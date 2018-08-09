@@ -1,0 +1,14 @@
+- content_for :content do
+  %nav.navbar.navbar-dark.bg-secondary.mb-5
+    %span.navbar-text= @page_title
+  .container
+    .row
+      .col-12.col-md-9.mx-md-auto
+        - if flash[:notice]
+          .alert.alert-info= flash[:notice]
+        - elsif flash[:error]
+          .alert.alert-danger= flash[:error]
+        - elsif flash[:success]
+          .alert.alert-success= flash[:success]
+        = yield
+= render template: 'layouts/admin'

@@ -1,0 +1,26 @@
+!!!
+%html{lang: I18n.locale}
+  %head
+    %title= [@page_title, 'Civils de la Défense'].delete_if(&:blank?).join(' - ')
+    %meta{content: "text/html; charset=UTF-8", http: {equiv: "Content-Type"}}
+    %meta{charset: "utf-8"}
+    %meta{name: "viewport", content: "width=device-width, initial-scale=1, shrink-to-fit=no"}
+    = stylesheet_link_tag 'https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500|Roboto+Mono:400,500'
+    = stylesheet_pack_tag 'admin-style'
+    = csrf_meta_tags
+    = csp_meta_tag
+  %body{class: !admin_signed_in? ? 'mt-0' : nil}
+    - if admin_signed_in?
+      = render partial: '/admin/shared/navbar'
+      = content_for?(:content) ? yield(:content) : yield
+      = javascript_pack_tag 'admin-bundle'
+    - else
+      .container-fluid.devise
+        .row
+          .col-12.col-md-4.d-md-flex.flex-md-column.justify-content-center.bg-white.px-md-5.sidebar
+            .logos.mb-5
+              = image_tag asset_pack_path('images/minarm.svg'), class: 'minarm'
+              .d-flex.flex-column.justify-content-center
+                = image_tag asset_pack_path('images/logo.svg'), class: 'logo'
+            = yield
+          .col-12.col-md-8{style: "background-size: cover;background-image: url(#{ asset_pack_path('images/background.png') })"}

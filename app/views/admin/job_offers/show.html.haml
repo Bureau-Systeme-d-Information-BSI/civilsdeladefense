@@ -1,0 +1,57 @@
+%p#notice= notice
+
+%p
+  %b Title:
+  = @job_offer.title
+%p
+  %b Description:
+  = @job_offer.description
+%p
+  %b Category:
+  = @job_offer.category
+%p
+  %b Official status:
+  = @job_offer.official_status
+%p
+  %b Location:
+  = @job_offer.location
+%p
+  %b Employer:
+  = @job_offer.employer
+%p
+  %b Required profile:
+  = @job_offer.required_profile
+%p
+  %b Recruitment process:
+  = @job_offer.recruitment_process
+%p
+  %b Contract type:
+  = @job_offer.contract_type
+%p
+  %b Contract start on:
+  = @job_offer.contract_start_on
+%p
+  %b Is remote possible:
+  = @job_offer.is_remote_possible
+%p
+  %b Studiy level:
+  = @job_offer.study_level
+%p
+  %b Experience level:
+  = @job_offer.experience_level
+%p
+  %b Sector:
+  = @job_offer.sector
+%p
+  %b Is negotiable:
+  = @job_offer.is_negotiable
+%p
+  %b Estimate monthly salary net:
+  = @job_offer.estimate_monthly_salary_net
+%p
+  %b Estimate monthly salary gross:
+  = @job_offer.estimate_monthly_salary_gross
+
+= link_to 'Edit', [:edit, :admin, @job_offer]
+\|
+= link_to 'Back', [:admin, :job_offers]

@@ -31,6 +31,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'haml-rails'
 gem 'devise'
+gem 'devise-i18n'
 gem 'simple_form'
 gem 'nested_form'
 gem 'will_paginate'

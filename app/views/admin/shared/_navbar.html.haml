@@ -1,0 +1,25 @@
+- nav_items = %i(job_offers)
+%nav.navbar.navbar-expand-md.navbar-light.bg-white.fixed-top
+  %button.navbar-toggler.p-0.border-0{type: :button, data: {toggle: 'offcanvas'}}
+    %span.navbar-toggler-icon
+  = link_to admin_root_path, class: "navbar-brand py-0" do
+    = image_tag(asset_pack_path("images/republique_francaise.svg"))
+  .collapse.navbar-collapse.offcanvas-collapse.ml-md-5
+    %ul.navbar-nav.mr-auto
+      - nav_items.each do |item|
+        - extra_klass = controller.controller_name == item.to_s && 'active'
+        %li.nav-item{class: extra_klass}
+          = fa_icon(icon_for_controller(item))
+          = link_to t(".#{item}"), [:admin, item.to_sym], class: "nav-link"
+    %ul.nav.navbar-nav
+      %li.nav-item
+        = link_to current_admin.email, admin_root_path, class: "nav-link"
+      %li.nav-item
+        = link_to t('.logout'), destroy_admin_session_path, method: :delete, class: "nav-link"
+%aside.offcanvas-collapse
+  .drawer
+    %ul.list-group
+      - nav_items.each do |item|
+        - klass = %w(list-group-item)
+        - klass << 'active' if controller.controller_name == item
+        = link_to t(".#{item}"), [item.to_sym], class: klass

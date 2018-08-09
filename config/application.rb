@@ -22,9 +22,21 @@ module Civilsdeladefense
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.2
 
-    # Settings in config/environments/* take precedence over those specified here.
-    # Application configuration can go into files in config/initializers
-    # -- all .rb files in that directory are automatically loaded after loading
-    # the framework and any gems in your application.
+    config.time_zone = 'Paris'
+
+    config.i18n.available_locales = [:fr]
+    config.i18n.default_locale = :fr
+
+    if Rails.env.production?
+      # Cache assets for 1 year
+      config.public_file_server.headers = {
+        'Cache-Control' => "max-age=#{ 1.week.to_i }",
+        'Expires' => 1.week.from_now.httpdate
+      }
+
+      # Setup HSTS to ensure https
+      config.force_ssl = true
+      config.ssl_options = { hsts: { subdomains: false, preload: true, expires: 1.year } }
+    end
   end
 end

@@ -1,0 +1,37 @@
+- @page_title = @job_offer.title + ' ' + @job_offer.location
+.row
+  .col-12.col-md-8.mx-md-auto
+    %h1.h5.text-quinary.text-center.mt-3.mb-0= @job_offer.title
+  .col-12.col-md-9.mx-md-auto
+    %ul.list-inline.text-center.mt-5.mb-0.basic-infos
+      %li.list-inline-item
+        = fa_icon 'briefcase'
+        = @job_offer.contract_type.name
+      %li.list-inline-item
+        = fa_icon 'calendar'
+        = l @job_offer.contract_start_on
+      %li.list-inline-item
+        = fa_icon 'map-marker'
+        = @job_offer.location
+      %li.list-inline-item
+        = fa_icon 'study'
+        = @job_offer.study_level.name
+      %li.list-inline-item
+        = fa_icon 'entity'
+        = @job_offer.category.name
+      %li.list-inline-item
+        = fa_icon 'coin'
+        = @job_offer.estimate_monthly_salary_gross
+      %li.list-inline-item
+        = fa_icon 'target'
+        = @job_offer.experience_level.name
+
+- fields = %i(description required_profile recruitment_process)
+- fields.each do |field|
+  %h2.h5.mt-5.mb-3.text-dark-gray= t('.'+field.to_s)
+  != @job_offer.send(field)
+
+.row
+  .col-12.text-center.mt-5
+    = link_to t('.apply'), [:apply, @job_offer], class: 'btn btn-primary btn-lg'
+

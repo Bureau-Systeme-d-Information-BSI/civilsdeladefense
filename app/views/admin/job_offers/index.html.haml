@@ -1,0 +1,10 @@
+- @page_title = t('.title')
+.card
+  .card-body
+    .d-flex
+      = link_to [:new, :admin, :job_offer], class: 'btn btn-primary ml-auto' do
+        = fa_icon 'plus', class: 'mr-1'
+        = t('.new_job_offer')
+    .row.mt-3
+      .col-12
+        = render partial: 'category', collection: @categories, space_divider: 'category_divider'

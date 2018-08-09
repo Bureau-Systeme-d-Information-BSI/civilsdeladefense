@@ -1,0 +1,29 @@
+- extra_klasses = []
+- extra_klasses << 'mt-3' if job_offer_iteration.first?
+- extra_klasses << 'mb-4' if job_offer_iteration.last?
+.card{class: extra_klasses}
+  .card-body
+    .row
+      .col-12.col-md-8
+        .card-title.font-weight-bold= job_offer.title
+        .d-flex
+          .font-weight-bold.mr-3= job_offer.contract_type.name
+          .font-weight-bold= job_offer.location
+      .col-12.col-md-4
+  .card-footer.d-flex
+    .mr-auto= t('.published_date', time_ago_in_words: time_ago_in_words(job_offer.created_at))
+    %ul.list-inline.mb-0.actions
+      %li.list-inline-item
+        = link_to '#' do
+          = fa_icon 'star'
+          = t('.follow')
+      %li.list-inline-item
+        = link_to [:edit, :admin, job_offer] do
+          = fa_icon 'pencil'
+          = t('.edit')
+      %li.list-inline-item
+        = link_to '#' do
+          = fa_icon 'eye'
+          = t('.preview')
+      %li.list-inline-item= link_to 'Menu', '#'
+

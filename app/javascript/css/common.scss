@@ -1,0 +1,242 @@
+$primary: #0084f8;
+$secondary: #003a9b;
+$tertiary: #344374;
+$quaternary: #003285;
+$quinary: #2d3b66;
+$dark-gray: #585858;
+$success: #00d893;
+$danger: #f60e0e;
+$body-color: #818181;
+$body-bg: #e6e6e6;
+$font-family-sans-serif: Roboto, sans-serif;
+$enable-rounded: false !default;
+$enable-shadows: true !default;
+$btn-box-shadow: none;
+$btn-active-box-shadow: none;
+$card-bg: #f5f5f5;
+$card-cap-bg: $card-bg;
+$card-border-width: 0;
+$card-border-color: #e0e0e0;
+$border-width: 0;
+$font-weight-normal: 300 !default;
+$font-weight-bold: 500 !default;
+$headings-color: $secondary !default;
+$hr-border-color: #eee !default;
+$hr-border-width: 1px !default;
+
+$theme-colors: (
+  "tertiary": $tertiary,
+  "quaternary": $quaternary,
+  "quinary": $quinary,
+  "dark-gray": $dark-gray
+);
+
+@import '~bootstrap/scss/bootstrap';
+@import 'navbar';
+@import 'offcanvas';
+@import 'fontawesome';
+
+svg {
+  fill: $body-color;
+}
+
+[role="main"] {
+  @extend .px-0;
+  nav.navbar {
+    @supports (position: sticky) {
+      z-index: 3;
+      position: sticky;
+      top: 50px;
+    }
+  }
+  .card {
+    @supports (position: sticky) {
+      z-index: 2;
+    }
+  }
+}
+
+.alert {
+  @extend .mb-0;
+}
+
+aside.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  padding: 48px 0 0;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12);
+}
+
+.sidebar-sticky {
+  @extend .position-sticky;
+  top: 50px;
+  height: calc(100vh - 50px);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.btn {
+  font-weight: $font-weight-bold;
+  &:not(.btn-link) {
+    box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.25);
+  }
+  &.btn-primary {
+    svg {
+      fill: white;
+    }
+  }
+}
+
+.card {
+  box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.25);
+  .card-subheader {
+    padding: $card-spacer-y $card-spacer-x;
+    background-color: white;
+    border-bottom: 1px solid $card-border-color;
+    .card-title {
+      @extend .mb-0;
+      font-size: $h5-font-size;
+      font-weight: $headings-font-weight;
+    }
+  }
+  .card-title {
+    color: $secondary;
+  }
+  .card-header {
+    &:not(.with-subheader) {
+      border-bottom: 2px solid $card-border-color;
+    }
+    .card-title {
+      @extend .mb-0;
+      font-size: $h5-font-size;
+      font-weight: $headings-font-weight;
+    }
+  }
+  .card-footer {
+    @extend small;
+    border-top: 1px solid $card-border-color;
+  }
+}
+
+.form-control, .custom-select {
+  @extend .mb-4;
+  border-color: white;
+  border-width: 2px;
+  box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.25);
+  &:focus {
+    border-color: $primary;
+    outline: 0;
+    box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.25);
+  }
+}
+
+label, legend {
+  font-weight: 500;
+}
+
+.form-inputs {
+  &:not(.options) {
+    .form-group {
+      &.radio_buttons {
+        .form-check {
+          label {
+            @extend .mt-2;
+          }
+        }
+      }
+    }
+  }
+}
+
+.form-group {
+  &.radio_buttons {
+    .form-check {
+      @extend .mr-0, .ml-5;
+      &:first-of-type {
+        @extend .ml-3;
+      }
+      input {
+        display: none;
+        &:checked + label {
+          color: $primary;
+          font-weight: 500;
+          box-shadow: inset 0 -2px $primary;
+        }
+      }
+      label {
+        @extend .mb-0;
+      }
+    }
+    > .form-check:first-child {
+      @extend .ml-2;
+    }
+  }
+}
+
+.devise {
+  .sidebar {
+    height: 100vh;
+  }
+  .logos {
+    @extend .d-flex, .justify-content-start;
+    .minarm {
+      height: 120px;
+    }
+    .logo {
+      margin-left: 20px;
+      height: 80px;
+    }
+  }
+  .form-inputs {
+    > .form-group:first-child {
+      @extend .mb-0;
+    }
+  }
+  .form-actions {
+    @extend .d-flex, .justify-content-end;
+    .btn-link {
+      color: inherit;
+    }
+  }
+  .form-control {
+    border: 2px solid $card-border-color;
+    box-shadow: none;
+    &:focus {
+      border: 2px solid $card-border-color;
+      box-shadow: none;
+    }
+  }
+}
+
+.list-group {
+  &.stepper {
+    .list-group-item {
+      color: #cdcdcd;
+      font-size: 80%;
+      &.active {
+        color: black;
+        font-weight: 500;
+        background-color: $card-bg;
+        border-left: 4px solid $primary;
+        .badge {
+          &.badge-pill {
+            color: $primary;
+            border-color: $primary;
+          }
+        }
+      }
+      .badge {
+        &.badge-pill {
+          border-radius: 50%;
+          line-height: 1.2rem;
+          height: 1.2rem;
+          padding: 0 0.4rem;
+          border: 1px solid #cdcdcd;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,70 @@
+$card-spacer-x: 2.5rem;
+
+@import 'common';
+
+body {
+  > .container {
+    margin-top: -50px;
+  }
+}
+
+nav.navbar {
+  & + div {
+    height: 50px;
+    background-color: $secondary;
+    & + div {
+      height: 85px;
+      background-color: $quaternary;
+    }
+  }
+}
+
+footer {
+  @extend .px-5, .py-5, .bg-quaternary;
+  color: white;
+  .minarm {
+    height: 150px;
+  }
+  ul {
+    li {
+      a {
+        color: white;
+        @extend .font-weight-bold;
+        &:hover, &:focus {
+          color: white;
+        }
+      }
+    }
+  }
+  ul > li {
+    @extend .mt-2;
+    > ul {
+      @extend .mt-2;
+      > li {
+        @extend .mt-0;
+        @extend small;
+        > a {
+          @extend small;
+        }
+      }
+    }
+  }
+  > [class^="container"] > .row > [class^="col"] {
+    > ul {
+      @extend .pl-4;
+      border-left: 0.5px solid white;
+    }
+  }
+}
+
+ul.basic-infos {
+  li {
+    @extend .mr-4;
+    svg {
+      @extend .mr-1;
+    }
+    &:last-child {
+      @extend .mb-0;
+    }
+  }
+}

@@ -1,7 +1,9 @@
-administrator = Administrator.create email: 'pipo@molo.fr',
+administrator = Administrator.new email: 'pipo@molo.fr',
   name: 'Col Pipo Molo',
   password: 'pipomolo',
   password_confirmation: 'pipomolo'
+administrator.skip_confirmation_notification!
+administrator.save!
 administrator.confirm
 
 Category.create name: 'Administration'

@@ -1,4 +1,8 @@
 fr:
+  buttons:
+    confirm: "Êtes-vous sûr ?"
+    edit: "Éditer"
+    resend_confirmation_instructions: "Renvoyer le mail d'activation"
   job_offers:
     index:
       title: "Nos offres"
@@ -43,7 +47,27 @@ fr:
     shared:
       navbar:
         job_offers: "Offres"
+        settings: "Paramètres"
         logout: "Déconnexion"
+    settings:
+      base:
+        index:
+          title: "Paramètres"
+        administrators:
+          title: "Liste des comptes admin"
+          add: "Ajouter"
+      administrators:
+        new:
+          title: "Inviter un nouvel administrateur"
+        edit:
+          title: "Modifier un compte administrateur"
+  activerecord:
+    models:
+      job_offer: "Offre"
+    attributes:
+      administrator:
+        confirmed: "Confirmé"
+        unconfirmed: "Non confirmé"
   simple_form:
     "yes": "Oui"
     "no": "Non"
@@ -97,10 +121,18 @@ fr:
       user:
         email: 'E-mail'
         password: 'Mot de passe'
+      administrator:
+        email: 'E-mail'
+        name: 'Nom complet'
+        password: 'Mot de passe'
+        password_confirmation: 'Confirmation du mot de passe'
   helpers:
     submit:
       job_offer:
         save: "Enregistrer"
         publish: "Publier"
         unpublish: "Dépublier"
+        cancel: "Annuler"
+      administrator:
+        invite: "Inviter"
         cancel: "Annuler"

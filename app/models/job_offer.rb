@@ -1,5 +1,5 @@
 class JobOffer < ApplicationRecord
-  belongs_to :owner, class_name: 'Admin'
+  belongs_to :owner, class_name: 'Administrator'
   belongs_to :category
   belongs_to :official_status
   belongs_to :employer

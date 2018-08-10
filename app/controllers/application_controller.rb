@@ -14,10 +14,18 @@ class ApplicationController < ActionController::Base
     end
 
     def layout_by_resource
-      if devise_controller? && resource_name == :admin
+      if devise_controller? && resource_name == :administrator
         'admin'
       else
         'application'
+      end
+    end
+
+    def after_sign_in_path_for(resource)
+      if resource.is_a?(Administrator)
+        stored_location_for(resource) || admin_root_path
+      else
+        stored_location_for(resource)
       end
     end
 end

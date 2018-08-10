@@ -1,0 +1,18 @@
+.card
+  .card-header
+    .card-title= @page_title
+  .card-body
+    = simple_form_for([:admin, :settings, @administrator]) do |f|
+      = f.error_notification
+      = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+      .form-inputs
+        = f.input :email
+        = f.input :name
+      .form-actions.text-right.my-5
+        %ul.list-inline
+          %li.list-inline-item
+            = link_to(t('helpers.submit.administrator.cancel'), [:admin, :settings, :root], class: 'btn btn-link btn-lg')
+          %li.list-inline-item
+            = button_tag(type: 'submit', class: 'btn btn-primary btn-lg') do
+              = t('helpers.submit.administrator.invite')
+              = fa_icon('send', class: 'ml-1')

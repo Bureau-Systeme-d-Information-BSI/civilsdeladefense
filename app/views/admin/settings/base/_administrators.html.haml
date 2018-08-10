@@ -1,0 +1,22 @@
+.card
+  .card-header
+    .card-title.d-flex
+      = t('.title')
+      = link_to [:new, :admin, :settings, :administrator], class: 'btn btn-primary ml-auto' do
+        = fa_icon 'plus', class: 'mr-1'
+        = t('.add')
+  %table.table.mb-0
+    %tbody
+      - for administrator in @administrators
+        %tr
+          %td
+            = administrator.email
+          %td
+            = administrator.name
+          %td
+            = administrator.confirmed? ? Administrator.human_attribute_name(:confirmed) : Administrator.human_attribute_name(:unconfirmed)
+          %td.text-right
+            %ul.list-inline.mb-0
+              %li.list-inline-item
+                = link_to fa_icon('pencil'), [:edit, :admin, :settings, administrator], title: t('buttons.edit')
+                = link_to fa_icon('refresh'), [:resend_confirmation_instructions, :admin, :settings, administrator], method: :post, confirm: t('buttons.confirm'), title: t('buttons.resend_confirmation_instructions')

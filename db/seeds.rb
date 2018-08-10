@@ -1,7 +1,8 @@
-admin = Admin.create email: 'pipo@molo.fr',
-                   password: 'pipomolo',
-                   password_confirmation: 'pipomolo'
-admin.confirm
+administrator = Administrator.create email: 'pipo@molo.fr',
+  name: 'Col Pipo Molo',
+  password: 'pipomolo',
+  password_confirmation: 'pipomolo'
+administrator.confirm
 
 Category.create name: 'Administration'
 Category.create name: 'Archives'
@@ -36,7 +37,7 @@ ExperienceLevel.create name: '5 à 6 ans'
 ExperienceLevel.create name: '> 7 ans'
 
 job_offer = JobOffer.new do |j|
-  j.owner = admin
+  j.owner = administrator
   j.title = 'Ingénieur expert en systemes d’information, réseau et active directory - Chef de section'
   j.category = informatique
   j.official_status = OfficialStatus.first

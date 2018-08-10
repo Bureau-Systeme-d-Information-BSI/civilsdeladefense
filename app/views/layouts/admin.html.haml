@@ -9,8 +9,8 @@
     = stylesheet_pack_tag 'admin-style'
     = csrf_meta_tags
     = csp_meta_tag
-  %body{class: !admin_signed_in? ? 'mt-0' : nil}
-    - if admin_signed_in?
+  %body{class: !administrator_signed_in? ? 'mt-0 pb-0' : nil}
+    - if administrator_signed_in?
       = render partial: '/admin/shared/navbar'
       = content_for?(:content) ? yield(:content) : yield
       = javascript_pack_tag 'admin-bundle'

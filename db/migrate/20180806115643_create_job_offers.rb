@@ -1,7 +1,7 @@
 class CreateJobOffers < ActiveRecord::Migration[5.2]
   def change
     create_table :job_offers do |t|
-      t.references :owner, foreign_key: {to_table: :admins}
+      t.references :owner, foreign_key: {to_table: :administrators}
       t.string :title
       t.text :description
       t.references :category, foreign_key: true

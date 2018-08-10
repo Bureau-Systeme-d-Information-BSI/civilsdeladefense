@@ -20,7 +20,7 @@ fr:
           <<: *options_defaults
         option_resume:
           <<: *options_defaults
-        option_portfolio:
+        option_portfolio_url:
           <<: *options_defaults
         option_photo:
           <<: *options_defaults
@@ -64,7 +64,7 @@ mois afin d'être recontacté(e) pour de nouvelles opportunités."
         estimate_monthly_salary_gross: "Estimation mensuel brut (secteur privé)"
         option_cover_letter: "Lettre de motivation"
         option_resume: "CV"
-        option_portfolio: "Portfolio"
+        option_portfolio_url: "Portfolio"
         option_photo: "Photo"
         option_website_url: "Site internet (URL)"
         option_linkedin_url: "LinkedIn (URL)"

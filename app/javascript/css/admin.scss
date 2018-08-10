@@ -38,6 +38,11 @@ nav.navbar {
     .card-body, .card-footer, .card-header {
       padding: $card-spacer-x-normal;
     }
+    &.job-offer {
+      .card-footer {
+        padding: ($card-spacer-x-normal * 0.5) $card-spacer-x-normal;
+      }
+    }
   }
   > table {
     > tbody {
@@ -69,7 +74,7 @@ ul {
       }
     }
     a {
-      @extend .font-weight-bold;
+      // @extend .font-weight-bold;
       color: $body-color;
       svg {
         fill: $body-color;

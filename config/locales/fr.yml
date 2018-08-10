@@ -35,6 +35,11 @@ fr:
         title: "Candidats"
         search: "Recherche"
         my_job_applications: "Mes candidatures"
+        job_applications_count:
+          zero: 'Aucune candidature trouvée'
+          one: '1 candidature trouvée'
+          other: '%{count} candidatures trouvées'
+
     job_offers:
       index:
         title: "Offres du Ministère des Armées"

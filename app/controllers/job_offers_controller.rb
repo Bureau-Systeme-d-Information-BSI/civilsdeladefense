@@ -21,5 +21,8 @@ class JobOffersController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_job_offer
       @job_offer = JobOffer.find(params[:id])
+      if params[:id] != @job_offer.slug
+        return redirect_to @job_offer, status: :moved_permanently
+      end
     end
 end

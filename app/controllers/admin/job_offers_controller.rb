@@ -68,6 +68,9 @@ class Admin::JobOffersController < Admin::BaseController
     # Use callbacks to share common setup or constraints between actions.
     def set_job_offer
       @job_offer = JobOffer.find(params[:id])
+      if params[:id] != @job_offer.slug
+        return redirect_to [:admin, @job_offer], status: :moved_permanently
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

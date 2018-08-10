@@ -3,6 +3,7 @@ class CreateJobOffers < ActiveRecord::Migration[5.2]
     create_table :job_offers do |t|
       t.references :owner, foreign_key: {to_table: :administrators}
       t.string :title
+      t.string :slug, null: false
       t.text :description
       t.references :category, foreign_key: true
       t.references :official_status, foreign_key: true
@@ -28,5 +29,7 @@ class CreateJobOffers < ActiveRecord::Migration[5.2]
 
       t.timestamps
     end
+
+    add_index :job_offers, :slug, unique: true
   end
 end

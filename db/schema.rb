@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_08_114642) do
+ActiveRecord::Schema.define(version: 2018_08_10_093134) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,9 +69,22 @@ ActiveRecord::Schema.define(version: 2018_08_08_114642) do
     t.index ["name"], name: "index_experience_levels_on_name", unique: true
   end
 
+  create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
+    t.string "slug", null: false
+    t.integer "sluggable_id", null: false
+    t.string "sluggable_type", limit: 50
+    t.string "scope"
+    t.datetime "created_at"
+    t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
+    t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
+    t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
+    t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
+  end
+
   create_table "job_offers", force: :cascade do |t|
     t.bigint "owner_id"
     t.string "title"
+    t.string "slug", null: false
     t.text "description"
     t.bigint "category_id"
     t.bigint "official_status_id"
@@ -103,6 +116,7 @@ ActiveRecord::Schema.define(version: 2018_08_08_114642) do
     t.index ["official_status_id"], name: "index_job_offers_on_official_status_id"
     t.index ["owner_id"], name: "index_job_offers_on_owner_id"
     t.index ["sector_id"], name: "index_job_offers_on_sector_id"
+    t.index ["slug"], name: "index_job_offers_on_slug", unique: true
     t.index ["study_level_id"], name: "index_job_offers_on_study_level_id"
   end
 

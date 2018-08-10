@@ -1,4 +1,7 @@
 class JobOffer < ApplicationRecord
+  extend FriendlyId
+  friendly_id :title, use: [:slugged, :finders, :history]
+
   belongs_to :owner, class_name: 'Administrator'
   belongs_to :category
   belongs_to :official_status

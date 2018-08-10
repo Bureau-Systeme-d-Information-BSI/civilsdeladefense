@@ -1,0 +1,51 @@
+.devise {
+  .sidebar {
+    height: 100vh;
+  }
+  .logos {
+    @extend .d-flex, .justify-content-start;
+    .minarm {
+      height: 80px;
+    }
+    .logo {
+      margin-left: 20px;
+      height: 60px;
+    }
+  }
+  .form-inputs {
+    > .form-group:first-child {
+      @extend .mb-0;
+    }
+  }
+  .form-actions {
+    @extend .d-flex, .justify-content-start, .align-items-start;
+    > *:last-child {
+      @extend .ml-auto;
+    }
+    .btn-link {
+      color: inherit;
+    }
+  }
+  .form-control {
+    border: 2px solid $card-border-color;
+    box-shadow: none;
+    &:focus {
+      border: 2px solid $card-border-color;
+      box-shadow: none;
+    }
+  }
+}
+
+@include media-breakpoint-up(md) {
+  .devise {
+    .logos {
+      .minarm {
+        height: 120px;
+      }
+      .logo {
+        margin-left: 20px;
+        height: 80px;
+      }
+    }
+  }
+}

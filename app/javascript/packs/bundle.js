@@ -17,3 +17,5 @@ function importAll(r) {
 
 importAll(require.context('images/', true, /\.(ico|png|jpe?g|svg|gif)$/))
 importAll(require.context('icons/', true, /\.svg$/))
+
+require('js/offcanvas.js')

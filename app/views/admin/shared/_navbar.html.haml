@@ -25,3 +25,5 @@
         - klass << 'active' if controller.class.to_s.underscore =~ /#{ item.first.to_s }/
         - ary = [:admin] + item
         = link_to t(".#{ item.first.to_s }"), ary, class: klass
+      %li.nav-item
+        = link_to t('.logout'), destroy_administrator_session_path, method: :delete, class: "nav-link"

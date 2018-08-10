@@ -16,6 +16,7 @@ class JobOffersController < ApplicationController
   # GET /job_offers/1/apply.json
   def apply
     @job_application = JobApplication.new
+    @job_application.country = "FR"
   end
 
   # POST /job_offers/1/send_application

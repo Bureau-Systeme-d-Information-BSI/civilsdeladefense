@@ -10,9 +10,9 @@
           .font-weight-bold.mr-3= job_offer.contract_type.name
           .font-weight-bold= job_offer.location
       .col-12.col-md-4
-  .card-footer.d-flex
+  .card-footer.d-flex.flex-column.flex-md-row
     .mr-auto= t('.published_date', time_ago_in_words: time_ago_in_words(job_offer.created_at))
-    %ul.list-inline.mb-0.actions
+    %ul.list-inline.mb-0.actions.mt-2.mt-md-0
       %li.list-inline-item
         = link_to '#' do
           = fa_icon 'star'
@@ -25,5 +25,7 @@
         = link_to '#' do
           = fa_icon 'eye'
           = t('.preview')
-      %li.list-inline-item= link_to 'Menu', '#'
+      %li.list-inline-item
+        = link_to '#' do
+          = fa_icon 'dots-horizontal'
 

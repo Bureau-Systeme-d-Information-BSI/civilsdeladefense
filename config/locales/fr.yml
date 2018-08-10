@@ -2,6 +2,7 @@ fr:
   buttons:
     confirm: "Êtes-vous sûr ?"
     edit: "Éditer"
+    delete: "Supprimer"
     resend_confirmation_instructions: "Renvoyer le mail d'activation"
   job_offers:
     index:

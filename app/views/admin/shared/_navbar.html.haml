@@ -1,7 +1,7 @@
 - nav_items = [[:job_offers],  [:settings, :root]]
 %nav.navbar.navbar-expand-md.navbar-light.bg-white.fixed-top
   %button.navbar-toggler.p-0.border-0{type: :button, data: {toggle: 'offcanvas'}}
-    %span.navbar-toggler-icon
+    %span.navbar-toggler-icon= fa_icon "menu", style: "width:1.5em;height:auto;"
   = link_to admin_root_path, class: "navbar-brand py-0" do
     = image_tag(asset_pack_path("images/republique_francaise.svg"))
   .collapse.navbar-collapse.offcanvas-collapse.ml-md-5

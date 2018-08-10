@@ -58,7 +58,7 @@
                         = f.association :contract_type
                       .col-12.col-md-3
                         = f.input :contract_start_on, as: :string
-                      .col-12.col-md-3
+                      .col-12.col-md-6.pl-md-5
                         = f.input :is_remote_possible, as: :radio_buttons
 
               .card.mt-5
@@ -78,7 +78,7 @@
                             = f.association :sector
                           .col-12.col-md-6
                             = f.input :is_negotiable, as: :radio_buttons
-                      .col-12.col-md-6.pl-5
+                      .col-12.col-md-6.pl-md-5
                         .row
                           .col-12
                             = f.input :estimate_monthly_salary_net

@@ -28,28 +28,26 @@ body {
   margin-top: 50px;
 }
 
-.card {
-  .card-footer {
-    .actions {
-      > li {
-        @extend .mr-3;
-        &:last-child {
-          @extend .mr-0;
-        }
+ul {
+  &.actions {
+    > li {
+      @extend .mr-3;
+      &:last-child {
+        @extend .mr-0;
       }
-      a {
-        @extend .font-weight-bold;
-        color: $body-color;
+    }
+    a {
+      @extend .font-weight-bold;
+      color: $body-color;
+      svg {
+        fill: $body-color;
+        @extend .mr-1;
+      }
+      &:hover, &:focus, &.active {
+        text-decoration: none;
+        color: $primary;
         svg {
-          fill: $body-color;
-          @extend .mr-1;
-        }
-        &:hover, &:focus, &.active {
-          text-decoration: none;
-          color: $primary;
-          svg {
-            fill: $primary;
-          }
+          fill: $primary;
         }
       }
     }

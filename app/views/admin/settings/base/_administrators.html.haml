@@ -1,8 +1,8 @@
 .card
   .card-header
-    .card-title.d-flex
+    .card-title.d-md-flex.align-items-start
       = t('.title')
-      = link_to [:new, :admin, :settings, :administrator], class: 'btn btn-primary ml-auto' do
+      = link_to [:new, :admin, :settings, :administrator], class: 'btn btn-primary ml-auto mt-2 mt-md-0' do
         = fa_icon 'plus', class: 'mr-1'
         = t('.add')
   %table.table.mb-0
@@ -16,7 +16,8 @@
           %td
             = administrator.confirmed? ? Administrator.human_attribute_name(:confirmed) : Administrator.human_attribute_name(:unconfirmed)
           %td.text-right
-            %ul.list-inline.mb-0
+            %ul.list-inline.mb-0.actions
               %li.list-inline-item
                 = link_to fa_icon('pencil'), [:edit, :admin, :settings, administrator], title: t('buttons.edit')
-                = link_to fa_icon('refresh'), [:resend_confirmation_instructions, :admin, :settings, administrator], method: :post, confirm: t('buttons.confirm'), title: t('buttons.resend_confirmation_instructions')
+                = link_to fa_icon('refresh'), [:resend_confirmation_instructions, :admin, :settings, administrator], method: :postr, title: t('buttons.resend_confirmation_instructions'), data: {confirm: t('buttons.confirm')}
+                = link_to fa_icon('delete'), [:admin, :settings, administrator], method: :delete, title: t('buttons.delete'), data: {confirm: t('buttons.confirm')}

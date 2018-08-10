@@ -7,9 +7,9 @@ Rails.application.routes.draw do
   devise_for :users
 
   namespace :admin do
-    resources :job_offers
-    namespace :settings do
-      resources :administrators do
+    resources :job_offers, path: 'offresdemploi'
+    namespace :settings, path: 'parametres' do
+      resources :administrators, path: 'administrateurs' do
         member do
           post :resend_confirmation_instructions
         end
@@ -19,7 +19,7 @@ Rails.application.routes.draw do
     root to: 'job_offers#index'
   end
 
-  resources :job_offers, only: %i(index show) do
+  resources :job_offers, path: 'offresdemploi', only: %i(index show) do
     member do
       get :apply
     end

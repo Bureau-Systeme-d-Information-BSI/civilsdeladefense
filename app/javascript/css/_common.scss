@@ -16,16 +16,17 @@ $btn-box-shadow: none;
 $btn-active-box-shadow: none;
 $card-bg: #f5f5f5;
 $card-cap-bg: $card-bg;
-$card-border-width: 0;
+$card-border-width-normal: 0;
 $card-border-color: #e0e0e0;
 $card-spacer-x: 2rem;
-$table-border-width: 1px;
+$table-border-width-normal: 1px;
 $border-width: 0;
+$border-width-normal: 1px;
 $font-weight-normal: 300 !default;
 $font-weight-bold: 500 !default;
 $headings-color: $secondary !default;
 $hr-border-color: #eee !default;
-$hr-border-width: 1px !default;
+$hr-border-width-normal: 1px !default;
 
 $theme-colors: (
   "tertiary": $tertiary,
@@ -53,6 +54,24 @@ $bmd-animation-curve-default: $bmd-animation-curve-fast-out-slow-in !default;
 @import 'navbar';
 @import 'offcanvas';
 @import 'fontawesome';
+
+.border         { border: $border-width-normal solid $border-color !important; }
+.border-top     { border-top: $border-width-normal solid $border-color !important; }
+.border-right   { border-right: $border-width-normal solid $border-color !important; }
+.border-bottom  { border-bottom: $border-width-normal solid $border-color !important; }
+.border-left    { border-left: $border-width-normal solid $border-color !important; }
+
+.border-0        { border: 0 !important; }
+.border-top-0    { border-top: 0 !important; }
+.border-right-0  { border-right: 0 !important; }
+.border-bottom-0 { border-bottom: 0 !important; }
+.border-left-0   { border-left: 0 !important; }
+
+@each $color, $value in $theme-colors {
+  .border-#{$color} {
+    border-color: $value !important;
+  }
+}
 
 svg {
   fill: $body-color;
@@ -139,7 +158,7 @@ aside.sidebar {
 .form-control, .custom-select {
   @extend .mb-4;
   border-color: white;
-  border-width: 2px;
+  border-width-normal: 2px;
   @include box-shadow($bmd-shadow-2dp);
   &:focus {
     border-color: $primary;

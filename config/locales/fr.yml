@@ -39,7 +39,6 @@ fr:
           zero: 'Aucune candidature trouvée'
           one: '1 candidature trouvée'
           other: '%{count} candidatures trouvées'
-
     job_offers:
       index:
         title: "Offres du Ministère des Armées"
@@ -64,6 +63,12 @@ fr:
         edit: 'Éditer'
         preview: 'Aperçu'
         published_date: 'Publié il y a %{time_ago_in_words}'
+        job_applications_count:
+          zero: 'Candidature'
+          one: 'Candidature'
+          other: 'Candidatures'
+        job_applications_to_be_treated_count:
+          "À traiter"
     shared:
       navbar:
         job_offers: "Offres"

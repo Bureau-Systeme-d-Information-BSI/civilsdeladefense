@@ -5,11 +5,22 @@
   .card-body
     .row
       .col-12.col-md-8
-        .card-title.font-weight-bold= job_offer.title
+        .card-title.font-weight-bold.text-truncate= job_offer.title
         .d-flex
           .font-weight-bold.mr-3= job_offer.contract_type.name
           .font-weight-bold= job_offer.location
       .col-12.col-md-4
+        .row
+          .col-6
+            .d-flex.flex-column.justify-content-center.text-center.mt-2
+              - count = 0
+              .font-weight-bold.text-dark-gray= count
+              %span= t('.job_applications_to_be_treated_count')
+          .col-6.border-left
+            .d-flex.flex-column.justify-content-center.text-center.mt-2
+              - count = job_offer.job_applications.count
+              .font-weight-bold.text-dark-gray= count
+              %span= t('.job_applications_count', count: count)
   .card-footer.d-flex.flex-column.flex-md-row
     .mr-auto= t('.published_date', time_ago_in_words: time_ago_in_words(job_offer.created_at))
     %ul.list-inline.mb-0.actions.mt-2.mt-md-0

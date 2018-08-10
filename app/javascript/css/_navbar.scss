@@ -13,8 +13,8 @@ body > .navbar.bg-white {
   .nav-item {
     @extend .d-flex;
     svg {
-      margin-top: ($spacer * .75);
-      margin-right: ($spacer * .75);
+      margin-top: ($spacer * .85);
+      margin-right: ($spacer * .50);
       color: $body-color;
     }
     .nav-link {

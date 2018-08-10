@@ -17,6 +17,8 @@ $card-bg: #f5f5f5;
 $card-cap-bg: $card-bg;
 $card-border-width: 0;
 $card-border-color: #e0e0e0;
+$card-spacer-x: 2rem;
+$table-border-width: 1px;
 $border-width: 0;
 $font-weight-normal: 300 !default;
 $font-weight-bold: 500 !default;
@@ -32,6 +34,7 @@ $theme-colors: (
 );
 
 @import '~bootstrap/scss/bootstrap';
+@import 'shadow';
 @import 'navbar';
 @import 'offcanvas';
 @import 'fontawesome';
@@ -91,7 +94,7 @@ aside.sidebar {
 }
 
 .card {
-  box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.25);
+  @include box-shadow($bmd-shadow-2dp);
   .card-subheader {
     padding: $card-spacer-y $card-spacer-x;
     background-color: white;
@@ -125,11 +128,11 @@ aside.sidebar {
   @extend .mb-4;
   border-color: white;
   border-width: 2px;
-  box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.25);
+  @include box-shadow($bmd-shadow-2dp);
   &:focus {
     border-color: $primary;
     outline: 0;
-    box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.25);
+    @include box-shadow($bmd-shadow-3dp);
   }
 }
 
@@ -176,67 +179,3 @@ label, legend {
   }
 }
 
-.devise {
-  .sidebar {
-    height: 100vh;
-  }
-  .logos {
-    @extend .d-flex, .justify-content-start;
-    .minarm {
-      height: 120px;
-    }
-    .logo {
-      margin-left: 20px;
-      height: 80px;
-    }
-  }
-  .form-inputs {
-    > .form-group:first-child {
-      @extend .mb-0;
-    }
-  }
-  .form-actions {
-    @extend .d-flex, .justify-content-end;
-    .btn-link {
-      color: inherit;
-    }
-  }
-  .form-control {
-    border: 2px solid $card-border-color;
-    box-shadow: none;
-    &:focus {
-      border: 2px solid $card-border-color;
-      box-shadow: none;
-    }
-  }
-}
-
-.list-group {
-  &.stepper {
-    .list-group-item {
-      color: #cdcdcd;
-      font-size: 80%;
-      &.active {
-        color: black;
-        font-weight: 500;
-        background-color: $card-bg;
-        border-left: 4px solid $primary;
-        .badge {
-          &.badge-pill {
-            color: $primary;
-            border-color: $primary;
-          }
-        }
-      }
-      .badge {
-        &.badge-pill {
-          border-radius: 50%;
-          line-height: 1.2rem;
-          height: 1.2rem;
-          padding: 0 0.4rem;
-          border: 1px solid #cdcdcd;
-        }
-      }
-    }
-  }
-}

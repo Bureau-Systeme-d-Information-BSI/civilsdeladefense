@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :job_offers, path: 'offresdemploi'
+    resources :job_applications, path: 'candidatures'
     namespace :settings, path: 'parametres' do
       resources :administrators, path: 'administrateurs' do
         member do
@@ -22,6 +23,8 @@ Rails.application.routes.draw do
   resources :job_offers, path: 'offresdemploi', only: %i(index show) do
     member do
       get :apply
+      post :send_application
+      get :successful
     end
   end
 

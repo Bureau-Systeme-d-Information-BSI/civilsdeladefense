@@ -1,5 +1,5 @@
 class JobOffersController < ApplicationController
-  before_action :set_job_offer, only: [:show, :apply]
+  before_action :set_job_offer, only: [:show, :apply, :send_application, :successful]
 
   # GET /job_offers
   # GET /job_offers.json
@@ -15,6 +15,29 @@ class JobOffersController < ApplicationController
   # GET /job_offers/1/apply
   # GET /job_offers/1/apply.json
   def apply
+    @job_application = JobApplication.new
+  end
+
+  # POST /job_offers/1/send_application
+  # POST /job_offers/1/send_application.json
+  def send_application
+    @job_application = JobApplication.new(job_application_params)
+    @job_application.job_offer = @job_offer
+
+    respond_to do |format|
+      if @job_application.save
+        format.html { redirect_to [:successful, @job_offer, job_application_id: @job_application.id] }
+        format.json { render :show, status: :created, location: @job_application }
+      else
+        format.html { render :apply }
+        format.json { render json: @job_application.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # GET /job_offers/1/successful
+  # GET /job_offers/1/successful.json
+  def successful
   end
 
   private
@@ -24,5 +47,10 @@ class JobOffersController < ApplicationController
       if params[:id] != @job_offer.slug
         return redirect_to @job_offer, status: :moved_permanently
       end
+    end
+
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def job_application_params
+      params.require(:job_application).permit(:first_name, :last_name, :current_position, :phone, :address_1, :address_2, :postal_code, :city, :country, :portfolio_url, :website_url, :linkedin_url, :terms_of_service)
     end
 end

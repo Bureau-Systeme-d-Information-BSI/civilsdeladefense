@@ -4,6 +4,11 @@ fr:
     edit: "Éditer"
     delete: "Supprimer"
     resend_confirmation_instructions: "Renvoyer le mail d'activation"
+  job_applications:
+    form:
+      general_informations: "Informations générales"
+      your_profile: "Votre profil"
+      your_internet_presence: "Votre présence sur internet"
   job_offers:
     index:
       title: "Nos offres"
@@ -15,12 +20,21 @@ fr:
       description: "Descriptif de l’offre"
       required_profile: "Profil recherché"
       recruitment_process: "Process de recrutement"
+    successful:
+      title: "Merci d'avoir soumis votre candidature !"
+      subtitle: "Nous allons y répondre dans les plus brefs délais."
+      link: "Retour à l'accueil"
   shared:
     navbar:
       job_offers: "Nos offres"
       account: "Mon compte"
       logout: "Déconnexion"
   admin:
+    job_applications:
+      index:
+        title: "Candidats"
+        search: "Recherche"
+        my_job_applications: "Mes candidatures"
     job_offers:
       index:
         title: "Offres du Ministère des Armées"
@@ -48,6 +62,7 @@ fr:
     shared:
       navbar:
         job_offers: "Offres"
+        job_applications: "Candidatures"
         settings: "Paramètres"
         logout: "Déconnexion"
     settings:
@@ -69,66 +84,10 @@ fr:
       administrator:
         confirmed: "Confirmé"
         unconfirmed: "Non confirmé"
-  simple_form:
-    "yes": "Oui"
-    "no": "Non"
-    options:
-      defaults: &options_defaults
-        disabled: "Désactivé"
-        optional: "Optionel"
-        mandatory: "Obligatoire"
-      job_offer:
-        option_cover_letter:
-          <<: *options_defaults
-        option_resume:
-          <<: *options_defaults
-        option_portfolio:
-          <<: *options_defaults
-        option_photo:
-          <<: *options_defaults
-        option_website_url:
-          <<: *options_defaults
-        option_linkedin_url:
-          <<: *options_defaults
-    labels:
-      job_offer:
-        title: "Intitulé du poste"
-        category: "Catégorie de métier"
-        official_status: "Statut"
-        location: "Localisation"
-        employer: "Employeur"
-        description: "Descriptif de l’offre"
-        required_profile: "Profil recherché"
-        recruitment_process: "Process de recrutement"
-        contract_type: "Type de contrat"
-        contract_start_on: "Début du contrat"
-        is_remote_possible: "Télétravail possible ?"
-        study_level: "Niveau d'études"
-        experience_level: "Expérience"
-        sector: "Secteur / Filière"
-        is_negotiable: "Négociation possible ?"
-        estimate_monthly_salary_net: "Estimation mensuel net (fonction publique)"
-        estimate_monthly_salary_gross: "Estimation mensuel brut (secteur privé)"
-        option_cover_letter: "Lettre de motivation"
-        option_resume: "CV"
-        option_portfolio: "Portfolio"
-        option_photo: "Photo"
-        option_website_url: "Site internet (URL)"
-        option_linkedin_url: "LinkedIn (URL)"
-      user:
-        email: 'E-mail'
-        password: 'Mot de passe'
-    placeholders:
-      user:
-        email: 'E-mail'
-        password: 'Mot de passe'
-      administrator:
-        email: 'E-mail'
-        name: 'Nom complet'
-        password: 'Mot de passe'
-        password_confirmation: 'Confirmation du mot de passe'
   helpers:
     submit:
+      job_application:
+        save: "Je valide ma candidature"
       job_offer:
         save: "Enregistrer"
         publish: "Publier"

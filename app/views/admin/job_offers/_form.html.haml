@@ -98,7 +98,7 @@
                   .card-title= t('.card_2_1_1_title')
                 .card-body
                   .form-inputs.options
-                    - options = %w(cover_letter resume portfolio photo)
+                    - options = %w(cover_letter resume portfolio_url photo)
                     - options.each do |option|
                       - collection = JobOffer::OPTIONS_AVAILABLE.symbolize_keys.keys.reverse
                       = f.input "option_#{option}".to_sym, collection: collection, as: :radio_buttons, wrapper: :horizontal_collection_inline

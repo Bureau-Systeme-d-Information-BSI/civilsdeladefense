@@ -32,6 +32,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'haml-rails'
 gem 'devise'
 gem 'simple_form'
+gem 'country_select'
 gem 'nested_form'
 gem 'will_paginate'
 gem 'friendly_id'

@@ -2,6 +2,37 @@
 @import 'devise';
 $card-spacer-x-normal: 1rem;
 
+nav.navbar {
+  & + aside + .bg-secondary {
+    height: 50px;
+    background-color: $secondary;
+    .nav-item {
+      .nav-link {
+        color: rgba(255, 255, 255, 0.6);
+        text-transform: uppercase;
+        font-weight: 500;
+        transition: color 0.2s $bmd-animation-curve-default;
+        will-change: color, transform;
+        line-height: 50px;
+        @extend .px-4, .py-0;
+      }
+      &:active, &.active, &:hover {
+        .nav-link {
+          color: white;
+        }
+      }
+      &.active {
+        box-shadow: inset 0 -2px white;
+      }
+    }
+    & + .bg-quaternary {
+      height: 85px;
+      background-color: $quaternary;
+    }
+  }
+}
+
+
 .card {
   .card {
     .card-body, .card-footer, .card-header {
@@ -81,6 +112,38 @@ ul {
           border: 1px solid #cdcdcd;
         }
       }
+    }
+  }
+}
+
+.card-deck {
+  display: flex;
+  flex-flow: row wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+  .job-application {
+    background-color: $card-bg;
+    margin-right: 15px;
+    margin-left: 15px;
+    @include media-breakpoint-up(sm) {
+      flex: 0 0 calc(100%);
+    }
+    @include media-breakpoint-up(md) {
+      flex: 0 0 calc(100%/4 - 30px);
+    }
+    @include media-breakpoint-up(xl) {
+      flex: 0 0 calc(100%/5 - 30px);
+    }
+    .card-body, .card-footer {
+      padding: $card-spacer-x-normal * 0.75;
+    }
+    .card-header {
+      color: $body-color-variation;
+      border-bottom: 0;
+      padding: ($card-spacer-x-normal * 0.25) ($card-spacer-x-normal * 0.75);
+    }
+    .card-body {
+      background-color: white;
     }
   }
 }

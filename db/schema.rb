@@ -10,10 +10,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_10_093134) do
+ActiveRecord::Schema.define(version: 2018_08_10_132807) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "active_storage_attachments", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.bigint "blob_id", null: false
+    t.datetime "created_at", null: false
+    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
+    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+  end
+
+  create_table "active_storage_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type"
+    t.text "metadata"
+    t.bigint "byte_size", null: false
+    t.string "checksum", null: false
+    t.datetime "created_at", null: false
+    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
 
   create_table "administrators", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -81,6 +102,27 @@ ActiveRecord::Schema.define(version: 2018_08_10_093134) do
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
   end
 
+  create_table "job_applications", force: :cascade do |t|
+    t.bigint "job_offer_id"
+    t.bigint "user_id"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "current_position"
+    t.string "phone"
+    t.string "address_1"
+    t.string "address_2"
+    t.string "postal_code"
+    t.string "city"
+    t.string "country"
+    t.string "portfolio_url"
+    t.string "website_url"
+    t.string "linkedin_url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["job_offer_id"], name: "index_job_applications_on_job_offer_id"
+    t.index ["user_id"], name: "index_job_applications_on_user_id"
+  end
+
   create_table "job_offers", force: :cascade do |t|
     t.bigint "owner_id"
     t.string "title"
@@ -103,7 +145,7 @@ ActiveRecord::Schema.define(version: 2018_08_10_093134) do
     t.string "estimate_monthly_salary_gross"
     t.integer "option_cover_letter"
     t.integer "option_resume"
-    t.integer "option_portfolio"
+    t.integer "option_portfolio_url"
     t.integer "option_photo"
     t.integer "option_website_url"
     t.integer "option_linkedin_url"
@@ -167,6 +209,8 @@ ActiveRecord::Schema.define(version: 2018_08_10_093134) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  add_foreign_key "job_applications", "job_offers"
+  add_foreign_key "job_applications", "users"
   add_foreign_key "job_offers", "administrators", column: "owner_id"
   add_foreign_key "job_offers", "categories"
   add_foreign_key "job_offers", "contract_types"

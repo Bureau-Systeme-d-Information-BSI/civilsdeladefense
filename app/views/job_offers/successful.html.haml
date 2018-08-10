@@ -1,0 +1,9 @@
+- @page_title = @job_offer.title + ' ' + @job_offer.location
+= render partial: 'job_offer_head', locals: {job_offer: @job_offer}
+
+.text-center.mt-5
+  .h2
+    = t('.title')
+  .h5.text-dark-gray
+    = t('.subtitle')
+  = link_to t('.link'), root_path, class: 'btn btn-primary btn-raised mt-5 btn-lg'

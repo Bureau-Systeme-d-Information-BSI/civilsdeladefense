@@ -11,14 +11,14 @@ class JobOffer < ApplicationRecord
   belongs_to :experience_level
   belongs_to :sector
 
+  has_many :job_applications
+
   validates :title, :description, presence: true
 
   OPTIONS_AVAILABLE = { disabled: 0, optional: 1, mandatory: 2 }
-
-  enum option_cover_letter: OPTIONS_AVAILABLE, _suffix: true
-  enum option_resume: OPTIONS_AVAILABLE, _suffix: true
-  enum option_portfolio: OPTIONS_AVAILABLE, _suffix: true
-  enum option_photo: OPTIONS_AVAILABLE, _suffix: true
-  enum option_website_url: OPTIONS_AVAILABLE, _suffix: true
-  enum option_linkedin_url: OPTIONS_AVAILABLE, _suffix: true
+  FILES = %i(cover_letter resume photo)
+  URLS = %i(portfolio_url website_url linkedin_url)
+  (FILES + URLS).each do |opt_name|
+    enum :"option_#{opt_name}" => OPTIONS_AVAILABLE, _suffix: true
+  end
 end

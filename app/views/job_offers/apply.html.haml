@@ -1,1 +1,4 @@
-%em Rien pour le moment
+- @page_title = @job_offer.title + ' ' + @job_offer.location
+= render partial: 'job_offer_head', locals: {job_offer: @job_offer}
+
+= render partial: '/job_applications/form'

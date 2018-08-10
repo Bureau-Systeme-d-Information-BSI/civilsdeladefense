@@ -1,0 +1,55 @@
+-# frozen_string_literal: true
+= simple_form_for(@job_application, url: [:send_application, @job_offer], method: :post) do |f|
+  .form-inputs.mt-5
+    = f.error_notification
+    = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+    %h2.h5.mb-3.text-dark-gray= t('.general_informations')
+    .row
+      .col-12.col-md-6
+        = f.input :first_name
+      .col-12.col-md-6
+        = f.input :last_name
+    .row
+      .col-12.col-md-6
+        = f.input :current_position
+    .row
+      .col-12.col-md-6
+        = f.input :phone
+    .row
+      .col-12.col-md-6
+        = f.input :address_1
+      .col-12.col-md-6
+        .row
+          .col-12.col-md-4
+            = f.input :postal_code
+          .col-12.col-md-4
+            = f.input :city
+          .col-12.col-md-4
+            = f.input :country
+
+    .row
+      .col-12.col-md-6
+        = f.input :address_2
+
+    %h2.h5.mt-5.mb-3.text-dark-gray= t('.your_profile')
+
+    %h2.h5.mt-5.mb-3.text-dark-gray= t('.your_internet_presence')
+
+    .row
+      .col-12
+        = f.input :portfolio_url
+    .row
+      .col-12
+        = f.input :website_url
+    .row
+      .col-12
+        = f.input :linkedin_url
+
+    .row
+      .col-12.mt-2
+        = f.input :terms_of_service, as: :boolean, label_html: { class: 'ml-2' }
+
+  .form-actions.text-center.mt-3
+    = button_tag(type: 'submit', class: 'btn btn-primary btn-raised btn-lg') do
+      = t('helpers.submit.job_application.save')
+      = fa_icon('send', class: 'ml-1')

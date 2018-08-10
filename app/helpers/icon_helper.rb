@@ -13,6 +13,8 @@ module IconHelper
     case key
     when :job_offers
       :briefcase
+    when :job_applications
+      :'account-multiple'
     when :settings
       :settings
     end

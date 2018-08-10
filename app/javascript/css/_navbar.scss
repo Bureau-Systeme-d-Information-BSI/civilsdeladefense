@@ -17,8 +17,12 @@ body > .navbar.bg-white {
       margin-top: ($spacer * .85);
       margin-right: ($spacer * .50);
       color: $body-color;
+      transition: fill 0.2s $bmd-animation-curve-default;
+      will-change: fill, transform;
     }
     .nav-link {
+      transition: color 0.2s $bmd-animation-curve-default;
+      will-change: color, transform;
       @extend .px-0, .py-0, .my-2;
       font-weight: 500;
     }

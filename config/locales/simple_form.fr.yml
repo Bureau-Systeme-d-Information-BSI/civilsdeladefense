@@ -1,0 +1,82 @@
+fr:
+  simple_form:
+    "yes": "Oui"
+    "no": "Non"
+    required:
+      text: 'obligatoire'
+      mark: '*'
+      # You can uncomment the line below if you need to overwrite the whole required html.
+      # When using html, text and mark won't be used.
+      # html: '<abbr title="required">*</abbr>'
+    error_notification:
+      default_message: "Veuillez corriger les erreurs ci-dessous :"
+    options:
+      defaults: &options_defaults
+        disabled: "Désactivé"
+        optional: "Optionel"
+        mandatory: "Obligatoire"
+      job_offer:
+        option_cover_letter:
+          <<: *options_defaults
+        option_resume:
+          <<: *options_defaults
+        option_portfolio:
+          <<: *options_defaults
+        option_photo:
+          <<: *options_defaults
+        option_website_url:
+          <<: *options_defaults
+        option_linkedin_url:
+          <<: *options_defaults
+    labels:
+      job_application:
+        first_name: "Prénom"
+        last_name: "Nom"
+        current_position: "Poste actuel"
+        phone: "Téléphone"
+        address_1: "Adresse"
+        address_2: "Complément d'adresse"
+        postal_code: "Code postal"
+        city: "Ville"
+        country: "Pays"
+        portfolio_url: "Portfolio"
+        website_url: "Site web"
+        linkedin_url: "LinkedIn"
+        terms_of_service: "J'accepte que le Ministère des Armées conserve mes données personnelles pendant une durée de 6
+mois afin d'être recontacté(e) pour de nouvelles opportunités."
+      job_offer:
+        title: "Intitulé du poste"
+        category: "Catégorie de métier"
+        official_status: "Statut"
+        location: "Localisation"
+        employer: "Employeur"
+        description: "Descriptif de l’offre"
+        required_profile: "Profil recherché"
+        recruitment_process: "Process de recrutement"
+        contract_type: "Type de contrat"
+        contract_start_on: "Début du contrat"
+        is_remote_possible: "Télétravail possible ?"
+        study_level: "Niveau d'études"
+        experience_level: "Expérience"
+        sector: "Secteur / Filière"
+        is_negotiable: "Négociation possible ?"
+        estimate_monthly_salary_net: "Estimation mensuel net (fonction publique)"
+        estimate_monthly_salary_gross: "Estimation mensuel brut (secteur privé)"
+        option_cover_letter: "Lettre de motivation"
+        option_resume: "CV"
+        option_portfolio: "Portfolio"
+        option_photo: "Photo"
+        option_website_url: "Site internet (URL)"
+        option_linkedin_url: "LinkedIn (URL)"
+      user:
+        email: 'E-mail'
+        password: 'Mot de passe'
+    placeholders:
+      user:
+        email: 'E-mail'
+        password: 'Mot de passe'
+      administrator:
+        email: 'E-mail'
+        name: 'Nom complet'
+        password: 'Mot de passe'
+        password_confirmation: 'Confirmation du mot de passe'

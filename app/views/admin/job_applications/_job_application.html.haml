@@ -1,0 +1,9 @@
+.card.mt-3.job-application
+  .card-header
+    .text-truncate
+      = job_application.job_offer.title
+  .card-body
+    .d-flex.justify-content-start.align-items-start
+      .d-flex.flex-column.align-items-start
+        %strong= job_application.full_name
+        .text-muted= job_application.current_position

@@ -7,6 +7,7 @@ $dark-gray: #585858;
 $success: #00d893;
 $danger: #f60e0e;
 $body-color: #818181;
+$body-color-variation: #848484;
 $body-bg: #e6e6e6;
 $font-family-sans-serif: Roboto, sans-serif;
 $enable-rounded: false !default;
@@ -149,6 +150,12 @@ aside.sidebar {
 
 label, legend {
   font-weight: 500;
+}
+
+.invalid-feedback {
+  &:first-letter {
+    text-transform: capitalize;
+  }
 }
 
 .form-inputs {

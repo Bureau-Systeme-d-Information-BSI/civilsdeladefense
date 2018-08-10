@@ -1,0 +1,27 @@
+.row
+  .col-12.col-md-8.mx-md-auto
+    %h1.h5.text-quinary.text-center.mt-3.mb-0= job_offer.title
+  .col-12.col-md-9.mx-md-auto
+    %ul.list-inline.text-center.mt-5.mb-0.basic-infos
+      %li.list-inline-item
+        = fa_icon 'briefcase'
+        = job_offer.contract_type.name
+      %li.list-inline-item
+        = fa_icon 'calendar'
+        = l job_offer.contract_start_on
+      %li.list-inline-item
+        = fa_icon 'map-marker'
+        = job_offer.location
+      %li.list-inline-item
+        = fa_icon 'study'
+        = job_offer.study_level.name
+      %li.list-inline-item
+        = fa_icon 'entity'
+        = job_offer.category.name
+      %li.list-inline-item
+        = fa_icon 'coin'
+        = job_offer.estimate_monthly_salary_gross
+      %li.list-inline-item
+        = fa_icon 'target'
+        = job_offer.experience_level.name
+

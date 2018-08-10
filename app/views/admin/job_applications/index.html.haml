@@ -1,0 +1,10 @@
+.bg-secondary.text-center
+  %ul.navbar-nav.flex-row.justify-content-center
+    %li.nav-item.active
+      = link_to t('.search'), [:admin, :job_applications], class: 'nav-link'
+    %li.nav-item
+      = link_to t('.my_job_applications'), [:admin, :job_applications], class: 'nav-link'
+.bg-quaternary
+.container-fluid
+  .card-deck
+    = render partial: 'job_application', collection: @job_applications

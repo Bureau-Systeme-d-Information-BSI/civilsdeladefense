@@ -1,8 +1,8 @@
 - @page_title = t('.title')
 .card
   .card-body
-    .d-flex
-      = link_to [:new, :admin, :job_offer], class: 'btn btn-primary ml-auto' do
+    .d-flex.align-items-start
+      = link_to [:new, :admin, :job_offer], class: 'btn btn-primary btn-raised ml-auto' do
         = fa_icon 'plus', class: 'mr-1'
         = t('.new_job_offer')
     .row.mt-3

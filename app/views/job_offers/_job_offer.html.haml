@@ -9,5 +9,5 @@
         = job_offer.location
       %small= t('.published_date', time_ago_in_words: time_ago_in_words(job_offer.created_at))
   .col-12.col-md-3.text-left.text-md-right.mt-3.mt-md-0
-    = link_to t('.show'), job_offer, class: 'btn btn-primary'
+    = link_to t('.show'), job_offer, class: 'btn btn-primary btn-raised'
 

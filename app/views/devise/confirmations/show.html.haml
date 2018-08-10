@@ -13,4 +13,4 @@
       = f.input :password_confirmation, required: false, label: false, placeholder: true
   = hidden_field_tag :confirmation_token, @confirmation_token
   .form-actions
-    = f.button :submit, t(".activate"), class: 'btn btn-primary'
+    = f.button :submit, t(".activate"), class: 'btn btn-primary btn-raised'

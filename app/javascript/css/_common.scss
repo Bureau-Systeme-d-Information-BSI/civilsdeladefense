@@ -4,8 +4,12 @@ $tertiary: #344374;
 $quaternary: #003285;
 $quinary: #2d3b66;
 $dark-gray: #585858;
+$light-gray: #c4c4c4;
+$text-muted: $light-gray;
 $success: #00d893;
+$cyan: #6cbeff;
 $danger: #f60e0e;
+$purple: #a462ff;
 $body-color: #818181;
 $body-color-variation: #848484;
 $body-bg: #e6e6e6;
@@ -32,7 +36,9 @@ $theme-colors: (
   "tertiary": $tertiary,
   "quaternary": $quaternary,
   "quinary": $quinary,
-  "dark-gray": $dark-gray
+  "dark-gray": $dark-gray,
+  "light-gray": $light-gray,
+  "purple": $purple
 );
 
 // variables borrowed from bootstrap-material-design

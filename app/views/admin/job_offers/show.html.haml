@@ -15,10 +15,4 @@
           = surround '(', ')' do
             = concerned_job_applications.size
         .d-flex.flex-column
-          - for job_application in concerned_job_applications
-            .card.job-application
-              .card-body
-                .d-flex.justify-content-start.align-items-start
-                  .d-flex.flex-column.align-items-start
-                    %strong= job_application.full_name
-                    .text-muted= job_application.current_position
+          = render partial: '/admin/job_applications/job_application', collection: concerned_job_applications, locals: {with_header: false}

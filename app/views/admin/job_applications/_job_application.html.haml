@@ -1,7 +1,12 @@
+- with_header = true if with_header.nil?
 .card.mt-3.job-application
-  .card-header
-    %small.d-block.text-truncate
-      = job_application.job_offer.title
+  - if with_header
+    .card-header.d-flex
+      %small.d-block.text-truncate.mr-auto
+        = job_application.job_offer.title
+      - klass = badge_class(job_application.state.to_sym)
+      %small.badge{class: klass}
+        = job_application.aasm.human_state
   .card-body
     .d-flex.justify-content-start.align-items-start
       .d-flex.flex-column.align-items-start

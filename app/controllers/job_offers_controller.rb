@@ -52,6 +52,10 @@ class JobOffersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def job_application_params
-      params.require(:job_application).permit(:first_name, :last_name, :current_position, :phone, :address_1, :address_2, :postal_code, :city, :country, :portfolio_url, :website_url, :linkedin_url, :terms_of_service)
+      permitted_params = [:first_name, :last_name, :current_position, :phone, :address_1, :address_2, :postal_code, :city, :country, :portfolio_url, :website_url, :linkedin_url, :terms_of_service]
+      (JobOffer::FILES + JobOffer::URLS).each do |field|
+        permitted_params << field unless @job_offer.send("disabled_option_#{field}?")
+      end
+      params.require(:job_application).permit(permitted_params)
     end
 end

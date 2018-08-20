@@ -39,6 +39,8 @@ fr:
         postal_code: "Code postal"
         city: "Ville"
         country: "Pays"
+        cover_letter: "Lettre de motivation"
+        resume: "CV"
         portfolio_url: "Portfolio"
         website_url: "Site web"
         linkedin_url: "LinkedIn"

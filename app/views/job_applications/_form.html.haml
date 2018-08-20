@@ -31,19 +31,26 @@
       .col-12.col-md-6
         = f.input :address_2
 
+    - unless @job_offer.disabled_option_photo?
+      .row
+        .col-12.col-md-6
+          = f.input :photo
+
     %h2.h5.mt-5.mb-3.text-dark-gray= t('.your_profile')
+
+    - %i(resume cover_letter).each do |field|
+      - unless @job_offer.send("disabled_option_#{field}?")
+        .row
+          .col-12
+            = f.input field
 
     %h2.h5.mt-5.mb-3.text-dark-gray= t('.your_internet_presence')
 
-    .row
-      .col-12
-        = f.input :portfolio_url
-    .row
-      .col-12
-        = f.input :website_url
-    .row
-      .col-12
-        = f.input :linkedin_url
+    - %i(portfolio_url website_url linkedin_url).each do |field|
+      - unless @job_offer.send("disabled_option_#{field}?")
+        .row
+          .col-12
+            = f.input field
 
     .row
       .col-12.mt-2

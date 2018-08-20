@@ -1,0 +1,80 @@
+/* Some Sass variables */
+// Layout
+$list-width: 292px;
+$gap: 10px;
+$scrollbar-thickness: 17px;
+$list-header-height: 36px;
+$list-footer-height: 36px;
+// Misc
+$list-border-radius: 5px;
+$card-border-radius: 3px;
+// Colors
+$board-bg-color: #0079bf;
+$appbar-bg-color: #0067a3;
+$list-bg-color: #e2e4e6;
+
+.board {
+  height: calc(100vh - 100px);
+  padding-top: $gap;
+  padding-bottom: $gap;
+
+  // display: grid;
+  // grid-template-rows: 1fr;
+  //grid-template-columns: 100%;
+
+  // background-color: $board-bg-color;
+  // color: #eee;
+  overflow-x: auto;
+}
+
+.lists {
+  display: flex;
+  //width: 100%; // This is needed for FF < 54
+  height: calc(100vh - 130px);
+  > * {
+    flex: 0 0 auto; // 'rigid' lists
+    margin-left: $gap;
+  }
+  &::after {
+    content: '';
+    flex: 0 0 $gap;
+  }
+}
+
+.list {
+  @include box-shadow($bmd-shadow-2dp);
+  width: $list-width;
+  // height: calc(100% - #{$gap} - #{$scrollbar-thickness});
+  background-color: $card-bg;
+  > * {
+    padding: 0 $gap;
+  }
+
+  header {
+    color: $quinary;
+    line-height: $list-header-height;
+    font-weight: $font-weight-bold;
+    text-transform: uppercase;
+    border-bottom: 1px solid $card-border-color;
+  }
+
+  .card {
+    margin-top: $gap;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0;
+
+    max-height: calc(100% - #{$list-header-height} - #{$list-footer-height});
+    overflow-y: auto;
+
+    li {
+      background-color: #fff;
+      margin-top: $gap;
+      &:last-child {
+        margin-bottom: $gap;
+      }
+    }
+  }
+}

@@ -1,57 +1,24 @@
-%p#notice= notice
-
-%p
-  %b Title:
-  = @job_offer.title
-%p
-  %b Description:
-  = @job_offer.description
-%p
-  %b Category:
-  = @job_offer.category
-%p
-  %b Official status:
-  = @job_offer.official_status
-%p
-  %b Location:
-  = @job_offer.location
-%p
-  %b Employer:
-  = @job_offer.employer
-%p
-  %b Required profile:
-  = @job_offer.required_profile
-%p
-  %b Recruitment process:
-  = @job_offer.recruitment_process
-%p
-  %b Contract type:
-  = @job_offer.contract_type
-%p
-  %b Contract start on:
-  = @job_offer.contract_start_on
-%p
-  %b Is remote possible:
-  = @job_offer.is_remote_possible
-%p
-  %b Studiy level:
-  = @job_offer.study_level
-%p
-  %b Experience level:
-  = @job_offer.experience_level
-%p
-  %b Sector:
-  = @job_offer.sector
-%p
-  %b Is negotiable:
-  = @job_offer.is_negotiable
-%p
-  %b Estimate monthly salary net:
-  = @job_offer.estimate_monthly_salary_net
-%p
-  %b Estimate monthly salary gross:
-  = @job_offer.estimate_monthly_salary_gross
-
-= link_to 'Edit', [:edit, :admin, @job_offer]
-\|
-= link_to 'Back', [:admin, :job_offers]
+- @page_title = @job_offer.title
+%nav.navbar.navbar-dark.bg-secondary.justify-content-start
+  %span.navbar-text= @page_title
+  = link_to [:edit, :admin, @job_offer], class: 'small ml-3' do
+    = fa_icon('pencil')
+    = t('buttons.edit')
+.board
+  .lists
+    - JobApplication.aasm.states.each do |state|
+      - state_name = state.name.to_s
+      - concerned_job_applications = @job_applications[state_name] || []
+      .list
+        %header
+          = JobApplication.human_attribute_name("state/#{state_name}")
+          = surround '(', ')' do
+            = concerned_job_applications.size
+        .d-flex.flex-column
+          - for job_application in concerned_job_applications
+            .card.job-application
+              .card-body
+                .d-flex.justify-content-start.align-items-start
+                  .d-flex.flex-column.align-items-start
+                    %strong= job_application.full_name
+                    .text-muted= job_application.current_position

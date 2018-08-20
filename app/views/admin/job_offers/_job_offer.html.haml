@@ -5,7 +5,7 @@
   .card-body
     .row
       .col-12.col-md-8
-        .card-title.font-weight-bold.text-truncate= job_offer.title
+        .card-title.font-weight-bold.text-truncate= link_to job_offer.title, [:admin, job_offer]
         .d-flex
           .font-weight-bold.mr-3= job_offer.contract_type.name
           .font-weight-bold= job_offer.location

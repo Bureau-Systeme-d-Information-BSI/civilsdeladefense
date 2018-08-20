@@ -9,7 +9,9 @@
     = stylesheet_pack_tag 'admin-style'
     = csrf_meta_tags
     = csp_meta_tag
-  %body{class: !administrator_signed_in? ? 'mt-0 pb-0' : nil}
+  - style = "overflow: hidden;" if controller.controller_name == "job_offers" && controller.action_name == "show"
+  - klasses = %w(mt-0 pb-0) if !administrator_signed_in?
+  %body{class: klasses, style: style}
     - if administrator_signed_in?
       = render partial: '/admin/shared/navbar'
       = content_for?(:content) ? yield(:content) : yield

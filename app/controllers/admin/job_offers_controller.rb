@@ -12,6 +12,7 @@ class Admin::JobOffersController < Admin::BaseController
   # GET /job_offers/1
   # GET /job_offers/1.json
   def show
+    @job_applications = @job_offer.job_applications.group_by(&:state)
   end
 
   # GET /job_offers/new

@@ -138,6 +138,9 @@ aside.sidebar {
   }
   .card-title {
     color: $secondary;
+    a {
+      color: $secondary;
+    }
   }
   .card-header {
     &:not(.with-subheader) {

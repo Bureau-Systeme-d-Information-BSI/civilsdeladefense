@@ -1,5 +1,5 @@
 class Admin::JobOffersController < Admin::BaseController
-  before_action :set_job_offer, only: [:show, :edit, :update, :destroy]
+  before_action :set_job_offer, only: [:show, :edit, :update, :destroy].push(*JobOffer.aasm.events.map(&:name)).push(*JobOffer.aasm.events.map{ |x| "update_and_#{x.name}".to_sym })
 
   # GET /job_offers
   # GET /job_offers.json
@@ -32,7 +32,7 @@ class Admin::JobOffersController < Admin::BaseController
 
     respond_to do |format|
       if @job_offer.save
-        format.html { redirect_to [:admin, :job_offers], notice: 'Job offer was successfully created.' }
+        format.html { redirect_to [:admin, :job_offers], notice: t('.success') }
         format.json { render :show, status: :created, location: @job_offer }
       else
         format.html { render :new }
@@ -46,7 +46,7 @@ class Admin::JobOffersController < Admin::BaseController
   def update
     respond_to do |format|
       if @job_offer.update(job_offer_params)
-        format.html { redirect_to [:admin, :job_offers], notice: 'Job offer was successfully updated.' }
+        format.html { redirect_to [:admin, :job_offers], notice: t('.success') }
         format.json { render :show, status: :ok, location: @job_offer }
       else
         format.html { render :edit }
@@ -60,9 +60,39 @@ class Admin::JobOffersController < Admin::BaseController
   def destroy
     @job_offer.destroy
     respond_to do |format|
-      format.html { redirect_to job_offers_url, notice: 'Job offer was successfully destroyed.' }
+      format.html { redirect_to job_offers_url, notice: t('.success') }
       format.json { head :no_content }
     end
+  end
+
+  JobOffer.aasm.events.map(&:name).each do |event_name|
+
+    define_method(event_name) do
+      @job_offer.send("#{event_name}!")
+      respond_to do |format|
+        format.html { redirect_back(fallback_location: job_offers_url, notice: t('.success')) }
+        format.js {
+          @notification = t('.success')
+          render :state_change
+        }
+        format.json { render :show, status: :ok, location: @job_offer }
+      end
+    end
+
+    define_method("update_and_#{ event_name }".to_sym) do
+
+      respond_to do |format|
+        if @job_offer.update(job_offer_params) and @job_offer.send("#{event_name}!")
+          format.html { redirect_to [:admin, :job_offers], notice: t('.success') }
+          format.json { render :show, status: :ok, location: @job_offer }
+        else
+          format.html { render :edit }
+          format.json { render json: @job_offer.errors, status: :unprocessable_entity }
+        end
+      end
+
+    end
+
   end
 
   private

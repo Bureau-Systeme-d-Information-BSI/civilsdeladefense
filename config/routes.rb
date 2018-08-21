@@ -7,7 +7,19 @@ Rails.application.routes.draw do
   devise_for :users
 
   namespace :admin do
-    resources :job_offers, path: 'offresdemploi'
+    resources :job_offers, path: 'offresdemploi' do
+      collection do
+        JobOffer.aasm.events.map(&:name).each do |event_name|
+          post("create_and_#{ event_name }".to_sym)
+        end
+      end
+      member do
+        JobOffer.aasm.events.map(&:name).each do |event_name|
+          patch(event_name.to_sym)
+          patch("update_and_#{ event_name }".to_sym)
+        end
+      end
+    end
     resources :job_applications, path: 'candidatures'
     namespace :settings, path: 'parametres' do
       resources :administrators, path: 'administrateurs' do

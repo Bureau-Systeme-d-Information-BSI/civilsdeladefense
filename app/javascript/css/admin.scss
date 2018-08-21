@@ -1,6 +1,10 @@
 @import 'common';
 @import 'devise';
 @import 'board';
+@import '~bootstrap-material-design/scss/dropdown';
+@import '~bootstrap-material-design/scss/dropdown';
+@import '~bootstrap-material-design/scss/extensions/snackbarjs';
+
 $card-spacer-x-normal: 1rem;
 
 nav.navbar {
@@ -86,23 +90,28 @@ ul {
       &:last-child {
         @extend .mr-0;
       }
-    }
-    a {
-      // @extend .font-weight-bold;
-      color: $body-color;
-      svg {
-        fill: $body-color;
-        @extend .mr-1;
-      }
-      &:hover, &:focus, &.active {
-        text-decoration: none;
-        color: $primary;
+      > a {
+        // @extend .font-weight-bold;
+        color: $body-color;
+        outline: 0;
         svg {
-          fill: $primary;
+          fill: $body-color;
+          @extend .mr-1;
+        }
+        &:hover, &:focus, &.active {
+          text-decoration: none;
+          color: $primary;
+          svg {
+            fill: $primary;
+          }
         }
       }
     }
   }
+}
+
+.dropdown-menu {
+  @include box-shadow($bmd-shadow-2dp);
 }
 
 .list-group {
@@ -156,6 +165,13 @@ ul {
 }
 
 .card {
+  &.card-state-draft,
+  &.card-state-draft .card-footer,
+  &.card-state-archived,
+  &.card-state-archived .card-footer {
+    background-color: rgba($card-border-color, 0.1);
+    background-image: repeating-linear-gradient(45deg, transparent, transparent 15px, rgba(255,255,255,.3) 15px, rgba(255,255,255,.3) 30px);
+  }
   &.job-application {
     background-color: $card-bg;
     .card-body, .card-footer {

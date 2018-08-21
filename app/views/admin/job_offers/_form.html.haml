@@ -13,7 +13,7 @@
               = title
               %span.badge.badge-pill= number
     %main.col-md-9.ml-sm-auto.col-lg-10{role: 'main'}
-      = simple_form_for([:admin, @job_offer]) do |f|
+      = simple_form_for([:admin, @job_offer], defaults: { disabled: @job_offer.archived? }) do |f|
         = f.error_notification
         = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
 
@@ -22,12 +22,6 @@
         .container
           .row
             .col-12.col-md-9.mx-md-auto
-              - if flash[:notice]
-                .alert.alert-info= flash[:notice]
-              - elsif flash[:error]
-                .alert.alert-danger= flash[:error]
-              - elsif flash[:success]
-                .alert.alert-success= flash[:success]
               .card
                 .card-header
                   .card-title= t('.card_1_1_title')
@@ -123,8 +117,17 @@
               .form-actions.text-right.my-5
                 %ul.list-inline
                   %li.list-inline-item
-                    = link_to(t('helpers.submit.job_offer.cancel'), [:admin, :job_offers], class: 'btn btn-link btn-lg')
+                    = link_to(t('helpers.submit.job_offer.cancel'), [:admin, :job_offers], class: 'btn btn-link')
                   %li.list-inline-item
-                    = button_tag(type: 'submit', class: 'btn btn-primary btn-raised btn-lg') do
+                    = button_tag(type: 'submit', class: 'btn btn-primary btn-raised') do
                       = t('helpers.submit.job_offer.save')
                       = fa_icon('save', class: 'ml-1')
+                  - events = @job_offer.aasm.events.map(&:name)
+                  - events.delete(:archive) if @job_offer.new_record?
+                  - events.each do |event_name|
+                    %li.list-inline-item
+                      - action_prefix = @job_offer.new_record? ? "create" : "update"
+                      - action_name = [action_prefix, "and", event_name].join("_")
+                      = button_tag(type: 'submit', class: 'btn btn-primary btn-raised', formaction: url_for([action_name, :admin, @job_offer])) do
+                        = t("buttons.#{ event_name }")
+                        = fa_icon('send', class: 'ml-1')

@@ -33,3 +33,22 @@ importAll(require.context('images/', true, /\.(ico|png|jpe?g|svg|gif)$/))
 importAll(require.context('icons/', true, /\.svg$/))
 
 require('js/offcanvas.js')
+
+import $ from 'jquery';
+window.jQuery = $;
+window.$ = $;
+
+import Popper from 'popper.js'
+window.Popper = Popper
+require('snackbarjs')
+require('bootstrap-material-design')
+
+$('body').bootstrapMaterialDesign();
+
+$( document ).ready(function() {
+  var alertNotice = document.querySelector('.alert.alert-info')
+  if (alertNotice !== null) {
+    var msg = alertNotice.innerHTML
+    $.snackbar({content: msg})
+  }
+})

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_20_130015) do
+ActiveRecord::Schema.define(version: 2018_08_21_083829) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -119,7 +119,7 @@ ActiveRecord::Schema.define(version: 2018_08_20_130015) do
     t.string "linkedin_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "state"
+    t.integer "state"
     t.index ["job_offer_id"], name: "index_job_applications_on_job_offer_id"
     t.index ["state"], name: "index_job_applications_on_state"
     t.index ["user_id"], name: "index_job_applications_on_user_id"
@@ -153,6 +153,7 @@ ActiveRecord::Schema.define(version: 2018_08_20_130015) do
     t.integer "option_linkedin_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "state"
     t.index ["category_id"], name: "index_job_offers_on_category_id"
     t.index ["contract_type_id"], name: "index_job_offers_on_contract_type_id"
     t.index ["employer_id"], name: "index_job_offers_on_employer_id"
@@ -161,6 +162,7 @@ ActiveRecord::Schema.define(version: 2018_08_20_130015) do
     t.index ["owner_id"], name: "index_job_offers_on_owner_id"
     t.index ["sector_id"], name: "index_job_offers_on_sector_id"
     t.index ["slug"], name: "index_job_offers_on_slug", unique: true
+    t.index ["state"], name: "index_job_offers_on_state"
     t.index ["study_level_id"], name: "index_job_offers_on_study_level_id"
   end
 

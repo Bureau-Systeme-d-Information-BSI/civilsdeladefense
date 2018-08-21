@@ -3,7 +3,7 @@ module JobApplicationsHelper
     case state
     when :initial
       'purple'
-    when :rejected, :phone_meeting_rejected, :after_meeting_rejected
+    when :rejected, :phone_meeting_rejected, :after_meeting_rejected, :draft, :archived
       'light-gray'
     when :phone_meeting_accepted, :accepted
       'success'

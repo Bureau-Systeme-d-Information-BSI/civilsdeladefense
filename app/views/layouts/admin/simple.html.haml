@@ -5,7 +5,7 @@
     .row
       .col-12.col-md-9.mx-md-auto
         - if flash[:notice]
-          .alert.alert-info= flash[:notice]
+          .d-none.alert.alert-info= flash[:notice]
         - elsif flash[:error]
           .alert.alert-danger= flash[:error]
         - elsif flash[:success]

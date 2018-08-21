@@ -1,11 +1,15 @@
 - extra_klasses = []
-- extra_klasses << 'mt-3' if job_offer_iteration.first?
-- extra_klasses << 'mb-4' if job_offer_iteration.last?
-.card.job-offer{class: extra_klasses}
+- extra_klasses << "card-state-#{job_offer.state}"
+.card.job-offer.mt-3{class: extra_klasses, id: dom_id(job_offer)}
   .card-body
     .row
       .col-12.col-md-8
-        .card-title.font-weight-bold.text-truncate= link_to job_offer.title, [:admin, job_offer]
+        .card-title.font-weight-bold.d-flex.align-items-center
+          = link_to job_offer.title, [:admin, job_offer], class: 'text-truncate'
+          - unless job_offer.published?
+            - klass = badge_class(job_offer.state.to_sym)
+            %small.badge.text-white.ml-2.text-uppercase.text-nowrap{class: klass}
+              = job_offer.aasm.human_state
         .d-flex
           .font-weight-bold.mr-3= job_offer.contract_type.name
           .font-weight-bold= job_offer.location
@@ -37,6 +41,9 @@
           = fa_icon 'eye'
           = t('.preview')
       %li.list-inline-item
-        = link_to '#' do
-          = fa_icon 'dots-horizontal'
-
+        .dropdown
+          = button_tag type: 'button', data: { toggle: "dropdown" }, aria: { haspopup: true, expanded: false }, class: "btn btn-link btn-sm mb-0 px-0 py-0" do
+            = fa_icon 'dots-horizontal'
+          .dropdown-menu{"aria-labelledby" => "dropdownMenuLink"}
+            - job_offer.aasm.events.each do |event|
+              = link_to t("buttons.#{ event.name }"), [event.name, :admin, job_offer], method: :patch, remote: true, class: "dropdown-item"

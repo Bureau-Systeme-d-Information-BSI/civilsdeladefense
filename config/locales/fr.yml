@@ -3,6 +3,11 @@ fr:
     confirm: "Êtes-vous sûr ?"
     edit: "Éditer"
     delete: "Supprimer"
+    publish: "Publier"
+    archive: "Archiver"
+    unarchive: "Désarchiver"
+    suspend: "Mettre en pause"
+    draftize: "Passer en brouillon"
     resend_confirmation_instructions: "Renvoyer le mail d'activation"
   job_applications:
     form:
@@ -69,6 +74,22 @@ fr:
           other: 'Candidatures'
         job_applications_to_be_treated_count:
           "À traiter"
+      publish:
+        success: "Annonce publiée !"
+      create_and_publish:
+        success: "Annonce créée et publiée !"
+      update_and_publish:
+        success: "Annonce mise à jour et publiée !"
+      draftize:
+        success: "Annonce passée en brouillon !"
+      update_and_draftize:
+        success: "Annonce mise à jour et passée en brouillon !"
+      archive:
+        success: "Annonce archivée !"
+      update_and_archive:
+        success: "Annonce mise à jour et archivée !"
+      suspend:
+        success: "Annonce mise en pause !"
     shared:
       navbar:
         job_offers: "Offres"
@@ -95,6 +116,12 @@ fr:
         confirmed: "Confirmé"
         unconfirmed: "Non confirmé"
     attributes:
+      job_offer:
+        state: "État"
+        state/draft: "Brouillon"
+        state/published: "Publiée"
+        state/suspended: "En pause"
+        state/archived: "Archivée"
       job_application:
         state: "État"
         state/initial: "Nouveau"

@@ -43,7 +43,7 @@ window.Popper = Popper
 require('snackbarjs')
 require('bootstrap-material-design')
 
-$('body').bootstrapMaterialDesign();
+$('body').bootstrapMaterialDesign()
 
 $( document ).ready(function() {
   var alertNotice = document.querySelector('.alert.alert-info')

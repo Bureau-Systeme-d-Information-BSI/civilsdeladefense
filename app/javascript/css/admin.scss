@@ -188,6 +188,19 @@ ul {
         color: rgba(0, 0, 0, 0.87);
         font-weight: $font-weight-bold;
       }
+      a {
+        &:hover, &:focus {
+          text-decoration: none;
+        }
+      }
     }
   }
+}
+
+.bg-card-bg {
+  background-color: $card-bg;
+}
+
+.bg-body-bg {
+  background-color: $body-bg;
 }

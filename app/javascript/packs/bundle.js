@@ -19,3 +19,15 @@ importAll(require.context('images/', true, /\.(ico|png|jpe?g|svg|gif)$/))
 importAll(require.context('icons/', true, /\.svg$/))
 
 require('js/offcanvas.js')
+
+document.addEventListener("DOMContentLoaded", function() {
+
+  [].forEach.call(document.querySelectorAll('.custom-file-input'), function(el) {
+    el.addEventListener('change', function() {
+      let fileName = this.value.split('\\').pop()
+      let label = this.nextElementSibling
+      label.classList.add("selected")
+      label.innerHTML = fileName
+    })
+  })
+})

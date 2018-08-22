@@ -1,16 +1,20 @@
 -# frozen_string_literal: true
+- suffix = @job_offer.new_record? ? 'new' : 'edit'
+- card_1_title = t(".card_1_title_#{ suffix }")
+- card_2_title = t('.card_2_title')
+- card_3_title = t('.card_3_title')
 .container-fluid
   .row
     %aside.col-md-2.d-none.d-md-block.bg-white.sidebar
       .sidebar-sticky
         .list-group.stepper
-          - steps = [@page_title, t('.card_2_title'), t('.card_3_title')]
+          - steps = [card_1_title, card_2_title, card_3_title]
           - steps.each_with_index do |step, index|
             - space, number, title = step.split /(\d)\.\s/
             - klasses = %w(list-group-item d-flex justify-content-between align-items-center)
             - klasses << 'active' if index == 0
             = link_to "#step_#{index+1}", class: klasses do
-              = title
+              = title.split(" ")[0, 3].join(" ")
               %span.badge.badge-pill= number
     %main.col-md-9.ml-sm-auto.col-lg-10{role: 'main'}
       = simple_form_for([:admin, @job_offer], defaults: { disabled: @job_offer.archived? }) do |f|
@@ -18,7 +22,7 @@
         = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
 
         %nav.navbar.navbar-dark.bg-secondary.mb-5
-          %span.navbar-text#step_1= @page_title
+          %span.navbar-text#step_1= card_1_title
         .container
           .row
             .col-12.col-md-9.mx-md-auto
@@ -81,7 +85,7 @@
                             = f.input :estimate_monthly_salary_gross
 
         %nav.navbar.navbar-dark.bg-secondary.my-5
-          %span.navbar-text#step_2= t('.card_2_title')
+          %span.navbar-text#step_2= card_2_title
         .container
           .row
             .col-12.col-md-9.mx-md-auto
@@ -92,7 +96,7 @@
                   .card-title= t('.card_2_1_1_title')
                 .card-body
                   .form-inputs.options
-                    - options = %w(cover_letter resume portfolio_url photo)
+                    - options = JobOffer::FILES
                     - options.each do |option|
                       - collection = JobOffer::OPTIONS_AVAILABLE.symbolize_keys.keys.reverse
                       = f.input "option_#{option}".to_sym, collection: collection, as: :radio_buttons, wrapper: :horizontal_collection_inline
@@ -100,13 +104,13 @@
                   .card-title= t('.card_2_1_2_title')
                 .card-body
                   .form-inputs.options
-                    - options = %w(website_url linkedin_url)
+                    - options = JobOffer::URLS
                     - options.each do |option|
                       - collection = JobOffer::OPTIONS_AVAILABLE.symbolize_keys.keys.reverse
                       = f.input "option_#{option}".to_sym, collection: collection, as: :radio_buttons, wrapper: :horizontal_collection_inline
 
         %nav.navbar.navbar-dark.bg-secondary.my-5
-          %span.navbar-text#step_3= t('.card_3_title')
+          %span.navbar-text#step_3= card_3_title
         .container
           .row
             .col-12.col-md-9.mx-md-auto

@@ -47,6 +47,11 @@ $bmd-animation-curve-linear-out-slow-in: cubic-bezier(0, 0, 0.2, 1) !default;
 $bmd-animation-curve-fast-out-linear-in: cubic-bezier(0.4, 0, 1, 1) !default;
 $bmd-animation-curve-default: $bmd-animation-curve-fast-out-slow-in !default;
 
+$custom-file-text: (
+  en: "Browse",
+  fr: "Parcourir"
+);
+
 @import '~bootstrap/scss/bootstrap';
 
 @import '~bootstrap-material-design/scss/variables';
@@ -60,6 +65,10 @@ $bmd-animation-curve-default: $bmd-animation-curve-fast-out-slow-in !default;
 @import 'navbar';
 @import 'offcanvas';
 @import 'fontawesome';
+
+svg {
+  fill: currentColor !important;
+}
 
 .border         { border: $border-width-normal solid $border-color !important; }
 .border-top     { border-top: $border-width-normal solid $border-color !important; }
@@ -164,8 +173,7 @@ aside.sidebar {
   }
 }
 
-.form-control, .custom-select {
-  @extend .mb-4;
+.form-control, .custom-select, .custom-file-label {
   border-color: white;
   border-width: 2px;
   @include box-shadow($bmd-shadow-2dp);
@@ -173,6 +181,22 @@ aside.sidebar {
     border-color: $primary;
     outline: 0;
     @include box-shadow($bmd-shadow-3dp);
+  }
+}
+
+.was-validated .custom-file-input:invalid ~ .custom-file-label, .custom-file-input.is-invalid ~ .custom-file-label {
+  border-width: 2px;
+}
+
+.custom-file-input.is-valid ~ .custom-file-label, .form-control.is-valid, .custom-select.is-valid {
+  border-color: white;
+}
+
+.custom-file-label {
+  line-height: 1.25;
+  &::after {
+    height: calc(2.25rem - 4px);
+    line-height: 1.25;
   }
 }
 

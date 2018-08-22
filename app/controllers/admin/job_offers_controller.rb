@@ -106,6 +106,12 @@ class Admin::JobOffersController < Admin::BaseController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def job_offer_params
-      params.require(:job_offer).permit(:title, :description, :category_id, :official_status_id, :location, :employer_id, :required_profile, :recruitment_process, :contract_type_id, :contract_start_on, :is_remote_possible, :study_level_id, :experience_level_id, :sector_id, :is_negotiable, :estimate_monthly_salary_net, :estimate_monthly_salary_gross, :option_cover_letter, :option_resume, :option_portfolio_url, :option_photo, :option_website_url, :option_linkedin_url)
+      params.require(:job_offer).permit(permitted_fields)
+    end
+
+    def permitted_fields
+      fields = [:title, :description, :category_id, :official_status_id, :location, :employer_id, :required_profile, :recruitment_process, :contract_type_id, :contract_start_on, :is_remote_possible, :study_level_id, :experience_level_id, :sector_id, :is_negotiable, :estimate_monthly_salary_net, :estimate_monthly_salary_gross]
+      other_fields = (JobOffer::FILES + JobOffer::URLS).map{ |x| "option_#{x}".to_sym }
+      fields.push(*other_fields)
     end
 end

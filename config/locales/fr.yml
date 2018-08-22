@@ -1,4 +1,46 @@
 fr:
+  datetime:
+    distance_in_words:
+      short:
+        about_x_hours:
+          one: 1 h
+          other: "%{count} h"
+        about_x_months:
+          one: 1 mois
+          other: "%{count} mois"
+        about_x_years:
+          one: 1 an
+          other: "%{count} ans"
+        almost_x_years:
+          one: 1 an
+          other: "%{count} ans"
+        half_a_min: ½ min
+        less_than_x_min:
+          zero: < 1 min
+          one: < 1 min
+          other: < %{count} min
+        less_than_x_seconds:
+          zero: < 1 s
+          one: < 1 s
+          other: < %{count} s
+        over_x_years:
+          one: 1+ an
+          other: "%{count}+ ans"
+        x_days:
+          one: 1 j
+          other: "%{count} j"
+        x_min:
+          one: 1 min
+          other: "%{count} min"
+        x_months:
+          one: 1 mois
+          other: "%{count} mois"
+        x_years:
+          one: 1 an
+          other: "%{count} ans"
+        x_seconds:
+          one: 1 s
+          other: "%{count} s"
   buttons:
     confirm: "Êtes-vous sûr ?"
     edit: "Éditer"
@@ -8,6 +50,7 @@ fr:
     unarchive: "Désarchiver"
     suspend: "Mettre en pause"
     draftize: "Passer en brouillon"
+    choose_file: "Choisir un fichier"
     resend_confirmation_instructions: "Renvoyer le mail d'activation"
   job_applications:
     form:
@@ -49,10 +92,13 @@ fr:
         title: "Offres du Ministère des Armées"
         new_job_offer: "Ajouter une offre"
       new:
-        title: "1. Rédaction de l'offre"
+        title: "Rédaction d'une nouvelle offre"
       edit:
-        title: "1. Édition de l'offre"
+        title: "Édition de l'offre '%{job_offer_title}'"
       form:
+        card_1_title_new: "1. Rédaction de l'offre"
+        card_1_title_edit: "1. Édition de l'offre"
+        card_1_1_title: "1.1 Description de l'offre"
         card_1_1_title: "1.1 Description de l'offre"
         card_1_2_title: "1.2 Paramètres de l'offre"
         card_1_3_title: "1.3. Estimation rémunération salariale"
@@ -84,6 +130,8 @@ fr:
         success: "Annonce passée en brouillon !"
       update_and_draftize:
         success: "Annonce mise à jour et passée en brouillon !"
+      update:
+        success: "Annonce mise à jour !"
       archive:
         success: "Annonce archivée !"
       update_and_archive:
@@ -109,6 +157,17 @@ fr:
         edit:
           title: "Modifier un compte administrateur"
   activerecord:
+    errors:
+      messages:
+        mandatory_file: "est obligatoire"
+        allowed_file_content_types: "au mauvais format (seul le format PDF est accepté)"
+      models:
+        job_application:
+          attributes:
+            photo:
+              file_size_is_less_than_or_equal_to: "Est trop volumineuse (ne doit pas dépasser %{count})"
+              allowed_file_content_types: "au mauvais format (seuls les formats JPG et PNG sont acceptés)"
+
     models:
       job_offer: "Offre"
     attributes:

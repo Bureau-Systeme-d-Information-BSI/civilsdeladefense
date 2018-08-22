@@ -37,6 +37,8 @@ gem 'nested_form'
 gem 'will_paginate'
 gem 'friendly_id'
 gem 'aasm'
+gem 'file_validators'
+gem 'mini_magick'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

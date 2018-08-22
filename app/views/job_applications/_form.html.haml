@@ -1,5 +1,8 @@
 -# frozen_string_literal: true
-= simple_form_for(@job_application, url: [:send_application, @job_offer], method: :post) do |f|
+- file_fields = JobOffer::FILES.dup
+- file_fields.delete(:photo)
+- url_fields = JobOffer::URLS
+= simple_form_for(@job_application, url: [:send_application, @job_offer], method: :post, html: { novalidate: true }) do |f|
   .form-inputs.mt-5
     = f.error_notification
     = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
@@ -19,38 +22,40 @@
       .col-12.col-md-6
         = f.input :address_1
       .col-12.col-md-6
-        .row
-          .col-12.col-md-4
-            = f.input :postal_code
-          .col-12.col-md-4
-            = f.input :city
-          .col-12.col-md-4
-            = f.input :country
+        = f.input :address_2
 
     .row
       .col-12.col-md-6
-        = f.input :address_2
+        = f.input :city
+      .col-12.col-md-6
+        .row
+          .col-12.col-md-6
+            = f.input :postal_code
+          .col-12.col-md-6
+            = f.input :country
 
     - unless @job_offer.disabled_option_photo?
       .row
         .col-12.col-md-6
-          = f.input :photo
+          = f.label :photo, required: @job_offer.mandatory_option_photo?
+          = f.input :photo, label: t('buttons.choose_file'), wrapper: :custom_file_without_label
 
     %h2.h5.mt-5.mb-3.text-dark-gray= t('.your_profile')
 
-    - %i(resume cover_letter).each do |field|
+    - file_fields.each do |field|
       - unless @job_offer.send("disabled_option_#{field}?")
         .row
-          .col-12
-            = f.input field
+          .col-12.col-md-6
+            = f.label field, required: @job_offer.send("mandatory_option_#{field}?")
+            = f.input field, label: t('buttons.choose_file'), wrapper: :custom_file_without_label
 
     %h2.h5.mt-5.mb-3.text-dark-gray= t('.your_internet_presence')
 
-    - %i(portfolio_url website_url linkedin_url).each do |field|
+    - url_fields.each do |field|
       - unless @job_offer.send("disabled_option_#{field}?")
         .row
           .col-12
-            = f.input field
+            = f.input field, required: @job_offer.send("mandatory_option_#{field}?")
 
     .row
       .col-12.mt-2

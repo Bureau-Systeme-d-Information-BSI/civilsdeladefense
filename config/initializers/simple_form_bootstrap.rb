@@ -335,6 +335,21 @@ SimpleForm.setup do |config|
     b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
   end
 
+  # custom file input
+  config.wrappers :custom_file_without_label, tag: 'div', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+    b.use :html5
+    b.use :placeholder
+    b.optional :maxlength
+    b.optional :minlength
+    b.optional :readonly
+    b.wrapper :custom_file_wrapper, tag: 'div', class: 'custom-file' do |ba|
+      ba.use :input, class: 'custom-file-input', error_class: 'is-invalid', valid_class: 'is-valid'
+      ba.use :label, class: 'custom-file-label'
+      ba.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
+    end
+    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+  end
+
   # custom multi select
   config.wrappers :custom_multi_select, tag: 'div', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
     b.use :html5
@@ -419,11 +434,12 @@ SimpleForm.setup do |config|
     check_boxes:   :vertical_collection,
     date:          :custom_multi_select,
     datetime:      :custom_multi_select,
-    file:          :vertical_file,
+    file:          :custom_file,
     radio_buttons: :vertical_collection_inline,
     range:         :vertical_range,
     time:          :custom_multi_select,
-    select:        :custom_multi_select
+    select:        :custom_multi_select,
+    country:       :custom_multi_select
   }
 
   # enable custom form wrappers

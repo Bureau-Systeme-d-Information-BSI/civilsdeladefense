@@ -39,6 +39,7 @@ fr:
         postal_code: "Code postal"
         city: "Ville"
         country: "Pays"
+        photo: "Photo"
         cover_letter: "Lettre de motivation"
         resume: "CV"
         portfolio_url: "Portfolio"
@@ -82,3 +83,8 @@ mois afin d'être recontacté(e) pour de nouvelles opportunités."
         name: 'Nom complet'
         password: 'Mot de passe'
         password_confirmation: 'Confirmation du mot de passe'
+    hints:
+      job_application:
+        photo: "Format JPG ou PNG, max. 2Mo"
+        resume: "Format PDF, max. 2Mo"
+        cover_letter: "Format PDF, max. 2Mo"

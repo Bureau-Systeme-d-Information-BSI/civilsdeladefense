@@ -9,8 +9,28 @@ class JobApplication < ApplicationRecord
   end
 
   validates :first_name, :last_name, :current_position, :phone, presence: true
+  validates :terms_of_service, acceptance: true
+  JobOffer::URLS.each do |field|
+    validates field.to_sym, presence: true, if: Proc.new { |job_application|
+      job_application.job_offer.send("mandatory_option_#{field}?")
+    }
+  end
 
-  validates_acceptance_of :terms_of_service
+  JobOffer::FILES.each do |field|
+    validates field.to_sym, mandatory_file: true
+  end
+
+  validates :photo, file_size: { less_than_or_equal_to: 1.megabytes },
+                    file_content_type: { allow: ['image/jpg', 'image/jpeg', 'image/png'] },
+                    if: -> { photo.attached? }
+
+  validates :cover_letter, file_size: { less_than_or_equal_to: 2.megabytes },
+                           file_content_type: { allow: ['application/pdf'] },
+                           if: -> { cover_letter.attached? }
+
+  validates :resume, file_size: { less_than_or_equal_to: 2.megabytes },
+                     file_content_type: { allow: ['application/pdf'] },
+                     if: -> { resume.attached? }
 
   enum state: {
     initial: 0,

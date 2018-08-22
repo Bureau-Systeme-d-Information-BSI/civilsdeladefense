@@ -8,7 +8,12 @@
       %small.badge{class: klass}
         = job_application.aasm.human_state
   .card-body
-    .d-flex.justify-content-start.align-items-start
-      .d-flex.flex-column.align-items-start
-        %strong= job_application.full_name
-        .text-muted= job_application.current_position
+    = link_to [:admin, job_application] do
+      .d-flex.justify-content-start
+        - if job_application.photo.attached?
+          = image_tag job_application.photo.variant(resize: "80x80^", gravity: "center", extent: "80x80"), class: 'rounded-circle mr-2', style: "width:40px;height:40px;"
+        .d-flex.flex-column
+          %strong= job_application.full_name
+          %strong.small.text-muted= job_application.current_position
+        .ml-auto
+          %strong.small.text-muted= time_ago_in_words job_application.created_at, scope: 'datetime.distance_in_words.short'

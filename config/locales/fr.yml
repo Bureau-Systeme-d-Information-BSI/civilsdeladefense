@@ -87,6 +87,8 @@ fr:
           zero: 'Aucune candidature trouvée'
           one: '1 candidature trouvée'
           other: '%{count} candidatures trouvées'
+      show:
+        activity: "Activité et commentaires"
     job_offers:
       index:
         title: "Offres du Ministère des Armées"

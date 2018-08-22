@@ -17,12 +17,17 @@
     - files = JobOffer::FILES.dup
     - files.delete(:photo)
     - files.each do |file|
-      .card.mt-3
-        .card-header.with-subheader.bg-white.font-weight-bold.text-secondary
-          = fa_icon('file-document', class: 'text-secondary')
-          = t("simple_form.labels.job_application.#{file}")
-        .card-subheader.bg-secondary
-        .card-body.bg-body-bg
-          - pdf_url = url_for @job_application.send(file)
-          %embed{src: pdf_url, type: "application/pdf", width: "100%", height: "400px"}
-  .col-12.col-md-4
+      - if @job_application.send(file).attached?
+        .card.mt-3
+          .card-header.with-subheader.bg-white.font-weight-bold.text-secondary
+            = fa_icon('file-document', class: 'text-secondary')
+            = t("simple_form.labels.job_application.#{file}")
+          .card-subheader.bg-secondary
+          .card-body.bg-body-bg
+            - pdf_url = url_for @job_application.send(file)
+            %embed{src: pdf_url, type: "application/pdf", width: "100%", height: "400px"}
+
+  .col-12.col-md-4.py-2
+    .font-weight-bold.text-secondary
+      = fa_icon('forum', class: 'text-secondary')
+      = t(".activity")

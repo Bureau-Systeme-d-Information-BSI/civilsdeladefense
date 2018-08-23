@@ -1,7 +1,7 @@
 - @page_title = @job_offer.title
 %nav.navbar.navbar-dark.bg-secondary.justify-content-start
-  %span.navbar-text= @page_title
-  = link_to [:edit, :admin, @job_offer], class: 'small ml-3' do
+  %span.navbar-text.text-truncate= @page_title
+  = link_to [:edit, :admin, @job_offer], class: 'small ml-3 text-nowrap' do
     = fa_icon('pencil')
     = t('buttons.edit')
 .board
@@ -9,10 +9,15 @@
     - JobApplication.aasm.states.each do |state|
       - state_name = state.name.to_s
       - concerned_job_applications = @job_applications[state_name] || []
-      .list
+      .list{id: "job-application--state-#{state_name}"}
         %header
           = JobApplication.human_attribute_name("state/#{state_name}")
           = surround '(', ')' do
             = concerned_job_applications.size
-        .d-flex.flex-column
+        .d-flex.flex-column.cards
           = render partial: '/admin/job_applications/job_application', collection: concerned_job_applications, locals: {with_header: false}
+
+.modal.fade#remoteContentModal{tabindex: -1, role: :dialog, aria: {labelledby: :remoteContentModal, hidden: true}}
+  .modal-dialog.modal-lg{role: :document}
+    .modal-content
+      .modal-body.p-0

@@ -12,3 +12,8 @@
 .container-fluid
   .card-deck
     = render partial: 'job_application', collection: @job_applications
+
+.modal.fade#remoteContentModal{tabindex: -1, role: :dialog, aria: {labelledby: :remoteContentModal, hidden: true}}
+  .modal-dialog.modal-lg{role: :document}
+    .modal-content
+      .modal-body.p-0

@@ -57,3 +57,22 @@ $( document ).ready(function() {
     $(this).next('.custom-file-label').addClass("selected").html(fileName)
   })
 })
+
+$('#remoteContentModal').on('show.bs.modal', function (event) {
+  var link = event.relatedTarget
+  var href = link.href
+  var modal = $(this)
+  Rails.ajax({
+    type: "GET",
+    url: href,
+    success: function(response){
+      var content = $(response).find('body').html()
+      modal.find('.modal-body').html(content)
+    },
+    error: function(response){
+      console.log("error")
+      console.log(response)
+    }
+  })
+
+})

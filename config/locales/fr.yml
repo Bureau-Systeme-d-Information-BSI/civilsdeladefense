@@ -15,7 +15,7 @@ fr:
           one: 1 an
           other: "%{count} ans"
         half_a_min: ½ min
-        less_than_x_min:
+        less_than_x_minutes:
           zero: < 1 min
           one: < 1 min
           other: < %{count} min
@@ -29,7 +29,7 @@ fr:
         x_days:
           one: 1 j
           other: "%{count} j"
-        x_min:
+        x_minutes:
           one: 1 min
           other: "%{count} min"
         x_months:
@@ -87,8 +87,14 @@ fr:
           zero: 'Aucune candidature trouvée'
           one: '1 candidature trouvée'
           other: '%{count} candidatures trouvées'
-      show:
+      job_application_head:
+        nav_job_application: "Candidature"
+        nav_emails: "Emails"
+        nav_files: "Fichiers (%{count})"
+      job_application_body:
         activity: "Activité et commentaires"
+      change_state:
+        success: "Candidature passée en statut %{state} !"
     job_offers:
       index:
         title: "Offres du Ministère des Armées"

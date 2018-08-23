@@ -20,7 +20,11 @@ Rails.application.routes.draw do
         end
       end
     end
-    resources :job_applications, path: 'candidatures'
+    resources :job_applications, path: 'candidatures' do
+      member do
+        patch :change_state
+      end
+    end
     namespace :settings, path: 'parametres' do
       resources :administrators, path: 'administrateurs' do
         member do

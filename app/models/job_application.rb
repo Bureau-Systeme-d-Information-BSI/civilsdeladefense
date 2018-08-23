@@ -60,6 +60,11 @@ class JobApplication < ApplicationRecord
     state :contract_feedback_waiting
     state :contract_received
     state :affected
+
+    event :reject do
+      transitions from: [:initial], to: :rejected
+    end
+
   end
 
   counter_culture :job_offer,
@@ -76,5 +81,12 @@ class JobApplication < ApplicationRecord
 
   def full_name
     [first_name, last_name].join(" ")
+  end
+
+  def address_short
+    ary = []
+    ary << city if city.present?
+    ary << country if country.present?
+    ary.join(" ")
   end
 end

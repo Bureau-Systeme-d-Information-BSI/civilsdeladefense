@@ -1,5 +1,5 @@
 class Admin::JobApplicationsController < Admin::BaseController
-  before_action :set_job_application, only: [:show, :edit, :update, :destroy]
+  before_action :set_job_application, only: [:show, :edit, :update, :destroy, :change_state]
 
   # GET /admin/job_applications
   # GET /admin/job_applications.json
@@ -10,6 +10,7 @@ class Admin::JobApplicationsController < Admin::BaseController
   # GET /admin/job_applications/1
   # GET /admin/job_applications/1.json
   def show
+    render layout: request.xhr? ? false : "admin/simple"
   end
 
   # GET /admin/job_applications/new
@@ -58,6 +59,22 @@ class Admin::JobApplicationsController < Admin::BaseController
     respond_to do |format|
       format.html { redirect_to [:admin, :job_applications], notice: 'Job application was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def change_state
+    @state = params[:state].to_s
+    @job_application.send("#{ @state }!".to_sym)
+    @job_offer = @job_application.job_offer
+    state_i18n = JobApplication.human_attribute_name("state/#{ @state }")
+
+    respond_to do |format|
+      format.html { redirect_back(fallback_location: [:admin, @job_application], notice: t('.success', state: state_i18n)) }
+      format.js {
+        @notification = t('.success', state: state_i18n)
+        render :change_state
+      }
+      format.json { render :show, status: :ok, location: @job_application }
     end
   end
 

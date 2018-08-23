@@ -1,0 +1,44 @@
+- linkedin_url = job_application.linkedin_url
+- website_url = job_application.website_url
+.row.bg-white.border-bottom.head
+  .col-12.col-md-8.border-right.pt-3
+    .d-flex.justify-content-start
+      - if job_application.photo.attached?
+        = image_tag job_application.photo.variant(resize: "160x160^", gravity: "center", extent: "160x160"), class: 'rounded-circle mr-2', style: "width:80px;height:80px;"
+      .d-flex.flex-column
+        .h5.secondary.mb-0= job_application.full_name
+        .my-1= job_application.current_position
+        .d-flex.justify-content.justify-content-start
+          - if (phone = job_application.phone).present?
+            %span.mr-2
+              = fa_icon "phone"
+              = phone
+          - if (address_short = job_application.address_short).present?
+            %span.mr-2
+              = fa_icon "map-marker"
+              = address_short
+        - if linkedin_url.present? || website_url.present?
+          .d-flex.justify-content.justify-content-start
+            - if linkedin_url.present?
+              = link_to fa_icon('linkedin', class: 'fa-w-20'), linkedin_url, target: :_blank, class: 'mt-1 mr-2'
+            - if website_url.present?
+              = link_to fa_icon('web', class: 'fa-w-20'), website_url, target: :_blank, class: 'mt-1 text-body-color'
+    %ul.nav.nav-tabs.mt-3{role: :tablist}
+      %li.nav-item.mr-3
+        = link_to t('.nav_job_application'), "#job-application", class: "nav-link active", data: {toggle: :tab}, role: :tab, aria: {controls: :'job-application', selected: true}
+      %li.nav-item.mr-3
+        = link_to t('.nav_emails'), "#emails", class: "nav-link", data: {toggle: :tab}, role: :tab, aria: {controls: :emails, selected: false}
+      %li.nav-item.mr-3
+        = link_to t('.nav_files', count: 0), "#files", class: "nav-link", data: {toggle: :tab}, role: :tab, aria: {controls: :files, selected: false}
+
+  .col-12.col-md-4.py-3
+    .btn-group.my-0
+      = link_to job_application.aasm.human_state, "#", class: "btn btn-primary btn-raised dropdown-toggle", data: {toggle: :dropdown}, aria: {haspopup: true, expanded: false}
+      .dropdown-menu
+        - job_application.aasm.states.map(&:name).each do |state|
+          - klasses = %w(dropdown-item)
+          - klasses << 'disabled' if job_application.state.to_sym == state
+          = link_to JobApplication.human_attribute_name("state/#{ state }"), [:change_state, :admin, job_application, {state: state}], method: :patch, remote: true, class: klasses
+    %button.close{type: :button, data: { dismiss: :modal }, aria: { label: t("buttons.close") }}
+      %span{ aria: { hidden: true }}
+        &times

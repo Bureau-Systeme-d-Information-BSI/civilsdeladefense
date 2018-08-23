@@ -25,7 +25,7 @@
           %span.navbar-text#step_1= card_1_title
         .container
           .row
-            .col-12.col-md-9.mx-md-auto
+            .col-12.col-md-10.mx-md-auto
               .card
                 .card-header
                   .card-title= t('.card_1_1_title')
@@ -88,12 +88,14 @@
           %span.navbar-text#step_2= card_2_title
         .container
           .row
-            .col-12.col-md-9.mx-md-auto
+            .col-12.col-md-10.mx-md-auto
               .card
                 .card-header.with-subheader
                   .card-title= t('.card_2_1_title')
                 .card-subheader
-                  .card-title= t('.card_2_1_1_title')
+                  .card-title
+                    = fa_icon('file-document')
+                    = t('.card_2_1_1_title')
                 .card-body
                   .form-inputs.options
                     - options = JobOffer::FILES
@@ -101,7 +103,9 @@
                       - collection = JobOffer::OPTIONS_AVAILABLE.symbolize_keys.keys.reverse
                       = f.input "option_#{option}".to_sym, collection: collection, as: :radio_buttons, wrapper: :horizontal_collection_inline
                 .card-subheader
-                  .card-title= t('.card_2_1_2_title')
+                  .card-title
+                    = fa_icon('web')
+                    = t('.card_2_1_2_title')
                 .card-body
                   .form-inputs.options
                     - options = JobOffer::URLS
@@ -113,7 +117,7 @@
           %span.navbar-text#step_3= card_3_title
         .container
           .row
-            .col-12.col-md-9.mx-md-auto
+            .col-12.col-md-10.mx-md-auto
               .card
                 .card-header.with-subheader
                   .card-title= t('.card_3_1_title')

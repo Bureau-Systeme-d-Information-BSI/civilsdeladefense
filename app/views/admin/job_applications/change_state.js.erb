@@ -1,0 +1,27 @@
+var jobApplicationModal = document.getElementById('remoteContentModal')
+if (jobApplicationModal !== null) {
+  var headNode = jobApplicationModal.querySelector('.head')
+  if (headNode !== null) {
+    var headHtml = '<%= j render(partial: 'job_application_head', locals: { job_application: @job_application }) %>'
+    var frag = document.createRange().createContextualFragment(headHtml)
+    headNode.replaceWith(frag)
+  }
+}
+
+var cardNode = document.getElementById('<%= dom_id(@job_application) %>')
+if (cardNode !== null) {
+  cardNode.remove()
+  var newState = '<%= @state %>'
+  var listId = "job-application--state-" + newState
+  var listNode = document.getElementById(listId)
+  if (listNode !== null) {
+    var containerNode = listNode.querySelector('.cards')
+    if (containerNode !== null) {
+      var html = '<%= j render(partial: 'job_application', locals: { job_application: @job_application, with_header: false }) %>'
+      var frag = document.createRange().createContextualFragment(html)
+      containerNode.insertAdjacentHTML('afterbegin', html)
+    }
+  }
+
+  $.snackbar({content: '<%= @notification %>'})
+}

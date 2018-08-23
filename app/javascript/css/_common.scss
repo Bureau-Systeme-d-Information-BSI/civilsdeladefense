@@ -31,6 +31,7 @@ $font-weight-bold: 500 !default;
 $headings-color: $secondary !default;
 $hr-border-color: #eee !default;
 $hr-border-width: 1px !default;
+$modal-lg: 920px !default;
 
 $theme-colors: (
   "tertiary": $tertiary,
@@ -38,7 +39,8 @@ $theme-colors: (
   "quinary": $quinary,
   "dark-gray": $dark-gray,
   "light-gray": $light-gray,
-  "purple": $purple
+  "purple": $purple,
+  "body-color": $body-color
 );
 
 // variables borrowed from bootstrap-material-design
@@ -68,6 +70,9 @@ $custom-file-text: (
 
 svg {
   fill: currentColor !important;
+  &.fa-linkedin {
+    color: #0077b5;
+  }
 }
 
 .border         { border: $border-width-normal solid $border-color !important; }
@@ -147,12 +152,13 @@ aside.sidebar {
     border-bottom: 1px solid $card-border-color;
     .card-title {
       @extend .mb-0;
-      font-size: $h5-font-size;
+      font-size: $font-size-base * 1.1;
       font-weight: $headings-font-weight;
     }
   }
   .card-title {
     color: $secondary;
+    font-size: $font-size-base * 1.1;
     a {
       color: $secondary;
     }
@@ -163,7 +169,7 @@ aside.sidebar {
     }
     .card-title {
       @extend .mb-0;
-      font-size: $h5-font-size;
+      font-size: $font-size-base * 1.1;
       font-weight: $headings-font-weight;
     }
   }

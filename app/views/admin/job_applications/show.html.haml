@@ -1,33 +1,3 @@
-.row.bg-white.border-bottom
-  .col-12.col-md-8.border-right
-    .d-flex.justify-content-start
-      - if @job_application.photo.attached?
-        = image_tag @job_application.photo.variant(resize: "160x160^", gravity: "center", extent: "160x160"), class: 'rounded-circle mr-2', style: "width:80px;height:80px;"
-      .d-flex.flex-column
-        .h5.secondary.mb-0= @job_application.full_name
-        .my-1= @job_application.current_position
-        .d-flex.justify-content.justify-content-between
-          %span
-            = fa_icon "phone"
-            = @job_application.phone
-
-  .col-12.col-md-4
-.row.bg-card-bg
-  .col-12.col-md-8.border-right
-    - files = JobOffer::FILES.dup
-    - files.delete(:photo)
-    - files.each do |file|
-      - if @job_application.send(file).attached?
-        .card.mt-3
-          .card-header.with-subheader.bg-white.font-weight-bold.text-secondary
-            = fa_icon('file-document', class: 'text-secondary')
-            = t("simple_form.labels.job_application.#{file}")
-          .card-subheader.bg-secondary
-          .card-body.bg-body-bg
-            - pdf_url = url_for @job_application.send(file)
-            %embed{src: pdf_url, type: "application/pdf", width: "100%", height: "400px"}
-
-  .col-12.col-md-4.py-2
-    .font-weight-bold.text-secondary
-      = fa_icon('forum', class: 'text-secondary')
-      = t(".activity")
+.container-fluid
+  = render partial: 'job_application_head', locals: {job_application: @job_application}
+  = render partial: 'job_application_body'

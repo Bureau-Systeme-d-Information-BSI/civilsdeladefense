@@ -1,8 +1,8 @@
 - @page_title = t(".forgot_your_password")
-= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+= simple_form_for(resource, as: resource_name, url: password_path(resource_name), wrapper: :input_group, html: { method: :post }) do |f|
   = f.error_notification
   .form-inputs
-    = f.input :email, required: true, autofocus: true, label: false, placeholder: true
+    = f.input :email, required: true, autofocus: true, label: false, placeholder: true, prepend: fa_icon('email')
   .form-actions
     = render "devise/shared/links"
     = f.button :submit, t(".send_me_reset_password_instructions"), class: 'btn btn-primary btn-raised'

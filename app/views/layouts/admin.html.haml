@@ -25,3 +25,4 @@
                 = image_tag asset_pack_path('images/logo.svg'), class: 'logo'
             = yield
           .col-12.col-md-8{style: "background-size: cover;background-image: url(#{ asset_pack_path('images/background.png') })"}
+      = javascript_pack_tag 'devise-bundle'

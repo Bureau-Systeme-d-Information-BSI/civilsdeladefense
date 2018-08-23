@@ -13,8 +13,8 @@
     }
   }
   .form-inputs {
-    > .form-group:first-child {
-      @extend .mb-0;
+    > .form-group {
+      @extend .mb-3;
     }
   }
   .form-actions {
@@ -32,6 +32,13 @@
     &:focus {
       border: 2px solid $card-border-color;
       box-shadow: none;
+    }
+  }
+  .input-group-prepend {
+    .input-group-text {
+      background-color: white;
+      border: 2px solid $card-border-color;
+      border-right: 0;
     }
   }
 }

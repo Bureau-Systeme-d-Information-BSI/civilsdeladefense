@@ -208,9 +208,9 @@ ul {
 .badge-counter {
   @extend .badge, .rounded-circle, .px-0, .py-0, .font-weight-bold;
   font-size: 100%;
-  width: 20px;
-  height: 20px;
-  line-height: 20px;
+  width: 2rem;
+  height: 2rem;
+  line-height: 2rem;
   &:hover {
     text-decoration: none;
   }

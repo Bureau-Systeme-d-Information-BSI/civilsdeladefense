@@ -62,6 +62,18 @@ class JobApplication < ApplicationRecord
     state :affected
   end
 
+  counter_culture :job_offer,
+    column_name: Proc.new {|model| "#{ model.state }_job_applications_count" },
+    column_names: aasm.states.inject({}) { |memo, obj|
+      state = obj.name
+      enum_value = states[ state ]
+      memo[ ["job_applications.state = ?", enum_value] ] = "#{ state }_job_applications_count"
+      memo
+    },
+    touch: true
+  counter_culture :job_offer,
+    column_name: 'job_applications_count'
+
   def full_name
     [first_name, last_name].join(" ")
   end

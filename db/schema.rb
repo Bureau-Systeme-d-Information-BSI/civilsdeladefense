@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_21_083829) do
+ActiveRecord::Schema.define(version: 2018_08_23_080756) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -154,6 +154,19 @@ ActiveRecord::Schema.define(version: 2018_08_21_083829) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "state"
+    t.integer "job_applications_count", default: 0, null: false
+    t.integer "initial_job_applications_count", default: 0, null: false
+    t.integer "rejected_job_applications_count", default: 0, null: false
+    t.integer "phone_meeting_job_applications_count", default: 0, null: false
+    t.integer "phone_meeting_rejected_job_applications_count", default: 0, null: false
+    t.integer "phone_meeting_accepted_job_applications_count", default: 0, null: false
+    t.integer "to_be_met_job_applications_count", default: 0, null: false
+    t.integer "after_meeting_rejected_job_applications_count", default: 0, null: false
+    t.integer "accepted_job_applications_count", default: 0, null: false
+    t.integer "contract_drafting_job_applications_count", default: 0, null: false
+    t.integer "contract_feedback_waiting_job_applications_count", default: 0, null: false
+    t.integer "contract_received_job_applications_count", default: 0, null: false
+    t.integer "affected_job_applications_count", default: 0, null: false
     t.index ["category_id"], name: "index_job_offers_on_category_id"
     t.index ["contract_type_id"], name: "index_job_offers_on_contract_type_id"
     t.index ["employer_id"], name: "index_job_offers_on_employer_id"

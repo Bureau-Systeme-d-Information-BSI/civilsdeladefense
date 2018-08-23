@@ -204,3 +204,14 @@ ul {
 .bg-body-bg {
   background-color: $body-bg;
 }
+
+.badge-counter {
+  @extend .badge, .rounded-circle, .px-0, .py-0, .font-weight-bold;
+  font-size: 100%;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  &:hover {
+    text-decoration: none;
+  }
+}

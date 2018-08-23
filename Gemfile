@@ -37,6 +37,7 @@ gem 'nested_form'
 gem 'will_paginate'
 gem 'friendly_id'
 gem 'aasm'
+gem 'counter_culture'
 gem 'file_validators'
 gem 'mini_magick'
 

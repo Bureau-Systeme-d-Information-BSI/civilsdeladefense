@@ -4,6 +4,7 @@ RSpec.describe "admin/job_applications/show", type: :view do
   before(:each) do
     @job_application = assign(:job_application, create(:job_application))
     @message = assign(:message, build(:message, job_application: @job_application))
+    @email = assign(:email, build(:email, job_application: @job_application))
   end
 
   it "renders attributes in <p>" do

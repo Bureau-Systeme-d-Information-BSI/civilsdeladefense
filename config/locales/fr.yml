@@ -53,6 +53,7 @@ fr:
     choose_file: "Choisir un fichier"
     resend_confirmation_instructions: "Renvoyer le mail d'activation"
     send: "Envoyer"
+    send_to_candidate: "Envoyer au candidat"
   job_applications:
     form:
       general_informations: "Informations générales"
@@ -147,6 +148,11 @@ fr:
         success: "Annonce mise à jour et archivée !"
       suspend:
         success: "Annonce mise en pause !"
+    emails:
+      create:
+        success: "Email envoyé !"
+      form:
+        title: "Envoyer un email à ce candidat"
     messages:
       create:
         success: "Message envoyé !"

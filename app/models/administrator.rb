@@ -38,4 +38,8 @@ class Administrator < ApplicationRecord
   def only_if_unconfirmed
     pending_any_confirmation {yield}
   end
+
+  def full_name
+    email
+  end
 end

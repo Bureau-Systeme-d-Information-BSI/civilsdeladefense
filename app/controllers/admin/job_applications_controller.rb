@@ -13,6 +13,9 @@ class Admin::JobApplicationsController < Admin::BaseController
     @message = Message.new
     @message.job_application = @job_application
 
+    @email = Email.new
+    @email.job_application = @job_application
+
     render layout: request.xhr? ? false : "admin/simple"
   end
 

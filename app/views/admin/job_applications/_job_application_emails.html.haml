@@ -1,1 +1,13 @@
-Ici les emails
+.d-flex.flex-column{id: dom_id(@job_application, 'emails')}
+
+  = render partial: '/admin/emails/form'
+
+  - @job_application.emails.order(created_at: :desc).each do |email|
+    .card
+      .card-header.with-subheader.bg-white.font-weight-bold.text-secondary
+        = fa_icon('file-document', class: 'text-secondary')
+        = email.administrator.full_name
+      .card-subheader.bg-card-bg.font-weight-bold.text-muted
+        = email.title
+      .card-body.bg-white
+        = email.body

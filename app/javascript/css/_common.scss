@@ -40,7 +40,8 @@ $theme-colors: (
   "dark-gray": $dark-gray,
   "light-gray": $light-gray,
   "purple": $purple,
-  "body-color": $body-color
+  "body-color": $body-color,
+  "card-bg": $card-bg,
 );
 
 // variables borrowed from bootstrap-material-design
@@ -165,7 +166,7 @@ aside.sidebar {
   }
   .card-header {
     &:not(.with-subheader) {
-      border-bottom: 2px solid $card-border-color;
+      border-bottom: $border-width-normal solid $card-border-color;
     }
     .card-title {
       @extend .mb-0;
@@ -175,7 +176,7 @@ aside.sidebar {
   }
   .card-footer {
     @extend small;
-    border-top: 1px solid $card-border-color;
+    border-top: $border-width-normal solid $card-border-color;
   }
 }
 

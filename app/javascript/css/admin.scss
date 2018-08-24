@@ -252,3 +252,16 @@ ul {
 #message_body {
   height: 110px;
 }
+
+#email_body {
+  height: 200px;
+}
+
+.tab-pane {
+  > .card, > * > .card {
+    @extend .mt-4;
+    &:first-child {
+      @extend .mt-0;
+    }
+  }
+}

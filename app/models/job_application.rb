@@ -4,6 +4,7 @@ class JobApplication < ApplicationRecord
   belongs_to :job_offer
   belongs_to :user, optional: true
   has_many :messages
+  has_many :emails
 
   JobOffer::FILES.each do |file|
     has_one_attached file.to_sym

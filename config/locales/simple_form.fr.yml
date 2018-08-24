@@ -29,6 +29,9 @@ fr:
         option_linkedin_url:
           <<: *options_defaults
     labels:
+      email:
+        title: "Sujet"
+        body: "Votre message"
       job_application:
         first_name: "Prénom"
         last_name: "Nom"

@@ -11,11 +11,13 @@ const Rails = require('rails-ujs')
 Rails.start()
 
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+import '@ckeditor/ckeditor5-build-classic/build/translations/fr.js'
 
 document.querySelectorAll('.ckeditor').forEach((node) => {
   ClassicEditor
     .create(node, {
       toolbar: [ 'bold', 'italic', 'link', 'bulletedList', 'numberedList' ],
+      language: 'fr',
     })
     .then( editor => {
         console.log( editor )

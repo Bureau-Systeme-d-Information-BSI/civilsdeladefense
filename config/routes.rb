@@ -24,6 +24,7 @@ Rails.application.routes.draw do
       member do
         patch :change_state
       end
+      resources :messages, only: %i(create)
     end
     namespace :settings, path: 'parametres' do
       resources :administrators, path: 'administrateurs' do

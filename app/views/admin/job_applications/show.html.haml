@@ -1,3 +1,13 @@
 .container-fluid
   = render partial: 'job_application_head', locals: {job_application: @job_application}
-  = render partial: 'job_application_body'
+  .row.bg-card-bg
+    .col-12.col-md-8.border-right{class: job_application_modal_section_classes}
+      .tab-content
+        .tab-pane.fade.show.active#overview{role: :tabpanel, aria: {labelledby: :overview}}
+          = render partial: 'job_application_overview', locals: {job_application: @job_application}
+        .tab-pane.fade#emails{role: :tabpanel, aria: {labelledby: :emails}}
+          = render partial: 'job_application_emails', locals: {job_application: @job_application}
+        .tab-pane.fade#files{role: :tabpanel, aria: {labelledby: :files}}
+          = render partial: 'job_application_files', locals: {job_application: @job_application}
+    .col-12.col-md-4{class: job_application_modal_section_classes}
+      = render partial: "job_application_activity"

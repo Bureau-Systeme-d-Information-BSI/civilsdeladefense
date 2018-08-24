@@ -1,8 +1,8 @@
 - linkedin_url = job_application.linkedin_url
 - website_url = job_application.website_url
 .row.bg-white.border-bottom.head
-  .col-12.col-md-8.border-right.pt-3
-    .d-flex.justify-content-start
+  .col-12.col-md-8.border-right{class: job_application_modal_section_classes('pb-0')}
+    .d-flex.justify-content-start.head
       - if job_application.photo.attached?
         = image_tag job_application.photo.variant(resize: "160x160^", gravity: "center", extent: "160x160"), class: 'rounded-circle mr-2', style: "width:80px;height:80px;"
       .d-flex.flex-column
@@ -25,13 +25,13 @@
               = link_to fa_icon('web', class: 'fa-w-20'), website_url, target: :_blank, class: 'mt-1 text-body-color'
     %ul.nav.nav-tabs.mt-3{role: :tablist}
       %li.nav-item.mr-3
-        = link_to t('.nav_job_application'), "#job-application", class: "nav-link active", data: {toggle: :tab}, role: :tab, aria: {controls: :'job-application', selected: true}
+        = link_to t('.nav_overview'), "#overview", class: "nav-link active", data: {toggle: :tab}, role: :tab, aria: {controls: :overview, selected: true}
       %li.nav-item.mr-3
         = link_to t('.nav_emails'), "#emails", class: "nav-link", data: {toggle: :tab}, role: :tab, aria: {controls: :emails, selected: false}
       %li.nav-item.mr-3
         = link_to t('.nav_files', count: 0), "#files", class: "nav-link", data: {toggle: :tab}, role: :tab, aria: {controls: :files, selected: false}
 
-  .col-12.col-md-4.py-3
+  .col-12.col-md-4{class: job_application_modal_section_classes}
     .btn-group.my-0
       = link_to job_application.aasm.human_state, "#", class: "btn btn-primary btn-raised dropdown-toggle", data: {toggle: :dropdown}, aria: {haspopup: true, expanded: false}
       .dropdown-menu

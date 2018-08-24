@@ -53,8 +53,11 @@ nav.navbar {
 
 .card, .modal, form {
   .card {
-    .card-header, .card-subheader, .card-body, .card-footer {
+    .card-header, .card-subheader, .card-footer {
       padding: ($card-spacer-x-normal * 0.5) $card-spacer-x-normal;
+    }
+    .card-body {
+      padding: $card-spacer-x-normal $card-spacer-x-normal;
     }
   }
 }
@@ -241,3 +244,11 @@ ul {
   }
 }
 
+.ck.ck-content {
+  min-height: 300px;
+  max-height: 500px;
+}
+
+#message_body {
+  height: 110px;
+}

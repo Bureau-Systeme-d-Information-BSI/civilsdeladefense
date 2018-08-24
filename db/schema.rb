@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_23_080756) do
+ActiveRecord::Schema.define(version: 2018_08_24_091628) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -179,6 +179,16 @@ ActiveRecord::Schema.define(version: 2018_08_23_080756) do
     t.index ["study_level_id"], name: "index_job_offers_on_study_level_id"
   end
 
+  create_table "messages", force: :cascade do |t|
+    t.text "body"
+    t.bigint "job_application_id"
+    t.bigint "administrator_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["administrator_id"], name: "index_messages_on_administrator_id"
+    t.index ["job_application_id"], name: "index_messages_on_job_application_id"
+  end
+
   create_table "official_statuses", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -236,4 +246,6 @@ ActiveRecord::Schema.define(version: 2018_08_23_080756) do
   add_foreign_key "job_offers", "official_statuses"
   add_foreign_key "job_offers", "sectors"
   add_foreign_key "job_offers", "study_levels"
+  add_foreign_key "messages", "administrators"
+  add_foreign_key "messages", "job_applications"
 end

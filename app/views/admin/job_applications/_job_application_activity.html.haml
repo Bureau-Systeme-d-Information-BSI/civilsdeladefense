@@ -1,0 +1,10 @@
+%div{id: dom_id(@job_application, 'activity')}
+  .font-weight-bold.text-secondary.mb-3
+    = fa_icon('forum', class: 'text-secondary')
+    = t('.title')
+
+  = render partial: '/admin/messages/form'
+
+  %ul
+    - @job_application.messages.order(created_at: :desc).each do |message|
+      %li= message.body

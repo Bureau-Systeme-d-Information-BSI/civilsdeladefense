@@ -52,6 +52,7 @@ fr:
     draftize: "Passer en brouillon"
     choose_file: "Choisir un fichier"
     resend_confirmation_instructions: "Renvoyer le mail d'activation"
+    send: "Envoyer"
   job_applications:
     form:
       general_informations: "Informations générales"
@@ -88,11 +89,11 @@ fr:
           one: '1 candidature trouvée'
           other: '%{count} candidatures trouvées'
       job_application_head:
-        nav_job_application: "Candidature"
+        nav_overview: "Candidature"
         nav_emails: "Emails"
         nav_files: "Fichiers (%{count})"
-      job_application_body:
-        activity: "Activité et commentaires"
+      job_application_activity:
+        title: "Activité et commentaires"
       change_state:
         success: "Candidature passée en statut %{state} !"
     job_offers:
@@ -146,6 +147,9 @@ fr:
         success: "Annonce mise à jour et archivée !"
       suspend:
         success: "Annonce mise en pause !"
+    messages:
+      create:
+        success: "Message envoyé !"
     shared:
       navbar:
         job_offers: "Offres"
@@ -175,7 +179,6 @@ fr:
             photo:
               file_size_is_less_than_or_equal_to: "Est trop volumineuse (ne doit pas dépasser %{count})"
               allowed_file_content_types: "au mauvais format (seuls les formats JPG et PNG sont acceptés)"
-
     models:
       job_offer: "Offre"
     attributes:

@@ -1,0 +1,6 @@
+var activityNode = document.getElementById('<%= dom_id(@job_application, 'activity') %>')
+var html = '<%= j render(partial: '/admin/job_applications/job_application_activity') %>'
+var frag = document.createRange().createContextualFragment(html)
+activityNode.replaceWith(frag)
+$.snackbar({content: '<%= @notification %>'})
+

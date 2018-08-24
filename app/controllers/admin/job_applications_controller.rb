@@ -10,6 +10,9 @@ class Admin::JobApplicationsController < Admin::BaseController
   # GET /admin/job_applications/1
   # GET /admin/job_applications/1.json
   def show
+    @message = Message.new
+    @message.job_application = @job_application
+
     render layout: request.xhr? ? false : "admin/simple"
   end
 

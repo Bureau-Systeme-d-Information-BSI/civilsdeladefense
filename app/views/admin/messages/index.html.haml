@@ -1,0 +1,25 @@
+%h1 Listing admin_messages
+
+%table
+  %thead
+    %tr
+      %th Body
+      %th Job application
+      %th Administrator
+      %th
+      %th
+      %th
+
+  %tbody
+    - @admin_messages.each do |admin_message|
+      %tr
+        %td= admin_message.body
+        %td= admin_message.job_application
+        %td= admin_message.administrator
+        %td= link_to 'Show', admin_message
+        %td= link_to 'Edit', edit_admin_message_path(admin_message)
+        %td= link_to 'Destroy', admin_message, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Message', new_admin_message_path

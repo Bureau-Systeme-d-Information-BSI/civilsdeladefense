@@ -83,6 +83,9 @@ mois afin d'être recontacté(e) pour de nouvelles opportunités."
         name: 'Nom complet'
         password: 'Mot de passe'
         password_confirmation: 'Confirmation du mot de passe'
+      message:
+        body: 'Ce commentaire ne sera visible que par vous et les
+autres membres de votre équipe.'
     hints:
       job_application:
         photo: "Format JPG ou PNG, max. 2Mo"

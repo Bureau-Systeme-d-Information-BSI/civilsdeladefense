@@ -1,0 +1,12 @@
+-# frozen_string_literal: true
+= simple_form_for([:admin, @message.job_application, @message], remote: true) do |f|
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  .form-inputs
+    = f.input :body, label: false, placeholder: true
+
+  .form-actions.text-right
+    = button_tag(type: 'submit', class: 'btn btn-primary') do
+      = t('buttons.send')
+      = fa_icon('send', class: 'ml-1')

@@ -80,7 +80,7 @@ Rails.application.configure do
     port: smtp_uri.port,
     authentication: :login,
     user_name: URI.unescape(smtp_uri.user),
-    password: smtp_uri.password,
+    password: URI.unescape(smtp_uri.password),
     enable_starttls_auto: true,
   }
 

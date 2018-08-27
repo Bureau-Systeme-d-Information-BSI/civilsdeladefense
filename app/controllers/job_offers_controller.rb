@@ -4,7 +4,7 @@ class JobOffersController < ApplicationController
   # GET /job_offers
   # GET /job_offers.json
   def index
-    @categories = Category.order(name: :asc).joins(job_offers: [:contract_type]).uniq
+    @categories = Category.order(name: :asc).joins(publicly_visible_job_offers: [:contract_type]).uniq
   end
 
   # GET /job_offers/1

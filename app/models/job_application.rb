@@ -2,7 +2,8 @@ class JobApplication < ApplicationRecord
   include AASM
 
   belongs_to :job_offer
-  belongs_to :user, optional: true
+  belongs_to :user
+  accepts_nested_attributes_for :user
   has_many :messages
   has_many :emails
 

@@ -1,0 +1,19 @@
+%h1.h3 Mes candidatures en cours
+
+- if @job_applications.empty?
+  %em.d-block.my-5 Aucune candidature pour le moment.
+- else
+  %table.table.mt-5
+    %thead
+      %tr
+        %th Poste
+        %th Statut
+        %th
+    %tbody
+      - for job_application in @job_applications
+        - job_offer = job_application.job_offer
+        %tr
+          %td= job_offer.title
+          %td= JobApplication.human_attribute_name("state/#{job_application.state}")
+          %td= link_to t('buttons.show'), [:account, job_application]
+

@@ -23,7 +23,6 @@
         = f.input :address_1
       .col-12.col-md-6
         = f.input :address_2
-
     .row
       .col-12.col-md-6
         = f.input :city
@@ -33,15 +32,13 @@
             = f.input :postal_code
           .col-12.col-md-6
             = f.input :country
-
     - unless @job_offer.disabled_option_photo?
       .row
         .col-12.col-md-6
           = f.label :photo, required: @job_offer.mandatory_option_photo?
           = f.input :photo, label: t('buttons.choose_file'), wrapper: :custom_file_without_label
 
-    %h2.h5.mt-5.mb-3.text-dark-gray= t('.your_profile')
-
+    %h2.h5.mt-4.mb-3.text-dark-gray= t('.your_profile')
     - file_fields.each do |field|
       - unless @job_offer.send("disabled_option_#{field}?")
         .row
@@ -49,19 +46,30 @@
             = f.label field, required: @job_offer.send("mandatory_option_#{field}?")
             = f.input field, label: t('buttons.choose_file'), wrapper: :custom_file_without_label
 
-    %h2.h5.mt-5.mb-3.text-dark-gray= t('.your_internet_presence')
-
+    %h2.h5.mt-4.mb-3.text-dark-gray= t('.your_internet_presence')
     - url_fields.each do |field|
       - unless @job_offer.send("disabled_option_#{field}?")
         .row
           .col-12
             = f.input field, required: @job_offer.send("mandatory_option_#{field}?")
 
-    .row
-      .col-12.mt-2
+    - unless user_signed_in?
+      %h2.h5.mt-4.mb-3.text-dark-gray= t('.your_account_creation')
+      = f.simple_fields_for :user, input_html: {placeholder: false, required: true} do |user_form|
+        .row
+          .col-12.col-md-6
+            = user_form.input :email
+        .row
+          .col-12.col-md-6
+            = user_form.input :password
+          .col-12.col-md-6
+            = user_form.input :password_confirmation
+
+    .row.mt-4.mb-3
+      .col-12
         = f.input :terms_of_service, as: :boolean, label_html: { class: 'ml-2' }
 
-  .form-actions.text-center.mt-3
+  .form-actions.text-center.mt-4
     = button_tag(type: 'submit', class: 'btn btn-primary btn-raised btn-lg') do
       = t('helpers.submit.job_application.save')
       = fa_icon('send', class: 'ml-1')

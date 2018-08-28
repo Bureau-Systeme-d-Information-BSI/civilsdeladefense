@@ -4,11 +4,5 @@
   .container
     .row
       .col-12.col-md-10.mx-md-auto
-        - if flash[:notice]
-          .d-none.alert.alert-info= flash[:notice]
-        - elsif flash[:error]
-          .alert.alert-danger= flash[:error]
-        - elsif flash[:success]
-          .alert.alert-success= flash[:success]
         = yield
 = render template: 'layouts/admin'

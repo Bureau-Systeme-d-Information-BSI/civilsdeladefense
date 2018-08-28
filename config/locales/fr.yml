@@ -54,11 +54,13 @@ fr:
     resend_confirmation_instructions: "Renvoyer le mail d'activation"
     send: "Envoyer"
     send_to_candidate: "Envoyer au candidat"
+    show: "Voir"
   job_applications:
     form:
       general_informations: "Informations générales"
       your_profile: "Votre profil"
       your_internet_presence: "Votre présence sur internet"
+      your_account_creation: "Votre création de compte"
   job_offers:
     index:
       title: "Nos offres"
@@ -79,6 +81,7 @@ fr:
       job_offers: "Nos offres"
       account: "Mon compte"
       logout: "Déconnexion"
+      job_applications: "Mes candidatures"
   admin:
     job_applications:
       index:

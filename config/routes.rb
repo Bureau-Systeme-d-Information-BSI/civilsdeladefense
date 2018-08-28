@@ -38,6 +38,11 @@ Rails.application.routes.draw do
     root to: 'job_offers#index'
   end
 
+  namespace :account, path: 'mon-compte' do
+    resources :job_applications, path: 'candidatures'
+    root to: 'base#show'
+  end
+
   resources :job_offers, path: 'offresdemploi', only: %i(index show) do
     member do
       get :apply

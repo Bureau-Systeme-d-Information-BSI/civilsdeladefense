@@ -3,6 +3,8 @@ class Administrator < ApplicationRecord
          :recoverable, :trackable, :validatable,
          :confirmable, :lockable, :timeoutable
 
+  validates :name, presence: true
+
   def password_required?
     # Password is required if it is being set, but not for new records
     if !persisted?
@@ -40,6 +42,6 @@ class Administrator < ApplicationRecord
   end
 
   def full_name
-    email
+    name
   end
 end

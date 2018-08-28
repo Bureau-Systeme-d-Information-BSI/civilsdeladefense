@@ -12,9 +12,16 @@
     = render partial: '/shared/navbar'
     .container
       .row
-        .col-12.col-md-10.mx-md-auto
+        - klasses = devise_controller? ? %w(col-md-6 devise) : %w(col-md-10)
+        .col-12.mx-md-auto{class: klasses}
           .card.mb-5
             .card-body
+              - if flash[:notice]
+                .alert.alert-info.mb-5= flash[:notice]
+              - elsif flash[:error]
+                .alert.alert-danger.mb-5= flash[:error]
+              - elsif flash[:success]
+                .alert.alert-success.mb-5= flash[:success]
               = yield
     = render partial: '/shared/footer'
     = javascript_pack_tag 'bundle'

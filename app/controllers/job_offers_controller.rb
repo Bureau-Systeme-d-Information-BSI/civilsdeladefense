@@ -17,6 +17,7 @@ class JobOffersController < ApplicationController
   def apply
     @job_application = JobApplication.new
     @job_application.country = "FR"
+    @job_application.user = User.new unless user_signed_in?
   end
 
   # POST /job_offers/1/send_application
@@ -24,6 +25,13 @@ class JobOffersController < ApplicationController
   def send_application
     @job_application = JobApplication.new(job_application_params)
     @job_application.job_offer = @job_offer
+    @job_application.user = current_user if user_signed_in?
+
+    if @job_application.user
+      @job_application.user.first_name = @job_application.first_name
+      @job_application.user.last_name = @job_application.last_name
+      @job_application.user.photo = @job_application.photo
+    end
 
     respond_to do |format|
       if @job_application.save
@@ -53,6 +61,7 @@ class JobOffersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def job_application_params
       permitted_params = [:first_name, :last_name, :current_position, :phone, :address_1, :address_2, :postal_code, :city, :country, :portfolio_url, :website_url, :linkedin_url, :terms_of_service]
+      permitted_params << {user_attributes: [:email, :password, :password_confirmation]} unless user_signed_in?
       (JobOffer::FILES + JobOffer::URLS).each do |field|
         permitted_params << field unless @job_offer.send("disabled_option_#{field}?")
       end

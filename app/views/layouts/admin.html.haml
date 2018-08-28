@@ -13,6 +13,12 @@
   %body{class: klasses, style: style}
     - if administrator_signed_in?
       = render partial: '/admin/shared/navbar'
+      - if flash[:notice]
+        .d-none.alert.alert-info= flash[:notice]
+      - elsif flash[:error]
+        .d-none.alert.alert-danger= flash[:error]
+      - elsif flash[:success]
+        .d-none.alert.alert-success= flash[:success]
       = content_for?(:content) ? yield(:content) : yield
       = javascript_pack_tag 'admin-bundle'
     - else
@@ -23,6 +29,12 @@
               = image_tag asset_pack_path('images/minarm.svg'), class: 'minarm'
               .d-flex.flex-column.justify-content-center
                 = image_tag asset_pack_path('images/logo.svg'), class: 'logo'
+            - if flash[:notice]
+              .alert.alert-info= flash[:notice]
+            - elsif flash[:error]
+              .alert.alert-danger= flash[:error]
+            - elsif flash[:success]
+              .alert.alert-success= flash[:success]
             = yield
           .col-12.col-md-8{style: "background-size: cover;background-image: url(#{ asset_pack_path('images/background.png') })"}
       = javascript_pack_tag 'devise-bundle'

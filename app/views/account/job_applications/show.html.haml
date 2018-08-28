@@ -1,0 +1,6 @@
+%p
+  %strong Poste
+  = @job_offer.title
+%p
+  %strong Statut
+  = JobApplication.human_attribute_name("state/#{@job_application.state}")

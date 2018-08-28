@@ -103,3 +103,7 @@ job_offer3.title = 'Responsable Achat d’Infrastructures (H/F)'
 job_offer3.category = infrastructure
 job_offer3.location = "Brest, FR"
 job_offer3.save!
+
+job_offer.publish!
+job_offer2.publish!
+job_offer3.publish!

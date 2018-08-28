@@ -1,24 +1,27 @@
-# README
+# Civilsdeladefense
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Application de gestion de recrutements.
 
-Things you may want to cover:
+## Environnement de développement
 
-* Ruby version
+Application Ruby on Rails avec base de données PostgreSQL, assets compilés avec webpack, suite de tests avec RSpec.
 
-* System dependencies
+Des fichiers de définition Docker docker-compose sont présents pour faciliter la mise en place de l'environnements de développement.
 
-* Configuration
+Build des images Docker :
 
-* Database creation
+```
+docker-compose build
+```
 
-* Database initialization
+Démarrage des images
 
-* How to run the test suite
+```
+docker-compose down && docker-compose up
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+## Lancer les tests
 
-* Deployment instructions
-
-* ...
+```
+docker-compose run web rspec
+```

@@ -10,13 +10,15 @@ nav.navbar {
   }
 }
 
-body > .navbar.bg-white, .nav.nav-tabs {
+body > .navbar.bg-white {
   .nav-item {
     @extend .d-flex;
+    &:hover {
+      color: $navbar-light-hover-color;
+    }
     svg {
       margin-top: ($spacer * .85);
       margin-right: ($spacer * .50);
-      color: $body-color;
       transition: fill 0.2s $bmd-animation-curve-default;
       will-change: fill, transform;
     }
@@ -26,21 +28,34 @@ body > .navbar.bg-white, .nav.nav-tabs {
       will-change: color, box-shadow, transform;
       @extend .px-0, .py-0, .my-2;
       font-weight: 500;
+      outline: 0;
+    }
+    &.active {
+      color: $primary;
+      .nav-link {
+        box-shadow: inset 0 -2px $primary;
+      }
+    }
+  }
+}
+
+.nav.nav-tabs {
+  .nav-item {
+    .nav-link {
+      transition: color 0.2s $bmd-animation-curve-default;
+      transition: box-shadow 0.2s $bmd-animation-curve-default;
+      will-change: color, box-shadow, transform;
+      @extend .px-0, .py-0, .my-2;
+      font-weight: 500;
       color: $body-color;
       outline: 0;
+      &:hover {
+        color: $navbar-light-hover-color;
+      }
       &.active {
         color: $primary;
         box-shadow: inset 0 -2px $primary;
         background-color: transparent;
-      }
-    }
-    &.active {
-      svg {
-        fill: $primary;
-      }
-      .nav-link {
-        color: $primary;
-        box-shadow: inset 0 -2px $primary;
       }
     }
   }

@@ -1,0 +1,11 @@
+# robots.txt for <%= root_url %>
+
+<%- unless ENV["SHOW_ROBOTS"] %>
+User-agent: *
+Disallow: /
+<%- else %>
+User-agent: *
+Disallow: /mon-compte
+Disallow: /users
+Sitemap: <%= sitemap_url(format: :xml) %>
+<%- end %>

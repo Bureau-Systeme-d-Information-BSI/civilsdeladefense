@@ -51,5 +51,8 @@ Rails.application.routes.draw do
     end
   end
 
+  resource :robots, only: %w(show)
+  resource :sitemap
+
   root to: 'job_offers#index'
 end

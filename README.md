@@ -14,7 +14,7 @@ Build des images Docker :
 docker-compose build
 ```
 
-Démarrage des images
+Démarrage des images :
 
 ```
 docker-compose down && docker-compose up

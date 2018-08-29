@@ -344,7 +344,7 @@ SimpleForm.setup do |config|
     b.optional :readonly
     b.wrapper :custom_file_wrapper, tag: 'div', class: 'custom-file' do |ba|
       ba.use :input, class: 'custom-file-input', error_class: 'is-invalid', valid_class: 'is-valid'
-      ba.use :label, class: 'custom-file-label'
+      ba.use :label, class: 'custom-file-label text-truncate'
       ba.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
     end
     b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }

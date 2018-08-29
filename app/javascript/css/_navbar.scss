@@ -11,6 +11,7 @@ nav.navbar {
 }
 
 body > .navbar.bg-white {
+  @include box-shadow($bmd-shadow-2dp);
   .nav-item {
     @extend .d-flex;
     &:hover {

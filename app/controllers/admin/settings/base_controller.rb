@@ -1,6 +1,7 @@
 class Admin::Settings::BaseController < Admin::BaseController
 
+  layout 'admin/settings'
+
   def index
-    @administrators = Administrator.all
   end
 end

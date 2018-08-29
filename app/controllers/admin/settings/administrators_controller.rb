@@ -4,6 +4,7 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
   # GET /admin/settings/administrators
   # GET /admin/settings/administrators.json
   def index
+    @administrators = Administrator.all
   end
 
   # GET /admin/settings/administrators/1
@@ -14,13 +15,10 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
   # GET /admin/settings/administrators/new
   def new
     @administrator = Administrator.new
-
-    render layout: 'admin/simple'
   end
 
   # GET /admin/settings/administrators/1/edit
   def edit
-    render layout: 'admin/simple'
   end
 
   # POST /admin/settings/administrators
@@ -30,10 +28,10 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
 
     respond_to do |format|
       if @administrator.save
-        format.html { redirect_to [:admin, :settings, :root], notice: 'Job offer was successfully created.' }
+        format.html { redirect_to [:admin, :settings, :root], notice: t('.success') }
         format.json { render :show, status: :created, location: @administrator }
       else
-        format.html { render :new, layout: 'admin/simple' }
+        format.html { render :new }
         format.json { render json: @administrator.errors, status: :unprocessable_entity }
       end
     end
@@ -44,10 +42,10 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
   def update
     respond_to do |format|
       if @administrator.update(administrator_params)
-        format.html { redirect_to [:admin, :settings, :root], notice: 'Job offer was successfully updated.' }
+        format.html { redirect_to [:admin, :settings, :root], notice: t('.success') }
         format.json { render :show, status: :ok, location: @administrator }
       else
-        format.html { render :edit, layout: 'admin/simple' }
+        format.html { render :edit }
         format.json { render json: @administrator.errors, status: :unprocessable_entity }
       end
     end
@@ -58,7 +56,7 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
   def destroy
     @administrator.destroy
     respond_to do |format|
-      format.html { redirect_to [:admin, :settings, :root], notice: 'Job offer was successfully destroyed.' }
+      format.html { redirect_to [:admin, :settings, :root], notice: t('.success') }
       format.json { head :no_content }
     end
   end
@@ -68,7 +66,7 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
   def resend_confirmation_instructions
     respond_to do |format|
       @administrator.send_confirmation_instructions
-      format.html { redirect_to [:admin, :settings, :root], notice: 'Job offer was successfully updated.' }
+      format.html { redirect_to [:admin, :settings, :root], notice: t('.success') }
       format.json { render :resend_confirmation_instructions, status: :ok, location: @administrator }
     end
   end

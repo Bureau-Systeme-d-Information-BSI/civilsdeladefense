@@ -1,0 +1,29 @@
+- @page_title = t("admin.settings.shared.navbar.#{ resource_class.to_s.tableize }")
+- resource_symbol = resource_class.to_s.tableize.singularize.to_sym
+.card
+  .card-header.border-bottom-0
+    .card-title.d-md-flex.align-items-center
+      = t("admin.settings.#{ resource_class.to_s.tableize }.index.card_title", count: collection.size)
+      = link_to [:new, :admin, :settings, resource_symbol], class: 'btn btn-primary btn-raised ml-auto mt-2 mt-md-0 mb-0' do
+        = fa_icon 'plus', class: 'mr-1'
+        = t('buttons.add')
+  %table.table.table-hover.mb-0.mt-3
+    %thead
+      %tr
+        %th Nom
+        - if resource_class == Category
+          %th Nombre d'offres
+        %th
+    %tbody
+      - for element in collection
+        %tr
+          %td
+            = element.name
+          - if resource_class == Category
+            %td
+              = element.job_offers.publicly_visible.count
+          %td.text-right
+            %ul.list-inline.mb-0.actions
+              %li.list-inline-item
+                = link_to fa_icon('pencil'), [:edit, :admin, :settings, element], title: t('buttons.edit')
+                = link_to fa_icon('delete'), [:admin, :settings, element], method: :delete, title: t('buttons.delete'), data: {confirm: t('buttons.confirm')}

@@ -160,6 +160,7 @@ aside.sidebar {
   }
   .card-title {
     color: $secondary;
+    font-weight: $headings-font-weight;
     font-size: $font-size-base * 1.1;
     a {
       color: $secondary;

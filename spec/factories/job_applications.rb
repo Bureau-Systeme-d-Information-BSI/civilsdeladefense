@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :job_application do
     job_offer
+    user
     first_name "MyString"
     last_name "MyString"
     current_position "MyString"

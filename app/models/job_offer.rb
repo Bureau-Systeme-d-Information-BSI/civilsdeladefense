@@ -5,13 +5,11 @@ class JobOffer < ApplicationRecord
   friendly_id :title, use: [:slugged, :finders, :history]
 
   belongs_to :owner, class_name: 'Administrator'
-  belongs_to :category
-  belongs_to :official_status
   belongs_to :employer
-  belongs_to :contract_type
-  belongs_to :study_level
-  belongs_to :experience_level
-  belongs_to :sector
+  SETTINGS = %i(category official_status contract_type study_level experience_level sector).freeze
+  SETTINGS.each do |setting|
+    belongs_to setting
+  end
 
   has_many :job_applications
 

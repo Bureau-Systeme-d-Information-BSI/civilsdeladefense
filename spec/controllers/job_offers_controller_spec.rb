@@ -33,7 +33,9 @@ RSpec.describe JobOffersController, type: :controller do
 
   describe "GET #show" do
     it "returns a success response" do
+      create(:job_offer)
       job_offer = JobOffer.first
+      job_offer.publish!
       get :show, params: {id: job_offer.to_param}
       expect(response).to be_successful
     end

@@ -42,6 +42,7 @@ fr:
           one: 1 s
           other: "%{count} s"
   buttons:
+    add: "Ajouter"
     confirm: "Êtes-vous sûr ?"
     edit: "Éditer"
     delete: "Supprimer"
@@ -55,6 +56,7 @@ fr:
     send: "Envoyer"
     send_to_candidate: "Envoyer au candidat"
     show: "Voir"
+    cancel: "Annuler"
   job_applications:
     form:
       general_informations: "Informations générales"
@@ -166,17 +168,90 @@ fr:
         settings: "Paramètres"
         logout: "Déconnexion"
     settings:
+      shared:
+        navbar:
+          administrators: "Membres"
+          categories: "Catégories"
+          official_statuses: "Statuts"
+          contract_types: "Types de contrat"
+          study_levels: "Niveaux d'études"
+          experience_levels: "Expériences"
+          sectors: "Secteurs / Filières"
       base:
         index:
           title: "Paramètres"
-        administrators:
-          title: "Liste des comptes admin"
-          add: "Ajouter"
       administrators:
+        index:
+          title: "Membres"
+          add: "Ajouter"
+          card_title:
+            zero: 'Aucun membre'
+            one: '1 membre'
+            other: '%{count} membres'
         new:
-          title: "Inviter un nouvel administrateur"
+          title: "Inviter un nouveau membre"
         edit:
-          title: "Modifier un compte administrateur"
+          title: "Modifier un membre"
+      categories:
+        index:
+          card_title:
+            zero: 'Aucune catégorie'
+            one: '1 catégorie'
+            other: '%{count} catégories'
+        new:
+          title: "Ajouter une nouvelle catégorie"
+        edit:
+          title: "Modifier la catégorie '%{name}'"
+      official_statuses:
+        index:
+          card_title:
+            zero: 'Aucun statut'
+            one: '1 statut'
+            other: '%{count} statuts'
+        new:
+          title: "Ajouter un nouveau statut"
+        edit:
+          title: "Modifier le statut '%{name}'"
+      contract_types:
+        index:
+          card_title:
+            zero: 'Aucun type de contrat'
+            one: '1 type de contrat'
+            other: '%{count} types de contrat'
+        new:
+          title: "Ajouter un nouveau type de contrat"
+        edit:
+          title: "Modifier le type de contrat '%{name}'"
+      study_levels:
+        index:
+          card_title:
+            zero: "Aucun niveau d'étude"
+            one: "1 niveau d'étude"
+            other: "%{count} niveaux d'étude"
+        new:
+          title: "Ajouter un nouveau niveau d'étude"
+        edit:
+          title: "Modifier le niveau d'étude '%{name}'"
+      experience_levels:
+        index:
+          card_title:
+            zero: "Aucun niveau d'expérience"
+            one: "1 niveau d'expérience"
+            other: "%{count} niveaux d'expérience"
+        new:
+          title: "Ajouter un nouveau niveau d'expérience"
+        edit:
+          title: "Modifier le niveau d'expérience '%{name}'"
+      sectors:
+        index:
+          card_title:
+            zero: "Aucun secteur / filière"
+            one: "1 secteur / filière"
+            other: "%{count} secteurs / filières"
+        new:
+          title: "Ajouter une nouvelle filière"
+        edit:
+          title: "Modifier la filière '%{name}'"
   activerecord:
     errors:
       messages:

@@ -12,7 +12,7 @@
           - steps.each_with_index do |step, index|
             - space, number, title = step.split /(\d)\.\s/
             - klasses = %w(list-group-item d-flex justify-content-between align-items-center)
-            - klasses << 'active' if index == 0
+            - klasses << (index == 0 ? 'active' : 'disabled')
             = link_to "#step_#{index+1}", class: klasses do
               = title.split(" ")[0, 3].join(" ")
               %span.badge.badge-pill= number

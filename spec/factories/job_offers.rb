@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :job_offer do
     owner
-    title "Ingénieur informatique"
+    title { Faker::Job.title }
     description "Un super poste"
     category
     official_status

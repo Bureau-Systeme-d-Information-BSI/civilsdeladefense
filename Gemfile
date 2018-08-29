@@ -38,8 +38,10 @@ gem 'will_paginate'
 gem 'friendly_id'
 gem 'aasm'
 gem 'counter_culture'
+gem 'acts_as_list'
 gem 'file_validators'
 gem 'mini_magick'
+gem 'inherited_resources'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -47,6 +49,7 @@ group :development, :test do
 
   gem 'rspec-rails', '~> 3.7'
   gem 'factory_bot_rails'
+  gem 'faker'
 end
 
 group :development do

@@ -33,7 +33,10 @@ Rails.application.routes.draw do
           post :resend_confirmation_instructions
         end
       end
-      root to: 'base#index'
+      JobOffer::SETTINGS.each do |setting|
+        resources setting.to_s.pluralize.to_sym, except: %i(show)
+      end
+      root to: 'administrators#index'
     end
     root to: 'job_offers#index'
   end

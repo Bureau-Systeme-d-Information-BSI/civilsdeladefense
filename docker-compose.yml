@@ -16,8 +16,6 @@ services:
     environment:
       DEFAULT_HOST: "${DEFAULT_HOST}"
       DEFAULT_FROM: "${DEFAULT_FROM}"
-      PORT: 3000
-      RAILS_ENV: development
       DATABASE_URL: postgresql://admin:admin-secret@postgresql:5432/civilsdeladefense_development
       DATABASE_URL_TEST: postgresql://admin:admin-secret@postgresql:5432/civilsdeladefense_test
       BUNDLE_BIN: "/usr/src/app/vendor/.bundle/ruby/2.5.0/bin"

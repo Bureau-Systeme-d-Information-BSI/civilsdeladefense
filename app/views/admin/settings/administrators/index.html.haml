@@ -1,18 +1,25 @@
+- @page_title = t('.title')
 .card
-  .card-header
-    .card-title.d-md-flex.align-items-start
-      = t('.title')
-      = link_to [:new, :admin, :settings, :administrator], class: 'btn btn-primary btn-raised ml-auto mt-2 mt-md-0' do
+  .card-header.border-bottom-0
+    .card-title.d-md-flex.align-items-center
+      = t('.card_title', count: @administrators.size)
+      = link_to [:new, :admin, :settings, :administrator], class: 'btn btn-primary btn-raised ml-auto mt-2 mt-md-0 mb-0' do
         = fa_icon 'plus', class: 'mr-1'
         = t('.add')
-  %table.table.mb-0
+  %table.table.table-hover.mb-0.mt-3
+    %thead
+      %tr
+        %th Nom
+        %th Email
+        %th Statut
+        %th
     %tbody
       - for administrator in @administrators
         %tr
           %td
-            = administrator.email
-          %td
             = administrator.name
+          %td
+            = administrator.email
           %td
             = administrator.confirmed? ? Administrator.human_attribute_name(:confirmed) : Administrator.human_attribute_name(:unconfirmed)
           %td.text-right

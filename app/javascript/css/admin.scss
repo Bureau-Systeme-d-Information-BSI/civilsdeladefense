@@ -71,16 +71,45 @@ nav.navbar {
   }
 }
 
+th {
+  font-weight: $font-weight-bold;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(0, 0, 0, .02);
+}
+
 .card {
   > table {
-    > tbody {
+    thead th {
+      border-bottom-width: 1px;
+    }
+    > tbody, > thead {
       > tr {
+        &:first-child {
+          > th, > td {
+            border-top: 0;
+          }
+        }
         > th, > td {
           &:first-child {
             padding-left: $card-spacer-x;
           }
+        }
+        > td {
           &:last-child {
-            padding-right: $card-spacer-x;
+            > * {
+              visibility: hidden;
+            }
+          }
+        }
+        &:hover {
+          > td {
+            &:last-child {
+              > * {
+                visibility: visible;
+              }
+            }
           }
         }
       }
@@ -123,13 +152,22 @@ ul {
 .list-group {
   &.stepper {
     .list-group-item {
-      color: #cdcdcd;
-      font-size: 80%;
+      border-left: 4px solid transparent;
+      color: $body-color;
+      transition: color 0.2s $bmd-animation-curve-default;
+      will-change: color, transform;
+      outline: 0;
+      &:hover {
+        color: $navbar-light-hover-color;
+      }
+      &.disabled {
+        color: #cdcdcd;
+      }
       &.active {
         color: black;
         font-weight: 500;
         background-color: $card-bg;
-        border-left: 4px solid $primary;
+        border-left-color: $primary;
         .badge {
           &.badge-pill {
             color: $primary;
@@ -139,10 +177,10 @@ ul {
       }
       .badge {
         &.badge-pill {
-          border-radius: 50%;
-          line-height: 1.2rem;
+          @extend .badge, .rounded-circle, .px-0, .py-0, .font-weight-normal;
+          width: 1.2rem;
           height: 1.2rem;
-          padding: 0 0.4rem;
+          line-height: 1.1rem;
           border: 1px solid #cdcdcd;
         }
       }

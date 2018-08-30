@@ -9,13 +9,13 @@ class Admin::Settings::InheritedResourcesController < Admin::Settings::BaseContr
   end
 
   def update
-    key = "admin.settings.#{ resource_class.to_s.tableize }.update.update"
+    key = "admin.settings.#{ resource_class.to_s.tableize }.update.success"
     create!(notice: t(key))
   end
 
   def destroy
-    key = "admin.settings.#{ resource_class.to_s.tableize }.destroy.update"
-    create!(notice: t(key))
+    key = "admin.settings.#{ resource_class.to_s.tableize }.destroy.success"
+    destroy!(notice: t(key))
   end
 
   protected

@@ -3,6 +3,21 @@ class Admin::Settings::InheritedResourcesController < Admin::Settings::BaseContr
   inherit_resources
   actions :all, except: %i(show)
 
+  def create
+    key = "admin.settings.#{ resource_class.to_s.tableize }.create.success"
+    create!(notice: t(key))
+  end
+
+  def update
+    key = "admin.settings.#{ resource_class.to_s.tableize }.update.update"
+    create!(notice: t(key))
+  end
+
+  def destroy
+    key = "admin.settings.#{ resource_class.to_s.tableize }.destroy.update"
+    create!(notice: t(key))
+  end
+
   protected
 
     def permitted_fields

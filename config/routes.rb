@@ -33,6 +33,7 @@ Rails.application.routes.draw do
           post :resend_confirmation_instructions
         end
       end
+      resources :employers
       JobOffer::SETTINGS.each do |setting|
         resources setting.to_s.pluralize.to_sym, except: %i(show)
       end

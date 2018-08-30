@@ -171,6 +171,7 @@ fr:
       shared:
         navbar:
           administrators: "Membres"
+          employers: "Employeurs"
           categories: "Catégories"
           official_statuses: "Statuts"
           contract_types: "Types de contrat"
@@ -198,6 +199,24 @@ fr:
           success: "Compte supprimé !"
         edit:
           title: "Modifier un membre"
+      employers:
+        index:
+          title: "Employeurs"
+          add: "Ajouter"
+          card_title:
+            zero: 'Aucun employeur'
+            one: '1 employeur'
+            other: '%{count} employeurs'
+        new:
+          title: "Ajouter un nouel employeur"
+        create:
+          success: "Employeur créé !"
+        update:
+          success: "Employeur mis à jour !"
+        destroy:
+          success: "Employeur supprimé !"
+        edit:
+          title: "Modifier un employeur"
       categories:
         index:
           card_title:

@@ -38,5 +38,9 @@ module Civilsdeladefense
       config.force_ssl = true
       config.ssl_options = { hsts: { subdomains: false, preload: true, expires: 1.year } }
     end
+
+    config.middleware.insert_before(Rack::Runtime, Rack::Rewrite) do
+      r301 /^\/administrators\/(.*)/, '/admin/$1'
+    end
   end
 end

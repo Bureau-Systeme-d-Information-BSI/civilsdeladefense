@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
 
   as :administrator do
-    patch '/administrators/confirmation' => 'administrators/confirmations#update', as: :update_administrator_confirmation
+    patch '/admin/confirmation' => 'administrators/confirmations#update', as: :update_administrator_confirmation
   end
-  devise_for :administrators, controllers: { confirmations: 'administrators/confirmations' }, timeout_in: 30.minutes
+  devise_for :administrators, path: 'admin', controllers: { confirmations: 'administrators/confirmations' }, timeout_in: 30.minutes
   devise_for :users
 
   namespace :admin do

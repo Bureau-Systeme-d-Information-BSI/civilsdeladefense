@@ -30,8 +30,12 @@ fr:
           <<: *options_defaults
     labels:
       defaults:
-        email: "Email"
+        email: "E-mail"
         name: "Nom"
+      administrator:
+        current_password: 'Mot de passe actuel'
+        password: 'Nouveau mot de passe'
+        password_confirmation: 'Confirmation du mot de passe'
       email:
         title: "Sujet"
         body: "Votre message"

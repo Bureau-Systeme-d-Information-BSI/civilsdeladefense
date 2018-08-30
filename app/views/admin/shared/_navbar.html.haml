@@ -12,11 +12,13 @@
           = fa_icon(icon_for_controller(item))
           - ary = [:admin] + item
           = link_to t(".#{ item.first.to_s }"), ary, class: "nav-link"
-    %ul.nav.navbar-nav
-      %li.nav-item
-        = link_to current_administrator.email, admin_root_path, class: "nav-link"
-      %li.nav-item
-        = link_to t('.logout'), destroy_administrator_session_path, method: :delete, class: "nav-link"
+    %ul.navbar-nav
+      %li.nav-item.dropdown
+        = button_tag(class: "nav-link dropdown-toggle py-0 btn mb-0", role: :button, data: {toggle: :dropdown}, aria: {haspopup: true, expanded: false}) do
+          = image_user_tag current_administrator.photo, width: 20
+        .dropdown-menu.dropdown-menu-right
+          = link_to t('.account'), [:admin, :account], class: 'dropdown-item'
+          = link_to t('.logout'), destroy_administrator_session_path, method: :delete, class: 'dropdown-item'
 %aside.offcanvas-collapse
   .drawer
     %ul.list-group

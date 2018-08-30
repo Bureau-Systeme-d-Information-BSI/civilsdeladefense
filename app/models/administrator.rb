@@ -5,6 +5,11 @@ class Administrator < ApplicationRecord
 
   validates :name, presence: true
 
+  has_one_attached :photo
+  validates :photo, file_size: { less_than_or_equal_to: 1.megabytes },
+                    file_content_type: { allow: ['image/jpg', 'image/jpeg', 'image/png'] },
+                    if: -> { photo.attached? }
+
   def password_required?
     # Password is required if it is being set, but not for new records
     if !persisted?

@@ -57,6 +57,7 @@ fr:
     send_to_candidate: "Envoyer au candidat"
     show: "Voir"
     cancel: "Annuler"
+    save: "Enregistrer"
   job_applications:
     form:
       general_informations: "Informations générales"
@@ -85,6 +86,25 @@ fr:
       logout: "Déconnexion"
       job_applications: "Mes candidatures"
   admin:
+    accounts:
+      navbar:
+        show: "Informations"
+        change_password: "Mot de passe"
+        change_email: "Adresse e-mail"
+      show:
+        title: "Votre compte"
+      form_administrator:
+        title: "Vos informations"
+      change_password:
+        title: "Changement de mot de passe"
+      update_password:
+        success: "Mot de passe modifié !"
+      change_email:
+        title: "Changement d'e-mail"
+      update_email:
+        success: "Nouvel email ajouté, en attente de confirmation !"
+      update:
+        success: "Vos informations ont été mises à jour"
     job_applications:
       index:
         title: "Candidats"
@@ -166,6 +186,7 @@ fr:
         job_offers: "Offres"
         job_applications: "Candidatures"
         settings: "Paramètres"
+        account: "Mon compte"
         logout: "Déconnexion"
     settings:
       shared:

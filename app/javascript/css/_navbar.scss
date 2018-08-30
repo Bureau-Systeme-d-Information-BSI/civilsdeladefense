@@ -1,6 +1,5 @@
 nav.navbar {
-  padding-top: 5px;
-  padding-bottom: 5px;
+  @extend .py-0;
   height: 50px;
   .navbar-brand {
     img {
@@ -17,6 +16,13 @@ body > .navbar.bg-white {
     &:hover {
       color: $navbar-light-hover-color;
     }
+    &.show {
+      .nav-link {
+        &.dropdown-toggle {
+          color: inherit;
+        }
+      }
+    }
     svg {
       margin-top: ($spacer * .85);
       margin-right: ($spacer * .50);
@@ -27,9 +33,21 @@ body > .navbar.bg-white {
       transition: color 0.2s $bmd-animation-curve-default;
       transition: box-shadow 0.2s $bmd-animation-curve-default;
       will-change: color, box-shadow, transform;
-      @extend .px-0, .py-0, .my-2;
+      @extend .py-0;
       font-weight: 500;
       outline: 0;
+      &:not(.dropdown-toggle) {
+        @extend .px-0, .my-2;
+      }
+      &.dropdown-toggle {
+        height: 50px;
+        &:focus {
+          box-shadow: none;
+        }
+        .ripple-container {
+          display: inline-block;
+        }
+      }
     }
     &.active {
       color: $primary;

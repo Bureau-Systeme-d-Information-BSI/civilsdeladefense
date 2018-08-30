@@ -7,6 +7,12 @@ Rails.application.routes.draw do
   devise_for :users
 
   namespace :admin do
+    resource :account do
+      member do
+        get :change_email, :change_password
+        patch :update_email, :update_password
+      end
+    end
     resources :job_offers, path: 'offresdemploi' do
       collection do
         JobOffer.aasm.events.map(&:name).each do |event_name|

@@ -190,6 +190,12 @@ fr:
             other: '%{count} membres'
         new:
           title: "Inviter un nouveau membre"
+        create:
+          success: "Invitation envoyée !"
+        update:
+          success: "Compte mis à jour !"
+        destroy:
+          success: "Compte supprimé !"
         edit:
           title: "Modifier un membre"
       categories:
@@ -202,6 +208,12 @@ fr:
           title: "Ajouter une nouvelle catégorie"
         edit:
           title: "Modifier la catégorie '%{name}'"
+        create:
+          success: "Catégorie créée !"
+        update:
+          success: "Catégorie mise à jour !"
+        destroy:
+          success: "Catégorie supprimée !"
       official_statuses:
         index:
           card_title:
@@ -212,6 +224,12 @@ fr:
           title: "Ajouter un nouveau statut"
         edit:
           title: "Modifier le statut '%{name}'"
+        create:
+          success: "Statut créé !"
+        update:
+          success: "Statut mis à jour !"
+        destroy:
+          success: "Statut supprimé !"
       contract_types:
         index:
           card_title:
@@ -222,6 +240,12 @@ fr:
           title: "Ajouter un nouveau type de contrat"
         edit:
           title: "Modifier le type de contrat '%{name}'"
+        create:
+          success: "Type de contrat créé !"
+        update:
+          success: "Type de contrat mis à jour !"
+        destroy:
+          success: "Type de contrat supprimé !"
       study_levels:
         index:
           card_title:
@@ -232,6 +256,12 @@ fr:
           title: "Ajouter un nouveau niveau d'étude"
         edit:
           title: "Modifier le niveau d'étude '%{name}'"
+        create:
+          success: "Niveau d'étude créé !"
+        update:
+          success: "Niveau d'étude mis à jour !"
+        destroy:
+          success: "Niveau d'étude supprimé !"
       experience_levels:
         index:
           card_title:
@@ -242,6 +272,12 @@ fr:
           title: "Ajouter un nouveau niveau d'expérience"
         edit:
           title: "Modifier le niveau d'expérience '%{name}'"
+        create:
+          success: "Niveau d'expérience créé !"
+        update:
+          success: "Niveau d'expérience mis à jour !"
+        destroy:
+          success: "Niveau d'expérience supprimé !"
       sectors:
         index:
           card_title:
@@ -252,6 +288,12 @@ fr:
           title: "Ajouter une nouvelle filière"
         edit:
           title: "Modifier la filière '%{name}'"
+        create:
+          success: "Filière créée !"
+        update:
+          success: "Filière mise à jour !"
+        destroy:
+          success: "Filière supprimée !"
   activerecord:
     errors:
       messages:

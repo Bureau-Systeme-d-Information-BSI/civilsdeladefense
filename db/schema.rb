@@ -10,17 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_29_090432) do
+ActiveRecord::Schema.define(version: 2018_08_30_140901) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
-    t.bigint "record_id", null: false
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
+    t.uuid "record_id"
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
@@ -36,7 +37,7 @@ ActiveRecord::Schema.define(version: 2018_08_29_090432) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
-  create_table "administrators", force: :cascade do |t|
+  create_table "administrators", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "name"
     t.string "encrypted_password", default: "", null: false
@@ -62,7 +63,7 @@ ActiveRecord::Schema.define(version: 2018_08_29_090432) do
     t.index ["unlock_token"], name: "index_administrators_on_unlock_token", unique: true
   end
 
-  create_table "categories", force: :cascade do |t|
+  create_table "categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -70,32 +71,32 @@ ActiveRecord::Schema.define(version: 2018_08_29_090432) do
     t.index ["name"], name: "index_categories_on_name", unique: true
   end
 
-  create_table "contract_types", force: :cascade do |t|
+  create_table "contract_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_contract_types_on_name", unique: true
   end
 
-  create_table "emails", force: :cascade do |t|
+  create_table "emails", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
     t.text "body"
-    t.bigint "job_application_id"
-    t.bigint "administrator_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "administrator_id"
+    t.uuid "job_application_id"
     t.index ["administrator_id"], name: "index_emails_on_administrator_id"
     t.index ["job_application_id"], name: "index_emails_on_job_application_id"
   end
 
-  create_table "employers", force: :cascade do |t|
+  create_table "employers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_employers_on_name", unique: true
   end
 
-  create_table "experience_levels", force: :cascade do |t|
+  create_table "experience_levels", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -104,19 +105,17 @@ ActiveRecord::Schema.define(version: 2018_08_29_090432) do
 
   create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
     t.string "slug", null: false
-    t.integer "sluggable_id", null: false
     t.string "sluggable_type", limit: 50
     t.string "scope"
     t.datetime "created_at"
+    t.uuid "sluggable_id"
     t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
     t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
     t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
   end
 
-  create_table "job_applications", force: :cascade do |t|
-    t.bigint "job_offer_id"
-    t.bigint "user_id"
+  create_table "job_applications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
     t.string "current_position"
@@ -132,28 +131,22 @@ ActiveRecord::Schema.define(version: 2018_08_29_090432) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "state"
+    t.uuid "job_offer_id"
+    t.uuid "user_id"
     t.index ["job_offer_id"], name: "index_job_applications_on_job_offer_id"
     t.index ["state"], name: "index_job_applications_on_state"
     t.index ["user_id"], name: "index_job_applications_on_user_id"
   end
 
-  create_table "job_offers", force: :cascade do |t|
-    t.bigint "owner_id"
+  create_table "job_offers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
     t.string "slug", null: false
     t.text "description"
-    t.bigint "category_id"
-    t.bigint "official_status_id"
     t.string "location"
-    t.bigint "employer_id"
     t.text "required_profile"
     t.text "recruitment_process"
-    t.bigint "contract_type_id"
     t.date "contract_start_on"
     t.boolean "is_remote_possible"
-    t.bigint "study_level_id"
-    t.bigint "experience_level_id"
-    t.bigint "sector_id"
     t.boolean "is_negotiable"
     t.string "estimate_monthly_salary_net"
     t.string "estimate_monthly_salary_gross"
@@ -179,6 +172,14 @@ ActiveRecord::Schema.define(version: 2018_08_29_090432) do
     t.integer "contract_feedback_waiting_job_applications_count", default: 0, null: false
     t.integer "contract_received_job_applications_count", default: 0, null: false
     t.integer "affected_job_applications_count", default: 0, null: false
+    t.uuid "owner_id"
+    t.uuid "category_id"
+    t.uuid "contract_type_id"
+    t.uuid "employer_id"
+    t.uuid "experience_level_id"
+    t.uuid "official_status_id"
+    t.uuid "sector_id"
+    t.uuid "study_level_id"
     t.index ["category_id"], name: "index_job_offers_on_category_id"
     t.index ["contract_type_id"], name: "index_job_offers_on_contract_type_id"
     t.index ["employer_id"], name: "index_job_offers_on_employer_id"
@@ -191,38 +192,38 @@ ActiveRecord::Schema.define(version: 2018_08_29_090432) do
     t.index ["study_level_id"], name: "index_job_offers_on_study_level_id"
   end
 
-  create_table "messages", force: :cascade do |t|
+  create_table "messages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "body"
-    t.bigint "job_application_id"
-    t.bigint "administrator_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.uuid "administrator_id"
+    t.uuid "job_application_id"
     t.index ["administrator_id"], name: "index_messages_on_administrator_id"
     t.index ["job_application_id"], name: "index_messages_on_job_application_id"
   end
 
-  create_table "official_statuses", force: :cascade do |t|
+  create_table "official_statuses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_official_statuses_on_name", unique: true
   end
 
-  create_table "sectors", force: :cascade do |t|
+  create_table "sectors", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_sectors_on_name", unique: true
   end
 
-  create_table "study_levels", force: :cascade do |t|
+  create_table "study_levels", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_study_levels_on_name", unique: true
   end
 
-  create_table "users", force: :cascade do |t|
+  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"

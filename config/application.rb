@@ -42,5 +42,9 @@ module Civilsdeladefense
     config.middleware.insert_before(Rack::Runtime, Rack::Rewrite) do
       r301 /^\/administrators\/(.*)/, '/admin/$1'
     end
+
+    config.generators do |g|
+      g.orm :active_record, primary_key_type: :uuid
+    end
   end
 end

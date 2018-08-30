@@ -3,8 +3,7 @@
 .row.bg-white.border-bottom.head
   .col-12.col-md-8.border-right{class: job_application_modal_section_classes('pb-0')}
     .d-flex.justify-content-start.head
-      - if job_application.photo.attached?
-        = image_tag job_application.photo.variant(resize: "160x160^", gravity: "center", extent: "160x160"), class: 'rounded-circle mr-2', style: "width:80px;height:80px;"
+      = image_user_tag job_application.photo, width: 80, class: 'mr-4'
       .d-flex.flex-column
         .h5.secondary.mb-0= job_application.full_name
         .my-1= job_application.current_position

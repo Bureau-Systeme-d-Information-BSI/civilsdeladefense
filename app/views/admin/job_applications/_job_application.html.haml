@@ -10,8 +10,7 @@
   .card-body
     = link_to [:admin, job_application], data: { toggle: :modal, target: '#remoteContentModal' } do
       .d-flex.justify-content-start
-        - if job_application.photo.attached?
-          = image_tag job_application.photo.variant(resize: "80x80^", gravity: "center", extent: "80x80"), class: 'rounded-circle mr-2', style: "width:40px;height:40px;"
+        = image_user_tag job_application.photo, width: 40, class: 'mr-2'
         .d-flex.flex-column
           %strong= job_application.full_name
           %strong.small.text-muted= job_application.current_position

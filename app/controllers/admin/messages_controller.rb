@@ -1,4 +1,4 @@
-class Admin::MessagesController < ApplicationController
+class Admin::MessagesController < Admin::BaseController
   before_action :set_job_application
 
   # POST /admin/messages

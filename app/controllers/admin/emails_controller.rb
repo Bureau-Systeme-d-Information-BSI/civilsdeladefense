@@ -1,4 +1,4 @@
-class Admin::EmailsController < ApplicationController
+class Admin::EmailsController < Admin::BaseController
   before_action :set_job_application
 
   # POST /admin/emails

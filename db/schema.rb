@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 2018_08_30_140901) do
     t.string "record_type", null: false
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
-    t.uuid "record_id", null: false
+    t.uuid "record_id"
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
@@ -108,7 +108,7 @@ ActiveRecord::Schema.define(version: 2018_08_30_140901) do
     t.string "sluggable_type", limit: 50
     t.string "scope"
     t.datetime "created_at"
-    t.uuid "sluggable_id", null: false
+    t.uuid "sluggable_id"
     t.index ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true
     t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
     t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"

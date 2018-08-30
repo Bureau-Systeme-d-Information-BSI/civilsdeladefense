@@ -49,7 +49,7 @@ class ChangeForeignkeysToUuid < ActiveRecord::Migration[5.2]
     foreign_key_type = "#{column_name}_type".to_sym
     new_foreign_key = "#{column_name}_uuid".to_sym
 
-    add_column from_table, new_foreign_key, :uuid, null: false
+    add_column from_table, new_foreign_key, :uuid
 
     from_klass = from_table.classify.constantize
 

@@ -41,6 +41,9 @@
       border-right: 0;
     }
   }
+  .alert {
+    @extend .mb-3;
+  }
 }
 
 @include media-breakpoint-up(md) {

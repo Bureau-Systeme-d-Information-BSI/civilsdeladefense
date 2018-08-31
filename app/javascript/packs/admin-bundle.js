@@ -60,6 +60,16 @@ $( document ).ready(function() {
   })
 })
 
+document.addEventListener("DOMContentLoaded", function() {
+  var inputSearchNodes = document.querySelectorAll('.input-search')
+  if (inputSearchNodes !== null) {
+    inputSearchNodes.forEach( (inputSearchNode) => {
+      inputSearchNode.addEventListener('click', function(e) {
+      })
+    })
+  }
+})
+
 $('#remoteContentModal').on('show.bs.modal', function (event) {
   var link = event.relatedTarget
   var href = link.href
@@ -76,5 +86,4 @@ $('#remoteContentModal').on('show.bs.modal', function (event) {
       console.log(response)
     }
   })
-
 })

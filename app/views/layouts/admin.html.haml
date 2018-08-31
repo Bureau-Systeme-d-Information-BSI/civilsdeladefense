@@ -31,6 +31,8 @@
                 = image_tag asset_pack_path('images/logo.svg'), class: 'logo'
             - if flash[:notice]
               .alert.alert-info= flash[:notice]
+            - if flash[:alert]
+              .alert.alert-danger= flash[:alert]
             - elsif flash[:error]
               .alert.alert-danger= flash[:error]
             - elsif flash[:success]

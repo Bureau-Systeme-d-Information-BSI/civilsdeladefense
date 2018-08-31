@@ -11,11 +11,22 @@ class JobOffer < ApplicationRecord
     belongs_to setting
   end
 
+  include PgSearch
+  pg_search_scope :search_full_text, against: [
+    [:title, 'A'],
+    [:description, 'B'],
+    [:location, 'C']
+  ], associated_against: SETTINGS.inject({}) { |memo, obj|
+    memo[obj] = %i(name)
+    memo
+  }
+
   has_many :job_applications
 
   validates :title, :description, presence: true
 
   scope :publicly_visible, -> { where(state: :published) }
+  scope :search_import, -> { includes(*SETTINGS) }
 
   OPTIONS_AVAILABLE = { disabled: 0, optional: 1, mandatory: 2 }
   FILES = %i(cover_letter resume photo).freeze
@@ -23,6 +34,21 @@ class JobOffer < ApplicationRecord
   (FILES + URLS).each do |opt_name|
     enum :"option_#{opt_name}" => OPTIONS_AVAILABLE, _suffix: true
   end
+
+  enum most_advanced_job_applications_state: {
+    initial: 0,
+    rejected: 1,
+    phone_meeting: 2,
+    phone_meeting_rejected: 3,
+    phone_meeting_accepted: 4,
+    to_be_met: 5,
+    after_meeting_rejected: 6,
+    accepted: 7,
+    contract_drafting: 8,
+    contract_feedback_waiting: 9,
+    contract_received: 10,
+    affected: 11
+  }
 
   enum state: {
     draft: 0,

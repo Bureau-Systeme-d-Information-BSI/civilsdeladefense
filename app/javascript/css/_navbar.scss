@@ -64,7 +64,7 @@ body > .navbar.bg-white {
       transition: color 0.2s $bmd-animation-curve-default;
       transition: box-shadow 0.2s $bmd-animation-curve-default;
       will-change: color, box-shadow, transform;
-      @extend .px-0, .py-0, .my-2;
+      @extend .px-0, .py-0;
       font-weight: 500;
       color: $body-color;
       outline: 0;

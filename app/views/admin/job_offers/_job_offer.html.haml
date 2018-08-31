@@ -4,12 +4,11 @@
   .card-body
     .row
       .col-12.col-md-8
-        .card-title.font-weight-bold.d-flex.align-items-center
+        .card-title.font-weight-bold.d-flex.align-items-center.mb-0
           = link_to job_offer.title, [:admin, job_offer], class: 'text-truncate'
-          - unless job_offer.published?
-            - klass = badge_class(job_offer.state.to_sym)
-            %small.badge.text-white.ml-2.text-uppercase.text-nowrap{class: klass}
-              = job_offer.aasm.human_state
+        - klass = badge_class(job_offer.state.to_sym)
+        %small.badge.text-white.text-uppercase.text-nowrap.my-2{class: klass}
+          = job_offer.aasm.human_state
         .d-flex
           .font-weight-bold.mr-3= job_offer.contract_type.name
           .font-weight-bold= job_offer.location

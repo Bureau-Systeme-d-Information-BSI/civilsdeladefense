@@ -1,10 +1,35 @@
-%div{id: dom_id(@job_application, 'activity')}
+.activity{id: dom_id(@job_application, 'activity')}
   .font-weight-bold.text-secondary.mb-3
     = fa_icon('forum', class: 'text-secondary')
     = t('.title')
 
   = render partial: '/admin/messages/form'
 
-  %ul
-    - @job_application.messages.order(created_at: :desc).each do |message|
-      %li= message.body
+  %ul.list-unstyled.activities
+    - ary = @job_application.audits + @job_application.associated_audits
+    - audits = ary.sort_by(&:created_at).reverse!
+    - audits.each do |audit|
+      - audited_changes = audit.audited_changes
+      - whodunnit = audit.try(:user).try(:name) || 'N/A'
+      %li
+        .d-flex
+          - model = audit.user == 'unknown' && audit.version == 1 ? @job_application : audit.user
+          = image_user_tag model&.photo, width: 32, class: 'photo'
+          .d-flex.flex-column
+            .mb-1
+              - if audit.version == 1 && audit.user == "unknown"
+                = t('.activities.creation_html', name: @job_application.full_name)
+              - elsif audited_changes.key?('state')
+                - state_name = audited_changes['state'].last
+                - state_name_i18n = JobApplication.human_attribute_name("state/#{state_name}")
+                = t('.activities.change_state_html', admin_name: whodunnit, name: @job_application.full_name, state_name: state_name_i18n)
+              - elsif audit.auditable_type == "Message"
+                = t('.activities.message_html', admin_name: whodunnit, name: @job_application.full_name)
+                .card.my-2
+                  .card-body= audited_changes['body']
+              - elsif audit.auditable_type == "Email"
+                = t('.activities.email_html', admin_name: whodunnit, name: @job_application.full_name)
+              - else
+                %code= audited_changes
+            %small.text-muted.time-ago
+              il y a #{time_ago_in_words audit.created_at}

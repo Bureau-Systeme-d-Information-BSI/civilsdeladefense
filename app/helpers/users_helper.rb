@@ -17,7 +17,7 @@ module UsersHelper
       klasses << options[:class]
     end
 
-    image_url = if photo.attached?
+    image_url = if photo.present? && photo.attached?
       extent = [width*2, height*2].join('x')
       resize =  extent + '^'
       photo.variant(resize: resize, gravity: :center, extent: extent)

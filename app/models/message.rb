@@ -5,4 +5,6 @@ class Message < ApplicationRecord
   validates :body, presence: true
 
   default_scope { order(created_at: :desc) }
+
+  audited associated_with: :job_application
 end

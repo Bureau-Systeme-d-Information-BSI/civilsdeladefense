@@ -1,5 +1,7 @@
 class JobApplication < ApplicationRecord
   include AASM
+  audited
+  has_associated_audits
 
   belongs_to :job_offer
   belongs_to :user

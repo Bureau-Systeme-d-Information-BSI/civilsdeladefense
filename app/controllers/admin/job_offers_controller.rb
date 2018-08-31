@@ -1,21 +1,30 @@
 class Admin::JobOffersController < Admin::BaseController
   before_action :set_job_offer, only: [:show, :edit, :update, :destroy].push(*JobOffer.aasm.events.map(&:name)).push(*JobOffer.aasm.events.map{ |x| "update_and_#{x.name}".to_sym })
+  before_action :set_job_offers, only: %i(index archived)
 
-  # GET /job_offers
-  # GET /job_offers.json
+  # GET /admin/job_offers
+  # GET /admin/job_offers.json
   def index
-    @categories = Category.order(name: :asc).includes(:job_offers).all
+    @job_offers = @job_offers_active
 
     render layout: 'admin/simple'
   end
 
-  # GET /job_offers/1
-  # GET /job_offers/1.json
+  # GET /admin/job_offers/archived
+  # GET /admin/job_offers/archived.json
+  def archived
+    @job_offers = @job_offers_archived
+
+    render action: :index, layout: 'admin/simple'
+  end
+
+  # GET /admin/job_offers/1
+  # GET /admin/job_offers/1.json
   def show
     @job_applications = @job_offer.job_applications.group_by(&:state)
   end
 
-  # GET /job_offers/new
+  # GET /admin/job_offers/new
   def new
     @job_offer_origin = nil
     if params[:job_offer_id].present?
@@ -31,12 +40,12 @@ class Admin::JobOffersController < Admin::BaseController
     end
   end
 
-  # GET /job_offers/1/edit
+  # GET /admin/job_offers/1/edit
   def edit
   end
 
-  # POST /job_offers
-  # POST /job_offers.json
+  # POST /admin/job_offers
+  # POST /admin/job_offers.json
   def create
     @job_offer = JobOffer.new(job_offer_params)
     @job_offer.owner = current_administrator
@@ -52,8 +61,8 @@ class Admin::JobOffersController < Admin::BaseController
     end
   end
 
-  # PATCH/PUT /job_offers/1
-  # PATCH/PUT /job_offers/1.json
+  # PATCH/PUT /admin/job_offers/1
+  # PATCH/PUT /admin/job_offers/1.json
   def update
     respond_to do |format|
       if @job_offer.update(job_offer_params)
@@ -66,8 +75,8 @@ class Admin::JobOffersController < Admin::BaseController
     end
   end
 
-  # DELETE /job_offers/1
-  # DELETE /job_offers/1.json
+  # DELETE /admin/job_offers/1
+  # DELETE /admin/job_offers/1.json
   def destroy
     @job_offer.destroy
     respond_to do |format|
@@ -107,6 +116,21 @@ class Admin::JobOffersController < Admin::BaseController
   end
 
   private
+
+    def set_job_offers
+      @categories = Category.order(name: :asc).all
+
+      @job_offers_active = job_offers_root.where.not(state: :archived)
+      @job_offers_active = @job_offers_active.search_full_text(params[:q]) if params[:q].present?
+
+      @job_offers_archived = job_offers_root.archived
+      @job_offers_archived = @job_offers_archived.search_full_text(params[:q]) if params[:q].present?
+    end
+
+    def job_offers_root
+      JobOffer.includes(:category, :contract_type).order(created_at: :desc)
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_job_offer
       @job_offer = JobOffer.find(params[:id])

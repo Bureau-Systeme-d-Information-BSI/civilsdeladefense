@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     end
     resources :job_offers, path: 'offresdemploi' do
       collection do
+        get :archived
         JobOffer.aasm.events.map(&:name).each do |event_name|
           post("create_and_#{ event_name }".to_sym)
         end

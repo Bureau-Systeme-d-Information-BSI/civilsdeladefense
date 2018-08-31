@@ -193,6 +193,26 @@ aside.sidebar {
   }
 }
 
+.input-search {
+  @include box-shadow($bmd-shadow-2dp);
+  .input-group-text {
+    padding-top: ($spacer * .75);
+    padding-bottom: ($spacer * .75);
+  }
+  input {
+    border-color: transparent;
+  }
+  svg {
+    height: auto;
+  }
+  .input-group-prepend {
+    width: 2.5rem;
+  }
+  input {
+    width: calc(100% - 2.5rem);
+  }
+}
+
 .was-validated .custom-file-input:invalid ~ .custom-file-label, .custom-file-input.is-invalid ~ .custom-file-label {
   border-width: 2px;
 }

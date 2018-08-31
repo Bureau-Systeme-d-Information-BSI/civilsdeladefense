@@ -11,11 +11,22 @@ class JobOffer < ApplicationRecord
     belongs_to setting
   end
 
+  include PgSearch
+  pg_search_scope :search_full_text, against: [
+    [:title, 'A'],
+    [:description, 'B'],
+    [:location, 'C']
+  ], associated_against: SETTINGS.inject({}) { |memo, obj|
+    memo[obj] = %i(name)
+    memo
+  }
+
   has_many :job_applications
 
   validates :title, :description, presence: true
 
   scope :publicly_visible, -> { where(state: :published) }
+  scope :search_import, -> { includes(*SETTINGS) }
 
   OPTIONS_AVAILABLE = { disabled: 0, optional: 1, mandatory: 2 }
   FILES = %i(cover_letter resume photo).freeze

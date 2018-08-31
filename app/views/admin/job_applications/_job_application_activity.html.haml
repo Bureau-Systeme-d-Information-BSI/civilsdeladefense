@@ -13,7 +13,7 @@
       - whodunnit = audit.try(:user).try(:name) || 'N/A'
       %li
         .d-flex
-          - model = audit.user == 'unknown' && audit.version == 1 ? @job_application : audit.user
+          - model = audit.auditable_type == 'JobApplication' && audit.version == 1 ? @job_application : audit.user
           = image_user_tag model&.photo, width: 32, class: 'photo'
           .d-flex.flex-column
             .mb-1

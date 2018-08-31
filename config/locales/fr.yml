@@ -58,6 +58,7 @@ fr:
     show: "Voir"
     cancel: "Annuler"
     save: "Enregistrer"
+    copy: "Dupliquer"
   job_applications:
     form:
       general_informations: "Informations générales"

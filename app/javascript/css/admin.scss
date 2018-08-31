@@ -240,6 +240,13 @@ ul {
       }
     }
   }
+  &.job-offer {
+    .dropdown-menu {
+      .dropdown-item {
+        @extend small;
+      }
+    }
+  }
 }
 
 .bg-card-bg {

@@ -48,4 +48,9 @@
             = fa_icon 'dots-horizontal'
           .dropdown-menu{"aria-labelledby" => "dropdownMenuLink"}
             - job_offer.aasm.events.each do |event|
-              = link_to t("buttons.#{ event.name }"), [event.name, :admin, job_offer], method: :patch, remote: true, class: "dropdown-item"
+              = link_to [event.name, :admin, job_offer], method: :patch, remote: true, class: "dropdown-item" do
+                = fa_icon('arrow-right', class: 'mr-1')
+                = t("buttons.#{ event.name }")
+            = link_to [:new, :admin, :job_offer, {job_offer_id: job_offer.to_param}], class: "dropdown-item" do
+              = fa_icon('content-copy', class: 'mr-1')
+              = t("buttons.copy")

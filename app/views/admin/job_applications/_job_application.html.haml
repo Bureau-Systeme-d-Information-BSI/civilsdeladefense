@@ -1,5 +1,5 @@
 - with_header = true if with_header.nil?
-.card.mt-3.job-application{id: dom_id(job_application)}
+.card.mt-3.job-application{id: dom_id(job_application), class: "job-application--state-#{job_application.state}"}
   - if with_header
     .card-header.d-flex
       %small.d-block.text-truncate.mr-auto
@@ -12,7 +12,8 @@
       .d-flex.justify-content-start
         = image_user_tag job_application.photo, width: 40, class: 'mr-2'
         .d-flex.flex-column
-          %strong= job_application.full_name
+          %strong.text-secondary= job_application.full_name
           %strong.small.text-muted= job_application.current_position
         .ml-auto
-          %strong.small.text-muted= time_ago_in_words job_application.created_at, scope: 'datetime.distance_in_words.short'
+  .card-footer.d-flex.flex-column.flex-md-row
+    .mr-auto= t('.published_date', time_ago_in_words: time_ago_in_words(job_application.created_at))

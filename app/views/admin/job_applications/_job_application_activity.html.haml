@@ -17,7 +17,7 @@
           = image_user_tag model&.photo, width: 32, class: 'photo'
           .d-flex.flex-column
             .mb-1
-              - if audit.version == 1 && audit.user == "unknown"
+              - if audit.version == 1 && audit.auditable_type == 'JobApplication'
                 = t('.activities.creation_html', name: @job_application.full_name)
               - elsif audited_changes.key?('state')
                 - state_name = audited_changes['state'].last

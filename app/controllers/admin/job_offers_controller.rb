@@ -17,7 +17,18 @@ class Admin::JobOffersController < Admin::BaseController
 
   # GET /job_offers/new
   def new
-    @job_offer = JobOffer.new
+    @job_offer_origin = nil
+    if params[:job_offer_id].present?
+      @job_offer_origin = JobOffer.find params[:job_offer_id]
+    end
+    @job_offer = if @job_offer_origin.nil?
+      JobOffer.new
+    else
+      j = @job_offer_origin.dup
+      j.title = "Copie de #{j.title}"
+      j.state = nil
+      j
+    end
   end
 
   # GET /job_offers/1/edit

@@ -58,6 +58,7 @@ fr:
     show: "Voir"
     cancel: "Annuler"
     save: "Enregistrer"
+    copy: "Dupliquer"
   job_applications:
     form:
       general_informations: "Informations générales"
@@ -114,6 +115,8 @@ fr:
           zero: 'Aucune candidature trouvée'
           one: '1 candidature trouvée'
           other: '%{count} candidatures trouvées'
+      job_application:
+        published_date: "Candidaté il y a %{time_ago_in_words}"
       job_application_head:
         nav_overview: "Candidature"
         nav_emails: "Emails"

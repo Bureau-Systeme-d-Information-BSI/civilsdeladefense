@@ -217,16 +217,17 @@ ul {
     background-color: rgba($card-border-color, 0.1);
     background-image: repeating-linear-gradient(45deg, transparent, transparent 15px, rgba(255,255,255,.3) 15px, rgba(255,255,255,.3) 30px);
   }
+  &.job-application--state-rejected {
+    opacity: 0.6;
+  }
   &.job-application {
-    .card-body, .card-footer {
-      padding: $card-spacer-x-normal * 0.75;
-    }
     .card-header {
       color: $body-color-variation;
       border-bottom: 0;
       padding: ($card-spacer-x-normal * 0.25) ($card-spacer-x-normal * 0.75);
     }
     .card-body {
+      padding: $card-spacer-x-normal * 0.75;
       background-color: white;
       strong {
         color: rgba(0, 0, 0, 0.87);
@@ -237,6 +238,18 @@ ul {
         &:hover, &:focus {
           text-decoration: none;
         }
+      }
+    }
+    .card-footer {
+      font-size: 60%;
+      @extend .text-muted;
+      padding: ($card-spacer-x-normal * 0.25) ($card-spacer-x-normal * 0.75);
+    }
+  }
+  &.job-offer {
+    .dropdown-menu {
+      .dropdown-item {
+        @extend small;
       }
     }
   }

@@ -15,7 +15,7 @@
     %ul.navbar-nav
       %li.nav-item.dropdown
         = button_tag(class: "nav-link dropdown-toggle py-0 btn mb-0", role: :button, data: {toggle: :dropdown}, aria: {haspopup: true, expanded: false}) do
-          = image_user_tag current_administrator.photo, width: 32
+          = image_user_tag current_administrator.photo, width: 40
         .dropdown-menu.dropdown-menu-right
           = link_to t('.account'), [:admin, :account], class: 'dropdown-item'
           = link_to t('.logout'), destroy_administrator_session_path, method: :delete, class: 'dropdown-item'

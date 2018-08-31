@@ -120,6 +120,11 @@ fr:
         nav_files: "Fichiers (%{count})"
       job_application_activity:
         title: "Activité et commentaires"
+        activities:
+          creation_html: "<span class='user-name'>%{name}</span> vient de postuler"
+          change_state_html: "<span class='user-name'>%{admin_name}</span> a déplacé <span class='user-name'>%{name}</span> dans la colonne “%{state_name}”"
+          message_html: "<span class='user-name'>%{admin_name}</span> a commenté la candidature de <span class='user-name'>%{name}</span>"
+          email_html: "<span class='user-name'>%{admin_name}</span> a envoyé un mail à <span class='user-name'>%{name}</span>"
       change_state:
         success: "Candidature passée en statut %{state} !"
     job_offers:

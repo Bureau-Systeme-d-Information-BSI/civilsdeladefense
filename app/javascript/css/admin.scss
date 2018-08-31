@@ -312,3 +312,34 @@ ul {
     }
   }
 }
+
+.activity {
+  textarea {
+    @extend small;
+  }
+  textarea, .card-body {
+    @extend .px-2, .py-2;
+  }
+}
+
+.activities {
+  color: #4e6e7c;
+  @extend small;
+  @extend .mt-3;
+  > li {
+    @extend .mb-3;
+    &:last-child {
+      @extend .mb-0;
+    }
+    .photo {
+      @extend .mr-3;
+      margin-top: 0.15rem;
+    }
+    .user-name {
+      font-weight: $font-weight-bold;
+    }
+    .card {
+      color: #787878;
+    }
+  }
+}

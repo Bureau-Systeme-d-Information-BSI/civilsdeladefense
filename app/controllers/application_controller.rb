@@ -30,4 +30,14 @@ class ApplicationController < ActionController::Base
         stored_location_for(resource)
       end
     end
+
+    def authenticated_user_or_administrator
+      if current_user
+        current_user
+      elsif current_administrator
+        current_administrator
+      else
+        'unknown'
+      end
+    end
 end

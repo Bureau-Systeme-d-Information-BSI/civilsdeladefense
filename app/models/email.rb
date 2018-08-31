@@ -3,4 +3,6 @@ class Email < ApplicationRecord
   belongs_to :administrator
 
   validates :title, :body, presence: true
+
+  audited associated_with: :job_application
 end

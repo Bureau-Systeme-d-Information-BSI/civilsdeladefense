@@ -1,2 +1,2 @@
 web: bundle exec rails server
-postdeploy: rake db:migrate
+postdeploy: rails db:migrate

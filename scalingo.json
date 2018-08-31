@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "first-deploy": "rails db:migrate && rails db:seed"
+  }
+}

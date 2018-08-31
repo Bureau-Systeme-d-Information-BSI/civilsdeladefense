@@ -74,6 +74,11 @@ class Admin::JobApplicationsController < Admin::BaseController
     @job_offer = @job_application.job_offer
     state_i18n = JobApplication.human_attribute_name("state/#{ @state }")
 
+    val = @job_offer.job_applications.where(job_offer_id: @job_offer.id).select(:state).group(:state).map{|x| x.state_before_type_cast}.max
+    if @job_offer.most_advanced_job_applications_state_before_type_cast != val
+      @job_offer.update_column(:most_advanced_job_applications_state, val)
+    end
+
     respond_to do |format|
       format.html { redirect_back(fallback_location: [:admin, @job_application], notice: t('.success', state: state_i18n)) }
       format.js {

@@ -35,6 +35,21 @@ class JobOffer < ApplicationRecord
     enum :"option_#{opt_name}" => OPTIONS_AVAILABLE, _suffix: true
   end
 
+  enum most_advanced_job_applications_state: {
+    initial: 0,
+    rejected: 1,
+    phone_meeting: 2,
+    phone_meeting_rejected: 3,
+    phone_meeting_accepted: 4,
+    to_be_met: 5,
+    after_meeting_rejected: 6,
+    accepted: 7,
+    contract_drafting: 8,
+    contract_feedback_waiting: 9,
+    contract_received: 10,
+    affected: 11
+  }
+
   enum state: {
     draft: 0,
     published: 1,

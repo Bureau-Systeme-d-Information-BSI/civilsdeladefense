@@ -4,11 +4,12 @@
   .card-body
     .row
       .col-12.col-md-8
+        - most_advanced_state = job_offer.most_advanced_job_applications_state
         .card-title.font-weight-bold.d-flex.align-items-center.mb-0
           = link_to job_offer.title, [:admin, job_offer], class: 'text-truncate'
-        - klass = badge_class(job_offer.state.to_sym)
+        - klass = badge_class(most_advanced_state.to_sym)
         %small.badge.text-white.text-uppercase.text-nowrap.my-2{class: klass}
-          = job_offer.aasm.human_state
+          = JobApplication.human_attribute_name("state/#{most_advanced_state}")
         .d-flex
           .font-weight-bold.mr-3= job_offer.contract_type.name
           .font-weight-bold= job_offer.location

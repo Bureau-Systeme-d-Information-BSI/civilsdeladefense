@@ -2,10 +2,16 @@ require 'rails_helper'
 
 RSpec.describe "admin/job_offers/index", type: :view do
   before(:each) do
-    assign(:job_offers, [
-      create(:job_offer),
-      create(:job_offer)
+    ary1 = assign(:job_offers_active, [
+      create(:job_offer, state: :published),
+      create(:job_offer, state: :published),
     ])
+    ary2 = assign(:job_offers_archived, [
+      create(:job_offer, state: :archived),
+      create(:job_offer, state: :archived),
+      create(:job_offer, state: :archived),
+    ])
+    assign(:job_offers, ary1)
   end
 
   it "renders a list of job_offers" do

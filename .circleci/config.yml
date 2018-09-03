@@ -38,8 +38,21 @@ jobs:
             - ./vendor/bundle
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
 
+      - run:
+          name: install js dependencies
+          command: |
+            yarn install
+
+      - save_js_cache:
+          paths:
+            - ./node_modules
+          key: v1-js-dependencies-{{ checksum "package.json" }}
+
       # Run webpack
-      - run: bin/webpack
+      - run:
+          name: run wbepack
+          command: |
+            bin/webpack
 
       # Database setup
       - run: bundle exec rake db:create

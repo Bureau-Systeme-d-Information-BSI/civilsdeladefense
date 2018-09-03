@@ -38,6 +38,9 @@ jobs:
             - ./vendor/bundle
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
 
+      # Run webpack
+      - run: bin/webpack
+
       # Database setup
       - run: bundle exec rake db:create
       - run: bundle exec rake db:schema:load

@@ -39,5 +39,5 @@ AWS_BUCKET_NAME=XXX
 ## Lancer les tests
 
 ```
-docker-compose run web rspec
+docker-compose run specs rspec
 ```

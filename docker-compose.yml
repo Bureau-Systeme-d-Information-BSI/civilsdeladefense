@@ -38,3 +38,18 @@ services:
     environment:
       BUNDLE_BIN: "/usr/src/app/vendor/.bundle/ruby/2.5.0/bin"
       BUNDLE_PATH: "/usr/src/app/vendor/.bundle/ruby/2.5.0"
+  specs:
+    build: .
+    volumes:
+      - ./:/usr/src/app/
+    environment:
+      RAILS_ENV: test
+      DEFAULT_FROM: hello@localhost
+      DEFAULT_HOST: http://localhost:3000
+      DATABASE_URL_TEST: postgresql://admin:admin-secret@postgresql:5432/civilsdeladefense_test
+      BUNDLE_BIN: "/usr/src/app/vendor/.bundle/ruby/2.5.0/bin"
+      BUNDLE_PATH: "/usr/src/app/vendor/.bundle/ruby/2.5.0"
+      BUNDLE_APP_CONFIG: "/usr/src/app/.bundle"
+    links:
+      - postgresql
+    command: "tail -F /dev/null"

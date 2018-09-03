@@ -43,7 +43,7 @@ jobs:
           command: |
             yarn install
 
-      - save_js_cache:
+      - save_cache:
           paths:
             - ./node_modules
           key: v1-js-dependencies-{{ checksum "package.json" }}

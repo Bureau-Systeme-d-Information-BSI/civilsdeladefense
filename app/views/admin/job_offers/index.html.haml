@@ -1,7 +1,7 @@
 - @page_title = t('.title')
 .card
   .card-body
-    .d-flex.align-items-center
+    .d-flex.flex-column.flex-md-row.align-items-start.align-items-md-center
       %ul.nav.nav-tabs.mr-auto{role: :tablist}
         %li.nav-item.mr-3
           - klasses = %i(nav-link text-uppercase my-0)
@@ -15,7 +15,7 @@
           - url = [:archived, :admin, :job_offers]
           - url << {q: params[:q]} if params[:q].present?
           = link_to t('.archived', count: @job_offers_archived.count), url, class: klasses
-      = link_to [:new, :admin, :job_offer], class: 'btn btn-primary btn-raised mb-0' do
+      = link_to [:new, :admin, :job_offer], class: 'btn btn-primary btn-raised mb-0 mt-3 mt-md-0' do
         = fa_icon 'plus', class: 'mr-1'
         = t('.new_job_offer')
     .row.mt-4.mb-3

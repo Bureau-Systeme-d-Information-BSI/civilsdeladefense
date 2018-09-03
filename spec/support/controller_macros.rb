@@ -3,8 +3,6 @@ module ControllerMacros
     before(:each) do
       @request.env["devise.mapping"] = Devise.mappings[:admin]
       admin = FactoryBot.create(:administrator)
-      admin.skip_confirmation_notification!
-      admin.confirm
       sign_in admin
     end
   end

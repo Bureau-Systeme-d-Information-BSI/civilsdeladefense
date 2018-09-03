@@ -280,6 +280,8 @@ GEM
       rspec-mocks (~> 3.8.0)
       rspec-support (~> 3.8.0)
     rspec-support (3.8.0)
+    rspec_junit_formatter (0.4.1)
+      rspec-core (>= 2, < 4, != 2.12.0)
     ruby_dep (1.5.0)
     ruby_parser (3.11.0)
       sexp_processor (~> 4.9)
@@ -366,6 +368,7 @@ DEPENDENCIES
   rails-i18n
   rollbar
   rspec-rails (~> 3.7)
+  rspec_junit_formatter
   selenium-webdriver
   simple_form
   spring

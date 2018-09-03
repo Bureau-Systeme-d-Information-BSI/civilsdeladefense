@@ -301,3 +301,13 @@ label, legend {
 .h-80 {
   height: 80px;
 }
+
+.card-body {
+  padding: 1rem;
+}
+
+@include media-breakpoint-up(md) {
+  .card-body {
+    padding: $card-spacer-x;
+  }
+}

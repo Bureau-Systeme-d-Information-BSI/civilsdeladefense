@@ -8,6 +8,7 @@ jobs:
     docker:
       - image: circleci/ruby:2.5.1-node-browsers
         environment:
+          RAILS_ENV: test
           DATABASE_URL_TEST: postgresql://circleci:@127.0.0.1:5432/civilsdeladefense_test
       - image: circleci/postgres:10.5-alpine-ram
         environment:

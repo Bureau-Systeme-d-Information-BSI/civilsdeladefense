@@ -14,10 +14,16 @@ Build des images Docker :
 docker-compose build
 ```
 
-Démarrage des images :
+Installation des gems :
 
 ```
-docker-compose down && docker-compose up
+docker-compose run web bundle install
+```
+
+Installation des packages Javascript :
+
+```
+docker-compose run web yarn install
 ```
 
 Un fichier .env à la racine du projet local au développeur derait contenir les valeurs suivantes :
@@ -34,6 +40,12 @@ AWS_ACCESS_KEY_ID=XXX
 AWS_SECRET_ACCESS_KEY=XXX
 AWS_REGION=XX-XXXX-XX
 AWS_BUCKET_NAME=XXX
+```
+
+Démarrage des images :
+
+```
+docker-compose down && docker-compose up
 ```
 
 ## Lancer les tests

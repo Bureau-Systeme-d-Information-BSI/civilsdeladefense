@@ -42,6 +42,14 @@ AWS_REGION=XX-XXXX-XX
 AWS_BUCKET_NAME=XXX
 ```
 
+Créer le fichier config/master.key contenat la clé principale : le contenu du fichier doit être demandée à l'équipe de développement.
+
+Créer la base de données avec les données de seed :
+
+```
+docker-compose run web rails db:drop db:create db:schema:load db:seed
+```
+
 Démarrage des images :
 
 ```

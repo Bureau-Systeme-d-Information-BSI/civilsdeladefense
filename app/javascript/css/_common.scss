@@ -195,11 +195,13 @@ aside.sidebar {
     @include box-shadow($bmd-shadow-3dp);
   }
 }
+
 .custom-file-input.is-valid:focus ~ .custom-file-label{
     outline: none !important;
     border-bottom: solid 1px $primary !important;
     @include box-shadow($bmd-shadow-3dp);
 }
+
 .input-search.is-focused {
   outline: none !important;
   border-bottom: solid 1px $primary !important;
@@ -209,7 +211,7 @@ aside.sidebar {
   outline: none !important;
 }
 
-.was-validated .form-control:invalid, .form-control.is-invalid, .was-validated .custom-select:invalid, .custom-select.is-invalid, .was-validated .custom-file-input:invalid ~ .custom-file-label, .custom-file-input .is-invalid, .custom-file-input.is-invalid ~ .custom-file-label {
+.was-validated .form-control:invalid, .form-control.is-invalid, .was-validated .custom-select:invalid, .custom-select.is-invalid, .custom-file-input .is-invalid, .custom-file-input.is-invalid ~ .custom-file-label {
   outline: none !important;
   border-bottom: solid 1px $danger !important;
   @include box-shadow($bmd-shadow-3dp);
@@ -218,6 +220,12 @@ aside.sidebar {
     border-bottom: solid 1px $danger !important;
     @include box-shadow($bmd-shadow-3dp);
   }
+}
+
+.custom-file-input.invalid:focus ~ .custom-file-label{
+    outline: none !important;
+    border-bottom: solid 1px $danger !important;
+    @include box-shadow($bmd-shadow-3dp);
 }
 
 .form-control:disabled, .form-control[readonly] {

@@ -5,6 +5,7 @@ $quaternary: #003285;
 $quinary: #2d3b66;
 $dark-gray: #585858;
 $light-gray: #c4c4c4;
+$disabled-gray: #fbfbfb;
 $text-muted: $light-gray;
 $success: #00d893;
 $cyan: #6cbeff;
@@ -182,15 +183,45 @@ aside.sidebar {
   }
 }
 
-.form-control, .custom-select, .custom-file-label {
-  border-color: white;
-  border-width: 2px;
+.form-control, .custom-select, .custom-file-label, .is-valid, .custom-select.is-valid, custom-file-input.is-valid, .form-control.is-valid,  {
+  outline: none !important;
+  border-color: white !important;
+  border-width: 1px;
+  border-top: solid 2px;
   @include box-shadow($bmd-shadow-2dp);
   &:focus {
-    border-color: $primary;
-    outline: 0;
+    outline: none !important;
+    border-bottom: solid 1px $primary !important;
     @include box-shadow($bmd-shadow-3dp);
   }
+}
+.custom-file-input.is-valid:focus ~ .custom-file-label{
+    outline: none !important;
+    border-bottom: solid 1px $primary !important;
+    @include box-shadow($bmd-shadow-3dp);
+}
+.input-search.is-focused {
+  outline: none !important;
+  border-bottom: solid 1px $primary !important;
+}
+
+.input-search.is-focused > input{
+  outline: none !important;
+}
+
+.was-validated .form-control:invalid, .form-control.is-invalid, .was-validated .custom-select:invalid, .custom-select.is-invalid, .was-validated .custom-file-input:invalid ~ .custom-file-label, .custom-file-input .is-invalid, .custom-file-input.is-invalid ~ .custom-file-label {
+  outline: none !important;
+  border-bottom: solid 1px $danger !important;
+  @include box-shadow($bmd-shadow-3dp);
+  &:focus {
+    outline: none !important;
+    border-bottom: solid 1px $danger !important;
+    @include box-shadow($bmd-shadow-3dp);
+  }
+}
+
+.form-control:disabled, .form-control[readonly] {
+    background-color: $disabled-gray;
 }
 
 .input-search {
@@ -213,13 +244,6 @@ aside.sidebar {
   }
 }
 
-.was-validated .custom-file-input:invalid ~ .custom-file-label, .custom-file-input.is-invalid ~ .custom-file-label {
-  border-width: 2px;
-}
-
-.custom-file-input.is-valid ~ .custom-file-label, .form-control.is-valid, .custom-select.is-valid {
-  border-color: white;
-}
 
 .custom-file-label {
   line-height: 1.25;

@@ -56,8 +56,24 @@ Démarrage des images :
 docker-compose down && docker-compose up
 ```
 
+## Workflow de développement
+
+Le workflow de développement est basé sur le [GitHub flow](https://guides.github.com/introduction/flow/) :
+
+* chaque changement de code (nouvelle fonctionnialité, bug fix, etc) devrait résulter d'un ticket (une *issue* GitHub)
+* chaque changement de code devrait passer une *review* de code via une Pull Request
+
+La bonne manière de créer une Pull Request est de :
+
+* créer localement une nouvelle branche correspondant au ticket/issue qu'on veut traiter via ```git checkout master && git pull && git checkout -b fix/13```
+* modifier le code et accumuler les commits dans cette nouvelle branch. Les commits devraient mentionner le ticket correspondant (utiliser les mot-clés *fix* or *see*)
+* pousser le code vers GitHub ```git push origin fix/13```
+* ouvrir une PUll Request
+* attendre la review de code et éventuellement modifier son code en fonction des commentaires
+
 ## Lancer les tests
 
 ```
 docker-compose run specs rspec
 ```
+

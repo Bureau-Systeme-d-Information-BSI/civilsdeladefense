@@ -27,10 +27,10 @@
     }
   }
   .form-control {
-    border: 2px solid $card-border-color;
+    border: 2px solid $card-border-color !important;
     box-shadow: none;
     &:focus {
-      border: 2px solid $card-border-color;
+      border: 2px solid $card-border-color !important;
       box-shadow: none;
     }
   }

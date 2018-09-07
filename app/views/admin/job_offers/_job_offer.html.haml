@@ -6,7 +6,15 @@
       .col-12.col-md-8
         - most_advanced_state = job_offer.most_advanced_job_applications_state
         .card-title.font-weight-bold.d-flex.align-items-center.mb-0
-          = link_to job_offer.title, [:admin, job_offer], class: 'text-truncate'
+          = link_to [:admin, job_offer], class: 'text-truncate' do
+            = job_offer.title
+          %span.font-weight-normal.text-nowrap.ml-1
+            = precede ' - ' do
+              = job_offer.identifier
+          - unless (controller.action_name == 'index' && job_offer.state == 'published')
+            - klass = badge_class(job_offer.state.to_sym)
+            %small.badge.text-white.text-uppercase.text-nowrap.ml-2{class: klass}
+              = job_offer.aasm.human_state
         - klass = badge_class(most_advanced_state.to_sym)
         %small.badge.text-white.text-uppercase.text-nowrap.my-2{class: klass}
           = JobApplication.human_attribute_name("state/#{most_advanced_state}")

@@ -44,7 +44,7 @@ fr:
   buttons:
     add: "Ajouter"
     confirm: "Êtes-vous sûr ?"
-    edit: "Éditer"
+    edit: "Modifier"
     delete: "Supprimer"
     publish: "Publier"
     archive: "Archiver"
@@ -344,6 +344,8 @@ fr:
           success: "Filière mise à jour !"
         destroy:
           success: "Filière supprimée !"
+  attributes:
+    name: "Nom"
   activerecord:
     errors:
       messages:
@@ -361,7 +363,8 @@ fr:
       administrator:
         confirmed: "Confirmé"
         unconfirmed: "Non confirmé"
-    attributes:
+      employer:
+        code: "Libellé"
       job_offer:
         state: "État"
         state/draft: "Brouillon"

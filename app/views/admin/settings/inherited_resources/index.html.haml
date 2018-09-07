@@ -10,7 +10,9 @@
   %table.table.table-hover.mb-0.mt-3
     %thead
       %tr
-        %th Nom
+        %th= resource_class.human_attribute_name(:name)
+        - if resource_class == Employer
+          %th= resource_class.human_attribute_name(:code)
         - if resource_class == Category
           %th Nombre d'offres
         %th
@@ -19,6 +21,9 @@
         %tr
           %td
             = element.name
+          - if resource_class == Employer
+            %td
+              = element.code
           - if resource_class == Category
             %td
               = element.job_offers.publicly_visible.count

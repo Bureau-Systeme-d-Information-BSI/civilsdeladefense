@@ -1,7 +1,6 @@
 FactoryBot.define do
   factory :employer do
-    sequence :name do |n|
-      "employer_name_#{n}"
-    end
+    name { Faker::Company.name }
+    code { Faker::Code.asin }
   end
 end

@@ -5,6 +5,8 @@
       = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
       .form-inputs
         = f.input :name
+        - if resource.is_a?(Employer)
+          = f.input :code
       .form-actions.text-right.mt-4
         %ul.list-inline.mb-0
           %li.list-inline-item

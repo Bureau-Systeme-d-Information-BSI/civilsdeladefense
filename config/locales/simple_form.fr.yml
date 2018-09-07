@@ -39,6 +39,9 @@ fr:
       email:
         title: "Sujet"
         body: "Votre message"
+      employer:
+        name: "Nom"
+        code: "Libellé"
       job_application:
         first_name: "Prénom"
         last_name: "Nom"
@@ -102,3 +105,5 @@ autres membres de votre équipe.'
         photo: "Format JPG ou PNG, max. 2Mo"
         resume: "Format PDF, max. 2Mo"
         cover_letter: "Format PDF, max. 2Mo"
+      employer:
+        code: "Ce champ est utilisé pour construire l'identifiant unique d'une annonce."

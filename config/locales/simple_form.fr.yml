@@ -84,6 +84,7 @@ mois afin d'être recontacté(e) pour de nouvelles opportunités."
         option_photo: "Photo"
         option_website_url: "Site internet (URL)"
         option_linkedin_url: "LinkedIn (URL)"
+        identifier: "Référence de l'offre"
       user:
         email: 'E-mail'
         password: 'Mot de passe'

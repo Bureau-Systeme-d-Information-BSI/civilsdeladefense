@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_07_094352) do
+ActiveRecord::Schema.define(version: 2018_09_07_113751) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -204,10 +204,13 @@ ActiveRecord::Schema.define(version: 2018_09_07_094352) do
     t.uuid "sector_id"
     t.uuid "study_level_id"
     t.integer "most_advanced_job_applications_state", default: 0
+    t.integer "sequential_id"
+    t.string "identifier"
     t.index ["category_id"], name: "index_job_offers_on_category_id"
     t.index ["contract_type_id"], name: "index_job_offers_on_contract_type_id"
     t.index ["employer_id"], name: "index_job_offers_on_employer_id"
     t.index ["experience_level_id"], name: "index_job_offers_on_experience_level_id"
+    t.index ["identifier"], name: "index_job_offers_on_identifier", unique: true
     t.index ["official_status_id"], name: "index_job_offers_on_official_status_id"
     t.index ["owner_id"], name: "index_job_offers_on_owner_id"
     t.index ["sector_id"], name: "index_job_offers_on_sector_id"

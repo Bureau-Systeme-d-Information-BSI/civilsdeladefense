@@ -1,15 +1,12 @@
 class JobOffer < ApplicationRecord
+  SETTINGS = %i(category official_status contract_type study_level experience_level sector).freeze
+
   include AASM
 
   extend FriendlyId
   friendly_id :title, use: [:slugged, :finders, :history]
 
-  belongs_to :owner, class_name: 'Administrator'
-  belongs_to :employer
-  SETTINGS = %i(category official_status contract_type study_level experience_level sector).freeze
-  SETTINGS.each do |setting|
-    belongs_to setting
-  end
+  acts_as_sequenced scope: :employer_id
 
   include PgSearch
   pg_search_scope :search_full_text, against: [
@@ -21,13 +18,23 @@ class JobOffer < ApplicationRecord
     memo
   }
 
+  ## Relationships
+  belongs_to :owner, class_name: 'Administrator'
+  belongs_to :employer
+  SETTINGS.each do |setting|
+    belongs_to setting
+  end
+
   has_many :job_applications
 
+  ## Validations
   validates :title, :description, presence: true
 
+  ## Scopes
   scope :publicly_visible, -> { where(state: :published) }
   scope :search_import, -> { includes(*SETTINGS) }
 
+  ## Enums
   OPTIONS_AVAILABLE = { disabled: 0, optional: 1, mandatory: 2 }
   FILES = %i(cover_letter resume photo).freeze
   URLS = %i(website_url linkedin_url).freeze
@@ -57,6 +64,7 @@ class JobOffer < ApplicationRecord
     archived: 3
   }
 
+  ## States and events
   aasm column: :state, enum: true do
     state :draft, initial: true
     state :published
@@ -86,5 +94,12 @@ class JobOffer < ApplicationRecord
     event :unarchive do
       transitions from: [:archived], to: :draft
     end
+  end
+
+  ## Callbacks
+  after_create :set_identifier
+
+  def set_identifier
+    self.update_column :identifier, [employer.code, sequential_id].join('')
   end
 end

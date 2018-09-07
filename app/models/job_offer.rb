@@ -10,6 +10,7 @@ class JobOffer < ApplicationRecord
 
   include PgSearch
   pg_search_scope :search_full_text, against: [
+    [:identifier, 'A'],
     [:title, 'A'],
     [:description, 'B'],
     [:location, 'C']

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_07_113751) do
+ActiveRecord::Schema.define(version: 2018_09_07_140739) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 2018_09_07_113751) do
 
   create_table "administrators", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "email", default: "", null: false
-    t.string "name"
+    t.string "first_name"
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
@@ -57,8 +57,13 @@ ActiveRecord::Schema.define(version: 2018_09_07_113751) do
     t.datetime "locked_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "title"
+    t.uuid "employer_id"
+    t.integer "role"
+    t.string "last_name"
     t.index ["confirmation_token"], name: "index_administrators_on_confirmation_token", unique: true
     t.index ["email"], name: "index_administrators_on_email", unique: true
+    t.index ["employer_id"], name: "index_administrators_on_employer_id"
     t.index ["reset_password_token"], name: "index_administrators_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_administrators_on_unlock_token", unique: true
   end
@@ -278,6 +283,7 @@ ActiveRecord::Schema.define(version: 2018_09_07_113751) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  add_foreign_key "administrators", "employers"
   add_foreign_key "emails", "administrators"
   add_foreign_key "emails", "job_applications"
   add_foreign_key "job_applications", "job_offers"

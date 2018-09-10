@@ -10,7 +10,7 @@ class User < ApplicationRecord
                     file_content_type: { allow: ['image/jpg', 'image/jpeg', 'image/png'] },
                     if: -> { photo.attached? }
 
-  def name
+  def full_name
     [first_name, last_name].join(" ")
   end
 end

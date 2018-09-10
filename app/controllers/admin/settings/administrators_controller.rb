@@ -79,6 +79,6 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def administrator_params
-      params.require(:administrator).permit(:email, :name)
+      params.require(:administrator).permit(:role, :title, :employer_id, :first_name, :last_name, :email)
     end
 end

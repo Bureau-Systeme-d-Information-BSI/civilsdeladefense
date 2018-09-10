@@ -1,16 +1,39 @@
-.card
-  .card-body
-    = simple_form_for([:admin, :settings, @administrator]) do |f|
+= simple_form_for([:admin, :settings, @administrator]) do |f|
+  .card
+    .card-header.d-flex.align-items-center
+      = image_user_tag @administrator.photo, width: 40, class: 'mr-2'
+      - unless @administrator.new_record?
+        .card-title.ml-1= @administrator.full_name_with_title
+      .ml-auto
+        - roles = Administrator.roles.keys.map{|x| [Administrator.human_attribute_name("role.#{ x }"), x]}
+        = f.input :role, collection: roles, label: false, wrapper: false, include_blank: false
+    .card-body
       = f.error_notification
       = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
       .form-inputs
-        = f.input :email, placeholder: false
-        = f.input :name, placeholder: false
+        .row
+          .col-12.col-md-6
+            = f.input :title
+          .col-12.col-md-6
+            - disabled = @administrator.new_record? || (@administrator.role.present? && @administrator.role != 'employer')
+            = f.association :employer, collection: Employer.all, input_html: {disabled: disabled}
+        .row
+          .col-12.col-md-6
+            = f.input :first_name
+          .col-12.col-md-6
+            = f.input :last_name
+        .row
+          .col-12.col-md-6
+            = f.input :email, placeholder: false
       .form-actions.text-right.mt-4
         %ul.list-inline.mb-0
           %li.list-inline-item
             = link_to(t('helpers.submit.administrator.cancel'), [:admin, :settings, :root], class: 'btn btn-body-color mb-0')
           %li.list-inline-item
             = button_tag(type: 'submit', class: 'btn btn-primary btn-raised mb-0') do
-              = t('helpers.submit.administrator.invite')
-              = fa_icon('send', class: 'ml-1')
+              - if @administrator.new_record?
+                = t('buttons.invite')
+                = fa_icon('send', class: 'ml-1')
+              - else
+                = t('buttons.update')
+                = fa_icon('content-save', class: 'ml-1')

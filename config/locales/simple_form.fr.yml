@@ -32,10 +32,15 @@ fr:
       defaults:
         email: "E-mail"
         name: "Nom"
+        first_name: "Prénom"
+        last_name: "Nom"
+        title: "Titre"
       administrator:
         current_password: 'Mot de passe actuel'
         password: 'Nouveau mot de passe'
         password_confirmation: 'Confirmation du mot de passe'
+        employer: "Employeur"
+        role: "Rôle"
       email:
         title: "Sujet"
         body: "Votre message"
@@ -102,6 +107,8 @@ mois afin d'être recontacté(e) pour de nouvelles opportunités."
         body: 'Ce commentaire ne sera visible que par vous et les
 autres membres de votre équipe.'
     hints:
+      administrator:
+        employer_id: "Actif seulement si le rôle est \"Employeur\""
       job_application:
         photo: "Format JPG ou PNG, max. 2Mo"
         resume: "Format PDF, max. 2Mo"

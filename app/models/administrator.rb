@@ -3,12 +3,25 @@ class Administrator < ApplicationRecord
          :recoverable, :trackable, :validatable,
          :confirmable, :lockable, :timeoutable
 
-  validates :name, presence: true
-
+  #####################################
+  # Relationships
+  belongs_to :employer, optional: true
   has_one_attached :photo
+
+  #####################################
+  # Validations
   validates :photo, file_size: { less_than_or_equal_to: 1.megabytes },
                     file_content_type: { allow: ['image/jpg', 'image/jpeg', 'image/png'] },
                     if: -> { photo.attached? }
+  validates :employer, presence: true, if: Proc.new { |a| a.role == 'employer' }
+
+  #####################################
+  # Enums
+  enum role: {
+    bant: 0,
+    employer: 1,
+    brh: 2
+  }
 
   def password_required?
     # Password is required if it is being set, but not for new records
@@ -47,6 +60,10 @@ class Administrator < ApplicationRecord
   end
 
   def full_name
-    name
+    [first_name, last_name].join(" ")
+  end
+
+  def full_name_with_title
+    [title, first_name, last_name].join(" ")
   end
 end

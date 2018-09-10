@@ -53,7 +53,6 @@ class Admin::JobOffersController < Admin::BaseController
         @job_offer.publish!
         format.html { redirect_to [:admin, :job_offers], notice: t('.success') }
         format.json { render :show, status: :created, location: @job_offer }
-        
       else
         format.html { render :new }
         format.json { render json: @job_offer.errors, status: :unprocessable_entity }

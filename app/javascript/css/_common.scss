@@ -5,6 +5,7 @@ $quaternary: #003285;
 $quinary: #2d3b66;
 $dark-gray: #585858;
 $light-gray: #c4c4c4;
+$disabled-gray: #fbfbfb;
 $text-muted: $light-gray;
 $success: #00d893;
 $cyan: #6cbeff;
@@ -182,15 +183,73 @@ aside.sidebar {
   }
 }
 
-.form-control, .custom-select, .custom-file-label {
-  border-color: white;
-  border-width: 2px;
+.form-control, .custom-select, .custom-select.is-valid, .form-control.is-valid {
+  outline: none !important;
+  border: solid 0px white;
+  border-bottom: solid 1px white;
   @include box-shadow($bmd-shadow-2dp);
   &:focus {
-    border-color: $primary;
-    outline: 0;
+    outline: none !important;
+    border: solid 0px white;
+    border-bottom: solid 1px $primary;
     @include box-shadow($bmd-shadow-3dp);
   }
+}
+.custom-file-input:lang(fr) ~ .custom-file-label::after {
+  margin:2px;
+}
+.custom-file-input.is-valid ~ .custom-file-label{
+  outline: none !important;
+  border: solid 0px white;
+  border-bottom: solid 1px white;
+  @include box-shadow($bmd-shadow-2dp);
+}
+.custom-file-input.is-valid:focus ~ .custom-file-label{
+    outline: none !important;
+    border: solid 0px white;
+    border-bottom: solid 1px $primary;
+    @include box-shadow($bmd-shadow-3dp);
+}
+
+.input-search.is-focused {
+  outline: none !important;
+  border-bottom: solid 1px $primary !important;
+}
+
+.input-search.is-focused > input{
+  outline: none !important;
+}
+
+.form-control.is-invalid, .custom-select.is-invalid {
+  outline: none !important;
+  border: solid 0px white;
+  border-bottom: solid 1px $danger;
+  @include box-shadow($bmd-shadow-2dp);
+  &:focus {
+    outline: none !important;
+    border: solid 0px white;
+    border-bottom: solid 1px $danger;
+    @include box-shadow($bmd-shadow-3dp);
+  }
+}
+
+.custom-file-input.is-invalid ~ .custom-file-label{
+  outline: none !important;
+  border: solid 0px white;
+  border-bottom: solid 1px $danger;
+  @include box-shadow($bmd-shadow-2dp);
+}
+
+.custom-file-input.is-invalid:focus ~ .custom-file-label{
+  outline: none !important;
+  border: solid 0px white;
+  border-bottom: solid 1px $danger;
+  @include box-shadow($bmd-shadow-3dp);
+}
+
+.form-control:disabled, .form-control[readonly], .custom-select:disabled {
+    border-bottom: solid 1px $disabled-gray;
+    background-color: $disabled-gray;
 }
 
 .input-search {
@@ -213,13 +272,6 @@ aside.sidebar {
   }
 }
 
-.was-validated .custom-file-input:invalid ~ .custom-file-label, .custom-file-input.is-invalid ~ .custom-file-label {
-  border-width: 2px;
-}
-
-.custom-file-input.is-valid ~ .custom-file-label, .form-control.is-valid, .custom-select.is-valid {
-  border-color: white;
-}
 
 .custom-file-label {
   line-height: 1.25;

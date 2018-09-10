@@ -7,12 +7,22 @@
   .collapse.navbar-collapse.offcanvas-collapse.ml-md-5
     %ul.navbar-nav.mr-auto
       - nav_items.each do |item|
-        - extra_klass = controller.class.to_s.underscore =~ /#{ item.first.to_s }/ && 'active'
-        %li.nav-item.mr-3{class: extra_klass}
-          = fa_icon(icon_for_controller(item))
-          - ary = [:admin] + item
-          = link_to t(".#{ item.first.to_s }"), ary, class: "nav-link"
+        - klass = nil
+        - klass = item.first.to_s.singularize.classify.constantize if item.size == 1
+        - if klass && can?(:read, klass) || klass.nil?
+          - extra_klass = controller.class.to_s.underscore =~ /#{ item.first.to_s }/ && 'active'
+          %li.nav-item.mr-3{class: extra_klass}
+            = fa_icon(icon_for_controller(item))
+            - ary = [:admin] + item
+            = link_to t(".#{ item.first.to_s }"), ary, class: "nav-link"
     %ul.navbar-nav
+      %li.nav-item.mr-2
+        .d-flex.flex-column.justify-content-center.align-items-end
+          %span.font-weight-bold= current_administrator.full_name
+          - if current_administrator.bant?
+            %small.text-muted= Administrator.human_attribute_name('role.'+current_administrator.role)
+          - else
+            %small.text-muted= current_administrator.employer.code
       %li.nav-item.dropdown
         = button_tag(class: "nav-link dropdown-toggle py-0 btn mb-0", role: :button, data: {toggle: :dropdown}, aria: {haspopup: true, expanded: false}) do
           = image_user_tag current_administrator.photo, width: 40

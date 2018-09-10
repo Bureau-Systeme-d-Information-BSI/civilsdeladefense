@@ -1,5 +1,4 @@
 class Admin::JobOffersController < Admin::BaseController
-  before_action :set_job_offer, only: [:show, :edit, :update, :destroy].push(*JobOffer.aasm.events.map(&:name)).push(*JobOffer.aasm.events.map{ |x| "update_and_#{x.name}".to_sym })
   before_action :set_job_offers, only: %i(index archived)
 
   # GET /admin/job_offers
@@ -38,6 +37,7 @@ class Admin::JobOffersController < Admin::BaseController
       j.state = nil
       j
     end
+    @job_offer.employer = current_administrator.employer unless current_administrator.bant?
   end
 
   # GET /admin/job_offers/1/edit
@@ -47,7 +47,6 @@ class Admin::JobOffersController < Admin::BaseController
   # POST /admin/job_offers
   # POST /admin/job_offers.json
   def create
-    @job_offer = JobOffer.new(job_offer_params)
     @job_offer.owner = current_administrator
 
     respond_to do |format|
@@ -128,12 +127,11 @@ class Admin::JobOffersController < Admin::BaseController
     end
 
     def job_offers_root
-      JobOffer.includes(:category, :contract_type).order(created_at: :desc)
+      @job_offers.includes(:category, :contract_type).order(created_at: :desc)
     end
 
     # Use callbacks to share common setup or constraints between actions.
     def set_job_offer
-      @job_offer = JobOffer.find(params[:id])
       if params[:id] != @job_offer.slug
         return redirect_to [:admin, @job_offer], status: :moved_permanently
       end

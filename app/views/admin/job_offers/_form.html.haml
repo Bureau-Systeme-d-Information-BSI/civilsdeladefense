@@ -41,7 +41,9 @@
                       .col-12.col-md-6
                         = f.input :location
                       .col-12.col-md-3
-                        = f.association :employer
+                        - employers = current_administrator.bant? ? Employer.order(code: :asc).all : [current_administrator.employer]
+                        - disabled = !current_administrator.bant?
+                        = f.association :employer, collection: employers.map{|x| [x.code, x.id]}, disabled: disabled
                       .col-12.col-md-3
                         = f.input :identifier, input_html: {disabled: true}
                     = f.input :description, input_html: { class: :ckeditor }

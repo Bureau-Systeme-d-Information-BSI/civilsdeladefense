@@ -1,42 +1,43 @@
 administrator = Administrator.new email: 'pipo@molo.fr',
-  name: 'Col Pipo Molo',
+  first_name: 'Pipo',
+  last_name: 'Molo',
   password: 'pipomolo',
   password_confirmation: 'pipomolo'
 administrator.skip_confirmation_notification!
 administrator.save!
 administrator.confirm
 
-Category.create name: 'Administration'
-Category.create name: 'Archives'
-Category.create name: 'Audit'
-Category.create name: 'Communication'
-infrastructure = Category.create name: 'Infrastructure'
-informatique = Category.create name: 'Informatique'
+Category.create! name: 'Administration'
+Category.create! name: 'Archives'
+Category.create! name: 'Audit'
+Category.create! name: 'Communication'
+infrastructure = Category.create! name: 'Infrastructure'
+informatique = Category.create! name: 'Informatique'
 
-OfficialStatus.create name: 'Cadre'
-OfficialStatus.create name: 'Non Cadre'
+OfficialStatus.create! name: 'Cadre'
+OfficialStatus.create! name: 'Non Cadre'
 
-Employer.create name: 'DIRISI'
+Employer.create! name: 'DIRISI', code: 'DRI'
 
-ContractType.create name: 'CDD'
-ContractType.create name: 'CDI'
-ContractType.create name: 'Interim'
+ContractType.create! name: 'CDD'
+ContractType.create! name: 'CDI'
+ContractType.create! name: 'Interim'
 
-Sector.create name: 'Technique'
-Sector.create name: 'Lettre'
-Sector.create name: 'Économie'
+Sector.create! name: 'Technique'
+Sector.create! name: 'Lettre'
+Sector.create! name: 'Économie'
 
-StudyLevel.create name: 'Sans diplôme'
-StudyLevel.create name: 'CAP / BEP'
-StudyLevel.create name: 'BAC'
-StudyLevel.create name: 'BAC+2'
-StudyLevel.create name: 'BAC+5 / Thèse'
+StudyLevel.create! name: 'Sans diplôme'
+StudyLevel.create! name: 'CAP / BEP'
+StudyLevel.create! name: 'BAC'
+StudyLevel.create! name: 'BAC+2'
+StudyLevel.create! name: 'BAC+5 / Thèse'
 
-ExperienceLevel.create name: 'Aucune'
-ExperienceLevel.create name: '1 à 2 ans'
-ExperienceLevel.create name: '3 à 4 ans'
-ExperienceLevel.create name: '5 à 6 ans'
-ExperienceLevel.create name: '> 7 ans'
+ExperienceLevel.create! name: 'Aucune'
+ExperienceLevel.create! name: '1 à 2 ans'
+ExperienceLevel.create! name: '3 à 4 ans'
+ExperienceLevel.create! name: '5 à 6 ans'
+ExperienceLevel.create! name: '> 7 ans'
 
 job_offer = JobOffer.new do |j|
   j.owner = administrator
@@ -44,7 +45,7 @@ job_offer = JobOffer.new do |j|
   j.category = informatique
   j.official_status = OfficialStatus.first
   j.location = "Rennes, FR"
-  j.employer = Employer.first
+  j.employer = Employer.last
   j.description = "Placé au sein du commandement des opérations cyber et rattaché à la direction interarmées des réseaux
   d’infrastructure
   et des systèmes d’information (DIRISI), le centre d’analyse en lutte informatique défensive (CALID) est
@@ -96,12 +97,16 @@ job_offer.save!
 job_offer2 = job_offer.dup
 job_offer2.title = 'Conducteur d’Opérations (H/F)'
 job_offer2.category = infrastructure
+job_offer2.identifier = nil
+job_offer2.sequential_id = nil
 job_offer2.save!
 
 job_offer3 = job_offer.dup
 job_offer3.title = 'Responsable Achat d’Infrastructures (H/F)'
 job_offer3.category = infrastructure
 job_offer3.location = "Brest, FR"
+job_offer3.identifier = nil
+job_offer3.sequential_id = nil
 job_offer3.save!
 
 job_offer.publish!

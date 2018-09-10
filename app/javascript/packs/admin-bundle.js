@@ -35,6 +35,7 @@ importAll(require.context('images/', true, /\.(ico|png|jpe?g|svg|gif)$/))
 importAll(require.context('icons/', true, /\.svg$/))
 
 require('js/offcanvas.js')
+require('js/dependent-fields.js')
 
 import $ from 'jquery';
 window.jQuery = $;

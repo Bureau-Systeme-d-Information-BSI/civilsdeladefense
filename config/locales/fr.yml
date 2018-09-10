@@ -59,6 +59,8 @@ fr:
     cancel: "Annuler"
     save: "Enregistrer"
     copy: "Dupliquer"
+    invite: "Inviter"
+    update: "Mettre à jour"
   job_applications:
     form:
       general_informations: "Informations générales"
@@ -363,6 +365,10 @@ fr:
       administrator:
         confirmed: "Confirmé"
         unconfirmed: "Non confirmé"
+      administrator/role:
+        bant: "BANT"
+        employer: "Employeur"
+        brh: "BRH"
       employer:
         code: "Libellé"
       job_offer:

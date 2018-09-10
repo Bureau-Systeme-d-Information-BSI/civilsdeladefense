@@ -44,6 +44,23 @@ class Admin::JobOffersController < Admin::BaseController
   def edit
   end
 
+  def create_and_publish
+    @job_offer = JobOffer.new(job_offer_params)
+    @job_offer.owner = current_administrator
+
+    respond_to do |format|
+      if @job_offer.save 
+        @job_offer.publish!
+        format.html { redirect_to [:admin, :job_offers], notice: t('.success') }
+        format.json { render :show, status: :created, location: @job_offer }
+        
+      else
+        format.html { render :new }
+        format.json { render json: @job_offer.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   # POST /admin/job_offers
   # POST /admin/job_offers.json
   def create

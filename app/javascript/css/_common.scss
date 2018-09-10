@@ -185,26 +185,28 @@ aside.sidebar {
 
 .form-control, .custom-select, .custom-select.is-valid, .form-control.is-valid {
   outline: none !important;
-  border: solid 2px white;
+  border: solid 0px white;
   border-bottom: solid 1px white;
   @include box-shadow($bmd-shadow-2dp);
   &:focus {
     outline: none !important;
-    border: solid 2px white;
+    border: solid 0px white;
     border-bottom: solid 1px $primary;
     @include box-shadow($bmd-shadow-3dp);
   }
 }
-
+.custom-file-input:lang(fr) ~ .custom-file-label::after {
+  margin:2px;
+}
 .custom-file-input.is-valid ~ .custom-file-label{
   outline: none !important;
-  border: solid 2px white;
+  border: solid 0px white;
   border-bottom: solid 1px white;
   @include box-shadow($bmd-shadow-2dp);
 }
 .custom-file-input.is-valid:focus ~ .custom-file-label{
     outline: none !important;
-    border: solid 2px white;
+    border: solid 0px white;
     border-bottom: solid 1px $primary;
     @include box-shadow($bmd-shadow-3dp);
 }
@@ -220,12 +222,12 @@ aside.sidebar {
 
 .form-control.is-invalid, .custom-select.is-invalid {
   outline: none !important;
-  border: solid 2px white;
+  border: solid 0px white;
   border-bottom: solid 1px $danger;
   @include box-shadow($bmd-shadow-2dp);
   &:focus {
     outline: none !important;
-    border: solid 2px white;
+    border: solid 0px white;
     border-bottom: solid 1px $danger;
     @include box-shadow($bmd-shadow-3dp);
   }
@@ -233,19 +235,20 @@ aside.sidebar {
 
 .custom-file-input.is-invalid ~ .custom-file-label{
   outline: none !important;
-  border: solid 2px white;
+  border: solid 0px white;
   border-bottom: solid 1px $danger;
   @include box-shadow($bmd-shadow-2dp);
 }
 
 .custom-file-input.is-invalid:focus ~ .custom-file-label{
   outline: none !important;
-  border: solid 2px white;
+  border: solid 0px white;
   border-bottom: solid 1px $danger;
   @include box-shadow($bmd-shadow-3dp);
 }
 
-.form-control:disabled, .form-control[readonly] {
+.form-control:disabled, .form-control[readonly], .custom-select:disabled {
+    border-bottom: solid 1px $disabled-gray;
     background-color: $disabled-gray;
 }
 

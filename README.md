@@ -18,6 +18,8 @@ Installation des gems :
 
 ```
 docker-compose run web bundle install
+
+Cette commande doit être lancée dès qu'une nouvelle gem apparait.
 ```
 
 Installation des packages Javascript :
@@ -49,6 +51,10 @@ Créer la base de données avec les données de seed :
 ```
 docker-compose run web rails db:drop db:create db:schema:load db:seed
 ```
+Lancement d'une migration de base :
+
+docker-compose run web rails db:migrate
+
 
 Démarrage des images :
 

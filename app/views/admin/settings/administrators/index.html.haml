@@ -11,6 +11,8 @@
       %tr
         %th Nom
         %th Email
+        %th Rôle
+        %th Employeur
         %th Statut
         %th
     %tbody
@@ -20,6 +22,10 @@
             = administrator.full_name
           %td
             = administrator.email
+          %td
+            = Administrator.human_attribute_name('role.'+administrator.role)
+          %td
+            = administrator&.employer&.code
           %td
             = administrator.confirmed? ? Administrator.human_attribute_name(:confirmed) : Administrator.human_attribute_name(:unconfirmed)
           %td.text-right

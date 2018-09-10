@@ -6,6 +6,7 @@ class Administrator < ApplicationRecord
   #####################################
   # Relationships
   belongs_to :employer, optional: true
+  has_many :job_offers, foreign_key: :owner
   has_one_attached :photo
 
   #####################################

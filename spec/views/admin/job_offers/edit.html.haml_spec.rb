@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe "admin/job_offers/edit", type: :view do
+  login_admin
+
   before(:each) do
     @job_offer = assign(:job_offer, create(:job_offer))
   end

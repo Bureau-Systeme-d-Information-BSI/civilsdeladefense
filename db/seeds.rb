@@ -45,7 +45,7 @@ job_offer = JobOffer.new do |j|
   j.category = informatique
   j.official_status = OfficialStatus.first
   j.location = "Rennes, FR"
-  j.employer = Employer.first
+  j.employer = Employer.last
   j.description = "Placé au sein du commandement des opérations cyber et rattaché à la direction interarmées des réseaux
   d’infrastructure
   et des systèmes d’information (DIRISI), le centre d’analyse en lutte informatique défensive (CALID) est

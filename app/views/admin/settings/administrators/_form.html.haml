@@ -5,8 +5,9 @@
       - unless @administrator.new_record?
         .card-title.ml-1= @administrator.full_name_with_title
       .ml-auto
-        - roles = Administrator.roles.keys.map{|x| [Administrator.human_attribute_name("role.#{ x }"), x]}
-        = f.input :role, collection: roles, label: false, wrapper: false, include_blank: false
+        - roles = current_administrator.bant? ? Administrator.roles.keys : [current_administrator.role]
+        - disabled = !current_administrator.bant?
+        = f.input :role, collection: roles.map{|x| [Administrator.human_attribute_name("role.#{ x }"), x]}, label: false, wrapper: false, include_blank: false, disabled: disabled
     .card-body
       = f.error_notification
       = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
@@ -16,7 +17,8 @@
             = f.input :title
           .col-12.col-md-6
             - disabled = @administrator.new_record? || (@administrator.role.present? && @administrator.role != 'employer')
-            = f.association :employer, collection: Employer.all, input_html: {disabled: disabled}
+            - employers = current_administrator.bant? ? Employer.all : [current_administrator.employer]
+            = f.association :employer, collection: employers, input_html: {disabled: disabled}
         .row
           .col-12.col-md-6
             = f.input :first_name

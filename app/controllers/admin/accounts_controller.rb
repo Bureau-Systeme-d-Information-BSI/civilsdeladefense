@@ -1,4 +1,6 @@
 class Admin::AccountsController < Admin::BaseController
+  skip_load_and_authorize_resource
+
   before_action :set_administrator, only: %i(show change_password change_email update update_password update_email)
 
   layout 'admin/account'

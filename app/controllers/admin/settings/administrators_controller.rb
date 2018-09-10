@@ -1,10 +1,8 @@
 class Admin::Settings::AdministratorsController < Admin::Settings::BaseController
-  before_action :set_administrator, only: [:show, :edit, :update, :destroy, :resend_confirmation_instructions]
-
+  before_action :set_role_and_employer, only: %i(new create)
   # GET /admin/settings/administrators
   # GET /admin/settings/administrators.json
   def index
-    @administrators = Administrator.all
   end
 
   # GET /admin/settings/administrators/1
@@ -14,7 +12,6 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
 
   # GET /admin/settings/administrators/new
   def new
-    @administrator = Administrator.new
   end
 
   # GET /admin/settings/administrators/1/edit
@@ -24,8 +21,6 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
   # POST /admin/settings/administrators
   # POST /admin/settings/administrators.json
   def create
-    @administrator = Administrator.new(administrator_params)
-
     respond_to do |format|
       if @administrator.save
         format.html { redirect_to [:admin, :settings, :root], notice: t('.success') }
@@ -72,13 +67,21 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_administrator
-      @administrator = Administrator.find(params[:id])
-    end
-
     # Never trust parameters from the scary internet, only allow the white list through.
     def administrator_params
-      params.require(:administrator).permit(:role, :title, :employer_id, :first_name, :last_name, :email)
+      params.require(:administrator).permit(permitted_fields)
+    end
+
+    def permitted_fields
+      ary = %i(title first_name last_name email)
+      ary += %i(role employer_id) if current_administrator.bant?
+      ary
+    end
+
+    def set_role_and_employer
+      unless current_administrator.bant?
+        @administrator.role = 'employer'
+        @administrator.employer = current_administrator.employer
+      end
     end
 end

@@ -25,6 +25,8 @@ class Admin::Settings::InheritedResourcesController < Admin::Settings::BaseContr
     end
 
     def permitted_params
-      params.permit(resource_class.to_s.tableize.singularize.to_sym => permitted_fields)
+      params.require(resource_class.to_s.tableize.singularize.to_sym).permit(permitted_fields)
     end
+
+    alias_method :resource_params, :permitted_params
 end

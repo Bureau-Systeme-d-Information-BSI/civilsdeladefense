@@ -12,11 +12,6 @@
       height: 60px;
     }
   }
-  .form-inputs {
-    > .form-group {
-      @extend .mb-3;
-    }
-  }
   .form-actions {
     @extend .d-flex, .justify-content-start, .align-items-start;
     > *:last-child {

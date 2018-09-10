@@ -47,10 +47,9 @@ class Admin::JobOffersController < Admin::BaseController
   def create_and_publish
     @job_offer = JobOffer.new(job_offer_params)
     @job_offer.owner = current_administrator
-
+    @job_offer.publish
     respond_to do |format|
       if @job_offer.save 
-        @job_offer.publish!
         format.html { redirect_to [:admin, :job_offers], notice: t('.success') }
         format.json { render :show, status: :created, location: @job_offer }
       else

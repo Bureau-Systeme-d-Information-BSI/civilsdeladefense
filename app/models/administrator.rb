@@ -6,8 +6,15 @@ class Administrator < ApplicationRecord
   #####################################
   # Relationships
   belongs_to :employer, optional: true
+  belongs_to :inviter, optional: true, class_name: 'Administrator'
   has_many :job_offers, foreign_key: :owner
   has_one_attached :photo
+
+  #####################################
+  # Accessors
+
+  # used to lax some validations when creating the very first account from a rails console
+  attr_accessor :very_first_account
 
   #####################################
   # Validations
@@ -15,6 +22,16 @@ class Administrator < ApplicationRecord
                     file_content_type: { allow: ['image/jpg', 'image/jpeg', 'image/png'] },
                     if: -> { photo.attached? }
   validates :employer, presence: true, if: Proc.new { |a| a.role == 'employer' }
+  validates :inviter, presence: true, unless: Proc.new { |a| a.very_first_account }
+  validates_inclusion_of :role,
+    in: ->(a) {
+      if a.very_first_account
+        a.class.roles.keys
+      else
+        (a.inviter&.authorized_roles_to_confer || a.class.roles.keys.last)
+      end
+    },
+    message: :non_compliant_role
 
   #####################################
   # Enums
@@ -61,10 +78,30 @@ class Administrator < ApplicationRecord
   end
 
   def full_name
-    [first_name, last_name].join(" ")
+    @full_name ||= begin
+      if first_name.present? || last_name.present?
+        [first_name, last_name].join(" ")
+      else
+        email
+      end
+    end
   end
 
   def full_name_with_title
-    [title, first_name, last_name].join(" ")
+    @full_name_with_title ||= begin
+      if title.present? || first_name.present? || last_name.present?
+        [title, first_name, last_name].join(" ")
+      else
+        email
+      end
+    end
+  end
+
+  def authorized_roles_to_confer
+    score = self.role_before_type_cast
+    self.class.roles.inject([]) {|memo, (k,v)|
+      memo << k if v >= score
+      memo
+    }
   end
 end

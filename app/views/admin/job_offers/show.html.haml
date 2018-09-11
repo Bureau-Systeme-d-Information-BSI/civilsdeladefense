@@ -1,9 +1,10 @@
 - @page_title = @job_offer.title
 %nav.navbar.navbar-dark.bg-secondary.justify-content-start
   %span.navbar-text.text-truncate= @page_title
-  = link_to [:edit, :admin, @job_offer], class: 'small ml-3 text-nowrap' do
-    = fa_icon('pencil')
-    = t('buttons.edit')
+  - if can? :edit, @job_offer
+    = link_to [:edit, :admin, @job_offer], class: 'small ml-3 text-nowrap' do
+      = fa_icon('pencil')
+      = t('buttons.edit')
 .board
   .lists
     - JobApplication.aasm.states.each do |state|

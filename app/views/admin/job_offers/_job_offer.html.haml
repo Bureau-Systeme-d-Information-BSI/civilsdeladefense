@@ -42,23 +42,25 @@
         = link_to '#' do
           = fa_icon 'star'
           = t('.follow')
-      %li.list-inline-item
-        = link_to [:edit, :admin, job_offer] do
-          = fa_icon 'pencil'
-          = t('.edit')
+      - if can? :edit, job_offer
+        %li.list-inline-item
+          = link_to [:edit, :admin, job_offer] do
+            = fa_icon 'pencil'
+            = t('.edit')
       %li.list-inline-item
         = link_to '#' do
           = fa_icon 'eye'
           = t('.preview')
-      %li.list-inline-item
-        .dropdown
-          = button_tag type: 'button', data: { toggle: "dropdown" }, aria: { haspopup: true, expanded: false }, class: "btn btn-link btn-sm mb-0 px-0 py-0" do
-            = fa_icon 'dots-horizontal'
-          .dropdown-menu{"aria-labelledby" => "dropdownMenuLink"}
-            - job_offer.aasm.events.each do |event|
-              = link_to [event.name, :admin, job_offer], method: :patch, remote: true, class: "dropdown-item" do
-                = fa_icon('arrow-right', class: 'mr-1')
-                = t("buttons.#{ event.name }")
-            = link_to [:new, :admin, :job_offer, {job_offer_id: job_offer.to_param}], class: "dropdown-item" do
-              = fa_icon('content-copy', class: 'mr-1')
-              = t("buttons.copy")
+      - if can? :manage, job_offer
+        %li.list-inline-item
+          .dropdown
+            = button_tag type: 'button', data: { toggle: "dropdown" }, aria: { haspopup: true, expanded: false }, class: "btn btn-link btn-sm mb-0 px-0 py-0" do
+              = fa_icon 'dots-horizontal'
+            .dropdown-menu{"aria-labelledby" => "dropdownMenuLink"}
+              - job_offer.aasm.events.each do |event|
+                = link_to [event.name, :admin, job_offer], method: :patch, remote: true, class: "dropdown-item" do
+                  = fa_icon('arrow-right', class: 'mr-1')
+                  = t("buttons.#{ event.name }")
+              = link_to [:new, :admin, :job_offer, {job_offer_id: job_offer.to_param}], class: "dropdown-item" do
+                = fa_icon('content-copy', class: 'mr-1')
+                = t("buttons.copy")

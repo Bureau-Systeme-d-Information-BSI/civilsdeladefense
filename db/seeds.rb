@@ -2,7 +2,8 @@ administrator = Administrator.new email: 'pipo@molo.fr',
   first_name: 'Pipo',
   last_name: 'Molo',
   password: 'pipomolo',
-  password_confirmation: 'pipomolo'
+  password_confirmation: 'pipomolo',
+  role: 'bant'
 administrator.skip_confirmation_notification!
 administrator.save!
 administrator.confirm

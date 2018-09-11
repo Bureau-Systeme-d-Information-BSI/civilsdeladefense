@@ -1,11 +1,12 @@
 class Admin::EmailsController < Admin::BaseController
-  before_action :set_job_application
+  load_and_authorize_resource :job_application
+  load_and_authorize_resource :email, through: :job_application
 
   # POST /admin/emails
   # POST /admin/emails.json
   def create
-    @email = @job_application.emails.build(email_params)
     @email.administrator = current_administrator
+    @email.job_application = @job_application
 
     respond_to do |format|
       if @email.save
@@ -25,11 +26,6 @@ class Admin::EmailsController < Admin::BaseController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_job_application
-      @job_application = JobApplication.find(params[:job_application_id])
-    end
-
     # Never trust parameters from the scary internet, only allow the white list through.
     def email_params
       params.require(:email).permit(:title, :body)

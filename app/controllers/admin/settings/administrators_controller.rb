@@ -21,6 +21,7 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
   # POST /admin/settings/administrators
   # POST /admin/settings/administrators.json
   def create
+    @administrator.inviter = current_administrator
     respond_to do |format|
       if @administrator.save
         format.html { redirect_to [:admin, :settings, :root], notice: t('.success') }
@@ -74,14 +75,17 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
 
     def permitted_fields
       ary = %i(title first_name last_name email)
-      ary += %i(role employer_id) if current_administrator.bant?
+      ary += %i(employer_id) if current_administrator.bant?
+      ary += %i(role) if current_administrator.bant? || current_administrator.employer?
       ary
     end
 
     def set_role_and_employer
-      unless current_administrator.bant?
-        @administrator.role = 'employer'
+      if !current_administrator.bant?
         @administrator.employer = current_administrator.employer
+      end
+      if current_administrator.brh?
+        @administrator.role = 'brh'
       end
     end
 end

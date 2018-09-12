@@ -5,8 +5,8 @@
       - unless @administrator.new_record?
         .card-title.ml-1= @administrator.full_name_with_title
       .ml-auto
-        - roles = current_administrator.bant? ? Administrator.roles.keys : [current_administrator.role]
-        - disabled = !current_administrator.bant?
+        - roles = current_administrator.authorized_roles_to_confer
+        - disabled = current_administrator.brh?
         = f.input :role, collection: roles.map{|x| [Administrator.human_attribute_name("role.#{ x }"), x]}, label: false, wrapper: false, include_blank: false, disabled: disabled
     .card-body
       = f.error_notification

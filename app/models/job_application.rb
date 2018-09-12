@@ -5,6 +5,7 @@ class JobApplication < ApplicationRecord
 
   belongs_to :job_offer
   belongs_to :user
+  belongs_to :employer
   accepts_nested_attributes_for :user
   has_many :messages
   has_many :emails
@@ -36,6 +37,8 @@ class JobApplication < ApplicationRecord
   validates :resume, file_size: { less_than_or_equal_to: 2.megabytes },
                      file_content_type: { allow: ['application/pdf'] },
                      if: -> { resume.attached? }
+
+  before_validation :set_employer
 
   enum state: {
     initial: 0,
@@ -93,5 +96,9 @@ class JobApplication < ApplicationRecord
     ary << city if city.present?
     ary << country if country.present?
     ary.join(" ")
+  end
+
+  def set_employer
+    self.employer_id = self.job_offer.employer_id
   end
 end

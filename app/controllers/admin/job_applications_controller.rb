@@ -1,10 +1,7 @@
 class Admin::JobApplicationsController < Admin::BaseController
-  before_action :set_job_application, only: [:show, :edit, :update, :destroy, :change_state]
-
   # GET /admin/job_applications
   # GET /admin/job_applications.json
   def index
-    @job_applications = JobApplication.all
   end
 
   # GET /admin/job_applications/1
@@ -21,7 +18,6 @@ class Admin::JobApplicationsController < Admin::BaseController
 
   # GET /admin/job_applications/new
   def new
-    @job_application = JobApplication.new
   end
 
   # GET /admin/job_applications/1/edit
@@ -31,8 +27,6 @@ class Admin::JobApplicationsController < Admin::BaseController
   # POST /admin/job_applications
   # POST /admin/job_applications.json
   def create
-    @job_application = JobApplication.new(job_application_params)
-
     respond_to do |format|
       if @job_application.save
         format.html { redirect_to [:admin, @job_application], notice: 'Job application was successfully created.' }

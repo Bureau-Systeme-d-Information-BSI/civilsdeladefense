@@ -248,8 +248,9 @@ aside.sidebar {
 }
 
 .form-control:disabled, .form-control[readonly], .custom-select:disabled {
-    border-bottom: solid 1px $disabled-gray;
-    background-color: $disabled-gray;
+  border-bottom: solid 1px $disabled-gray;
+  background-color: $disabled-gray;
+  cursor: not-allowed;
 }
 
 .input-search {

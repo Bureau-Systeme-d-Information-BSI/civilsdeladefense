@@ -19,7 +19,9 @@
         %small.badge.text-white.text-uppercase.text-nowrap.my-2{class: klass}
           = JobApplication.human_attribute_name("state/#{most_advanced_state}")
         .d-flex
-          .font-weight-bold.mr-3= job_offer.contract_type.name
+          .font-weight-bold.mr-3
+            = job_offer.contract_type.name
+            = job_offer.duration_contract
           .font-weight-bold= job_offer.location
       .col-12.col-md-4
         .row

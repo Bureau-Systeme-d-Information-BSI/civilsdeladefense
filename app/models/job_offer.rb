@@ -29,7 +29,7 @@ class JobOffer < ApplicationRecord
   has_many :job_applications
 
   ## Validations
-  validates :title, :description, :contract_start_on, presence: true
+  validates :title, :description, presence: true
 
   ## Scopes
   scope :publicly_visible, -> { where(state: :published) }

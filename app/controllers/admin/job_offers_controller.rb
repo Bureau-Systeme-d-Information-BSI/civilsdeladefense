@@ -30,9 +30,7 @@ class Admin::JobOffersController < Admin::BaseController
       @job_offer_origin = JobOffer.find params[:job_offer_id]
     end
     @job_offer = if @job_offer_origin.nil?
-      j = JobOffer.new
-      j.contract_start_on = Date.today.next_month(6).strftime("%d/%m/%Y")
-      j
+      JobOffer.new
     else
       j = @job_offer_origin.dup
       j.title = "Copie de #{j.title}"

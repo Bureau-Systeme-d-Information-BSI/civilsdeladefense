@@ -31,7 +31,7 @@ class Admin::JobOffersController < Admin::BaseController
     end
     @job_offer = if @job_offer_origin.nil?
       j = JobOffer.new
-      j.contract_start_on = Date.today.next_month(6).strftime("%d/%m/%Y")
+      j.contract_start_on = 6.months.from_now
       j
     else
       j = @job_offer_origin.dup

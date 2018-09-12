@@ -5,8 +5,9 @@
       .tab-content
         .tab-pane.fade.show.active#overview{role: :tabpanel, aria: {labelledby: :overview}}
           = render partial: 'job_application_overview', locals: {job_application: @job_application}
-        .tab-pane.fade#emails{role: :tabpanel, aria: {labelledby: :emails}}
-          = render partial: 'job_application_emails', locals: {job_application: @job_application}
+        - if can? :manage, Email
+          .tab-pane.fade#emails{role: :tabpanel, aria: {labelledby: :emails}}
+            = render partial: 'job_application_emails', locals: {job_application: @job_application}
         .tab-pane.fade#files{role: :tabpanel, aria: {labelledby: :files}}
           = render partial: 'job_application_files', locals: {job_application: @job_application}
     .col-12.col-md-4{class: job_application_modal_section_classes}

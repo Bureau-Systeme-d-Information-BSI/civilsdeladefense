@@ -3,14 +3,15 @@
     = fa_icon('forum', class: 'text-secondary')
     = t('.title')
 
-  = render partial: '/admin/messages/form'
+  - if can? :manage, Message
+    = render partial: '/admin/messages/form'
 
   %ul.list-unstyled.activities
     - ary = @job_application.audits + @job_application.associated_audits
     - audits = ary.sort_by(&:created_at).reverse!
     - audits.each do |audit|
       - audited_changes = audit.audited_changes
-      - whodunnit = audit.try(:user).try(:name) || 'N/A'
+      - whodunnit = audit.try(:user).try(:full_name) || 'N/A'
       %li
         .d-flex
           - model = audit.auditable_type == 'JobApplication' && audit.version == 1 ? @job_application : audit.user

@@ -61,9 +61,11 @@ ActiveRecord::Schema.define(version: 2018_09_11_165000) do
     t.uuid "employer_id"
     t.integer "role"
     t.string "last_name"
+    t.uuid "inviter_id"
     t.index ["confirmation_token"], name: "index_administrators_on_confirmation_token", unique: true
     t.index ["email"], name: "index_administrators_on_email", unique: true
     t.index ["employer_id"], name: "index_administrators_on_employer_id"
+    t.index ["inviter_id"], name: "index_administrators_on_inviter_id"
     t.index ["reset_password_token"], name: "index_administrators_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_administrators_on_unlock_token", unique: true
   end
@@ -161,6 +163,8 @@ ActiveRecord::Schema.define(version: 2018_09_11_165000) do
     t.integer "state"
     t.uuid "job_offer_id"
     t.uuid "user_id"
+    t.uuid "employer_id"
+    t.index ["employer_id"], name: "index_job_applications_on_employer_id"
     t.index ["job_offer_id"], name: "index_job_applications_on_job_offer_id"
     t.index ["state"], name: "index_job_applications_on_state"
     t.index ["user_id"], name: "index_job_applications_on_user_id"
@@ -283,9 +287,11 @@ ActiveRecord::Schema.define(version: 2018_09_11_165000) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  add_foreign_key "administrators", "administrators", column: "inviter_id"
   add_foreign_key "administrators", "employers"
   add_foreign_key "emails", "administrators"
   add_foreign_key "emails", "job_applications"
+  add_foreign_key "job_applications", "employers"
   add_foreign_key "job_applications", "job_offers"
   add_foreign_key "job_applications", "users"
   add_foreign_key "job_offers", "administrators", column: "owner_id"

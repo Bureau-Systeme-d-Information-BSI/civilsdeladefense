@@ -12,11 +12,6 @@
       height: 60px;
     }
   }
-  .form-inputs {
-    > .form-group {
-      @extend .mb-3;
-    }
-  }
   .form-actions {
     @extend .d-flex, .justify-content-start, .align-items-start;
     > *:last-child {
@@ -35,11 +30,7 @@
     }
   }
   .input-group-prepend {
-    .input-group-text {
-      background-color: white;
-      border: 2px solid $card-border-color;
-      border-right: 0;
-    }
+    width :2.5rem;
   }
   .alert {
     @extend .mb-3;

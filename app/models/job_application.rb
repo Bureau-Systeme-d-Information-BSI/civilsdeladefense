@@ -99,6 +99,6 @@ class JobApplication < ApplicationRecord
   end
 
   def set_employer
-    self.employer_id = self.job_offer.employer_id
+    self.employer_id ||= self.job_offer.employer_id
   end
 end

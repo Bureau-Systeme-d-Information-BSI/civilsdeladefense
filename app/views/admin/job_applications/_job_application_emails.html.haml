@@ -2,12 +2,12 @@
 
   = render partial: '/admin/emails/form'
 
-  - @job_application.emails.order(created_at: :desc).each do |email|
+  - @job_application.emails.order(created_at: :desc).includes(:sender).each do |email|
     .card
       .card-header.with-subheader.bg-white.font-weight-bold.text-secondary
         = fa_icon('file-document', class: 'text-secondary')
-        = email.administrator.full_name
+        = email.sender&.full_name
       .card-subheader.bg-card-bg.font-weight-bold.text-muted
-        = email.title
+        = email.subject
       .card-body.bg-white
         = email.body

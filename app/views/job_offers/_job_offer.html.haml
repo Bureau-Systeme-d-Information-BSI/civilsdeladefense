@@ -3,9 +3,8 @@
     .font-weight-bold.text-quinary= job_offer.title
     %small
       .d-flex.mt-1
-        .mr-1= job_offer.contract_type.name
-        - if job_offer.duration_contract.present?
-          .mr-1= job_offer.duration_contract 
+        .mr-1
+          = [job_offer.contract_type.name, job_offer.duration_contract]join(' ')
         .mr-1
           \-
         = job_offer.location

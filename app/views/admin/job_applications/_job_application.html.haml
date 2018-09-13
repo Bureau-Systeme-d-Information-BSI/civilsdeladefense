@@ -1,5 +1,6 @@
 - with_header = true if with_header.nil?
-.card.mt-3.job-application{id: dom_id(job_application), class: "job-application--state-#{job_application.state}"}
+- change_state_url = url_for([:change_state, :admin, job_application, {state: job_application.state}])
+.card.job-application{id: dom_id(job_application), class: "job-application--state-#{job_application.state}", data: {state: job_application.state, change: {state: {url: change_state_url}}}}
   - if with_header
     .card-header.d-flex
       %small.d-block.text-truncate.mr-auto

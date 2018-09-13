@@ -1,3 +1,8 @@
+# Faker initialization
+I18n.config.available_locales = %w(fr en)
+I18n.reload!
+Faker::Config.locale = :fr
+
 administrator = Administrator.new email: 'pipo@molo.fr',
   first_name: 'Pipo',
   last_name: 'Molo',
@@ -124,24 +129,37 @@ user.skip_confirmation_notification!
 user.save!
 user.confirm
 
-job_application = JobApplication.new do |ja|
-  ja.job_offer = job_offer
-  ja.user = user
-  ja.first_name = 'Coin'
-  ja.last_name = 'Pan'
-  ja.current_position = 'Dev'
-  ja.phone = '0606060606'
-  ja.terms_of_service = true
-end
-file = File.open(Rails.root.join('spec', 'fixtures', 'files', 'document.pdf'))
-job_application.cover_letter.attach(io: file, filename: 'cover_letter.pdf')
-file = File.open(Rails.root.join('spec', 'fixtures', 'files', 'document.pdf'))
-job_application.resume.attach(io: file, filename: 'resume.pdf')
-job_application.save!
+JobOffer.all.each do |job_offer|
+  30.times do |i|
+    user = User.new email: Faker::Internet.email,
+      first_name: Faker::Name.first_name ,
+      last_name: Faker::Name.last_name ,
+      password: 'pipomolo',
+      password_confirmation: 'pipomolo'
+    user.skip_confirmation_notification!
+    user.save!
+    user.confirm
 
-Audited.audit_class.as_user(administrator) do
-  Email.create! subject: "subject", body: "body", job_application: job_application, sender: administrator
-  Email.create! subject: "subject", body: "body", job_application: job_application, sender: administrator
-  Email.create! subject: "subject", body: "body", job_application: job_application, sender: administrator
-  Email.create! subject: "subject", body: "body", job_application: job_application, sender: administrator
+    job_application = JobApplication.new do |ja|
+      ja.job_offer = job_offer
+      ja.user = user
+      ja.first_name = user.first_name
+      ja.last_name = user.last_name
+      ja.current_position = 'Dev'
+      ja.phone = '0606060606'
+      ja.terms_of_service = true
+    end
+    file = File.open(Rails.root.join('spec', 'fixtures', 'files', 'document.pdf'))
+    job_application.cover_letter.attach(io: file, filename: 'cover_letter.pdf')
+    file = File.open(Rails.root.join('spec', 'fixtures', 'files', 'document.pdf'))
+    job_application.resume.attach(io: file, filename: 'resume.pdf')
+    job_application.save!
+
+    Audited.audit_class.as_user(administrator) do
+      Email.create! subject: "subject", body: Faker::Lorem.paragraph(2), job_application: job_application, sender: administrator
+      Email.create! subject: "subject", body: Faker::Lorem.paragraph(2), job_application: job_application, sender: administrator
+      Email.create! subject: "subject", body: Faker::Lorem.paragraph(2), job_application: job_application, sender: administrator
+      Email.create! subject: "subject", body: Faker::Lorem.paragraph(2), job_application: job_application, sender: administrator
+    end
+  end
 end

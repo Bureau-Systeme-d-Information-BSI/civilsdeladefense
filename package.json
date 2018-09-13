@@ -10,6 +10,7 @@
     "popper.js": "^1.14.4",
     "rails-ujs": "^5.2.0",
     "snackbarjs": "^1.1.0",
+    "sortablejs": "^1.7.0",
     "svg-sprite-loader": "^3.8.0",
     "svgo": "^1.0.5",
     "svgo-loader": "^2.1.0"

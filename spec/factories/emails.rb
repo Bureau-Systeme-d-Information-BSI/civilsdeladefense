@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :email, class: 'Email' do
-    title "MyString"
+    subject "New email"
     body "MyText"
-    job_application nil
-    administrator nil
+    job_application
+    association :sender, factory: :administrator
   end
 end

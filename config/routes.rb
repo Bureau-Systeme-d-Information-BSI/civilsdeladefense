@@ -50,7 +50,9 @@ Rails.application.routes.draw do
   end
 
   namespace :account, path: 'mon-compte' do
-    resources :job_applications, path: 'candidatures'
+    resources :job_applications, path: 'candidatures' do
+      resources :emails, only: %i(index create)
+    end
     root to: 'base#show'
   end
 

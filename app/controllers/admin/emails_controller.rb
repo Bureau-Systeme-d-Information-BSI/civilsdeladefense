@@ -5,11 +5,13 @@ class Admin::EmailsController < Admin::BaseController
   # POST /admin/emails
   # POST /admin/emails.json
   def create
-    @email.administrator = current_administrator
+    @email.sender = current_administrator
     @email.job_application = @job_application
 
     respond_to do |format|
       if @email.save
+        ApplicantNotificationsMailer.new_email(@email.id).deliver_now
+
         format.html { redirect_to [:admin, @email.job_application], notice: t('.success') }
         format.js {
           @email = Email.new
@@ -28,6 +30,6 @@ class Admin::EmailsController < Admin::BaseController
   private
     # Never trust parameters from the scary internet, only allow the white list through.
     def email_params
-      params.require(:email).permit(:title, :body)
+      params.require(:email).permit(:subject, :body)
     end
 end

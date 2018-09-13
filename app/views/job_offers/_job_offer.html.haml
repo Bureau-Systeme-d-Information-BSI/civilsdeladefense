@@ -4,7 +4,7 @@
     %small
       .d-flex.mt-1
         .mr-1
-          = [job_offer.contract_type.name, job_offer.duration_contract]join(' ')
+          = [job_offer.contract_type.name, job_offer.duration_contract].join(' ')
         .mr-1
           \-
         = job_offer.location

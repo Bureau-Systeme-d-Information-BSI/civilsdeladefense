@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
       if resource.is_a?(Administrator)
         stored_location_for(resource) || admin_root_path
       elsif resource.is_a?(User)
-        stored_location_for(resource) || job_applications_path
+        stored_location_for(resource) || account_root_path
       else
         stored_location_for(resource)
       end

@@ -19,7 +19,7 @@ informatique = Category.create! name: 'Informatique'
 OfficialStatus.create! name: 'Cadre'
 OfficialStatus.create! name: 'Non Cadre'
 
-Employer.create! name: 'DIRISI', code: 'DRI'
+employer = Employer.create! name: 'DIRISI', code: 'DRI'
 
 ContractType.create! name: 'CDD'
 ContractType.create! name: 'CDI'
@@ -115,3 +115,34 @@ job_offer3.save!
 job_offer.publish!
 job_offer2.publish!
 job_offer3.publish!
+
+user = User.new email: 'coin@pan.fr',
+  first_name: 'Coin',
+  last_name: 'Pan',
+  password: 'pipomolo',
+  password_confirmation: 'pipomolo'
+user.skip_confirmation_notification!
+user.save!
+user.confirm
+
+job_application = JobApplication.new do |ja|
+  ja.job_offer = job_offer
+  ja.user = user
+  ja.first_name = 'Coin'
+  ja.last_name = 'Pan'
+  ja.current_position = 'Dev'
+  ja.phone = '0606060606'
+  ja.terms_of_service = true
+end
+file = File.open(Rails.root.join('spec', 'fixtures', 'files', 'document.pdf'))
+job_application.cover_letter.attach(io: file, filename: 'cover_letter.pdf')
+file = File.open(Rails.root.join('spec', 'fixtures', 'files', 'document.pdf'))
+job_application.resume.attach(io: file, filename: 'resume.pdf')
+job_application.save!
+
+Audited.audit_class.as_user(administrator) do
+  Email.create! subject: "subject", body: "body", job_application: job_application, sender: administrator
+  Email.create! subject: "subject", body: "body", job_application: job_application, sender: administrator
+  Email.create! subject: "subject", body: "body", job_application: job_application, sender: administrator
+  Email.create! subject: "subject", body: "body", job_application: job_application, sender: administrator
+end

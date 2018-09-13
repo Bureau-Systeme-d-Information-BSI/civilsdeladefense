@@ -1,6 +1,6 @@
 .d-flex.flex-column{id: dom_id(@job_application, 'emails')}
 
-  = render partial: '/admin/emails/form'
+  = render partial: '/account/emails/form'
 
   - @job_application.emails.order(created_at: :desc).includes(:sender).each do |email|
     .card

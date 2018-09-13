@@ -42,7 +42,7 @@ fr:
         employer: "Employeur"
         role: "Rôle"
       email:
-        title: "Sujet"
+        subject: "Sujet"
         body: "Votre message"
       employer:
         name: "Nom"

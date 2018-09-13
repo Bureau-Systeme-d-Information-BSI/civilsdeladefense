@@ -5,8 +5,7 @@
     %ul.list-inline.text-center.mt-5.mb-0.basic-infos
       %li.list-inline-item
         = fa_icon 'briefcase'
-        = job_offer.contract_type.name
-        = job_offer.duration_contract
+        = [job_offer.contract_type.name, job_offer.duration_contract].join(' ')
       %li.list-inline-item
         = fa_icon 'calendar'
         = l job_offer.contract_start_on

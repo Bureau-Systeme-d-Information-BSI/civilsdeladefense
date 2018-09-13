@@ -14,7 +14,7 @@ class ApplicantNotificationsMailer < ApplicationMailer
     to = @user.email
     subject = @email.subject
     @body = @email.body
-    @answer_url = [:account, @job_application]
+    @answer_url = [:account, @job_application, :emails]
 
     mail to: to, subject: subject
   end

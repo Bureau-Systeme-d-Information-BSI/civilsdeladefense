@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_12_100000) do
+ActiveRecord::Schema.define(version: 2018_09_12_125242) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -108,14 +108,15 @@ ActiveRecord::Schema.define(version: 2018_09_12_100000) do
   end
 
   create_table "emails", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "title"
+    t.string "subject"
     t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "administrator_id"
     t.uuid "job_application_id"
-    t.index ["administrator_id"], name: "index_emails_on_administrator_id"
+    t.string "sender_type"
+    t.uuid "sender_id"
     t.index ["job_application_id"], name: "index_emails_on_job_application_id"
+    t.index ["sender_type", "sender_id"], name: "index_emails_on_sender_type_and_sender_id"
   end
 
   create_table "employers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -290,7 +291,6 @@ ActiveRecord::Schema.define(version: 2018_09_12_100000) do
 
   add_foreign_key "administrators", "administrators", column: "inviter_id"
   add_foreign_key "administrators", "employers"
-  add_foreign_key "emails", "administrators"
   add_foreign_key "emails", "job_applications"
   add_foreign_key "job_applications", "employers"
   add_foreign_key "job_applications", "job_offers"

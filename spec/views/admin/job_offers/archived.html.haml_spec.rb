@@ -2,14 +2,44 @@ require 'rails_helper'
 
 RSpec.describe "admin/job_offers/archived", type: :view do
   before(:each) do
+    owner = create(:owner)
+    category = create(:category)
+    official_status = create(:official_status)
+    employer = create(:employer)
+    contract_type = create(:contract_type)
+    study_level = create(:study_level)
+    experience_level = create(:experience_level)
+    sector = create(:sector)
+
     ary1 = assign(:job_offers_active, [
-      create(:job_offer, state: :published),
-      create(:job_offer, state: :published),
+      2.times do
+        create(:job_offer,
+          state: :published,
+          owner: owner,
+          category: category,
+          official_status: official_status,
+          employer: employer,
+          contract_type: contract_type,
+          study_level: study_level,
+          experience_level: experience_level,
+          sector: sector
+        )
+      end
     ])
     ary2 = assign(:job_offers_archived, [
-      create(:job_offer, state: :archived),
-      create(:job_offer, state: :archived),
-      create(:job_offer, state: :archived),
+      3.times do
+        create(:job_offer,
+          state: :archived,
+          owner: owner,
+          category: category,
+          official_status: official_status,
+          employer: employer,
+          contract_type: contract_type,
+          study_level: study_level,
+          experience_level: experience_level,
+          sector: sector
+        )
+      end
     ])
     assign(:job_offers, ary2)
   end

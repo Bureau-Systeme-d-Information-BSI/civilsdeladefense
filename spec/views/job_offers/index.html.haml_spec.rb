@@ -2,9 +2,29 @@ require 'rails_helper'
 
 RSpec.describe "job_offers/index", type: :view do
   before(:each) do
+    owner = create(:owner)
+    category = create(:category)
+    official_status = create(:official_status)
+    employer = create(:employer)
+    contract_type = create(:contract_type)
+    study_level = create(:study_level)
+    experience_level = create(:experience_level)
+    sector = create(:sector)
+
     assign(:job_offers, [
-      create(:job_offer),
-      create(:job_offer)
+      2.times do
+        create(:job_offer,
+          state: :published,
+          owner: owner,
+          category: category,
+          official_status: official_status,
+          employer: employer,
+          contract_type: contract_type,
+          study_level: study_level,
+          experience_level: experience_level,
+          sector: sector
+        )
+      end
     ])
   end
 

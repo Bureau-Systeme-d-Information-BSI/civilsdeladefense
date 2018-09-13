@@ -53,7 +53,7 @@ $list-bg-color: #e2e4e6;
 
   .cards {
     height: calc(100% - #{$gap*2} - #{$scrollbar-thickness});
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 
   .card {

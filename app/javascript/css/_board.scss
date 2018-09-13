@@ -17,19 +17,12 @@ $list-bg-color: #e2e4e6;
   height: calc(100vh - 100px);
   padding-top: $gap;
   padding-bottom: $gap;
-
-  // display: grid;
-  // grid-template-rows: 1fr;
-  //grid-template-columns: 100%;
-
-  // background-color: $board-bg-color;
-  // color: #eee;
   overflow-x: auto;
 }
 
 .lists {
   display: flex;
-  //width: 100%; // This is needed for FF < 54
+  width: 100%; // This is needed for FF < 54
   height: calc(100vh - 130px);
   > * {
     flex: 0 0 auto; // 'rigid' lists
@@ -44,8 +37,8 @@ $list-bg-color: #e2e4e6;
 .list {
   @include box-shadow($bmd-shadow-2dp);
   width: $list-width;
-  // height: calc(100% - #{$gap} - #{$scrollbar-thickness});
   background-color: $card-bg;
+  padding-bottom: $gap;
   > * {
     padding: 0 $gap;
   }
@@ -58,8 +51,23 @@ $list-bg-color: #e2e4e6;
     border-bottom: 1px solid $card-border-color;
   }
 
+  .cards {
+    height: calc(100% - #{$gap*2} - #{$scrollbar-thickness});
+    overflow-y: scroll;
+  }
+
   .card {
     margin-top: $gap;
+    &.tilt {
+      transition: transform 0.2s $bmd-animation-curve-default;
+      will-change: transform;
+      &.right {
+        transform: rotate(3deg);
+      }
+      &.left {
+        transform: rotate(-3deg);
+      }
+    }
   }
 
   ul {

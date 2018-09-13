@@ -5,17 +5,17 @@
     = link_to [:edit, :admin, @job_offer], class: 'small ml-3 text-nowrap' do
       = fa_icon('pencil')
       = t('buttons.edit')
-.board
+.board#board
   .lists
     - JobApplication.aasm.states.each do |state|
       - state_name = state.name.to_s
       - concerned_job_applications = @job_applications[state_name] || []
-      .list{id: "job-application--state-#{state_name}"}
+      .list{id: "job-application--state-#{state_name}", data: {state: state_name}}
         %header
           = JobApplication.human_attribute_name("state/#{state_name}")
           = surround '(', ')' do
-            = concerned_job_applications.size
-        .d-flex.flex-column.cards
+            %span.total= concerned_job_applications.size
+        .d-flex.flex-column.cards{data: {state: state_name}}
           = render partial: '/admin/job_applications/job_application', collection: concerned_job_applications, locals: {with_header: false}
 
 .modal.fade#remoteContentModal{tabindex: -1, role: :dialog, aria: {labelledby: :remoteContentModal, hidden: true}}

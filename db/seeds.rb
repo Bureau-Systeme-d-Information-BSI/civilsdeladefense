@@ -79,6 +79,7 @@ job_offer = JobOffer.new do |j|
   Si vous êtes sélectionné(e) après cette première étape, vous serez reçu(e) en entretien par l’employeur et éventuellement le service RH.
   Vous serez à l’issue de cet entretien informé(e) par l’employeur des suites données."
   j.contract_type = ContractType.first
+  j.duration_contract = "4 mois"
   j.contract_start_on = Date.new(2019, 1, 1)
   j.is_remote_possible = false
   j.study_level = StudyLevel.last

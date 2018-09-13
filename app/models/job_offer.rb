@@ -29,7 +29,7 @@ class JobOffer < ApplicationRecord
   has_many :job_applications
 
   ## Validations
-  validates :title, :description, :contract_start_on, presence: true
+  validates :title, :description, :contract_start_on, :duration_contract, presence: true
 
   ## Scopes
   scope :publicly_visible, -> { where(state: :published) }
@@ -99,7 +99,7 @@ class JobOffer < ApplicationRecord
 
   ## Callbacks
   after_create :set_identifier
-  before_validation :set_duration_without_cdd
+  after_validation :set_duration_without_cdd
 
   def set_identifier
     self.update_column :identifier, [employer.code, sequential_id].join('')

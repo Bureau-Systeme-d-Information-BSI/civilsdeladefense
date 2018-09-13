@@ -28,6 +28,7 @@ function triggerTypeContractChange() {
   if (duration_contract !== null) {
     let value = type_contract.options[type_contract.selectedIndex].text
     duration_contract_goup.hidden = value !== 'CDD'
-    duration_contract.value = (value !== 'CDD')?"nop":"";
+    duration_contract.value  = (duration_contract.value =="nop")?"":duration_contract.value;
+    duration_contract.value = (value !== 'CDD' && duration_contract.value =="")?"nop":duration_contract.value;
   }
 }

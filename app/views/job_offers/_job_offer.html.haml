@@ -4,7 +4,8 @@
     %small
       .d-flex.mt-1
         .mr-1= job_offer.contract_type.name
-        .mr-1= job_offer.duration_contract 
+        - if job_offer.duration_contract.present?
+          .mr-1= job_offer.duration_contract 
         .mr-1
           \-
         = job_offer.location

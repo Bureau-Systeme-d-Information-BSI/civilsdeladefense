@@ -100,9 +100,16 @@ class JobOffer < ApplicationRecord
   ## Callbacks
   after_create :set_identifier
   after_validation :set_duration_without_cdd
+  before_validation :hack_duration_require
 
   def set_identifier
     self.update_column :identifier, [employer.code, sequential_id].join('')
+  end
+
+  def hack_duration_require
+    if (self.contract_type&.name != "CDD")
+      self.duration_contract = "nop"
+    end
   end
 
   def set_duration_without_cdd

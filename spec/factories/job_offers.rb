@@ -11,6 +11,7 @@ FactoryBot.define do
     recruitment_process "Des interviews"
     contract_type
     contract_start_on { 1.year.from_now }
+    duration_contract "4 mois"
     is_remote_possible false
     study_level
     experience_level
@@ -18,5 +19,6 @@ FactoryBot.define do
     is_negotiable false
     estimate_monthly_salary_net "3k€"
     estimate_monthly_salary_gross "36k€"
+
   end
 end

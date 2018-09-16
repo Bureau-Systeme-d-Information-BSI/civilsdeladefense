@@ -11,7 +11,6 @@ FactoryBot.define do
     recruitment_process "Des interviews"
     contract_type
     contract_start_on { 1.year.from_now }
-    duration_contract "4 mois"
     is_remote_possible false
     study_level
     experience_level

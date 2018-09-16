@@ -29,7 +29,9 @@ class JobOffer < ApplicationRecord
   has_many :job_applications
 
   ## Validations
-  validates :title, :description, :contract_start_on, :duration_contract, presence: true
+  validates :title, :description, :contract_start_on, presence: true
+  validates :duration_contract, presence: true, if: :contract_type_is_cdd?
+  validates :duration_contract, absence: true, unless: :contract_type_is_cdd?
 
   ## Scopes
   scope :publicly_visible, -> { where(state: :published) }
@@ -99,22 +101,12 @@ class JobOffer < ApplicationRecord
 
   ## Callbacks
   after_create :set_identifier
-  after_validation :set_duration_without_cdd
-  before_validation :hack_duration_require
 
   def set_identifier
     self.update_column :identifier, [employer.code, sequential_id].join('')
   end
 
-  def hack_duration_require
-    if (self.contract_type&.name != "CDD")
-      self.duration_contract = "nop"
-    end
-  end
-
-  def set_duration_without_cdd
-    if (self.contract_type&.name != "CDD")
-      self.duration_contract = nil
-    end
+  def contract_type_is_cdd?
+    self.contract_type&.name == "CDD"
   end
 end

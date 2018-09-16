@@ -8,7 +8,7 @@ RSpec.describe JobOffer do
 	it 'should be invalid if duration <> nil when type = CDI' do
 		leType = build(:contract_type, name: 'CDI')
 		jb = build(:job_offer, contract_type: leType, duration_contract: "2 mois")
-		jb.valid?
+		
 		expect(jb.valid?).to be_falsey
 	end
 

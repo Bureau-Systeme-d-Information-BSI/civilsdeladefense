@@ -10,17 +10,20 @@
   %table.table.table-hover.mb-0.mt-3
     %thead
       %tr
-        %th= resource_class.human_attribute_name(:name)
-        - if resource_class == Employer
-          %th= resource_class.human_attribute_name(:code)
-        - if resource_class == Category
-          %th Nombre d'offres
+        - if resource_class == EmailTemplate
+          %th= resource_class.human_attribute_name(:title)
+        - else
+          %th= resource_class.human_attribute_name(:name)
+          - if resource_class == Employer
+            %th= resource_class.human_attribute_name(:code)
+          - if resource_class == Category
+            %th Nombre d'offres
         %th
     %tbody
       - for element in collection
         %tr
           %td
-            = element.name
+            = element.try(:name) || element.try(:title)
           - if resource_class == Employer
             %td
               = element.code

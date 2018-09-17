@@ -5,4 +5,6 @@ class Email < ApplicationRecord
   validates :subject, :body, presence: true
 
   audited associated_with: :job_application
+
+  attr_accessor :template
 end

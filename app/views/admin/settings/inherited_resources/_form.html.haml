@@ -4,9 +4,14 @@
       = f.error_notification
       = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
       .form-inputs
-        = f.input :name
-        - if resource.is_a?(Employer)
-          = f.input :code
+        - if resource.is_a?(EmailTemplate)
+          = f.input :title
+          = f.input :subject
+          = f.input :body
+        - else
+          = f.input :name
+          - if resource.is_a?(Employer)
+            = f.input :code
       .form-actions.text-right.mt-4
         %ul.list-inline.mb-0
           %li.list-inline-item

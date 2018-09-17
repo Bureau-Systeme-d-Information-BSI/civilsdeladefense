@@ -41,6 +41,7 @@ Rails.application.routes.draw do
         end
       end
       resources :employers
+      resources :email_templates
       JobOffer::SETTINGS.each do |setting|
         resources setting.to_s.pluralize.to_sym, except: %i(show)
       end

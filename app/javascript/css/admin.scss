@@ -152,20 +152,18 @@ ul {
 .list-group {
   &.stepper {
     .list-group-item {
+      @extend .px-3;
       border-left: 4px solid transparent;
-      color: $body-color;
+      color: #393939;
       transition: color 0.2s $bmd-animation-curve-default;
       will-change: color, transform;
       outline: 0;
-      &:hover {
-        color: $navbar-light-hover-color;
-      }
+      color: black;
+      font-weight: 500;
       &.disabled {
         color: #cdcdcd;
       }
       &.active {
-        color: black;
-        font-weight: 500;
         background-color: $card-bg;
         border-left-color: $primary;
         .badge {
@@ -174,6 +172,11 @@ ul {
             border-color: $primary;
           }
         }
+      }
+      &.menu {
+        color: $body-color;
+        text-transform: uppercase;
+        padding-bottom: 0;
       }
       .badge {
         &.badge-pill {

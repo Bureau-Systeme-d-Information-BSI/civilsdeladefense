@@ -1,2 +1,2 @@
-- @page_title = t("admin.settings.#{ resource_class.to_s.tableize }.edit.title", name: resource.name)
+- @page_title = t("admin.settings.#{ resource_class.to_s.tableize }.edit.title", name: resource.try(:name) || resource.try(:title))
 = render '/admin/settings/inherited_resources/form'

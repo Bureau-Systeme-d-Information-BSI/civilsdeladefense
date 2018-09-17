@@ -35,6 +35,8 @@ fr:
         first_name: "Prénom"
         last_name: "Nom"
         title: "Titre"
+        subject: "Sujet"
+        body: "Corps du mail"
       administrator:
         current_password: 'Mot de passe actuel'
         password: 'Nouveau mot de passe'

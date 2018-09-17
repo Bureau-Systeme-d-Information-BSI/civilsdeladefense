@@ -206,6 +206,7 @@ fr:
         navbar:
           administrators: "Membres"
           employers: "Employeurs"
+          email_templates: "Emails"
           categories: "Catégories"
           official_statuses: "Statuts"
           contract_types: "Types de contrat"
@@ -242,7 +243,7 @@ fr:
             one: '1 employeur'
             other: '%{count} employeurs'
         new:
-          title: "Ajouter un nouel employeur"
+          title: "Ajouter un nouvel employeur"
         create:
           success: "Employeur créé !"
         update:
@@ -251,6 +252,24 @@ fr:
           success: "Employeur supprimé !"
         edit:
           title: "Modifier un employeur"
+      email_templates:
+        index:
+          title: "Templates d'emails"
+          add: "Ajouter"
+          card_title:
+            zero: 'Aucun template'
+            one: '1 template'
+            other: '%{count} templates'
+        new:
+          title: "Ajouter un nouveau template"
+        create:
+          success: "Template ajouté !"
+        update:
+          success: "Template mis à jour !"
+        destroy:
+          success: "Template supprimé !"
+        edit:
+          title: "Modifier un template"
       categories:
         index:
           card_title:

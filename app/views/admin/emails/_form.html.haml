@@ -1,4 +1,5 @@
 -# frozen_string_literal: true
+- @templates = EmailTemplate.all
 .card
   .card-header.bg-white.font-weight-bold.text-secondary
     = fa_icon('file-document', class: 'text-secondary')
@@ -9,6 +10,7 @@
       = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
 
       .form-inputs
+        = f.input :template, collection: @templates
         = f.input :subject
         = f.input :body
 
@@ -16,3 +18,5 @@
         = button_tag(type: 'submit', class: 'btn btn-primary') do
           = t('buttons.send_to_candidate')
           = fa_icon('send', class: 'ml-1')
+
+= javascript_tag "var templates = #{ @templates.to_json };"

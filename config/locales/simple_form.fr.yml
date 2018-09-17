@@ -44,6 +44,7 @@ fr:
         employer: "Employeur"
         role: "Rôle"
       email:
+        template: "Template"
         subject: "Sujet"
         body: "Votre message"
       employer:

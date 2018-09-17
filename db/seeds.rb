@@ -83,7 +83,8 @@ job_offer = JobOffer.new do |j|
   j.recruitment_process = "Si votre candidature est pré-selectionnée, vous serez contacté(e) par téléphone pour apprécier vos attentes et motivations.
   Si vous êtes sélectionné(e) après cette première étape, vous serez reçu(e) en entretien par l’employeur et éventuellement le service RH.
   Vous serez à l’issue de cet entretien informé(e) par l’employeur des suites données."
-  j.contract_type = ContractType.first
+  j.contract_type = ContractType.where(name:"CDD").first
+  j.duration_contract = "4 mois"
   j.contract_start_on = Date.new(2019, 1, 1)
   j.is_remote_possible = false
   j.study_level = StudyLevel.last
@@ -103,6 +104,8 @@ job_offer.save!
 
 job_offer2 = job_offer.dup
 job_offer2.title = 'Conducteur d’Opérations (H/F)'
+job_offer2.contract_type = ContractType.where(name:"CDI").first
+job_offer2.duration_contract = nil
 job_offer2.category = infrastructure
 job_offer2.identifier = nil
 job_offer2.sequential_id = nil

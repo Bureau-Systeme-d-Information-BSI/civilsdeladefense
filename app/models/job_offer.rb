@@ -30,6 +30,8 @@ class JobOffer < ApplicationRecord
 
   ## Validations
   validates :title, :description, :contract_start_on, presence: true
+  validates :duration_contract, presence: true, if: :contract_type_is_cdd?
+  validates :duration_contract, absence: true, unless: :contract_type_is_cdd?
 
   ## Scopes
   scope :publicly_visible, -> { where(state: :published) }
@@ -102,5 +104,9 @@ class JobOffer < ApplicationRecord
 
   def set_identifier
     self.update_column :identifier, [employer.code, sequential_id].join('')
+  end
+
+  def contract_type_is_cdd?
+    self.contract_type&.name == "CDD"
   end
 end

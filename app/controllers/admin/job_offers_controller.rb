@@ -160,7 +160,7 @@ class Admin::JobOffersController < Admin::BaseController
     end
 
     def permitted_fields
-      fields = [:title, :description, :category_id, :official_status_id, :location, :employer_id, :required_profile, :recruitment_process, :contract_type_id, :contract_start_on, :is_remote_possible, :study_level_id, :experience_level_id, :sector_id, :is_negotiable, :estimate_monthly_salary_net, :estimate_monthly_salary_gross]
+      fields = [:title, :description, :category_id, :official_status_id, :location, :employer_id, :required_profile, :recruitment_process, :contract_type_id, :duration_contract, :contract_start_on, :is_remote_possible, :study_level_id, :experience_level_id, :sector_id, :is_negotiable, :estimate_monthly_salary_net, :estimate_monthly_salary_gross]
       other_fields = (JobOffer::FILES + JobOffer::URLS).map{ |x| "option_#{x}".to_sym }
       fields.push(*other_fields)
     end

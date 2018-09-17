@@ -18,5 +18,6 @@ FactoryBot.define do
     is_negotiable false
     estimate_monthly_salary_net "3k€"
     estimate_monthly_salary_gross "36k€"
+
   end
 end

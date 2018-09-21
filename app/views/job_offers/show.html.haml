@@ -1,12 +1,11 @@
+- @with_background_image = true
 - @page_title = @job_offer.title + ' ' + @job_offer.location
-= render partial: 'job_offer_head', locals: {job_offer: @job_offer}
-
-- fields = %i(description required_profile recruitment_process)
-- fields.each do |field|
-  %h2.h5.mt-5.mb-3.text-dark-gray= t('.'+field.to_s)
-  != @job_offer.send(field)
-
 .row
-  .col-12.text-center.mt-5
-    = link_to t('.apply'), [:apply, @job_offer], class: 'btn btn-primary btn-raised btn-lg'
-
+  .col-12.col-md-5
+    .card.job-offer-head-sticky
+      .card-body
+        = render partial: 'job_offer_head', locals: {job_offer: @job_offer, inside_card: true}
+        .text-center
+          = link_to t('.apply'), [:apply, @job_offer], class: 'btn btn-primary btn-raised btn-lg'
+  .col-12.col-md-7
+    = render partial: "job_offer_content", locals: {job_offer: @job_offer}

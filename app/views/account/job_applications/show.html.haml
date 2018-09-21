@@ -1,8 +1,27 @@
-%p
-  = link_to "Messages", [:account, @job_application, :emails]
-%p
-  %strong Poste
-  = @job_offer.title
-%p
-  %strong Statut
-  = JobApplication.human_attribute_name("state/#{@job_application.state}")
+.container
+  .row.bg-white.border-bottom
+    .col-12
+      %button.close.mt-2{type: :button, data: { dismiss: :modal }, aria: { label: t("buttons.close") }}
+        %span{ aria: { hidden: true }}
+          &times
+      = render partial: '/job_offers/job_offer_head', locals: {job_offer: @job_offer}
+      .row
+        .col-12
+          .h5.text-quinary.text-center Suivi de candidature
+          = JobApplication.human_attribute_name("state/#{@job_application.state}")
+      %ul.nav.nav-tabs.mt-3{role: :tablist}
+        %li.nav-item
+          = link_to t('.nav_emails'), "#emails", class: "nav-link active", data: {toggle: :tab}, role: :tab, aria: {controls: :emails, selected: true}
+        %li.nav-item
+          = link_to t('.nav_files', count: 0), "#files", class: "nav-link", data: {toggle: :tab}, role: :tab, aria: {controls: :files, selected: false}
+        %li.nav-item
+          = link_to t('.nav_offer'), "#offer", class: "nav-link", data: {toggle: :tab}, role: :tab, aria: {controls: :offer, selected: true}
+  .row.bg-card-bg
+    .col-12.col-md-9.mx-md-auto.py-4
+      .tab-content
+        .tab-pane.fade.show.active#emails{role: :tabpanel, aria: {labelledby: :emails}}
+          = render template: '/account/emails/index', locals: {job_application: @job_application}
+        .tab-pane.fade#files{role: :tabpanel, aria: {labelledby: :files}}
+          = render partial: '/account/files/form', locals: {job_application: @job_application}
+        .tab-pane.fade#offer{role: :tabpanel, aria: {labelledby: :offer}}
+          = render partial: '/job_offers/job_offer_content', locals: {job_offer: @job_offer}

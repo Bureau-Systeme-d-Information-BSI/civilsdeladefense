@@ -83,6 +83,42 @@ class Admin::JobApplicationsController < Admin::BaseController
     end
   end
 
+  def check_file
+    @file_name = params[:file_name]
+    if %i(resume cover_letter).include?(@file_name.to_sym)
+      @job_application.update_column("#{ @file_name }_is_validated", 1)
+    else
+      @job_application.user.update_column("#{ @file_name }_is_validated", 1)
+    end
+
+    respond_to do |format|
+      format.html { redirect_back(fallback_location: [:admin, @job_application], notice: t('.success', state: state_i18n)) }
+      format.js {
+        @notification = t('.success')
+        render :file_operation
+      }
+      format.json { render :show, status: :ok, location: [:admin, @job_application] }
+    end
+  end
+
+  def uncheck_file
+    @file_name = params[:file_name]
+    if %i(resume cover_letter).include?(@file_name.to_sym)
+      @job_application.update_column("#{ @file_name }_is_validated", 2)
+    else
+      @job_application.user.update_column("#{ @file_name }_is_validated", 2)
+    end
+
+    respond_to do |format|
+      format.html { redirect_back(fallback_location: [:admin, @job_application], notice: t('.success', state: state_i18n)) }
+      format.js {
+        @notification = t('.success')
+        render :file_operation
+      }
+      format.json { render :show, status: :ok, location: [:admin, @job_application] }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_job_application

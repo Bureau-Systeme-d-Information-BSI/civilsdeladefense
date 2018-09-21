@@ -30,6 +30,8 @@ Rails.application.routes.draw do
     resources :job_applications, path: 'candidatures' do
       member do
         patch :change_state
+        post :check_file
+        post :uncheck_file
       end
       resources :messages, only: %i(create)
       resources :emails, only: %i(create)
@@ -51,7 +53,11 @@ Rails.application.routes.draw do
   end
 
   namespace :account, path: 'mon-compte' do
+    resource :user, only: %i(update)
     resources :job_applications, path: 'candidatures' do
+      collection do
+        get :finished
+      end
       resources :emails, only: %i(index create)
     end
     root to: 'base#show'

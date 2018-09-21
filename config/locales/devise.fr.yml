@@ -114,7 +114,9 @@ fr:
     sessions:
       already_signed_out: Déconnecté(e).
       new:
-        sign_in: Connexion
+        sign_in:
+          user: Accéder à mon espace candidat
+          administrator: Se connecter
       signed_in: Connecté(e) avec succès.
       signed_out: Déconnecté(e) avec succès.
     shared:

@@ -132,6 +132,28 @@ user.skip_confirmation_notification!
 user.save!
 user.confirm
 
+job_application = JobApplication.new do |ja|
+  ja.job_offer = job_offer
+  ja.user = user
+  ja.first_name = user.first_name
+  ja.last_name = user.last_name
+  ja.current_position = 'Dev'
+  ja.phone = '0606060606'
+  ja.terms_of_service = true
+end
+file = File.open(Rails.root.join('spec', 'fixtures', 'files', 'document.pdf'))
+job_application.cover_letter = file
+file = File.open(Rails.root.join('spec', 'fixtures', 'files', 'document.pdf'))
+job_application.resume = file
+job_application.save!
+
+Audited.audit_class.as_user(administrator) do
+  Email.create! subject: "subject", body: Faker::Lorem.paragraph(2), job_application: job_application, sender: administrator
+  Email.create! subject: "subject", body: Faker::Lorem.paragraph(2), job_application: job_application, sender: administrator
+  Email.create! subject: "subject", body: Faker::Lorem.paragraph(2), job_application: job_application, sender: administrator
+  Email.create! subject: "subject", body: Faker::Lorem.paragraph(2), job_application: job_application, sender: administrator
+end
+
 JobOffer.all.each do |job_offer|
   30.times do |i|
     user = User.new email: Faker::Internet.email,
@@ -153,9 +175,9 @@ JobOffer.all.each do |job_offer|
       ja.terms_of_service = true
     end
     file = File.open(Rails.root.join('spec', 'fixtures', 'files', 'document.pdf'))
-    job_application.cover_letter.attach(io: file, filename: 'cover_letter.pdf')
+    job_application.cover_letter = file
     file = File.open(Rails.root.join('spec', 'fixtures', 'files', 'document.pdf'))
-    job_application.resume.attach(io: file, filename: 'resume.pdf')
+    job_application.resume = file
     job_application.save!
 
     Audited.audit_class.as_user(administrator) do

@@ -1,6 +1,9 @@
-- job_offers = category.job_offers.publicly_visible
-.row
-  .col-12.col-md-2
-    %h2.h6.text-dark-gray= category.name
-  .col-12.col-md-10
-    = render partial: 'job_offer', collection: job_offers, spacer_template: 'job_offer_divider'
+- job_offers = @job_offers.select{|x| x.category_id == category.id }
+- if job_offers.any?
+  .card.mt-4
+    .card-body
+      .row
+        .col-12
+          %h2.h4.text-quinary= category.name
+        .col-12
+          = render partial: 'job_offer', collection: job_offers

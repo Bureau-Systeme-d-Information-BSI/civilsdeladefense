@@ -1,3 +1,6 @@
+@import 'common';
+@import 'footer';
+
 .devise {
   .sidebar {
     height: 100vh;
@@ -18,27 +21,13 @@
     }
   }
   .form-actions {
-    @extend .d-flex, .justify-content-start, .align-items-start;
-    > *:last-child {
-      @extend .ml-auto;
-    }
-    .btn-link {
+    @extend .d-flex, .justify-content-end, .mt-4;
+  }
+  .form-links {
+    @extend .d-flex, .justify-content-end, .mt-4;
+    a {
+      @extend .mb-1;
       color: inherit;
-    }
-  }
-  .form-control {
-    border: 2px solid $card-border-color;
-    box-shadow: none;
-    &:focus {
-      border: 2px solid $card-border-color;
-      box-shadow: none;
-    }
-  }
-  .input-group-prepend {
-    .input-group-text {
-      background-color: white;
-      border: 2px solid $card-border-color;
-      border-right: 0;
     }
   }
   .alert {

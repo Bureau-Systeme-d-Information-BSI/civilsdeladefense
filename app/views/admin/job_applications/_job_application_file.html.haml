@@ -1,0 +1,17 @@
+- obj = %i(resume cover_letter).include?(field) ? job_application : job_application.user
+.d-flex.align-items-center.border.py-1.px-2.file{id: "job_application_#{job_application.id}_#{field}"}
+  - if obj.send(field).exists?
+    .text-truncate= obj.send("#{ field }_file_name")
+  - else
+    .text-truncate.text-muted= t("simple_form.labels.#{ obj.class.to_s.underscore }.#{field}")
+  - if obj.send(field).exists?
+    .ml-auto
+      - klasses = %w(btn btn-success btn-raised btn-sm mb-0 mr-1)
+      - klasses << 'opaque' if obj.send("#{ field }_is_validated") != 1
+      = link_to [:check_file, :admin, @job_application, {file_name: field}], class: klasses, title: "Valider ce fichier", remote: true, method: :post do
+        = fa_icon "check"
+      - klasses = %w(btn btn-card-bg text-dark-gray btn-raised btn-sm mb-0 mr-1)
+      - klasses << 'opaque' if obj.send("#{ field }_is_validated") != 2
+      = link_to [:uncheck_file, :admin, @job_application, {file_name: field}], class: klasses, title: "Invalider ce fichier", remote: true, method: :post do
+        = fa_icon "close"
+      = link_to "Télécharger", obj.send(field).url, target: "_blank", class: "btn btn-primary btn-raised btn-sm mb-0"

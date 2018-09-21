@@ -1,0 +1,6 @@
+var node = document.getElementById('edit_user_<%= @file_name %>')
+var html = '<%= j render partial: '/account/files/file_name_upload', locals: {obj: @user, file_name: @file_name} %>'
+var frag = document.createRange().createContextualFragment(html)
+node.replaceWith(frag)
+var newNode = document.getElementById('edit_user_<%= @file_name %>')
+manageDropArea(newNode.querySelector('.drop-area'))

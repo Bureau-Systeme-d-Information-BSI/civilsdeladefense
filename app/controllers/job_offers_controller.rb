@@ -4,7 +4,10 @@ class JobOffersController < ApplicationController
   # GET /job_offers
   # GET /job_offers.json
   def index
-    @categories = Category.order(name: :asc).joins(publicly_visible_job_offers: [:contract_type]).uniq
+    @categories = Category.order(name: :asc).to_a
+    @job_offers = JobOffer.publicly_visible.includes(:contract_type)
+    @job_offers = @job_offers.search_full_text(params[:q]) if params[:q].present?
+    @job_offers = @job_offers.to_a
   end
 
   # GET /job_offers/1
@@ -16,8 +19,16 @@ class JobOffersController < ApplicationController
   # GET /job_offers/1/apply.json
   def apply
     @job_application = JobApplication.new
-    @job_application.country = "FR"
-    @job_application.user = User.new unless user_signed_in?
+    if user_signed_in?
+      fields = %w(first_name last_name current_position phone address_1 address_2 postal_code city country website_url linkedin_url)
+      fields.each do |field|
+        value = current_user.send(field.to_sym)
+        @job_application.send("#{field}=".to_sym, value)
+      end
+    else
+      @job_application.user = User.new
+    end
+    @job_application.country ||= "FR"
   end
 
   # POST /job_offers/1/send_application
@@ -35,8 +46,8 @@ class JobOffersController < ApplicationController
 
     respond_to do |format|
       if @job_application.save
-        format.html { redirect_to [:successful, @job_offer, job_application_id: @job_application.id] }
-        format.json { render :show, status: :created, location: @job_application }
+        format.html { redirect_to [:account, :job_applications] }
+        format.json { render :show, status: :created, location: [:account, @job_application] }
       else
         format.html { render :apply }
         format.json { render json: @job_application.errors, status: :unprocessable_entity }

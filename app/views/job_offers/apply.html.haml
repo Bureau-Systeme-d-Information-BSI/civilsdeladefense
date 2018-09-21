@@ -1,3 +1,5 @@
-- @page_title = @job_offer.title + ' ' + @job_offer.location
-= render partial: 'job_offer_head', locals: {job_offer: @job_offer}
-= render partial: '/job_applications/form'
+- @page_title = 'Postuler au poste ' + @job_offer.title + ' ' + @job_offer.location
+.card.pushed-top
+  .card-body
+    = render partial: 'job_offer_head', locals: {job_offer: @job_offer}
+    = render partial: '/job_applications/form'

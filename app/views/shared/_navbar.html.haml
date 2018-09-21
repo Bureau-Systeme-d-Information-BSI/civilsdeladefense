@@ -1,5 +1,5 @@
 - nav_items = %w(job_offers)
-%nav.navbar.navbar-expand-md.navbar-light.bg-white
+%nav.navbar.navbar-expand-md.navbar-light.bg-white.fixed-top
   %button.navbar-toggler.p-0.border-0{type: :button, data: {toggle: 'offcanvas'}}
     %span.navbar-toggler-icon= fa_icon "menu", style: "width:1.5em;height:auto;"
   = link_to root_path, class: "navbar-brand py-0" do
@@ -7,19 +7,32 @@
   .collapse.navbar-collapse.offcanvas-collapse.ml-md-5
     %ul.navbar-nav.ml-auto
       - nav_items.each do |item|
-        %li.nav-item
+        - klasses = controller.controller_name == item ? %w(active sober) : %w()
+        %li.nav-item{class: klasses}
           = link_to t(".#{item}"), [item.to_sym], class: "nav-link text-dark-gray"
+      - klasses = controller.class.to_s =~ /Account/ ? %w(active sober) : %w()
+      %li.nav-item.ml-3{class: klasses}
+        = link_to t(".account_root"), [:account, :root], class: "nav-link text-dark-gray"
       - if user_signed_in?
         %li.nav-item.ml-3
-          = link_to t('.job_applications'), [:account, :job_applications], class: "nav-link text-dark-gray"
-        %li.nav-item.ml-3
-          = link_to t('.logout'), destroy_user_session_path, method: :delete, class: "nav-link text-dark-gray"
-      - else
-        %li.nav-item.ml-3
-          = link_to t(".account"), account_root_path, class: "nav-link text-dark-gray"
-
-.bg-secondary
-.bg-quaternary
+          .nav-link.text-dark-gray= current_user.full_name
+        %li.nav-item.dropdown.ml-3
+          = button_tag(class: "nav-link dropdown-toggle py-0 btn mb-0", role: :button, data: {toggle: :dropdown}, aria: {haspopup: true, expanded: false}) do
+            = image_user_tag current_user.photo, width: 40
+          .dropdown-menu.dropdown-menu-right
+            = link_to t('.logout'), destroy_user_session_path, method: :delete, class: 'dropdown-item'
+- if @with_background_image
+  %section.intro-bg{style: "background-image: url(#{ asset_pack_path('images/background-fo.jpg') });"}
+- elsif controller.class.send(:_layout) == 'account'
+  .bg-secondary.text-center
+    %ul.navbar-nav.flex-row.justify-content-center
+      %li.nav-item.active
+        = link_to t('.job_applications'), [:account, :job_applications], class: 'nav-link'
+      %li.nav-item
+        = link_to t('.account'), "#", class: 'nav-link'
+- elsif !(controller.class.to_s =~ /Devise/)
+  .bg-secondary
+  .bg-quaternary
 %aside.offcanvas-collapse
   .drawer
     %ul.list-group
@@ -27,3 +40,7 @@
         - klass = %w(list-group-item)
         - klass << 'active' if controller.controller_name == item
         = link_to t(".#{item}"), [item.to_sym], class: klass
+      - klass = %w(list-group-item)
+      - klass << 'active' if controller.class.to_s =~ /Account/
+      = link_to t(".account_root"), [:account, :job_applications], class: klass
+      = link_to t('.logout'), destroy_user_session_path, method: :delete, class: 'list-group-item'

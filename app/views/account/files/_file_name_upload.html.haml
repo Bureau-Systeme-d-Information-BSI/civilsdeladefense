@@ -1,0 +1,13 @@
+- is_validated_value = obj.send("#{ file_name }_is_validated")
+- hint_text = hint_text_for_file(obj, file_name, is_validated_value)
+- options = {method: :put, remote: true}
+- options[:url] = [:account, :user] if obj.is_a?(User)
+- options[:url] = [:account, obj] if obj.is_a?(JobApplication)
+- klasses = %w(mb-4)
+- klasses << "is-validated-#{ is_validated_value }"
+- options[:html] = {id: "edit_#{obj.class.to_s.underscore}_#{file_name}", class: klasses}
+= simple_form_for(obj, options) do |f|
+  .form-inputs
+    = f.label file_name.to_sym
+    - label = is_validated_value == 1 ? t('buttons.choose_file_validated_html') : t('buttons.choose_file_drop_zone_html')
+    = f.input file_name.to_sym, label: label, wrapper: :custom_file_with_dropzone, hint: hint_text

@@ -24,13 +24,12 @@
               = link_to fa_icon('web', class: 'fa-w-20'), website_url, target: :_blank, class: 'mt-1 text-body-color'
     %ul.nav.nav-tabs.mt-3{role: :tablist}
       %li.nav-item.mr-3
-        = link_to t('.nav_overview'), "#overview", class: "nav-link active mb-2", data: {toggle: :tab}, role: :tab, aria: {controls: :overview, selected: true}
+        = link_to t('.nav_overview'), "#overview", class: "nav-link active", data: {toggle: :tab}, role: :tab, aria: {controls: :overview, selected: true}
       - if can? :manage, Email
         %li.nav-item.mr-3
-          = link_to t('.nav_emails'), "#emails", class: "nav-link mb-2", data: {toggle: :tab}, role: :tab, aria: {controls: :emails, selected: false}
+          = link_to t('.nav_emails'), "#emails", class: "nav-link", data: {toggle: :tab}, role: :tab, aria: {controls: :emails, selected: false}
       %li.nav-item.mr-3
-        = link_to t('.nav_files', count: 0), "#files", class: "nav-link mb-2", data: {toggle: :tab}, role: :tab, aria: {controls: :files, selected: false}
-
+        = link_to t('.nav_files', count: 0), "#files", class: "nav-link", data: {toggle: :tab}, role: :tab, aria: {controls: :files, selected: false}
   .col-12.col-md-4{class: job_application_modal_section_classes}
     .btn-group.my-0
       = link_to job_application.aasm.human_state, "#", class: "btn btn-primary btn-raised dropdown-toggle", data: {toggle: :dropdown}, aria: {haspopup: true, expanded: false}

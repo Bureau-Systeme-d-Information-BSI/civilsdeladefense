@@ -3,7 +3,7 @@
   = render partial: '/account/emails/form'
 
   - @job_application.emails.order(created_at: :desc).includes(:sender).each do |email|
-    .card
+    .card.mt-4
       .card-header.with-subheader.bg-white.font-weight-bold.text-secondary
         = fa_icon('file-document', class: 'text-secondary')
         = email.sender&.full_name

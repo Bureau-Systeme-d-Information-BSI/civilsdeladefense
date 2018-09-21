@@ -1,0 +1,24 @@
+.btn {
+  font-weight: $font-weight-bold;
+  &.btn-raised {
+    svg {
+      fill: white;
+    }
+  }
+}
+
+$input-btn-padding-y-l: $input-btn-padding-y-lg * 0.75;
+$input-btn-padding-x-l: $input-btn-padding-x-lg * 0.75;
+$bmd-btn-font-size-l: $bmd-btn-font-size-lg * 0.75;
+$line-height-l: $line-height-lg * 0.75;
+$btn-border-radius-l: $btn-border-radius-lg * 0.75;
+.btn {
+  &.btn-l,
+  .btn-group-l & {
+    @include button-size($input-btn-padding-y-l, $input-btn-padding-x-l, $bmd-btn-font-size-l, $line-height-l, $btn-border-radius-l);
+    svg {
+      height: 1.8rem;
+      width: auto;
+    }
+  }
+}

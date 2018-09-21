@@ -350,6 +350,21 @@ SimpleForm.setup do |config|
     b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
   end
 
+  # custom file input
+  config.wrappers :custom_file_with_dropzone, tag: 'div', class: 'form-group drop-area', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+    b.use :html5
+    b.use :placeholder
+    b.optional :maxlength
+    b.optional :minlength
+    b.optional :readonly
+    b.wrapper :custom_file_wrapper, tag: 'div', class: 'custom-file-drop-area' do |ba|
+      ba.use :input, error_class: 'is-invalid', valid_class: 'is-valid'
+      ba.use :label, class: 'text-truncate'
+      ba.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
+    end
+    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+  end
+
   # custom multi select
   config.wrappers :custom_multi_select, tag: 'div', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
     b.use :html5

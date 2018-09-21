@@ -1,0 +1,6 @@
+var node = document.getElementById('<%= "job_application_#{@job_application.id}_#{@file_name}" %>')
+var html = '<%= j render(partial: '/admin/job_applications/job_application_file', locals: {job_application: @job_application, field: @file_name.to_sym}) %>'
+var frag = document.createRange().createContextualFragment(html)
+node.replaceWith(frag)
+$.snackbar({content: '<%= @notification %>'})
+

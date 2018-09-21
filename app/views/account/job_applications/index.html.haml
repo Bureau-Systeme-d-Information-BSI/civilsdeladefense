@@ -1,19 +1,28 @@
-%h1.h3 Mes candidatures en cours
+- real_action_name = controller.action_name == 'index' ? 'active' : 'finished'
+- @page_title = t('.' + real_action_name).split('(').first
+.card
+  .card-body
+    .d-flex.flex-column.flex-md-row.align-items-start.align-items-md-center
+      %ul.nav.nav-tabs.mr-auto{role: :tablist}
+        %li.nav-item.mr-3
+          - klasses = %i(nav-link text-uppercase my-0)
+          - klasses << :active if real_action_name == "active"
+          - url = [:account, :job_applications]
+          = link_to t('.active', count: @job_applications_active.count), url, class: klasses
+        %li.nav-item
+          - klasses = %i(nav-link text-uppercase my-0)
+          - klasses << :active if real_action_name == "finished"
+          - url = [:finished, :account, :job_applications]
+          = link_to t('.finished', count: @job_applications_finished.count), url, class: klasses
+    .row
+      .col-12.mt-3
+        - if @job_applications.any?
+          = render partial: 'job_application', collection: @job_applications
+        - else
+          %em.d-block.mt-5
+            = t('.none_'+real_action_name)
 
-- if @job_applications.empty?
-  %em.d-block.my-5 Aucune candidature pour le moment.
-- else
-  %table.table.mt-5
-    %thead
-      %tr
-        %th Poste
-        %th Statut
-        %th
-    %tbody
-      - for job_application in @job_applications
-        - job_offer = job_application.job_offer
-        %tr
-          %td= job_offer.title
-          %td= JobApplication.human_attribute_name("state/#{job_application.state}")
-          %td= link_to t('buttons.show'), [:account, job_application]
-
+.modal.fade#remoteContentModal{tabindex: -1, role: :dialog, aria: {labelledby: :remoteContentModal, hidden: true}}
+  .modal-dialog.modal-l{role: :document}
+    .modal-content
+      .modal-body.p-0

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_17_092139) do
+ActiveRecord::Schema.define(version: 2018_09_21_082158) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -62,6 +62,10 @@ ActiveRecord::Schema.define(version: 2018_09_17_092139) do
     t.integer "role"
     t.string "last_name"
     t.uuid "inviter_id"
+    t.string "photo_file_name"
+    t.string "photo_content_type"
+    t.bigint "photo_file_size"
+    t.datetime "photo_updated_at"
     t.index ["confirmation_token"], name: "index_administrators_on_confirmation_token", unique: true
     t.index ["email"], name: "index_administrators_on_email", unique: true
     t.index ["employer_id"], name: "index_administrators_on_employer_id"
@@ -173,6 +177,21 @@ ActiveRecord::Schema.define(version: 2018_09_17_092139) do
     t.uuid "job_offer_id"
     t.uuid "user_id"
     t.uuid "employer_id"
+    t.integer "cover_letter_is_validated", limit: 2, default: 0
+    t.integer "resume_is_validated", limit: 2, default: 0
+    t.integer "photo_is_validated", limit: 2, default: 0
+    t.string "cover_letter_file_name"
+    t.string "cover_letter_content_type"
+    t.bigint "cover_letter_file_size"
+    t.datetime "cover_letter_updated_at"
+    t.string "resume_file_name"
+    t.string "resume_content_type"
+    t.bigint "resume_file_size"
+    t.datetime "resume_updated_at"
+    t.string "photo_file_name"
+    t.string "photo_content_type"
+    t.bigint "photo_file_size"
+    t.datetime "photo_updated_at"
     t.index ["employer_id"], name: "index_job_applications_on_employer_id"
     t.index ["job_offer_id"], name: "index_job_applications_on_job_offer_id"
     t.index ["state"], name: "index_job_applications_on_state"
@@ -291,6 +310,85 @@ ActiveRecord::Schema.define(version: 2018_09_17_092139) do
     t.datetime "updated_at", null: false
     t.string "first_name"
     t.string "last_name"
+    t.string "current_position"
+    t.string "phone"
+    t.string "address_1"
+    t.string "address_2"
+    t.string "postal_code"
+    t.string "city"
+    t.string "country"
+    t.string "website_url"
+    t.string "linkedin_url"
+    t.string "photo_file_name"
+    t.string "photo_content_type"
+    t.bigint "photo_file_size"
+    t.datetime "photo_updated_at"
+    t.string "resume_file_name"
+    t.string "resume_content_type"
+    t.bigint "resume_file_size"
+    t.datetime "resume_updated_at"
+    t.string "cover_letter_file_name"
+    t.string "cover_letter_content_type"
+    t.bigint "cover_letter_file_size"
+    t.datetime "cover_letter_updated_at"
+    t.string "diploma_file_name"
+    t.string "diploma_content_type"
+    t.bigint "diploma_file_size"
+    t.datetime "diploma_updated_at"
+    t.string "identity_file_name"
+    t.string "identity_content_type"
+    t.bigint "identity_file_size"
+    t.datetime "identity_updated_at"
+    t.string "carte_vitale_certificate_file_name"
+    t.string "carte_vitale_certificate_content_type"
+    t.bigint "carte_vitale_certificate_file_size"
+    t.datetime "carte_vitale_certificate_updated_at"
+    t.string "home_invoice_file_name"
+    t.string "home_invoice_content_type"
+    t.bigint "home_invoice_file_size"
+    t.datetime "home_invoice_updated_at"
+    t.string "medical_certificate_file_name"
+    t.string "medical_certificate_content_type"
+    t.bigint "medical_certificate_file_size"
+    t.datetime "medical_certificate_updated_at"
+    t.string "contract_file_name"
+    t.string "contract_content_type"
+    t.bigint "contract_file_size"
+    t.datetime "contract_updated_at"
+    t.string "iban_file_name"
+    t.string "iban_content_type"
+    t.bigint "iban_file_size"
+    t.datetime "iban_updated_at"
+    t.string "agent_statement_file_name"
+    t.string "agent_statement_content_type"
+    t.bigint "agent_statement_file_size"
+    t.datetime "agent_statement_updated_at"
+    t.string "request_transport_costs_file_name"
+    t.string "request_transport_costs_content_type"
+    t.bigint "request_transport_costs_file_size"
+    t.datetime "request_transport_costs_updated_at"
+    t.string "request_family_supplement_file_name"
+    t.string "request_family_supplement_content_type"
+    t.bigint "request_family_supplement_file_size"
+    t.datetime "request_family_supplement_updated_at"
+    t.string "statement_sft_file_name"
+    t.string "statement_sft_content_type"
+    t.bigint "statement_sft_file_size"
+    t.datetime "statement_sft_updated_at"
+    t.integer "photo_is_validated", limit: 2, default: 0
+    t.integer "resume_is_validated", limit: 2, default: 0
+    t.integer "cover_letter_is_validated", limit: 2, default: 0
+    t.integer "diploma_is_validated", limit: 2, default: 0
+    t.integer "identity_is_validated", limit: 2, default: 0
+    t.integer "carte_vitale_certificate_is_validated", limit: 2, default: 0
+    t.integer "home_invoice_is_validated", limit: 2, default: 0
+    t.integer "medical_certificate_is_validated", limit: 2, default: 0
+    t.integer "contract_is_validated", limit: 2, default: 0
+    t.integer "iban_is_validated", limit: 2, default: 0
+    t.integer "agent_statement_is_validated", limit: 2, default: 0
+    t.integer "request_transport_costs_is_validated", limit: 2, default: 0
+    t.integer "request_family_supplement_is_validated", limit: 2, default: 0
+    t.integer "statement_sft_is_validated", limit: 2, default: 0
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

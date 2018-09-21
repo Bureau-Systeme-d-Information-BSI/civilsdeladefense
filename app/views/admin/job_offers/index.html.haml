@@ -24,7 +24,7 @@
         = form_tag request.original_url, method: :get do
           .form-group.input-group.input-search
             .input-group-prepend
-              %span.input-group-text.bg-white
+              %span.input-group-text.bg-white.py-4
                 = fa_icon('magnify')
             = text_field_tag :q, params[:q]
           = submit_tag 'Rechercher', name: nil, class: 'd-none'

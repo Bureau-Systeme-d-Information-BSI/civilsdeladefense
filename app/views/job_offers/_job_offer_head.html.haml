@@ -1,27 +1,32 @@
+- inside_card ||= false
 .row
-  .col-12.col-md-8.mx-md-auto
-    %h1.h5.text-quinary.text-center.mt-3.mb-0= job_offer.title
-  .col-12.col-md-10.mx-md-auto
-    %ul.list-inline.text-center.mt-5.mb-0.basic-infos
-      %li.list-inline-item
+  - klasses = inside_card ? %w() : %w(col-md-9 mx-md-auto)
+  .col-12{class: klasses}
+    %h1.text-quinary.text-center.mb-0{class: inside_card ? %w(h5) : %w(mt-3 h4)}= job_offer.title
+  - klasses = inside_card ? %w() : %w(col-md-10 mx-md-auto)
+  .col-12{class: klasses}
+    - klasses = inside_card ? %w(vertical) : %w(horizontal)
+    .basic-infos{class: klasses}
+      .info
         = fa_icon 'briefcase'
         = [job_offer.contract_type.name, job_offer.duration_contract].join(' ')
-      %li.list-inline-item
+      .info
         = fa_icon 'calendar'
         = l job_offer.contract_start_on
-      %li.list-inline-item
+      .info
         = fa_icon 'map-marker'
         = job_offer.location
-      %li.list-inline-item
+      .info
         = fa_icon 'study'
         = job_offer.study_level.name
-      %li.list-inline-item
+      .info
         = fa_icon 'entity'
         = job_offer.category.name
-      %li.list-inline-item
+      .info
         = fa_icon 'coin'
         = job_offer.estimate_monthly_salary_gross
-      %li.list-inline-item
+      .info
         = fa_icon 'target'
+        Expérience pro :
         = job_offer.experience_level.name
 

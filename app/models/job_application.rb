@@ -10,8 +10,19 @@ class JobApplication < ApplicationRecord
   has_many :messages
   has_many :emails
 
-  JobOffer::FILES.each do |file|
-    has_one_attached file.to_sym
+  JobOffer::FILES.each do |field|
+    has_attached_file field.to_sym
+    validates_with AttachmentPresenceValidator,
+      attributes: field.to_sym,
+      if: Proc.new { |job_application|
+        job_application.job_offer.send("mandatory_option_#{field}?")
+      }
+    validates_with AttachmentContentTypeValidator,
+      attributes: field.to_sym,
+      content_type: (field == :photo ? /\Aimage\/.*\z/ : "application/pdf")
+    validates_with AttachmentSizeValidator,
+      attributes: field.to_sym,
+      less_than: (field == :photo ? 1.megabyte : 2.megabytes)
   end
 
   validates :first_name, :last_name, :current_position, :phone, presence: true
@@ -22,24 +33,9 @@ class JobApplication < ApplicationRecord
     }
   end
 
-  JobOffer::FILES.each do |field|
-    validates field.to_sym, mandatory_file: true
-  end
-
-  validates :photo, file_size: { less_than_or_equal_to: 1.megabytes },
-                    file_content_type: { allow: ['image/jpg', 'image/jpeg', 'image/png'] },
-                    if: -> { photo.attached? }
-
-  validates :cover_letter, file_size: { less_than_or_equal_to: 2.megabytes },
-                           file_content_type: { allow: ['application/pdf'] },
-                           if: -> { cover_letter.attached? }
-
-  validates :resume, file_size: { less_than_or_equal_to: 2.megabytes },
-                     file_content_type: { allow: ['application/pdf'] },
-                     if: -> { resume.attached? }
-
   before_validation :set_employer
 
+  FINISHED_STATES = %i(rejected phone_meeting_rejected after_meeting_rejected affected).freeze
   enum state: {
     initial: 0,
     rejected: 1,
@@ -86,6 +82,9 @@ class JobApplication < ApplicationRecord
     touch: true
   counter_culture :job_offer,
     column_name: 'job_applications_count'
+
+  scope :finished, -> { where(state: FINISHED_STATES) }
+  scope :not_finished, -> { where.not(state: FINISHED_STATES) }
 
   def full_name
     [first_name, last_name].join(" ")

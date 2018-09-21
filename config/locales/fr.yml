@@ -52,6 +52,8 @@ fr:
     suspend: "Mettre en pause"
     draftize: "Passer en brouillon"
     choose_file: "Choisir un fichier"
+    choose_file_drop_zone_html: "<u>Choisissez un fichier</u> ou transférez le par glisser/déposer."
+    choose_file_validated_html: "Ce fichier a été validé !"
     resend_confirmation_instructions: "Renvoyer le mail d'activation"
     send: "Envoyer"
     send_to_candidate: "Envoyer au candidat"
@@ -61,6 +63,7 @@ fr:
     copy: "Dupliquer"
     invite: "Inviter"
     update: "Mettre à jour"
+    search: "Rechercher"
   job_applications:
     form:
       general_informations: "Informations générales"
@@ -70,11 +73,17 @@ fr:
   job_offers:
     index:
       title: "Nos offres"
+      job_offers_count:
+        zero: "Aucune offre ne correspond à votre recherche"
+        one: "1 offre d'emploi trouvée"
+        other: "%{count} offres d'emploi trouvées"
+
     job_offer:
       show: "Postuler"
-      published_date: 'Publié il y a %{time_ago_in_words}'
+      published_date: 'Il y a %{time_ago_in_words}'
     show:
       apply: "Postuler"
+    job_offer_content:
       description: "Descriptif de l’offre"
       required_profile: "Profil recherché"
       recruitment_process: "Process de recrutement"
@@ -88,6 +97,26 @@ fr:
       account: "Mon compte"
       logout: "Déconnexion"
       job_applications: "Mes candidatures"
+      account_root: "Mon espace candidat"
+  account:
+    job_applications:
+      index:
+        active: "Candidatures en cours (%{count})"
+        finished: "Candidatures terminées (%{count})"
+        none_active: "Aucune candidature active"
+        none_finished: "Aucune candidature terminée"
+      job_application:
+        published_date: "Candidaté il y a %{time_ago_in_words}"
+        preview: "Aperçu"
+      show:
+        nav_emails: "Mes échanges"
+        nav_files: "Mes documents"
+        nav_offer: "L'offre"
+    emails:
+      create:
+        success: "Email envoyé !"
+      form:
+        title: "Envoyer un email"
   admin:
     accounts:
       navbar:
@@ -133,6 +162,10 @@ fr:
           email_simple_html: "<span class='user-name'>%{from_name}</span> a envoyé un mail"
       change_state:
         success: "Candidature passée en statut %{state} !"
+      check_file:
+        success: "Fichier validé !"
+      uncheck_file:
+        success: "Fichier invalidé !"
     job_offers:
       index:
         title: "Offres du Ministère des Armées"

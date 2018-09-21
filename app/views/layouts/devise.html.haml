@@ -1,0 +1,33 @@
+!!!
+%html{lang: I18n.locale}
+  %head
+    %title= [@page_title, 'Civils de la Défense'].delete_if(&:blank?).join(' - ')
+    %meta{charset: "utf-8"}
+    %meta{name: "viewport", content: "width=device-width, initial-scale=1, shrink-to-fit=no"}
+    = stylesheet_link_tag 'https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500|Roboto+Mono:400,500'
+    = stylesheet_pack_tag 'devise-style'
+    = csrf_meta_tags
+    = csp_meta_tag
+  %body.mt-0.pb-0
+    - if resource.is_a?(User)
+      = render partial: '/shared/navbar'
+    .container-fluid.devise
+      .row
+        .col-12.col-md-4.d-md-flex.flex-md-column.justify-content-center.bg-white.px-md-5.sidebar.pt-5.pt-md-0
+          .logos.mb-5
+            = image_tag asset_pack_path('images/minarm.svg'), class: 'minarm'
+            .d-flex.flex-column.justify-content-center
+              = image_tag asset_pack_path('images/logo.svg'), class: 'logo'
+          - if flash[:notice]
+            .alert.alert-info= flash[:notice]
+          - if flash[:alert]
+            .alert.alert-danger= flash[:alert]
+          - elsif flash[:error]
+            .alert.alert-danger= flash[:error]
+          - elsif flash[:success]
+            .alert.alert-success= flash[:success]
+          = yield
+        .col-12.col-md-8{style: "background-size: cover;background-image: url(#{ asset_pack_path('images/background.png') })"}
+    - if resource.is_a?(User)
+      = render partial: '/shared/footer'
+    = javascript_pack_tag 'devise-bundle'

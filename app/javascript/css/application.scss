@@ -1,12 +1,10 @@
 $card-spacer-x: 2.5rem;
 
 @import 'common';
-@import 'devise';
+@import 'footer';
 
-body {
-  > .container {
-    margin-top: -50px;
-  }
+body > .navbar.bg-white .nav-item .nav-link {
+  line-height: 34px;
 }
 
 nav.navbar {
@@ -18,54 +16,62 @@ nav.navbar {
       background-color: $quaternary;
     }
   }
-}
-
-footer {
-  @extend .px-5, .py-5, .bg-quaternary;
-  color: white;
-  .minarm {
-    height: 150px;
-  }
-  ul {
-    li {
-      a {
-        color: white;
-        @extend .font-weight-bold;
-        &:hover, &:focus {
-          color: white;
-        }
-      }
+  &.fixed-top {
+    & + div {
+      margin-top: 50px;
     }
   }
-  ul > li {
-    @extend .mt-2;
-    > ul {
-      @extend .mt-2;
-      > li {
+}
+
+.basic-infos {
+  @extend .d-flex, .my-4;
+  .info {
+    @extend .text-nowrap;
+  }
+  &.vertical {
+    @extend .flex-column;
+    > .info {
+      @extend .mt-1;
+      &:first-child {
         @extend .mt-0;
-        @extend small;
-        > a {
-          @extend small;
-        }
       }
     }
   }
-  > [class^="container"] > .row > [class^="col"] {
-    > ul {
-      @extend .pl-4;
-      border-left: 0.5px solid white;
+  &.horizontal {
+    @extend .flex-row, .flex-wrap, .justify-content-center;
+    > .info {
+      @extend .ml-4, .mt-1;
+      &:first-child {
+        @extend .ml-0;
+      }
     }
   }
 }
 
-ul.basic-infos {
-  li {
-    @extend .mr-4;
-    svg {
-      @extend .mr-1;
-    }
-    &:last-child {
-      @extend .mb-0;
-    }
+.intro-bg {
+  height: 200px;
+  background: no-repeat center center;
+  background-size: cover;
+  @include media-breakpoint-up(md) {
+    height: 410px;
+  }
+}
+
+.pushed-top {
+  margin-top: -6rem;
+}
+
+.job-offer-head-sticky {
+  @extend .position-sticky;
+  @extend .mb-4, .mb-md-0;
+  @extend .pushed-top;
+  top: 100px;
+}
+
+.job-application-summary {
+  color: inherit;
+  &:hover, &:focus {
+    text-decoration: none;
+    color: inherit;
   }
 }

@@ -8,7 +8,13 @@ class Administrator < ApplicationRecord
   belongs_to :employer, optional: true
   belongs_to :inviter, optional: true, class_name: 'Administrator'
   has_many :job_offers, foreign_key: :owner
-  has_one_attached :photo
+  has_attached_file :photo
+  validates_with AttachmentContentTypeValidator,
+    attributes: :photo,
+    content_type: /\Aimage\/.*\z/
+  validates_with AttachmentSizeValidator,
+    attributes: :photo,
+    less_than: 1.megabyte
 
   #####################################
   # Accessors
@@ -18,9 +24,6 @@ class Administrator < ApplicationRecord
 
   #####################################
   # Validations
-  validates :photo, file_size: { less_than_or_equal_to: 1.megabytes },
-                    file_content_type: { allow: ['image/jpg', 'image/jpeg', 'image/png'] },
-                    if: -> { photo.attached? }
   validates :employer, presence: true, if: Proc.new { |a| a.role == 'employer' }
   validates :inviter, presence: true, unless: Proc.new { |a| a.very_first_account }
   validates_inclusion_of :role,

@@ -27,4 +27,26 @@ module UsersHelper
 
     image_tag image_url, class: klasses
   end
+
+
+  def hint_text_for_file(obj, file_name, is_validated_value)
+    file = obj.send(file_name.to_sym)
+    txt = []
+    if is_validated_value == 1
+      link = file.url
+      txt << "Vous pouvez #{ link_to "consulter", link, target: '_blank', class: 'text-dark-gray' } ce fichier.".html_safe
+    elsif is_validated_value == 2
+      link = file.url
+      txt << "Votre #{ link_to "fichier", link, target: '_blank', class: 'text-dark-gray' } n'est pas valide, veuillez en téléverser un nouveau.".html_safe
+      txt << "Seuls les fichiers PDF de taille inférieure à 2Mo sont acceptés."
+    else
+      if file.exists?
+        link = file.url
+        txt << "Vous avez déjà téléversé ce #{ link_to "fichier", link, target: '_blank', class: 'text-dark-gray' }, il est en attente de validation.".html_safe
+        txt << "Pour téléverser une nouvelle version, vous pouvez utiliser la zone ci-dessus.".html_safe
+      end
+      txt << "Seuls les fichiers PDF de taille inférieure à 2Mo sont acceptés."
+    end
+    txt.join('<br/>').html_safe
+  end
 end

@@ -1,2 +1,17 @@
+- @with_background_image = true
 - @page_title = t('.title')
-= render partial: 'category', collection: @categories, spacer_template: 'category_divider'
+.row.pushed-top
+  .col-12
+    = form_tag request.original_url, method: :get do
+      .form-group.input-group.input-search.mb-0
+        .input-group-prepend
+          %span.input-group-text.bg-white.py-4
+            = fa_icon('magnify')
+        = text_field_tag :q, params[:q], placeholder: t('buttons.search')
+      = submit_tag 'Rechercher', name: nil, class: 'd-none'
+
+.row.mt-4.mb-5
+  .col-12.text-center
+    .text-secondary.h6= t('.job_offers_count', count: @job_offers.size)
+
+= render partial: 'category', collection: @categories

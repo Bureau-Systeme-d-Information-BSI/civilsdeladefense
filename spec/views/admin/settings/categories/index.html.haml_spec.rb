@@ -2,10 +2,15 @@ require 'rails_helper'
 
 RSpec.describe "admin/settings/categories/index", type: :view do
   before(:each) do
-    assign(:categories, [
-      create(:category),
-      create(:category)
-    ])
+    existing_categories = Category.all
+    if existing_categories.any?
+      assign(:categories, existing_categories)
+    else
+      assign(:categories, [
+        create(:category),
+        create(:category)
+      ])
+    end
   end
 
   it "renders a list of admin/settings/categories" do

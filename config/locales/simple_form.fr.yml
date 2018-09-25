@@ -98,14 +98,15 @@ mois afin d'être recontacté(e) pour de nouvelles opportunités."
         email: 'E-mail'
         password: 'Mot de passe'
         password_confirmation: 'Confirmation du mot de passe'
-        diploma: "La copie des diplômes"
+        diploma: "Copie des diplômes"
         identity: "Copie d’une pièce d’identité en cours de validité (carte nationale d’identité ou passeport)"
-        carte_vitale_certificate: "L’attestation de carte vitale (pour le n° INSEE)"
-        home_invoice: "La copie d’une facture EDF ou téléphone (pour adresse actualisée devant figurer au contrat)"
-        medical_certificate: "Le certificat médical d’aptitude fourni par le médecin de l’établissement ou
+        carte_vitale_certificate: "Attestation de carte vitale (mentionnant le n° INSEE)"
+        proof_of_address: "Justificatif de domicile (facture EDF, téléphone, etc)"
+        medical_certificate: "Certificat médical d’aptitude fourni par le médecin de l’établissement ou
 à défaut par un médecin agréé"
         contract: "Le contrat de travail préalablement signé par toutes les parties"
         iban: "RIB original au format BIC/IBAN comportant le logo de la banque au nom du signataire du contrat (les RIB sur compte épargne ne sont pas acceptés)"
+        transport_ticket: "Copie d'un titre de transport (si vous postulez en Île-de-france)"
         agent_statement: "Déclaration dûment remplie et signée par l’agent"
         request_transport_costs: "Fiche de demande de prise en charge des frais de transport"
         request_family_supplement: "Demande d’attribution du supplément familial de traitement"

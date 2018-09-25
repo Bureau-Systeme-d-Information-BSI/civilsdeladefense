@@ -1,9 +1,9 @@
 -# frozen_string_literal: true
-- ary = %i(resume cover_letter)
+- ary = User::FILES_DURING_SUBMISSION.dup
+- ary.shift(1)
 - ary.each do |file_name|
   = render partial: '/account/files/file_name_upload', locals: {obj: job_application, file_name: file_name}
 - user = current_user
-- ary = User::FILES.dup
-- ary.shift(3)
+- ary = User::FILES_JUST_AFTER_SUBMISSION
 - ary.each do |file_name|
   = render partial: '/account/files/file_name_upload', locals: {obj: user, file_name: file_name}

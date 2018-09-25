@@ -5,9 +5,10 @@ class User < ApplicationRecord
 
   has_many :job_applications
 
-  FILES = %i(photo resume cover_letter diploma identity carte_vitale_certificate home_invoice medical_certificate contract iban agent_statement request_transport_costs request_family_supplement statement_sft).freeze
-  FILES_ALWAYS = %i(resume cover_letter diploma identity carte_vitale_certificate home_invoice medical_certificate).freeze
-  FILES_FOR_PAYROLL = (FILES - FILES_ALWAYS).freeze
+  FILES_DURING_SUBMISSION = %i(photo resume cover_letter).freeze
+  FILES_JUST_AFTER_SUBMISSION = %w(diploma identity carte_vitale_certificate proof_of_address medical_certificate iban transport_ticket).freeze
+  FILES_FOR_PAYROLL = %w(contract agent_statement request_transport_costs request_family_supplement statement_sft).freeze
+  FILES = (FILES_DURING_SUBMISSION + FILES_JUST_AFTER_SUBMISSION + FILES_FOR_PAYROLL).freeze
   FILES.each do |field|
     if field == :photo
       has_attached_file field.to_sym,

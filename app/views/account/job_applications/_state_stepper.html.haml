@@ -1,0 +1,12 @@
+- current_number = job_application.end_user_state_number
+.mdl-stepper-horizontal-alternative
+  - 0.upto(8) do |i|
+    - klasses = []
+    - klasses << "active-step" if i <= current_number
+    - klasses << "step-done" if i < current_number
+    .mdl-stepper-step{class: klasses}
+      .mdl-stepper-circle
+        %span= i
+      .mdl-stepper-title=JobApplication.human_attribute_name("state/end_user_state_#{i}")
+      .mdl-stepper-bar-left
+      .mdl-stepper-bar-right

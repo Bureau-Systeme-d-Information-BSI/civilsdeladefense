@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_21_082158) do
+ActiveRecord::Schema.define(version: 2018_09_25_145447) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -343,10 +343,10 @@ ActiveRecord::Schema.define(version: 2018_09_21_082158) do
     t.string "carte_vitale_certificate_content_type"
     t.bigint "carte_vitale_certificate_file_size"
     t.datetime "carte_vitale_certificate_updated_at"
-    t.string "home_invoice_file_name"
-    t.string "home_invoice_content_type"
-    t.bigint "home_invoice_file_size"
-    t.datetime "home_invoice_updated_at"
+    t.string "proof_of_address_file_name"
+    t.string "proof_of_address_content_type"
+    t.bigint "proof_of_address_file_size"
+    t.datetime "proof_of_address_updated_at"
     t.string "medical_certificate_file_name"
     t.string "medical_certificate_content_type"
     t.bigint "medical_certificate_file_size"
@@ -381,7 +381,7 @@ ActiveRecord::Schema.define(version: 2018_09_21_082158) do
     t.integer "diploma_is_validated", limit: 2, default: 0
     t.integer "identity_is_validated", limit: 2, default: 0
     t.integer "carte_vitale_certificate_is_validated", limit: 2, default: 0
-    t.integer "home_invoice_is_validated", limit: 2, default: 0
+    t.integer "proof_of_address_is_validated", limit: 2, default: 0
     t.integer "medical_certificate_is_validated", limit: 2, default: 0
     t.integer "contract_is_validated", limit: 2, default: 0
     t.integer "iban_is_validated", limit: 2, default: 0
@@ -389,6 +389,11 @@ ActiveRecord::Schema.define(version: 2018_09_21_082158) do
     t.integer "request_transport_costs_is_validated", limit: 2, default: 0
     t.integer "request_family_supplement_is_validated", limit: 2, default: 0
     t.integer "statement_sft_is_validated", limit: 2, default: 0
+    t.string "transport_ticket_file_name"
+    t.string "transport_ticket_content_type"
+    t.bigint "transport_ticket_file_size"
+    t.datetime "transport_ticket_updated_at"
+    t.integer "transport_ticket_is_validated", limit: 2, default: 0
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

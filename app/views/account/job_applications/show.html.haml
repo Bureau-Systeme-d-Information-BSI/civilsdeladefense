@@ -7,8 +7,8 @@
       = render partial: '/job_offers/job_offer_head', locals: {job_offer: @job_offer}
       .row
         .col-12
-          .h5.text-quinary.text-center Suivi de candidature
-          = JobApplication.human_attribute_name("state/#{@job_application.state}")
+          .h5.text-quinary.text-center.mb-4 Suivi de candidature
+          = render partial: "state_stepper", locals: {job_application: @job_application}
       %ul.nav.nav-tabs.mt-3{role: :tablist}
         %li.nav-item
           = link_to t('.nav_emails'), "#emails", class: "nav-link active", data: {toggle: :tab}, role: :tab, aria: {controls: :emails, selected: true}

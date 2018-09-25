@@ -444,6 +444,15 @@ fr:
         state/contract_feedback_waiting: "En attente retour contrat"
         state/contract_received: "Contrat reçu"
         state/affected: "Affecté(e)"
+        state/end_user_state_0: "Candidature soumise"
+        state/end_user_state_1: "Révision candidature"
+        state/end_user_state_2: "Entretien téléphonique"
+        state/end_user_state_3: "Entretien physique"
+        state/end_user_state_4: "Documents à envoyer"
+        state/end_user_state_5: "Rédaction contrat"
+        state/end_user_state_6: "Contrat envoyé et à renvoyer signé"
+        state/end_user_state_7: "Contrat reçu"
+        state/end_user_state_8: "Affecté(e)"
   helpers:
     submit:
       job_application:

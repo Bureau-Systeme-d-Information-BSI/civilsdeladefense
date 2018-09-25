@@ -68,7 +68,27 @@ class JobApplication < ApplicationRecord
     event :reject do
       transitions from: [:initial], to: :rejected
     end
+  end
 
+  def self.end_user_states_regrouping
+    @end_user_states_regrouping ||= [
+      [:initial, :rejected],
+      [:phone_meeting, :phone_meeting_rejected, :phone_meeting_accepted],
+      [:to_be_met, :after_meeting_rejected],
+      [:accepted],
+      [:contract_drafting],
+      [:contract_feedback_waiting],
+      [:contract_received],
+      [:affected]
+    ]
+  end
+
+  def end_user_state_number
+    self.class.end_user_states_regrouping.index { |x| x.include?(state.to_sym) }
+  end
+
+  def end_user_state
+    "end_user_state_#{end_user_state_number}"
   end
 
   counter_culture :job_offer,

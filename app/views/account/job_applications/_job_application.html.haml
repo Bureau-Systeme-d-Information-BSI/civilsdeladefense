@@ -16,10 +16,11 @@
         .row
           .col-6
             .d-flex.flex-column.justify-content-center.align-items-center.text-center.mt-2
-              %span= JobApplication.human_attribute_name("state/#{job_application.state}")
+              = fa_icon "step", class: "fa-w-20"
+              %span= "Étape #{job_application.end_user_state_number}/#{JobApplication.end_user_states_regrouping.size}"
           .col-6.border-left
             .d-flex.flex-column.justify-content-center.align-items-center.text-center.mt-2
-              %span= JobApplication.human_attribute_name("state/#{job_application.state}")
+              %span.font-weight-bold= JobApplication.human_attribute_name("state/#{job_application.end_user_state}")
   .card-footer.d-flex.flex-column.flex-md-row
     .mr-auto= t('.published_date', time_ago_in_words: time_ago_in_words(job_application.created_at))
     %ul.list-inline.mb-0.actions.mt-2.mt-md-0

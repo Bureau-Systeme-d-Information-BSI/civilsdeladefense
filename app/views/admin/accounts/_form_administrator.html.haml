@@ -3,6 +3,7 @@
     .card-title= t('.title')
   .card-body
     = simple_form_for(@administrator, url: [:admin, :account]) do |f|
+      - debugger
       = f.error_notification
       = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
       .form-inputs

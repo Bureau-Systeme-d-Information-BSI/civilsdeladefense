@@ -18,9 +18,15 @@ module UsersHelper
     end
 
     image_url = if photo.exists?
-      extent = [width*2, height*2].join('x')
-      resize =  extent + '^'
-      photo.variant(resize: resize, gravity: :center, extent: extent)
+      style = case options[:width]
+      when 32
+        :small
+      when 40
+        :medium
+      when 80
+        :big
+      end
+      photo.url(style)
     else
       asset_pack_path('images/default_user_avatar.svg')
     end

@@ -9,7 +9,16 @@ class User < ApplicationRecord
   FILES_ALWAYS = %i(resume cover_letter diploma identity carte_vitale_certificate home_invoice medical_certificate).freeze
   FILES_FOR_PAYROLL = (FILES - FILES_ALWAYS).freeze
   FILES.each do |field|
-    has_attached_file field.to_sym
+    if field == :photo
+      has_attached_file field.to_sym,
+        styles: {
+          small: "64x64#",
+          medium: "80x80#",
+          big: "160x160#"
+        }
+    else
+      has_attached_file field.to_sym
+    end
     validates_with AttachmentContentTypeValidator,
       attributes: field.to_sym,
       content_type: (field == :photo ? /\Aimage\/.*\z/ : "application/pdf")

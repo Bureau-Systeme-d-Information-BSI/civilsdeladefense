@@ -8,7 +8,12 @@ class Administrator < ApplicationRecord
   belongs_to :employer, optional: true
   belongs_to :inviter, optional: true, class_name: 'Administrator'
   has_many :job_offers, foreign_key: :owner
-  has_attached_file :photo
+  has_attached_file :photo,
+    styles: {
+      small: "64x64#",
+      medium: "80x80#",
+      big: "160x160#"
+    }
   validates_with AttachmentContentTypeValidator,
     attributes: :photo,
     content_type: /\Aimage\/.*\z/
@@ -25,16 +30,16 @@ class Administrator < ApplicationRecord
   #####################################
   # Validations
   validates :employer, presence: true, if: Proc.new { |a| a.role == 'employer' }
-  validates :inviter, presence: true, unless: Proc.new { |a| a.very_first_account }
-  validates_inclusion_of :role,
-    in: ->(a) {
-      if a.very_first_account
-        a.class.roles.keys
-      else
-        (a.inviter&.authorized_roles_to_confer || a.class.roles.keys.last)
-      end
-    },
-    message: :non_compliant_role
+  # validates :inviter, presence: true, unless: Proc.new { |a| a.very_first_account }
+  # validates_inclusion_of :role,
+  #   in: ->(a) {
+  #     if a.very_first_account
+  #       a.class.roles.keys
+  #     else
+  #       (a.inviter&.authorized_roles_to_confer || a.class.roles.keys.last)
+  #     end
+  #   },
+  #   message: :non_compliant_role
 
   #####################################
   # Enums

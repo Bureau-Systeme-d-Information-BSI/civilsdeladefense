@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_25_145447) do
+ActiveRecord::Schema.define(version: 2018_09_26_072624) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -101,6 +101,11 @@ ActiveRecord::Schema.define(version: 2018_09_25_145447) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "position"
+    t.uuid "parent_id"
+    t.integer "lft"
+    t.integer "rgt"
+    t.integer "depth", default: 0
+    t.integer "children_count", default: 0
     t.index ["name"], name: "index_categories_on_name", unique: true
   end
 

@@ -2,8 +2,10 @@ require 'rails_helper'
 
 RSpec.describe "job_offers/index", type: :view do
   before(:each) do
+    categories = create_list(:category, 5)
+
     owner = create(:owner)
-    category = create(:category)
+    category = categories.first
     official_status = create(:official_status)
     employer = create(:employer)
     contract_type = create(:contract_type)
@@ -11,21 +13,21 @@ RSpec.describe "job_offers/index", type: :view do
     experience_level = create(:experience_level)
     sector = create(:sector)
 
-    assign(:job_offers, [
-      2.times do
-        create(:job_offer,
-          state: :published,
-          owner: owner,
-          category: category,
-          official_status: official_status,
-          employer: employer,
-          contract_type: contract_type,
-          study_level: study_level,
-          experience_level: experience_level,
-          sector: sector
-        )
-      end
-    ])
+    job_offers = create_list(:job_offer,
+      2,
+      state: :published,
+      owner: owner,
+      category: category,
+      official_status: official_status,
+      employer: employer,
+      contract_type: contract_type,
+      study_level: study_level,
+      experience_level: experience_level,
+      sector: sector
+    )
+
+    assign(:categories, categories)
+    assign(:job_offers, job_offers)
   end
 
   it "renders a list of job_offers" do

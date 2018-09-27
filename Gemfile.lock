@@ -56,6 +56,8 @@ GEM
     arel (9.0.0)
     audited (4.8.0)
       activerecord (>= 4.0, < 5.3)
+    awesome_nested_set (3.1.4)
+      activerecord (>= 4.0.0, < 5.3)
     aws-eventstream (1.0.1)
     aws-partitions (1.100.0)
     aws-sdk-core (3.24.1)
@@ -354,6 +356,7 @@ DEPENDENCIES
   aasm
   acts_as_list
   audited
+  awesome_nested_set
   aws-sdk-s3
   bootsnap (>= 1.1.0)
   byebug

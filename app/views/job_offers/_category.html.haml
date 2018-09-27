@@ -1,9 +1,19 @@
-- job_offers = @job_offers.select{|x| x.category_id == category.id }
-- if job_offers.any?
-  .card.mt-4
-    .card-body
-      .row
-        .col-12
-          %h2.h4.text-quinary= category.name
-        .col-12
-          = render partial: 'job_offer', collection: job_offers
+- if category.depth == 0
+  - job_offers = @job_offers.select{|x| category.self_and_descendants.map(&:id).include?(x.category_id) }
+  - if job_offers.any?
+    .card.mt-4
+      .card-body
+        .row
+          .col-12.job-offer-category
+            %h2.h4.text-quinary= category.name
+            = render partial: 'category', collection: @categories.select{|x| x.parent_id == category.id}
+- elsif category.depth == 1
+  - job_offers = @job_offers.select{|x| category.self_and_descendants.map(&:id).include?(x.category_id) }
+  - if job_offers.any?
+    %h3.h6.text-quinary.mb-0.mt-3= category.name
+    = render partial: 'category', collection: @categories.select{|x| x.parent_id == category.id}
+- elsif category.depth == 2
+  - job_offers = @job_offers.select{|x| x.category_id == category.id }
+  - if job_offers.any?
+    .job-offers
+      = render partial: 'job_offer', collection: job_offers, locals: {category: category}

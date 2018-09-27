@@ -4,7 +4,7 @@ class JobOffersController < ApplicationController
   # GET /job_offers
   # GET /job_offers.json
   def index
-    @categories = Category.order(name: :asc).to_a
+    @categories = Category.order('lft ASC')
     @job_offers = JobOffer.publicly_visible.includes(:contract_type)
     @job_offers = @job_offers.search_full_text(params[:q]) if params[:q].present?
     @job_offers = @job_offers.to_a

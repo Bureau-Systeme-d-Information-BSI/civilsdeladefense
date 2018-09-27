@@ -76,3 +76,14 @@ nav.navbar {
     color: inherit;
   }
 }
+
+.job-offer-category {
+  .job-offers {
+    > .job-offer {
+      @extend .mt-4;
+      &:first-child {
+        @extend .mt-3;
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+%tr
+  %td
+    - if level && level > 0
+      └
+      - 1.upto(level) do
+        ──
+    = element.try(:name) || element.try(:title)
+  - if resource_class == Employer
+    %td
+      = element.code
+  - if resource_class == Category
+    %td
+      = element.job_offers.publicly_visible.count
+  %td.text-right
+    %ul.list-inline.mb-0.actions
+      %li.list-inline-item
+        - if resource_class == Category
+          = link_to fa_icon('plus'), [:new, :admin, :settings, :category, {parent_id: element.id}], title: t('buttons.add_child')
+        = link_to fa_icon('pencil'), [:edit, :admin, :settings, element], title: t('buttons.edit')
+        = link_to fa_icon('delete'), [:admin, :settings, element], method: :delete, title: t('buttons.delete'), data: {confirm: t('buttons.confirm')}

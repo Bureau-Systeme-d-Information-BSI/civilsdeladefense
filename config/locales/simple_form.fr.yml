@@ -43,6 +43,8 @@ fr:
         password_confirmation: 'Confirmation du mot de passe'
         employer: "Employeur"
         role: "Rôle"
+      category:
+        parent_id: "Catégorie parente"
       email:
         template: "Template"
         subject: "Sujet"

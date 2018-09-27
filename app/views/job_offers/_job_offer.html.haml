@@ -1,18 +1,20 @@
-.row.mt-4
+.row.job-offer
   .col-12
     = link_to job_offer, class: 'job-application-summary' do
       .d-flex.flex-column.flex-md-row.align-items-center
         .d-flex.flex-column
+          %small
+            %small= category.name
           .font-weight-bold.text-quinary= job_offer.title
           %small
-            .d-flex.mt-1
+            .d-flex
               .mr-1
                 = [job_offer.contract_type.name, job_offer.duration_contract].join(' ')
               .mr-1
                 \-
               = job_offer.location
           %small
-            .mt-1= t('.published_date', time_ago_in_words: time_ago_in_words(job_offer.created_at))
+            %small.mt-1= t('.published_date', time_ago_in_words: time_ago_in_words(job_offer.created_at))
         %button.btn.btn-primary.btn-raised.btn-l.mb-0.ml-auto{title: t('.show')}
           = fa_icon('chevron-right')
 

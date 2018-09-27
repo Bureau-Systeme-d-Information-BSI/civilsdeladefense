@@ -20,18 +20,9 @@
             %th Nombre d'offres
         %th
     %tbody
-      - for element in collection
-        %tr
-          %td
-            = element.try(:name) || element.try(:title)
-          - if resource_class == Employer
-            %td
-              = element.code
-          - if resource_class == Category
-            %td
-              = element.job_offers.publicly_visible.count
-          %td.text-right
-            %ul.list-inline.mb-0.actions
-              %li.list-inline-item
-                = link_to fa_icon('pencil'), [:edit, :admin, :settings, element], title: t('buttons.edit')
-                = link_to fa_icon('delete'), [:admin, :settings, element], method: :delete, title: t('buttons.delete'), data: {confirm: t('buttons.confirm')}
+      - if resource_class == Category
+        - Category.roots.each do |root|
+          - Category.each_with_level(root.self_and_descendants) do |category, level|
+            = render partial: "/admin/settings/inherited_resources/element", locals: {element: category, level: level}
+      - else
+        = render partial: "/admin/settings/inherited_resources/element", collection: collection, as: :element

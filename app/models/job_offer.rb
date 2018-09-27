@@ -50,7 +50,6 @@ class JobOffer < ApplicationRecord
     rejected: 1,
     phone_meeting: 2,
     phone_meeting_rejected: 3,
-    phone_meeting_accepted: 4,
     to_be_met: 5,
     after_meeting_rejected: 6,
     accepted: 7,

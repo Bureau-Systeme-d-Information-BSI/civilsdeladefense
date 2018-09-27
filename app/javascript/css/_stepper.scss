@@ -52,9 +52,18 @@
       border-color: $success;
     }
   }
+  &.step-rejected {
+    .mdl-stepper-circle {
+      background-color: $danger;
+    }
+    .mdl-stepper-circle:before {
+      content: "\2716";
+    }
+  }
 }
 
 .mdl-stepper-horizontal-alternative .mdl-stepper-step.step-done .mdl-stepper-circle *,
+.mdl-stepper-horizontal-alternative .mdl-stepper-step.step-rejected .mdl-stepper-circle *,
 .mdl-stepper-horizontal-alternative .mdl-stepper-step.editable-step .mdl-stepper-circle * {
   display: none;
 }

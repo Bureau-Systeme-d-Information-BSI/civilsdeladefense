@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_25_145447) do
+ActiveRecord::Schema.define(version: 2018_09_27_090646) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(version: 2018_09_25_145447) do
     t.string "photo_content_type"
     t.bigint "photo_file_size"
     t.datetime "photo_updated_at"
+    t.boolean "very_first_account", default: false
     t.index ["confirmation_token"], name: "index_administrators_on_confirmation_token", unique: true
     t.index ["email"], name: "index_administrators_on_email", unique: true
     t.index ["employer_id"], name: "index_administrators_on_employer_id"
@@ -101,6 +102,11 @@ ActiveRecord::Schema.define(version: 2018_09_25_145447) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "position"
+    t.uuid "parent_id"
+    t.integer "lft"
+    t.integer "rgt"
+    t.integer "depth", default: 0
+    t.integer "children_count", default: 0
     t.index ["name"], name: "index_categories_on_name", unique: true
   end
 
@@ -224,7 +230,6 @@ ActiveRecord::Schema.define(version: 2018_09_25_145447) do
     t.integer "rejected_job_applications_count", default: 0, null: false
     t.integer "phone_meeting_job_applications_count", default: 0, null: false
     t.integer "phone_meeting_rejected_job_applications_count", default: 0, null: false
-    t.integer "phone_meeting_accepted_job_applications_count", default: 0, null: false
     t.integer "to_be_met_job_applications_count", default: 0, null: false
     t.integer "after_meeting_rejected_job_applications_count", default: 0, null: false
     t.integer "accepted_job_applications_count", default: 0, null: false

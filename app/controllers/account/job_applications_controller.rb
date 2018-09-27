@@ -50,7 +50,7 @@ class Account::JobApplicationsController < Account::BaseController
     end
 
     def job_applications_root
-      current_user.job_applications.includes(job_offer: [:contract_type])
+      current_user.job_applications.includes(job_offer: [:contract_type]).order(created_at: :desc)
     end
 
     # Use callbacks to share common setup or constraints between actions.

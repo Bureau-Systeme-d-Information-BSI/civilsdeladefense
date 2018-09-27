@@ -1,6 +1,6 @@
 %tr
   %td
-    - if level && level > 0
+    - if defined?(level) && level > 0
       └
       - 1.upto(level) do
         ──

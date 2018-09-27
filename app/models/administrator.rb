@@ -22,24 +22,18 @@ class Administrator < ApplicationRecord
     less_than: 1.megabyte
 
   #####################################
-  # Accessors
-
-  # used to lax some validations when creating the very first account from a rails console
-  attr_accessor :very_first_account
-
-  #####################################
   # Validations
   validates :employer, presence: true, if: Proc.new { |a| a.role == 'employer' }
-  # validates :inviter, presence: true, unless: Proc.new { |a| a.very_first_account }
-  # validates_inclusion_of :role,
-  #   in: ->(a) {
-  #     if a.very_first_account
-  #       a.class.roles.keys
-  #     else
-  #       (a.inviter&.authorized_roles_to_confer || a.class.roles.keys.last)
-  #     end
-  #   },
-  #   message: :non_compliant_role
+  validates :inviter, presence: true, unless: Proc.new { |a| a.very_first_account }, on: :create
+  validates_inclusion_of :role,
+    in: ->(a) {
+      if a.very_first_account
+        a.class.roles.keys
+      else
+        (a.inviter&.authorized_roles_to_confer || a.class.roles.keys.last)
+      end
+    },
+    message: :non_compliant_role, on: :create
 
   #####################################
   # Enums

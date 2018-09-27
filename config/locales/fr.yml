@@ -445,7 +445,7 @@ fr:
         state/contract_received: "Contrat reçu"
         state/affected: "Affecté(e)"
         state/end_user_state_0: "Candidature soumise"
-        state/end_user_state_1: "Révision candidature"
+        state/end_user_state_1: "Examen candidature"
         state/end_user_state_2: "Entretien téléphonique"
         state/end_user_state_3: "Entretien physique"
         state/end_user_state_4: "Documents à envoyer"

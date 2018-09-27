@@ -82,6 +82,9 @@ $('#remoteContentModal').on('show.bs.modal', function (event) {
     success: function(response){
       var content = $(response).find('body').html()
       modal.find('.modal-body').html(content)
+      if (link.classList.contains('job-application-modal-link')) {
+        initEmailTemplates()
+      }
     },
     error: function(response){
       console.log("error")

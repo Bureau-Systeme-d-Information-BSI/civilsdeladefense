@@ -437,7 +437,6 @@ fr:
         state/rejected: "Refusé(e)"
         state/phone_meeting: "Entretien téléphonique"
         state/phone_meeting_rejected: "Refusé(e) après e. tél."
-        state/phone_meeting_accepted: "Accepté(e) après e. tél."
         state/to_be_met: "À rencontrer"
         state/after_meeting_rejected: "Rencontré(e) mais refusé(e)"
         state/accepted: "Retenu(e)"

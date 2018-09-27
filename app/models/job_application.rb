@@ -41,7 +41,6 @@ class JobApplication < ApplicationRecord
     rejected: 1,
     phone_meeting: 2,
     phone_meeting_rejected: 3,
-    phone_meeting_accepted: 4,
     to_be_met: 5,
     after_meeting_rejected: 6,
     accepted: 7,
@@ -56,7 +55,6 @@ class JobApplication < ApplicationRecord
     state :rejected
     state :phone_meeting
     state :phone_meeting_rejected
-    state :phone_meeting_accepted
     state :to_be_met
     state :after_meeting_rejected
     state :accepted
@@ -73,7 +71,7 @@ class JobApplication < ApplicationRecord
   def self.end_user_states_regrouping
     @end_user_states_regrouping ||= [
       [:initial, :rejected],
-      [:phone_meeting, :phone_meeting_rejected, :phone_meeting_accepted],
+      [:phone_meeting, :phone_meeting_rejected],
       [:to_be_met, :after_meeting_rejected],
       [:accepted],
       [:contract_drafting],

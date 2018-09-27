@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_27_085807) do
+ActiveRecord::Schema.define(version: 2018_09_27_090646) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -230,7 +230,6 @@ ActiveRecord::Schema.define(version: 2018_09_27_085807) do
     t.integer "rejected_job_applications_count", default: 0, null: false
     t.integer "phone_meeting_job_applications_count", default: 0, null: false
     t.integer "phone_meeting_rejected_job_applications_count", default: 0, null: false
-    t.integer "phone_meeting_accepted_job_applications_count", default: 0, null: false
     t.integer "to_be_met_job_applications_count", default: 0, null: false
     t.integer "after_meeting_rejected_job_applications_count", default: 0, null: false
     t.integer "accepted_job_applications_count", default: 0, null: false

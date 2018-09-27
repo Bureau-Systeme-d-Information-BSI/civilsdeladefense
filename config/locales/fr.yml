@@ -90,7 +90,7 @@ fr:
       recruitment_process: "Process de recrutement"
     successful:
       title: "Merci d'avoir soumis votre candidature !"
-      subtitle: "Nous allons y répondre dans les plus brefs délais."
+      subtitle_html: "Votre demande est prise en compte.<br/>Veuillez confirmer votre accès à l'aide du lien sur votre boîte courriel."
       link: "Retour à l'accueil"
   shared:
     navbar:

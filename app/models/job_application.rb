@@ -82,7 +82,7 @@ class JobApplication < ApplicationRecord
   end
 
   def end_user_state_number
-    self.class.end_user_states_regrouping.index { |x| x.include?(state.to_sym) }
+    self.class.end_user_states_regrouping.index { |x| x.include?(state.to_sym) } + 1
   end
 
   def end_user_state

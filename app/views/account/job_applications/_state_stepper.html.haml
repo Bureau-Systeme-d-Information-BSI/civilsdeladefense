@@ -1,9 +1,11 @@
 - current_number = job_application.end_user_state_number
+- state_name = job_application.state
 .mdl-stepper-horizontal-alternative
   - 0.upto(8) do |i|
     - klasses = []
     - klasses << "active-step" if i <= current_number
     - klasses << "step-done" if i < current_number
+    - klasses << "step-rejected" if state_name.to_s =~ /rejected/ && i == current_number
     .mdl-stepper-step{class: klasses}
       .mdl-stepper-circle
         %span= i

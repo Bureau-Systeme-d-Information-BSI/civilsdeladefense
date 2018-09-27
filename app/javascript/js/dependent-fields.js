@@ -14,12 +14,17 @@ function triggerRoleChange() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
+  initEmailTemplates()
+})
+
+function initEmailTemplates() {
   let email_template = document.getElementById('email_template')
   if (email_template !== null) {
     email_template.addEventListener('change', triggerEmailTemplateChoice, false)
   }
-})
+}
 
+window.initEmailTemplates = initEmailTemplates
 
 function triggerEmailTemplateChoice() {
   let value = this.options[this.selectedIndex].value

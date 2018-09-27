@@ -51,7 +51,7 @@ class Admin::JobOffersController < Admin::BaseController
     @job_offer.owner = current_administrator
     @job_offer.publish
     respond_to do |format|
-      if @job_offer.save 
+      if @job_offer.save
         format.html { redirect_to [:admin, :job_offers], notice: t('.success') }
         format.json { render :show, status: :created, location: @job_offer }
       else
@@ -134,17 +134,21 @@ class Admin::JobOffersController < Admin::BaseController
   private
 
     def set_job_offers
-      @categories = Category.order(name: :asc).all
+      @employers = Employer.all
 
       @job_offers_active = job_offers_root.where.not(state: :archived)
       @job_offers_active = @job_offers_active.search_full_text(params[:q]) if params[:q].present?
+      @job_offers_active = @job_offers_active.to_a.group_by(&:employer_id)
 
       @job_offers_archived = job_offers_root.archived
       @job_offers_archived = @job_offers_archived.search_full_text(params[:q]) if params[:q].present?
+      @job_offers_archived = @job_offers_archived.to_a.group_by(&:employer_id)
     end
 
     def job_offers_root
-      @job_offers.includes(:category, :contract_type).order(created_at: :desc)
+      r = @job_offers.includes(:employer, :contract_type).order(created_at: :desc)
+      r = r.where(employer_id: current_administrator.employer_id) unless current_administrator.bant?
+      r
     end
 
     # Use callbacks to share common setup or constraints between actions.

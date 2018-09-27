@@ -3,46 +3,47 @@ require 'rails_helper'
 RSpec.describe "admin/job_offers/index", type: :view do
   before(:each) do
 
+    employers = create_list(:employer, 5)
+
     owner = create(:owner)
     category = create(:category)
     official_status = create(:official_status)
-    employer = create(:employer)
+    employer = employers.first
     contract_type = create(:contract_type)
     study_level = create(:study_level)
     experience_level = create(:experience_level)
     sector = create(:sector)
 
-    ary1 = assign(:job_offers_active, [
-      2.times do
-        create(:job_offer,
-          state: :published,
-          owner: owner,
-          category: category,
-          official_status: official_status,
-          employer: employer,
-          contract_type: contract_type,
-          study_level: study_level,
-          experience_level: experience_level,
-          sector: sector
-        )
-      end
-    ])
-    ary2 = assign(:job_offers_archived, [
-      3.times do
-        create(:job_offer,
-          state: :archived,
-          owner: owner,
-          category: category,
-          official_status: official_status,
-          employer: employer,
-          contract_type: contract_type,
-          study_level: study_level,
-          experience_level: experience_level,
-          sector: sector
-        )
-      end
-    ])
+    ary1 = assign(:job_offers_active,
+      create_list(:job_offer,
+        2,
+        state: :published,
+        owner: owner,
+        category: category,
+        official_status: official_status,
+        employer: employer,
+        contract_type: contract_type,
+        study_level: study_level,
+        experience_level: experience_level,
+        sector: sector
+      ).group_by(&:employer_id)
+    )
+    ary2 = assign(:job_offers_archived,
+      create_list(:job_offer,
+        3,
+        state: :archived,
+        owner: owner,
+        category: category,
+        official_status: official_status,
+        employer: employer,
+        contract_type: contract_type,
+        study_level: study_level,
+        experience_level: experience_level,
+        sector: sector
+      ).group_by(&:employer_id)
+    )
     assign(:job_offers, ary1)
+    assign(:employers, employers)
   end
 
   it "renders a list of job_offers" do

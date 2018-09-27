@@ -1,9 +1,7 @@
 %tr
   %td
     - if defined?(level) && level > 0
-      └
-      - 1.upto(level) do
-        ──
+      %span.text-light-grey{style: "opacity: 0.6;"}= "└#{'──' * (level-1)}"
     = element.try(:name) || element.try(:title)
   - if resource_class == Employer
     %td

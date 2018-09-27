@@ -8,29 +8,25 @@
           - klasses << :active if controller.action_name == "index"
           - url = [:admin, :job_offers]
           - url << {q: params[:q]} if params[:q].present?
-          = link_to t('.active', count: @job_offers_active.count), url, class: klasses
+          = link_to t('.active', count: @job_offers_active.size), url, class: klasses
         %li.nav-item.mr-3
           - klasses = %i(nav-link text-uppercase my-0)
           - klasses << :active if controller.action_name == "archived"
           - url = [:archived, :admin, :job_offers]
           - url << {q: params[:q]} if params[:q].present?
-          = link_to t('.archived', count: @job_offers_archived.count), url, class: klasses
+          = link_to t('.archived', count: @job_offers_archived.size), url, class: klasses
       - if can? :create, JobOffer
         = link_to [:new, :admin, :job_offer], class: 'btn btn-primary btn-raised mb-0 mt-3 mt-md-0' do
           = fa_icon 'plus', class: 'mr-1'
           = t('.new_job_offer')
-    .row.mt-4.mb-3
-      .col-12
-        = form_tag request.original_url, method: :get do
-          .form-group.input-group.input-search
-            .input-group-prepend
-              %span.input-group-text.bg-white.py-4
-                = fa_icon('magnify')
-            = text_field_tag :q, params[:q]
-          = submit_tag 'Rechercher', name: nil, class: 'd-none'
+    = render partial: 'search'
     .row
       .col-12
         - if @job_offers.any?
-          = render partial: 'category', collection: @categories, space_divider: 'category_divider'
+          - @employers.each do |employer|
+            - job_offers = @job_offers[employer.id]
+            - if job_offers.present? && job_offers.any?
+              %h2.h6.text-uppercase.mt-4.mb-2= employer.name
+              = render partial: 'job_offer', collection: job_offers, as: :job_offer
         - else
           %em Aucun résultat

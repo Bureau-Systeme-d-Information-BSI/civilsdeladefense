@@ -46,6 +46,9 @@ class JobOffersController < ApplicationController
 
     respond_to do |format|
       if @job_application.save
+
+        @job_application.job_offer.initial! if @job_application.job_offer.start?
+
         format.html { redirect_to [:account, :job_applications] }
         format.json { render :show, status: :created, location: [:account, @job_application] }
       else

@@ -433,6 +433,7 @@ fr:
         state/archived: "Archivée"
       job_application:
         state: "État"
+        state/start: "N'a encore aucune candidature"
         state/initial: "Nouveau"
         state/rejected: "Refusé(e)"
         state/phone_meeting: "Entretien téléphonique"

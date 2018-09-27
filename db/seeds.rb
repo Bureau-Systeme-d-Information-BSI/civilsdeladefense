@@ -154,7 +154,7 @@ Audited.audit_class.as_user(administrator) do
   Email.create! subject: "subject", body: Faker::Lorem.paragraph(2), job_application: job_application, sender: administrator
 end
 
-JobOffer.all.each do |job_offer|
+JobOffer.where.not(duration_contract: nil).each do |job_offer|
   30.times do |i|
     user = User.new email: Faker::Internet.email,
       first_name: Faker::Name.first_name ,
@@ -178,6 +178,7 @@ JobOffer.all.each do |job_offer|
     job_application.cover_letter = file
     file = File.open(Rails.root.join('spec', 'fixtures', 'files', 'document.pdf'))
     job_application.resume = file
+    job_application.job_offer.initial!
     job_application.save!
 
     Audited.audit_class.as_user(administrator) do

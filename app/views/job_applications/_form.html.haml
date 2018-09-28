@@ -2,7 +2,7 @@
 - file_fields = JobOffer::FILES.dup
 - file_fields.delete(:photo)
 - url_fields = JobOffer::URLS
-= simple_form_for(@job_application, url: [:send_application, @job_offer], method: :post, html: { novalidate: true }) do |f|
+= simple_form_for(@job_application, url: [:send_application, @job_offer], method: :post, remote: true, html: {data: {type: :json}}) do |f|
   .form-inputs.mt-3
     = f.error_notification
     = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?

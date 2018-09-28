@@ -1,5 +1,4 @@
 # Faker initialization
-require 'faker'
 I18n.config.available_locales = %w(fr en)
 I18n.reload!
 Faker::Config.locale = :fr

@@ -50,7 +50,7 @@ class JobOffersController < ApplicationController
         @job_offer.initial! if @job_offer.start?
 
         format.html { redirect_to [:account, :job_applications] }
-        format.json { render :show, status: :created, location: [:account, @job_application] }
+        format.json { render json: @job_application.to_json(only: %i(id)), status: :created, location: [:successful, @job_offer] }
       else
         format.html { render :apply }
         format.json { render json: @job_application.errors, status: :unprocessable_entity }

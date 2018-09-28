@@ -245,7 +245,7 @@ ActiveRecord::Schema.define(version: 2018_09_27_090646) do
     t.uuid "official_status_id"
     t.uuid "sector_id"
     t.uuid "study_level_id"
-    t.integer "most_advanced_job_applications_state", default: 0
+    t.integer "most_advanced_job_applications_state", default: -1
     t.integer "sequential_id"
     t.string "identifier"
     t.string "duration_contract"

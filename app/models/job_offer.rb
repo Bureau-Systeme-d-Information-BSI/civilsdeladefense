@@ -46,6 +46,7 @@ class JobOffer < ApplicationRecord
   end
 
   enum most_advanced_job_applications_state: {
+    start: -1,
     initial: 0,
     rejected: 1,
     phone_meeting: 2,

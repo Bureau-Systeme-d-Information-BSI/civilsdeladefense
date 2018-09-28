@@ -1,6 +1,8 @@
 module JobApplicationsHelper
   def badge_color_for_state(state)
     case state
+    when :start
+      'light invisible'
     when :initial
       'purple'
     when :rejected, :phone_meeting_rejected, :after_meeting_rejected, :draft, :archived, :suspended

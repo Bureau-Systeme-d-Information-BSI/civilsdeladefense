@@ -6,10 +6,7 @@ RSpec.describe "admin/settings/categories/index", type: :view do
     if existing_categories.any?
       assign(:categories, existing_categories)
     else
-      assign(:categories, [
-        create(:category),
-        create(:category)
-      ])
+      assign(:categories, create_list(:category, 5))
     end
   end
 

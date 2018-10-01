@@ -29,6 +29,8 @@ import $ from 'jquery';
 window.jQuery = $;
 window.$ = $;
 
+import 'select2'; // globally assign select2 fn to $ element
+
 import Popper from 'popper.js'
 window.Popper = Popper
 require('snackbarjs')
@@ -50,7 +52,25 @@ function cleanupInvalidFields () {
 
 document.addEventListener("DOMContentLoaded", function() {
 
-  [].forEach.call(document.querySelectorAll('.custom-file-input'), function(el) {
+  $('select.filter').select2({
+    width: '100%',
+    minimumResultsForSearch: Infinity,
+    prompt: 'Select',
+    allowClear: true
+  }).on('select2:unselecting', function(ev) {
+    if (ev.params.args.originalEvent) {
+      // When unselecting (in multiple mode)
+      ev.params.args.originalEvent.stopPropagation();
+    } else {
+      // When clearing (in single mode)
+      $(this).one('select2:opening', function(ev) { ev.preventDefault(); })
+    }
+  }).on('change', function(e) {
+    let form = e.currentTarget.form
+    Rails.fire(form, 'submit')
+  })
+
+  ;[].forEach.call(document.querySelectorAll('.custom-file-input'), function(el) {
     el.addEventListener('change', function() {
       let fileName = this.value.split('\\').pop()
       let label = this.nextElementSibling
@@ -102,4 +122,18 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     })
   }
+
+  let jobOffersFilterings = document.getElementById
+  ;[].forEach.call(document.querySelectorAll('.job-offers-filtering'), function(el) {
+    el.addEventListener("ajax:beforeSend", function(event) {
+      var spinner = el.nextElementSibling
+      spinner.classList.remove('invisible')
+      spinner.classList.add('visible')
+    })
+    el.addEventListener("ajax:complete", function(event) {
+      var spinner = el.nextElementSibling
+      spinner.classList.remove('visible')
+      spinner.classList.add('invisible')
+    })
+  })
 })

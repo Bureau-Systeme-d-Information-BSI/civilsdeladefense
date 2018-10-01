@@ -1,0 +1,5 @@
+var node = document.getElementById('list')
+var html = '<%= j render(partial: '/admin/job_applications/list') %>'
+var frag = document.createRange().createContextualFragment(html)
+node.replaceWith(frag)
+

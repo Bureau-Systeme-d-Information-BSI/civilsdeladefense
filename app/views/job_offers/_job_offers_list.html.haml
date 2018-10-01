@@ -1,0 +1,6 @@
+#job-offers
+  .row.mt-4.mb-5
+    .col-12.text-center
+      .text-secondary.h6= t('.job_offers_count', count: @job_offers.size)
+  - roots = @categories.select{|x| x.parent_id.nil?}
+  = render partial: 'category', collection: roots

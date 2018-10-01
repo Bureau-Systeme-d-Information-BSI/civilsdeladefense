@@ -74,11 +74,11 @@ fr:
   job_offers:
     index:
       title: "Nos offres"
+    job_offers_list:
       job_offers_count:
         zero: "Aucune offre ne correspond à votre recherche"
         one: "1 offre d'emploi trouvée"
         other: "%{count} offres d'emploi trouvées"
-
     job_offer:
       show: "Postuler"
       published_date: 'Il y a %{time_ago_in_words}'
@@ -143,6 +143,7 @@ fr:
         title: "Candidats"
         search: "Recherche"
         my_job_applications: "Mes candidatures"
+      list:
         job_applications_count:
           zero: 'Aucune candidature trouvée'
           one: '1 candidature trouvée'

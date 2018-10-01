@@ -3,6 +3,14 @@ class JobApplication < ApplicationRecord
   audited
   has_associated_audits
 
+  include PgSearch
+  pg_search_scope :search_full_text, against: [
+    [:first_name, 'A'],
+    [:last_name, 'A']
+  ], associated_against: {
+    job_offer: %i(identifier title)
+  }
+
   belongs_to :job_offer
   belongs_to :user
   belongs_to :employer

@@ -95,23 +95,24 @@ body {
   }
 }
 
-.card-deck {
-  display: flex;
-  flex-flow: row wrap;
-  margin-right: -15px;
-  margin-left: -15px;
+$job-application-gutter: 3px;
+.job-applications-list {
+  @extend .d-flex, .flex-wrap;
+  margin-right: $job-application-gutter;
+  margin-left: $job-application-gutter;
   .job-application {
+    @extend .mt-3;
     background-color: white;
-    margin-right: 15px;
-    margin-left: 15px;
+    margin-right: $job-application-gutter * 2;
+    margin-left: $job-application-gutter * 2;
     @include media-breakpoint-up(sm) {
       flex: 0 0 calc(100%);
     }
     @include media-breakpoint-up(md) {
-      flex: 0 0 calc(100%/4 - 30px);
+      flex: 0 0 calc(100%/4 - #{$job-application-gutter * 4});
     }
     @include media-breakpoint-up(xl) {
-      flex: 0 0 calc(100%/5 - 30px);
+      flex: 0 0 calc(100%/5 - #{$job-application-gutter * 4});
     }
   }
 }
@@ -195,4 +196,8 @@ body {
       @extend .mb-0;
     }
   }
+}
+
+.pushed-top {
+  margin-top: -3rem;
 }

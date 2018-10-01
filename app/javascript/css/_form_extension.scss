@@ -26,15 +26,6 @@
     @include box-shadow($bmd-shadow-3dp);
 }
 
-.input-search.is-focused {
-  outline: none !important;
-  border-bottom: solid 1px $primary !important;
-}
-
-.input-search.is-focused > input{
-  outline: none !important;
-}
-
 .form-control.is-invalid, .custom-select.is-invalid {
   outline: none !important;
   border: solid 0px white;
@@ -68,8 +59,7 @@
   cursor: not-allowed;
 }
 
-.input-search {
-  @include box-shadow($bmd-shadow-2dp);
+.filter {
   .input-group-text {
     padding-top: ($spacer * .75);
     padding-bottom: ($spacer * .75);
@@ -88,6 +78,34 @@
   }
 }
 
+.input-search {
+  @extend .filter;
+  @include box-shadow($bmd-shadow-2dp);
+  border-bottom: solid 1px transparent;
+  &.is-focused {
+    outline: none !important;
+    border-bottom: solid 1px $primary !important;
+    > input {
+      outline: none !important;
+    }
+  }
+}
+
+form {
+  &.filters {
+    @include box-shadow($bmd-shadow-2dp);
+    .input-search {
+      box-shadow: none;
+    }
+    select {
+      box-shadow: none;
+    }
+    .is-focused select, select:focus, select:active {
+      border-bottom: 0;
+      box-shadow: none;
+    }
+  }
+}
 
 .custom-file-label {
   line-height: 1.25;

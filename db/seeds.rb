@@ -20,7 +20,11 @@ Category.create! name: 'Archives'
 Category.create! name: 'Audit'
 Category.create! name: 'Communication'
 infrastructure = Category.create! name: 'Infrastructure'
+sub_infrastructure = Category.create! name: 'Sous-infrastructure', parent: infrastructure
+sub_sub_infrastructure = Category.create! name: 'Sous sous-infrastructure', parent: sub_infrastructure
 informatique = Category.create! name: 'Informatique'
+sub_informatique = Category.create! name: 'Sous-informatique', parent: informatique
+sub_sub_informatique = Category.create! name: 'Sous sous-informatique', parent: sub_informatique
 
 OfficialStatus.create! name: 'Cadre'
 OfficialStatus.create! name: 'Non Cadre'
@@ -50,7 +54,7 @@ ExperienceLevel.create! name: '> 7 ans'
 job_offer = JobOffer.new do |j|
   j.owner = administrator
   j.title = 'Ingénieur expert en systemes d’information, réseau et active directory - Chef de section'
-  j.category = informatique
+  j.category = sub_sub_informatique
   j.official_status = OfficialStatus.first
   j.location = "Rennes, FR"
   j.employer = Employer.last
@@ -107,14 +111,14 @@ job_offer2 = job_offer.dup
 job_offer2.title = 'Conducteur d’Opérations (H/F)'
 job_offer2.contract_type = ContractType.where(name:"CDI").first
 job_offer2.duration_contract = nil
-job_offer2.category = infrastructure
+job_offer2.category = sub_sub_infrastructure
 job_offer2.identifier = nil
 job_offer2.sequential_id = nil
 job_offer2.save!
 
 job_offer3 = job_offer.dup
 job_offer3.title = 'Responsable Achat d’Infrastructures (H/F)'
-job_offer3.category = infrastructure
+job_offer3.category = sub_sub_infrastructure
 job_offer3.location = "Brest, FR"
 job_offer3.identifier = nil
 job_offer3.sequential_id = nil

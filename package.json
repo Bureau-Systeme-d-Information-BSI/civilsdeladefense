@@ -10,6 +10,7 @@
     "mdn-polyfills": "^5.12.0",
     "popper.js": "^1.14.4",
     "rails-ujs": "^5.2.0",
+    "select2": "4.0.5",
     "smoothscroll-polyfill": "^0.4.3",
     "snackbarjs": "^1.1.0",
     "sortablejs": "^1.7.0",

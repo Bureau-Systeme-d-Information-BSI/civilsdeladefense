@@ -1,0 +1,126 @@
+/* imports */
+
+
+/* Linear interpolate between $a and $b */
+
+@function lerp($a, $b, $p) {
+  @return ($b - $a) * $p + $a;
+}
+
+
+/* Linear interpolate assuming $a and $b are numeric two-item lists */
+
+@function lerp-point($a, $b, $p) {
+  @return ( lerp(nth($a, 1), nth($b, 1), $p), lerp(nth($a, 2), nth($b, 2), $p));
+}
+
+
+/* Reduce points to one in a beziery way */
+
+@function bezier-reduce($points, $p) {
+  @while length($points) > 1 {
+    $tmp: ();
+    @for $i from 1 through length($points) {
+      @if $i < length($points) {
+        $a: nth($points, $i);
+        $b: nth($points, $i + 1);
+        $tmp: append($tmp, lerp-point($a, $b, $p));
+      }
+    }
+    $points: $tmp;
+  }
+  @return nth($points, 1);
+}
+
+
+/* variables */
+
+$radius: 8.75;
+$pi: 3.14159265359;
+$circumference: 2 * $pi * $radius;
+@function circlePercentage($percent, $limit: 100) {
+  @return $circumference * ((3 * ($limit/100)) - $percent/100);
+}
+
+
+/* Pure CSS Material Spin Animation
+ * radius = 8.75
+ * pi = 3.14159
+ * circumference = 2 * pi * r (54.977825)
+ * dash-length = circumference * (100-x)/100
+ *
+ * Every cycle rotates entire shape an additional -90deg (CCW)
+ *
+ * Entire animation rotates 4x speed (CW)
+ *
+ * 1. Start 0.072% from head
+ * 2. Increase to 75% from head
+ * 3. Reduce tail to 0.521% from tail
+ * 4. Rotate -90 deg
+ *
+ * TODO: Confirm bezier easing
+ */
+
+
+/* Material Ease */
+
+$bezier-points: (0 0, 0.4 0, 0.2 1, 1 1);
+@mixin createMaterialSpinAnimation($detail:1, $colorList: null null null null) {
+  $totalFrames: $detail * 8;
+  /* #{$totalFrames} frames */
+  @for $iteration from 0 to 4 {
+    $iterationRotation: -90 * $iteration;
+    /* Ease-in 0-75%  */
+    @for $i from 0 to $detail +1 {
+      $rotation: ($i / $detail) * 180;
+      $keyframe: (($iteration * $detail * 2) + $i) * 100 / $totalFrames;
+      $percent: nth(bezier-reduce($bezier-points, ($i / $detail)), 1) * 75;
+      @if ($percent==0) {
+        $percent: 0.5;
+        $keyframe: $keyframe + 0.0001;
+      }
+      #{$keyframe}% {
+        /* circlePercentage(#{$percent}, 75); */
+        stroke-dashoffset: circlePercentage($percent, 75);
+        transform: rotate(#{$iterationRotation}deg) rotate(#{$rotation}deg);
+        stroke: nth($colorList,$iteration + 1);
+      }
+    }
+    /* Ease-out 75-150%  */
+    @for $i from 1 to $detail +1 {
+      $rotation: ($i / $detail) * 180 + 180;
+      $keyframe: (($iteration * $detail * 2) + ($detail + $i)) * 100 / $totalFrames;
+      $percent: nth(bezier-reduce($bezier-points, ($i / $detail)), 2) * 75 + 75;
+      @if ($percent==150) {
+        $percent: 149.5;
+      }
+      #{$keyframe}% {
+        /* circlePercentage(#{$percent}, 75); */
+        stroke-dashoffset: circlePercentage($percent, 75);
+        transform: rotate(#{$iterationRotation}deg) rotate(#{$rotation}deg);
+        stroke: nth($colorList,$iteration + 1);
+      }
+    }
+  }
+}
+
+@keyframes material-spin {
+  @include createMaterialSpinAnimation(40);
+}
+
+#indeterminate {
+  stroke-dasharray: $circumference * 0.75;
+  stroke-dashoffset: circlePercentage(0.05,75);
+  animation: material-spin 5332ms linear infinite;
+  transform-origin: center center;
+}
+
+.indeterminate-circle {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  &.mini {
+    width: 20px;
+    height: 20px;
+  }
+}

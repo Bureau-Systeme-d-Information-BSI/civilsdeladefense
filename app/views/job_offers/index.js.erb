@@ -1,0 +1,5 @@
+var node = document.getElementById('job-offers')
+var html = '<%= j render(partial: '/job_offers/job_offers_list') %>'
+var frag = document.createRange().createContextualFragment(html)
+node.replaceWith(frag)
+

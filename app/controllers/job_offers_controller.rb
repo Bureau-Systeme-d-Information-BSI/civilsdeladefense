@@ -5,9 +5,22 @@ class JobOffersController < ApplicationController
   # GET /job_offers.json
   def index
     @categories = Category.order('lft ASC')
+    @contract_types = ContractType.all
     @job_offers = JobOffer.publicly_visible.includes(:contract_type)
+    %i(category_id contract_type_id).each do |filter|
+      if params[filter].present? && (obj = filter.to_s.gsub('_id', '').classify.constantize.find(params[filter])).present?
+        @job_offers = @job_offers.where(filter => obj.id)
+        instance_variable_set("@#{ filter.to_s.gsub('_id', '') }", obj)
+      end
+    end
     @job_offers = @job_offers.search_full_text(params[:q]) if params[:q].present?
     @job_offers = @job_offers.to_a
+
+    respond_to do |format|
+      format.html {}
+      format.js {}
+      format.json { render @job_offers.to_json }
+    end
   end
 
   # GET /job_offers/1

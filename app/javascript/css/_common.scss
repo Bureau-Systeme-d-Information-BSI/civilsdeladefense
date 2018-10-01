@@ -44,6 +44,7 @@ $theme-colors: (
   "purple": $purple,
   "body-color": $body-color,
   "card-bg": $card-bg,
+  "cyan": $cyan,
 );
 
 // variables borrowed from bootstrap-material-design
@@ -76,6 +77,7 @@ $custom-file-text: (
 @import 'card_extension';
 @import 'form_extension';
 @import 'buttons_extension';
+@import 'progress';
 
 svg {
   fill: currentColor !important;
@@ -95,6 +97,11 @@ svg {
 .border-right-0  { border-right: 0 !important; }
 .border-bottom-0 { border-bottom: 0 !important; }
 .border-left-0   { border-left: 0 !important; }
+
+.border-bottom-3 {
+  @extend .border-bottom;
+  border-bottom-width: 3px !important;
+}
 
 @each $color, $value in $theme-colors {
   .border-#{$color} {
@@ -296,3 +303,20 @@ ul {
   opacity: 0.25;
 }
 
+.select2-container--default .select2-selection--single {
+  background-color: #fff;
+  border: 0;
+  border-radius: 0;
+}
+
+.select2-selection.select2-selection--single {
+  outline: none;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__placeholder {
+  color: inherit;
+}
+
+b, strong {
+  font-weight: 500;
+}

@@ -98,7 +98,9 @@ form {
       box-shadow: none;
     }
     select {
+      @extend .form-control, .custom-select;
       box-shadow: none;
+      width: 100%;
     }
     .is-focused select, select:focus, select:active {
       border-bottom: 0;

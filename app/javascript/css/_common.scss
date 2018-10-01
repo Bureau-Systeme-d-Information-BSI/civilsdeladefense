@@ -11,6 +11,7 @@ $success: #00d893;
 $cyan: #6cbeff;
 $danger: #f60e0e;
 $purple: #a462ff;
+$orange: #ff8800;
 $body-color: #818181;
 $body-color-variation: #848484;
 $body-bg: #e6e6e6;
@@ -45,6 +46,8 @@ $theme-colors: (
   "body-color": $body-color,
   "card-bg": $card-bg,
   "cyan": $cyan,
+  "orange": $orange,
+  "danger": $danger
 );
 
 // variables borrowed from bootstrap-material-design

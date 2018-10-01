@@ -42,6 +42,8 @@ import $ from 'jquery';
 window.jQuery = $;
 window.$ = $;
 
+import 'select2'; // globally assign select2 fn to $ element
+
 import Popper from 'popper.js'
 window.Popper = Popper
 require('snackbarjs')
@@ -50,6 +52,24 @@ require('bootstrap-material-design')
 $('body').bootstrapMaterialDesign()
 
 $( document ).ready(function() {
+  $('select.filter').select2({
+    width: '100%',
+    minimumResultsForSearch: Infinity,
+    prompt: 'Select',
+    allowClear: true
+  }).on('select2:unselecting', function(ev) {
+    if (ev.params.args.originalEvent) {
+      // When unselecting (in multiple mode)
+      ev.params.args.originalEvent.stopPropagation();
+    } else {
+      // When clearing (in single mode)
+      $(this).one('select2:opening', function(ev) { ev.preventDefault(); })
+    }
+  }).on('change', function(e) {
+    let form = e.currentTarget.form
+    Rails.fire(form, 'submit')
+  })
+
   var alertNotice = document.querySelector('.alert.alert-info')
   if (alertNotice !== null) {
     var msg = alertNotice.innerHTML

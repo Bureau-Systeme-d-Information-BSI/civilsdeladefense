@@ -143,6 +143,7 @@ fr:
         title: "Candidats"
         search: "Recherche"
         my_job_applications: "Mes candidatures"
+      list:
         job_applications_count:
           zero: 'Aucune candidature trouvée'
           one: '1 candidature trouvée'

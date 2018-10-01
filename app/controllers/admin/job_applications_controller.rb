@@ -2,6 +2,31 @@ class Admin::JobApplicationsController < Admin::BaseController
   # GET /admin/job_applications
   # GET /admin/job_applications.json
   def index
+    @contract_types = ContractType.all
+    @employers = Employer.all
+
+    @job_applications = @job_applications.includes(:job_offer)
+
+    %i(category_id contract_type_id).each do |filter|
+      if params[filter].present? && (obj = filter.to_s.gsub('_id', '').classify.constantize.find(params[filter])).present?
+        @job_applications = @job_applications.where(job_offers: {filter => obj.id})
+        instance_variable_set("@#{ filter.to_s.gsub('_id', '') }", obj)
+      end
+    end
+    %i(employer_id).each do |filter|
+      if params[filter].present? && (obj = filter.to_s.gsub('_id', '').classify.constantize.find(params[filter])).present?
+        @job_applications = @job_applications.where(filter => obj.id)
+        instance_variable_set("@#{ filter.to_s.gsub('_id', '') }", obj)
+      end
+    end
+    %i(state).each do |filter|
+      if params[filter].present?
+        @job_applications = @job_applications.where(filter => params[filter])
+        instance_variable_set("@#{ filter.to_s.gsub('_id', '') }", params[filter])
+      end
+    end
+    @job_applications = @job_applications.search_full_text(params[:q]) if params[:q].present?
+    @job_applications = @job_applications.paginate(page: params[:page], per_page: 25)
   end
 
   # GET /admin/job_applications/1

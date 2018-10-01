@@ -1,0 +1,9 @@
+#list
+  .container
+    .row
+      .col-12.text-center
+        .font-weight-bold.text-secondary.mt-3.mb-4= t('.job_applications_count', count: @job_applications.count)
+  .job-applications-list
+    = render partial: 'job_application', collection: @job_applications
+  .mt-4
+    = will_paginate @job_applications

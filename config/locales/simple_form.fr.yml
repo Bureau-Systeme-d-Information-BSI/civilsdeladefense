@@ -62,7 +62,7 @@ fr:
         postal_code: "Code postal"
         city: "Ville"
         country: "Pays"
-        photo: "Photo"
+        photo: "Photo (facultative)"
         cover_letter: "Lettre de motivation"
         resume: "CV"
         portfolio_url: "Portfolio"

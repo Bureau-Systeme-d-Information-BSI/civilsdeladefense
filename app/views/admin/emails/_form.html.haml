@@ -1,5 +1,6 @@
 -# frozen_string_literal: true
 - @templates = EmailTemplate.all
+- @email ||= Email.new(job_application: @job_application)
 .card
   .card-header.bg-white.font-weight-bold.text-secondary
     = fa_icon('file-document', class: 'text-secondary')

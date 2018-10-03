@@ -1,4 +1,5 @@
 -# frozen_string_literal: true
+- @message ||= Message.new(job_application: @job_application)
 = simple_form_for([:admin, @message.job_application, @message], remote: true) do |f|
   = f.error_notification
   = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?

@@ -7,6 +7,19 @@
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
 
+import flatpickr from 'flatpickr'
+import { French } from "flatpickr/dist/l10n/fr"
+import $ from 'jquery'
+window.jQuery = $
+window.$ = $
+
+import 'select2' // globally assign select2 fn to $ element
+
+import Popper from 'popper.js'
+window.Popper = Popper
+require('snackbarjs')
+require('bootstrap-material-design')
+
 const Rails = require('rails-ujs')
 Rails.start()
 
@@ -38,17 +51,6 @@ require('js/offcanvas.js')
 require('js/dependent-fields.js')
 require('js/board.js')
 
-import $ from 'jquery';
-window.jQuery = $;
-window.$ = $;
-
-import 'select2'; // globally assign select2 fn to $ element
-
-import Popper from 'popper.js'
-window.Popper = Popper
-require('snackbarjs')
-require('bootstrap-material-design')
-
 $('body').bootstrapMaterialDesign()
 
 $( document ).ready(function() {
@@ -60,10 +62,10 @@ $( document ).ready(function() {
   }).on('select2:unselecting', function(ev) {
     if (ev.params.args.originalEvent) {
       // When unselecting (in multiple mode)
-      ev.params.args.originalEvent.stopPropagation();
+      ev.params.args.originalEvent.stopPropagation()
     } else {
       // When clearing (in single mode)
-      $(this).one('select2:opening', function(ev) { ev.preventDefault(); })
+      $(this).one('select2:opening', function(ev) { ev.preventDefault() })
     }
   }).on('change', function(e) {
     let form = e.currentTarget.form
@@ -79,6 +81,13 @@ $( document ).ready(function() {
   $('.custom-file-input').on('change', function() {
     let fileName = $(this).val().split('\\').pop()
     $(this).next('.custom-file-label').addClass("selected").html(fileName)
+  })
+
+  flatpickr("#job_offer_contract_start_on", {
+    locale: French,
+    altInput: true,
+    altFormat: "d/m/Y",
+    dateFormat: "Y-m-d"
   })
 })
 
@@ -112,3 +121,4 @@ $('#remoteContentModal').on('show.bs.modal', function (event) {
     }
   })
 })
+

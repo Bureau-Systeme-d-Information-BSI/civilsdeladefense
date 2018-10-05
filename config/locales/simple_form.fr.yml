@@ -13,7 +13,7 @@ fr:
     options:
       defaults: &options_defaults
         disabled: "Désactivé"
-        optional: "Optionel"
+        optional: "Optionnel"
         mandatory: "Obligatoire"
       job_offer:
         option_cover_letter:

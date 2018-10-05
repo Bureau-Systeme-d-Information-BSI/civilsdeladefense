@@ -17,7 +17,7 @@ module UsersHelper
       klasses << options[:class]
     end
 
-    image_url = if photo.exists?
+    image_url = if photo && photo.exists?
       style = case options[:width]
       when 32
         :small

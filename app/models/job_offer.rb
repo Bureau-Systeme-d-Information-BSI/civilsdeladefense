@@ -109,4 +109,13 @@ class JobOffer < ApplicationRecord
   def contract_type_is_cdd?
     self.contract_type&.name == "CDD"
   end
+
+  def compute_notifications_count!
+    compute_notifications_count
+    save!
+  end
+
+  def compute_notifications_count
+    self.notifications_count = job_applications.sum(:emails_administrator_unread_count) + job_applications.sum(:files_unread_count)
+  end
 end

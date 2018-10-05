@@ -186,11 +186,13 @@ JobOffer.where.not(duration_contract: nil).each do |job_offer|
     job_application.job_offer.initial!
     job_application.save!
 
-    Audited.audit_class.as_user(administrator) do
-      Email.create! subject: "subject", body: Faker::Lorem.paragraph(2), job_application: job_application, sender: administrator
-      Email.create! subject: "subject", body: Faker::Lorem.paragraph(2), job_application: job_application, sender: administrator
-      Email.create! subject: "subject", body: Faker::Lorem.paragraph(2), job_application: job_application, sender: administrator
-      Email.create! subject: "subject", body: Faker::Lorem.paragraph(2), job_application: job_application, sender: administrator
+    3.times do
+      Audited.audit_class.as_user(administrator) do
+        Email.create! subject: "About your application", body: Faker::Lorem.paragraph(2), job_application: job_application, sender: administrator
+      end
+      Audited.audit_class.as_user(user) do
+        Email.create! subject: "My application", body: Faker::Lorem.paragraph(2), job_application: job_application, sender: user
+      end
     end
   end
 end

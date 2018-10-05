@@ -44,6 +44,7 @@ fr:
   buttons:
     add: "Ajouter"
     add_child: "Ajouter une sous-catégorie"
+    close: "Fermer"
     confirm: "Êtes-vous sûr ?"
     edit: "Modifier"
     delete: "Supprimer"
@@ -153,7 +154,7 @@ fr:
       job_application_head:
         nav_overview: "Candidature"
         nav_emails: "Emails"
-        nav_files: "Fichiers (%{count})"
+        nav_files: "Fichiers"
       job_application_activity:
         title: "Activité et commentaires"
         activities:
@@ -226,6 +227,13 @@ fr:
         success: "Email envoyé !"
       form:
         title: "Envoyer un email à ce candidat"
+      email:
+        mark_as_read: "Marquer comme lu"
+        mark_as_unread: "Marquer comme non lu"
+      mark_as_read:
+        success: "Email marqué comme lu !"
+      mark_as_unread:
+        success: "Email marqué comme non lu !"
     messages:
       create:
         success: "Message envoyé !"

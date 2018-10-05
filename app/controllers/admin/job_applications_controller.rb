@@ -32,12 +32,6 @@ class Admin::JobApplicationsController < Admin::BaseController
   # GET /admin/job_applications/1
   # GET /admin/job_applications/1.json
   def show
-    @message = Message.new
-    @message.job_application = @job_application
-
-    @email = Email.new
-    @email.job_application = @job_application
-
     render layout: request.xhr? ? false : "admin/simple"
   end
 
@@ -112,8 +106,10 @@ class Admin::JobApplicationsController < Admin::BaseController
     @file_name = params[:file_name]
     if %i(resume cover_letter).include?(@file_name.to_sym)
       @job_application.update_column("#{ @file_name }_is_validated", 1)
+      @job_application.compute_notifications_counter!
     else
       @job_application.user.update_column("#{ @file_name }_is_validated", 1)
+      @job_application.user.job_applications.each &:compute_notifications_counter!
     end
 
     respond_to do |format|
@@ -130,8 +126,10 @@ class Admin::JobApplicationsController < Admin::BaseController
     @file_name = params[:file_name]
     if %i(resume cover_letter).include?(@file_name.to_sym)
       @job_application.update_column("#{ @file_name }_is_validated", 2)
+      @job_application.compute_notifications_counter!
     else
       @job_application.user.update_column("#{ @file_name }_is_validated", 2)
+      @job_application.user.job_applications.each &:compute_notifications_counter!
     end
 
     respond_to do |format|

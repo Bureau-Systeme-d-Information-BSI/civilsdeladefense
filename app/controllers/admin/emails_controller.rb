@@ -27,6 +27,36 @@ class Admin::EmailsController < Admin::BaseController
     end
   end
 
+  def mark_as_read
+    @email.is_unread = false
+    @email.save
+    @job_application.reload
+
+    respond_to do |format|
+      format.html { redirect_back(fallback_location: [:admin, @job_application, @email], notice: t('.success')) }
+      format.js {
+        @notification = t('.success')
+        render :email_operation
+      }
+      format.json { render json: @email.to_json, status: :ok, location: [:admin, @job_application, @email] }
+    end
+  end
+
+  def mark_as_unread
+    @email.is_unread = true
+    @email.save
+    @job_application.reload
+
+    respond_to do |format|
+      format.html { redirect_back(fallback_location: [:admin, @job_application, @email], notice: t('.success')) }
+      format.js {
+        @notification = t('.success')
+        render :email_operation
+      }
+      format.json { render json: @email.to_json, status: :ok, location: [:admin, @job_application, @email] }
+    end
+  end
+
   private
     # Never trust parameters from the scary internet, only allow the white list through.
     def email_params

@@ -13,7 +13,7 @@ fr:
     options:
       defaults: &options_defaults
         disabled: "Désactivé"
-        optional: "Optionel"
+        optional: "Optionnel"
         mandatory: "Obligatoire"
       job_offer:
         option_cover_letter:
@@ -62,7 +62,7 @@ fr:
         postal_code: "Code postal"
         city: "Ville"
         country: "Pays"
-        photo: "Photo"
+        photo: "Photo (facultative)"
         cover_letter: "Lettre de motivation"
         resume: "CV"
         portfolio_url: "Portfolio"

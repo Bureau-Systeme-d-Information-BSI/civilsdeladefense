@@ -201,3 +201,17 @@ $job-application-gutter: 3px;
 .pushed-top {
   margin-top: -3rem;
 }
+
+.new_job_offer, .edit_job_offer {
+  .job_offer_option_photo {
+    .form-check.form-check-inline {
+      &:first-of-type {
+        @extend .invisible;
+      }
+    }
+  }
+}
+
+a.badge:not(.badge-danger) {
+  color: inherit;
+}

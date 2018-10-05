@@ -1,6 +1,9 @@
 - extra_klasses = []
 - extra_klasses << "card-state-#{job_offer.state}"
 .card.job-offer.mt-3{class: extra_klasses, id: dom_id(job_offer)}
+  - notifications_count = job_offer.notifications_count
+  - if notifications_count > 0
+    .notification= notifications_count
   .card-body
     .row
       .col-12.col-md-8

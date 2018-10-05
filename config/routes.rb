@@ -34,7 +34,12 @@ Rails.application.routes.draw do
         post :uncheck_file
       end
       resources :messages, only: %i(create)
-      resources :emails, only: %i(create)
+      resources :emails, only: %i(create) do
+        member do
+          post :mark_as_read
+          post :mark_as_unread
+        end
+      end
     end
     namespace :settings, path: 'parametres' do
       resources :administrators, path: 'administrateurs' do

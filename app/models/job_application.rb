@@ -1,6 +1,6 @@
 class JobApplication < ApplicationRecord
   include AASM
-  audited
+  audited except: %i(files_count files_unread_count emails_count emails_administrator_unread_count emails_user_unread_count administrator_notifications_count)
   has_associated_audits
 
   include PgSearch
@@ -42,6 +42,7 @@ class JobApplication < ApplicationRecord
   end
 
   before_validation :set_employer
+  before_save :compute_notifications_counter
 
   FINISHED_STATES = %i(rejected phone_meeting_rejected after_meeting_rejected affected).freeze
   enum state: {
@@ -107,7 +108,12 @@ class JobApplication < ApplicationRecord
     },
     touch: true
   counter_culture :job_offer,
-    column_name: 'job_applications_count'
+    column_name: 'job_applications_count',
+    touch: true
+  counter_culture :job_offer,
+    column_name: :notifications_count,
+    delta_column: 'administrator_notifications_count',
+    touch: true
 
   scope :finished, -> { where(state: FINISHED_STATES) }
   scope :not_finished, -> { where.not(state: FINISHED_STATES) }
@@ -125,5 +131,54 @@ class JobApplication < ApplicationRecord
 
   def set_employer
     self.employer_id ||= self.job_offer.employer_id
+  end
+
+  def compute_notifications_counter!
+    compute_notifications_counter
+    save!
+  end
+
+  def compute_notifications_counter
+    compute_files_count
+    compute_emails_count
+    compute_administrator_notifications_count
+    true
+  end
+
+  def compute_files_count
+    ary = JobOffer::FILES.inject([0, 0]) { |memo,obj|
+      if self.send("#{obj}?".to_sym)
+        memo[0] += 1
+        if self.send("#{obj}_is_validated".to_sym) == 0
+          memo[1] += 1
+        end
+      end
+      memo
+    }
+    ary = User::FILES.inject(ary) { |memo,obj|
+      if self.user.send("#{obj}?".to_sym)
+        memo[0] += 1
+        if self.user.send("#{obj}_is_validated".to_sym) == 0
+          memo[1] += 1
+        end
+      end
+      memo
+    }
+    self.files_count, self.files_unread_count = ary
+  end
+
+  def compute_emails_count
+    ary = emails.reload.inject([0, 0]) do |memo,obj|
+      if obj.is_unread?
+        memo[0] += 1 if obj.sender.is_a?(User)
+        memo[1] += 1 if obj.sender.is_a?(Administrator)
+      end
+      memo
+    end
+    self.emails_administrator_unread_count, self.emails_user_unread_count = ary
+  end
+
+  def compute_administrator_notifications_count
+    self.administrator_notifications_count = self.emails_administrator_unread_count + self.files_unread_count
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_27_090646) do
+ActiveRecord::Schema.define(version: 2018_10_03_125323) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -133,6 +133,7 @@ ActiveRecord::Schema.define(version: 2018_09_27_090646) do
     t.uuid "job_application_id"
     t.string "sender_type"
     t.uuid "sender_id"
+    t.boolean "is_unread", default: true
     t.index ["job_application_id"], name: "index_emails_on_job_application_id"
     t.index ["sender_type", "sender_id"], name: "index_emails_on_sender_type_and_sender_id"
   end
@@ -198,6 +199,13 @@ ActiveRecord::Schema.define(version: 2018_09_27_090646) do
     t.string "photo_content_type"
     t.bigint "photo_file_size"
     t.datetime "photo_updated_at"
+    t.integer "emails_unread_count", default: 0
+    t.integer "files_count", default: 0
+    t.integer "files_unread_count", default: 0
+    t.integer "emails_count", default: 0
+    t.integer "emails_administrator_unread_count", default: 0
+    t.integer "emails_user_unread_count", default: 0
+    t.integer "administrator_notifications_count", default: 0
     t.index ["employer_id"], name: "index_job_applications_on_employer_id"
     t.index ["job_offer_id"], name: "index_job_applications_on_job_offer_id"
     t.index ["state"], name: "index_job_applications_on_state"
@@ -219,7 +227,6 @@ ActiveRecord::Schema.define(version: 2018_09_27_090646) do
     t.integer "option_cover_letter"
     t.integer "option_resume"
     t.integer "option_portfolio_url"
-    t.integer "option_photo"
     t.integer "option_website_url"
     t.integer "option_linkedin_url"
     t.datetime "created_at", null: false
@@ -249,6 +256,8 @@ ActiveRecord::Schema.define(version: 2018_09_27_090646) do
     t.integer "sequential_id"
     t.string "identifier"
     t.string "duration_contract"
+    t.integer "option_photo"
+    t.integer "notifications_count", default: 0
     t.index ["category_id"], name: "index_job_offers_on_category_id"
     t.index ["contract_type_id"], name: "index_job_offers_on_contract_type_id"
     t.index ["employer_id"], name: "index_job_offers_on_employer_id"

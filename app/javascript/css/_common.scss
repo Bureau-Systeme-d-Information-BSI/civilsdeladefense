@@ -323,3 +323,43 @@ ul {
 b, strong {
   font-weight: 500;
 }
+
+.card {
+  .notification {
+    position: absolute;
+    top: -8px;
+    right: -9px;
+    border: 1px solid #FFF;
+    font-size: 9px;
+    background: $danger;
+    color: #FFF;
+    min-width: 20px;
+    padding: 0 5px;
+    height: 20px;
+    border-radius: 10px;
+    text-align: center;
+    line-height: 19px;
+    vertical-align: middle;
+    display: block;
+  }
+}
+
+.nav-link {
+  .notification {
+    position: absolute;
+    top: 3px;
+    right: -5px;
+    border: 1px solid #FFF;
+    font-size: 9px;
+    background: $danger;
+    color: #FFF;
+    min-width: 20px;
+    padding: 0 5px;
+    height: 20px;
+    border-radius: 10px;
+    text-align: center;
+    line-height: 19px;
+    vertical-align: middle;
+    display: block;
+  }
+}

@@ -28,6 +28,12 @@ class User < ApplicationRecord
       less_than: (field == :photo ? 1.megabyte : 2.megabytes)
   end
 
+  after_save :compute_job_applications_notifications_counter
+
+  def compute_job_applications_notifications_counter
+    job_applications.each &:compute_notifications_counter!
+  end
+
   def full_name
     [first_name, last_name].join(" ")
   end

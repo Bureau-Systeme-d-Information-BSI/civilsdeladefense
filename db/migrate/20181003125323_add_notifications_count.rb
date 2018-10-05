@@ -10,12 +10,6 @@ class AddNotificationsCount < ActiveRecord::Migration[5.2]
     add_column :job_offers, :notifications_count, :integer, default: 0
     Email.all.update_all is_unread: true
     Email.counter_culture_fix_counts skip_unsupported: true
-    JobApplication.all.each do |job_application|
-      job_application.computes_files_count!
-    end
     Email.all.map &:save
-    JobOffer.all.each do |job_offer|
-      job_offer.compute_notifications_count!
-    end
   end
 end

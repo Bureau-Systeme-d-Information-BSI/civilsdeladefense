@@ -3,17 +3,42 @@ require 'faker'
 I18n.config.available_locales = %w(fr en)
 I18n.reload!
 Faker::Config.locale = :fr
+employer = Employer.create! name: 'DIRISI', code: 'DRI'
 
-administrator = Administrator.new email: 'pipo@molo.fr',
+bant_admin = Administrator.new email: 'pipo@molo.fr',
   first_name: 'Pipo',
   last_name: 'Molo',
   password: 'pipomolo',
   password_confirmation: 'pipomolo',
   very_first_account: true,
   role: 'bant'
-administrator.skip_confirmation_notification!
-administrator.save!
-administrator.confirm
+bant_admin.skip_confirmation_notification!
+bant_admin.save!
+bant_admin.confirm
+
+employer_admin = Administrator.new email: 'employer@molo.fr',
+  first_name: 'employer',
+  last_name: 'Molo',
+  password: 'pipomolo',
+  password_confirmation: 'pipomolo',
+  very_first_account: true,
+  role: 'employer',
+  employer: employer
+employer_admin.skip_confirmation_notification!
+employer_admin.save!
+employer_admin.confirm
+
+brh_admin = Administrator.new email: 'brh@molo.fr',
+  first_name: 'brh',
+  last_name: 'Molo',
+  password: 'pipomolo',
+  password_confirmation: 'pipomolo',
+  very_first_account: true,
+  role: 'brh',
+  employer: employer
+brh_admin.skip_confirmation_notification!
+brh_admin.save!
+brh_admin.confirm
 
 Category.create! name: 'Administration'
 Category.create! name: 'Archives'
@@ -29,7 +54,6 @@ sub_sub_informatique = Category.create! name: 'Sous sous-informatique', parent: 
 OfficialStatus.create! name: 'Cadre'
 OfficialStatus.create! name: 'Non Cadre'
 
-employer = Employer.create! name: 'DIRISI', code: 'DRI'
 
 ContractType.create! name: 'CDD'
 ContractType.create! name: 'CDI'
@@ -52,7 +76,7 @@ ExperienceLevel.create! name: '5 à 6 ans'
 ExperienceLevel.create! name: '> 7 ans'
 
 job_offer = JobOffer.new do |j|
-  j.owner = administrator
+  j.owner = bant_admin
   j.title = 'Ingénieur expert en systemes d’information, réseau et active directory - Chef de section'
   j.category = sub_sub_informatique
   j.official_status = OfficialStatus.first
@@ -109,6 +133,7 @@ job_offer.save!
 
 job_offer2 = job_offer.dup
 job_offer2.title = 'Conducteur d’Opérations (H/F)'
+job_offer2.owner = brh_admin
 job_offer2.contract_type = ContractType.where(name:"CDI").first
 job_offer2.duration_contract = nil
 job_offer2.category = sub_sub_infrastructure
@@ -117,6 +142,7 @@ job_offer2.sequential_id = nil
 job_offer2.save!
 
 job_offer3 = job_offer.dup
+job_offer3.owner = employer_admin
 job_offer3.title = 'Responsable Achat d’Infrastructures (H/F)'
 job_offer3.category = sub_sub_infrastructure
 job_offer3.location = "Brest, FR"
@@ -152,11 +178,11 @@ file = File.open(Rails.root.join('spec', 'fixtures', 'files', 'document.pdf'))
 job_application.resume = file
 job_application.save!
 
-Audited.audit_class.as_user(administrator) do
-  Email.create! subject: "subject", body: Faker::Lorem.paragraph(2), job_application: job_application, sender: administrator
-  Email.create! subject: "subject", body: Faker::Lorem.paragraph(2), job_application: job_application, sender: administrator
-  Email.create! subject: "subject", body: Faker::Lorem.paragraph(2), job_application: job_application, sender: administrator
-  Email.create! subject: "subject", body: Faker::Lorem.paragraph(2), job_application: job_application, sender: administrator
+Audited.audit_class.as_user(bant_admin) do
+  Email.create! subject: "subject", body: Faker::Lorem.paragraph(2), job_application: job_application, sender: bant_admin
+  Email.create! subject: "subject", body: Faker::Lorem.paragraph(2), job_application: job_application, sender: bant_admin
+  Email.create! subject: "subject", body: Faker::Lorem.paragraph(2), job_application: job_application, sender: bant_admin
+  Email.create! subject: "subject", body: Faker::Lorem.paragraph(2), job_application: job_application, sender: bant_admin
 end
 
 JobOffer.where.not(duration_contract: nil).each do |job_offer|
@@ -187,8 +213,8 @@ JobOffer.where.not(duration_contract: nil).each do |job_offer|
     job_application.save!
 
     3.times do
-      Audited.audit_class.as_user(administrator) do
-        Email.create! subject: "About your application", body: Faker::Lorem.paragraph(2), job_application: job_application, sender: administrator
+      Audited.audit_class.as_user(bant_admin) do
+        Email.create! subject: "About your application", body: Faker::Lorem.paragraph(2), job_application: job_application, sender: bant_admin
       end
       Audited.audit_class.as_user(user) do
         Email.create! subject: "My application", body: Faker::Lorem.paragraph(2), job_application: job_application, sender: user

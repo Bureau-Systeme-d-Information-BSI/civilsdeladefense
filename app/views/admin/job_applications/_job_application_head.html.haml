@@ -42,12 +42,15 @@
           = t('.nav_files', count: job_application.files_count)
   .col-12.col-md-4{class: job_application_modal_section_classes}
     .btn-group.my-0
-      = link_to job_application.aasm.human_state, "#", class: "btn btn-primary btn-raised dropdown-toggle", data: {toggle: :dropdown}, aria: {haspopup: true, expanded: false}
-      .dropdown-menu
-        - job_application.aasm.states.map(&:name).each do |state|
-          - klasses = %w(dropdown-item)
-          - klasses << 'disabled' if job_application.state.to_sym == state
-          = link_to JobApplication.human_attribute_name("state/#{ state }"), [:change_state, :admin, job_application, {state: state}], method: :patch, remote: true, class: klasses
+      - if can? :manage, job_application
+        = link_to job_application.aasm.human_state, "#", class: "btn btn-primary btn-raised dropdown-toggle", data: {toggle: :dropdown}, aria: {haspopup: true, expanded: false}
+        .dropdown-menu
+          - job_application.aasm.states.map(&:name).each do |state|
+            - klasses = %w(dropdown-item)
+            - klasses << 'disabled' if job_application.state.to_sym == state
+            = link_to JobApplication.human_attribute_name("state/#{ state }"), [:change_state, :admin, job_application, {state: state}], method: :patch, remote: true, class: klasses
+      - else
+        = link_to job_application.aasm.human_state, "#", class: "btn btn-primary btn-raised"
     %button.close{type: :button, data: { dismiss: :modal }, aria: { label: t("buttons.close") }}
       %span{ aria: { hidden: true }}
         &times

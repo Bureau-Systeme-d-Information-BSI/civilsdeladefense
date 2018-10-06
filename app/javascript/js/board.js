@@ -14,7 +14,7 @@ window.recomputeColumnTotal = recomputeColumnTotal
 
 document.addEventListener("DOMContentLoaded", function() {
   var board = document.getElementById('board')
-  if (board !== null) {
+  if (board !== null && board.getAttribute("data-draggable") !== null) {
     var listNodes = board.querySelectorAll('.lists .list')
     listNodes.forEach( (listNode) => {
       var state = listNode.getAttribute('data-state')

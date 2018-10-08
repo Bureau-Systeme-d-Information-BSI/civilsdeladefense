@@ -1,6 +1,6 @@
 class Email < ApplicationRecord
   belongs_to :job_application
-  belongs_to :sender, polymorphic: true
+  belongs_to :sender, optional: true, polymorphic: true
 
   validates :subject, :body, presence: true
 

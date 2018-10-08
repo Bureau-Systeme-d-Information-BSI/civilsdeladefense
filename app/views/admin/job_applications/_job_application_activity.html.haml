@@ -15,7 +15,8 @@
       %li
         .d-flex
           - model = audit.auditable_type == 'JobApplication' && audit.version == 1 ? @job_application : audit.user
-          = image_user_tag model&.photo, width: 32, class: 'photo'
+          - photo_obj = model == "unknown" ? nil : model&.photo
+          = image_user_tag photo_obj, width: 32, class: 'photo'
           .d-flex.flex-column
             .mb-1
               - if audit.version == 1 && audit.auditable_type == 'JobApplication'
@@ -33,6 +34,8 @@
                   = t('.activities.email_html', admin_name: whodunnit, name: @job_application.full_name)
                 - elsif klass == "User"
                   = t('.activities.email_simple_html', from_name: whodunnit)
+              - elsif audit.auditable_type == "Email" && model == "unknown"
+                = t('.activities.email_automatic_html', name: @job_application.full_name)
               - else
                 %code= audited_changes
             %small.text-muted.time-ago

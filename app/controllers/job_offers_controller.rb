@@ -62,6 +62,9 @@ class JobOffersController < ApplicationController
 
         @job_offer.initial! if @job_offer.start?
 
+        email = @job_application.emails.create subject: t('job_offers.successful.subject'), body: t('job_offers.successful.body', first_name: @job_application.first_name, job_offer_title: @job_offer.title)
+        ApplicantNotificationsMailer.new_email(email.id).deliver_now
+
         format.html { redirect_to [:account, :job_applications] }
         format.json { render json: @job_application.to_json(only: %i(id)), status: :created, location: [:successful, @job_offer] }
       else

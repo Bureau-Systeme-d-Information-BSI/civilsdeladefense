@@ -1,3 +1,3 @@
-class OfficialStatus < ApplicationRecord
+class ProfessionalCategory < ApplicationRecord
   validates :name, presence: true, uniqueness: true
 end

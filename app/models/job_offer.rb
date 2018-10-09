@@ -1,5 +1,5 @@
 class JobOffer < ApplicationRecord
-  SETTINGS = %i(category official_status contract_type study_level experience_level sector).freeze
+  SETTINGS = %i(category professional_category contract_type study_level experience_level sector).freeze
 
   include AASM
 

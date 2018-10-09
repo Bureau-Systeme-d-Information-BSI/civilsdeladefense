@@ -24,7 +24,7 @@
       - klasses << 'active' if controller.controller_name == entry
       = link_to [:admin, :settings, entry.to_sym], class: klasses do
         = t(".#{ entry }")
-  - entries = JobOffer::SETTINGS.map{|x| x.to_s.pluralize.to_sym}
+  - entries = JobOffer::SETTINGS.map{|x| x.to_s.pluralize.to_sym} + [:salary_ranges]
   - if entries.any?{ |entry| can? :read, entry.to_s.singularize.classify.constantize }
     .list-group-item.menu
       Rédaction offres d'emploi

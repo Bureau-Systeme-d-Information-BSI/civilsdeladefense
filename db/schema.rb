@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_03_125323) do
+ActiveRecord::Schema.define(version: 2018_10_08_100059) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -249,7 +249,7 @@ ActiveRecord::Schema.define(version: 2018_10_03_125323) do
     t.uuid "contract_type_id"
     t.uuid "employer_id"
     t.uuid "experience_level_id"
-    t.uuid "official_status_id"
+    t.uuid "professional_category_id"
     t.uuid "sector_id"
     t.uuid "study_level_id"
     t.integer "most_advanced_job_applications_state", default: -1
@@ -263,8 +263,8 @@ ActiveRecord::Schema.define(version: 2018_10_03_125323) do
     t.index ["employer_id"], name: "index_job_offers_on_employer_id"
     t.index ["experience_level_id"], name: "index_job_offers_on_experience_level_id"
     t.index ["identifier"], name: "index_job_offers_on_identifier", unique: true
-    t.index ["official_status_id"], name: "index_job_offers_on_official_status_id"
     t.index ["owner_id"], name: "index_job_offers_on_owner_id"
+    t.index ["professional_category_id"], name: "index_job_offers_on_professional_category_id"
     t.index ["sector_id"], name: "index_job_offers_on_sector_id"
     t.index ["slug"], name: "index_job_offers_on_slug", unique: true
     t.index ["state"], name: "index_job_offers_on_state"
@@ -281,11 +281,23 @@ ActiveRecord::Schema.define(version: 2018_10_03_125323) do
     t.index ["job_application_id"], name: "index_messages_on_job_application_id"
   end
 
-  create_table "official_statuses", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "professional_categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_official_statuses_on_name", unique: true
+    t.index ["name"], name: "index_professional_categories_on_name", unique: true
+  end
+
+  create_table "salary_ranges", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "estimate_annual_salary_gross"
+    t.uuid "professional_category_id"
+    t.uuid "experience_level_id"
+    t.uuid "sector_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["experience_level_id"], name: "index_salary_ranges_on_experience_level_id"
+    t.index ["professional_category_id"], name: "index_salary_ranges_on_professional_category_id"
+    t.index ["sector_id"], name: "index_salary_ranges_on_sector_id"
   end
 
   create_table "sectors", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -425,9 +437,12 @@ ActiveRecord::Schema.define(version: 2018_10_03_125323) do
   add_foreign_key "job_offers", "contract_types"
   add_foreign_key "job_offers", "employers"
   add_foreign_key "job_offers", "experience_levels"
-  add_foreign_key "job_offers", "official_statuses"
+  add_foreign_key "job_offers", "professional_categories"
   add_foreign_key "job_offers", "sectors"
   add_foreign_key "job_offers", "study_levels"
   add_foreign_key "messages", "administrators"
   add_foreign_key "messages", "job_applications"
+  add_foreign_key "salary_ranges", "experience_levels"
+  add_foreign_key "salary_ranges", "professional_categories"
+  add_foreign_key "salary_ranges", "sectors"
 end

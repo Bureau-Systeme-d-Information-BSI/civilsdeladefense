@@ -253,12 +253,13 @@ fr:
           administrators: "Membres"
           employers: "Employeurs"
           email_templates: "Emails"
-          categories: "Catégories"
-          official_statuses: "Statuts"
+          categories: "Métiers"
+          professional_categories: "Catégories professionnelles"
           contract_types: "Types de contrat"
           study_levels: "Niveaux d'études"
           experience_levels: "Expériences"
           sectors: "Secteurs / Filières"
+          salary_ranges: "Estimations salariales"
       base:
         index:
           title: "Paramètres"
@@ -332,7 +333,7 @@ fr:
           success: "Catégorie mise à jour !"
         destroy:
           success: "Catégorie supprimée !"
-      official_statuses:
+      professional_categories:
         index:
           card_title:
             zero: 'Aucun statut'
@@ -364,6 +365,20 @@ fr:
           success: "Type de contrat mis à jour !"
         destroy:
           success: "Type de contrat supprimé !"
+      salary_ranges:
+        index:
+          title: "Estimations salariales"
+          add: "Ajouter"
+          card_title:
+            zero: 'Aucune estimation'
+            one: '1 estimation'
+            other: '%{count} estimations'
+        new:
+          title: "Ajouter une estimation"
+        create:
+          success: "Estimation ajoutée !"
+        destroy:
+          success: "Estimation supprimée !"
       study_levels:
         index:
           card_title:

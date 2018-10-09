@@ -9,6 +9,11 @@
           = f.input :title
           = f.input :subject
           = f.input :body
+        - elsif resource.is_a?(SalaryRange)
+          = f.input :professional_category
+          = f.input :experience_level
+          = f.input :sector
+          = f.input :estimate_annual_salary_gross
         - else
           = f.input :name
           - if resource.is_a?(Employer)

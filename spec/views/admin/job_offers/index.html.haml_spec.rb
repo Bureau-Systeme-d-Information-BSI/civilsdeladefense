@@ -7,7 +7,7 @@ RSpec.describe "admin/job_offers/index", type: :view do
 
     owner = create(:owner)
     category = create(:category)
-    official_status = create(:official_status)
+    professional_category = create(:professional_category)
     employer = employers.first
     contract_type = create(:contract_type)
     study_level = create(:study_level)
@@ -20,7 +20,7 @@ RSpec.describe "admin/job_offers/index", type: :view do
         state: :published,
         owner: owner,
         category: category,
-        official_status: official_status,
+        professional_category: professional_category,
         employer: employer,
         contract_type: contract_type,
         study_level: study_level,
@@ -34,7 +34,7 @@ RSpec.describe "admin/job_offers/index", type: :view do
         state: :archived,
         owner: owner,
         category: category,
-        official_status: official_status,
+        professional_category: professional_category,
         employer: employer,
         contract_type: contract_type,
         study_level: study_level,

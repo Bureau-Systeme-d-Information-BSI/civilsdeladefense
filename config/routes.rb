@@ -13,6 +13,7 @@ Rails.application.routes.draw do
         patch :update_email, :update_password
       end
     end
+    resources :salary_ranges, only: %i(index)
     resources :job_offers, path: 'offresdemploi' do
       collection do
         get :archived
@@ -49,6 +50,7 @@ Rails.application.routes.draw do
       end
       resources :employers
       resources :email_templates
+      resources :salary_ranges
       JobOffer::SETTINGS.each do |setting|
         resources setting.to_s.pluralize.to_sym, except: %i(show)
       end

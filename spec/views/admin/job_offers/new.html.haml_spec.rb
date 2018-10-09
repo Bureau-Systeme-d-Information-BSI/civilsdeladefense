@@ -18,7 +18,7 @@ RSpec.describe "admin/job_offers/new", type: :view do
 
     #   assert_select "input[name=?]", "job_offer[category_id]"
 
-    #   assert_select "input[name=?]", "job_offer[official_status_id]"
+    #   assert_select "input[name=?]", "job_offer[professional_category_id]"
 
     #   assert_select "input[name=?]", "job_offer[location]"
 

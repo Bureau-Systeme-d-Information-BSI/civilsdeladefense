@@ -51,9 +51,8 @@ informatique = Category.create! name: 'Informatique'
 sub_informatique = Category.create! name: 'Sous-informatique', parent: informatique
 sub_sub_informatique = Category.create! name: 'Sous sous-informatique', parent: sub_informatique
 
-OfficialStatus.create! name: 'Cadre'
-OfficialStatus.create! name: 'Non Cadre'
-
+ProfessionalCategory.create! name: 'Cadre'
+ProfessionalCategory.create! name: 'Non Cadre'
 
 ContractType.create! name: 'CDD'
 ContractType.create! name: 'CDI'
@@ -79,7 +78,7 @@ job_offer = JobOffer.new do |j|
   j.owner = bant_admin
   j.title = 'Ingénieur expert en systemes d’information, réseau et active directory - Chef de section'
   j.category = sub_sub_informatique
-  j.official_status = OfficialStatus.first
+  j.professional_category = ProfessionalCategory.first
   j.location = "Rennes, FR"
   j.employer = Employer.last
   j.description = "Placé au sein du commandement des opérations cyber et rattaché à la direction interarmées des réseaux

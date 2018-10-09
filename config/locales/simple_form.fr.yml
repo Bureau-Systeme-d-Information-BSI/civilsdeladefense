@@ -73,7 +73,7 @@ mois afin d'être recontacté(e) pour de nouvelles opportunités."
       job_offer:
         title: "Intitulé du poste"
         category: "Catégorie de métier"
-        official_status: "Statut"
+        professional_category: "Catégorie professionnelle"
         location: "Localisation"
         employer: "Employeur"
         description: "Descriptif de l’offre"

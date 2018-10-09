@@ -1,0 +1,31 @@
+- @page_title = t('.title')
+.card
+  .card-header.border-bottom-0
+    .card-title.d-md-flex.align-items-center
+      = t('.card_title', count: @salary_ranges.size)
+  = simple_form_for([:admin, :settings, SalaryRange.new]) do |f|
+    %table.table.table-hover.mb-0.mt-3
+      %thead
+        %tr
+          %th Catégorie
+          %th Expérience
+          %th Filière
+          %th Rémunération
+          %th
+      %tbody
+        - for salary_range in @salary_ranges
+          %tr
+            %td= salary_range.professional_category.name
+            %td= salary_range.experience_level.name
+            %td= salary_range.sector.name
+            %td= salary_range.estimate_annual_salary_gross
+            %td= link_to t('buttons.delete'), [:admin, :settings, salary_range], method: :delete, data: { confirm: t('buttons.confirm') }
+        %tr
+          %td= f.association :professional_category, label: false, collection: ProfessionalCategory.all
+          %td= f.association :experience_level, label: false, collection: ExperienceLevel.all
+          %td= f.association :sector, label: false, collection: Sector.all
+          %td= f.input :estimate_annual_salary_gross, label: false
+          %td
+            = button_tag(type: 'submit', class: 'btn btn-primary btn-raised mb-0') do
+              = fa_icon('plus')
+              = t("buttons.add")

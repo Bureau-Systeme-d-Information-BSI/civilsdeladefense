@@ -4,7 +4,7 @@ FactoryBot.define do
     title { Faker::Job.title }
     description "Un super poste"
     category
-    official_status
+    professional_category
     location "Rennes, FR"
     employer
     required_profile "Un profil pointu"

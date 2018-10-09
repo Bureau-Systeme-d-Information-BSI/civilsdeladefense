@@ -1,4 +1,3 @@
-- linkedin_url = job_application.linkedin_url
 - website_url = job_application.website_url
 - tab_active ||= :overview
 .row.bg-white.border-bottom.head
@@ -17,11 +16,11 @@
             %span.mr-2
               = fa_icon "map-marker"
               = address_short
-        - if linkedin_url.present? || website_url.present?
+        - if website_url.present?
           .d-flex.justify-content.justify-content-start
-            - if linkedin_url.present?
-              = link_to fa_icon('linkedin', class: 'fa-w-20'), linkedin_url, target: :_blank, class: 'mt-1 mr-2'
-            - if website_url.present?
+            - if website_url =~ /linkedin/
+              = link_to fa_icon('linkedin', class: 'fa-w-20'), website_url, target: :_blank, class: 'mt-1 mr-2'
+            - else
               = link_to fa_icon('web', class: 'fa-w-20'), website_url, target: :_blank, class: 'mt-1 text-body-color'
     %ul.nav.nav-tabs.mt-3{role: :tablist}
       %li.nav-item.mr-3

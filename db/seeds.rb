@@ -123,10 +123,8 @@ job_offer = JobOffer.new do |j|
   j.estimate_monthly_salary_gross = "39000 - 46000€"
   j.option_cover_letter = :mandatory
   j.option_resume = :mandatory
-  j.option_portfolio_url = :optional
   j.option_photo = :optional
   j.option_website_url = :optional
-  j.option_linkedin_url = :optional
 end
 job_offer.save!
 

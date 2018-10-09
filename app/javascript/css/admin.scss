@@ -203,7 +203,7 @@ $job-application-gutter: 3px;
 }
 
 .new_job_offer, .edit_job_offer {
-  .job_offer_option_photo {
+  .job_offer_option_photo, .job_offer_option_website_url {
     .form-check.form-check-inline {
       &:first-of-type {
         @extend .invisible;

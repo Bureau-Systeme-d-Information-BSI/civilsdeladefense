@@ -150,6 +150,6 @@ class Admin::JobApplicationsController < Admin::BaseController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def job_application_params
-      params.require(:job_application).permit(:job_offer_id, :user_id, :first_name, :last_name, :current_position, :phone, :address_1, :address_2, :postal_code, :city, :country, :portfolio_url, :website_url, :linkedin_url)
+      params.require(:job_application).permit(:job_offer_id, :user_id, :first_name, :last_name, :current_position, :phone, :address_1, :address_2, :postal_code, :city, :country, :website_url)
     end
 end

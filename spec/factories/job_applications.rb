@@ -11,8 +11,6 @@ FactoryBot.define do
     postal_code "MyString"
     city "MyString"
     country "MyString"
-    portfolio_url "MyString"
     website_url "MyString"
-    linkedin_url "MyString"
   end
 end

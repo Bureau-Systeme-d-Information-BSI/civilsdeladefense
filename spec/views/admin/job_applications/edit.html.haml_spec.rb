@@ -28,11 +28,7 @@ RSpec.describe "admin/job_applications/edit", type: :view do
 
       assert_select "select[name=?]", "job_application[country]"
 
-      assert_select "input[name=?]", "job_application[portfolio_url]"
-
       assert_select "input[name=?]", "job_application[website_url]"
-
-      assert_select "input[name=?]", "job_application[linkedin_url]"
     end
   end
 end

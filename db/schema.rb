@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_08_100059) do
+ActiveRecord::Schema.define(version: 2018_10_09_131807) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -175,9 +175,7 @@ ActiveRecord::Schema.define(version: 2018_10_08_100059) do
     t.string "postal_code"
     t.string "city"
     t.string "country"
-    t.string "portfolio_url"
     t.string "website_url"
-    t.string "linkedin_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "state"
@@ -226,9 +224,7 @@ ActiveRecord::Schema.define(version: 2018_10_08_100059) do
     t.string "estimate_monthly_salary_gross"
     t.integer "option_cover_letter"
     t.integer "option_resume"
-    t.integer "option_portfolio_url"
     t.integer "option_website_url"
-    t.integer "option_linkedin_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "state"
@@ -344,7 +340,6 @@ ActiveRecord::Schema.define(version: 2018_10_08_100059) do
     t.string "city"
     t.string "country"
     t.string "website_url"
-    t.string "linkedin_url"
     t.string "photo_file_name"
     t.string "photo_content_type"
     t.bigint "photo_file_size"

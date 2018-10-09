@@ -40,7 +40,7 @@ class JobOffer < ApplicationRecord
   ## Enums
   OPTIONS_AVAILABLE = { disabled: 0, optional: 1, mandatory: 2 }
   FILES = %i(cover_letter resume photo).freeze
-  URLS = %i(website_url linkedin_url).freeze
+  URLS = %i(website_url).freeze
   (FILES + URLS).each do |opt_name|
     enum :"option_#{opt_name}" => OPTIONS_AVAILABLE, _suffix: true
   end

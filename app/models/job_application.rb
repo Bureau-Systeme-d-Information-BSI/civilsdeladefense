@@ -15,8 +15,8 @@ class JobApplication < ApplicationRecord
   belongs_to :user
   belongs_to :employer
   accepts_nested_attributes_for :user
-  has_many :messages
-  has_many :emails
+  has_many :messages, dependent: :destroy
+  has_many :emails, dependent: :destroy
 
   JobOffer::FILES.each do |field|
     has_attached_file field.to_sym

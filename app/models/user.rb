@@ -3,7 +3,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable, :lockable
 
-  has_many :job_applications
+  has_many :job_applications, dependent: :destroy
 
   FILES_DURING_SUBMISSION = %i(photo resume cover_letter).freeze
   FILES_JUST_AFTER_SUBMISSION = %w(diploma identity carte_vitale_certificate proof_of_address medical_certificate iban transport_ticket).freeze

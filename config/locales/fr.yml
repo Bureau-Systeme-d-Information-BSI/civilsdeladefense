@@ -198,7 +198,6 @@ fr:
       job_offer:
         follow: 'Suivre'
         unfollow: 'Ne plus suivre'
-        edit: 'Éditer'
         preview: 'Aperçu'
         published_date: 'Publié il y a %{time_ago_in_words}'
         job_applications_count:

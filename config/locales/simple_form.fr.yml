@@ -20,13 +20,9 @@ fr:
           <<: *options_defaults
         option_resume:
           <<: *options_defaults
-        option_portfolio_url:
-          <<: *options_defaults
         option_photo:
           <<: *options_defaults
         option_website_url:
-          <<: *options_defaults
-        option_linkedin_url:
           <<: *options_defaults
     labels:
       defaults:
@@ -65,9 +61,7 @@ fr:
         photo: "Photo (facultative)"
         cover_letter: "Lettre de motivation"
         resume: "CV"
-        portfolio_url: "Portfolio"
         website_url: "Site web"
-        linkedin_url: "LinkedIn"
         terms_of_service: "J'accepte que le Ministère des Armées conserve mes données personnelles pendant une durée de 6
 mois afin d'être recontacté(e) pour de nouvelles opportunités."
       job_offer:
@@ -91,10 +85,8 @@ mois afin d'être recontacté(e) pour de nouvelles opportunités."
         estimate_monthly_salary_gross: "Estimation annuel brut (secteur privé)"
         option_cover_letter: "Lettre de motivation"
         option_resume: "CV"
-        option_portfolio_url: "Portfolio"
         option_photo: "Photo"
         option_website_url: "Site internet (URL)"
-        option_linkedin_url: "LinkedIn (URL)"
         identifier: "Référence de l'offre"
       user:
         email: 'E-mail'
@@ -132,5 +124,6 @@ autres membres de votre équipe.'
         photo: "Format JPG ou PNG, max. 2Mo"
         resume: "Format PDF, max. 2Mo"
         cover_letter: "Format PDF, max. 2Mo"
+        website_url: "LinkedIn, Viadeo, portfolio, etc."
       employer:
         code: "Ce champ est utilisé pour construire l'identifiant unique d'une annonce."

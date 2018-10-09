@@ -32,6 +32,10 @@ class Admin::JobOffersController < Admin::BaseController
     @job_offer = if @job_offer_origin.nil?
       j = JobOffer.new
       j.contract_start_on = 6.months.from_now
+      j.option_cover_letter = :optional
+      j.option_resume = :optional
+      j.option_photo = :optional
+      j.option_website_url = :optional
       j
     else
       j = @job_offer_origin.dup

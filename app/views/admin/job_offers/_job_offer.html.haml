@@ -52,9 +52,9 @@
             = fa_icon 'pencil'
             = t('buttons.edit')
       %li.list-inline-item
-        = link_to [job_offer, preview: true] do
+        = link_to [job_offer, preview: true], target: '_blank' do
           = fa_icon 'eye'
-          = t('.preview')
+          = t('buttons.preview')
       - if can? :manage, job_offer
         %li.list-inline-item
           .dropdown

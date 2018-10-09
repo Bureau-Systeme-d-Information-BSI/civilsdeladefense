@@ -66,6 +66,7 @@ fr:
     invite: "Inviter"
     update: "Mettre à jour"
     search: "Rechercher"
+    preview: "Aperçu"
   job_applications:
     form:
       general_informations: "Informations générales"
@@ -111,7 +112,6 @@ fr:
         none_finished: "Aucune candidature terminée"
       job_application:
         published_date: "Candidaté il y a %{time_ago_in_words}"
-        preview: "Aperçu"
       show:
         nav_emails: "Mes échanges"
         nav_files: "Mes documents"
@@ -198,7 +198,6 @@ fr:
       job_offer:
         follow: 'Suivre'
         unfollow: 'Ne plus suivre'
-        preview: 'Aperçu'
         published_date: 'Publié il y a %{time_ago_in_words}'
         job_applications_count:
           zero: 'Candidature'

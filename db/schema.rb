@@ -340,7 +340,6 @@ ActiveRecord::Schema.define(version: 2018_10_09_131807) do
     t.string "city"
     t.string "country"
     t.string "website_url"
-    t.string "linkedin_url"
     t.string "photo_file_name"
     t.string "photo_content_type"
     t.bigint "photo_file_size"

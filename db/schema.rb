@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_08_094423) do
+ActiveRecord::Schema.define(version: 2018_10_08_100059) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -288,6 +288,18 @@ ActiveRecord::Schema.define(version: 2018_10_08_094423) do
     t.index ["name"], name: "index_professional_categories_on_name", unique: true
   end
 
+  create_table "salary_ranges", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "estimate_annual_salary_gross"
+    t.uuid "professional_category_id"
+    t.uuid "experience_level_id"
+    t.uuid "sector_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["experience_level_id"], name: "index_salary_ranges_on_experience_level_id"
+    t.index ["professional_category_id"], name: "index_salary_ranges_on_professional_category_id"
+    t.index ["sector_id"], name: "index_salary_ranges_on_sector_id"
+  end
+
   create_table "sectors", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -430,4 +442,7 @@ ActiveRecord::Schema.define(version: 2018_10_08_094423) do
   add_foreign_key "job_offers", "study_levels"
   add_foreign_key "messages", "administrators"
   add_foreign_key "messages", "job_applications"
+  add_foreign_key "salary_ranges", "experience_levels"
+  add_foreign_key "salary_ranges", "professional_categories"
+  add_foreign_key "salary_ranges", "sectors"
 end

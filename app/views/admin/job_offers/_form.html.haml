@@ -36,17 +36,15 @@
                       .col-12.col-md-6
                         - grouped_options = grouped_nested_set_options(Category, @category) {|i| "#{'   ' * i.level}#{i.name}" }
                         = f.association :category, collection: grouped_options, as: :grouped_select, group_method: :last, input_html: {class: 'custom-select'}
-                      .col-12.col-md-6
-                        = f.association :professional_category
-                    .row
-                      .col-12.col-md-6
-                        = f.input :location
                       .col-12.col-md-3
                         - employers = current_administrator.bant? ? Employer.order(code: :asc).all : [current_administrator.employer]
                         - disabled = !current_administrator.bant?
                         = f.association :employer, collection: employers.map{|x| [x.code, x.id]}, disabled: disabled
                       .col-12.col-md-3
                         = f.input :identifier, input_html: {disabled: true}
+                    .row
+                      .col-12.col-md-6
+                        = f.input :location
                     = f.input :description, input_html: { class: :ckeditor }
                     = f.input :required_profile, input_html: { class: :ckeditor }
                     = f.input :recruitment_process, input_html: { class: :ckeditor }
@@ -74,19 +72,20 @@
                       .col-12.col-md-6
                         .row
                           .col-12.col-md-6
+                            = f.association :professional_category, input_html: {data: {remote: true, type: :json, url: admin_salary_ranges_url}}
+                          .col-12.col-md-6
                             = f.association :study_level
                           .col-12.col-md-6
-                            = f.association :experience_level
-                        .row
+                            = f.association :experience_level, input_html: {data: {remote: true, type: :json, url: admin_salary_ranges_url}}
                           .col-12.col-md-6
-                            = f.association :sector
+                            = f.association :sector, input_html: {data: {remote: true, type: :json, url: admin_salary_ranges_url}}
+                        .row
                           .col-12.col-md-6
                             = f.input :is_negotiable, as: :radio_buttons
                       .col-12.col-md-6.pl-md-5
                         .row
                           .col-12
                             = f.input :estimate_monthly_salary_net
-                        .row
                           .col-12
                             = f.input :estimate_monthly_salary_gross
 

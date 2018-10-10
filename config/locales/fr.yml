@@ -195,6 +195,8 @@ fr:
         card_2_1_2_title: "Présence sur internet"
         card_3_title: "3. Notifications"
         card_3_1_title: "3.1 Acteurs du processus notifiés"
+        estimate_annual_salary_gross_html: "Fourchette de référence : <span class='estimate_annual_salary_gross_reference'>%{value}</span>"
+        estimate_annual_salary_gross_none_html: "Fourchette de référence : <span class='estimate_annual_salary_gross_reference'>aucune</span>"
       job_offer:
         follow: 'Suivre'
         unfollow: 'Ne plus suivre'
@@ -207,6 +209,8 @@ fr:
           "À traiter"
       publish:
         success: "Annonce publiée !"
+      create:
+        success: "Annonce créée !"
       create_and_publish:
         success: "Annonce créée et publiée !"
       update_and_publish:

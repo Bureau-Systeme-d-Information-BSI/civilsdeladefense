@@ -42,7 +42,7 @@ RSpec.describe "admin/job_offers/edit", type: :view do
 
     #   assert_select "input[name=?]", "job_offer[estimate_monthly_salary_net]"
 
-    #   assert_select "input[name=?]", "job_offer[estimate_monthly_salary_gross]"
+    #   assert_select "input[name=?]", "job_offer[estimate_annual_salary_gross]"
     # end
   end
 end

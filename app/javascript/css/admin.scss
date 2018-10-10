@@ -215,3 +215,7 @@ $job-application-gutter: 3px;
 a.badge:not(.badge-danger) {
   color: inherit;
 }
+
+.estimate_annual_salary_gross_reference {
+  @extend .font-italic;
+}

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_09_131807) do
+ActiveRecord::Schema.define(version: 2018_10_10_075417) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -221,7 +221,7 @@ ActiveRecord::Schema.define(version: 2018_10_09_131807) do
     t.boolean "is_remote_possible"
     t.boolean "is_negotiable"
     t.string "estimate_monthly_salary_net"
-    t.string "estimate_monthly_salary_gross"
+    t.string "estimate_annual_salary_gross"
     t.integer "option_cover_letter"
     t.integer "option_resume"
     t.integer "option_website_url"

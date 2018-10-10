@@ -87,7 +87,10 @@
                           .col-12
                             = f.input :estimate_monthly_salary_net
                           .col-12
-                            = f.input :estimate_monthly_salary_gross
+                            - salary_range = SalaryRange.where(professional_category_id: @job_offer.professional_category_id, experience_level_id: @job_offer.experience_level_id, sector_id: @job_offer.sector_id).first
+                            - estimate_annual_salary_gross = salary_range.try(:estimate_annual_salary_gross)
+                            - hint = estimate_annual_salary_gross ? t('.estimate_annual_salary_gross_html', value: estimate_annual_salary_gross) : t('.estimate_annual_salary_gross_none_html')
+                            = f.input :estimate_annual_salary_gross, readonly: !current_administrator.bant?, hint: hint
 
         %nav.navbar.navbar-dark.bg-secondary.my-5
           %span.navbar-text#step_2= card_2_title

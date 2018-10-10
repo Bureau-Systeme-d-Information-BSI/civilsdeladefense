@@ -63,7 +63,7 @@ fr:
         resume: "CV"
         website_url: "Site web"
         terms_of_service: "J'accepte que le Ministère des Armées conserve mes données personnelles pendant une durée de 6
-mois afin d'être recontacté(e) pour de nouvelles opportunités."
+mois afin d'être recontacté(e) pour de nouvelles opportunits."
       job_offer:
         title: "Intitulé du poste"
         category: "Catégorie de métier"
@@ -82,7 +82,7 @@ mois afin d'être recontacté(e) pour de nouvelles opportunités."
         sector: "Secteur / Filière"
         is_negotiable: "Négociation possible ?"
         estimate_monthly_salary_net: "Estimation mensuel net (fonction publique)"
-        estimate_monthly_salary_gross: "Estimation annuel brut (secteur privé)"
+        estimate_annual_salary_gross: "Estimation annuel brut (secteur privé)"
         option_cover_letter: "Lettre de motivation"
         option_resume: "CV"
         option_photo: "Photo"

@@ -69,12 +69,14 @@ $( document ).ready(function() {
       let detail = event.detail
       let data = detail[0]
       let result = data[0]
-      let element = document.getElementById('job_offer_estimate_monthly_salary_gross')
+      let element = document.getElementById('job_offer_estimate_annual_salary_gross')
       if (result) {
         var estimateAnnualSalaryGross = result.estimate_annual_salary_gross
-        element.value = estimateAnnualSalaryGross
-      } else {
-        element.value = ''
+        if ((!element.value) || (!element.defaultValue)) {
+          element.value = estimateAnnualSalaryGross
+        }
+        let elementHint = document.querySelector('.estimate_annual_salary_gross_reference')
+        elementHint.innerHTML = estimateAnnualSalaryGross
       }
     })
   })

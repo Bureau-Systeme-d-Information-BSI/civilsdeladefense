@@ -44,6 +44,9 @@ Rails.application.routes.draw do
     end
     namespace :settings, path: 'parametres' do
       resources :administrators, path: 'administrateurs' do
+        collection do
+          get :inactive
+        end
         member do
           post :resend_confirmation_instructions
         end

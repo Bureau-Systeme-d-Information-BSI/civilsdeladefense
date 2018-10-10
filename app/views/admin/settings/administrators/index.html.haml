@@ -1,36 +1,59 @@
 - @page_title = t('.title')
 .card
-  .card-header.border-bottom-0
+  .card-header
     .card-title.d-md-flex.align-items-center
-      = t('.card_title', count: @administrators.size)
+      = t('.card_title', count: @administrators_count)
       = link_to [:new, :admin, :settings, :administrator], class: 'btn btn-primary btn-raised ml-auto mt-2 mt-md-0 mb-0' do
         = fa_icon 'plus', class: 'mr-1'
         = t('.add')
-  %table.table.table-hover.mb-0.mt-3
-    %thead
-      %tr
-        %th Nom
-        %th Email
-        %th Rôle
-        %th Employeur
-        %th Statut
-        %th
-    %tbody
-      - for administrator in @administrators
+  .card-body
+    .d-flex
+      %ul.nav.nav-tabs{role: :tablist}
+        %li.nav-item.mr-3
+          - klasses = %i(nav-link text-uppercase my-0)
+          - klasses << :active if controller.action_name == "index"
+          - url = [:admin, :settings, :root]
+          = link_to t('.account_active', count: @administrators_active.size), url, class: klasses
+        %li.nav-item.mr-3
+          - klasses = %i(nav-link text-uppercase my-0)
+          - klasses << :active if controller.action_name == "inactive"
+          - url = [:inactive, :admin, :settings, :administrators]
+          = link_to t('.account_inactive', count: @administrators_inactive.size), url, class: klasses
+  -if @administrators.size != 0
+    %table.table.table-hover.mb-0.mt-3
+      %thead
         %tr
-          %td
-            = administrator.full_name
-          %td
-            = administrator.email
-          %td
-            = Administrator.human_attribute_name('role.'+administrator.role)
-          %td
-            = administrator&.employer&.code
-          %td
-            = administrator.confirmed? ? Administrator.human_attribute_name(:confirmed) : Administrator.human_attribute_name(:unconfirmed)
-          %td.text-right
-            %ul.list-inline.mb-0.actions
-              %li.list-inline-item
-                = link_to fa_icon('pencil'), [:edit, :admin, :settings, administrator], title: t('buttons.edit')
-                = link_to fa_icon('refresh'), [:resend_confirmation_instructions, :admin, :settings, administrator], method: :postr, title: t('buttons.resend_confirmation_instructions'), data: {confirm: t('buttons.confirm')}
-                = link_to fa_icon('delete'), [:admin, :settings, administrator], method: :delete, title: t('buttons.delete'), data: {confirm: t('buttons.confirm')}
+          %th 
+            = t('.table.photo')
+          %th
+            = t('.table.name')
+          %th 
+            = t('.table.employer')
+          %th 
+            = t('.table.role')
+          %th 
+            = t('.table.last_sign_in_at')
+          %th{ :style => "width: 95px;" }
+      %tbody
+        - for administrator in @administrators
+          %tr
+            %td
+              = image_user_tag administrator.photo, width: 40, class: 'mr-2'
+            %td
+              .text-muted
+                = administrator.full_name_with_title
+              .text-dark
+                = administrator.email
+            %td.text-dark
+              = administrator&.employer&.code
+            %td
+              .badge.badge-light-gray.text-white
+                = Administrator.human_attribute_name('role.'+administrator.role)
+            %td.text-dark
+              = l administrator.last_sign_in_at.present?, format: :date_at_hours_minutes if administrator.last_sign_in_at != nil
+            %td.text-right
+              %ul.list-inline.mb-0.actions
+                %li.list-inline-item
+                  = link_to fa_icon('pencil'), [:edit, :admin, :settings, administrator], title: t('buttons.edit')
+                  = link_to fa_icon('refresh'), [:resend_confirmation_instructions, :admin, :settings, administrator], method: :postr, title: t('buttons.resend_confirmation_instructions'), data: {confirm: t('buttons.confirm')}
+                  = link_to fa_icon('delete'), [:admin, :settings, administrator], method: :delete, title: t('buttons.delete'), data: {confirm: t('buttons.confirm')}

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_10_075417) do
+ActiveRecord::Schema.define(version: 2018_10_10_133906) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(version: 2018_10_10_075417) do
     t.bigint "photo_file_size"
     t.datetime "photo_updated_at"
     t.boolean "very_first_account", default: false
+    t.datetime "deleted_at"
     t.index ["confirmation_token"], name: "index_administrators_on_confirmation_token", unique: true
     t.index ["email"], name: "index_administrators_on_email", unique: true
     t.index ["employer_id"], name: "index_administrators_on_employer_id"

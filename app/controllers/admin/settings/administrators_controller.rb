@@ -1,8 +1,18 @@
 class Admin::Settings::AdministratorsController < Admin::Settings::BaseController
   before_action :set_role_and_employer, only: %i(new create)
+  before_action :set_administrators, only: %i(index inactive)
+  
   # GET /admin/settings/administrators
   # GET /admin/settings/administrators.json
   def index
+    @administrators = @administrators_active
+  end
+
+  # GET /admin/settings/administrators/inactive
+  def inactive
+    @administrators = @administrators_inactive
+
+    render action: :index
   end
 
   # GET /admin/settings/administrators/1
@@ -68,6 +78,13 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
   end
 
   private
+
+    def set_administrators
+      @administrators_active = Administrator.active
+      @administrators_inactive = Administrator.inactive
+      @administrators_count = @administrators.size
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def administrator_params
       params.require(:administrator).permit(permitted_fields)

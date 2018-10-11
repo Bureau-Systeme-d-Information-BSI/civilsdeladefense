@@ -170,6 +170,10 @@ fr:
         nav_overview: "Candidature"
         nav_emails: "Emails"
         nav_files: "Fichiers"
+      job_application_files:
+        title: "Documents fournis par le candidat"
+        subtitle_1: "Pièces nécessaires pour établissement du contrat"
+        subtitle_2: "Pièces nécessaires pour la prise en charge"
       job_application_activity:
         title: "Activité et commentaires"
         activities:

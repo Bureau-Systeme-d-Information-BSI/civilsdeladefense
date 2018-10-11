@@ -62,15 +62,19 @@ Rails.application.routes.draw do
     root to: 'job_offers#index'
   end
 
-  namespace :account, path: 'mon-compte' do
-    resource :user, only: %i(update)
-    resources :job_applications, path: 'candidatures' do
+  scope as: 'account', module: 'account' do
+    resources :job_applications, path: 'mes-candidatures' do
       collection do
         get :finished
       end
       resources :emails, only: %i(index create)
     end
-    root to: 'base#show'
+    resource :user, path: 'mon-compte', only: %i(show update destroy) do
+      member do
+        get :change_email, :change_password
+        patch :update_email, :update_password
+      end
+    end
   end
 
   resources :job_offers, path: 'offresdemploi', only: %i(index show) do

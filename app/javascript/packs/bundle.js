@@ -24,6 +24,7 @@ importAll(require.context('images/', true, /\.(ico|png|jpe?g|svg|gif)$/))
 importAll(require.context('icons/', true, /\.svg$/))
 
 require('js/offcanvas.js')
+require('js/file-drop.js')
 
 import $ from 'jquery';
 window.jQuery = $;
@@ -135,5 +136,34 @@ document.addEventListener("DOMContentLoaded", function() {
       spinner.classList.remove('visible')
       spinner.classList.add('invisible')
     })
+  })
+})
+
+$( document ).ready(function() {
+  var alertNotice = document.querySelector('.alert.alert-info')
+  if (alertNotice !== null) {
+    var msg = alertNotice.innerHTML
+    $.snackbar({content: msg})
+  }
+})
+
+$('#remoteContentModal').on('show.bs.modal', function (event) {
+  var link = event.relatedTarget
+  var href = link.href
+  var modal = $(this)
+  Rails.ajax({
+    type: "GET",
+    url: href,
+    success: function(response){
+      var content = $(response).find('body').html()
+      modal.find('.modal-body').html(content)
+      if (link.classList.contains('job-application-modal-link')) {
+        manageDropAreas()
+      }
+    },
+    error: function(response){
+      console.log("error")
+      console.log(response)
+    }
   })
 })

@@ -4,6 +4,5 @@ class Account::BaseController < ApplicationController
   layout 'account'
 
   def show
-    redirect_to [:account, :job_applications]
   end
 end

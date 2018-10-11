@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_10_133906) do
+ActiveRecord::Schema.define(version: 2018_10_11_093712) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -115,6 +115,7 @@ ActiveRecord::Schema.define(version: 2018_10_10_133906) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "position"
     t.index ["name"], name: "index_contract_types_on_name", unique: true
   end
 
@@ -151,6 +152,7 @@ ActiveRecord::Schema.define(version: 2018_10_10_133906) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "position"
     t.index ["name"], name: "index_experience_levels_on_name", unique: true
   end
 
@@ -278,6 +280,14 @@ ActiveRecord::Schema.define(version: 2018_10_10_133906) do
     t.index ["job_application_id"], name: "index_messages_on_job_application_id"
   end
 
+  create_table "official_statuses", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "uuid_temp", default: -> { "gen_random_uuid()" }, null: false
+    t.index ["name"], name: "index_official_statuses_on_name", unique: true
+  end
+
   create_table "professional_categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -301,6 +311,7 @@ ActiveRecord::Schema.define(version: 2018_10_10_133906) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "position"
     t.index ["name"], name: "index_sectors_on_name", unique: true
   end
 
@@ -308,6 +319,7 @@ ActiveRecord::Schema.define(version: 2018_10_10_133906) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "position"
     t.index ["name"], name: "index_study_levels_on_name", unique: true
   end
 

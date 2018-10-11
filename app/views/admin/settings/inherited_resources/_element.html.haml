@@ -6,8 +6,8 @@
   - if resource_class == Employer
     %td
       = element.code
-  - if resource_class == Category
-    %td
+  - if resource_class.reflect_on_association(:job_offers)
+    %td.text-center
       = element.job_offers.publicly_visible.count
   %td.text-right
     %ul.list-inline.mb-0.actions

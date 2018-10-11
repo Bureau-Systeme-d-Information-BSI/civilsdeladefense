@@ -33,7 +33,7 @@ class JobApplication < ApplicationRecord
       less_than: (field == :photo ? 1.megabyte : 2.megabytes)
   end
 
-  validates :first_name, :last_name, :current_position, :phone, presence: true
+  validates :first_name, :last_name, :current_position, :phone, :address_1, :city, :country, presence: true
   validates :terms_of_service, acceptance: true
   JobOffer::URLS.each do |field|
     validates field.to_sym, presence: true, if: Proc.new { |job_application|
@@ -115,6 +115,7 @@ class JobApplication < ApplicationRecord
     delta_column: 'administrator_notifications_count',
     touch: true
 
+  default_scope { order(created_at: :desc) }
   scope :finished, -> { where(state: FINISHED_STATES) }
   scope :not_finished, -> { where.not(state: FINISHED_STATES) }
 

@@ -31,7 +31,7 @@
           .col-12.col-md-6
             = f.input :postal_code
           .col-12.col-md-6
-            = f.input :country
+            = f.input :country, priority: [ "FR" ]
     - unless @job_offer.disabled_option_photo?
       .row
         .col-12.col-md-6
@@ -58,12 +58,12 @@
       = f.simple_fields_for :user, input_html: {placeholder: false, required: true} do |user_form|
         .row
           .col-12.col-md-6
-            = user_form.input :email
+            = user_form.input :email, required: true
         .row
           .col-12.col-md-6
-            = user_form.input :password
+            = user_form.input :password, required: true
           .col-12.col-md-6
-            = user_form.input :password_confirmation
+            = user_form.input :password_confirmation, required: true
 
     .row.mt-4.mb-3
       .col-12
@@ -73,3 +73,5 @@
     = button_tag(type: 'submit', class: 'btn btn-primary btn-raised btn-lg') do
       = t('helpers.submit.job_application.save')
       = fa_icon('send', class: 'ml-1')
+    .d-flex.justify-content-end.pt-1.invisible
+      = spinner

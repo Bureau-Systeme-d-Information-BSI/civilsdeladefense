@@ -24,6 +24,7 @@ importAll(require.context('images/', true, /\.(ico|png|jpe?g|svg|gif)$/))
 importAll(require.context('icons/', true, /\.svg$/))
 
 require('js/offcanvas.js')
+require('js/file-drop.js')
 
 import $ from 'jquery';
 window.jQuery = $;
@@ -72,26 +73,50 @@ document.addEventListener("DOMContentLoaded", function() {
 
   ;[].forEach.call(document.querySelectorAll('.custom-file-input'), function(el) {
     el.addEventListener('change', function() {
-      let fileName = this.value.split('\\').pop()
-      let label = this.nextElementSibling
-      label.classList.add("selected")
+      var input = this
+      let fileName = input.value.split('\\').pop()
+      let label = input.labels[input.labels.length - 1]
+      label.classList.add('selected')
+      var labelPlaceholder = label.innerHTML
       label.innerHTML = fileName
+      var elementAlreadyExisting = label.parentNode.querySelector('.delete')
+      if (elementAlreadyExisting === null) {
+        var element = document.createElement('div')
+        element.classList.add('delete')
+        element.innerHTML = '✕'
+        element.addEventListener("click", (e) => {
+          if (confirm("Êtes-vous sûr?")) {
+            input.value = ''
+            input.classList.remove('is-invalid')
+            label.classList.remove('selected')
+            label.innerHTML = labelPlaceholder
+            element.parentNode.removeChild(element)
+          }
+        })
+        label.parentNode.appendChild(element)
+      }
     })
   })
 
   let jobApplicationForm = document.getElementById('new_job_application')
   if (jobApplicationForm !== null) {
-    document.addEventListener("ajax:beforeSend", function(event) {
+    jobApplicationForm.addEventListener("ajax:beforeSend", function(event) {
       let form = event.currentTarget
       let btn = form.querySelector('[type=submit]')
       btn.disabled = true
+      var spinner = btn.nextElementSibling
+      spinner.classList.remove('invisible')
+      spinner.classList.add('visible')
     })
-    document.addEventListener("ajax:complete", function(event) {
+    jobApplicationForm.addEventListener("ajax:complete", function(event) {
       let form = event.currentTarget
       let btn = form.querySelector('[type=submit]')
       btn.disabled = false
+      var spinner = btn.nextElementSibling
+      spinner.classList.remove('visible')
+      spinner.classList.add('invisible')
     })
-    document.addEventListener("ajax:success", function(event) {
+    jobApplicationForm.addEventListener("ajax:success", function(event) {
       let detail = event.detail
       let data = detail[0]
       let status = detail[1]
@@ -101,7 +126,7 @@ document.addEventListener("DOMContentLoaded", function() {
         window.location.href = redirect_url
       }
     })
-    document.addEventListener("ajax:error", function(event) {
+    jobApplicationForm.addEventListener("ajax:error", function(event) {
       let detail = event.detail
       let data = detail[0]
       cleanupInvalidFields()
@@ -135,5 +160,34 @@ document.addEventListener("DOMContentLoaded", function() {
       spinner.classList.remove('visible')
       spinner.classList.add('invisible')
     })
+  })
+})
+
+$( document ).ready(function() {
+  var alertNotice = document.querySelector('.alert.alert-info')
+  if (alertNotice !== null) {
+    var msg = alertNotice.innerHTML
+    $.snackbar({content: msg})
+  }
+})
+
+$('#remoteContentModal').on('show.bs.modal', function (event) {
+  var link = event.relatedTarget
+  var href = link.href
+  var modal = $(this)
+  Rails.ajax({
+    type: "GET",
+    url: href,
+    success: function(response){
+      var content = $(response).find('body').html()
+      modal.find('.modal-body').html(content)
+      if (link.classList.contains('job-application-modal-link')) {
+        manageDropAreas()
+      }
+    },
+    error: function(response){
+      console.log("error")
+      console.log(response)
+    }
   })
 })

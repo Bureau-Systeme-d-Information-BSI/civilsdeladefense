@@ -15,11 +15,11 @@
         - klasses = devise_controller? ? %w(col-md-6 devise) : (controller.action_name == "show" ? %w() : %w(col-md-9))
         .col-12.mx-md-auto{class: klasses}
           - if flash[:notice]
-            .alert.alert-info.mb-5= flash[:notice]
+            .d-none.alert.alert-info= flash[:notice]
           - elsif flash[:error]
-            .alert.alert-danger.mb-5= flash[:error]
+            .d-none.alert.alert-danger= flash[:error]
           - elsif flash[:success]
-            .alert.alert-success.mb-5= flash[:success]
+            .d-none.alert.alert-success= flash[:success]
           = yield
     = render partial: '/shared/footer'
     = javascript_pack_tag 'bundle'

@@ -124,6 +124,16 @@ fr:
         success: "Email envoyé !"
       form:
         title: "Envoyer un email"
+    users:
+      change_password:
+        title: "Changement de mot de passe"
+      change_email:
+        title: "Changement d'email"
+      want_destroy:
+        title: "Danger"
+        destroy: "Je veux supprimer mon compte"
+      destroy:
+        success: "Votre compte a bien été supprimé"
   admin:
     accounts:
       navbar:

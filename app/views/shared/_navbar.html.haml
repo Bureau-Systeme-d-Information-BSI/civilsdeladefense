@@ -12,7 +12,7 @@
           = link_to t(".#{item}"), [item.to_sym], class: "nav-link text-dark-gray"
       - klasses = controller.class.to_s =~ /Account/ ? %w(active sober) : %w()
       %li.nav-item.ml-3{class: klasses}
-        = link_to t(".account_root"), [:account, :root], class: "nav-link text-dark-gray"
+        = link_to t(".account_root"), [:account, :job_applications], class: "nav-link text-dark-gray"
       - if user_signed_in?
         %li.nav-item.ml-3
           .nav-link.text-dark-gray= current_user.full_name
@@ -26,10 +26,10 @@
 - elsif controller.class.send(:_layout) == 'account'
   .bg-secondary.text-center
     %ul.navbar-nav.flex-row.justify-content-center
-      %li.nav-item.active
+      %li.nav-item{class: controller.controller_name == 'job_applications' && 'active'}
         = link_to t('.job_applications'), [:account, :job_applications], class: 'nav-link'
-      %li.nav-item
-        = link_to t('.account'), "#", class: 'nav-link'
+      %li.nav-item{class: controller.controller_name == 'users' && 'active'}
+        = link_to t('.account'), [:account, :user], class: 'nav-link'
 - elsif !(controller.class.to_s =~ /Devise/)
   .bg-secondary
   .bg-quaternary

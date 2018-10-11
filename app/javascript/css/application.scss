@@ -1,5 +1,5 @@
 $card-spacer-x: 2.5rem;
-
+$card-bg: #fff;
 @import 'common';
 @import 'footer';
 @import 'stepper';
@@ -88,3 +88,30 @@ nav.navbar {
   }
 }
 
+.custom-file-label {
+  line-height: 1.5;
+  &.selected {
+    padding-left: 2.5rem;
+  }
+}
+
+.custom-file {
+  .delete {
+    height: 2.25rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 3;
+    display: block;
+    padding: 0.375rem 0.5rem;
+    line-height: 1.5;
+    color: white;
+    background-color: lighten($danger, 20%);
+    transition: background-color 0.2s $bmd-animation-curve-default;
+    cursor: pointer;
+    &:hover {
+      background-color: lighten($danger, 10%);
+    }
+  }
+}

@@ -20,7 +20,7 @@ $enable-rounded: false !default;
 $enable-shadows: true !default;
 $btn-box-shadow: none;
 $btn-active-box-shadow: none;
-$card-bg: #f5f5f5;
+$card-bg: #f5f5f5 !default;
 $card-cap-bg: $card-bg;
 $card-border-width: 0;
 $card-border-color: #e0e0e0;

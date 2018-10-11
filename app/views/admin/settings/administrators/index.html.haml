@@ -50,7 +50,7 @@
               .badge.badge-light-gray.text-white
                 = Administrator.human_attribute_name('role.'+administrator.role)
             %td.text-dark
-              = l administrator.last_sign_in_at.present?, format: :date_at_hours_minutes if administrator.last_sign_in_at != nil
+              = l administrator.last_sign_in_at, format: :date_at_hours_minutes if administrator.last_sign_in_at.present?
             %td.text-right
               %ul.list-inline.mb-0.actions
                 %li.list-inline-item

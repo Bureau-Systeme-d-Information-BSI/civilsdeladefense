@@ -8,7 +8,7 @@
       = t(".#{ entry }")
   - if can? :read, Employer
     .list-group-item.menu
-      Entreprise
+      = t(".company")
     .list-group.stepper
       - entry = 'employers'
       - klasses = %w(list-group-item d-flex justify-content-between align-items-center)
@@ -17,7 +17,7 @@
         = t(".#{ entry }")
   - if can? :read, EmailTemplate
     .list-group-item.menu
-      Templates
+      = t(".template")
     .list-group.stepper
       - entry = 'email_templates'
       - klasses = %w(list-group-item d-flex justify-content-between align-items-center)
@@ -27,7 +27,7 @@
   - entries = JobOffer::SETTINGS.map{|x| x.to_s.pluralize.to_sym} + [:salary_ranges]
   - if entries.any?{ |entry| can? :read, entry.to_s.singularize.classify.constantize }
     .list-group-item.menu
-      Rédaction offres d'emploi
+      = t(".writing_job_offers")
     .list-group.stepper
       - entries.each do |entry|
         - if can? :read, entry.to_s.singularize.classify.constantize

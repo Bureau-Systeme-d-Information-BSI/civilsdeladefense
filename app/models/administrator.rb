@@ -35,6 +35,11 @@ class Administrator < ApplicationRecord
     },
     message: :non_compliant_role, on: :create
 
+  ####################################
+  # Scope
+  scope :active, -> { where(deleted_at: nil) }
+  scope :inactive, -> { where.not(deleted_at: nil) }
+
   #####################################
   # Enums
   enum role: {

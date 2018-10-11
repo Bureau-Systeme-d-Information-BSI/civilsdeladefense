@@ -1,4 +1,7 @@
 fr:
+  time:
+    formats:
+      date_at_hours_minutes: "%d %B %Y à %Hh%M"
   datetime:
     distance_in_words:
       short:
@@ -262,13 +265,31 @@ fr:
           experience_levels: "Expériences"
           sectors: "Secteurs / Filières"
           salary_ranges: "Estimations salariales"
+          company : "Entreprise"
+          templates : "Templates"
+          writing_job_offers: "Rédaction offres d'emploi"
+
       base:
         index:
           title: "Paramètres"
       administrators:
         index:
           title: "Membres"
-          add: "Ajouter"
+          add: "Ajouter un membre"
+          table:
+            photo: "Avatar"
+            name: "Nom"
+            employer: "Employeur"
+            role: "Rôle"
+            last_sign_in_at: "Dernière connexion"
+          account_active:
+            zero: 'Aucun membre actif'
+            one: 'Membre actif (1)'
+            other: "Membre actifs (%{count})"
+          account_inactive: 
+            zero: 'Aucun membre désactivé'
+            one: 'Membre désactivé (1)'
+            other: "Membres désactivés (%{count})"
           card_title:
             zero: 'Aucun membre'
             one: '1 membre'

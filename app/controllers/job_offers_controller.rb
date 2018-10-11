@@ -31,17 +31,13 @@ class JobOffersController < ApplicationController
   # GET /job_offers/1/apply
   # GET /job_offers/1/apply.json
   def apply
-    @job_application = JobApplication.new
-    if user_signed_in?
-      fields = %w(first_name last_name current_position phone address_1 address_2 postal_code city country website_url)
-      fields.each do |field|
-        value = current_user.send(field.to_sym)
-        @job_application.send("#{field}=".to_sym, value)
-      end
+    if user_signed_in? && (@previous_job_application = current_user.job_applications.first)
+      @job_application = @previous_job_application.dup
     else
+      @job_application = JobApplication.new
       @job_application.user = User.new
+      @job_application.country = "FR"
     end
-    @job_application.country ||= "FR"
   end
 
   # POST /job_offers/1/send_application

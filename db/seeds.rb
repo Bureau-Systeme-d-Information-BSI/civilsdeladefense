@@ -168,6 +168,9 @@ job_application = JobApplication.new do |ja|
   ja.current_position = 'Dev'
   ja.phone = '0606060606'
   ja.terms_of_service = true
+  ja.city = "Paris"
+  ja.address_1 = "1 avenue des Champs Elysées"
+  ja.country = "FR"
 end
 file = File.open(Rails.root.join('spec', 'fixtures', 'files', 'document.pdf'))
 job_application.cover_letter = file
@@ -201,6 +204,9 @@ JobOffer.where.not(duration_contract: nil).each do |job_offer|
       ja.current_position = 'Dev'
       ja.phone = '0606060606'
       ja.terms_of_service = true
+      ja.city = "Paris"
+      ja.address_1 = "1 avenue des Champs Elysées"
+      ja.country = "FR"
     end
     file = File.open(Rails.root.join('spec', 'fixtures', 'files', 'document.pdf'))
     job_application.cover_letter = file

@@ -6,11 +6,8 @@ if (node !== null) {
 }
 
 var jobApplicationModal = document.getElementById('remoteContentModal')
-console.log('*******')
-console.log(jobApplicationModal)
 if (jobApplicationModal !== null) {
   var headNode = jobApplicationModal.querySelector('.head')
-  console.log("headNode: ", headNode)
   if (headNode !== null) {
     var headHtml = '<%= j render(partial: '/admin/job_applications/job_application_head', locals: { job_application: @job_application, tab_active: :emails }) %>'
     var frag = document.createRange().createContextualFragment(headHtml)

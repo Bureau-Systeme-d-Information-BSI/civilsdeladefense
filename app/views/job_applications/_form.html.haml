@@ -31,7 +31,7 @@
           .col-12.col-md-6
             = f.input :postal_code
           .col-12.col-md-6
-            = f.input :country
+            = f.input :country, priority: [ "FR" ]
     - unless @job_offer.disabled_option_photo?
       .row
         .col-12.col-md-6
@@ -73,3 +73,5 @@
     = button_tag(type: 'submit', class: 'btn btn-primary btn-raised btn-lg') do
       = t('helpers.submit.job_application.save')
       = fa_icon('send', class: 'ml-1')
+    .d-flex.justify-content-end.pt-1.invisible
+      = spinner

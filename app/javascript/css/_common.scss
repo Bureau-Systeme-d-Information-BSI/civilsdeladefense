@@ -324,21 +324,20 @@ b, strong {
   font-weight: 500;
 }
 
-.card {
+.lists .card, .job-offer.card {
   .notification {
+    @extend .font-weight-bold;
     position: absolute;
-    top: -8px;
-    right: -9px;
-    border: 1px solid #FFF;
-    font-size: 9px;
+    top: -6px;
+    right: -10px;
+    font-size: 12px;
     background: $danger;
     color: #FFF;
-    min-width: 20px;
-    padding: 0 5px;
-    height: 20px;
-    border-radius: 10px;
+    min-width: 22px;
+    height: 22px;
+    border-radius: 11px;
     text-align: center;
-    line-height: 19px;
+    line-height: 22px;
     vertical-align: middle;
     display: block;
   }

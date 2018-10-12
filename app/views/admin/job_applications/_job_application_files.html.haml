@@ -1,10 +1,10 @@
 .card
   .card-header.with-subheader.bg-white.font-weight-bold.text-secondary
     = fa_icon('file-document', class: 'text-secondary')
-    Documents fournis par le candidat
+    = t(".title")
   - ary = []
-  - ary << ["Pièces nécessaires pour établissement du contrat", (User::FILES_DURING_SUBMISSION + User::FILES_JUST_AFTER_SUBMISSION)]
-  - ary << ["Pièces nécessaires pour établissement de la paie", User::FILES_FOR_PAYROLL]
+  - ary << [t(".subtitle_1"), (User::FILES_DURING_SUBMISSION + User::FILES_JUST_AFTER_SUBMISSION)]
+  - ary << [t(".subtitle_2"), User::FILES_FOR_PAYROLL]
   - ary.each do |subary|
     - text = subary[0]
     - fields = subary[1]

@@ -73,7 +73,7 @@ $card-spacer-x-normal: 1rem;
   &.card-state-archived,
   &.card-state-archived .card-footer {
     background-color: rgba($card-border-color, 0.1);
-    background-image: repeating-linear-gradient(45deg, transparent, transparent 15px, rgba(255,255,255,.3) 15px, rgba(255,255,255,.3) 30px);
+    background-image: repeating-linear-gradient(45deg, transparent, transparent 15px, rgba(255,255,255,.9) 15px, rgba(255,255,255,.9) 30px);
   }
   &.job-application--state-rejected {
     opacity: 0.6;

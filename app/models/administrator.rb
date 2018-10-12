@@ -111,4 +111,8 @@ class Administrator < ApplicationRecord
       memo
     }
   end
+
+  def deactivate
+    update_attribute(:deleted_at, Time.current)
+  end
 end

@@ -23,15 +23,15 @@
     %table.table.table-hover.mb-0.mt-3
       %thead
         %tr
-          %th 
+          %th
             = t('.table.photo')
           %th
             = t('.table.name')
-          %th 
+          %th
             = t('.table.employer')
-          %th 
+          %th
             = t('.table.role')
-          %th 
+          %th
             = t('.table.last_sign_in_at')
           %th{ :style => "width: 95px;" }
       %tbody
@@ -50,10 +50,14 @@
               .badge.badge-light-gray.text-white
                 = Administrator.human_attribute_name('role.'+administrator.role)
             %td.text-dark
-              = l administrator.last_sign_in_at, format: :date_at_hours_minutes if administrator.last_sign_in_at.present?
+              - if administrator.last_sign_in_at.present?
+                = l administrator.last_sign_in_at
+              - else
+                %em= t('.never_connected')
             %td.text-right
               %ul.list-inline.mb-0.actions
                 %li.list-inline-item
                   = link_to fa_icon('pencil'), [:edit, :admin, :settings, administrator], title: t('buttons.edit')
-                  = link_to fa_icon('refresh'), [:resend_confirmation_instructions, :admin, :settings, administrator], method: :postr, title: t('buttons.resend_confirmation_instructions'), data: {confirm: t('buttons.confirm')}
-                  = link_to fa_icon('delete'), [:admin, :settings, administrator], method: :delete, title: t('buttons.delete'), data: {confirm: t('buttons.confirm')}
+                  - unless administrator.confirmed_at.present?
+                    = link_to fa_icon('refresh'), [:resend_confirmation_instructions, :admin, :settings, administrator], method: :postr, title: t('buttons.resend_confirmation_instructions'), data: {confirm: t('buttons.confirm')}
+                  = link_to fa_icon('close'), [:deactivate, :admin, :settings, administrator], method: :post, title: t('buttons.deactivate'), data: {confirm: t('buttons.confirm')}

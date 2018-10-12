@@ -43,12 +43,13 @@ Rails.application.routes.draw do
       end
     end
     namespace :settings, path: 'parametres' do
-      resources :administrators, path: 'administrateurs' do
+      resources :administrators, path: 'administrateurs', except: %i(destroy) do
         collection do
           get :inactive
         end
         member do
           post :resend_confirmation_instructions
+          post :deactivate
         end
       end
       resources :employers

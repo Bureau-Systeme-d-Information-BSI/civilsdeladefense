@@ -1,7 +1,7 @@
 class Admin::Settings::AdministratorsController < Admin::Settings::BaseController
   before_action :set_role_and_employer, only: %i(new create)
   before_action :set_administrators, only: %i(index inactive)
-  
+
   # GET /admin/settings/administrators
   # GET /admin/settings/administrators.json
   def index
@@ -57,10 +57,10 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
     end
   end
 
-  # DELETE /admin/settings/administrators/1
-  # DELETE /admin/settings/administrators/1.json
-  def destroy
-    @administrator.destroy
+  # POST /admin/settings/administrators/1/deactivate
+  # POST /admin/settings/administrators/1/deactivate.json
+  def deactivate
+    @administrator.deactivate
     respond_to do |format|
       format.html { redirect_to [:admin, :settings, :root], notice: t('.success') }
       format.json { head :no_content }

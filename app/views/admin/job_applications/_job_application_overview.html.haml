@@ -10,3 +10,5 @@
       .card-body.bg-body-bg
         - pdf_url = job_application.send(file).url
         %embed{src: pdf_url, type: "application/pdf", width: "100%", height: "400px"}
+- if @other_job_applications.any?
+  = render partial: "other_job_applications", locals: {other_job_applications: @other_job_applications}

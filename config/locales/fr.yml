@@ -2,7 +2,6 @@ fr:
   time:
     formats:
       default: "%-d %b %Y %H:%M"
-      jjmmaaaa: "%d/%m/%Y"
   datetime:
     distance_in_words:
       short:

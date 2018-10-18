@@ -25,4 +25,4 @@
             %td.border-0
               = JobApplication.human_attribute_name("state/#{other_job_application.state}")
             %td.border-0.text-right
-              = l other_job_application.created_at, format: :jjmmaaaa
+              = l other_job_application.created_at.to_date

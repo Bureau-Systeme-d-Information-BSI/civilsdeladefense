@@ -175,6 +175,12 @@ fr:
         title: "Documents fournis par le candidat"
         subtitle_1: "Pièces nécessaires pour établissement du contrat"
         subtitle_2: "Pièces nécessaires pour la prise en charge"
+      other_job_applications:
+        title: "Autres candidatures de ce candidat"
+        image: "#"
+        offer: "Offre"
+        statut: "Statut"
+        date: "Date"
       job_application_activity:
         title: "Activité et commentaires"
         activities:

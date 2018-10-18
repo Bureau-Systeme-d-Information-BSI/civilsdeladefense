@@ -185,6 +185,15 @@ Audited.audit_class.as_user(bant_admin) do
   Email.create! subject: "subject", body: Faker::Lorem.paragraph(2), job_application: job_application, sender: bant_admin
 end
 
+user_candidate_of_all = User.new email: Faker::Internet.email,
+  first_name: 'Nicolas' ,
+  last_name: 'Agoini' ,
+  password: 'pipomolo',
+  password_confirmation: 'pipomolo'
+user_candidate_of_all.skip_confirmation_notification!
+user_candidate_of_all.save!
+user_candidate_of_all.confirm
+
 JobOffer.where.not(duration_contract: nil).each do |job_offer|
   30.times do |i|
     user = User.new email: Faker::Internet.email,
@@ -224,4 +233,34 @@ JobOffer.where.not(duration_contract: nil).each do |job_offer|
       end
     end
   end
+
+
+  job_application = JobApplication.new do |ja|
+    ja.job_offer = job_offer
+    ja.user = user_candidate_of_all
+    ja.first_name = user_candidate_of_all.first_name
+    ja.last_name = user_candidate_of_all.last_name
+    ja.current_position = 'Dev'
+    ja.phone = '0606060606'
+    ja.terms_of_service = true
+    ja.city = "Paris"
+    ja.address_1 = "1 avenue des Champs Elysées"
+    ja.country = "FR"
+  end
+  file = File.open(Rails.root.join('spec', 'fixtures', 'files', 'document.pdf'))
+  job_application.cover_letter = file
+  file = File.open(Rails.root.join('spec', 'fixtures', 'files', 'document.pdf'))
+  job_application.resume = file
+  job_application.job_offer.initial!
+  job_application.save!
+
+  3.times do
+    Audited.audit_class.as_user(bant_admin) do
+      Email.create! subject: "About your application", body: Faker::Lorem.paragraph(2), job_application: job_application, sender: bant_admin
+    end
+    Audited.audit_class.as_user(user_candidate_of_all) do
+      Email.create! subject: "My application", body: Faker::Lorem.paragraph(2), job_application: job_application, sender: user_candidate_of_all
+    end
+  end
+
 end

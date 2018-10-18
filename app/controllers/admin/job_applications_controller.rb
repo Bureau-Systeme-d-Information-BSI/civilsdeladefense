@@ -32,6 +32,7 @@ class Admin::JobApplicationsController < Admin::BaseController
   # GET /admin/job_applications/1
   # GET /admin/job_applications/1.json
   def show
+    @other_job_applications = @job_application.user.job_applications.where.not(id: @job_application.id)
     render layout: request.xhr? ? false : "admin/simple"
   end
 

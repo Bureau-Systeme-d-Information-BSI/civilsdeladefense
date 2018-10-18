@@ -29,13 +29,13 @@
                 = t('.activities.message_html', admin_name: whodunnit, name: @job_application.full_name)
                 .card.my-2
                   .card-body= audited_changes['body']
+              - elsif audit.version == 1 && audit.auditable_type == "Email"
+                = t('.activities.email_automatic_html', name: @job_application.full_name)
               - elsif audit.auditable_type == "Email" && (klass = audit.user.class.to_s) && %w(Administrator User).include?(klass)
                 - if klass == "Administrator"
                   = t('.activities.email_html', admin_name: whodunnit, name: @job_application.full_name)
                 - elsif klass == "User"
                   = t('.activities.email_simple_html', from_name: whodunnit)
-              - elsif audit.auditable_type == "Email" && model == "unknown"
-                = t('.activities.email_automatic_html', name: @job_application.full_name)
               - else
                 %code= audited_changes
             %small.text-muted.time-ago

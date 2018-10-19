@@ -10,13 +10,13 @@
         .d-flex
           .form-group.input-group.mb-0.border-bottom-3.border-success
             - grouped_options = grouped_nested_set_options(Category) {|i| "#{'   ' * i.level}#{i.name}" }
-            = select_tag "category_id", option_groups_from_collection_for_select(grouped_options, :last, :first, :last, :first, params[:category_id]), include_blank: true, data: {placeholder: 'Profession', 'allow-clear': true}, class: 'filter'
+            = select_tag "category_id", option_groups_from_collection_for_select(grouped_options, :last, :first, :last, :first, params[:category_id]), include_blank: true, data: {placeholder: t('.profession'), 'allow-clear': true}, class: 'filter'
           .form-group.input-group.mb-0.border-bottom-3.border-cyan
-            = select_tag "contract_type_id", options_from_collection_for_select(@contract_types, "id", "name", params[:contract_type_id]), include_blank: true, data: {placeholder: 'Contrat', 'allow-clear': true}, class: 'filter'
+            = select_tag "contract_type_id", options_from_collection_for_select(@contract_types, "id", "name", params[:contract_type_id]), include_blank: true, data: {placeholder: t('.contract'), 'allow-clear': true}, class: 'filter'
           .form-group.input-group.mb-0.border-bottom-3.border-danger
             = select_tag "state", options_for_select(JobApplication.states.map {|k, v| [ JobApplication.human_attribute_name("state/#{k}"), v]}, params[:state]), include_blank: true, data: {placeholder: 'Statut', 'allow-clear': true}, class: 'filter'
           .form-group.input-group.mb-0.border-bottom-3.border-orange
-            = select_tag "employer_id", options_from_collection_for_select(@employers, "id", "name", params[:employer_id]), include_blank: true, data: {placeholder: 'Employeur', 'allow-clear': true}, class: 'filter'
+            = select_tag "employer_id", options_from_collection_for_select(@employers, "id", "name", params[:employer_id]), include_blank: true, data: {placeholder: t('.employer'), 'allow-clear': true}, class: 'filter'
         = submit_tag 'Rechercher', name: nil, class: 'd-none'
       .d-flex.justify-content-end.pt-1.invisible
         = spinner

@@ -60,7 +60,7 @@ fr:
     choose_file: "Choisir un fichier"
     choose_file_drop_zone_html: "<u>Choisissez un fichier</u> ou transférez le par glisser/déposer."
     choose_file_validated_html: "Ce fichier a été validé !"
-    resend_confirmation_instructions: "Renvoyer le mail d'activation"
+    resend_confirmation_instructions: "Renvoyer le courriel d'activation"
     send: "Envoyer"
     send_to_candidate: "Envoyer au candidat"
     show: "Voir"
@@ -80,6 +80,10 @@ fr:
   job_offers:
     index:
       title: "Nos offres"
+    filters:
+      profession: "Domaines professionnels"
+      contract: "Contrat"
+      search: "Rechercher"
     job_offers_list:
       job_offers_count:
         zero: "Aucune offre ne correspond à votre recherche"
@@ -122,14 +126,14 @@ fr:
         nav_offer: "L'offre"
     emails:
       create:
-        success: "Email envoyé !"
+        success: "Courriel envoyé !"
       form:
-        title: "Envoyer un email"
+        title: "Envoyer un courriel"
     users:
       change_password:
         title: "Changement de mot de passe"
       change_email:
-        title: "Changement d'email"
+        title: "Changement de courriel"
       want_destroy:
         title: "Danger"
         destroy: "Je veux supprimer mon compte"
@@ -140,7 +144,7 @@ fr:
       navbar:
         show: "Informations"
         change_password: "Mot de passe"
-        change_email: "Adresse e-mail"
+        change_email: "Courriel"
       show:
         title: "Votre compte"
       form_administrator:
@@ -150,9 +154,9 @@ fr:
       update_password:
         success: "Mot de passe modifié !"
       change_email:
-        title: "Changement d'e-mail"
+        title: "Changement de courriel"
       update_email:
-        success: "Nouvel email ajouté, en attente de confirmation !"
+        success: "Nouveau courriel ajouté, en attente de confirmation !"
       update:
         success: "Vos informations ont été mises à jour"
     job_applications:
@@ -160,6 +164,10 @@ fr:
         title: "Candidats"
         search: "Recherche"
         my_job_applications: "Mes candidatures"
+      filters:
+        profession: "Domaines professionnels"
+        contract: "Contrat"
+        employer: "Employeur"
       list:
         job_applications_count:
           zero: 'Aucune candidature trouvée'
@@ -169,7 +177,7 @@ fr:
         published_date: "Candidaté il y a %{time_ago_in_words}"
       job_application_head:
         nav_overview: "Candidature"
-        nav_emails: "Emails"
+        nav_emails: "Courriels"
         nav_files: "Fichiers"
       job_application_files:
         title: "Documents fournis par le candidat"
@@ -187,9 +195,9 @@ fr:
           creation_html: "<span class='user-name'>%{name}</span> vient de postuler"
           change_state_html: "<span class='user-name'>%{admin_name}</span> a déplacé <span class='user-name'>%{name}</span> dans la colonne “%{state_name}”"
           message_html: "<span class='user-name'>%{admin_name}</span> a commenté la candidature de <span class='user-name'>%{name}</span>"
-          email_html: "<span class='user-name'>%{admin_name}</span> a envoyé un mail à <span class='user-name'>%{name}</span>"
-          email_simple_html: "<span class='user-name'>%{from_name}</span> a envoyé un mail"
-          email_automatic_html: "Mail automatique envoyé à <span class='user-name'>%{name}</span>"
+          email_html: "<span class='user-name'>%{admin_name}</span> a envoyé un courriel à <span class='user-name'>%{name}</span>"
+          email_simple_html: "<span class='user-name'>%{from_name}</span> a envoyé un courriel"
+          email_automatic_html: "Courriel automatique envoyé à <span class='user-name'>%{name}</span>"
       change_state:
         success: "Candidature passée en statut %{state} !"
       check_file:
@@ -253,16 +261,16 @@ fr:
         success: "Annonce mise en pause !"
     emails:
       create:
-        success: "Email envoyé !"
+        success: "Courriel envoyé !"
       form:
-        title: "Envoyer un email à ce candidat"
+        title: "Envoyer un courriel à ce candidat"
       email:
         mark_as_read: "Marquer comme lu"
         mark_as_unread: "Marquer comme non lu"
       mark_as_read:
-        success: "Email marqué comme lu !"
+        success: "Courriel marqué comme lu !"
       mark_as_unread:
-        success: "Email marqué comme non lu !"
+        success: "Courriel marqué comme non lu !"
     messages:
       create:
         success: "Message envoyé !"
@@ -278,8 +286,8 @@ fr:
         navbar:
           administrators: "Membres"
           employers: "Employeurs"
-          email_templates: "Emails"
-          categories: "Métiers"
+          email_templates: "Courriels"
+          categories: "Domaines professionnels"
           professional_categories: "Catégories professionnelles"
           contract_types: "Types de contrat"
           study_levels: "Niveaux d'études"
@@ -287,7 +295,7 @@ fr:
           sectors: "Secteurs / Filières"
           salary_ranges: "Estimations salariales"
           company : "Entreprise"
-          templates : "Templates"
+          templates : "Modèles"
           writing_job_offers: "Rédaction offres d'emploi"
 
       base:
@@ -346,22 +354,22 @@ fr:
           title: "Modifier un employeur"
       email_templates:
         index:
-          title: "Templates d'emails"
+          title: "Modèles de courriels"
           add: "Ajouter"
           card_title:
-            zero: 'Aucun template'
-            one: '1 template'
-            other: '%{count} templates'
+            zero: 'Aucun modèle'
+            one: '1 modèle'
+            other: '%{count} modèles'
         new:
-          title: "Ajouter un nouveau template"
+          title: "Ajouter un nouveau modèle"
         create:
-          success: "Template ajouté !"
+          success: "Modèle ajouté !"
         update:
-          success: "Template mis à jour !"
+          success: "Modèle mis à jour !"
         destroy:
-          success: "Template supprimé !"
+          success: "Modèle supprimé !"
         edit:
-          title: "Modifier un template"
+          title: "Modifier un modèle"
       categories:
         index:
           card_title:

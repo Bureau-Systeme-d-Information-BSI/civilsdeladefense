@@ -108,7 +108,7 @@ fr:
       signed_up: Bienvenue ! Vous vous êtes enregistré(e) avec succès.
       signed_up_but_inactive: Vous vous êtes enregistré(e) avec succès. Cependant, nous n’avons pas pu vous connecter car votre compte n’a pas encore été activé.
       signed_up_but_locked: Vous vous êtes enregistré(e) avec succès. Cependant, nous n’avons pas pu vous connecter car votre compte est verrouillé.
-      signed_up_but_unconfirmed: Un message avec un lien de confirmation vous a été envoyé par mail. Veuillez suivre ce lien pour activer votre compte.
+      signed_up_but_unconfirmed: Un message avec un lien de confirmation vous a été envoyé par courriel. Veuillez suivre ce lien pour activer votre compte.
       update_needs_confirmation: Vous avez modifié votre compte avec succès, mais nous devons vérifier votre nouvelle adresse de courriel. Veuillez consulter vos courriels et cliquer sur le lien de confirmation pour confirmer votre nouvelle adresse.
       updated: Votre compte a été modifié avec succès.
     sessions:

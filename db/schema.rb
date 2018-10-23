@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_11_093712) do
+ActiveRecord::Schema.define(version: 2018_10_23_095450) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -108,6 +108,7 @@ ActiveRecord::Schema.define(version: 2018_10_11_093712) do
     t.integer "rgt"
     t.integer "depth", default: 0
     t.integer "children_count", default: 0
+    t.integer "published_job_offers_count", default: 0, null: false
     t.index ["name"], name: "index_categories_on_name", unique: true
   end
 

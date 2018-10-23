@@ -1,0 +1,4 @@
+fr:
+  invisible_captcha:
+    sentence_for_humans: "Si vous êtes un humain, vous pouvez ignorez ce champ"
+    timestamp_error_message: "Désolé, vous avez soumis ce formulaire trop rapidement ! Veuillez réessayer."

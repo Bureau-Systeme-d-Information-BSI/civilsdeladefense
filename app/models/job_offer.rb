@@ -101,9 +101,16 @@ class JobOffer < ApplicationRecord
 
   ## Callbacks
   after_create :set_identifier
+  after_save :update_category_counter
 
   def set_identifier
     self.update_column :identifier, [employer.code, sequential_id].join('')
+  end
+
+  def update_category_counter
+    category.self_and_ancestors.reverse.each do |cat|
+      cat.compute_published_job_offers_count!
+    end
   end
 
   def contract_type_is_cdd?

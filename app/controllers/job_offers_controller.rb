@@ -4,10 +4,16 @@ class JobOffersController < ApplicationController
   # GET /job_offers
   # GET /job_offers.json
   def index
-    @categories = Category.order('lft ASC')
+    @categories = Category.order('lft ASC').where('published_job_offers_count > ?', 0)
+    @max_depth_limit = 1
+    @categories_for_select = @categories.select{|x| x.depth <= @max_depth_limit}
     @contract_types = ContractType.all
     @job_offers = JobOffer.publicly_visible.includes(:contract_type)
-    %i(category_id contract_type_id).each do |filter|
+    if params[:category_id].present?
+      @category = Category.find(params[:category_id])
+      @job_offers = @job_offers.where(category_id: @category.self_and_descendants)
+    end
+    %i(contract_type_id).each do |filter|
       if params[filter].present? && (obj = filter.to_s.gsub('_id', '').classify.constantize.find(params[filter])).present?
         @job_offers = @job_offers.where(filter => obj.id)
         instance_variable_set("@#{ filter.to_s.gsub('_id', '') }", obj)

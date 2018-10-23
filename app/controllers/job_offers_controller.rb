@@ -1,5 +1,6 @@
 class JobOffersController < ApplicationController
   before_action :set_job_offer, only: [:show, :apply, :send_application, :successful]
+  invisible_captcha only: [:send_application], honeypot: :subtitle
 
   # GET /job_offers
   # GET /job_offers.json

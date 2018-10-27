@@ -1,6 +1,6 @@
 .row.pushed-top
   .col-12
-    = form_tag request.original_url, method: :get, remote: true, class: 'filters job-offers-filtering' do
+    = form_tag request.original_url, method: :get, class: 'filters job-offers-filtering' do
       .form-group.input-group.filter.mb-0.border-bottom
         .input-group-prepend
           %span.input-group-text.bg-white.py-4
@@ -8,8 +8,8 @@
         = text_field_tag :q, params[:q], placeholder: t('buttons.search')
       .d-flex
         .form-group.input-group.mb-0.border-bottom-3.border-success
-          - grouped_options = grouped_nested_set_options(Category) {|i| "#{'   ' * i.level}#{i.name}" }
-          = select_tag "category_id", option_groups_from_collection_for_select(grouped_options, :last, :first, :last, :first, params[:category_id]), include_blank: true, data: {placeholder: t('.profession'), 'allow-clear': true}, class: 'filter'
+          - options = options_from_collection_for_select(@categories_for_select, "id", "name_with_depth", params[:category_id])
+          = select_tag "category_id", options, include_blank: true, data: {placeholder: t('.profession'), 'allow-clear': true}, class: 'filter'
         .form-group.input-group.mb-0.border-bottom-3.border-cyan
           = select_tag "contract_type_id", options_from_collection_for_select(@contract_types, "id", "name", params[:contract_type_id]), include_blank: true, data: {placeholder: t('.contract'), 'allow-clear': true}, class: 'filter'
       = submit_tag t('.search'), name: nil, class: 'd-none'

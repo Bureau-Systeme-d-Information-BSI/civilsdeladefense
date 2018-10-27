@@ -68,6 +68,7 @@
     .row.mt-4.mb-3
       .col-12
         = f.input :terms_of_service, as: :boolean, label_html: { class: 'ml-2' }
+        = f.invisible_captcha :subtitle
 
   .form-actions.text-center.mt-4
     = button_tag(type: 'submit', class: 'btn btn-primary btn-raised btn-lg') do

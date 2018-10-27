@@ -487,6 +487,7 @@ fr:
       messages:
         mandatory_file: "est obligatoire"
         allowed_file_content_types: "au mauvais format (seul le format PDF est accepté)"
+        invalid_suffix: "n'est pas conforme, doit se terminer par %{suffix}"
       models:
         job_application:
           attributes:

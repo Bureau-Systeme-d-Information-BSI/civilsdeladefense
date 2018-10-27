@@ -23,6 +23,8 @@ class Administrator < ApplicationRecord
 
   #####################################
   # Validations
+
+  validate :email_conformance
   validates :employer, presence: true, if: Proc.new { |a| a.role == 'employer' }
   validates :inviter, presence: true, unless: Proc.new { |a| a.very_first_account }, on: :create
   validates_inclusion_of :role,
@@ -82,6 +84,14 @@ class Administrator < ApplicationRecord
   # Instead you should use `pending_any_confirmation`.
   def only_if_unconfirmed
     pending_any_confirmation {yield}
+  end
+
+  def email_conformance
+    suffix = ENV['ADMINISTRATOR_EMAIL_SUFFIX']
+    if suffix.present? && !(email.ends_with?(suffix))
+      error_i18n = I18n.t('activerecord.errors.messages.invalid_suffix', suffix: ENV['ADMINISTRATOR_EMAIL_SUFFIX'])
+      errors.add(:email, error_i18n)
+    end
   end
 
   def full_name

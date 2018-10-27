@@ -28,6 +28,7 @@ RSpec.describe "job_offers/index", type: :view do
     )
 
     assign(:categories, categories)
+    assign(:categories_for_select, categories)
     assign(:contract_types, contract_types)
     assign(:job_offers, job_offers)
   end

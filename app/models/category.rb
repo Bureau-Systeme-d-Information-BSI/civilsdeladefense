@@ -5,4 +5,16 @@ class Category < ApplicationRecord
 
   has_many :job_offers
   has_many :publicly_visible_job_offers, -> { publicly_visible }, class_name: 'JobOffer'
+
+  def compute_published_job_offers_count!
+    if leaf?
+      update_column :published_job_offers_count, job_offers.count
+    else
+      update_column :published_job_offers_count, children.map(&:published_job_offers_count).sum
+    end
+  end
+
+  def name_with_depth
+    "#{'-' * depth} #{name}"
+  end
 end

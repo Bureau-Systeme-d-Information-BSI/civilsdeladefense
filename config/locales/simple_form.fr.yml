@@ -26,13 +26,13 @@ fr:
           <<: *options_defaults
     labels:
       defaults:
-        email: "E-mail"
+        email: "Courriel"
         name: "Nom"
         first_name: "Prénom"
         last_name: "Nom"
         title: "Titre"
         subject: "Sujet"
-        body: "Corps du mail"
+        body: "Corps du courriel"
       administrator:
         current_password: 'Mot de passe actuel'
         password: 'Nouveau mot de passe'
@@ -42,7 +42,7 @@ fr:
       category:
         parent_id: "Catégorie parente"
       email:
-        template: "Template"
+        template: "Modèle"
         subject: "Sujet"
         body: "Votre message"
       employer:
@@ -66,7 +66,7 @@ fr:
 mois afin d'être recontacté(e) pour de nouvelles opportunits."
       job_offer:
         title: "Intitulé du poste"
-        category: "Catégorie de métier"
+        category: "Domaines professionnels"
         professional_category: "Catégorie professionnelle"
         location: "Localisation"
         employer: "Employeur"
@@ -89,7 +89,7 @@ mois afin d'être recontacté(e) pour de nouvelles opportunits."
         option_website_url: "Site internet (URL)"
         identifier: "Référence de l'offre"
       user:
-        email: 'E-mail'
+        email: 'Courriel'
         password: 'Mot de passe'
         password_confirmation: 'Confirmation du mot de passe'
         diploma: "Copie des diplômes"
@@ -107,10 +107,10 @@ mois afin d'être recontacté(e) pour de nouvelles opportunits."
         statement_sft: "Attestation de perception ou non perception du SFT par le conjoint ou l’ex-conjoint"
     placeholders:
       user:
-        email: 'E-mail'
+        email: 'Courriel'
         password: 'Mot de passe'
       administrator:
-        email: 'E-mail'
+        email: 'Courriel'
         name: 'Nom complet'
         password: 'Mot de passe'
         password_confirmation: 'Confirmation du mot de passe'

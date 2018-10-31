@@ -93,7 +93,7 @@ Au préalable, les variables d'environnement PRODUCTION_SERVER_IP et PRODUCTION_
 
 Branchement sur "production" :
 ```
-git chckecout master && git pull && git checkout production && git merge master && git push origin productoin
+git checkout master && git pull && git checkout production && git merge master && git push origin production
 ```
 
 Déploiement de la branche production avec Capistrano :

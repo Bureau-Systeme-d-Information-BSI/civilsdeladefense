@@ -83,3 +83,21 @@ La bonne manière de créer une Pull Request est de :
 docker-compose run specs rspec
 ```
 
+## Déploiement en préproduction
+
+Actuellement, la branche master est autodéployée sur la version Scalingo.
+
+## Déploiement en production
+
+Au préalable, les variables d'environnement PRODUCTION_SERVER_IP et PRODUCTION_SERVER_USER doivent être définies sur votre poste local, par exemple dans un fichier .env à la racine du projet.
+
+Branchement sur "production" :
+```
+git chckecout master && git pull && git checkout production && git merge master && git push origin productoin
+```
+
+Déploiement de la branche production avec Capistrano :
+```
+docker-compose run web cap production deploy
+```
+

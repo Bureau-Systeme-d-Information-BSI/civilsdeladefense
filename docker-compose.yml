@@ -12,8 +12,11 @@ services:
   web:
     build: .
     volumes:
-     - .:/usr/src/app:rw
+      - .:/usr/src/app:rw
+      - ./docker/ssh:/root/.ssh:ro
     environment:
+      PRODUCTION_SERVER_IP: "${PRODUCTION_SERVER_IP}"
+      PRODUCTION_SERVER_USER: "${PRODUCTION_SERVER_USER}"
       DEFAULT_HOST: "${DEFAULT_HOST}"
       DEFAULT_FROM: "${DEFAULT_FROM}"
       DATABASE_URL: postgresql://admin:admin-secret@postgresql:5432/civilsdeladefense_development

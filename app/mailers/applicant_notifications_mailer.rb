@@ -16,6 +16,8 @@ class ApplicantNotificationsMailer < ApplicationMailer
     @body = @email.body
     @answer_url = [:account, @job_application, :emails]
 
+    headers['X-INTERNAL-EMAIL-ID'] = @email.id
+
     mail to: to, subject: subject
   end
 end

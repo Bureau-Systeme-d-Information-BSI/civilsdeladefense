@@ -18,7 +18,7 @@ services:
       PRODUCTION_SERVER_IP: "${PRODUCTION_SERVER_IP}"
       PRODUCTION_SERVER_USER: "${PRODUCTION_SERVER_USER}"
       DEFAULT_HOST: "${DEFAULT_HOST}"
-      DEFAULT_FROM: "${DEFAULT_FROM}"
+      MAIL_URL: "${MAIL_URL}"
       DATABASE_URL: postgresql://admin:admin-secret@postgresql:5432/civilsdeladefense_development
       DATABASE_URL_TEST: postgresql://admin:admin-secret@postgresql:5432/civilsdeladefense_test
       BUNDLE_BIN: "/usr/src/app/vendor/.bundle/ruby/2.5.0/bin"
@@ -47,7 +47,7 @@ services:
       - ./:/usr/src/app/
     environment:
       RAILS_ENV: test
-      DEFAULT_FROM: hello@localhost
+      MAIL_URL: smtp://hello%40localhost@localhost
       DEFAULT_HOST: http://localhost:3000
       DATABASE_URL_TEST: postgresql://admin:admin-secret@postgresql:5432/civilsdeladefense_test
       BUNDLE_BIN: "/usr/src/app/vendor/.bundle/ruby/2.5.0/bin"

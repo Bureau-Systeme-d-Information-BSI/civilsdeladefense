@@ -405,6 +405,7 @@ DEPENDENCIES
   invisible_captcha
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)
+  mail
   mini_magick
   nested_form
   paperclip
@@ -428,7 +429,7 @@ DEPENDENCIES
   will_paginate
 
 RUBY VERSION
-   ruby 2.5.1p57
+   ruby 2.5.3p105
 
 BUNDLED WITH
-   1.16.1
+   1.17.1

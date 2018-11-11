@@ -50,6 +50,8 @@ gem 'paperclip'
 gem 'invisible_captcha'
 gem 'mail'
 
+gem 'clockwork' # needed for staging on Scalingo
+
 # Use Capistrano for deployment
 group :development do
   gem 'capistrano-rails'

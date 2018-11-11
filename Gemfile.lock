@@ -111,6 +111,8 @@ GEM
       archive-zip (~> 0.10)
       nokogiri (~> 1.8)
     climate_control (0.2.0)
+    clockwork (2.0.3)
+      tzinfo
     coderay (1.1.2)
     concurrent-ruby (1.0.5)
     counter_culture (2.0.1)
@@ -392,6 +394,7 @@ DEPENDENCIES
   capistrano-rbenv
   capybara (>= 2.15, < 4.0)
   chromedriver-helper
+  clockwork
   counter_culture
   country_select
   devise

@@ -1,4 +1,10 @@
 {
+  "env": {
+    "DEFAULT_HOST": {
+      "description": "URL of the application",
+      "generator": "url"
+    }
+  },
   "scripts": {
     "first-deploy": "rails db:schema:load && rails db:seed"
   }

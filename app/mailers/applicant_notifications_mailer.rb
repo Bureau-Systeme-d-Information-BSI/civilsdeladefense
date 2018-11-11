@@ -16,6 +16,34 @@ class ApplicantNotificationsMailer < ApplicationMailer
     @body = @email.body
     @answer_url = [:account, @job_application, :emails]
 
+    mail_uri = URI(ENV['MAIL_URL'])
+    host = mail_uri.host
+    headers['Message-ID'] = "<#{ @email.id }@#{ host }>"
+
     mail to: to, subject: subject
+  end
+
+  def receive(message)
+    references = message.header['References']
+    original_email_id = references.value.split(/\<(.*)@/)[1]
+    if original_email_id.present?
+      original_email = Email.find original_email_id
+      body = (message.text_part || message.html_part || message).body.decoded
+      body = ActionView::Base.full_sanitizer.sanitize(body)
+      if body.present?
+        job_application = original_email.job_application
+        subject = message.subject
+        sender_email = message.from.first
+        user = User.find_by_email sender_email
+        email_params = {
+          subject: subject,
+          body: body
+        }
+        email = job_application.emails.build(email_params)
+        email.sender = user
+        email.job_application = job_application
+        email.save!
+      end
+    end
   end
 end

@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: ENV['DEFAULT_FROM']
+  default from: URI.unescape(URI(ENV['MAIL_URL']).user)
   layout 'mailer'
 end

@@ -6,10 +6,11 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.5.1-node-browsers
+      - image: circleci/ruby:2.5.3-node-browsers
         environment:
           RAILS_ENV: test
           DATABASE_URL_TEST: postgresql://circleci:@127.0.0.1:5432/civilsdeladefense_test
+          MAIL_URL: smtp://hello%40localhost@localhost
       - image: circleci/postgres:10.5-alpine-ram
         environment:
           POSTGRES_USER: circleci

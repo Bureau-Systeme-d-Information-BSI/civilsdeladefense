@@ -14,16 +14,17 @@ class Administrator < ApplicationRecord
       medium: "80x80#",
       big: "160x160#"
     }
+
+  #####################################
+  # Validations
+
   validates_with AttachmentContentTypeValidator,
     attributes: :photo,
     content_type: /\Aimage\/.*\z/
   validates_with AttachmentSizeValidator,
     attributes: :photo,
     less_than: 1.megabyte
-
-  #####################################
-  # Validations
-
+  validate :password_complexity
   validate :email_conformance
   validates :employer, presence: true, if: Proc.new { |a| a.role == 'employer' }
   validates :inviter, presence: true, unless: Proc.new { |a| a.very_first_account }, on: :create
@@ -124,5 +125,12 @@ class Administrator < ApplicationRecord
 
   def deactivate
     update_attribute(:deleted_at, Time.current)
+  end
+
+  def password_complexity
+    # Regexp extracted from https://stackoverflow.com/questions/19605150/regex-for-password-must-contain-at-least-eight-characters-at-least-one-number-a
+    return if password.blank? || password =~ /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,70}$/
+
+    errors.add :password, :not_strong_enough
   end
 end

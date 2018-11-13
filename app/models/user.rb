@@ -28,6 +28,8 @@ class User < ApplicationRecord
       less_than: (field == :photo ? 1.megabyte : 2.megabytes)
   end
 
+  validate :password_complexity
+
   after_save :compute_job_applications_notifications_counter
 
   def compute_job_applications_notifications_counter
@@ -36,5 +38,12 @@ class User < ApplicationRecord
 
   def full_name
     [first_name, last_name].join(" ")
+  end
+
+  def password_complexity
+    # Regexp extracted from https://stackoverflow.com/questions/19605150/regex-for-password-must-contain-at-least-eight-characters-at-least-one-number-a
+    return if password.blank? || password =~ /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,70}$/
+
+    errors.add :password, :not_strong_enough
   end
 end

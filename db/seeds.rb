@@ -8,8 +8,8 @@ employer = Employer.create! name: 'DIRISI', code: 'DRI'
 bant_admin = Administrator.new email: 'pipo@molo.fr',
   first_name: 'Pipo',
   last_name: 'Molo',
-  password: 'pipomolo',
-  password_confirmation: 'pipomolo',
+  password: '123PIPOmolo*',
+  password_confirmation: '123PIPOmolo*',
   very_first_account: true,
   role: 'bant'
 bant_admin.skip_confirmation_notification!
@@ -19,8 +19,8 @@ bant_admin.confirm
 employer_admin = Administrator.new email: 'employer@molo.fr',
   first_name: 'employer',
   last_name: 'Molo',
-  password: 'pipomolo',
-  password_confirmation: 'pipomolo',
+  password: '123PIPOmolo*',
+  password_confirmation: '123PIPOmolo*',
   very_first_account: true,
   role: 'employer',
   employer: employer
@@ -31,8 +31,8 @@ employer_admin.confirm
 brh_admin = Administrator.new email: 'brh@molo.fr',
   first_name: 'brh',
   last_name: 'Molo',
-  password: 'pipomolo',
-  password_confirmation: 'pipomolo',
+  password: '123PIPOmolo*',
+  password_confirmation: '123PIPOmolo*',
   very_first_account: true,
   role: 'brh',
   employer: employer
@@ -154,8 +154,8 @@ job_offer3.publish!
 user = User.new email: 'coin@pan.fr',
   first_name: 'Coin',
   last_name: 'Pan',
-  password: 'pipomolo',
-  password_confirmation: 'pipomolo'
+  password: '123PIPOmolo*',
+  password_confirmation: '123PIPOmolo*'
 user.skip_confirmation_notification!
 user.save!
 user.confirm
@@ -188,8 +188,8 @@ end
 user_candidate_of_all = User.new email: Faker::Internet.email,
   first_name: 'Nicolas' ,
   last_name: 'Agoini' ,
-  password: 'pipomolo',
-  password_confirmation: 'pipomolo'
+  password: '123PIPOmolo*',
+  password_confirmation: '123PIPOmolo*'
 user_candidate_of_all.skip_confirmation_notification!
 user_candidate_of_all.save!
 user_candidate_of_all.confirm
@@ -199,8 +199,8 @@ JobOffer.where.not(duration_contract: nil).each do |job_offer|
     user = User.new email: Faker::Internet.email,
       first_name: Faker::Name.first_name ,
       last_name: Faker::Name.last_name ,
-      password: 'pipomolo',
-      password_confirmation: 'pipomolo'
+      password: '123PIPOmolo*',
+      password_confirmation: '123PIPOmolo*'
     user.skip_confirmation_notification!
     user.save!
     user.confirm

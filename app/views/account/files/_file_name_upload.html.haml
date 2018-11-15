@@ -1,7 +1,7 @@
 - is_validated_value = obj.send("#{ file_name }_is_validated")
-- hint_text = hint_text_for_file(obj, file_name, is_validated_value)
+- hint_text = hint_text_for_file(job_application, obj, file_name, is_validated_value)
 - options = {method: :put, remote: true}
-- options[:url] = [:account, :user] if obj.is_a?(User)
+- options[:url] = [:account, :user, {job_application_id: job_application.id}] if obj.is_a?(User)
 - options[:url] = [:account, obj] if obj.is_a?(JobApplication)
 - klasses = %w(mb-4)
 - klasses << "is-validated-#{ is_validated_value }"

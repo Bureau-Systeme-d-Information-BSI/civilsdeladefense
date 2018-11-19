@@ -67,19 +67,21 @@ Rails.application.routes.draw do
   end
 
   scope as: 'account', module: 'account' do
-    resources :job_applications, path: 'mes-candidatures' do
-      collection do
-        get :finished
+    authenticate :user do
+      resources :job_applications, path: 'mes-candidatures' do
+        collection do
+          get :finished
+        end
+        resources :emails, only: %i(index create)
+        (JobOffer::FILES + User::FILES).each do |field|
+          get field
+        end
       end
-      resources :emails, only: %i(index create)
-      (JobOffer::FILES + User::FILES).each do |field|
-        get field
-      end
-    end
-    resource :user, path: 'mon-compte', only: %i(show update destroy) do
-      member do
-        get :change_email, :change_password
-        patch :update_email, :update_password
+      resource :user, path: 'mon-compte', only: %i(show update destroy) do
+        member do
+          get :change_email, :change_password
+          patch :update_email, :update_password
+        end
       end
     end
   end

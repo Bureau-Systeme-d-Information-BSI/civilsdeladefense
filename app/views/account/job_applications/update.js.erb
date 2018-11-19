@@ -1,5 +1,5 @@
 var node = document.getElementById('edit_job_application_<%= @file_name %>')
-var html = '<%= j render partial: '/account/files/file_name_upload', locals: {obj: @job_application, file_name: @file_name} %>'
+var html = '<%= j render partial: '/account/files/file_name_upload', locals: {obj: @job_application, job_application: @job_application, file_name: @file_name} %>'
 var frag = document.createRange().createContextualFragment(html)
 node.replaceWith(frag)
 var newNode = document.getElementById('edit_job_application_<%= @file_name %>')

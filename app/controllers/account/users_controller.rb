@@ -10,6 +10,7 @@ class Account::UsersController < Account::BaseController
 
   def update
     @user = current_user
+    @job_application = current_user.job_applications.find params[:job_application_id]
     @file_name = user_params.keys.first
     respond_to do |format|
       if @user.update(user_params)

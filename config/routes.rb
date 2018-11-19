@@ -33,6 +33,9 @@ Rails.application.routes.draw do
         patch :change_state
         post :check_file
         post :uncheck_file
+        (JobOffer::FILES + User::FILES).each do |field|
+          get field
+        end
       end
       resources :messages, only: %i(create)
       resources :emails, only: %i(create) do
@@ -69,6 +72,9 @@ Rails.application.routes.draw do
         get :finished
       end
       resources :emails, only: %i(index create)
+      (JobOffer::FILES + User::FILES).each do |field|
+        get field
+      end
     end
     resource :user, path: 'mon-compte', only: %i(show update destroy) do
       member do

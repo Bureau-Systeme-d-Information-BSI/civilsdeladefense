@@ -1,11 +1,10 @@
 class Account::JobApplicationsController < Account::BaseController
-  before_action :set_job_application, except: %i(index finished)
-  before_action :set_job_applications, only: %i(index finished)
-
   # Add the ability to stream data
   # (http://guides.rubyonrails.org/action_controller_overview.html#live-streaming-of-arbitrary-data)
   include ActionController::Live
 
+  before_action :set_job_application, except: %i(index finished)
+  before_action :set_job_applications, only: %i(index finished)
   before_action :serve_file_from_job_application, only: JobOffer::FILES
   before_action :serve_file_from_user, only: (User::FILES - JobOffer::FILES)
   before_action :serve_file, only: (JobOffer::FILES + User::FILES)

@@ -119,6 +119,8 @@ mois afin d'être recontacté(e) pour de nouvelles opportunits."
         name: 'Nom complet'
         password: 'Mot de passe'
         password_confirmation: 'Confirmation du mot de passe'
+        email_grand_employer: 'Courriel'
+        email_brh: 'Courriel'
       message:
         body: 'Ce commentaire ne sera visible que par vous et les
 autres membres de votre équipe.'

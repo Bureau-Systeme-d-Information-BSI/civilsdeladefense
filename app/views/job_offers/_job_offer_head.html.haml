@@ -13,18 +13,20 @@
       .info
         = fa_icon 'calendar'
         = l job_offer.contract_start_on
-      .info
-        = fa_icon 'map-marker'
-        = job_offer.location
+      - if job_offer.location.present?
+        .info
+          = fa_icon 'map-marker'
+          = job_offer.location
       .info
         = fa_icon 'study'
         = job_offer.study_level.name
       .info
         = fa_icon 'entity'
         = job_offer.category.name
-      .info
-        = fa_icon 'coin'
-        = job_offer.estimate_annual_salary_gross
+      - if job_offer.estimate_annual_salary_gross.present?
+        .info
+          = fa_icon 'coin'
+          = job_offer.estimate_annual_salary_gross
       .info
         = fa_icon 'target'
         Expérience pro :

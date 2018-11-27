@@ -104,5 +104,8 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
       if current_administrator.brh?
         @administrator.role = 'brh'
       end
+      if current_administrator.grand_employer?
+        @administrator.role = 'grand_employer'
+      end
     end
 end

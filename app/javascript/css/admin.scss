@@ -27,22 +27,6 @@ th {
             padding-left: $card-spacer-x;
           }
         }
-        > td {
-          &:last-child {
-            > * {
-              visibility: hidden;
-            }
-          }
-        }
-        &:hover {
-          > td {
-            &:last-child {
-              > * {
-                visibility: visible;
-              }
-            }
-          }
-        }
       }
     }
   }

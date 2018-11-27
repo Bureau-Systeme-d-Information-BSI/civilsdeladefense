@@ -20,6 +20,8 @@
             = f.input :code
           - if resource.is_a?(Category)
             = f.input :parent_id, collection: nested_set_options(Category, @category) {|i| "#{'-' * i.level} #{i.name}" }
+          - if resource.is_a?(Employer) && params[:parent_id].present?
+            = f.input :parent_id, collection: Employer.roots
       .form-actions.text-right.mt-4
         %ul.list-inline.mb-0
           %li.list-inline-item

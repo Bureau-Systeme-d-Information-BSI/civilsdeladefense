@@ -7,6 +7,7 @@ class Administrator < ApplicationRecord
   # Relationships
   belongs_to :employer, optional: true
   belongs_to :inviter, optional: true, class_name: 'Administrator'
+  has_many :invitees, class_name: 'Administrator'
   has_many :job_offers, foreign_key: :owner
   has_attached_file :photo,
     styles: {
@@ -26,7 +27,7 @@ class Administrator < ApplicationRecord
     less_than: 1.megabyte
   validate :password_complexity
   validate :email_conformance
-  validates :employer, presence: true, if: Proc.new { |a| a.role == 'employer' }
+  validates :employer, presence: true, if: Proc.new { |a| %w(employer grand_employer brh).include?(a.role) }
   validates :inviter, presence: true, unless: Proc.new { |a| a.very_first_account }, on: :create
   validates_inclusion_of :role,
     in: ->(a) {
@@ -48,7 +49,8 @@ class Administrator < ApplicationRecord
   enum role: {
     bant: 0,
     employer: 1,
-    brh: 2
+    brh: 2,
+    grand_employer: 3
   }
 
   def password_required?
@@ -117,10 +119,15 @@ class Administrator < ApplicationRecord
 
   def authorized_roles_to_confer
     score = self.role_before_type_cast
-    self.class.roles.inject([]) {|memo, (k,v)|
-      memo << k if v >= score
-      memo
-    }
+    if bant?
+      self.class.roles.map(&:first)
+    elsif employer?
+      %w(brh employer grand_employer)
+    elsif brh?
+      %w(brh)
+    elsif grand_employer?
+      %w(grand_employer)
+    end
   end
 
   def deactivate

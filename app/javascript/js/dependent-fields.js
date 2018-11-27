@@ -1,20 +1,42 @@
-document.addEventListener("DOMContentLoaded", function() {
+function initRoleChange() {
   let role_select = document.getElementById('administrator_role')
   if (role_select !== null) {
     role_select.addEventListener('change', triggerRoleChange, false)
+    var event = new Event('change')
+    role_select.dispatchEvent(event)
   }
-})
+}
 
 function triggerRoleChange() {
   let employer_select = document.getElementById('administrator_employer_id')
-  if (employer_select !== null) {
+  let grand_employer_select = document.getElementById('administrator_grand_employer_id')
+  if ((employer_select !== null) && (grand_employer_select !== null)) {
     let value = this.options[this.selectedIndex].value
-    employer_select.disabled = value !== 'employer'
+    if ((value === 'employer') || (value === 'brh')) {
+      employer_select.disabled = false
+      employer_select.closest('.form-group').classList.remove('d-none')
+
+      grand_employer_select.disabled = true
+      grand_employer_select.closest('.form-group').classList.add('d-none')
+    } else if (value === 'grand_employer') {
+      employer_select.disabled = true
+      employer_select.closest('.form-group').classList.add('d-none')
+
+      grand_employer_select.disabled = false
+      grand_employer_select.closest('.form-group').classList.remove('d-none')
+    } else {
+      employer_select.disabled = true
+      employer_select.closest('.form-group').classList.add('d-none')
+
+      grand_employer_select.disabled = true
+      grand_employer_select.closest('.form-group').classList.add('d-none')
+    }
   }
 }
 
 document.addEventListener("DOMContentLoaded", function() {
   initEmailTemplates()
+  initRoleChange()
 })
 
 function initEmailTemplates() {

@@ -37,9 +37,12 @@
                         - grouped_options = grouped_nested_set_options(Category, @category) {|i| "#{'   ' * i.level}#{i.name}" }
                         = f.association :category, collection: grouped_options, as: :grouped_select, group_method: :last, input_html: {class: 'custom-select'}
                       .col-12.col-md-3
-                        - employers = current_administrator.bant? ? Employer.order(code: :asc).all : [current_administrator.employer]
-                        - disabled = !current_administrator.bant?
-                        = f.association :employer, collection: employers.map{|x| [x.code, x.id]}, disabled: disabled
+                        - if current_administrator.bant?
+                          - grouped_options = Employer.roots.map{|x| [x.name, x.children]}
+                          = f.association :employer, collection: grouped_options, as: :grouped_select, group_method: :last, input_html: {class: 'custom-select'}
+                        - else
+                          - employers = [current_administrator.employer]
+                          = f.association :employer, collection: employers.map{|x| [x.code, x.id]}, disabled: true
                       .col-12.col-md-3
                         = f.input :identifier, input_html: {disabled: true}
                     .row

@@ -38,6 +38,7 @@ fr:
         password: 'Nouveau mot de passe'
         password_confirmation: 'Confirmation du mot de passe'
         employer: "Employeur"
+        grand_employer: "Grand Employeur"
         role: "Rôle"
       category:
         parent_id: "Catégorie parente"
@@ -48,6 +49,7 @@ fr:
       employer:
         name: "Nom"
         code: "Libellé"
+        parent_id: "Grand Employeur"
       job_application:
         first_name: "Prénom"
         last_name: "Nom"
@@ -106,6 +108,9 @@ mois afin d'être recontacté(e) pour de nouvelles opportunits."
         request_family_supplement: "Demande d’attribution du supplément familial de traitement"
         statement_sft: "Attestation de perception ou non perception du SFT par le conjoint ou l’ex-conjoint"
     placeholders:
+      defaults:
+        first_name: "Prénom"
+        last_name: "Nom"
       user:
         email: 'Courriel'
         password: 'Mot de passe'

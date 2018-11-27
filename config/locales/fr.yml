@@ -238,7 +238,7 @@ fr:
           one: 'Candidature'
           other: 'Candidatures'
         job_applications_to_be_treated_count:
-          "À traiter"
+          "Nouvelles candidatures"
       publish:
         success: "Annonce publiée !"
       create:

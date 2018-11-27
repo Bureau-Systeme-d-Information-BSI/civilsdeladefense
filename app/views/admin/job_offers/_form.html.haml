@@ -82,9 +82,6 @@
                             = f.association :experience_level, input_html: {data: {remote: true, type: :json, url: admin_salary_ranges_url}}
                           .col-12.col-md-6
                             = f.association :sector, input_html: {data: {remote: true, type: :json, url: admin_salary_ranges_url}}
-                        .row
-                          .col-12.col-md-6
-                            = f.input :is_negotiable, as: :radio_buttons
                       .col-12.col-md-6.pl-md-5
                         .row
                           .col-12

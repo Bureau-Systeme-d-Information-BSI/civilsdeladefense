@@ -33,11 +33,14 @@ fr:
         title: "Titre"
         subject: "Sujet"
         body: "Corps du courriel"
+        estimate_monthly_salary_net: "Estimation mensuel net (fonction publique)"
+        estimate_annual_salary_gross: "Estimation annuel brut (secteur privé)"
       administrator:
         current_password: 'Mot de passe actuel'
         password: 'Nouveau mot de passe'
         password_confirmation: 'Confirmation du mot de passe'
         employer: "Employeur"
+        grand_employer: "Grand Employeur"
         role: "Rôle"
       category:
         parent_id: "Catégorie parente"
@@ -48,6 +51,7 @@ fr:
       employer:
         name: "Nom"
         code: "Libellé"
+        parent_id: "Grand Employeur"
       job_application:
         first_name: "Prénom"
         last_name: "Nom"
@@ -80,9 +84,6 @@ mois afin d'être recontacté(e) pour de nouvelles opportunits."
         study_level: "Niveau d'études"
         experience_level: "Expérience"
         sector: "Secteur / Filière"
-        is_negotiable: "Négociation possible ?"
-        estimate_monthly_salary_net: "Estimation mensuel net (fonction publique)"
-        estimate_annual_salary_gross: "Estimation annuel brut (secteur privé)"
         option_cover_letter: "Lettre de motivation"
         option_resume: "CV"
         option_photo: "Photo"
@@ -106,6 +107,9 @@ mois afin d'être recontacté(e) pour de nouvelles opportunits."
         request_family_supplement: "Demande d’attribution du supplément familial de traitement"
         statement_sft: "Attestation de perception ou non perception du SFT par le conjoint ou l’ex-conjoint"
     placeholders:
+      defaults:
+        first_name: "Prénom"
+        last_name: "Nom"
       user:
         email: 'Courriel'
         password: 'Mot de passe'
@@ -114,6 +118,8 @@ mois afin d'être recontacté(e) pour de nouvelles opportunits."
         name: 'Nom complet'
         password: 'Mot de passe'
         password_confirmation: 'Confirmation du mot de passe'
+        email_grand_employer: 'Courriel'
+        email_brh: 'Courriel'
       message:
         body: 'Ce commentaire ne sera visible que par vous et les
 autres membres de votre équipe.'

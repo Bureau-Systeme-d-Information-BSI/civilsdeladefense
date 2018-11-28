@@ -38,8 +38,6 @@ RSpec.describe "admin/job_offers/new", type: :view do
 
     #   assert_select "input[name=?]", "job_offer[sector_id]"
 
-    #   assert_select "input[name=?]", "job_offer[is_negotiable]"
-
     #   assert_select "input[name=?]", "job_offer[estimate_monthly_salary_net]"
 
     #   assert_select "input[name=?]", "job_offer[estimate_annual_salary_gross]"

@@ -15,7 +15,6 @@ FactoryBot.define do
     study_level
     experience_level
     sector
-    is_negotiable false
     estimate_monthly_salary_net "3k€"
     estimate_annual_salary_gross "36k€"
   end

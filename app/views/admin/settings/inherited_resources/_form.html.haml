@@ -10,16 +10,19 @@
           = f.input :subject
           = f.input :body
         - elsif resource.is_a?(SalaryRange)
-          = f.input :professional_category
-          = f.input :experience_level
-          = f.input :sector
+          = f.input :professional_category, collection: ProfessionalCategory.all
+          = f.input :experience_level, collection: ExperienceLevel.all
+          = f.input :sector, collection: Sector.all
           = f.input :estimate_annual_salary_gross
+          = f.input :estimate_monthly_salary_net
         - else
           = f.input :name
           - if resource.is_a?(Employer)
             = f.input :code
           - if resource.is_a?(Category)
             = f.input :parent_id, collection: nested_set_options(Category, @category) {|i| "#{'-' * i.level} #{i.name}" }
+          - if resource.is_a?(Employer) && params[:parent_id].present?
+            = f.input :parent_id, collection: Employer.roots
       .form-actions.text-right.mt-4
         %ul.list-inline.mb-0
           %li.list-inline-item

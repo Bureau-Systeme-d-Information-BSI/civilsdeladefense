@@ -1,16 +1,29 @@
 
 = simple_form_for(resource, as: resource_name, url: update_administrator_confirmation_path, html: {method: :patch}) do |f|
-  = devise_error_messages!
   %fieldset.mb-3
     %legend
       = @page_title = t('.title')
-      - if resource.try(:name)
-        %small.d-block
-          pour #{ resource.name }
+      - if resource.is_a?(Administrator) && (resource.employer? || resource.brh?)
+        = Administrator.human_attribute_name('role.'+resource.role)
+        .d-block
+          = surround '“', '”' do
+            = resource.employer.name
   - if @requires_password
     .form-inputs
+      .row
+        .col-12.col-md-6
+          = f.input :first_name, required: false, label: false, placeholder: true
+        .col-12.col-md-6
+          = f.input :last_name, required: false, label: false, placeholder: true
       = f.input :password, required: false, label: false, placeholder: true
       = f.input :password_confirmation, required: false, label: false, placeholder: true
+      - if resource.employer?
+        - resource.confirmation_account_process = true
+        = f.input :confirmation_account_process, as: :hidden
+        .my-2= t(".mention_grand_employeur_html")
+        = f.input :email_grand_employer, required: false, label: false, placeholder: true
+        .my-2= t(".mention_brh_html")
+        = f.input :email_brh, required: false, label: false, placeholder: true
   = hidden_field_tag :confirmation_token, @confirmation_token
   .form-actions
     = f.button :submit, t(".activate"), class: 'btn btn-primary btn-raised'

@@ -118,7 +118,6 @@ job_offer = JobOffer.new do |j|
   j.study_level = StudyLevel.last
   j.experience_level = ExperienceLevel.last
   j.sector = Sector.first
-  j.is_negotiable = true
   j.estimate_monthly_salary_net = "2500 - 3000€"
   j.estimate_annual_salary_gross = "39000 - 46000€"
   j.option_cover_letter = :mandatory

@@ -36,8 +36,10 @@ fr:
       send_instructions: Vous allez recevoir sous quelques minutes un courriel comportant des instructions pour confirmer votre compte.
       send_paranoid_instructions: Si votre courriel existe sur notre base de données, vous recevrez sous quelques minutes un message avec des instructions pour confirmer votre compte.
       show:
-        title: "Confirmation du compte"
+        title: "Confirmation de compte"
         activate: "Confirmer"
+        mention_grand_employeur_html: "Merci d'indiquer le courriel de votre <strong>Grand Employeur</strong>"
+        mention_brh_html: "Merci d'indiquer le courriel de votre <strong>BRH</strong>"
     failure:
       already_authenticated: Vous êtes déjà connecté(e).
       inactive: Votre compte n’est pas encore activé.

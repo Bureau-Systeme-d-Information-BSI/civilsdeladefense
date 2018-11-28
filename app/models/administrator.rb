@@ -7,6 +7,7 @@ class Administrator < ApplicationRecord
   # Relationships
   belongs_to :employer, optional: true
   belongs_to :inviter, optional: true, class_name: 'Administrator'
+  has_many :invitees, class_name: 'Administrator'
   has_many :job_offers, foreign_key: :owner
   has_attached_file :photo,
     styles: {
@@ -26,8 +27,15 @@ class Administrator < ApplicationRecord
     less_than: 1.megabyte
   validate :password_complexity
   validate :email_conformance
-  validates :employer, presence: true, if: Proc.new { |a| a.role == 'employer' }
+  validates :employer, presence: true, if: Proc.new { |a| %w(employer grand_employer brh).include?(a.role) }
   validates :inviter, presence: true, unless: Proc.new { |a| a.very_first_account }, on: :create
+  validates :email_brh, :email_grand_employer,
+    presence: true,
+    format: {with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i},
+    if: Proc.new { |a|
+      a.employer? && a.confirmation_account_process.present?
+    }
+  validate :email_grand_employer_brh_conformance
   validates_inclusion_of :role,
     in: ->(a) {
       if a.very_first_account
@@ -48,8 +56,11 @@ class Administrator < ApplicationRecord
   enum role: {
     bant: 0,
     employer: 1,
-    brh: 2
+    brh: 2,
+    grand_employer: 3
   }
+
+  attr_accessor :confirmation_account_process, :email_grand_employer, :email_brh
 
   def password_required?
     # Password is required if it is being set, but not for new records
@@ -73,7 +84,12 @@ class Administrator < ApplicationRecord
     p = {}
     p[:password] = params[:password]
     p[:password_confirmation] = params[:password_confirmation]
-    update_attributes(p)
+    p[:first_name] = params[:first_name]
+    p[:last_name] = params[:last_name]
+    p[:email_brh] = params[:email_brh]
+    p[:email_grand_employer] = params[:email_grand_employer]
+    p[:confirmation_account_process] = params[:confirmation_account_process]
+    update_attributes(p) and create_administrator_brh and create_admin_grand_employer
   end
 
   # new function to return whether a password has been set
@@ -92,6 +108,22 @@ class Administrator < ApplicationRecord
     if suffix.present? && !(email.ends_with?(suffix))
       error_i18n = I18n.t('activerecord.errors.messages.invalid_suffix', suffix: ENV['ADMINISTRATOR_EMAIL_SUFFIX'])
       errors.add(:email, error_i18n)
+    end
+  end
+
+  def email_grand_employer_brh_conformance
+    suffix = ENV['ADMINISTRATOR_EMAIL_SUFFIX']
+    if suffix.present?
+      if self.employer? && self.confirmation_account_process.present?
+        if !(email_brh.ends_with?(suffix))
+          error_i18n = I18n.t('activerecord.errors.messages.invalid_suffix', suffix: ENV['ADMINISTRATOR_EMAIL_SUFFIX'])
+          errors.add(:email_brh, error_i18n)
+        end
+          if !(email_grand_employer.ends_with?(suffix))
+          error_i18n = I18n.t('activerecord.errors.messages.invalid_suffix', suffix: ENV['ADMINISTRATOR_EMAIL_SUFFIX'])
+          errors.add(:email_grand_employer, error_i18n)
+        end
+      end
     end
   end
 
@@ -117,10 +149,15 @@ class Administrator < ApplicationRecord
 
   def authorized_roles_to_confer
     score = self.role_before_type_cast
-    self.class.roles.inject([]) {|memo, (k,v)|
-      memo << k if v >= score
-      memo
-    }
+    if bant?
+      self.class.roles.map(&:first)
+    elsif employer?
+      %w(brh employer grand_employer)
+    elsif brh?
+      %w(brh)
+    elsif grand_employer?
+      %w(grand_employer)
+    end
   end
 
   def deactivate
@@ -132,5 +169,36 @@ class Administrator < ApplicationRecord
     return if password.blank? || password =~ /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,70}$/
 
     errors.add :password, :not_strong_enough
+  end
+
+  def create_admin_grand_employer
+    if email_grand_employer.present?
+      existing = Administrator.find_by_email email_grand_employer
+      grand_employer = self.employer.parent
+      if !existing && grand_employer.present?
+        administrator_grand_employer = Administrator.new do |a|
+          a.inviter = self
+          a.email = self.email_grand_employer
+          a.role = 'grand_employer'
+          a.employer = grand_employer
+        end
+        administrator_grand_employer.save!
+      end
+    end
+  end
+
+  def create_administrator_brh
+    if email_brh.present?
+      existing = Administrator.find_by_email email_brh
+      if !existing
+        administrator_brh = Administrator.new do |a|
+          a.inviter = self
+          a.email = self.email_brh
+          a.role = 'brh'
+          a.employer = self.employer
+        end
+        administrator_brh.save!
+      end
+    end
   end
 end

@@ -117,7 +117,12 @@ form {
   }
 }
 
-label, legend {
+legend {
+  color: $dark-gray;
+  font-weight: 900;
+}
+
+label {
   font-weight: 500;
 }
 

@@ -16,9 +16,15 @@
           .col-12.col-md-6
             = f.input :title
           .col-12.col-md-6
-            - disabled = @administrator.new_record? || (@administrator.role.present? && @administrator.role != 'employer')
-            - employers = current_administrator.bant? ? Employer.all : [current_administrator.employer]
-            = f.association :employer, collection: employers, input_html: {disabled: disabled}
+            - if current_administrator.bant?
+              - grouped_options = Employer.roots.map{|x| [x.name, x.children]}
+              = f.association :employer, collection: grouped_options, as: :grouped_select, group_method: :last, input_html: {class: 'custom-select', id: :administrator_employer_id}
+              = f.association :employer, collection: Employer.roots, label: t("simple_form.labels.administrator.grand_employer"), input_html: {class: 'custom-select', id: :administrator_grand_employer_id}
+            - else
+              - employers = [current_administrator.employer]
+              = f.association :employer, collection: employers
+              - employers = [current_administrator.employer.parent]
+              = f.association :employer, collection: employers, label: t("simple_form.labels.administrator.grand_employer")
         .row
           .col-12.col-md-6
             = f.input :first_name

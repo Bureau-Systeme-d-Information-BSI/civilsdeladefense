@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_23_095450) do
+ActiveRecord::Schema.define(version: 2018_11_28_063523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -146,6 +146,11 @@ ActiveRecord::Schema.define(version: 2018_10_23_095450) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "code"
+    t.uuid "parent_id"
+    t.integer "lft"
+    t.integer "rgt"
+    t.integer "depth", default: 0
+    t.integer "children_count", default: 0
     t.index ["name"], name: "index_employers_on_name", unique: true
   end
 
@@ -223,7 +228,6 @@ ActiveRecord::Schema.define(version: 2018_10_23_095450) do
     t.text "recruitment_process"
     t.date "contract_start_on", null: false
     t.boolean "is_remote_possible"
-    t.boolean "is_negotiable"
     t.string "estimate_monthly_salary_net"
     t.string "estimate_annual_salary_gross"
     t.integer "option_cover_letter"
@@ -303,6 +307,7 @@ ActiveRecord::Schema.define(version: 2018_10_23_095450) do
     t.uuid "sector_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "estimate_monthly_salary_net"
     t.index ["experience_level_id"], name: "index_salary_ranges_on_experience_level_id"
     t.index ["professional_category_id"], name: "index_salary_ranges_on_professional_category_id"
     t.index ["sector_id"], name: "index_salary_ranges_on_sector_id"

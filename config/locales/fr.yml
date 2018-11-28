@@ -227,6 +227,8 @@ fr:
         card_2_1_2_title: "Présence sur internet"
         card_3_title: "3. Notifications"
         card_3_1_title: "3.1 Acteurs du processus notifiés"
+        estimate_monthly_salary_net_html: "Fourchette de référence : <span class='estimate_monthly_salary_net_reference'>%{value}</span>"
+        estimate_monthly_salary_net_none_html: "Fourchette de référence : <span class='estimate_monthly_salary_net_reference'>aucune</span>"
         estimate_annual_salary_gross_html: "Fourchette de référence : <span class='estimate_annual_salary_gross_reference'>%{value}</span>"
         estimate_annual_salary_gross_none_html: "Fourchette de référence : <span class='estimate_annual_salary_gross_reference'>aucune</span>"
       job_offer:
@@ -238,7 +240,7 @@ fr:
           one: 'Candidature'
           other: 'Candidatures'
         job_applications_to_be_treated_count:
-          "À traiter"
+          "Nouvelles candidatures"
       publish:
         success: "Annonce publiée !"
       create:
@@ -297,7 +299,6 @@ fr:
           company : "Entreprise"
           templates : "Modèles"
           writing_job_offers: "Rédaction offres d'emploi"
-
       base:
         index:
           title: "Paramètres"
@@ -337,7 +338,11 @@ fr:
       employers:
         index:
           title: "Employeurs"
+          add_grand_employer: "Ajouter un grand employeur"
+          add_employer: "Ajouter un employeur"
           add: "Ajouter"
+          grand_employer: "Grand Employeur"
+          employer: "Employeur"
           card_title:
             zero: 'Aucun employeur'
             one: '1 employeur'
@@ -423,7 +428,7 @@ fr:
           title: "Estimations salariales"
           add: "Ajouter"
           card_title:
-            zero: 'Aucune estimation'
+            zero: 'Aucune estimation pour le moment'
             one: '1 estimation'
             other: '%{count} estimations'
         new:
@@ -505,6 +510,7 @@ fr:
       administrator/role:
         bant: "BANT"
         employer: "Employeur"
+        grand_employer: "Grand Employeur"
         brh: "BRH"
       employer:
         code: "Libellé"
@@ -537,6 +543,12 @@ fr:
         state/end_user_state_6: "Contrat envoyé et à renvoyer signé"
         state/end_user_state_7: "Contrat reçu"
         state/end_user_state_8: "Affecté(e)"
+      salary_range:
+        professional_category: "Catégorie"
+        experience_level: "Expérience"
+        sector: "Filière"
+        estimate_monthly_salary_net: "Estimation mensuel net (fonction publique)"
+        estimate_annual_salary_gross: "Estimation annuel brut (secteur privé)"
   helpers:
     submit:
       job_application:

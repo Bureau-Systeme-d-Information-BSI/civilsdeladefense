@@ -84,10 +84,12 @@
                             = f.association :sector, input_html: {data: {remote: true, type: :json, url: admin_salary_ranges_url}}
                       .col-12.col-md-6.pl-md-5
                         .row
+                          - salary_range = SalaryRange.where(professional_category_id: @job_offer.professional_category_id, experience_level_id: @job_offer.experience_level_id, sector_id: @job_offer.sector_id).first
                           .col-12
-                            = f.input :estimate_monthly_salary_net
+                            - estimate_monthly_salary_net = salary_range.try(:estimate_monthly_salary_net)
+                            - hint = estimate_monthly_salary_net ? t('.estimate_monthly_salary_net_html', value: estimate_monthly_salary_net) : t('.estimate_monthly_salary_net_none_html')
+                            = f.input :estimate_monthly_salary_net, readonly: !current_administrator.bant?, hint: hint
                           .col-12
-                            - salary_range = SalaryRange.where(professional_category_id: @job_offer.professional_category_id, experience_level_id: @job_offer.experience_level_id, sector_id: @job_offer.sector_id).first
                             - estimate_annual_salary_gross = salary_range.try(:estimate_annual_salary_gross)
                             - hint = estimate_annual_salary_gross ? t('.estimate_annual_salary_gross_html', value: estimate_annual_salary_gross) : t('.estimate_annual_salary_gross_none_html')
                             = f.input :estimate_annual_salary_gross, readonly: !current_administrator.bant?, hint: hint

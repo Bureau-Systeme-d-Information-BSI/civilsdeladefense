@@ -200,6 +200,6 @@ a.badge:not(.badge-danger) {
   color: inherit;
 }
 
-.estimate_annual_salary_gross_reference {
+.estimate_monthly_salary_net_reference, .estimate_annual_salary_gross_reference {
   @extend .font-italic;
 }

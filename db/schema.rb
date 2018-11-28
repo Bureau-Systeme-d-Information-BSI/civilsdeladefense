@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_27_200802) do
+ActiveRecord::Schema.define(version: 2018_11_28_063523) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -307,6 +307,7 @@ ActiveRecord::Schema.define(version: 2018_11_27_200802) do
     t.uuid "sector_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "estimate_monthly_salary_net"
     t.index ["experience_level_id"], name: "index_salary_ranges_on_experience_level_id"
     t.index ["professional_category_id"], name: "index_salary_ranges_on_professional_category_id"
     t.index ["sector_id"], name: "index_salary_ranges_on_sector_id"

@@ -69,7 +69,16 @@ $( document ).ready(function() {
       let detail = event.detail
       let data = detail[0]
       let result = data[0]
-      let element = document.getElementById('job_offer_estimate_annual_salary_gross')
+      let element = document.getElementById('job_offer_estimate_monthly_salary_net')
+      if (result) {
+        var estimateMonthlySalaryNet = result.estimate_monthly_salary_net
+        if ((!element.value) || (!element.defaultValue)) {
+          element.value = estimateMonthlySalaryNet
+        }
+        let elementHint = document.querySelector('.estimate_monthly_salary_net_reference')
+        elementHint.innerHTML = estimateMonthlySalaryNet
+      }
+      element = document.getElementById('job_offer_estimate_annual_salary_gross')
       if (result) {
         var estimateAnnualSalaryGross = result.estimate_annual_salary_gross
         if ((!element.value) || (!element.defaultValue)) {

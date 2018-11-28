@@ -33,6 +33,8 @@ fr:
         title: "Titre"
         subject: "Sujet"
         body: "Corps du courriel"
+        estimate_monthly_salary_net: "Estimation mensuel net (fonction publique)"
+        estimate_annual_salary_gross: "Estimation annuel brut (secteur privé)"
       administrator:
         current_password: 'Mot de passe actuel'
         password: 'Nouveau mot de passe'
@@ -82,8 +84,6 @@ mois afin d'être recontacté(e) pour de nouvelles opportunits."
         study_level: "Niveau d'études"
         experience_level: "Expérience"
         sector: "Secteur / Filière"
-        estimate_monthly_salary_net: "Estimation mensuel net (fonction publique)"
-        estimate_annual_salary_gross: "Estimation annuel brut (secteur privé)"
         option_cover_letter: "Lettre de motivation"
         option_resume: "CV"
         option_photo: "Photo"

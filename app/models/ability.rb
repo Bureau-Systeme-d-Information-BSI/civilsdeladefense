@@ -3,6 +3,7 @@ class Ability
 
   def initialize(administrator)
     if administrator
+      can :read, SalaryRange
       case administrator.role
       when 'bant'
         can :manage, :all
@@ -18,6 +19,12 @@ class Ability
         can :read, Message
         can :read, Email
         can :manage, Administrator, employer_id: administrator.employer_id, role: 'brh'
+      when 'grand_employer'
+        can :read, JobOffer, employer_id: administrator.employer_id
+        can :read, JobApplication, employer_id: administrator.employer_id
+        can :read, Message
+        can :read, Email
+        can :manage, Administrator, employer_id: administrator.employer_id, role: 'grand_employer'
       end
     end
   end

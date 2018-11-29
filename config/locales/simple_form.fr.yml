@@ -126,6 +126,8 @@ autres membres de votre équipe.'
     hints:
       administrator:
         title: "Facultatif"
+        first_name: "Facultatif"
+        last_name: "Facultatif"
         employer_id: "Actif seulement si le rôle est \"Employeur\""
         password: "8 caractères minimum, dont au moins 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial parmi #?!@$%^&*-'"
       job_application:

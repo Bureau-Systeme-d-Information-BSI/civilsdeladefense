@@ -57,7 +57,12 @@
             %td.text-right
               %ul.list-inline.mb-0.actions
                 %li.list-inline-item
-                  = link_to fa_icon('pencil'), [:edit, :admin, :settings, administrator], title: t('buttons.edit')
+                  - if can?(:update, administrator)
+                    = link_to fa_icon('pencil'), [:edit, :admin, :settings, administrator], title: t('buttons.edit')
                   - unless administrator.confirmed_at.present?
-                    = link_to fa_icon('refresh'), [:resend_confirmation_instructions, :admin, :settings, administrator], method: :postr, title: t('buttons.resend_confirmation_instructions'), data: {confirm: t('buttons.confirm')}
-                  = link_to fa_icon('close'), [:deactivate, :admin, :settings, administrator], method: :post, title: t('buttons.deactivate'), data: {confirm: t('buttons.confirm')}
+                    - if can?(:manage, administrator)
+                      = link_to fa_icon('refresh'), [:resend_confirmation_instructions, :admin, :settings, administrator], method: :postr, title: t('buttons.resend_confirmation_instructions'), data: {confirm: t('buttons.confirm')}
+                  - if can?(:deactivate, administrator) && administrator.active?
+                    = link_to fa_icon('close'), [:deactivate, :admin, :settings, administrator], method: :post, title: t('buttons.deactivate'), data: {confirm: t('buttons.confirm')}
+                  - if can?(:reactivate, administrator) && administrator.inactive?
+                    = link_to fa_icon('close'), [:reactivate, :admin, :settings, administrator], method: :post, title: t('buttons.reactivate'), data: {confirm: t('buttons.confirm')}

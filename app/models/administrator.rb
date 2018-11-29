@@ -36,6 +36,7 @@ class Administrator < ApplicationRecord
       a.employer? && a.confirmation_account_process.present?
     }
   validate :email_grand_employer_brh_conformance
+  validates :role, presence: true
   validates_inclusion_of :role,
     in: ->(a) {
       if a.very_first_account
@@ -44,7 +45,9 @@ class Administrator < ApplicationRecord
         (a.inviter&.authorized_roles_to_confer || a.class.roles.keys.last)
       end
     },
-    message: :non_compliant_role, on: :create
+    allow_blank: true,
+    message: :non_compliant_role,
+    on: :create
 
   ####################################
   # Scope
@@ -160,8 +163,20 @@ class Administrator < ApplicationRecord
     end
   end
 
+  def active?
+    deleted_at.blank?
+  end
+
+  def inactive?
+    deleted_at.present?
+  end
+
   def deactivate
     update_attribute(:deleted_at, Time.current)
+  end
+
+  def reactivate
+    update_attribute(:deleted_at, nil)
   end
 
   def password_complexity

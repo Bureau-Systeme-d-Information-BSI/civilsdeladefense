@@ -53,6 +53,7 @@ Rails.application.routes.draw do
         member do
           post :resend_confirmation_instructions
           post :deactivate
+          post :reactivate
         end
       end
       resources :employers

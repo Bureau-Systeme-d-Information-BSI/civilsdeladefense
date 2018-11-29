@@ -6,11 +6,13 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
   # GET /admin/settings/administrators.json
   def index
     @administrators = @administrators_active
+    @administrators_count = @administrators.size
   end
 
   # GET /admin/settings/administrators/inactive
   def inactive
     @administrators = @administrators_inactive
+    @administrators_count = @administrators.size
 
     render action: :index
   end
@@ -67,6 +69,16 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
     end
   end
 
+  # POST /admin/settings/administrators/1/reactivate
+  # POST /admin/settings/administrators/1/reactivate.json
+  def reactivate
+    @administrator.reactivate
+    respond_to do |format|
+      format.html { redirect_to [:admin, :settings, :root], notice: t('.success') }
+      format.json { head :no_content }
+    end
+  end
+
   # PATCH/PUT /admin/settings/administrators/1/resend_confirmation_instructions
   # PATCH/PUT /admin/settings/administrators/1/resend_confirmation_instructions.json
   def resend_confirmation_instructions
@@ -80,9 +92,15 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
   private
 
     def set_administrators
-      @administrators_active = Administrator.active
-      @administrators_inactive = Administrator.inactive
-      @administrators_count = @administrators.size
+      @administrators_active, @administrators_inactive = if current_administrator.bant?
+        [Administrator.active, Administrator.inactive]
+      elsif current_administrator.grand_employer?
+        employer_ids = current_administrator.employer.children.map(&:id) << current_administrator.employer_id
+        [Administrator.active.where(employer_id: employer_ids), Administrator.inactive.where(employer_id: employer_ids)]
+      else
+        employer_id = current_administrator.employer_id
+        [Administrator.active.where(employer_id: employer_id), Administrator.inactive.where(employer_id: employer_id)]
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

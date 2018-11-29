@@ -8,23 +8,28 @@ class Ability
       when 'bant'
         can :manage, :all
       when 'employer'
-        can :manage, JobOffer, employer_id: administrator.employer_id
-        can :manage, JobApplication, employer_id: administrator.employer_id
+        employer_id = administrator.employer_id
+        can :manage, JobOffer, employer_id: employer_id
+        can :manage, JobApplication, employer_id: employer_id
         can :manage, Message
         can :manage, Email
-        can :manage, Administrator, employer_id: administrator.employer_id
+        can :manage, Administrator, employer_id: employer_id
       when 'brh'
-        can :read, JobOffer, employer_id: administrator.employer_id
-        can :read, JobApplication, employer_id: administrator.employer_id
+        employer_id = administrator.employer_id
+        can :read, JobOffer, employer_id: employer_id
+        can :read, JobApplication, employer_id: employer_id
         can :read, Message
         can :read, Email
-        can :manage, Administrator, employer_id: administrator.employer_id, role: 'brh'
+        can :create, Administrator
+        can :manage, Administrator, employer_id: employer_id, role: 'brh'
       when 'grand_employer'
-        can :read, JobOffer, employer_id: administrator.employer_id
-        can :read, JobApplication, employer_id: administrator.employer_id
+        employer_ids = administrator.employer.children.map(&:id) << administrator.employer_id
+        can :read, JobOffer, employer_id: employer_ids
+        can :read, JobApplication, employer_id: employer_ids
         can :read, Message
         can :read, Email
-        can :manage, Administrator, employer_id: administrator.employer_id, role: 'grand_employer'
+        can :create, Administrator
+        can :read, Administrator, employer_id: employer_ids
       end
     end
   end

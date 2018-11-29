@@ -123,6 +123,9 @@ mois afin d'être recontacté(e) pour de nouvelles opportunits."
       message:
         body: 'Ce commentaire ne sera visible que par vous et les
 autres membres de votre équipe.'
+    prompts:
+      administrator:
+        role: 'Sélectionner un rôle'
     hints:
       administrator:
         title: "Facultatif"

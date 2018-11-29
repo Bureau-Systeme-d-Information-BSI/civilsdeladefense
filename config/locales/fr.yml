@@ -56,6 +56,7 @@ fr:
     unarchive: "Désarchiver"
     suspend: "Mettre en pause"
     deactivate: "Désactiver"
+    reactivate: "Réactiver"
     draftize: "Passer en brouillon"
     choose_file: "Choisir un fichier"
     choose_file_drop_zone_html: "<u>Choisissez un fichier</u> ou transférez le par glisser/déposer."
@@ -335,6 +336,10 @@ fr:
           success: "Compte supprimé !"
         edit:
           title: "Modifier un membre"
+        deactivate:
+          success: "Compte désactivé"
+        reactivate:
+          success: "Compte réactivé"
         resend_confirmation_instructions:
           success: "Invitation renvoyée !"
       employers:

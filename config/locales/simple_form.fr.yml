@@ -125,7 +125,9 @@ mois afin d'être recontacté(e) pour de nouvelles opportunits."
 autres membres de votre équipe.'
     hints:
       administrator:
+        title: "Facultatif"
         employer_id: "Actif seulement si le rôle est \"Employeur\""
+        password: "8 caractères minimum, dont au moins 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial parmi #?!@$%^&*-'"
       job_application:
         photo: "Format JPG ou PNG, max. 2Mo"
         resume: "Format PDF, max. 2Mo"
@@ -133,3 +135,5 @@ autres membres de votre équipe.'
         website_url: "LinkedIn, Viadeo, portfolio, etc."
       employer:
         code: "Ce champ est utilisé pour construire l'identifiant unique d'une annonce."
+      user:
+        password: "8 caractères minimum, dont au moins 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial parmi #?!@$%^&*-'"

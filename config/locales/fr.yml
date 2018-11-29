@@ -335,6 +335,8 @@ fr:
           success: "Compte supprimé !"
         edit:
           title: "Modifier un membre"
+        resend_confirmation_instructions:
+          success: "Invitation renvoyée !"
       employers:
         index:
           title: "Employeurs"
@@ -493,8 +495,7 @@ fr:
         mandatory_file: "est obligatoire"
         allowed_file_content_types: "au mauvais format (seul le format PDF est accepté)"
         invalid_suffix: "n'est pas conforme, doit se terminer par %{suffix}"
-        not_strong_enough: "Pas assez complexe : doit avoir au moins 8 caractères, dont au moins 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial parmi #?!@$%^&*-'
-"
+        not_strong_enough: "Pas assez complexe : doit avoir au moins 8 caractères, dont au moins 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial parmi #?!@$%^&*-'"
       models:
         job_application:
           attributes:

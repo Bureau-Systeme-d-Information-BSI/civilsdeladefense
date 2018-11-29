@@ -3,11 +3,12 @@
   %fieldset.mb-3
     %legend
       = @page_title = t('.title')
-      - if resource.is_a?(Administrator) && (resource.employer? || resource.brh?)
+      - if resource.is_a?(Administrator)
         = Administrator.human_attribute_name('role.'+resource.role)
-        .d-block
-          = surround '“', '”' do
-            = resource.employer.name
+        - if resource.employer
+          .d-block
+            = surround '“', '”' do
+              = resource.employer.name
   - if @requires_password
     .form-inputs
       .row

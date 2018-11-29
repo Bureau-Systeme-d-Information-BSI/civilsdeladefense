@@ -2,6 +2,7 @@ class JobOffer < ApplicationRecord
   SETTINGS = %i(category professional_category contract_type study_level experience_level sector).freeze
 
   include AASM
+  audited
 
   extend FriendlyId
   friendly_id :title, use: [:slugged, :finders, :history]

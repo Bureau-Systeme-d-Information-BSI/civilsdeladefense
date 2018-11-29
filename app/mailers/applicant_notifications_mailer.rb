@@ -14,7 +14,7 @@ class ApplicantNotificationsMailer < ApplicationMailer
     to = @user.email
     subject = @email.subject
     @body = @email.body
-    @answer_url = [:account, @job_application, :emails]
+    @answer_url = account_job_applications_url
 
     mail_uri = URI(ENV['MAIL_URL'])
     host = mail_uri.host

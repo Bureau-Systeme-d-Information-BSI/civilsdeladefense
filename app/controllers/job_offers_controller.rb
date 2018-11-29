@@ -65,7 +65,10 @@ class JobOffersController < ApplicationController
 
         @job_offer.initial! if @job_offer.start?
 
-        email = @job_application.emails.create subject: t('job_offers.successful.subject'), body: t('job_offers.successful.body', first_name: @job_application.first_name, job_offer_title: @job_offer.title)
+        job_offer_identifier = @job_offer.identifier
+        subject = t('job_offers.successful.subject', job_offer_identifier: job_offer_identifier)
+        body = t('job_offers.successful.body', first_name: @job_application.first_name, job_offer_title: @job_offer.title, job_offer_identifier: job_offer_identifier)
+        email = @job_application.emails.create(subject: subject, body: body)
         ApplicantNotificationsMailer.new_email(email.id).deliver_now
 
         format.html { redirect_to [:account, :job_applications] }

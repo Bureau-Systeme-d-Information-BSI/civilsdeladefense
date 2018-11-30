@@ -3,29 +3,54 @@
   .card-header.border-bottom-0
     .card-title.d-md-flex.align-items-center
       = t('.card_title', count: @salary_ranges.size)
-  = simple_form_for([:admin, :settings, SalaryRange.new]) do |f|
-    %table.table.table-hover.mb-0.mt-3
-      %thead
+  %table.table.table-hover.mb-0.mt-3
+    %thead
+      %tr
+        %th{style: 'width: 120px;'}
+          = SalaryRange.human_attribute_name(:professional_category)
+        %th{style: 'width: 120px;'}
+          = SalaryRange.human_attribute_name(:experience_level)
+        %th{style: 'width: 150px;'}
+          = SalaryRange.human_attribute_name(:sector)
+        %th
+          = SalaryRange.human_attribute_name(:estimate_annual_salary_gross)
+        %th
+          = SalaryRange.human_attribute_name(:estimate_monthly_salary_net)
+        %th{style: 'width: 100px;'}
+    %tbody
+      - for salary_range in @salary_ranges
         %tr
-          %th= SalaryRange.human_attribute_name(:professional_category)
-          %th= SalaryRange.human_attribute_name(:experience_level)
-          %th= SalaryRange.human_attribute_name(:sector)
-          %th= SalaryRange.human_attribute_name(:estimate_annual_salary_gross)
-          %th= SalaryRange.human_attribute_name(:estimate_monthly_salary_net)
-          %th
-      %tbody
-        - for salary_range in @salary_ranges
-          %tr
-            %td= salary_range.professional_category.name
-            %td= salary_range.experience_level.name
-            %td= salary_range.sector.name
-            %td= salary_range.estimate_annual_salary_gross
-            %td= salary_range.estimate_monthly_salary_net
-            %td= link_to t('buttons.delete'), [:admin, :settings, salary_range], method: :delete, data: { confirm: t('buttons.confirm') }
-        %tr
-          %td= f.association :professional_category, label: false, collection: ProfessionalCategory.all
-          %td= f.association :experience_level, label: false, collection: ExperienceLevel.all
-          %td= f.association :sector, label: false, collection: Sector.all
+          %td{style: 'width: 120px;'}
+            .in-place-edit{data: {field: :professional_category_id}}
+              = salary_range.professional_category.name
+            = simple_form_for([:admin, :settings, salary_range], remote: true,  html: {data: {type: :json}, class: "d-none form-in-place-edit"}) do |f|
+              = f.association :professional_category, label: false, include_blank: false, collection: ProfessionalCategory.all, wrapper_html: { class: 'mb-0' }
+          %td{style: 'width: 120px;'}
+            .in-place-edit{data: {field: :experience_level_id}}
+              = salary_range.experience_level.name
+            = simple_form_for([:admin, :settings, salary_range], remote: true,  html: {data: {type: :json}, class: "d-none form-in-place-edit"}) do |f|
+              = f.association :experience_level, label: false, include_blank: false, collection: ExperienceLevel.all, wrapper_html: { class: 'mb-0' }
+          %td{style: 'width: 150px;'}
+            .in-place-edit{data: {field: :sector_id}}
+              = salary_range.sector.name
+            = simple_form_for([:admin, :settings, salary_range], remote: true,  html: {data: {type: :json}, class: "d-none form-in-place-edit"}) do |f|
+              = f.association :sector, label: false, include_blank: false, collection: Sector.all, wrapper_html: { class: 'mb-0' }
+          %td
+            .in-place-edit{data: {field: :estimate_annual_salary_gross}}
+              = salary_range.estimate_annual_salary_gross
+            = simple_form_for([:admin, :settings, salary_range], remote: true,  html: {data: {type: :json}, class: "d-none form-in-place-edit"}) do |f|
+              = f.input :estimate_annual_salary_gross, label: false, wrapper_html: { class: 'mb-0' }
+          %td
+            .in-place-edit{data: {field: :estimate_monthly_salary_net}}
+              = salary_range.estimate_monthly_salary_net
+            = simple_form_for([:admin, :settings, salary_range], remote: true,  html: {data: {type: :json}, class: "d-none form-in-place-edit"}) do |f|
+              = f.input :estimate_monthly_salary_net, label: false, wrapper_html: { class: 'mb-0' }
+          %td= link_to t('buttons.delete'), [:admin, :settings, salary_range], method: :delete, data: { confirm: t('buttons.confirm') }
+      %tr
+        = simple_form_for([:admin, :settings, SalaryRange.new]) do |f|
+          %td= f.association :professional_category, label: false, include_blank: false, collection: ProfessionalCategory.all
+          %td= f.association :experience_level, label: false, include_blank: false, collection: ExperienceLevel.all
+          %td= f.association :sector, label: false, include_blank: false, collection: Sector.all
           %td= f.input :estimate_annual_salary_gross, label: false
           %td= f.input :estimate_monthly_salary_net, label: false
           %td

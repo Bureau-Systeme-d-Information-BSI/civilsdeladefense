@@ -1,5 +1,13 @@
 class Admin::Settings::SalaryRangesController < Admin::Settings::InheritedResourcesController
 
+  def update
+    key = "admin.settings.#{ resource_class.to_s.tableize }.update.success"
+    update!(notice: t(key)) do |success, failure|
+      success.json { render json: resource.to_json }
+    end
+  end
+
+
   protected
 
     def permitted_fields

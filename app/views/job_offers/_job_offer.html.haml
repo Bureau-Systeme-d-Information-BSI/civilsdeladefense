@@ -3,8 +3,9 @@
     = link_to job_offer, class: 'job-application-summary' do
       .d-flex.flex-column.flex-md-row.align-items-center
         .d-flex.flex-column
-          %small
-            %small= category.name
+          - if category.depth == 2
+            %small
+              %small= category.name
           .font-weight-bold.text-quinary= job_offer.title
           %small
             .d-flex

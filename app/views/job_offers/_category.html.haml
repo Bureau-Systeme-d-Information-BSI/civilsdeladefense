@@ -1,16 +1,24 @@
 - if category.depth == 0
   - job_offers = @job_offers.select{|x| category.self_and_descendants.map(&:id).include?(x.category_id) }
+  - direct_job_offers = @job_offers.select{|x| category.id == x.category_id }
   - if job_offers.any?
     .card.mt-4
       .card-body
         .row
           .col-12.job-offer-category
             %h2.h4.text-quinary= category.name
+            - if direct_job_offers.any?
+              .job-offers
+                = render partial: 'job_offer', collection: direct_job_offers, locals: {category: category}
             = render partial: 'category', collection: @categories.select{|x| x.parent_id == category.id}
 - elsif category.depth == 1
   - job_offers = @job_offers.select{|x| category.self_and_descendants.map(&:id).include?(x.category_id) }
+  - direct_job_offers = @job_offers.select{|x| category.id == x.category_id }
   - if job_offers.any?
     %h3.h6.text-quinary.mb-0.mt-3= category.name
+    - if direct_job_offers.any?
+      .job-offers
+        = render partial: 'job_offer', collection: direct_job_offers, locals: {category: category}
     = render partial: 'category', collection: @categories.select{|x| x.parent_id == category.id}
 - elsif category.depth == 2
   - job_offers = @job_offers.select{|x| x.category_id == category.id }

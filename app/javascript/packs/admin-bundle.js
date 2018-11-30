@@ -49,6 +49,7 @@ importAll(require.context('icons/', true, /\.svg$/))
 
 require('js/offcanvas.js')
 require('js/dependent-fields.js')
+require('js/in-place-edit.js')
 require('js/board.js')
 
 $('body').bootstrapMaterialDesign()

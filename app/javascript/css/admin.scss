@@ -203,3 +203,10 @@ a.badge:not(.badge-danger) {
 .estimate_monthly_salary_net_reference, .estimate_annual_salary_gross_reference {
   @extend .font-italic;
 }
+
+.in-place-edit {
+  @extend .form-control;
+  background-color: inherit;
+  box-shadow: inherit;
+  border-color: transparent;
+}

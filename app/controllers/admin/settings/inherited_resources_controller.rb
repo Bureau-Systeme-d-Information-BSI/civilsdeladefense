@@ -1,5 +1,5 @@
 class Admin::Settings::InheritedResourcesController < Admin::Settings::BaseController
-  respond_to :html
+  respond_to :html, :json
   inherit_resources
   actions :all, except: %i(show)
 

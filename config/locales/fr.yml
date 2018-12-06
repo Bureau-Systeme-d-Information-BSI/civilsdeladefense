@@ -106,6 +106,10 @@ fr:
       subtitle_html: "Votre demande est prise en compte.<br/>Veuillez confirmer votre accès à l'aide du lien sur votre boîte courriel."
       link: "Retour à l'accueil"
   shared:
+    footer:
+      legal_notice: "Mentions légales"
+      tos: "Conditions générales d’utilisation"
+      privacy: "Politique de confidentialité"
     navbar:
       job_offers: "Nos offres"
       account: "Mon compte"

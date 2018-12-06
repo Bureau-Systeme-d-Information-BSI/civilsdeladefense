@@ -5,21 +5,6 @@
         = image_tag asset_pack_path('images/minarm.svg'), class: 'minarm'
       .col-12.col-md-2
         %ul.list-unstyled.mb-0
-          %li= link_to 'Actualités', '#'
-          %li= link_to 'Glossaire', '#'
-          %li= link_to 'FAQ', '#'
-          %li
-            = link_to 'Forum', '#'
-            %ul.list-unstyled.mb-0
-              %li= link_to 'Accessibilité', '#'
-              %li= link_to 'Espace communiaction', '#'
-              %li= link_to 'Mentions légales', '#'
-              %li= link_to 'Politique de protection des données', '#'
-              %li= link_to 'Plan du site', '#'
-      .col-12.col-md-2
-        %ul.list-unstyled.mb-0
-          %li= link_to 'Facebook', '#'
-          %li= link_to 'Twitter', '#'
-          %li= link_to 'Instagram', '#'
-          %li= link_to 'Snapchat', '#'
-          %li= link_to 'YouTube', '#'
+          %li= link_to t('.legal_notice'), legal_notice_path
+          %li= link_to t('.tos'), tos_path
+          %li= link_to t('.privacy'), privacy_path

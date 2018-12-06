@@ -67,7 +67,8 @@
 
     .row.mt-4.mb-3
       .col-12
-        = f.input :terms_of_service, as: :boolean, label_html: { class: 'ml-2' }
+        = f.input :terms_of_service, as: :boolean, label: t("simple_form.labels.job_application.terms_of_service", link: privacy_url).html_safe, label_html: { class: 'ml-2' }
+        = f.input :certify_majority, as: :boolean, label_html: { class: 'ml-2' }
         = f.invisible_captcha :subtitle
 
   .form-actions.text-center.mt-4

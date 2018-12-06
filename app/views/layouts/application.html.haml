@@ -20,6 +20,8 @@
             .d-none.alert.alert-danger= flash[:error]
           - elsif flash[:success]
             .d-none.alert.alert-success= flash[:success]
-          = yield
+          = content_for?(:content) ? yield(:content) : yield
     = render partial: '/shared/footer'
     = javascript_pack_tag 'bundle'
+    - if ENV['INCLUDE_TRACKERS']
+      = render partial: "/shared/trackers"

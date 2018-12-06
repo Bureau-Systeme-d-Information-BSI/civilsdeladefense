@@ -66,8 +66,8 @@ fr:
         cover_letter: "Lettre de motivation"
         resume: "CV"
         website_url: "Site web"
-        terms_of_service: "J'accepte que le Ministère des Armées conserve mes données personnelles pendant une durée de 6
-mois afin d'être recontacté(e) pour de nouvelles opportunits."
+        terms_of_service: "En soumettant ce formulaire, j'accepte que les informations saisies sur le Site Civils de la Défense soient exploitées pour l'instruction de ma candidature par le ministère des armées. Les informations personnelles portées sur ce formulaire et celles communiquées aux étapes ultérieures du processus de recrutement sont enregistrées dans un fichier informatisé administré par le ministère des armées conformément à la <a href='%{link}' target='_blank'>déclaration de confidentialité</a> du portail Civils de la Défense, dont j'ai pris connaissance"
+        certify_majority: "Je certifie être majeur(e) et disposer de mes droits civiques"
       job_offer:
         title: "Intitulé du poste"
         category: "Domaines professionnels"

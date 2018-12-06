@@ -25,6 +25,7 @@ services:
       BUNDLE_PATH: "/usr/src/app/vendor/.bundle/ruby/2.5.0"
       BUNDLE_APP_CONFIG: "/usr/src/app/.bundle"
       WEBPACKER_DEV_SERVER_HOST: 172.17.0.1
+      INCLUDE_TRACKERS: 1
     links:
       - postgresql
       - webpack

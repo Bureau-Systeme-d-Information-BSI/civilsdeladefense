@@ -12,5 +12,7 @@ FactoryBot.define do
     city "MyString"
     country "MyString"
     website_url "MyString"
+    terms_of_service true
+    certify_majority true
   end
 end

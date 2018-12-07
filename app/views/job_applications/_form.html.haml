@@ -71,8 +71,11 @@
         = f.input :certify_majority, as: :boolean, label_html: { class: 'ml-2' }
         = f.invisible_captcha :subtitle
 
-  .form-actions.text-center.mt-4
-    = button_tag(type: 'submit', class: 'btn btn-primary btn-raised btn-lg') do
+  .form-actions.text-center.mt-md-4
+    = button_tag(type: 'submit', class: 'btn btn-primary btn-raised btn-lg d-none d-md-inline mb-0') do
+      = t('helpers.submit.job_application.save')
+      = fa_icon('send', class: 'ml-1')
+    = button_tag(type: 'submit', class: 'btn btn-primary btn-raised d-md-none mb-0') do
       = t('helpers.submit.job_application.save')
       = fa_icon('send', class: 'ml-1')
     .d-flex.justify-content-end.pt-1.invisible

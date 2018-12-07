@@ -2,9 +2,6 @@
 @import 'footer';
 
 .devise {
-  .sidebar {
-    height: 100vh;
-  }
   .logos {
     @extend .d-flex, .justify-content-start;
     .minarm {
@@ -37,6 +34,9 @@
 
 @include media-breakpoint-up(md) {
   .devise {
+    .sidebar {
+      height: 100vh;
+    }
     .logos {
       .minarm {
         height: 120px;

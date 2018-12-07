@@ -8,12 +8,12 @@
           - klasses = %i(nav-link text-uppercase my-0)
           - klasses << :active if real_action_name == "active"
           - url = [:account, :job_applications]
-          = link_to t('.active', count: @job_applications_active.count), url, class: klasses
+          = link_to t('.active', count: @job_applications_active.count).html_safe, url, class: klasses
         %li.nav-item
           - klasses = %i(nav-link text-uppercase my-0)
           - klasses << :active if real_action_name == "finished"
           - url = [:finished, :account, :job_applications]
-          = link_to t('.finished', count: @job_applications_finished.count), url, class: klasses
+          = link_to t('.finished', count: @job_applications_finished.count).html_safe, url, class: klasses
     .row
       .col-12.mt-3
         - if @job_applications.any?

@@ -119,8 +119,8 @@ fr:
   account:
     job_applications:
       index:
-        active: "Candidatures en cours (%{count})"
-        finished: "Candidatures terminées (%{count})"
+        active: "Candidatures en cours<span class='d-none d-md-inline'> (%{count})</span>"
+        finished: "Candidatures terminées<span class='d-none d-md-inline'> (%{count})</span>"
         none_active: "Aucune candidature active"
         none_finished: "Aucune candidature terminée"
       job_application:

@@ -6,28 +6,28 @@
   - klasses = inside_card ? %w() : %w(col-md-10 mx-md-auto)
   .col-12{class: klasses}
     - klasses = inside_card ? %w(vertical) : %w(horizontal)
-    .basic-infos{class: klasses}
-      .info
+    .basic-infos.flex-column.flex-md-row.flex-wrap.justify-content-center.my-4
+      .info.ml-md-4.mt-0.mt-md-1
         = fa_icon 'briefcase'
         = [job_offer.contract_type.name, job_offer.duration_contract].join(' ')
-      .info
+      .info.ml-md-4.mt-1
         = fa_icon 'calendar'
         = l job_offer.contract_start_on
       - if job_offer.location.present?
-        .info
+        .info.ml-md-4.mt-1
           = fa_icon 'map-marker'
           = job_offer.location
-      .info
+      .info.ml-md-4.mt-1
         = fa_icon 'study'
         = job_offer.study_level.name
-      .info
+      .info.ml-md-4.mt-1
         = fa_icon 'entity'
         = job_offer.category.name
       - if job_offer.estimate_annual_salary_gross.present?
-        .info
+        .info.ml-md-4.mt-1
           = fa_icon 'coin'
           = job_offer.estimate_annual_salary_gross
-      .info
+      .info.ml-md-4.mt-1
         = fa_icon 'target'
         Expérience pro :
         = job_offer.experience_level.name

@@ -217,6 +217,7 @@ fr:
         archived: "Offres archivées (%{count})"
       new:
         title: "Rédaction d'une nouvelle offre"
+        default_recruitment_process: "<ul><li>Si votre candidature est présélectionnée, vous serez contacté(e) par téléphone pour apprécier vos attentes et motivations.</li><li>Si vous êtes sélectionné(e) après cette première étape, vous serez reçu(e) en entretien par l’employeur et éventuellement le service des ressources humaines de la DIRISI.</li><li>Vous serez à l’issue de cet entretien informé(e) par l’employeur des suites données à votre candidature.</li></ul>"
       edit:
         title: "Édition de l'offre '%{job_offer_title}'"
       form:

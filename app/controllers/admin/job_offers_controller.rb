@@ -36,6 +36,7 @@ class Admin::JobOffersController < Admin::BaseController
       j.option_resume = :optional
       j.option_photo = :optional
       j.option_website_url = :optional
+      j.recruitment_process = t('.default_recruitment_process')
       j
     else
       j = @job_offer_origin.dup

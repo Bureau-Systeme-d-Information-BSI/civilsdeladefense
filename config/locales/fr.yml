@@ -291,7 +291,7 @@ fr:
     settings:
       shared:
         navbar:
-          administrators: "Membres"
+          administrators: "Comptes admin"
           employers: "Employeurs"
           email_templates: "Courriels"
           categories: "Domaines professionnels"
@@ -309,8 +309,8 @@ fr:
           title: "Paramètres"
       administrators:
         index:
-          title: "Membres"
-          add: "Ajouter un membre"
+          title: "Comptes admin"
+          add: "Ajouter un compte admin"
           never_connected: "Jamais connecté"
           table:
             photo: "Avatar"
@@ -319,19 +319,19 @@ fr:
             role: "Rôle"
             last_sign_in_at: "Dernière connexion"
           account_active:
-            zero: 'Aucun membre actif'
-            one: 'Membre actif (1)'
-            other: "Membre actifs (%{count})"
+            zero: 'Aucun compte admin actif'
+            one: 'Compte actif (1)'
+            other: "Comptes actifs (%{count})"
           account_inactive:
-            zero: 'Aucun membre désactivé'
-            one: 'Membre désactivé (1)'
-            other: "Membres désactivés (%{count})"
+            zero: 'Aucun compte admin désactivé'
+            one: 'Comte désactivé (1)'
+            other: "Comptes désactivés (%{count})"
           card_title:
-            zero: 'Aucun membre'
-            one: '1 membre'
-            other: '%{count} membres'
+            zero: 'Aucun compte admin'
+            one: '1 compte admin'
+            other: '%{count} comptes admin'
         new:
-          title: "Inviter un nouveau membre"
+          title: "Inviter un nouveau compte admin"
         create:
           success: "Invitation envoyée !"
         update:
@@ -339,7 +339,7 @@ fr:
         destroy:
           success: "Compte supprimé !"
         edit:
-          title: "Modifier un membre"
+          title: "Modifier un compte admin"
         deactivate:
           success: "Compte désactivé"
         reactivate:

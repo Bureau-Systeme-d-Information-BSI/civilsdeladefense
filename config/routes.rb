@@ -98,5 +98,9 @@ Rails.application.routes.draw do
   resource :robots, only: %w(show)
   resource :sitemap
 
+  get '/politique-confidentialite' => 'legals#privacy', as: :privacy
+  get '/cgu' => 'legals#tos', as: :tos
+  get '/mentions-legales' => 'legals#notice', as: :legal_notice
+
   root to: 'job_offers#index'
 end

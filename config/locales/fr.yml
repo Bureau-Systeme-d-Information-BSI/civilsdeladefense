@@ -101,11 +101,15 @@ fr:
       recruitment_process: "Process de recrutement"
     successful:
       subject: "Votre candidature à l'offre %{job_offer_identifier} Civils de la Défense"
-      body: "Bonjour %{first_name},\n\nNous avons bien reçu votre candidatiure à l'offre %{job_offer_identifier} au poste de '%{job_offer_title}'.\n\nNous y répondrons dans les meilleurs délais.\n\nL'équipe Civils de la Défense."
+      body: "Nous avons bien reçu votre candidatiure à l'offre %{job_offer_identifier} au poste de '%{job_offer_title}'.\n\nNous y répondrons dans les meilleurs délais.\n\nL'équipe Civils de la Défense."
       title: "Merci d'avoir soumis votre candidature !"
       subtitle_html: "Votre demande est prise en compte.<br/>Veuillez confirmer votre accès à l'aide du lien sur votre boîte courriel."
       link: "Retour à l'accueil"
   shared:
+    footer:
+      legal_notice: "Mentions légales"
+      tos: "Conditions générales d’utilisation"
+      privacy: "Politique de confidentialité"
     navbar:
       job_offers: "Nos offres"
       account: "Mon compte"
@@ -115,8 +119,8 @@ fr:
   account:
     job_applications:
       index:
-        active: "Candidatures en cours (%{count})"
-        finished: "Candidatures terminées (%{count})"
+        active: "Candidatures en cours<span class='d-none d-md-inline'> (%{count})</span>"
+        finished: "Candidatures terminées<span class='d-none d-md-inline'> (%{count})</span>"
         none_active: "Aucune candidature active"
         none_finished: "Aucune candidature terminée"
       job_application:
@@ -213,6 +217,7 @@ fr:
         archived: "Offres archivées (%{count})"
       new:
         title: "Rédaction d'une nouvelle offre"
+        default_recruitment_process: "<ul><li>Si votre candidature est présélectionnée, vous serez contacté(e) par téléphone pour apprécier vos attentes et motivations.</li><li>Si vous êtes sélectionné(e) après cette première étape, vous serez reçu(e) en entretien par l’employeur et éventuellement le service des ressources humaines de la DIRISI.</li><li>Vous serez à l’issue de cet entretien informé(e) par l’employeur des suites données à votre candidature.</li></ul>"
       edit:
         title: "Édition de l'offre '%{job_offer_title}'"
       form:
@@ -287,7 +292,7 @@ fr:
     settings:
       shared:
         navbar:
-          administrators: "Membres"
+          administrators: "Comptes admin"
           employers: "Employeurs"
           email_templates: "Courriels"
           categories: "Domaines professionnels"
@@ -305,8 +310,8 @@ fr:
           title: "Paramètres"
       administrators:
         index:
-          title: "Membres"
-          add: "Ajouter un membre"
+          title: "Comptes admin"
+          add: "Ajouter un compte admin"
           never_connected: "Jamais connecté"
           table:
             photo: "Avatar"
@@ -315,19 +320,19 @@ fr:
             role: "Rôle"
             last_sign_in_at: "Dernière connexion"
           account_active:
-            zero: 'Aucun membre actif'
-            one: 'Membre actif (1)'
-            other: "Membre actifs (%{count})"
+            zero: 'Aucun compte admin actif'
+            one: 'Compte actif (1)'
+            other: "Comptes actifs (%{count})"
           account_inactive:
-            zero: 'Aucun membre désactivé'
-            one: 'Membre désactivé (1)'
-            other: "Membres désactivés (%{count})"
+            zero: 'Aucun compte admin désactivé'
+            one: 'Comte désactivé (1)'
+            other: "Comptes désactivés (%{count})"
           card_title:
-            zero: 'Aucun membre'
-            one: '1 membre'
-            other: '%{count} membres'
+            zero: 'Aucun compte admin'
+            one: '1 compte admin'
+            other: '%{count} comptes admin'
         new:
-          title: "Inviter un nouveau membre"
+          title: "Inviter un nouveau compte admin"
         create:
           success: "Invitation envoyée !"
         update:
@@ -335,7 +340,7 @@ fr:
         destroy:
           success: "Compte supprimé !"
         edit:
-          title: "Modifier un membre"
+          title: "Modifier un compte admin"
         deactivate:
           success: "Compte désactivé"
         reactivate:
@@ -501,9 +506,14 @@ fr:
         allowed_file_content_types: "au mauvais format (seul le format PDF est accepté)"
         invalid_suffix: "n'est pas conforme, doit se terminer par %{suffix}"
         not_strong_enough: "Pas assez complexe : doit avoir au moins 8 caractères, dont au moins 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial parmi #?!@$%^&*-'"
+        spoofed_media_type: "Type de fichier incorrect"
       models:
         job_application:
           attributes:
+            cover_letter_content_type:
+              invalid: "PDF uniquement, max 2Mo"
+            resume_content_type:
+              invalid: "PDF uniquement, max 2Mo"
             photo:
               file_size_is_less_than_or_equal_to: "Est trop volumineuse (ne doit pas dépasser %{count})"
               allowed_file_content_types: "au mauvais format (seuls les formats JPG et PNG sont acceptés)"

@@ -6,7 +6,7 @@
     .row
       .col-12.col-md-8
         .card-title.font-weight-bold.d-flex.align-items-center.mb-0
-          - klasses = %w(job-application-modal-link text-truncate)
+          - klasses = %w(job-application-modal-link)
           = link_to [:account, job_application], class: klasses, data: { toggle: :modal, target: '#remoteContentModal' } do
             = job_offer.title
         .d-flex

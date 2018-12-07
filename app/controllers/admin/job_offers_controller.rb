@@ -36,6 +36,7 @@ class Admin::JobOffersController < Admin::BaseController
       j.option_resume = :optional
       j.option_photo = :optional
       j.option_website_url = :optional
+      j.recruitment_process = t('.default_recruitment_process')
       j
     else
       j = @job_offer_origin.dup
@@ -151,7 +152,12 @@ class Admin::JobOffersController < Admin::BaseController
 
     def job_offers_root
       r = @job_offers.includes(:employer, :contract_type).order(created_at: :desc)
-      r = r.where(employer_id: current_administrator.employer_id) unless current_administrator.bant?
+      if current_administrator.grand_employer?
+        employer_ids = current_administrator.employer.children.map(&:id) << current_administrator.employer_id
+        r = r.where(employer_id: employer_ids)
+      elsif !current_administrator.bant?
+        r = r.where(employer_id: current_administrator.employer_id)
+      end
       r
     end
 

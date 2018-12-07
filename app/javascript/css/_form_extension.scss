@@ -170,3 +170,9 @@ label {
     }
   }
 }
+
+.flatpickr-input {
+  &[readonly] {
+    cursor: initial;
+  }
+}

@@ -166,7 +166,7 @@ job_application = JobApplication.new do |ja|
   ja.last_name = user.last_name
   ja.current_position = 'Dev'
   ja.phone = '0606060606'
-  ja.terms_of_service = true
+  ja.terms_of_service = ja.certify_majority = true
   ja.city = "Paris"
   ja.address_1 = "1 avenue des Champs Elysées"
   ja.country = "FR"
@@ -211,7 +211,7 @@ JobOffer.where.not(duration_contract: nil).each do |job_offer|
       ja.last_name = user.last_name
       ja.current_position = 'Dev'
       ja.phone = '0606060606'
-      ja.terms_of_service = true
+      ja.terms_of_service = ja.certify_majority = true
       ja.city = "Paris"
       ja.address_1 = "1 avenue des Champs Elysées"
       ja.country = "FR"
@@ -241,7 +241,7 @@ JobOffer.where.not(duration_contract: nil).each do |job_offer|
     ja.last_name = user_candidate_of_all.last_name
     ja.current_position = 'Dev'
     ja.phone = '0606060606'
-    ja.terms_of_service = true
+    ja.terms_of_service = ja.certify_majority = true
     ja.city = "Paris"
     ja.address_1 = "1 avenue des Champs Elysées"
     ja.country = "FR"

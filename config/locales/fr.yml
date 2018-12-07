@@ -505,9 +505,14 @@ fr:
         allowed_file_content_types: "au mauvais format (seul le format PDF est accepté)"
         invalid_suffix: "n'est pas conforme, doit se terminer par %{suffix}"
         not_strong_enough: "Pas assez complexe : doit avoir au moins 8 caractères, dont au moins 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial parmi #?!@$%^&*-'"
+        spoofed_media_type: "Type de fichier incorrect"
       models:
         job_application:
           attributes:
+            cover_letter_content_type:
+              invalid: "PDF uniquement, max 2Mo"
+            resume_content_type:
+              invalid: "PDF uniquement, max 2Mo"
             photo:
               file_size_is_less_than_or_equal_to: "Est trop volumineuse (ne doit pas dépasser %{count})"
               allowed_file_content_types: "au mauvais format (seuls les formats JPG et PNG sont acceptés)"

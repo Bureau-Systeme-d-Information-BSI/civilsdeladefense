@@ -74,7 +74,7 @@ fr:
     preview: "Aperçu"
   job_applications:
     form:
-      general_informations: "Informations générales"
+      general_informations: "Informations génrales"
       your_profile: "Votre profil"
       your_internet_presence: "Votre présence sur internet"
       your_account_creation: "Votre création de compte"
@@ -231,12 +231,13 @@ fr:
         card_2_1_title: "2.1. Sélectionnez vos options"
         card_2_1_1_title: "Candidature"
         card_2_1_2_title: "Présence sur internet"
-        card_3_title: "3. Notifications"
-        card_3_1_title: "3.1 Acteurs du processus notifiés"
         estimate_monthly_salary_net_html: "Fourchette de référence : <span class='estimate_monthly_salary_net_reference'>%{value}</span>"
         estimate_monthly_salary_net_none_html: "Fourchette de référence : <span class='estimate_monthly_salary_net_reference'>aucune</span>"
         estimate_annual_salary_gross_html: "Fourchette de référence : <span class='estimate_annual_salary_gross_reference'>%{value}</span>"
         estimate_annual_salary_gross_none_html: "Fourchette de référence : <span class='estimate_annual_salary_gross_reference'>aucune</span>"
+      form_actors:
+        card_title: "3. Notifications"
+        card_subtitle: "3.1 Acteurs du processus notifiés"
       job_offer:
         follow: 'Suivre'
         unfollow: 'Ne plus suivre'
@@ -313,6 +314,7 @@ fr:
           title: "Comptes admin"
           add: "Ajouter un compte admin"
           never_connected: "Jamais connecté"
+          no_role: "Aucun rôle"
           table:
             photo: "Avatar"
             name: "Nom"
@@ -527,7 +529,12 @@ fr:
         bant: "BANT"
         employer: "Employeur"
         grand_employer: "Grand Employeur"
-        brh: "BRH"
+        brh: "RH"
+      job_offer_actor/role:
+        employer: "Employeur"
+        grand_employer: "Grand Employeur"
+        supervisor_employer: "Employeur Superviseur"
+        brh: "RH"
       employer:
         code: "Libellé"
       job_offer:

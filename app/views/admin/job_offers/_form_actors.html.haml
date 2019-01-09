@@ -1,0 +1,24 @@
+%nav.navbar.navbar-dark.bg-secondary.my-5
+  %span.navbar-text#step_3= t('.card_title')
+.container
+  .row
+    .col-12.col-md-10.mx-md-auto
+      .card
+        .card-header.with-subheader
+          .card-title= t('.card_subtitle')
+        .card-body
+          .form-inputs
+            .row
+              - %i(employer grand_employer supervisor_employer brh).each do |actor_role|
+                .col-12.col-md-3
+                  %h6= JobOfferActor.human_attribute_name("role.#{ actor_role }")
+                  %hr.mt-0
+                  .fields
+                    = f.simple_fields_for(:job_offer_actors, f.object.job_offer_actors.select{|x| x.role == actor_role.to_s}) do |job_offer_actor_form|
+                      = render 'job_offer_actor', f: job_offer_actor_form
+                  - job_offer_id = @job_offer.new_record? ? nil : @job_offer.id
+                  .d-flex.flex-row.mt-3.form-actor
+                    .form-group.mb-0.mr-2
+                      = email_field_tag :email, nil, placeholder: t('simple_form.labels.defaults.email'), class: 'form-control', id: "email_#{actor_role}"
+                    = link_to('#', class: 'btn btn-primary btn-raised mb-0 add_fields', data: {url: add_actor_admin_job_offers_url(role: actor_role, job_offer_id: job_offer_id)}) do
+                      = fa_icon "plus"

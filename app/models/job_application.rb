@@ -18,6 +18,9 @@ class JobApplication < ApplicationRecord
   has_many :messages, dependent: :destroy
   has_many :emails, dependent: :destroy
 
+  has_many :job_application_actors
+  has_many :actors, through: :job_applications_actors, class_name: 'Administrator'
+
   JobOffer::FILES.each do |field|
     has_attached_file field.to_sym
     validates_with AttachmentPresenceValidator,

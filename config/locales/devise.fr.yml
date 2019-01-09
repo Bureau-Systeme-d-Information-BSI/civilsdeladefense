@@ -38,8 +38,8 @@ fr:
       show:
         title: "Confirmation de compte"
         activate: "Confirmer"
-        mention_grand_employeur_html: "Merci d'indiquer le courriel de votre <strong>Grand Employeur</strong>"
-        mention_brh_html: "Merci d'indiquer le courriel de votre <strong>BRH</strong>"
+        mention_supervisor_administrator_html: "Merci d'indiquer courriel et entité de votre <strong>Employeur Superviseur</strong>"
+        mention_grand_employer_administrator_html: "Merci d'indiquer courriel et entité de votre <strong>Grand Employeur</strong>"
     failure:
       already_authenticated: Vous êtes déjà connecté(e).
       inactive: Votre compte n’est pas encore activé.

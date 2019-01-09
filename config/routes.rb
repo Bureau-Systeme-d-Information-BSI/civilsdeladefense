@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     resources :salary_ranges, only: %i(index)
     resources :job_offers, path: 'offresdemploi' do
       collection do
+        get :add_actor
         get :archived
         JobOffer.aasm.events.map(&:name).each do |event_name|
           post("create_and_#{ event_name }".to_sym)

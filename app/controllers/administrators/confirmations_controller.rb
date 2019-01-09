@@ -10,8 +10,7 @@ class Administrators::ConfirmationsController < Devise::ConfirmationsController
   def update
     with_unconfirmed_confirmable do
       if @confirmable.has_no_password?
-        @confirmable.attempt_set_password(params[:administrator])
-        if @confirmable.valid? and @confirmable.password_match?
+        if @confirmable.update_attributes(permitted_params)
           do_confirm
         else
           do_show
@@ -63,5 +62,19 @@ class Administrators::ConfirmationsController < Devise::ConfirmationsController
     @confirmable.confirm
     set_flash_message :notice, :confirmed
     sign_in_and_redirect(resource_name, @confirmable)
+  end
+
+  def permitted_params
+    params.require(:administrator).permit(
+      :password,
+      :password_confirmation,
+      :first_name,
+      :last_name,
+      {
+        supervisor_administrator_attributes: [:email, :employer_id, :ensure_employer_is_set]
+      },
+      {
+        grand_employer_administrator_attributes: [:email, :employer_id, :ensure_employer_is_set]
+      })
   end
 end

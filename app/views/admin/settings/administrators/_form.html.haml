@@ -4,15 +4,15 @@
       = image_user_tag @administrator.photo, width: 40, class: 'mr-2'
       - unless @administrator.new_record?
         .card-title.ml-1= @administrator.full_name_with_title
-      .ml-auto
-        - roles = current_administrator.authorized_roles_to_confer
-        - roles = roles.map{|x| [Administrator.human_attribute_name("role.#{ x }"), x]}
-        - prompt = roles.size != 1 ? :translate : false
-        = f.input :role, collection: roles, label: false, wrapper: false, prompt: prompt
     .card-body
       = f.error_notification
       = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
       .form-inputs
+        .row
+          .col-12.col-md-6
+            - roles = current_administrator.authorized_roles_to_confer
+            - roles = roles.map{|x| [Administrator.human_attribute_name("role.#{ x }"), x]}
+            = f.input :role, collection: roles, prompt: false, include_blank: :translate
         .row
           .col-12.col-md-6
             = f.input :title, required: false

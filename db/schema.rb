@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_11_28_151017) do
+ActiveRecord::Schema.define(version: 2018_12_13_151852) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -68,11 +68,15 @@ ActiveRecord::Schema.define(version: 2018_11_28_151017) do
     t.datetime "photo_updated_at"
     t.boolean "very_first_account", default: false
     t.datetime "deleted_at"
+    t.uuid "supervisor_administrator_id"
+    t.uuid "grand_employer_administrator_id"
     t.index ["confirmation_token"], name: "index_administrators_on_confirmation_token", unique: true
     t.index ["email"], name: "index_administrators_on_email", unique: true
     t.index ["employer_id"], name: "index_administrators_on_employer_id"
+    t.index ["grand_employer_administrator_id"], name: "index_administrators_on_grand_employer_administrator_id"
     t.index ["inviter_id"], name: "index_administrators_on_inviter_id"
     t.index ["reset_password_token"], name: "index_administrators_on_reset_password_token", unique: true
+    t.index ["supervisor_administrator_id"], name: "index_administrators_on_supervisor_administrator_id"
     t.index ["unlock_token"], name: "index_administrators_on_unlock_token", unique: true
   end
 
@@ -217,6 +221,16 @@ ActiveRecord::Schema.define(version: 2018_11_28_151017) do
     t.index ["job_offer_id"], name: "index_job_applications_on_job_offer_id"
     t.index ["state"], name: "index_job_applications_on_state"
     t.index ["user_id"], name: "index_job_applications_on_user_id"
+  end
+
+  create_table "job_offer_actors", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "job_offer_id"
+    t.uuid "administrator_id"
+    t.integer "role"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["administrator_id"], name: "index_job_offer_actors_on_administrator_id"
+    t.index ["job_offer_id"], name: "index_job_offer_actors_on_job_offer_id"
   end
 
   create_table "job_offers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -440,12 +454,16 @@ ActiveRecord::Schema.define(version: 2018_11_28_151017) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  add_foreign_key "administrators", "administrators", column: "grand_employer_administrator_id"
   add_foreign_key "administrators", "administrators", column: "inviter_id"
+  add_foreign_key "administrators", "administrators", column: "supervisor_administrator_id"
   add_foreign_key "administrators", "employers"
   add_foreign_key "emails", "job_applications"
   add_foreign_key "job_applications", "employers"
   add_foreign_key "job_applications", "job_offers"
   add_foreign_key "job_applications", "users"
+  add_foreign_key "job_offer_actors", "administrators"
+  add_foreign_key "job_offer_actors", "job_offers"
   add_foreign_key "job_offers", "administrators", column: "owner_id"
   add_foreign_key "job_offers", "categories"
   add_foreign_key "job_offers", "contract_types"

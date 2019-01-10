@@ -1,0 +1,20 @@
+- administrator = f.object
+.card.d-flex.flex-row.align-items-start.px-1.py-1
+  - if administrator.new_record?
+    = f.input_field :email, as: :hidden
+  = f.input_field :_destroy, as: :hidden
+  = image_user_tag administrator.photo, width: 32, class: 'mr-2'
+  .d-flex.flex-column
+    .d-flex.flex-row
+      .text-dark
+        = administrator.full_name_with_title
+      = link_to '#', class: 'remove_record btn btn-danger mb-0 ml-auto btn-sm', title: t('buttons.delete') do
+        = fa_icon('close')
+    %small.text-muted
+      %em
+        - if administrator.new_record?
+          Invité à la sauvegarde
+        - elsif administrator.last_sign_in_at.blank?
+          En attente de confirmation
+        - else
+          Utilisateur actif

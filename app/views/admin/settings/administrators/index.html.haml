@@ -48,7 +48,10 @@
               = administrator&.employer&.code
             %td
               .badge.badge-light-gray.text-white
-                = Administrator.human_attribute_name('role.'+administrator.role)
+                - if administrator.role?
+                  = Administrator.human_attribute_name("role.#{administrator.role}")
+                - else
+                  = t('.no_role')
             %td.text-dark
               - if administrator.last_sign_in_at.present?
                 = l administrator.last_sign_in_at

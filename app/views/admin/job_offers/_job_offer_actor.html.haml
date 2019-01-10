@@ -1,0 +1,4 @@
+.job-offer-actor
+  = f.input :role, as: :hidden
+  = f.simple_fields_for(:administrator) do |administrator_form|
+    = render 'administrator', f: administrator_form

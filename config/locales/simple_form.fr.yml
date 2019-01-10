@@ -126,6 +126,9 @@ autres membres de votre équipe.'
     prompts:
       administrator:
         role: 'Sélectionner un rôle'
+    include_blanks:
+      administrator:
+        role: 'Aucun rôle'
     hints:
       administrator:
         title: "Facultatif"

@@ -1,0 +1,7 @@
+.card.d-flex.flex-row.px-1.py-1
+  = image_user_tag administrator.photo, width: 40, class: 'mr-2'
+  .d-flex.flex-column
+    .text-muted
+      = administrator.full_name_with_title
+    .text-dark
+      = administrator.email

@@ -1,0 +1,9 @@
+= simple_form_for([:admin, @job_offer], defaults: { disabled: @job_offer.archived? ? true : nil }) do |f|
+  - new_object = f.object.send(:job_offer_actors).build(role: params[:role])
+  - if @administrator.present?
+    - new_object.administrator = @administrator
+  - else
+    - new_object.build_administrator(email: params[:email])
+  - id = new_object.object_id
+  = f.simple_fields_for(:job_offer_actors, new_object, child_index: id) do |builder|
+    = render 'job_offer_actor', f: builder

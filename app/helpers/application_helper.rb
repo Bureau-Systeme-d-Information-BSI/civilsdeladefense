@@ -23,4 +23,14 @@ module ApplicationHelper
         </svg>'.html_safe
     end
   end
+
+  def link_to_add_row(name, f, association, **args)
+    new_object = f.object.send(association).build(role: args[:role])
+    new_object.build_administrator
+    id = new_object.object_id
+    fields = f.simple_fields_for(association, new_object, child_index: id) do |builder|
+      render(association.to_s.singularize, f: builder)
+    end
+    link_to(name, '#', class: "btn btn-primary btn-link mt-2 mb-0 add_fields " + args[:class], data: {id: id, fields: fields.gsub("\n", "")})
+  end
 end

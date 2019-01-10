@@ -125,6 +125,48 @@ $( document ).ready(function() {
     altFormat: "d/m/Y",
     dateFormat: "Y-m-d"
   })
+
+  $('.new_job_offer, .edit_job_offer').on('click', '.remove_record', function(event) {
+    var hidden_field, hidden_value, job_offer_actor_node
+    job_offer_actor_node = $(this).closest('.job-offer-actor')
+    hidden_field = job_offer_actor_node.find('[name$="[_destroy]"]')
+    hidden_value = hidden_field.val()
+    if (hidden_value === '1') {
+      hidden_field.val('0')
+      $(job_offer_actor_node).removeClass('opacify')
+    } else {
+      hidden_field.val('1')
+      $(job_offer_actor_node).addClass('opacify')
+    }
+    return event.preventDefault()
+  });
+
+  $('.new_job_offer, .edit_job_offer').on('click', '.add_fields', function(event) {
+    var url, email_field, email, button
+    button = $(event.currentTarget)
+    email_field = button.prev().find('input[type=email]')
+    email = email_field.val()
+    url = $(this).data('url')
+    url += "&email=" + email
+    Rails.ajax({
+      type: "GET",
+      url: url,
+      success: function(response){
+        var content = $(response).find('form').html()
+        var fields = button.closest('.form-actor').prev()
+        var fields = fields.append(content)
+      },
+      error: function(response){
+        console.log("error")
+        console.log(response)
+      },
+      complete: function(event) {
+        email_field.val('')
+      }
+    })
+
+    return event.preventDefault()
+  })
 })
 
 document.addEventListener("DOMContentLoaded", function() {

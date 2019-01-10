@@ -29,6 +29,17 @@ class JobOffer < ApplicationRecord
 
   has_many :job_applications
 
+  has_many :job_offer_actors, inverse_of: :job_offer
+  has_many :administrators, through: :job_offer_actors
+  accepts_nested_attributes_for :job_offer_actors
+
+  %i(employer grand_employer supervisor_employer brh).each do |actor_role|
+    relationship_1 = "job_offer_#{actor_role}_actors".to_sym
+    relationship_2 = "#{actor_role}_actors".to_sym
+    has_many relationship_1, -> { where(role: JobOfferActor.roles[actor_role]) }, class_name: 'JobOfferActor'
+    has_many relationship_2, through: relationship_1, source: 'administrator'
+  end
+
   ## Validations
   validates :title, :description, :contract_start_on, presence: true
   validates :duration_contract, presence: true, if: :contract_type_is_cdd?

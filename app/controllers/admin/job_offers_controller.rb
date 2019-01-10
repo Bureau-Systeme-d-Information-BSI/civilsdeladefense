@@ -23,6 +23,13 @@ class Admin::JobOffersController < Admin::BaseController
     @job_applications = @job_offer.job_applications.group_by(&:state)
   end
 
+  def add_actor
+    @job_offer = params[:job_offer_id].present? ? JobOffer.find(params[:job_offer_id]) : JobOffer.new
+    @administrator = Administrator.find_by(email: params[:email])
+
+    render action: 'add_actor', layout: false
+  end
+
   # GET /admin/job_offers/new
   def new
     @job_offer_origin = nil
@@ -37,6 +44,12 @@ class Admin::JobOffersController < Admin::BaseController
       j.option_photo = :optional
       j.option_website_url = :optional
       j.recruitment_process = t('.default_recruitment_process')
+      %i(employer grand_employer supervisor_employer brh).each do |actor_role|
+        # j.job_offer_actors.build(role: actor_role).build_administrator
+      end
+      j.job_offer_actors.build(role: :employer).administrator = current_administrator
+      j.job_offer_actors.build(role: :grand_employer).administrator = current_administrator.grand_employer_administrator
+      j.job_offer_actors.build(role: :supervisor_employer).administrator = current_administrator.supervisor_administrator
       j
     else
       j = @job_offer_origin.dup
@@ -70,12 +83,18 @@ class Admin::JobOffersController < Admin::BaseController
   # POST /admin/job_offers.json
   def create
     @job_offer.owner = current_administrator
+    @job_offer.job_offer_actors.each{|job_offer_actor|
+      if job_offer_actor.administrator
+        job_offer_actor.administrator.inviter ||= current_administrator
+      end
+    }
 
     respond_to do |format|
       if @job_offer.save
         format.html { redirect_to [:admin, :job_offers], notice: t('.success') }
         format.json { render :show, status: :created, location: @job_offer }
       else
+        debugger
         format.html { render :new }
         format.json { render json: @job_offer.errors, status: :unprocessable_entity }
       end
@@ -85,6 +104,12 @@ class Admin::JobOffersController < Admin::BaseController
   # PATCH/PUT /admin/job_offers/1
   # PATCH/PUT /admin/job_offers/1.json
   def update
+    @job_offer.job_offer_actors.each{|job_offer_actor|
+      if job_offer_actor.administrator
+        job_offer_actor.administrator.inviter ||= current_administrator
+      end
+    }
+
     respond_to do |format|
       if @job_offer.update(job_offer_params)
         format.html { redirect_to [:admin, :job_offers], notice: t('.success') }
@@ -122,6 +147,10 @@ class Admin::JobOffersController < Admin::BaseController
 
     define_method("update_and_#{ event_name }".to_sym) do
 
+      @job_offer.job_offer_actors.each{|job_offer_actor|
+        job_offer_actor.administrator.inviter ||= current_administrator
+      }
+
       respond_to do |format|
         if @job_offer.update(job_offer_params) and @job_offer.send("#{event_name}!")
           format.html { redirect_to [:admin, :job_offers], notice: t('.success') }
@@ -152,12 +181,12 @@ class Admin::JobOffersController < Admin::BaseController
 
     def job_offers_root
       r = @job_offers.includes(:employer, :contract_type).order(created_at: :desc)
-      if current_administrator.grand_employer?
-        employer_ids = current_administrator.employer.children.map(&:id) << current_administrator.employer_id
-        r = r.where(employer_id: employer_ids)
-      elsif !current_administrator.bant?
-        r = r.where(employer_id: current_administrator.employer_id)
-      end
+      # if current_administrator.grand_employer?
+      #   employer_ids = current_administrator.employer.children.map(&:id) << current_administrator.employer_id
+      #   r = r.where(employer_id: employer_ids)
+      # elsif !current_administrator.bant?
+      #   r = r.where(employer_id: current_administrator.employer_id)
+      # end
       r
     end
 
@@ -176,6 +205,7 @@ class Admin::JobOffersController < Admin::BaseController
     def permitted_fields
       fields = [:title, :description, :category_id, :professional_category_id, :location, :employer_id, :required_profile, :recruitment_process, :contract_type_id, :duration_contract, :contract_start_on, :is_remote_possible, :study_level_id, :experience_level_id, :sector_id, :estimate_monthly_salary_net, :estimate_annual_salary_gross]
       other_fields = (JobOffer::FILES + JobOffer::URLS).map{ |x| "option_#{x}".to_sym }
+      fields  << {job_offer_actors_attributes: [:id, :role, :_destroy, administrator_attributes: [:id, :email, :_destroy]]}
       fields.push(*other_fields)
     end
 end

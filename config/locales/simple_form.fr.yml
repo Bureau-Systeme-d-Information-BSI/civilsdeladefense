@@ -30,7 +30,7 @@ fr:
         name: "Nom"
         first_name: "Prénom"
         last_name: "Nom"
-        title: "Titre"
+        title: "Fonction"
         subject: "Sujet"
         body: "Corps du courriel"
         estimate_monthly_salary_net: "Estimation mensuel net (fonction publique)"
@@ -131,7 +131,7 @@ autres membres de votre équipe.'
         role: 'Aucun rôle'
     hints:
       administrator:
-        title: "Facultatif"
+        title: "Facultatif. Ex. : Chef de département Qualité"
         first_name: "Facultatif"
         last_name: "Facultatif"
         employer_id: "Actif seulement si le rôle est \"Employeur\""

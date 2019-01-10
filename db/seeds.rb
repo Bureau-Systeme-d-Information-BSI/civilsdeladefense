@@ -16,7 +16,7 @@ bant_admin.skip_confirmation_notification!
 bant_admin.save!
 bant_admin.confirm
 
-employer_admin = Administrator.new email: 'employer@molo.fr',
+employer_admin_1 = Administrator.new email: 'employer1@molo.fr',
   first_name: 'employer',
   last_name: 'Molo',
   password: '123PIPOmolo*',
@@ -24,9 +24,21 @@ employer_admin = Administrator.new email: 'employer@molo.fr',
   very_first_account: true,
   role: 'employer',
   employer: employer
-employer_admin.skip_confirmation_notification!
-employer_admin.save!
-employer_admin.confirm
+employer_admin_1.skip_confirmation_notification!
+employer_admin_1.save!
+employer_admin_1.confirm
+
+employer_admin_2 = Administrator.new email: 'employer2@molo.fr',
+  first_name: 'employer',
+  last_name: 'Molo',
+  password: '123PIPOmolo*',
+  password_confirmation: '123PIPOmolo*',
+  very_first_account: true,
+  role: 'employer',
+  employer: employer
+employer_admin_2.skip_confirmation_notification!
+employer_admin_2.save!
+employer_admin_2.confirm
 
 brh_admin = Administrator.new email: 'brh@molo.fr',
   first_name: 'brh',
@@ -34,7 +46,6 @@ brh_admin = Administrator.new email: 'brh@molo.fr',
   password: '123PIPOmolo*',
   password_confirmation: '123PIPOmolo*',
   very_first_account: true,
-  role: 'brh',
   employer: employer
 brh_admin.skip_confirmation_notification!
 brh_admin.save!
@@ -124,26 +135,32 @@ job_offer = JobOffer.new do |j|
   j.option_resume = :mandatory
   j.option_photo = :optional
   j.option_website_url = :optional
+  j.job_offer_actors.build({administrator: employer_admin_1, role: :employer})
+  j.job_offer_actors.build({administrator: brh_admin, role: :brh})
 end
 job_offer.save!
 
 job_offer2 = job_offer.dup
 job_offer2.title = 'Conducteur d’Opérations (H/F)'
-job_offer2.owner = brh_admin
+job_offer2.owner = employer_admin_1
 job_offer2.contract_type = ContractType.where(name:"CDI").first
 job_offer2.duration_contract = nil
 job_offer2.category = sub_sub_infrastructure
 job_offer2.identifier = nil
 job_offer2.sequential_id = nil
+job_offer2.job_offer_actors.build({administrator: employer_admin_1, role: :employer})
+job_offer2.job_offer_actors.build({administrator: brh_admin, role: :brh})
 job_offer2.save!
 
 job_offer3 = job_offer.dup
-job_offer3.owner = employer_admin
+job_offer3.owner = employer_admin_2
 job_offer3.title = 'Responsable Achat d’Infrastructures (H/F)'
 job_offer3.category = sub_sub_infrastructure
 job_offer3.location = "Brest, FR"
 job_offer3.identifier = nil
 job_offer3.sequential_id = nil
+job_offer3.job_offer_actors.build({administrator: employer_admin_2, role: :employer})
+job_offer3.job_offer_actors.build({administrator: brh_admin, role: :brh})
 job_offer3.save!
 
 job_offer.publish!

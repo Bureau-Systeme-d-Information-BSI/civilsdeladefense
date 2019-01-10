@@ -286,7 +286,7 @@ fr:
     shared:
       navbar:
         job_offers: "Offres"
-        job_applications: "Candidatures"
+        job_applications: "Vivier"
         settings: "Paramètres"
         account: "Mon compte"
         logout: "Déconnexion"

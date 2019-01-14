@@ -3,7 +3,8 @@ require 'faker'
 I18n.config.available_locales = %w(fr en)
 I18n.reload!
 Faker::Config.locale = :fr
-employer = Employer.create! name: 'DIRISI', code: 'DRI'
+employer_parent = Employer.create! name: 'EMA', code: 'EMA'
+employer = Employer.create! name: 'DIRISI', code: 'DRI', parent: employer_parent
 
 bant_admin = Administrator.new email: 'pipo@molo.fr',
   first_name: 'Pipo',

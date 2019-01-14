@@ -12,7 +12,10 @@
         = [job_offer.contract_type.name, job_offer.duration_contract].join(' ')
       .info.mt-1
         = fa_icon 'calendar', class: 'mr-1'
-        = l job_offer.contract_start_on
+        - if job_offer.available_immediately?
+          = t('.available_immediately')
+        - else
+          = l job_offer.contract_start_on
       - if job_offer.location.present?
         .info.mt-1
           = fa_icon 'map-marker', class: 'mr-1'

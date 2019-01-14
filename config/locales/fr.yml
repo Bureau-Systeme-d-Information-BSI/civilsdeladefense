@@ -99,6 +99,8 @@ fr:
       description: "Descriptif de l’offre"
       required_profile: "Profil recherché"
       recruitment_process: "Process de recrutement"
+    job_offer_head:
+      available_immediately: "Poste à pourvoir immédiatement"
     successful:
       subject: "Votre candidature à l'offre %{job_offer_identifier} Civils de la Défense"
       body: "Nous avons bien reçu votre candidatiure à l'offre %{job_offer_identifier} au poste de '%{job_offer_title}'.\n\nNous y répondrons dans les meilleurs délais.\n\nL'équipe Civils de la Défense."

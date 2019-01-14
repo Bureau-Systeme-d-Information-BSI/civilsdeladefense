@@ -52,7 +52,9 @@
                         = f.input :contract_start_on, as: :string
                       .col-12.col-md-6.pl-md-5
                         = f.input :is_remote_possible, as: :radio_buttons
-
+                    .row
+                      .col-12.col-md-6
+                        = f.input :available_immediately, as: :radio_buttons
               .card.mt-5
                 .card-header
                   .card-title= t('.card_1_3_title')

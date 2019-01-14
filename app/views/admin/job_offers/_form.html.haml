@@ -29,7 +29,7 @@
                           = f.association :employer, collection: grouped_options, as: :grouped_select, group_method: :last, input_html: {class: 'custom-select'}
                         - else
                           - employers = [current_administrator.employer]
-                          = f.association :employer, collection: employers.map{|x| [x.code, x.id]}, disabled: true
+                          = f.association :employer, collection: employers.map{|x| [x.code, x.id]}, disabled: true, include_blank: false
                       .col-12.col-md-3
                         = f.input :identifier, input_html: {disabled: true}
                     .row

@@ -67,6 +67,9 @@ class Admin::JobOffersController < Admin::BaseController
   def create_and_publish
     @job_offer = JobOffer.new(job_offer_params)
     @job_offer.owner = current_administrator
+    unless current_administrator.bant?
+      @job_offer.employer = current_administrator.employer
+    end
     @job_offer.publish
     respond_to do |format|
       if @job_offer.save

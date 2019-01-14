@@ -41,7 +41,7 @@ class JobOffer < ApplicationRecord
   end
 
   ## Validations
-  validates :title, :description, :contract_start_on, presence: true
+  validates :title, :description, :required_profile, :contract_start_on, presence: true
   validates :duration_contract, presence: true, if: :contract_type_is_cdd?
   validates :duration_contract, absence: true, unless: :contract_type_is_cdd?
 

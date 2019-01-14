@@ -26,9 +26,6 @@ nav.navbar {
 
 .basic-infos {
   @extend .d-flex, .my-4;
-  .info {
-    @extend .text-nowrap;
-  }
   &.vertical {
     @extend .flex-column, .align-items-center;
     > .info {
@@ -39,9 +36,10 @@ nav.navbar {
     }
   }
   &.horizontal {
-    @extend .flex-row, .flex-wrap, .justify-content-center;
+    @extend .flex-column, .align-items-center;
+    @extend .flex-md-row, .flex-wrap, .justify-content-center;
     > .info {
-      @extend .ml-4, .mt-1;
+      @extend .ml-0, .ml-md-4, .mt-1;
       &:first-child {
         @extend .ml-0;
       }

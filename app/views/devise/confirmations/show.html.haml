@@ -5,7 +5,7 @@
       = @page_title = t('.title')
       - if resource.is_a?(Administrator)
         %small.d-block
-          - if resource.role.present? && %w(bant employer).include?(resource.role)
+          - if %w(bant employer).include?(resource.role)
             = Administrator.human_attribute_name("role.#{resource.role}")
           - if resource.employer
             .d-inline

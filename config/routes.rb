@@ -1,3 +1,13 @@
+class CommitParamConstraint
+  def initialize(*param_values)
+    @param_values = param_values
+  end
+
+  def matches?(request)
+    @param_values.any?{|prm| request.params[:commit] == prm.to_s}
+  end
+end
+
 Rails.application.routes.draw do
 
   as :administrator do
@@ -19,13 +29,15 @@ Rails.application.routes.draw do
         get :add_actor
         get :archived
         JobOffer.aasm.events.map(&:name).each do |event_name|
-          post("create_and_#{ event_name }".to_sym)
+          action_name = "create_and_#{ event_name }".to_sym
+          post :create, constraints: CommitParamConstraint.new(action_name), action: action_name
         end
       end
       member do
         JobOffer.aasm.events.map(&:name).each do |event_name|
           patch(event_name.to_sym)
-          patch("update_and_#{ event_name }".to_sym)
+          action_name = "update_and_#{ event_name }".to_sym
+          patch :update, constraints: CommitParamConstraint.new(action_name), action: action_name
         end
       end
     end

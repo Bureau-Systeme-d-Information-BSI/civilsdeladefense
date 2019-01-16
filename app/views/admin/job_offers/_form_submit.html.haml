@@ -1,0 +1,20 @@
+.container
+  .row
+    .col-12.col-md-10.mx-md-auto
+      .form-actions.text-right.my-5
+        %ul.list-inline
+          %li.list-inline-item
+            = link_to(t('helpers.submit.job_offer.cancel'), [:admin, :job_offers], class: 'btn btn-link mb-0')
+          %li.list-inline-item
+            = button_tag(type: 'submit', class: 'btn btn-primary btn-raised mb-0') do
+              = t('helpers.submit.job_offer.save')
+              = fa_icon('save', class: 'ml-1')
+          - events = @job_offer.aasm.events.map(&:name)
+          - events.delete(:archive) if @job_offer.new_record?
+          - events.each do |event_name|
+            %li.list-inline-item
+              - action_prefix = @job_offer.new_record? ? "create" : "update"
+              - action_name = [action_prefix, "and", event_name].join("_")
+              = button_tag(type: 'submit', class: 'btn btn-primary btn-raised mb-0', name: :commit, value: action_name) do
+                = t("buttons.#{ event_name }")
+                = fa_icon('send', class: 'ml-1')

@@ -113,23 +113,4 @@
                       = f.input "option_#{option}".to_sym, collection: collection, as: :radio_buttons, wrapper: :horizontal_collection_inline
 
         = render partial: "form_actors", locals: {f: f}
-        .container
-          .row
-            .col-12.col-md-10.mx-md-auto
-              .form-actions.text-right.my-5
-                %ul.list-inline
-                  %li.list-inline-item
-                    = link_to(t('helpers.submit.job_offer.cancel'), [:admin, :job_offers], class: 'btn btn-link')
-                  %li.list-inline-item
-                    = button_tag(type: 'submit', class: 'btn btn-primary btn-raised') do
-                      = t('helpers.submit.job_offer.save')
-                      = fa_icon('save', class: 'ml-1')
-                  - events = @job_offer.aasm.events.map(&:name)
-                  - events.delete(:archive) if @job_offer.new_record?
-                  - events.each do |event_name|
-                    %li.list-inline-item
-                      - action_prefix = @job_offer.new_record? ? "create" : "update"
-                      - action_name = [action_prefix, "and", event_name].join("_")
-                      = button_tag(type: 'submit', class: 'btn btn-primary btn-raised', formaction: url_for([action_name, :admin, @job_offer])) do
-                        = t("buttons.#{ event_name }")
-                        = fa_icon('send', class: 'ml-1')
+        = render partial: "form_submit", locals: {f: f}

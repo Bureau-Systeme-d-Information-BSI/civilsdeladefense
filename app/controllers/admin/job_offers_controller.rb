@@ -70,6 +70,11 @@ class Admin::JobOffersController < Admin::BaseController
     unless current_administrator.bant?
       @job_offer.employer = current_administrator.employer
     end
+    @job_offer.job_offer_actors.each{|job_offer_actor|
+      if job_offer_actor.administrator
+        job_offer_actor.administrator.inviter ||= current_administrator
+      end
+    }
     @job_offer.publish
     respond_to do |format|
       if @job_offer.save
@@ -109,6 +114,7 @@ class Admin::JobOffersController < Admin::BaseController
   # PATCH/PUT /admin/job_offers/1
   # PATCH/PUT /admin/job_offers/1.json
   def update
+    @job_offer.assign_attributes(job_offer_params)
     @job_offer.job_offer_actors.each{|job_offer_actor|
       if job_offer_actor.administrator
         job_offer_actor.administrator.inviter ||= current_administrator
@@ -116,7 +122,7 @@ class Admin::JobOffersController < Admin::BaseController
     }
 
     respond_to do |format|
-      if @job_offer.update(job_offer_params)
+      if @job_offer.save
         format.html { redirect_to [:admin, :job_offers], notice: t('.success') }
         format.json { render :show, status: :ok, location: @job_offer }
       else
@@ -152,12 +158,15 @@ class Admin::JobOffersController < Admin::BaseController
 
     define_method("update_and_#{ event_name }".to_sym) do
 
+      @job_offer.assign_attributes(job_offer_params)
       @job_offer.job_offer_actors.each{|job_offer_actor|
-        job_offer_actor.administrator.inviter ||= current_administrator
+        if job_offer_actor.administrator
+          job_offer_actor.administrator.inviter ||= current_administrator
+        end
       }
 
       respond_to do |format|
-        if @job_offer.update(job_offer_params) and @job_offer.send("#{event_name}!")
+        if @job_offer.save and @job_offer.send("#{event_name}!")
           format.html { redirect_to [:admin, :job_offers], notice: t('.success') }
           format.json { render :show, status: :ok, location: @job_offer }
         else

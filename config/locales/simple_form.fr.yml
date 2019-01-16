@@ -111,16 +111,19 @@ fr:
       defaults:
         first_name: "Prénom"
         last_name: "Nom"
-      user:
         email: 'Courriel'
+      user:
         password: 'Mot de passe'
       administrator:
-        email: 'Courriel'
         name: 'Nom complet'
         password: 'Mot de passe'
         password_confirmation: 'Confirmation du mot de passe'
         email_grand_employer: 'Courriel'
         email_brh: 'Courriel'
+        supervisor_administrator:
+          email: "Courriel Employeur Superviseur"
+        grand_employer_administrator:
+          email: "Courriel Grand Employeur"
       message:
         body: 'Ce commentaire ne sera visible que par vous et les
 autres membres de votre équipe.'

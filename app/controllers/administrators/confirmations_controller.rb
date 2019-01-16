@@ -70,6 +70,7 @@ class Administrators::ConfirmationsController < Devise::ConfirmationsController
       :password_confirmation,
       :first_name,
       :last_name,
+      :title,
       {
         supervisor_administrator_attributes: [:email, :employer_id, :ensure_employer_is_set]
       },

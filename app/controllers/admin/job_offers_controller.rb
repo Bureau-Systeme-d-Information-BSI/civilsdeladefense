@@ -70,6 +70,11 @@ class Admin::JobOffersController < Admin::BaseController
     unless current_administrator.bant?
       @job_offer.employer = current_administrator.employer
     end
+    @job_offer.job_offer_actors.each{|job_offer_actor|
+      if job_offer_actor.administrator
+        job_offer_actor.administrator.inviter ||= current_administrator
+      end
+    }
     @job_offer.publish
     respond_to do |format|
       if @job_offer.save

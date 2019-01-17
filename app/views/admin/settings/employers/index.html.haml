@@ -17,18 +17,21 @@
     %tbody
       - @grand_employers.each do |grand_employer|
         - employers = grand_employer.children
+        %tr
+          %td
+            = grand_employer.name_with_code
+          %td.text-left
+            %ul.list-inline.mb-0.actions
+              %li.list-inline-item
+                = link_to fa_icon('plus'), [:new, :admin, :settings, :employer, {parent_id: grand_employer.id}], title: t('.add_employer')
+                = link_to fa_icon('pencil'), [:edit, :admin, :settings, grand_employer], title: t('buttons.edit')
+                = link_to fa_icon('delete'), [:admin, :settings, grand_employer], method: :delete, title: t('buttons.delete'), data: {confirm: t('buttons.confirm')}
+          %td
+          %td
         - employers.each_with_index do |employer, index|
           %tr
             %td
-              - if index == 0
-                = grand_employer.name_with_code
-            %td.text-left
-              - if index == 0
-                %ul.list-inline.mb-0.actions
-                  %li.list-inline-item
-                    = link_to fa_icon('plus'), [:new, :admin, :settings, :employer, {parent_id: grand_employer.id}], title: t('.add_employer')
-                    = link_to fa_icon('pencil'), [:edit, :admin, :settings, grand_employer], title: t('buttons.edit')
-                    = link_to fa_icon('delete'), [:admin, :settings, grand_employer], method: :delete, title: t('buttons.delete'), data: {confirm: t('buttons.confirm')}
+            %td
             %td
               = employer.name_with_code
             %td.text-right

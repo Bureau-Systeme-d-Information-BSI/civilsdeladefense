@@ -11,13 +11,12 @@
       %small.badge{class: klass}
         = job_application.aasm.human_state
   .card-body
-    = link_to [:admin, job_application], class: 'job-application-modal-link', data: { toggle: :modal, target: '#remoteContentModal' } do
-      .d-flex.justify-content-start
-        = image_user_tag job_application.photo, width: 40, class: 'mr-2'
-        .d-flex.flex-column
-          %strong.text-secondary= job_application.full_name
-          %strong.small.text-muted= job_application.current_position
-        .ml-auto
+    - if can?(:manage, job_application)
+      = link_to [:admin, job_application], class: 'job-application-modal-link', data: { toggle: :modal, target: '#remoteContentModal' } do
+        = render "/admin/job_applications/job_application_card_body", job_application: job_application
+    - else
+      .job-application-modal-link
+        = render "/admin/job_applications/job_application_card_body", job_application: job_application
   .card-footer.d-flex.flex-column.flex-md-row
     .mr-auto= t('.published_date', time_ago_in_words: time_ago_in_words(job_application.created_at))
     - klasses = %w(emails-count badge job-application-modal-link mr-2)

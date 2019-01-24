@@ -212,6 +212,10 @@ fr:
       uncheck_file:
         success: "Fichier invalidé !"
     job_offers:
+      administrator:
+        new_record: "Cliquer sur \"Enregistrer\" pour inviter"
+        waiting: "En attente de confirmation"
+        active: "Utilisateur actif"
       index:
         title: "Offres du Ministère des Armées"
         new_job_offer: "Ajouter une offre"
@@ -219,7 +223,7 @@ fr:
         archived: "Offres archivées (%{count})"
       new:
         title: "Rédaction d'une nouvelle offre"
-        default_recruitment_process: "<ul><li>Si votre candidature est présélectionnée, vous serez contacté(e) par téléphone pour apprécier vos attentes et motivations.</li><li>Si vous êtes sélectionné(e) après cette première étape, vous serez reçu(e) en entretien par l’employeur et éventuellement le service des ressources humaines de la DIRISI.</li><li>Vous serez à l’issue de cet entretien informé(e) par l’employeur des suites données à votre candidature.</li></ul>"
+        default_recruitment_process: "<ul><li>Si votre candidature est présélectionnée, vous serez contacté(e) par téléphone pour apprécier vos attentes et motivations.</li><li>Si vous êtes sélectionné(e) après cette première étape, vous serez reçu(e) en entretien par l’employeur et éventuellement le service des ressources humaines.</li><li>Vous serez à l’issue de cet entretien informé(e) par l’employeur des suites données à votre candidature.</li></ul>"
       edit:
         title: "Édition de l'offre '%{job_offer_title}'"
       form:

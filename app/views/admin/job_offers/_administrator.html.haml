@@ -13,8 +13,8 @@
     %small.text-muted
       %em
         - if administrator.new_record?
-          Invité à la sauvegarde
+          = t('.new_record')
         - elsif administrator.last_sign_in_at.blank?
-          En attente de confirmation
+          = t('.waiting')
         - else
-          Utilisateur actif
+          = t('.active')

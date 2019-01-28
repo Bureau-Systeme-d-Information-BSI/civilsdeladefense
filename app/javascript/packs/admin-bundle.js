@@ -7,6 +7,7 @@
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
 
+import Url from 'domurl'
 import flatpickr from 'flatpickr'
 import { French } from "flatpickr/dist/l10n/fr"
 import $ from 'jquery'
@@ -147,7 +148,9 @@ $( document ).ready(function() {
     email_field = button.prev().find('input[type=email]')
     email = email_field.val()
     url = $(this).data('url')
-    url += "&email=" + email
+    var u = new Url(url)
+    u.query.email = email
+    url = u.toString()
     Rails.ajax({
       type: "GET",
       url: url,

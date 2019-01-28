@@ -21,24 +21,28 @@ class Administrator < ApplicationRecord
   has_many :job_applications, through: :job_applications_actors
 
   def supervisor_administrator_attributes=(attributes)
-    existing = Administrator.where(email: attributes[:email]).first
-    if existing
-      supervisor_administrator = existing
-    else
-      a = build_supervisor_administrator(attributes)
-      a.inviter = self
-      a
+    if attributes[:email].present?
+      existing = Administrator.where(email: attributes[:email]).first
+      if existing
+        supervisor_administrator = existing
+      else
+        a = build_supervisor_administrator(attributes)
+        a.inviter = self
+        a
+      end
     end
   end
 
   def grand_employer_administrator_attributes=(attributes)
-    existing = Administrator.where(email: attributes[:email]).first
-    if existing
-      self.grand_employer_administrator = existing
-    else
-      a = build_grand_employer_administrator(attributes)
-      a.inviter = self
-      a
+    if attributes[:email].present?
+      existing = Administrator.where(email: attributes[:email]).first
+      if existing
+        self.grand_employer_administrator = existing
+      else
+        a = build_grand_employer_administrator(attributes)
+        a.inviter = self
+        a
+      end
     end
   end
 

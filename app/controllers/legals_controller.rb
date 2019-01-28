@@ -14,4 +14,9 @@ class LegalsController < ApplicationController
     @page_title = "Politique de confidentialité"
     render layout: "legals"
   end
+
+  def tracking
+    @page_title = "Suivi d'audience et vie privée"
+    render layout: "legals"
+  end
 end

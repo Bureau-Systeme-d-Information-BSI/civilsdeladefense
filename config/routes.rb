@@ -114,6 +114,7 @@ Rails.application.routes.draw do
   get '/politique-confidentialite' => 'legals#privacy', as: :privacy
   get '/cgu' => 'legals#tos', as: :tos
   get '/mentions-legales' => 'legals#notice', as: :legal_notice
+  get '/suivi' => 'legals#tracking', as: :tracking
 
   root to: 'job_offers#index'
 end

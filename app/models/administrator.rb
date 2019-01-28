@@ -8,7 +8,7 @@ class Administrator < ApplicationRecord
   belongs_to :employer, optional: true
   validates :employer, presence: true, if: Proc.new { |a| a.employer? || a.ensure_employer_is_set }
   belongs_to :inviter, optional: true, class_name: 'Administrator'
-  has_many :invitees, class_name: 'Administrator'
+  has_many :invitees, class_name: 'Administrator', foreign_key: 'inviter_id'
   has_many :job_offers, foreign_key: :owner
 
   belongs_to :supervisor_administrator, optional: true, class_name: 'Administrator'

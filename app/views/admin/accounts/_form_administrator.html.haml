@@ -14,6 +14,23 @@
             = f.input :last_name
         = f.label :photo
         = f.input :photo, label: t('buttons.choose_file'), wrapper: :custom_file_without_label
+
+
+        - if @administrator.employer?
+          - %i(supervisor_administrator grand_employer_administrator).each do |submodel|
+            .my-2= t(".mention_#{submodel}_html")
+            = f.simple_fields_for(submodel, (@administrator.send(submodel) || Administrator.new)) do |submodel_form|
+              - submodel_form.object.ensure_employer_is_set = true
+              = submodel_form.input :ensure_employer_is_set, as: :hidden
+              .row
+                .col-12.col-md-8
+                  = submodel_form.input :email, required: true, label: false, placeholder: true
+                .col-12.col-md-4
+                  - if submodel == :grand_employer_administrator
+                    = submodel_form.association :employer, collection: [@administrator.employer.parent], label: false, include_blank: false, input_html: {class: 'custom-select'}
+                  - else
+                    = submodel_form.association :employer, collection: [@administrator.employer], label: false, include_blank: false, input_html: {class: 'custom-select'}
+
       .form-actions.text-right.mt-4
         %ul.list-inline.mb-0
           %li.list-inline-item

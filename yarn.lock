@@ -1850,6 +1850,11 @@ domready@1.0.8:
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/domready/-/domready-1.0.8.tgz#91f252e597b65af77e745ae24dd0185d5e26d58c"
 
+domurl@^2.1.9:
+  version "2.1.9"
+  resolved "https://registry.yarnpkg.com/domurl/-/domurl-2.1.9.tgz#d617adfa5b73cc1f60fa230db711876569be548b"
+  integrity sha512-bdHUY7ITkZjRUmagRQEwM1G1ktJMl8AOSDbbsR04cYM0aPo6clYcdH/PbrgXlghx4kzDFSPNIIdsrKpcFlFLVg==
+
 domutils@1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/domutils/-/domutils-1.5.1.tgz#dcd8488a26f563d61079e48c9f7b7e32373682cf"

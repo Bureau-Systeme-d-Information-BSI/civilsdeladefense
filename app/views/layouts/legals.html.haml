@@ -2,5 +2,5 @@
   .card.pushed-top
     .card-body
       %h1= @page_title
-      = simple_format(yield)
+      = simple_format(yield, {}, sanitize: false)
 = render template: "layouts/application"

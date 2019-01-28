@@ -112,6 +112,7 @@ fr:
       legal_notice: "Mentions légales"
       tos: "Conditions générales d’utilisation"
       privacy: "Politique de confidentialité"
+      tracking: "Suivi d'audience et vie privée"
     navbar:
       job_offers: "Nos offres"
       account: "Mon compte"
@@ -156,6 +157,8 @@ fr:
         title: "Votre compte"
       form_administrator:
         title: "Vos informations"
+        mention_supervisor_administrator_html: "Courriel et entité de votre <strong>Employeur Superviseur</strong>"
+        mention_grand_employer_administrator_html: "Courriel et entité de votre <strong>Grand Employeur</strong>"
       change_password:
         title: "Changement de mot de passe"
       update_password:

@@ -5,7 +5,7 @@
     = link_to [:edit, :admin, @job_offer], class: 'small ml-3 text-nowrap' do
       = fa_icon('pencil')
       = t('buttons.edit')
-- draggable = can? :manage, JobApplication
+- draggable = can? :manage, @job_applications.values.flatten.first
 .board#board{data: {draggable: draggable}}
   .lists
     - JobApplication.aasm.states.each do |state|

@@ -62,7 +62,17 @@ class Admin::AccountsController < Admin::BaseController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def administrator_params
-      params.require(:administrator).permit(:title, :first_name, :last_name, :photo)
+      params.require(:administrator).permit(
+        :title,
+        :first_name,
+        :last_name,
+        :photo,
+        {
+          supervisor_administrator_attributes: [:email, :employer_id, :ensure_employer_is_set]
+        },
+        {
+          grand_employer_administrator_attributes: [:email, :employer_id, :ensure_employer_is_set]
+        })
     end
 
     def administrator_password_params

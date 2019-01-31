@@ -14,19 +14,23 @@
     .container-fluid.devise
       .row
         .col-12.col-md-7.col-xl-6.d-md-flex.flex-md-column.justify-content-center.bg-white.px-md-5.sidebar.pt-5.pt-md-0
-          .logos
-            = image_tag asset_pack_path('images/minarm.svg'), class: 'minarm'
-            .d-flex.flex-column.justify-content-center
-              = image_tag asset_pack_path('images/logo.svg'), class: 'logo'
-          - if flash[:notice]
-            .alert.alert-info= flash[:notice]
-          - if flash[:alert]
-            .alert.alert-danger= flash[:alert]
-          - elsif flash[:error]
-            .alert.alert-danger= flash[:error]
-          - elsif flash[:success]
-            .alert.alert-success= flash[:success]
-          = yield
+          .row
+            - klasses = %w(col-12)
+            - klasses += %w(mx-auto col-12 col-md-8 col-xl-6) unless controller_name == "confirmations" && action_name == "show"
+            %div{class: klasses}
+              .logos
+                = image_tag asset_pack_path('images/minarm.svg'), class: 'minarm'
+                .d-flex.flex-column.justify-content-center
+                  = image_tag asset_pack_path('images/logo.svg'), class: 'logo'
+              - if flash[:notice]
+                .alert.alert-info= flash[:notice]
+              - if flash[:alert]
+                .alert.alert-danger= flash[:alert]
+              - elsif flash[:error]
+                .alert.alert-danger= flash[:error]
+              - elsif flash[:success]
+                .alert.alert-success= flash[:success]
+              = yield
         .col-12.col-md-5.col-xl-6{style: "background-size: cover;background-image: url(#{ asset_pack_path('images/background.png') })"}
     - if resource.is_a?(User)
       = render partial: '/shared/footer'

@@ -1,11 +1,11 @@
 - unread_by_administrator = email.is_unread? && email.sender.is_a?(User)
 - id = dom_id(email)
-.card{id: id}
+.email.card{id: id}
   - if unread_by_administrator
     .notification 1
   .card-header.with-subheader.bg-white.font-weight-bold.text-secondary.d-flex
     .mr-auto
-      = fa_icon('file-document', class: 'text-secondary')
+      = fa_icon('forum', class: 'text-secondary')
       = email.sender&.full_name
     - if email.sender && email.sender.is_a?(User)
       - klasses = %w(btn bmd-btn-icon)
@@ -24,3 +24,10 @@
     = email.subject
   .card-body.bg-white
     = simple_format email.body
+    - if email.attachments.any?
+      %ul.list-unstyled.mb-0
+        - for attachment in email.attachments
+          %li
+            = link_to rails_blob_path(attachment, disposition: "attachment") do
+              = fa_icon('file-document')
+              = attachment.filename

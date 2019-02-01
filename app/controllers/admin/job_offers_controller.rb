@@ -48,8 +48,12 @@ class Admin::JobOffersController < Admin::BaseController
         # j.job_offer_actors.build(role: actor_role).build_administrator
       end
       j.job_offer_actors.build(role: :employer).administrator = current_administrator
-      j.job_offer_actors.build(role: :grand_employer).administrator = current_administrator.grand_employer_administrator
-      j.job_offer_actors.build(role: :supervisor_employer).administrator = current_administrator.supervisor_administrator
+      if current_administrator.grand_employer_administrator.present?
+        j.job_offer_actors.build(role: :grand_employer).administrator = current_administrator.grand_employer_administrator
+      end
+      if current_administrator.supervisor_administrator.present?
+        j.job_offer_actors.build(role: :supervisor_employer).administrator = current_administrator.supervisor_administrator
+      end
       j
     else
       j = @job_offer_origin.dup

@@ -2,6 +2,8 @@ class Email < ApplicationRecord
   belongs_to :job_application
   belongs_to :sender, optional: true, polymorphic: true
 
+  has_many_attached :attachments
+
   validates :subject, :body, presence: true
 
   audited associated_with: :job_application

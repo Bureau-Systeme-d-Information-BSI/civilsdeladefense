@@ -20,6 +20,10 @@ class ApplicantNotificationsMailer < ApplicationMailer
     host = mail_uri.host
     headers['Message-ID'] = "<#{ @email.id }@#{ host }>"
 
+    @email.attachments.each do |attachment|
+      attachments[attachment.filename.to_s] = attachment.blob.download
+    end
+
     mail to: to, subject: subject
   end
 

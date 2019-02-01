@@ -324,7 +324,7 @@ b, strong {
   font-weight: 500;
 }
 
-.lists .card, .job-offer.card {
+.lists .card, .job-offer.card, .email.card {
   .notification {
     @extend .font-weight-bold;
     position: absolute;

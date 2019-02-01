@@ -60,6 +60,6 @@ class Admin::EmailsController < Admin::BaseController
   private
     # Never trust parameters from the scary internet, only allow the white list through.
     def email_params
-      params.require(:email).permit(:subject, :body)
+      params.require(:email).permit(:subject, :body, attachments: [])
     end
 end

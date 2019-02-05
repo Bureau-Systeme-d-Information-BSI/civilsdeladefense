@@ -25,9 +25,19 @@ class Admin::JobOffersController < Admin::BaseController
 
   def add_actor
     @job_offer = params[:job_offer_id].present? ? JobOffer.find(params[:job_offer_id]) : JobOffer.new
-    @administrator = Administrator.find_by(email: params[:email])
+    @existing_administrator = Administrator.find_by(email: params[:email])
+    @administrator = if @existing_administrator
+      @job_offer.job_offer_actors.build(role: params[:role]).administrator = @existing_administrator
+    else
+      @job_offer.job_offer_actors.build(role: params[:role]).build_administrator(email: params[:email])
+    end
+    @administrator.inviter ||= current_administrator
 
-    render action: 'add_actor', layout: false
+    if @administrator.valid?
+      render action: 'add_actor', layout: false
+    else
+      render json: @administrator.errors, status: :unprocessable_entity
+    end
   end
 
   # GET /admin/job_offers/new

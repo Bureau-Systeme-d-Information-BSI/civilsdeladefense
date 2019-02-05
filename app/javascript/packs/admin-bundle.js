@@ -143,10 +143,10 @@ $( document ).ready(function() {
   });
 
   $('.new_job_offer, .edit_job_offer').on('click', '.add_fields', function(event) {
-    var url, email_field, email, button
+    var url, emailField, email, button
     button = $(event.currentTarget)
-    email_field = button.prev().find('input[type=email]')
-    email = email_field.val()
+    emailField = button.prev().find('input[type=email]').get(0)
+    email = emailField.value
     url = $(this).data('url')
     var u = new Url(url)
     u.query.email = email
@@ -154,17 +154,30 @@ $( document ).ready(function() {
     Rails.ajax({
       type: "GET",
       url: url,
+      beforeSend: function() {
+        var formGroup = emailField.closest('.form-group')
+        formGroup.classList.remove('form-group-invalid')
+        ;[].forEach.call(formGroup.querySelectorAll('.invalid-feedback'), function(el) {
+          formGroup.removeChild(el)
+        })
+        emailField.classList.remove('is-invalid')
+        return true
+      },
       success: function(response){
         var content = $(response).find('form').html()
+        console.log('************')
+        console.log(content)
         var fields = button.closest('.form-actor').prev()
+        console.log(fields)
         var fields = fields.append(content)
+        emailField.value = ''
       },
       error: function(response){
-        console.log("error")
-        console.log(response)
-      },
-      complete: function(event) {
-        email_field.val('')
+        var message
+        message = response.email.join(', ')
+        emailField.closest('.form-group').classList.add('form-group-invalid')
+        emailField.classList.add('is-invalid')
+        emailField.insertAdjacentHTML('afterend', `<div class=\'invalid-feedback\'>${message}</div>`)
       }
     })
 

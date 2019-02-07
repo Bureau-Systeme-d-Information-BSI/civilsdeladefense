@@ -222,7 +222,7 @@ fr:
       index:
         title: "Offres du Ministère des Armées"
         new_job_offer: "Ajouter une offre"
-        active: "Offres actives (%{count})"
+        active: "Offres en cours (%{count})"
         archived: "Offres archivées (%{count})"
       new:
         title: "Rédaction d'une nouvelle offre"

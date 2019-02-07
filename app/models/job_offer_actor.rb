@@ -17,7 +17,9 @@ class JobOfferActor < ApplicationRecord
         self.administrator = existing
       end
     else
-      unless has_destroy_flag?(attributes)
+      if has_destroy_flag?(attributes)
+        self.mark_for_destruction
+      else
         attributes.delete(:_destroy)
         a = build_administrator(attributes)
         a.inviter = self.job_offer&.owner

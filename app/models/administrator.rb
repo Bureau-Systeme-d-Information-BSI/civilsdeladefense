@@ -9,7 +9,10 @@ class Administrator < ApplicationRecord
   validates :employer, presence: true, if: Proc.new { |a| a.employer? || a.ensure_employer_is_set }
   belongs_to :inviter, optional: true, class_name: 'Administrator'
   has_many :invitees, class_name: 'Administrator', foreign_key: 'inviter_id'
-  has_many :job_offers, foreign_key: :owner
+
+  has_many :owned_job_offers, class_name: 'JobOffer', foreign_key: 'owner_id'
+  has_many :job_offer_actors
+  has_many :job_offers, through: :job_offer_actors
 
   belongs_to :supervisor_administrator, optional: true, class_name: 'Administrator'
   belongs_to :grand_employer_administrator, optional: true, class_name: 'Administrator'

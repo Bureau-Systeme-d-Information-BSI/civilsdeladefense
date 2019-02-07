@@ -1,20 +1,13 @@
 class Admin::JobOffersController < Admin::BaseController
-  before_action :set_job_offers, only: %i(index archived)
+  before_action :set_job_offers, only: %i(index)
 
   # GET /admin/job_offers
   # GET /admin/job_offers.json
   def index
-    @job_offers = @job_offers_active
+    @archived_page = request.path =~ /archived/
+    @job_offers = @archived_page ? @job_offers_archived : @job_offers_active
 
     render layout: 'admin/simple'
-  end
-
-  # GET /admin/job_offers/archived
-  # GET /admin/job_offers/archived.json
-  def archived
-    @job_offers = @job_offers_archived
-
-    render action: :index, layout: 'admin/simple'
   end
 
   # GET /admin/job_offers/1

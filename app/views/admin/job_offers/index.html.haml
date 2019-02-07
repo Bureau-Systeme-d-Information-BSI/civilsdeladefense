@@ -5,13 +5,13 @@
       %ul.nav.nav-tabs.mr-auto{role: :tablist}
         %li.nav-item.mr-3
           - klasses = %i(nav-link text-uppercase my-0)
-          - klasses << :active if controller.action_name == "index"
+          - klasses << :active unless @archived_page
           - url = [:admin, :job_offers]
           - url << {q: params[:q]} if params[:q].present?
           = link_to t('.active', count: @job_offers_active.values.flatten.size), url, class: klasses
         %li.nav-item.mr-3
           - klasses = %i(nav-link text-uppercase my-0)
-          - klasses << :active if controller.action_name == "archived"
+          - klasses << :active if @archived_page
           - url = [:archived, :admin, :job_offers]
           - url << {q: params[:q]} if params[:q].present?
           = link_to t('.archived', count: @job_offers_archived.values.flatten.size), url, class: klasses

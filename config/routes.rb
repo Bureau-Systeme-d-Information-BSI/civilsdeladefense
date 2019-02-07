@@ -27,7 +27,7 @@ Rails.application.routes.draw do
     resources :job_offers, path: 'offresdemploi' do
       collection do
         get :add_actor
-        get :archived
+        get :archived, to: 'job_offers#index'
         JobOffer.aasm.events.map(&:name).each do |event_name|
           action_name = "create_and_#{ event_name }".to_sym
           post :create, constraints: CommitParamConstraint.new(action_name), action: action_name

@@ -1,6 +1,8 @@
 # config valid for current version and patch releases of Capistrano
 lock "~> 3.11.0"
 
+require 'capistrano-db-tasks'
+
 set :application, "civilsdeladefense"
 set :repo_url, "git@github.com:betagouv/civilsdeladefense.git"
 

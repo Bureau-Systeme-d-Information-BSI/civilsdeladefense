@@ -52,6 +52,7 @@ require('js/offcanvas.js')
 require('js/dependent-fields.js')
 require('js/in-place-edit.js')
 require('js/board.js')
+require('js/city-autocomplete.js')
 
 $('body').bootstrapMaterialDesign()
 

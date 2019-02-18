@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_01_14_143048) do
+ActiveRecord::Schema.define(version: 2019_02_18_143001) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -277,6 +277,12 @@ ActiveRecord::Schema.define(version: 2019_01_14_143048) do
     t.integer "option_photo"
     t.integer "notifications_count", default: 0
     t.boolean "available_immediately", default: false
+    t.string "city"
+    t.string "county"
+    t.integer "county_code"
+    t.string "country_code"
+    t.string "postcode"
+    t.string "region"
     t.index ["category_id"], name: "index_job_offers_on_category_id"
     t.index ["contract_type_id"], name: "index_job_offers_on_contract_type_id"
     t.index ["employer_id"], name: "index_job_offers_on_employer_id"

@@ -3,6 +3,7 @@ class JobOffer < ApplicationRecord
 
   include AASM
   audited
+  has_associated_audits
 
   extend FriendlyId
   friendly_id :title, use: [:slugged, :finders, :history]

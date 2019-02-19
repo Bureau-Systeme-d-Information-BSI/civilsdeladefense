@@ -15,6 +15,8 @@ services:
       - .:/usr/src/app:rw
       - ./docker/ssh:/root/.ssh:ro
     environment:
+      ALGOLIA_APP_ID: "${ALGOLIA_APP_ID}"
+      ALGOLIA_API_KEY: "${ALGOLIA_API_KEY}"
       PRODUCTION_SERVER_IP: "${PRODUCTION_SERVER_IP}"
       PRODUCTION_SERVER_USER: "${PRODUCTION_SERVER_USER}"
       DEFAULT_HOST: "${DEFAULT_HOST}"
@@ -40,6 +42,8 @@ services:
       - ./:/usr/src/app
     command: bundle exec ./bin/webpack-dev-server
     environment:
+      ALGOLIA_APP_ID: "${ALGOLIA_APP_ID}"
+      ALGOLIA_API_KEY: "${ALGOLIA_API_KEY}"
       BUNDLE_BIN: "/usr/src/app/vendor/.bundle/ruby/2.5.0/bin"
       BUNDLE_PATH: "/usr/src/app/vendor/.bundle/ruby/2.5.0"
   specs:

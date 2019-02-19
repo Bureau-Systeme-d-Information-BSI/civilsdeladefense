@@ -35,6 +35,12 @@
                     .row
                       .col-12.col-md-6
                         = f.input :location
+                        = f.input :city, as: :hidden
+                        = f.input :county, as: :hidden
+                        = f.input :county_code, as: :hidden
+                        = f.input :country_code, as: :hidden
+                        = f.input :postcode, as: :hidden
+                        = f.input :region, as: :hidden
                     = f.input :description, input_html: { class: :ckeditor }
                     = f.input :required_profile, input_html: { class: :ckeditor }
                     = f.input :recruitment_process, input_html: { class: :ckeditor }

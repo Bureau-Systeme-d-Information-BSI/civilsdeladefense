@@ -36,6 +36,8 @@
                   = t('.activities.email_html', admin_name: whodunnit, name: @job_application.full_name)
                 - elsif klass == "User"
                   = t('.activities.email_simple_html', from_name: whodunnit)
+              - elsif audited_changes.key?('photo_updated_at')
+                = t('.activities.updated_photo_html', admin_name: whodunnit, name: @job_application.full_name)
               - else
                 %code= audited_changes
             %small.text-muted.time-ago

@@ -3,10 +3,19 @@
 .email.card{id: id}
   - if unread_by_administrator
     .notification 1
-  .card-header.with-subheader.bg-white.font-weight-bold.text-secondary.d-flex
+  .card-header.with-subheader.bg-white.font-weight-bold.text-secondary.d-flex.align-items-center
     .mr-auto
       = fa_icon('forum', class: 'text-secondary')
-      = email.sender&.full_name
+      - if email.is_automatic_email?
+        %em Courriel automatique
+      - else
+        = precede 'de ' do
+          = email.sender&.full_name
+      %br
+      %small.datetime
+        = surround 'le ', ' - ' do
+          = I18n.l email.created_at, format: :short
+        = t('.time_ago', time_ago_in_words: time_ago_in_words(email.created_at))
     - if email.sender && email.sender.is_a?(User)
       - klasses = %w(btn bmd-btn-icon)
       - if unread_by_administrator

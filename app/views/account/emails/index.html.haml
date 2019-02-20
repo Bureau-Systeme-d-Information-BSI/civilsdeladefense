@@ -4,9 +4,19 @@
 
   - @job_application.emails.order(created_at: :desc).includes(:sender).each do |email|
     .card.mt-4
-      .card-header.with-subheader.bg-white.font-weight-bold.text-secondary
-        = fa_icon('file-document', class: 'text-secondary')
-        = email.sender&.full_name
+      .card-header.with-subheader.bg-white.font-weight-bold.text-secondary.d-flex.align-items-center
+        .mr-auto
+          = fa_icon('forum', class: 'text-secondary')
+          - if email.is_automatic_email?
+            %em Courriel automatique
+          - else
+            = precede 'de ' do
+              = email.sender&.full_name
+          %br
+          %small.datetime
+            = surround 'le ', ' - ' do
+              = I18n.l email.created_at, format: :short
+            = t('.time_ago', time_ago_in_words: time_ago_in_words(email.created_at))
       .card-subheader.bg-card-bg.font-weight-bold.text-muted
         = email.subject
       .card-body.bg-white

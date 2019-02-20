@@ -2,6 +2,7 @@ fr:
   time:
     formats:
       default: "%-d %b %Y %H:%M"
+      short: "%d/%m/%Y %H:%M"
   datetime:
     distance_in_words:
       short:
@@ -134,6 +135,8 @@ fr:
         nav_files: "Mes documents"
         nav_offer: "L'offre"
     emails:
+      index:
+        time_ago: "il y a %{time_ago_in_words}"
       create:
         success: "Courriel envoyé !"
       form:
@@ -286,6 +289,7 @@ fr:
       email:
         mark_as_read: "Marquer comme lu"
         mark_as_unread: "Marquer comme non lu"
+        time_ago: "il y a %{time_ago_in_words}"
       mark_as_read:
         success: "Courriel marqué comme lu !"
       mark_as_unread:

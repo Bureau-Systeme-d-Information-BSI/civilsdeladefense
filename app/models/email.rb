@@ -19,4 +19,8 @@ class Email < ApplicationRecord
   def compute_job_application_notifications_counter
     job_application.compute_notifications_counter!
   end
+
+  def is_automatic_email?
+    sender.nil?
+  end
 end

@@ -44,9 +44,13 @@ class ApplicantNotificationsMailer < ApplicationMailer
           body: body
         }
         email = job_application.emails.build(email_params)
+        email.created_at = email.updated_at = message.date
         email.sender = user
         email.job_application = job_application
         email.save!
+        return true
+      else
+        return false
       end
     end
   end

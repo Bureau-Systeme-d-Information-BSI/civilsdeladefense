@@ -17,7 +17,8 @@ class InboundMessage
     end
 
     Mail.find_and_delete(count: 100).each do |message|
-      ApplicantNotificationsMailer.receive(message)
+      res = ApplicantNotificationsMailer.receive(message)
+      message.mark_for_delete = res
     end
   end
 end

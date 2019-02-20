@@ -168,15 +168,6 @@ class JobApplication < ApplicationRecord
       end
       memo
     }
-    ary = User::FILES.inject(ary) { |memo,obj|
-      if self.user.send("#{obj}?".to_sym)
-        memo[0] += 1
-        if self.user.send("#{obj}_is_validated".to_sym) == 0
-          memo[1] += 1
-        end
-      end
-      memo
-    }
     self.files_count, self.files_unread_count = ary
   end
 

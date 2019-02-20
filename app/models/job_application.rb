@@ -22,7 +22,16 @@ class JobApplication < ApplicationRecord
   has_many :actors, through: :job_applications_actors, class_name: 'Administrator'
 
   JobOffer::FILES.each do |field|
-    has_attached_file field.to_sym
+    if field == :photo
+      has_attached_file field.to_sym,
+        styles: {
+          small: "32x32#",
+          medium: "40x40#",
+          big: "80x80#",
+        }
+    else
+      has_attached_file field.to_sym
+    end
     validates_with AttachmentPresenceValidator,
       attributes: field.to_sym,
       if: Proc.new { |job_application|

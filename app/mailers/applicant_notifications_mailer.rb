@@ -59,6 +59,8 @@ class ApplicantNotificationsMailer < ApplicationMailer
       else
         return false
       end
+    else
+      return false
     end
   end
 end

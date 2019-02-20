@@ -56,6 +56,7 @@ fr:
     unarchive: "Désarchiver"
     suspend: "Mettre en pause"
     deactivate: "Désactiver"
+    download: "Télécharger"
     reactivate: "Réactiver"
     draftize: "Passer en brouillon"
     choose_file: "Choisir un fichier"

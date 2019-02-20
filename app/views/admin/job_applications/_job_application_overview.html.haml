@@ -10,6 +10,6 @@
       .card-body.bg-body-bg
         - pdf_url = send("#{file}_admin_job_application_url", job_application, format: :pdf)
         %object{data: pdf_url, type: "application/pdf", width: "100%", height: "500px"}
-          = link_to t("simple_form.labels.job_application.#{file}"), pdf_url
+          = link_to t("buttons.download") + t("simple_form.labels.job_application.#{file}"), pdf_url
 - if @other_job_applications.any?
   = render partial: "other_job_applications", locals: {other_job_applications: @other_job_applications}

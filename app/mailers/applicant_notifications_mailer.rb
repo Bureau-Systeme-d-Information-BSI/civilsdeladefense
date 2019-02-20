@@ -48,6 +48,9 @@ class ApplicantNotificationsMailer < ApplicationMailer
         email.sender = user
         email.job_application = job_application
         email.save!
+        return true
+      else
+        return false
       end
     end
   end

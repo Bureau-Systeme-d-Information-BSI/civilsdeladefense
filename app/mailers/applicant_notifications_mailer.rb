@@ -31,7 +31,14 @@ class ApplicantNotificationsMailer < ApplicationMailer
     references = message.header['References']
     original_email_id = references.value.split(/\<(.*)@/)[1]
     if original_email_id.present?
-      original_email = Email.find original_email_id
+      begin
+        original_email = Email.find original_email_id
+      rescue ActiveRecord::RecordNotFound => e
+        original_email = nil
+      end
+      if original_email.blank?
+        return false
+      end
       body = (message.text_part || message.html_part || message).body.decoded
       body = ActionView::Base.full_sanitizer.sanitize(body)
       if body.present?

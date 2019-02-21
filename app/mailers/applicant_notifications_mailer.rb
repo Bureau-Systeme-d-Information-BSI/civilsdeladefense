@@ -47,15 +47,17 @@ class ApplicantNotificationsMailer < ApplicationMailer
         subject = message.subject
         sender_email = message.from.first
         user = User.find_by_email sender_email
-        email_params = {
-          subject: subject,
-          body: body
-        }
-        email = job_application.emails.build(email_params)
-        email.created_at = email.updated_at = message.date
-        email.sender = user
-        email.job_application = job_application
-        email.save!
+        Audited.audit_class.as_user(user) do
+          email_params = {
+            subject: subject,
+            body: body
+          }
+          email = job_application.emails.build(email_params)
+          email.created_at = email.updated_at = message.date
+          email.sender = user
+          email.job_application = job_application
+          email.save!
+        end
         return true
       else
         return false

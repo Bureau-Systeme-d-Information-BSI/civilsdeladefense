@@ -16,9 +16,15 @@ class InboundMessage
       )
     end
 
-    Mail.find_and_delete(count: 100).each do |message|
-      res = ApplicantNotificationsMailer.receive(message)
-      message.mark_for_delete = res
+    if Rails.env.production?
+      Mail.find_and_delete(count: 100).each do |message|
+        res = ApplicantNotificationsMailer.receive(message)
+        message.mark_for_delete = res
+      end
+    else
+      Mail.find(count: 100).each do |message|
+        res = ApplicantNotificationsMailer.receive(message)
+      end
     end
   end
 end

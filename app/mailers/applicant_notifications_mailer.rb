@@ -30,6 +30,7 @@ class ApplicantNotificationsMailer < ApplicationMailer
   def receive(message)
     references = message.header['References']
     original_email_id = references.value.split(/\<(.*)@/)[1]
+    Rails.logger.debug "InboundMessage treating message #{message.inspect}"
     if original_email_id.present?
       begin
         original_email = Email.find original_email_id

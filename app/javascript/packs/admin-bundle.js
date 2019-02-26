@@ -24,22 +24,14 @@ require('bootstrap-material-design')
 const Rails = require('rails-ujs')
 Rails.start()
 
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
-import '@ckeditor/ckeditor5-build-classic/build/translations/fr.js'
-
-document.querySelectorAll('.ckeditor').forEach((node) => {
-  ClassicEditor
-    .create(node, {
-      toolbar: [ 'bold', 'italic', 'link', 'bulletedList', 'numberedList' ],
-      language: 'fr',
-    })
-    .then( editor => {
-        console.log( editor )
-    })
-    .catch( error => {
-        console.error( error )
-    })
-})
+// Import TinyMCE
+import tinymce from 'tinymce/tinymce'
+// A theme is also required
+import 'tinymce/themes/silver/theme'
+// Any plugins you want to use has to be imported
+import 'tinymce/plugins/paste'
+import 'tinymce/plugins/link'
+import 'tinymce/plugins/lists'
 
 function importAll(r) {
   return r.keys().map(r)
@@ -57,6 +49,15 @@ require('js/city-autocomplete.js')
 $('body').bootstrapMaterialDesign()
 
 $( document ).ready(function() {
+  tinymce.init({
+    selector: '.ckeditor',
+    branding: false,
+    menubar: false,
+    height: 300,
+    toolbar: 'undo redo | paste | bold italic link | bullist numlist',
+    plugins: ['paste', 'lists']
+  })
+
   var reactiveElements = ['job_offer_professional_category_id', 'job_offer_experience_level_id', 'job_offer_sector_id']
   var reactiveElementsSelector = reactiveElements.map(item => `#${item}`).join(', ')
   ;[].forEach.call(document.querySelectorAll(reactiveElementsSelector), function(el) {
@@ -166,10 +167,7 @@ $( document ).ready(function() {
       },
       success: function(response){
         var content = $(response).find('form').html()
-        console.log('************')
-        console.log(content)
         var fields = button.closest('.form-actor').prev()
-        console.log(fields)
         var fields = fields.append(content)
         emailField.value = ''
       },
@@ -187,13 +185,10 @@ $( document ).ready(function() {
 })
 
 document.addEventListener("DOMContentLoaded", function() {
-  var inputSearchNodes = document.querySelectorAll('.input-search')
-  if (inputSearchNodes !== null) {
-    inputSearchNodes.forEach( (inputSearchNode) => {
-      inputSearchNode.addEventListener('click', function(e) {
-      })
+  ;[].forEach.call(document.querySelectorAll('.input-search'), function(inputSearchNode) {
+    inputSearchNode.addEventListener('click', function(e) {
     })
-  }
+  })
 })
 
 $('#remoteContentModal').on('show.bs.modal', function (event) {

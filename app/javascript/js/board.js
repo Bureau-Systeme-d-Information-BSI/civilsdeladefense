@@ -14,12 +14,10 @@ window.recomputeColumnTotal = recomputeColumnTotal
 
 document.addEventListener("DOMContentLoaded", function() {
   var board = document.getElementById('board')
-  if (board !== null && board.getAttribute("data-draggable") !== null) {
-    var listNodes = board.querySelectorAll('.lists .list')
-    listNodes.forEach( (listNode) => {
+  if (board !== null && board.getAttribute('data-draggable') !== null) {
+    ;[].forEach.call(board.querySelectorAll('.lists .list'), function(listNode) {
       var state = listNode.getAttribute('data-state')
-      var cardListNodes = listNode.querySelectorAll('.cards')
-      cardListNodes.forEach( (cardListNode) => {
+      ;[].forEach.call(listNode.querySelectorAll('.cards'), function(cardListNode) {
         Sortable.create(cardListNode, {
           group: 'job-applications',
           sort: false,

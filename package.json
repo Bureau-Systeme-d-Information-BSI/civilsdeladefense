@@ -19,7 +19,8 @@
     "sortablejs": "^1.7.0",
     "svg-sprite-loader": "^3.8.0",
     "svgo": "^1.0.5",
-    "svgo-loader": "^2.1.0"
+    "svgo-loader": "^2.1.0",
+    "tinymce": "^5.0.1"
   },
   "devDependencies": {
     "webpack-dev-server": "2.11.2"

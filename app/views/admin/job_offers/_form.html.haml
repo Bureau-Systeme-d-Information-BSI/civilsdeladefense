@@ -8,6 +8,11 @@
       = simple_form_for([:admin, @job_offer], defaults: { disabled: @job_offer.archived? ? true : nil }) do |f|
         = f.error_notification
         = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+        - if @job_offer.errors.any?
+          .alert.alert-danger.pt-0
+            %ul.mb-0
+              - @job_offer.errors.full_messages.each do |msg|
+                %li= msg
         %nav.navbar.navbar-dark.bg-secondary.mb-5
           %span.navbar-text#step_1= card_1_title
         .container

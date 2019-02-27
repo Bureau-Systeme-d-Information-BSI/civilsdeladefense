@@ -4,6 +4,13 @@ class ApplicationController < ActionController::Base
 
   layout :layout_by_resource
 
+
+  include ErrorResponseActions
+
+  rescue_from CanCan::AccessDenied, with: :authorization_error
+  rescue_from ActiveRecord::RecordNotFound, with: :resource_not_found
+  rescue_from JobOfferNotAvailableAnymore, with: :resource_not_available_anymore
+
   private
 
     def basic_auth

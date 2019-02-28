@@ -124,7 +124,7 @@ fr:
     shared:
       links:
         back: Retour
-        didn_t_receive_confirmation_instructions: Vous n'avez pas reçu le courriel de confirmation ?
+        didn_t_receive_confirmation_instructions: Vous voulez confirmer votre compte ?
         didn_t_receive_unlock_instructions: Vous n'avez pas reçu le courriel de déblocage ?
         forgot_your_password: Mot de passe oublié ?
         sign_in: Connexion

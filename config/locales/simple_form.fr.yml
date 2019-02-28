@@ -124,6 +124,7 @@ fr:
           email: "Courriel Employeur Superviseur"
         grand_employer_administrator:
           email: "Courriel Grand Employeur"
+        title: "Fonction"
       message:
         body: 'Ce commentaire ne sera visible que par vous et les
 autres membres de votre équipe.'

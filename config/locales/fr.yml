@@ -336,6 +336,7 @@ fr:
             employer: "Employeur"
             role: "Rôle"
             last_sign_in_at: "Dernière connexion"
+            created_at: "Créé le"
           account_active:
             zero: 'Aucun compte admin actif'
             one: 'Compte actif (1)'

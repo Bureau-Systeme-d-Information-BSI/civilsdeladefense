@@ -92,15 +92,10 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
   private
 
     def set_administrators
-      @administrators_active, @administrators_inactive = if current_administrator.bant?
-        [Administrator.active, Administrator.inactive]
-      elsif current_administrator.grand_employer?
-        employer_ids = current_administrator.employer.children.map(&:id) << current_administrator.employer_id
-        [Administrator.active.where(employer_id: employer_ids), Administrator.inactive.where(employer_id: employer_ids)]
-      else
-        employer_id = current_administrator.employer_id
-        [Administrator.active.where(employer_id: employer_id), Administrator.inactive.where(employer_id: employer_id)]
-      end
+      @q = Administrator.ransack(params[:q])
+      @q.sorts = 'created_at desc' if @q.sorts.empty?
+      @administrators_active = @q.result.active.includes(:employer)
+      @administrators_inactive = @q.result.inactive.includes(:employer)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

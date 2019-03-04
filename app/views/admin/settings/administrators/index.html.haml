@@ -19,21 +19,33 @@
           - klasses << :active if controller.action_name == "inactive"
           - url = [:inactive, :admin, :settings, :administrators]
           = link_to t('.account_inactive', count: @administrators_inactive.size), url, class: klasses
-  -if @administrators.size != 0
+  = search_form_for [:admin, :settings, @q], wrapper: :inline_form, html: { class: 'form-inline' }, builder: SimpleForm::FormBuilder do |f|
     %table.table.table-hover.mb-0.mt-3
       %thead
         %tr
           %th
             = t('.table.photo')
           %th
-            = t('.table.name')
+            = sort_link(@q, :last_name) do
+              = t('.table.name')
           %th
             = t('.table.employer')
           %th
             = t('.table.role')
           %th
-            = t('.table.last_sign_in_at')
-          %th{ :style => "width: 95px;" }
+            = sort_link(@q, :created_at) do
+              = t('.table.created_at')
+          %th{style: "width: 70px;"}
+        %tr
+          %td
+          %td
+            = f.input :first_name_or_last_name_or_email_cont, as: :string, label: false, input_html: {class: 'w-100'}
+          %td
+            = f.input :employer_id_eq, collection: Employer.all.map{|e| [e.name.truncate(10, separator: '…'), e.id]}, label: false
+          %td
+            = f.input :role_eq, collection: Administrator.roles.map{|x,y| [Administrator.human_attribute_name("role.#{ x }"), y]}, label: false, input_html: {class: 'w-100'}
+          %td
+          %td
       %tbody
         - for administrator in @administrators
           %tr
@@ -41,9 +53,9 @@
               = image_user_tag administrator.photo, width: 40, class: 'mr-2'
             %td
               .text-muted
-                = administrator.full_name_with_title
+                = administrator.full_name.truncate(60, separator: '…')
               .text-dark
-                = administrator.email
+                = administrator.email.truncate(60, separator: '…')
             %td.text-dark
               = administrator&.employer&.code
             %td
@@ -53,10 +65,16 @@
                 - else
                   = t('.no_role')
             %td.text-dark
-              - if administrator.last_sign_in_at.present?
-                = l administrator.last_sign_in_at
-              - else
-                %em= t('.never_connected')
+              .d-block.text-nowrap
+                = l administrator.created_at
+              %small
+                %small
+                  .d-block.text-nowrap
+                    Dernière conn. :
+                    - if administrator.last_sign_in_at
+                      = l administrator.last_sign_in_at
+                    - else
+                      %em= t('.never_connected')
             %td.text-right
               %ul.list-inline.mb-0.actions
                 %li.list-inline-item

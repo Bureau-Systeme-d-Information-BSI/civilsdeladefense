@@ -46,6 +46,7 @@ gem 'rollbar'
 gem 'pg_search'
 gem 'sequenced'
 gem 'paperclip'
+gem 'ransack'
 gem 'invisible_captcha'
 gem 'mail'
 

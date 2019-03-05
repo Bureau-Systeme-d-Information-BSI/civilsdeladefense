@@ -19,7 +19,7 @@
           - klasses << :active if controller.action_name == "inactive"
           - url = [:inactive, :admin, :settings, :administrators]
           = link_to t('.account_inactive', count: @administrators_inactive.size), url, class: klasses
-  = search_form_for [:admin, :settings, @q], wrapper: :inline_form, html: { class: 'form-inline' }, builder: SimpleForm::FormBuilder do |f|
+  = search_form_for [:admin, :settings, @q], wrapper: :inline_form, html: { class: 'form-inline auto-submit' }, builder: SimpleForm::FormBuilder do |f|
     %table.table.table-hover.mb-0.mt-3
       %thead
         %tr

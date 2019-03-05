@@ -111,6 +111,20 @@ $( document ).ready(function() {
     Rails.fire(form, 'submit')
   })
 
+  ;[].forEach.call(document.querySelectorAll('form.auto-submit'), function(formElement) {
+    ;[].forEach.call(formElement.querySelectorAll('select'), function(selectElement) {
+      selectElement.addEventListener('change', function(e) {
+        Rails.fire(formElement, 'submit')
+      })
+    })
+
+    ;[].forEach.call(formElement.querySelectorAll('input[type=text]'), function(inputElement) {
+      inputElement.addEventListener('blur', function(e) {
+        Rails.fire(formElement, 'submit')
+      })
+    })
+  })
+
   var alertNotice = document.querySelector('.alert.alert-info')
   if (alertNotice !== null) {
     var msg = alertNotice.innerHTML

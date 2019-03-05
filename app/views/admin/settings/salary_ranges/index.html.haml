@@ -3,57 +3,70 @@
   .card-header.border-bottom-0
     .card-title.d-md-flex.align-items-center
       = t('.card_title', count: @salary_ranges.size)
-  %table.table.table-hover.mb-0.mt-3
-    %thead
-      %tr
-        %th{style: 'width: 120px;'}
-          = SalaryRange.human_attribute_name(:professional_category)
-        %th{style: 'width: 120px;'}
-          = SalaryRange.human_attribute_name(:experience_level)
-        %th{style: 'width: 150px;'}
-          = SalaryRange.human_attribute_name(:sector)
-        %th
-          = SalaryRange.human_attribute_name(:estimate_annual_salary_gross)
-        %th
-          = SalaryRange.human_attribute_name(:estimate_monthly_salary_net)
-        %th{style: 'width: 100px;'}
-    %tbody
-      - for salary_range in @salary_ranges
-        %tr
-          %td{style: 'width: 120px;'}
-            .in-place-edit{data: {field: :professional_category_id}}
-              = salary_range.professional_category.name
-            = simple_form_for([:admin, :settings, salary_range], remote: true,  html: {data: {type: :json}, class: "d-none form-in-place-edit"}) do |f|
-              = f.association :professional_category, label: false, include_blank: false, collection: ProfessionalCategory.all, wrapper_html: { class: 'mb-0' }
-          %td{style: 'width: 120px;'}
-            .in-place-edit{data: {field: :experience_level_id}}
-              = salary_range.experience_level.name
-            = simple_form_for([:admin, :settings, salary_range], remote: true,  html: {data: {type: :json}, class: "d-none form-in-place-edit"}) do |f|
-              = f.association :experience_level, label: false, include_blank: false, collection: ExperienceLevel.all, wrapper_html: { class: 'mb-0' }
-          %td{style: 'width: 150px;'}
-            .in-place-edit{data: {field: :sector_id}}
-              = salary_range.sector.name
-            = simple_form_for([:admin, :settings, salary_range], remote: true,  html: {data: {type: :json}, class: "d-none form-in-place-edit"}) do |f|
-              = f.association :sector, label: false, include_blank: false, collection: Sector.all, wrapper_html: { class: 'mb-0' }
-          %td
-            .in-place-edit{data: {field: :estimate_annual_salary_gross}}
-              = salary_range.estimate_annual_salary_gross
-            = simple_form_for([:admin, :settings, salary_range], remote: true,  html: {data: {type: :json}, class: "d-none form-in-place-edit"}) do |f|
-              = f.input :estimate_annual_salary_gross, label: false, wrapper_html: { class: 'mb-0' }
-          %td
-            .in-place-edit{data: {field: :estimate_monthly_salary_net}}
-              = salary_range.estimate_monthly_salary_net
-            = simple_form_for([:admin, :settings, salary_range], remote: true,  html: {data: {type: :json}, class: "d-none form-in-place-edit"}) do |f|
-              = f.input :estimate_monthly_salary_net, label: false, wrapper_html: { class: 'mb-0' }
-          %td= link_to t('buttons.delete'), [:admin, :settings, salary_range], method: :delete, data: { confirm: t('buttons.confirm') }
-      %tr
-        = simple_form_for([:admin, :settings, SalaryRange.new]) do |f|
-          %td= f.association :professional_category, label: false, include_blank: false, collection: ProfessionalCategory.all
-          %td= f.association :experience_level, label: false, include_blank: false, collection: ExperienceLevel.all
-          %td= f.association :sector, label: false, include_blank: false, collection: Sector.all
-          %td= f.input :estimate_annual_salary_gross, label: false
-          %td= f.input :estimate_monthly_salary_net, label: false
-          %td
-            = button_tag(type: 'submit', class: 'btn btn-primary btn-raised mb-0') do
-              = fa_icon('plus')
-              = t("buttons.add")
+  .table-like.table.table-hover.mb-0.mt-3
+    .tr.thead
+      .th{style: 'width: 200px;'}
+        = SalaryRange.human_attribute_name(:professional_category)
+      .th{style: 'width: 150px;'}
+        = SalaryRange.human_attribute_name(:sector)
+      .th{style: 'width: 180px;'}
+        = SalaryRange.human_attribute_name(:experience_level)
+      .th
+        != SalaryRange.human_attribute_name(:estimate_annual_salary_gross)
+      .th
+        != SalaryRange.human_attribute_name(:estimate_monthly_salary_net)
+      .th{style: 'width: 140px;'}
+    = search_form_for [:admin, :settings, @q], wrapper: :inline_form, html: { class: 'form-inline tr thead auto-submit' }, builder: SimpleForm::FormBuilder do |f|
+      .th
+        = f.input :professional_category_id_eq, collection: @professional_categories, label: false
+      .th
+        = f.input :sector_id_eq, collection: @sectors, label: false
+      .th
+        = f.input :experience_level_id_eq, collection: @experience_levels, label: false
+      .th
+      .th
+      .th
+    - for salary_range in @salary_ranges
+      - professional_category_name = salary_range.professional_category.name
+      - sector_name = salary_range.sector.name
+      - experience_level_name = salary_range.experience_level.name
+      .tr
+        .td{style: 'width: 200px;'}
+          .in-place-edit.text-truncate{title: professional_category_name, data: {field: :professional_category_id}}
+            = salary_range.professional_category.name
+          = simple_form_for([:admin, :settings, salary_range], remote: true,  html: {data: {type: :json}, class: "d-none form-in-place-edit"}) do |f|
+            = f.association :professional_category, label: false, include_blank: false, collection: @professional_categories, wrapper_html: { class: 'mb-0' }
+        .td{style: 'width: 150px;'}
+          .in-place-edit{title: sector_name, data: {field: :sector_id}}
+            = sector_name
+          = simple_form_for([:admin, :settings, salary_range], remote: true,  html: {data: {type: :json}, class: "d-none form-in-place-edit"}) do |f|
+            = f.association :sector, label: false, include_blank: false, collection: @sectors, wrapper_html: { class: 'mb-0' }
+        .td{style: 'width: 180px;'}
+          .in-place-edit.text-truncate{title: experience_level_name, data: {field: :experience_level_id}}
+            = experience_level_name
+          = simple_form_for([:admin, :settings, salary_range], remote: true,  html: {data: {type: :json}, class: "d-none form-in-place-edit"}) do |f|
+            = f.association :experience_level, label: false, include_blank: false, collection: @experience_levels, wrapper_html: { class: 'mb-0' }
+        .td
+          .in-place-edit{data: {field: :estimate_annual_salary_gross}}
+            = salary_range.estimate_annual_salary_gross
+          = simple_form_for([:admin, :settings, salary_range], remote: true,  html: {data: {type: :json}, class: "d-none form-in-place-edit"}) do |f|
+            = f.input :estimate_annual_salary_gross, label: false, wrapper_html: { class: 'mb-0' }
+        .td
+          .in-place-edit{data: {field: :estimate_monthly_salary_net}}
+            = salary_range.estimate_monthly_salary_net
+          = simple_form_for([:admin, :settings, salary_range], remote: true,  html: {data: {type: :json}, class: "d-none form-in-place-edit"}) do |f|
+            = f.input :estimate_monthly_salary_net, label: false, wrapper_html: { class: 'mb-0' }
+        .td
+          = link_to [:admin, :settings, salary_range], class: 'btn btn-primary btn-raised mb-0 d-block', method: :delete, title: t('buttons.delete'), data: { confirm: t('buttons.confirm') } do
+            = fa_icon('delete')
+            Suppr.
+    = simple_form_for([:admin, :settings, SalaryRange.new], html: { class: 'form-inline tr thead' }) do |f|
+      .td= f.association :professional_category, label: false, include_blank: false, collection: @professional_categories
+      .td= f.association :sector, label: false, include_blank: false, collection: @sectors
+      .td= f.association :experience_level, label: false, include_blank: false, collection: @experience_levels
+      .td= f.input :estimate_annual_salary_gross, label: false
+      .td= f.input :estimate_monthly_salary_net, label: false
+      .td
+        = button_tag(type: 'submit', class: 'btn btn-primary btn-raised mb-0 d-block w-100') do
+          = fa_icon('plus')
+          = t("buttons.add")

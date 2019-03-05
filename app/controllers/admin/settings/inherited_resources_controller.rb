@@ -18,6 +18,18 @@ class Admin::Settings::InheritedResourcesController < Admin::Settings::BaseContr
     destroy!(notice: t(key))
   end
 
+  def move_higher
+    resource.move_higher
+
+    redirect_to action: :index
+  end
+
+  def move_lower
+    resource.move_lower
+
+    redirect_to action: :index
+  end
+
   protected
 
     def permitted_fields

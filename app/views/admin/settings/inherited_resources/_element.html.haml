@@ -14,5 +14,8 @@
       %li.list-inline-item
         - if resource_class == Category
           = link_to fa_icon('plus'), [:new, :admin, :settings, :category, {parent_id: element.id}], title: t('buttons.add_child')
+        - if element.has_attribute?(:position)
+          = link_to fa_icon('arrow-up'), [:move_higher, :admin, :settings, element], method: :post, title: t('buttons.move_higher'), data: {confirm: t('buttons.confirm')}
+          = link_to fa_icon('arrow-down'), [:move_lower, :admin, :settings, element], method: :post, title: t('buttons.move_lower'), data: {confirm: t('buttons.confirm')}
         = link_to fa_icon('pencil'), [:edit, :admin, :settings, element], title: t('buttons.edit')
         = link_to fa_icon('delete'), [:admin, :settings, element], method: :delete, title: t('buttons.delete'), data: {confirm: t('buttons.confirm')}

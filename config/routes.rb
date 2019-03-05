@@ -73,7 +73,11 @@ Rails.application.routes.draw do
       resources :email_templates
       resources :salary_ranges
       JobOffer::SETTINGS.each do |setting|
-        resources setting.to_s.pluralize.to_sym, except: %i(show)
+        resources setting.to_s.pluralize.to_sym, except: %i(show) do
+          member do
+            post :move_higher, :move_lower
+          end
+        end
       end
       root to: 'administrators#index'
     end

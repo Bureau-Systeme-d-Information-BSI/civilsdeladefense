@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_18_143001) do
+ActiveRecord::Schema.define(version: 2019_03_05_131541) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -122,6 +122,7 @@ ActiveRecord::Schema.define(version: 2019_02_18_143001) do
     t.datetime "updated_at", null: false
     t.integer "position"
     t.index ["name"], name: "index_contract_types_on_name", unique: true
+    t.index ["position"], name: "index_contract_types_on_position"
   end
 
   create_table "email_templates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -164,6 +165,7 @@ ActiveRecord::Schema.define(version: 2019_02_18_143001) do
     t.datetime "updated_at", null: false
     t.integer "position"
     t.index ["name"], name: "index_experience_levels_on_name", unique: true
+    t.index ["position"], name: "index_experience_levels_on_position"
   end
 
   create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
@@ -318,7 +320,9 @@ ActiveRecord::Schema.define(version: 2019_02_18_143001) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "position"
     t.index ["name"], name: "index_professional_categories_on_name", unique: true
+    t.index ["position"], name: "index_professional_categories_on_position"
   end
 
   create_table "salary_ranges", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -340,6 +344,7 @@ ActiveRecord::Schema.define(version: 2019_02_18_143001) do
     t.datetime "updated_at", null: false
     t.integer "position"
     t.index ["name"], name: "index_sectors_on_name", unique: true
+    t.index ["position"], name: "index_sectors_on_position"
   end
 
   create_table "study_levels", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -348,6 +353,7 @@ ActiveRecord::Schema.define(version: 2019_02_18_143001) do
     t.datetime "updated_at", null: false
     t.integer "position"
     t.index ["name"], name: "index_study_levels_on_name", unique: true
+    t.index ["position"], name: "index_study_levels_on_position"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

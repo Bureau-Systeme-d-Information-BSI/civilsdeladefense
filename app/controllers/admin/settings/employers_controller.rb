@@ -2,7 +2,7 @@ class Admin::Settings::EmployersController < Admin::Settings::InheritedResources
 
   def index
     super do |format|
-      @grand_employers = collection.select{|x| x.parent_id.blank?}
+      @grand_employers = Employer.roots
       format.html {
         render template: '/admin/settings/employers/index'
       }

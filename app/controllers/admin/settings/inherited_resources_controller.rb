@@ -30,6 +30,18 @@ class Admin::Settings::InheritedResourcesController < Admin::Settings::BaseContr
     redirect_to action: :index
   end
 
+  def move_left
+    resource.move_left
+
+    redirect_to action: :index
+  end
+
+  def move_right
+    resource.move_right
+
+    redirect_to action: :index
+  end
+
   protected
 
     def permitted_fields

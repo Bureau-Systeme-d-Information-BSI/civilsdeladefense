@@ -181,7 +181,7 @@ aside.sidebar {
 ul {
   &.actions {
     > li {
-      @extend .mr-3;
+      @extend .mr-2;
       &:last-child {
         @extend .mr-0;
       }

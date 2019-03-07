@@ -69,7 +69,11 @@ Rails.application.routes.draw do
           post :reactivate
         end
       end
-      resources :employers
+      resources :employers do
+        member do
+          post :move_left, :move_right
+        end
+      end
       resources :email_templates
       resources :salary_ranges
       JobOffer::SETTINGS.each do |setting|

@@ -18,7 +18,7 @@
         - for other_job_application in @other_job_applications
           %tr
             %td.border-0.text-center
-              = image_tag(asset_pack_path("images/republique_francaise.svg"), size: "23x15")
+              = link_to other_job_application.job_offer.identifier, [:admin, other_job_application.job_offer]
             %td.border-0
               .text-truncate{ :style => "width: 140px;" }
                 = other_job_application.job_offer.title

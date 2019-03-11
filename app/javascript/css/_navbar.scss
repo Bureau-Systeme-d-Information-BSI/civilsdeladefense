@@ -3,8 +3,11 @@ nav.navbar {
   height: 50px;
   .navbar-brand {
     img {
-      height: 32px;
+      height: 40px;
       width: auto;
+      &.logo {
+        height: 32px;
+      }
     }
   }
 }

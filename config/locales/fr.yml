@@ -111,6 +111,14 @@ fr:
       title: "Merci d'avoir soumis votre candidature !"
       subtitle_html: "Votre demande est prise en compte.<br/>Veuillez confirmer votre accès à l'aide du lien sur votre boîte courriel."
       link: "Retour à l'accueil"
+  notifications_mailer:
+    daily_summary:
+      subject: "[Civilsdeladefense] Rapport journalier"
+      generic_title: "Candidatures %{state}"
+      new_job_offers:
+        title: "Nouvelles offres"
+      new_job_applications:
+        title: "Nouvelles candidatures"
   shared:
     footer:
       legal_notice: "Mentions légales"
@@ -583,7 +591,7 @@ fr:
         state/end_user_state_5: "Rédaction contrat"
         state/end_user_state_6: "Contrat envoyé et à renvoyer signé"
         state/end_user_state_7: "Contrat reçu"
-        state/end_user_state_8: "Affecté(e)"
+        state/end_user_state_8: "Affectée"
       salary_range:
         professional_category: "Catégorie"
         experience_level: "Expérience"

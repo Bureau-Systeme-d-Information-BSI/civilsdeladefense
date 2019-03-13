@@ -8,7 +8,7 @@
         - if resource.is_a?(EmailTemplate)
           = f.input :title
           = f.input :subject
-          = f.input :body
+          = f.input :body, style: 'height:400px;'
         - elsif resource.is_a?(SalaryRange)
           = f.input :professional_category, collection: ProfessionalCategory.all
           = f.input :experience_level, collection: ExperienceLevel.all

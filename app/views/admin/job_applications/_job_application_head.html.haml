@@ -1,4 +1,5 @@
 - website_url = job_application.website_url
+- job_offer = job_application.job_offer
 - tab_active ||= :overview
 .row.bg-white.border-bottom.head
   .col-12.col-md-8.border-right{class: job_application_modal_section_classes('pb-0')}
@@ -6,6 +7,9 @@
       = image_user_tag job_application.photo, width: 80, class: 'mr-4'
       .d-flex.flex-column
         .h5.secondary.mb-0= job_application.full_name
+        %small
+          = [job_offer.identifier, job_offer.title].join(' ')
+          = link_to(fa_icon('open-in-new'), job_offer, target: '_blank', class: 'ml-1')
         .my-1= job_application.current_position
         .d-flex.justify-content.justify-content-start
           - if (phone = job_application.phone).present?

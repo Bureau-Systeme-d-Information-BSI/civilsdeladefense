@@ -59,5 +59,9 @@ module Civilsdeladefense
     config.generators do |g|
       g.orm :active_record, primary_key_type: :uuid
     end
+
+    config.to_prepare do
+      Devise::Mailer.layout "mailer"
+    end
   end
 end

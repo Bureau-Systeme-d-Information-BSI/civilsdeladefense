@@ -1,4 +1,8 @@
-Bonjour Madame, Monsieur,
+<%-if @user.full_name.present? %>
+Bonjour <%= @user.full_name %>,
+<%- else %>
+Bonjour,
+<%- end %>
 
 <%= @body %>
 

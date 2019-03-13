@@ -1,0 +1,8 @@
+%p
+  = t('.greeting', recipient: recipient: (@resource.full_name.present? ? @resource.full_name : nil))
+- if @resource.try(:unconfirmed_email?)
+  %p
+    = t('.message', email: @resource.unconfirmed_email)
+- else
+  %p
+    = t('.message', email: @resource.email)

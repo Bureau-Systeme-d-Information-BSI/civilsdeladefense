@@ -9,3 +9,11 @@
           %li= link_to t('.tos'), tos_path
           %li= link_to t('.privacy'), privacy_path
           %li= link_to t('.tracking'), tracking_path
+      .col-12.col-md-2
+        %ul.list-unstyled.mb-0
+          - links = ["service-public.fr", "legifrance.gouv.fr", "data.gouv.fr", "france.fr"]
+          - links.each do |link|
+            %li
+              = link_to 'https://www.'+link, target: '_blank', rel: 'noopener noreferrer' do
+                = link.capitalize
+                = fa_icon("open-in-new")

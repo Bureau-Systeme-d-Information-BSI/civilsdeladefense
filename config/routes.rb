@@ -74,9 +74,8 @@ Rails.application.routes.draw do
           post :move_left, :move_right
         end
       end
-      resources :email_templates
       resources :salary_ranges
-      JobOffer::SETTINGS.each do |setting|
+      (JobOffer::SETTINGS + [:email_template]).each do |setting|
         resources setting.to_s.pluralize.to_sym, except: %i(show) do
           member do
             post :move_higher, :move_lower

@@ -49,22 +49,14 @@ class Administrator < ApplicationRecord
     end
   end
 
-  has_attached_file :photo,
-    styles: {
-      small: "64x64#",
-      medium: "80x80#",
-      big: "160x160#"
-    }
+  mount_uploader :photo, PhotoUploader, mount_on: :photo_file_name
 
   #####################################
   # Validations
 
-  validates_with AttachmentContentTypeValidator,
-    attributes: :photo,
-    content_type: /\Aimage\/.*\z/
-  validates_with AttachmentSizeValidator,
-    attributes: :photo,
-    less_than: 1.megabyte
+  validates :photo,
+    file_size: { less_than: 1.megabytes },
+    file_content_type: { allow: /^image\/.*/ }
   validate :password_complexity
   validate :email_conformance
   validates :employer, presence: true, if: Proc.new { |a| %w(employer grand_employer).include?(a.role) }

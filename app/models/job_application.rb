@@ -23,26 +23,20 @@ class JobApplication < ApplicationRecord
 
   JobOffer::FILES.each do |field|
     if field == :photo
-      has_attached_file field.to_sym,
-        styles: {
-          small: "32x32#",
-          medium: "40x40#",
-          big: "80x80#",
-        }
+      mount_uploader :photo, PhotoUploader, mount_on: :photo_file_name
+      validates :photo,
+        file_size: { less_than: 1.megabytes },
+        file_content_type: { allow: /^image\/.*/ }
     else
-      has_attached_file field.to_sym
+      mount_uploader field.to_sym, DocumentUploader, mount_on: :"#{field}_file_name"
+      validates field.to_sym,
+        file_size: { less_than: 2.megabytes },
+        file_content_type: { allow: 'application/pdf' }
     end
-    validates_with AttachmentPresenceValidator,
-      attributes: field.to_sym,
+    validates_presence_of field.to_sym,
       if: Proc.new { |job_application|
         job_application.job_offer.send("mandatory_option_#{field}?")
       }
-    validates_with AttachmentContentTypeValidator,
-      attributes: field.to_sym,
-      content_type: (field == :photo ? /\Aimage\/.*\z/ : "application/pdf")
-    validates_with AttachmentSizeValidator,
-      attributes: field.to_sym,
-      less_than: (field == :photo ? 1.megabyte : 2.megabytes)
   end
 
   validates :first_name, :last_name, :current_position, :phone, :address_1, :city, :country, presence: true

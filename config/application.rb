@@ -27,19 +27,6 @@ module Civilsdeladefense
     config.i18n.available_locales = [:fr]
     config.i18n.default_locale = :fr
 
-    if ENV['AWS_ACCESS_KEY_ID'].present? && ENV['AWS_SECRET_ACCESS_KEY'].present? && ENV['AWS_REGION'].present? && ENV['AWS_BUCKET_NAME'].present?
-      config.paperclip_defaults = {
-        storage: :s3,
-        bucket: ENV['AWS_BUCKET_NAME'],
-        s3_region: ENV['AWS_REGION'],
-        s3_host_name: "s3.#{ENV['AWS_REGION']}.amazonaws.com",
-        s3_credentials: {
-          access_key_id: ENV['AWS_ACCESS_KEY_ID'],
-          secret_access_key: ENV['AWS_SECRET_ACCESS_KEY']
-        }
-      }
-    end
-
     if Rails.env.production?
       # Cache assets for 1 year
       config.public_file_server.headers = {

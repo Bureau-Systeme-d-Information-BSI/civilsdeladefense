@@ -17,7 +17,7 @@ module UsersHelper
       klasses << options[:class]
     end
 
-    image_url = if photo && photo.exists?
+    image_url = if photo && photo.present?
       style = case options[:width]
       when 32
         :small
@@ -46,7 +46,7 @@ module UsersHelper
       txt << "Votre #{ link_to "fichier", link, target: '_blank', class: 'text-dark-gray' } n'est pas valide, veuillez en téléverser un nouveau.".html_safe
       txt << "Seuls les fichiers PDF de taille inférieure à 2Mo sont acceptés."
     else
-      if file.exists?
+      if file.present?
         link = link_for_file(job_application, file_name)
         txt << "Vous avez déjà téléversé ce #{ link_to "fichier", link, target: '_blank', class: 'text-dark-gray' }, il est en attente de validation.".html_safe
         txt << "Pour téléverser une nouvelle version, vous pouvez utiliser la zone ci-dessus.".html_safe

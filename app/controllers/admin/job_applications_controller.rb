@@ -187,7 +187,7 @@ class Admin::JobApplicationsController < Admin::BaseController
         }, status: :not_found
       end
 
-      if ENV['AWS_ACCESS_KEY_ID'].present? && ENV['AWS_SECRET_ACCESS_KEY'].present? && ENV['AWS_REGION'].present? && ENV['AWS_BUCKET_NAME'].present?
+      if ENV['OS_AUTH_URL'].present?
         url = @reference_object.send(action_name).url
         uri = URI(url)
         if uri.scheme.blank?

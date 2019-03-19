@@ -96,7 +96,7 @@ class Account::JobApplicationsController < Account::BaseController
         }, status: :not_found
       end
 
-      if ENV['AWS_ACCESS_KEY_ID'].present? && ENV['AWS_SECRET_ACCESS_KEY'].present? && ENV['AWS_REGION'].present? && ENV['AWS_BUCKET_NAME'].present?
+      if ENV['OS_AUTH_URL'].present?
         url = @reference_object.send(action_name).url
         uri = URI(url)
         if uri.scheme.blank?
@@ -104,7 +104,6 @@ class Account::JobApplicationsController < Account::BaseController
         end
         response.headers['Content-Type'] = 'application/pdf'
         response.headers['Content-Disposition'] = "inline; filename=\"#{action_name}.pdf\""
-        response.headers['Content-Length'] = @reference_object.send("#{action_name}_file_size")
         # Download the backup file chunk by chunk and forward each chunk to the client.
         Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https') do |http|
           req = Net::HTTP::Get.new(uri.request_uri)

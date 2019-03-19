@@ -11,21 +11,16 @@ class User < ApplicationRecord
   FILES = (FILES_DURING_SUBMISSION + FILES_JUST_AFTER_SUBMISSION + FILES_FOR_PAYROLL).freeze
   FILES.each do |field|
     if field == :photo
-      has_attached_file field.to_sym,
-        styles: {
-          small: "64x64#",
-          medium: "80x80#",
-          big: "160x160#"
-        }
+      mount_uploader :photo, PhotoUploader, mount_on: :photo_file_name
+      validates :photo,
+        file_size: { less_than: 1.megabytes },
+        file_content_type: { allow: /^image\/.*/ }
     else
-      has_attached_file field.to_sym
+      mount_uploader field.to_sym, DocumentUploader, mount_on: :"#{field}_file_name"
+      validates field.to_sym,
+        file_size: { less_than: 2.megabytes },
+        file_content_type: { allow: 'application/pdf' }
     end
-    validates_with AttachmentContentTypeValidator,
-      attributes: field.to_sym,
-      content_type: (field == :photo ? /\Aimage\/.*\z/ : "application/pdf")
-    validates_with AttachmentSizeValidator,
-      attributes: field.to_sym,
-      less_than: (field == :photo ? 1.megabyte : 2.megabytes)
   end
 
   validate :password_complexity

@@ -1,0 +1,2 @@
+class DocumentUploader < CommonUploader
+end

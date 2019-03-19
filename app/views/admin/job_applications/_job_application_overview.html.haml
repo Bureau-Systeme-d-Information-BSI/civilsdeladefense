@@ -1,7 +1,7 @@
 - files = JobOffer::FILES.dup
 - files.delete(:photo)
 - files.each do |file|
-  - if job_application.send(file).exists?
+  - if job_application.send(file).present?
     .card
       .card-header.with-subheader.bg-white.font-weight-bold.text-secondary
         = fa_icon('file-document', class: 'text-secondary')

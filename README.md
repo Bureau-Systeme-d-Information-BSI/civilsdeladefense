@@ -35,13 +35,15 @@ DEFAULT_FROM=hello@localhost
 DEFAULT_HOST=http://localhost:3000
 ```
 
-Optionnellement ce fichier .env peut contenir les variables suivantes pour configurer un Object Storage basé sur AWS S3 :
+Optionnellement ce fichier .env peut contenir les variables suivantes pour configurer un Object Storage basé sur Swift :
 
 ```
-AWS_ACCESS_KEY_ID=XXX
-AWS_SECRET_ACCESS_KEY=XXX
-AWS_REGION=XX-XXXX-XX
-AWS_BUCKET_NAME=XXX
+OS_AUTH_URL=XXX
+OS_USERNAME=XXX
+OS_PASSWORD=XX-XXXX-XX
+OS_REGION_NAME=XXX
+OS_TENANT_NAME=XXX
+OS_TEMP_URL_KEY=XXX
 ```
 
 Créer le fichier config/master.key contenat la clé principale : le contenu du fichier doit être demandée à l'équipe de développement.

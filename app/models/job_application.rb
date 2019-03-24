@@ -26,7 +26,7 @@ class JobApplication < ApplicationRecord
       mount_uploader :photo, PhotoUploader, mount_on: :photo_file_name
       validates :photo,
         file_size: { less_than: 1.megabytes },
-        file_content_type: { allow: /^image\/.*/ }
+        file_content_type: { allow: ['image/jpeg', 'image/png'] }
     else
       mount_uploader field.to_sym, DocumentUploader, mount_on: :"#{field}_file_name"
       validates field.to_sym,

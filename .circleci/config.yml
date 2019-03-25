@@ -6,7 +6,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/ruby:2.5.3-node-browsers
+      - image: circleci/ruby:2.6.2-node-browsers-legacy
         environment:
           RAILS_ENV: test
           DATABASE_URL_TEST: postgresql://circleci:@127.0.0.1:5432/civilsdeladefense_test

@@ -33,9 +33,6 @@ services:
       BUCKET_NAME: "${BUCKET_NAME}"
       DATABASE_URL: postgresql://admin:admin-secret@postgresql:5432/civilsdeladefense_development
       DATABASE_URL_TEST: postgresql://admin:admin-secret@postgresql:5432/civilsdeladefense_test
-      BUNDLE_BIN: "/usr/src/app/vendor/.bundle/ruby/2.5.0/bin"
-      BUNDLE_PATH: "/usr/src/app/vendor/.bundle/ruby/2.5.0"
-      BUNDLE_APP_CONFIG: "/usr/src/app/.bundle"
       WEBPACKER_DEV_SERVER_HOST: 172.17.0.1
       INCLUDE_TRACKERS: 1
     links:
@@ -43,19 +40,17 @@ services:
       - webpack
     ports:
       - 3000:3000
-    command: bundle exec rails server -b 0.0.0.0 -p 3000
+    command: rails server -b 0.0.0.0 -p 3000
   webpack:
     build: .
     ports:
       - 3035:3035
     volumes:
       - ./:/usr/src/app
-    command: bundle exec ./bin/webpack-dev-server
+    command: ./bin/webpack-dev-server
     environment:
       ALGOLIA_APP_ID: "${ALGOLIA_APP_ID}"
       ALGOLIA_API_KEY: "${ALGOLIA_API_KEY}"
-      BUNDLE_BIN: "/usr/src/app/vendor/.bundle/ruby/2.5.0/bin"
-      BUNDLE_PATH: "/usr/src/app/vendor/.bundle/ruby/2.5.0"
   specs:
     build: .
     volumes:
@@ -65,9 +60,6 @@ services:
       MAIL_URL: smtp://hello%40localhost@localhost
       DEFAULT_HOST: http://localhost:3000
       DATABASE_URL_TEST: postgresql://admin:admin-secret@postgresql:5432/civilsdeladefense_test
-      BUNDLE_BIN: "/usr/src/app/vendor/.bundle/ruby/2.5.0/bin"
-      BUNDLE_PATH: "/usr/src/app/vendor/.bundle/ruby/2.5.0"
-      BUNDLE_APP_CONFIG: "/usr/src/app/.bundle"
     links:
       - postgresql
     command: "tail -F /dev/null"

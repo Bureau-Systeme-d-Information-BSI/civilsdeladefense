@@ -21,7 +21,7 @@
   - job_offers = @job_offers.select{|x| concerned_categories.map(&:id).include?(x.category_id) }
   - if job_offers.any?
     - direct_job_offers = @job_offers.select{|x| category.id == x.category_id }
-    %h3.h6.text-quinary= category.name + " (#{category.id} #{category.published_job_offers_count})"
+    %h3.h6.text-quinary= category.name
     %hr
     - if direct_job_offers.any?
       .job-offers

@@ -93,6 +93,11 @@ nav.navbar {
       &:first-child {
         @extend .mt-0;
       }
+      &:last-child {
+        hr {
+          display: none;
+        }
+      }
       .job-offer-title {
         @extend .text-quinary;
         font-weight: 700;

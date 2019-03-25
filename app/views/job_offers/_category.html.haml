@@ -1,5 +1,8 @@
 - if category.depth == 0
-  - job_offers = @job_offers.select{|x| category.self_and_descendants.map(&:id).include?(x.category_id) }
+  - sub_categories = @categories.select{|c| c.parent_id == category.id}
+  - sub_sub_categories = @categories.select{|c| sub_categories.map(&:id).include?(c.parent_id) }
+  - concerned_categories = [category] + sub_categories + sub_sub_categories
+  - job_offers = @job_offers.select{|x| concerned_categories.map(&:id).include?(x.category_id) }
   - direct_job_offers = @job_offers.select{|x| category.id == x.category_id }
   - if job_offers.any?
     .card.mt-4
@@ -12,10 +15,14 @@
                 = render partial: 'job_offer', collection: direct_job_offers, locals: {category: category}
             = render partial: 'category', collection: @categories.select{|x| x.parent_id == category.id}
 - elsif category.depth == 1
-  - job_offers = @job_offers.select{|x| category.self_and_descendants.map(&:id).include?(x.category_id) }
-  - direct_job_offers = @job_offers.select{|x| category.id == x.category_id }
+  - sub_categories = @categories.select{|c| c.parent_id == category.id}
+  - sub_sub_categories = @categories.select{|c| sub_categories.map(&:id).include?(c.parent_id) }
+  - concerned_categories = [category] + sub_categories + sub_sub_categories
+  - job_offers = @job_offers.select{|x| concerned_categories.map(&:id).include?(x.category_id) }
   - if job_offers.any?
-    %h3.h6.text-quinary.mb-0.mt-3= category.name
+    - direct_job_offers = @job_offers.select{|x| category.id == x.category_id }
+    %h3.h6.text-quinary= category.name + " (#{category.id} #{category.published_job_offers_count})"
+    %hr
     - if direct_job_offers.any?
       .job-offers
         = render partial: 'job_offer', collection: direct_job_offers, locals: {category: category}

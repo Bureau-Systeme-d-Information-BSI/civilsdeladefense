@@ -6,7 +6,7 @@
           - if category.depth == 2
             %small
               %small= category.name
-          .font-weight-bold.text-quinary= job_offer.title
+          .job-offer-title= job_offer.title
           %small
             .d-flex
               .mr-1
@@ -18,4 +18,5 @@
             %small.mt-1= t('.published_date', time_ago_in_words: time_ago_in_words(job_offer.created_at))
         %button.btn.btn-primary.btn-raised.btn-l.mb-0.ml-auto{title: t('.show')}
           = fa_icon('chevron-right')
+    %hr.mb-0
 

@@ -76,12 +76,30 @@ nav.navbar {
 }
 
 .job-offer-category {
+  h2 {
+    @extend .mb-0;
+  }
+  h3 {
+    font-weight: 400;
+    @extend .mt-5, .mb-0;
+    + hr {
+      @extend .d-inline-block, .mt-3, .mb-2;
+      width: 50px;
+    }
+  }
   .job-offers {
     > .job-offer {
-      @extend .mt-4;
+      @extend .mt-3;
       &:first-child {
-        @extend .mt-3;
+        @extend .mt-0;
       }
+      .job-offer-title {
+        @extend .text-quinary;
+        font-weight: 700;
+      }
+    }
+    + h3 {
+      @extend .mt-5;
     }
   }
 }

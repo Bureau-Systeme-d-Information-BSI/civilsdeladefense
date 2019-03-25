@@ -1,10 +1,14 @@
-<%-if @user.full_name.present? %>
-Bonjour <%= @user.full_name %>,
-<%- else %>
-Bonjour,
-<%- end %>
+<p>
+  <%-if @user.full_name.present? %>
+  Bonjour <%= @user.full_name %>,
+  <%- else %>
+  Bonjour,
+  <%- end %>
+</p>
 
-<%= @body %>
+<p>
+  <%= @body %>
+</p>
 
 --
 Vous recevez ce message parce que vous avez candidaté à l'offre <%= @job_offer.identifier %> “<%= @job_offer.title %>”.

@@ -173,4 +173,29 @@ class JobApplication < ApplicationRecord
   def compute_administrator_notifications_count
     self.administrator_notifications_count = self.emails_administrator_unread_count + self.files_unread_count
   end
+
+  def all_available_file_types
+    @all_available_file_types ||= JobApplicationFileType.all.to_a
+  end
+
+  def to_be_provided_files
+    @to_be_provided_files ||= begin
+      available_file_types = all_available_file_types.select{ |x|
+        x.from_state >= self.state && x.by_default
+      }
+      available_file_types.map{ |x|
+        file = self.job_application_files.detect{ |y| y.job_application_file_type_id == x.id}
+        if file
+          file
+        else
+          JobApplicationFile.new job_application_file_type: x, job_application_file_type_id: x.id
+        end
+      }
+    end
+  end
+
+  def other_available_file_types
+    ary = to_be_provided_files.dup.map(&:job_application_file_type_id)
+    all_available_file_types.dup.delete_if{|x| ary.include?(x.id)}
+  end
 end

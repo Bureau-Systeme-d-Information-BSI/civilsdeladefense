@@ -1,0 +1,18 @@
+- file_type = job_application_file.job_application_file_type
+.d-flex.align-items-center.border.py-1.px-2.file{id: dom_id(job_application_file)}
+  - if job_application_file.content.present?
+    .text-truncate= file_type.name
+  - else
+    .text-truncate.text-muted= file_type.name
+  - if job_application_file.content.present?
+    .ml-auto.d-flex
+      - klasses = %w(btn btn-success btn-raised btn-sm mb-0 mr-1)
+      - klasses << 'opaque' if job_application_file.is_validated != 1
+      = link_to [:check, :admin, @job_application, job_application_file], class: klasses, title: "Valider ce fichier", remote: true, method: :post do
+        = fa_icon "check"
+      - klasses = %w(btn btn-danger btn-raised btn-sm mb-0 mr-1)
+      - klasses << 'opaque' if job_application_file.is_validated != 2
+      = link_to [:uncheck, :admin, @job_application, job_application_file], class: klasses, title: "Invalider ce fichier", remote: true, method: :post do
+        = fa_icon "close"
+      - url = [:admin, job_application, job_application_file, {format: :pdf}]
+      = link_to "Télécharger", url, target: "_blank", class: "btn btn-primary btn-raised btn-sm mb-0"

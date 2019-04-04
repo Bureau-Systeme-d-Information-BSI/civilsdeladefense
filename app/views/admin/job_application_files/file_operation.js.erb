@@ -1,5 +1,5 @@
-var node = document.getElementById('<%= "job_application_#{@job_application.id}_#{@file_name}" %>')
-var html = '<%= j render(partial: '/admin/job_applications/job_application_file', locals: {job_application: @job_application, field: @file_name.to_sym}) %>'
+var node = document.getElementById('<%= dom_id(@job_application_file) %>')
+var html = '<%= j render(partial: 'job_application_file', locals: {job_application: @job_application, job_application_file: @job_application_file}) %>'
 var frag = document.createRange().createContextualFragment(html)
 node.replaceWith(frag)
 
@@ -7,7 +7,7 @@ var jobApplicationModal = document.getElementById('remoteContentModal')
 if (jobApplicationModal !== null) {
   var headNode = jobApplicationModal.querySelector('.head')
   if (headNode !== null) {
-    var headHtml = '<%= j render(partial: 'job_application_head', locals: { job_application: @job_application, tab_active: :files }) %>'
+    var headHtml = '<%= j render(partial: '/admin/job_applications/job_application_head', locals: { job_application: @job_application, tab_active: :files }) %>'
     var frag = document.createRange().createContextualFragment(headHtml)
     headNode.replaceWith(frag)
   }
@@ -15,7 +15,7 @@ if (jobApplicationModal !== null) {
 
 var cardNode = document.getElementById('<%= dom_id(@job_application) %>')
 if (cardNode !== null) {
-  var html = '<%= j render(partial: 'job_application', locals: { job_application: @job_application, with_header: false }) %>'
+  var html = '<%= j render(partial: '/admin/job_applications/job_application', locals: { job_application: @job_application, with_header: false }) %>'
   var frag = document.createRange().createContextualFragment(html)
   cardNode.replaceWith(frag)
 }

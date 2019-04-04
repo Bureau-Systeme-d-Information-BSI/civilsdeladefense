@@ -176,3 +176,7 @@ label {
     cursor: initial;
   }
 }
+
+.form-check-label {
+  @extend .ml-1;
+}

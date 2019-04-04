@@ -194,9 +194,9 @@ fr:
         employer: "Employeur"
       list:
         job_applications_count:
-          zero: 'Aucune candidature trouvée'
-          one: '1 candidature trouvée'
-          other: '%{count} candidatures trouvées'
+          zero: "Aucune candidature trouvée"
+          one: "1 candidature trouvée"
+          other: "%{count} candidatures trouvées"
       job_application:
         published_date: "Candidaté il y a %{time_ago_in_words}"
       job_application_head:
@@ -225,9 +225,10 @@ fr:
           updated_photo_html: "<span class='user-name'>%{name}</span> a mis à jour sa photo"
       change_state:
         success: "Candidature passée en statut %{state} !"
-      check_file:
+    job_application_files:
+      check:
         success: "Fichier validé !"
-      uncheck_file:
+      uncheck:
         success: "Fichier invalidé !"
     job_offers:
       administrator:
@@ -321,6 +322,8 @@ fr:
           administrators: "Comptes admin"
           employers: "Employeurs"
           email_templates: "Courriels"
+          job_applications: "Candidatures"
+          job_application_file_types: "Types de fichier"
           categories: "Domaines professionnels"
           professional_categories: "Catégories professionnelles"
           contract_types: "Types de contrat"
@@ -431,6 +434,22 @@ fr:
           success: "Catégorie mise à jour !"
         destroy:
           success: "Catégorie supprimée !"
+      job_application_file_types:
+        index:
+          card_title:
+            zero: 'Aucun type défini'
+            one: '1 type de fichier'
+            other: '%{count} types de fichier'
+        new:
+          title: "Ajouter un nouveau type de fichier"
+        edit:
+          title: "Modifier le type de fichier '%{name}'"
+        create:
+          success: "Type de fichier créé !"
+        update:
+          success: "Type de fichier mis à jour !"
+        destroy:
+          success: "Type de fichier supprimé !"
       professional_categories:
         index:
           card_title:
@@ -592,6 +611,11 @@ fr:
         state/end_user_state_6: "Contrat envoyé et à renvoyer signé"
         state/end_user_state_7: "Contrat reçu"
         state/end_user_state_8: "Affectée"
+      job_application_file_type:
+        kind/applicant_provided: "Fourni par le candidat"
+        kind/template: "Modèle de fichiers"
+        kind/admin_only: "Seulement admin"
+        kind/check_only_admin_only: "Fichier géré hors outil"
       salary_range:
         professional_category: "Catégorie"
         experience_level: "Expérience"

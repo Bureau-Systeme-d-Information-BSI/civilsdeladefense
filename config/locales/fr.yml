@@ -78,7 +78,7 @@ fr:
     update: "Mettre à jour"
   job_applications:
     form:
-      general_informations: "Informations génrales"
+      general_informations: "Informations générales"
       your_profile: "Votre profil"
       your_internet_presence: "Votre présence sur internet"
       your_account_creation: "Votre création de compte"

@@ -40,6 +40,7 @@ class JobOffersController < ApplicationController
   def apply
     if user_signed_in? && (@previous_job_application = current_user.job_applications.first)
       @job_application = @previous_job_application.dup
+      @job_application.state = JobApplication.new.state
     else
       @job_application = JobApplication.new
       @job_application.user = User.new

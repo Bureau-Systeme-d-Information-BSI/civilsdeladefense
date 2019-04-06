@@ -13,7 +13,7 @@
           - states = JobApplication.states.map {|k, v| [ JobApplication.human_attribute_name("state/#{k}"), v] }
           = f.input :from_state, collection: states, prompt: true
           = f.input :content
-          = f.input :is_mandatory
+          =# f.input :is_mandatory
           = f.input :by_default
         - elsif resource.is_a?(EmailTemplate)
           = f.input :title

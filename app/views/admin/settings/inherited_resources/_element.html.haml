@@ -6,6 +6,13 @@
   - if resource_class == Employer
     %td
       = element.code
+  - if resource_class == JobApplicationFileType
+    %td
+      = JobApplication.human_attribute_name("state/#{element.from_state}")
+    %td
+      = JobApplicationFileType.human_attribute_name("kind/#{element.kind}")
+    %td
+      = element.by_default? ? t('.affirmative') : t('.negative')
   - if resource_class.reflect_on_association(:job_offers)
     %td.text-center
       = element.job_offers.publicly_visible.count

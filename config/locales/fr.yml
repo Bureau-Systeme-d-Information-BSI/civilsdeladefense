@@ -428,6 +428,10 @@ fr:
           success: "Modèle supprimé !"
         edit:
           title: "Modifier un modèle"
+      inherited_resources:
+        element:
+          affirmative: "Oui"
+          negative: "Non"
       categories:
         index:
           card_title:
@@ -622,6 +626,9 @@ fr:
         state/end_user_state_7: "Contrat reçu"
         state/end_user_state_8: "Affectée"
       job_application_file_type:
+        from_state: "État"
+        kind: "Type"
+        by_default: "Par défaut"
         kind/applicant_provided: "Fourni par le candidat"
         kind/template: "Modèle de fichiers"
         kind/admin_only: "Seulement admin"

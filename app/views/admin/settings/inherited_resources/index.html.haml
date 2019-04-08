@@ -14,6 +14,10 @@
           %th= resource_class.human_attribute_name(:title)
         - else
           %th= resource_class.human_attribute_name(:name)
+          - if resource_class == JobApplicationFileType
+            %th= resource_class.human_attribute_name(:from_state)
+            %th= resource_class.human_attribute_name(:kind)
+            %th= resource_class.human_attribute_name(:by_default)
           - if resource_class == Employer
             %th= resource_class.human_attribute_name(:code)
           - if resource_class.reflect_on_association(:job_offers)

@@ -564,6 +564,7 @@ fr:
         invalid_suffix: "n'est pas conforme, doit se terminer par %{suffix}"
         not_strong_enough: "Pas assez complexe : doit avoir au moins 8 caractères, dont au moins 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial parmi #?!@$%^&*-'"
         spoofed_media_type: "Type de fichier incorrect"
+        content_type_whitelist_error: "Mauvais format. Seuls PDF pour les documents et PNG/JPG pour les photos."
       models:
         job_application:
           attributes:

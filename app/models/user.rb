@@ -7,8 +7,7 @@ class User < ApplicationRecord
 
   mount_uploader :photo, PhotoUploader, mount_on: :photo_file_name
   validates :photo,
-    file_size: { less_than: 1.megabytes },
-    file_content_type: { allow: /^image\/.*/ }
+    file_size: { less_than: 1.megabytes }
 
   validate :password_complexity
 

@@ -12,4 +12,8 @@ class PhotoUploader < CommonUploader
   version :big do
     process resize_to_fill: [160,160]
   end
+
+  def content_type_whitelist
+    /image\//
+  end
 end

@@ -90,21 +90,35 @@ ExperienceLevel.create! name: '> 7 ans'
 
 resume = JobApplicationFileType.create! name: "CV", kind: :applicant_provided, from_state: :initial, by_default: true
 cover_letter = JobApplicationFileType.create! name: "Lettre de Motivation", kind: :applicant_provided, from_state: :initial, by_default: true
-JobApplicationFileType.create! name: "Copie des diplômes",
+diploma = JobApplicationFileType.create! name: "Copie des diplômes",
   kind: :applicant_provided,
   from_state: :accepted,
   by_default: true
-JobApplicationFileType.create! name: "Justificatif de domicile de moins de 6 mois",
+proof_of_address = JobApplicationFileType.create! name: "Justificatif de domicile de moins de 6 mois",
   kind: :applicant_provided,
   from_state: :accepted,
   by_default: true
-JobApplicationFileType.create! name: "Carte d'identité",
+identity = JobApplicationFileType.create! name: "Carte d'identité",
   description: "Carte nationale d’identité recto/verso ou passeport",
   kind: :applicant_provided,
   from_state: :accepted,
   by_default: true
-JobApplicationFileType.create! name: "Carte Vitale",
+carte_vitale_certificate = JobApplicationFileType.create! name: "Carte Vitale",
   description: "Attestation de carte vitale ou copie de carte vitale (mentionnant le n° INSEE)",
+  kind: :applicant_provided,
+  from_state: :accepted,
+  by_default: true
+medical_certificate = JobApplicationFileType.create! name: "Certificat Médical",
+  description: "Certificat médical d’aptitude fourni par le médecin de l’établissement ou à défaut par un médecin agréé",
+  kind: :applicant_provided,
+  from_state: :accepted,
+  by_default: true
+iban = JobApplicationFileType.create! name: "Relevé d'identité bancaire",
+  description: "RIB original au format BIC/IBAN comportant le logo de la banque au nom du signataire du contrat (les RIB sur compte épargne ne sont pas acceptés)",
+  kind: :applicant_provided,
+  from_state: :accepted,
+  by_default: true
+transport_ticket = JobApplicationFileType.create! name: "Copie d'un titre de transport (si vous postulez en Île-de-france)",
   kind: :applicant_provided,
   from_state: :accepted,
   by_default: true
@@ -173,10 +187,6 @@ job_offer = JobOffer.new do |j|
   j.sector = Sector.first
   j.estimate_monthly_salary_net = "2500 - 3000€"
   j.estimate_annual_salary_gross = "39000 - 46000€"
-  j.option_cover_letter = :mandatory
-  j.option_resume = :mandatory
-  j.option_photo = :optional
-  j.option_website_url = :optional
   j.job_offer_actors.build({administrator: employer_admin_1, role: :employer})
   j.job_offer_actors.build({administrator: brh_admin, role: :brh})
 end

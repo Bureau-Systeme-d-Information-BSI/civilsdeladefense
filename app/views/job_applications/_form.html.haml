@@ -1,5 +1,4 @@
 -# frozen_string_literal: true
-- url_fields = JobOffer::URLS
 = simple_form_for(@job_application, url: [:send_application, @job_offer], method: :post, remote: true, html: {data: {type: :json}}) do |f|
   .form-inputs.mt-3
     = f.error_notification
@@ -30,12 +29,11 @@
             = f.input :postal_code
           .col-12.col-md-6
             = f.input :country, priority: [ "FR" ]
-    - unless @job_offer.disabled_option_photo?
-      .row
-        .col-12.col-md-6
-          = f.simple_fields_for :user do |user_form|
-            = user_form.label :photo, required: false
-            = user_form.input :photo, label: t('buttons.choose_file'), wrapper: :custom_file_without_label
+    .row
+      .col-12.col-md-6
+        = f.simple_fields_for :user do |user_form|
+          = user_form.label :photo, required: false
+          = user_form.input :photo, label: t('buttons.choose_file'), wrapper: :custom_file_without_label
 
     %h2.h5.mt-4.mb-3.text-dark-gray= t('.your_profile')
     - job_application_files = @job_application.job_application_files.to_a
@@ -51,11 +49,9 @@
             = file_form.input :content, label: t('buttons.choose_file'), wrapper: :custom_file_without_label
 
     %h2.h5.mt-4.mb-3.text-dark-gray= t('.your_internet_presence')
-    - url_fields.each do |field|
-      - unless @job_offer.send("disabled_option_#{field}?")
-        .row
-          .col-12
-            = f.input field, required: @job_offer.send("mandatory_option_#{field}?")
+    .row
+      .col-12
+        = f.input :website_url, required: false
 
     - unless user_signed_in?
       %h2.h5.mt-4.mb-3.text-dark-gray= t('.your_account_creation')

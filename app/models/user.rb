@@ -28,4 +28,8 @@ class User < ApplicationRecord
 
     errors.add :password, :not_strong_enough
   end
+
+  def most_advanced_job_application
+    job_applications.order(state: :desc).first
+  end
 end

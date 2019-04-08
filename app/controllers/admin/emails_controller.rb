@@ -22,6 +22,10 @@ class Admin::EmailsController < Admin::BaseController
         format.json { render :show, status: :created, location: @email }
       else
         format.html { render :new }
+        format.js {
+          @notification = t('.unsuccess')
+          render :create
+        }
         format.json { render json: @email.errors, status: :unprocessable_entity }
       end
     end

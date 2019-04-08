@@ -149,6 +149,7 @@ fr:
         time_ago: "il y a %{time_ago_in_words}"
       create:
         success: "Courriel envoyé !"
+        unsuccess: "Impossible d'envoyer le courriel, veuillez vérifier tous les champs"
       form:
         title: "Envoyer un courriel"
     users:
@@ -306,6 +307,7 @@ fr:
     emails:
       create:
         success: "Courriel envoyé !"
+        unsuccess: "Impossible d'envoyer le courriel, veuillez vérifier tous les champs"
       form:
         title: "Envoyer un courriel à ce candidat"
       email:

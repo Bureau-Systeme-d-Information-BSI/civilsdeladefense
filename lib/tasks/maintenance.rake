@@ -61,12 +61,12 @@ namespace :maintenance do
           already_created = job_application.job_application_files.where(job_application_file_type_id: file_type.id).first
           if already_created
             if already_created.content.blank?
-              already_created.content = job_application.send(file_type_key).url
+              already_created.content = job_application.send(file_type_key)
               already_created.save!
             end
           else
             new_one = job_application.job_application_files.build(job_application_file_type_id: file_type.id)
-            new_one.content = job_application.send(file_type_key).url
+            new_one.content = job_application.send(file_type_key)
             new_one.save!
           end
         end
@@ -80,16 +80,18 @@ namespace :maintenance do
           already_created = job_application.job_application_files.where(job_application_file_type_id: file_type.id).first
           if already_created
             if already_created.content.blank?
-              already_created.content = user.send(file_type_key).url
+              already_created.content = user.send(file_type_key)
               already_created.save!
             end
           else
             new_one = job_application.job_application_files.build(job_application_file_type_id: file_type.id)
-            new_one.content = user.send(file_type_key).url
+            new_one.content = user.send(file_type_key)
             new_one.save!
           end
         end
       end
+
+
     end
   end
 end

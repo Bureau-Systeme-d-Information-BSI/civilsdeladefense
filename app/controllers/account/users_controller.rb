@@ -38,6 +38,7 @@ class Account::UsersController < Account::BaseController
         format.html {
           @user_for_password_change = @user
           @user_for_email_change = User.new
+          @user_for_deletion = User.new
           render :show
         }
         format.json { render json: @user.errors, status: :unprocessable_entity }
@@ -56,6 +57,7 @@ class Account::UsersController < Account::BaseController
       else
         format.html {
           @user_for_password_change = User.new
+          @user_for_deletion = User.new
           @user_for_email_change = @user
           render :show
         }

@@ -40,6 +40,7 @@ class JobOffersController < ApplicationController
   def apply
     if user_signed_in? && (@previous_job_application = current_user.job_applications.first)
       @job_application = @previous_job_application.dup
+      @job_application.state = JobApplication.new.state
     else
       @job_application = JobApplication.new
       @job_application.user = User.new
@@ -57,7 +58,6 @@ class JobOffersController < ApplicationController
     if @job_application.user
       @job_application.user.first_name = @job_application.first_name
       @job_application.user.last_name = @job_application.last_name
-      @job_application.user.photo = @job_application.photo
     end
 
     respond_to do |format|
@@ -100,10 +100,8 @@ class JobOffersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def job_application_params
       permitted_params = [:first_name, :last_name, :current_position, :phone, :address_1, :address_2, :postal_code, :city, :country, :website_url, :terms_of_service, :certify_majority]
-      permitted_params << {user_attributes: [:email, :password, :password_confirmation]} unless user_signed_in?
-      (JobOffer::FILES + JobOffer::URLS).each do |field|
-        permitted_params << field unless @job_offer.send("disabled_option_#{field}?")
-      end
+      permitted_params << {user_attributes: [:photo, :email, :password, :password_confirmation]} unless user_signed_in?
+      permitted_params << {job_application_files_attributes: [:content, :job_application_file_type_id]}
       params.require(:job_application).permit(permitted_params)
     end
 end

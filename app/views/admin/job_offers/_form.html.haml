@@ -93,35 +93,5 @@
                             - estimate_annual_salary_gross = salary_range.try(:estimate_annual_salary_gross)
                             - hint = estimate_annual_salary_gross ? t('.estimate_annual_salary_gross_html', value: estimate_annual_salary_gross) : t('.estimate_annual_salary_gross_none_html')
                             = f.input :estimate_annual_salary_gross, readonly: !current_administrator.bant?, hint: hint
-
-        %nav.navbar.navbar-dark.bg-secondary.my-5
-          %span.navbar-text#step_2= card_2_title
-        .container
-          .row
-            .col-12.col-md-10.mx-md-auto
-              .card
-                .card-header.with-subheader
-                  .card-title= t('.card_2_1_title')
-                .card-subheader
-                  .card-title
-                    = fa_icon('file-document')
-                    = t('.card_2_1_1_title')
-                .card-body
-                  .form-inputs.options
-                    - options = JobOffer::FILES
-                    - options.each do |option|
-                      - collection = JobOffer::OPTIONS_AVAILABLE.symbolize_keys.keys.reverse
-                      = f.input "option_#{option}".to_sym, collection: collection, as: :radio_buttons, wrapper: :horizontal_collection_inline
-                .card-subheader
-                  .card-title
-                    = fa_icon('web')
-                    = t('.card_2_1_2_title')
-                .card-body
-                  .form-inputs.options
-                    - options = JobOffer::URLS
-                    - options.each do |option|
-                      - collection = JobOffer::OPTIONS_AVAILABLE.symbolize_keys.keys.reverse
-                      = f.input "option_#{option}".to_sym, collection: collection, as: :radio_buttons, wrapper: :horizontal_collection_inline
-
         = render partial: "form_actors", locals: {f: f}
         = render partial: "form_submit", locals: {f: f}

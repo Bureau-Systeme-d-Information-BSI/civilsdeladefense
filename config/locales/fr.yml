@@ -194,19 +194,22 @@ fr:
         employer: "Employeur"
       list:
         job_applications_count:
-          zero: 'Aucune candidature trouvée'
-          one: '1 candidature trouvée'
-          other: '%{count} candidatures trouvées'
+          zero: "Aucune candidature trouvée"
+          one: "1 candidature trouvée"
+          other: "%{count} candidatures trouvées"
       job_application:
         published_date: "Candidaté il y a %{time_ago_in_words}"
       job_application_head:
         nav_overview: "Candidature"
         nav_emails: "Courriels"
-        nav_files: "Fichiers"
+        nav_files: "Documents"
       job_application_files:
-        title: "Documents fournis par le candidat"
-        subtitle_1: "Pièces nécessaires pour établissement du contrat"
-        subtitle_2: "Pièces nécessaires pour la prise en charge"
+        title: "Documents du candidat"
+        subtitle_1: "Documents à fournir par le candidat"
+        subtitle_2: "Documents complémentaires"
+        none_atm: "Aucun fichiers demandés"
+        none: "Vous avez déjà demandé tous les fichiers possibles"
+        note: "Vous pouvez choisir de demander des pièces supplémentaires au candidat parmi la liste ci-dessous."
       other_job_applications:
         title: "Autres candidatures de ce candidat"
         image: "#"
@@ -225,9 +228,21 @@ fr:
           updated_photo_html: "<span class='user-name'>%{name}</span> a mis à jour sa photo"
       change_state:
         success: "Candidature passée en statut %{state} !"
-      check_file:
+    job_application_files:
+      available_job_application_file_type:
+        action_name: "Demander"
+      check:
         success: "Fichier validé !"
-      uncheck_file:
+      destroy:
+        success: "Fichier supprimé de la liste"
+      create:
+        success: "Fichier ajouté"
+      job_application_file:
+        check: "Valider"
+        uncheck: "Invalider"
+        download: "Télécharger"
+        do_not_ask: "Ne plus demander"
+      uncheck:
         success: "Fichier invalidé !"
     job_offers:
       administrator:
@@ -251,10 +266,6 @@ fr:
         card_1_1_title: "1.1 Description de l'offre"
         card_1_2_title: "1.2 Paramètres de l'offre"
         card_1_3_title: "1.3. Estimation rémunération salariale"
-        card_2_title: "2. Options du formulaire de candidature"
-        card_2_1_title: "2.1. Sélectionnez vos options"
-        card_2_1_1_title: "Candidature"
-        card_2_1_2_title: "Présence sur internet"
         estimate_monthly_salary_net_html: "Fourchette de référence : <span class='estimate_monthly_salary_net_reference'>%{value}</span>"
         estimate_monthly_salary_net_none_html: "Fourchette de référence : <span class='estimate_monthly_salary_net_reference'>aucune</span>"
         estimate_annual_salary_gross_html: "Fourchette de référence : <span class='estimate_annual_salary_gross_reference'>%{value}</span>"
@@ -321,6 +332,8 @@ fr:
           administrators: "Comptes admin"
           employers: "Employeurs"
           email_templates: "Courriels"
+          job_applications: "Candidatures"
+          job_application_file_types: "Types de fichier"
           categories: "Domaines professionnels"
           professional_categories: "Catégories professionnelles"
           contract_types: "Types de contrat"
@@ -431,6 +444,22 @@ fr:
           success: "Catégorie mise à jour !"
         destroy:
           success: "Catégorie supprimée !"
+      job_application_file_types:
+        index:
+          card_title:
+            zero: 'Aucun type défini'
+            one: '1 type de fichier'
+            other: '%{count} types de fichier'
+        new:
+          title: "Ajouter un nouveau type de fichier"
+        edit:
+          title: "Modifier le type de fichier '%{name}'"
+        create:
+          success: "Type de fichier créé !"
+        update:
+          success: "Type de fichier mis à jour !"
+        destroy:
+          success: "Type de fichier supprimé !"
       professional_categories:
         index:
           card_title:
@@ -592,6 +621,11 @@ fr:
         state/end_user_state_6: "Contrat envoyé et à renvoyer signé"
         state/end_user_state_7: "Contrat reçu"
         state/end_user_state_8: "Affectée"
+      job_application_file_type:
+        kind/applicant_provided: "Fourni par le candidat"
+        kind/template: "Modèle de fichiers"
+        kind/admin_only: "Seulement admin"
+        kind/check_only_admin_only: "Fichier géré hors outil"
       salary_range:
         professional_category: "Catégorie"
         experience_level: "Expérience"

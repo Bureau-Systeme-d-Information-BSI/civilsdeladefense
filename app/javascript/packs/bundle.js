@@ -104,17 +104,19 @@ document.addEventListener("DOMContentLoaded", function() {
       let form = event.currentTarget
       let btn = form.querySelector('[type=submit]')
       btn.disabled = true
-      var spinner = btn.nextElementSibling
-      spinner.classList.remove('invisible')
-      spinner.classList.add('visible')
+      var spinners = form.querySelectorAll('.spinner')
+      ;[].forEach.call(spinners, function(spinner) {
+        spinner.classList.remove('invisible')
+      })
     })
     jobApplicationForm.addEventListener("ajax:complete", function(event) {
       let form = event.currentTarget
       let btn = form.querySelector('[type=submit]')
       btn.disabled = false
-      var spinner = btn.nextElementSibling
-      spinner.classList.remove('visible')
-      spinner.classList.add('invisible')
+      var spinners = form.querySelectorAll('.spinner')
+      ;[].forEach.call(spinners, function(spinner) {
+        spinner.classList.add('invisible')
+      })
     })
     jobApplicationForm.addEventListener("ajax:success", function(event) {
       let detail = event.detail
@@ -132,7 +134,10 @@ document.addEventListener("DOMContentLoaded", function() {
       cleanupInvalidFields()
       for (var p in data) {
         if( data.hasOwnProperty(p) ) {
-          let id = `job_application_${ p.replace('.', '_attributes_') }`
+          let newP = p.replace('[', '_attributes_')
+          newP = newP.replace('].', '_')
+          newP = newP.replace('.', '_attributes_')
+          let id = `job_application_${ newP }`
           let node = document.getElementById(id)
           if (node !== null) {
             node.closest('.form-group').classList.add('form-group-invalid')

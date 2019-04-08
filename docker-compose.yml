@@ -30,11 +30,11 @@ services:
       OS_USERNAME: "${OS_USERNAME}"
       OS_REGION_NAME: "${OS_REGION_NAME}"
       OS_TEMP_URL_KEY: "${OS_TEMP_URL_KEY}"
+      SEED_PASSWORD: "${SEED_PASSWORD}"
       BUCKET_NAME: "${BUCKET_NAME}"
       DATABASE_URL: postgresql://admin:admin-secret@postgresql:5432/civilsdeladefense_development
       DATABASE_URL_TEST: postgresql://admin:admin-secret@postgresql:5432/civilsdeladefense_test
       WEBPACKER_DEV_SERVER_HOST: 172.17.0.1
-      INCLUDE_TRACKERS: 1
     links:
       - postgresql
       - webpack

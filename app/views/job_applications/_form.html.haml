@@ -1,7 +1,4 @@
 -# frozen_string_literal: true
-- file_fields = JobOffer::FILES.dup
-- file_fields.delete(:photo)
-- url_fields = JobOffer::URLS
 = simple_form_for(@job_application, url: [:send_application, @job_offer], method: :post, remote: true, html: {data: {type: :json}}) do |f|
   .form-inputs.mt-3
     = f.error_notification
@@ -32,26 +29,29 @@
             = f.input :postal_code
           .col-12.col-md-6
             = f.input :country, priority: [ "FR" ]
-    - unless @job_offer.disabled_option_photo?
-      .row
-        .col-12.col-md-6
-          = f.label :photo, required: @job_offer.mandatory_option_photo?
-          = f.input :photo, label: t('buttons.choose_file'), wrapper: :custom_file_without_label
+    .row
+      .col-12.col-md-6
+        = f.simple_fields_for :user do |user_form|
+          = user_form.label :photo, required: false
+          = user_form.input :photo, label: t('buttons.choose_file'), wrapper: :custom_file_without_label
 
     %h2.h5.mt-4.mb-3.text-dark-gray= t('.your_profile')
-    - file_fields.each do |field|
-      - unless @job_offer.send("disabled_option_#{field}?")
-        .row
-          .col-12.col-md-6
-            = f.label field, required: @job_offer.send("mandatory_option_#{field}?")
-            = f.input field, label: t('buttons.choose_file'), wrapper: :custom_file_without_label
+    - job_application_files = @job_application.job_application_files.to_a
+    - job_application_file_types = JobApplicationFileType.where(by_default: true).where("from_state >= ?", @job_application.state).all
+    - job_application_file_types.each do |job_application_file_type, index|
+      - job_application_file = job_application_files.detect{|x| x.job_application_file_type == job_application_file_type}
+      - job_application_file ||= @job_application.job_application_files.build job_application_file_type: job_application_file_type
+      .row
+        .col-12.col-md-6
+          = f.simple_fields_for :job_application_files, job_application_file, input_html: {placeholder: false, required: true} do |file_form|
+            = file_form.hidden_field :job_application_file_type_id
+            = file_form.label job_application_file_type.name, required: true
+            = file_form.input :content, label: t('buttons.choose_file'), wrapper: :custom_file_without_label
 
     %h2.h5.mt-4.mb-3.text-dark-gray= t('.your_internet_presence')
-    - url_fields.each do |field|
-      - unless @job_offer.send("disabled_option_#{field}?")
-        .row
-          .col-12
-            = f.input field, required: @job_offer.send("mandatory_option_#{field}?")
+    .row
+      .col-12
+        = f.input :website_url, required: false
 
     - unless user_signed_in?
       %h2.h5.mt-4.mb-3.text-dark-gray= t('.your_account_creation')
@@ -78,5 +78,5 @@
     = button_tag(type: 'submit', class: 'btn btn-primary btn-raised d-md-none mb-0') do
       = t('helpers.submit.job_application.save')
       = fa_icon('send', class: 'ml-1')
-    .d-flex.justify-content-end.pt-1.invisible
+    .d-flex.justify-content-end.pt-1.invisible.spinner
       = spinner

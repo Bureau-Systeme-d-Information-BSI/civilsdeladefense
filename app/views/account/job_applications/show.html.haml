@@ -22,6 +22,6 @@
         .tab-pane.fade.show.active#emails{role: :tabpanel, aria: {labelledby: :emails}}
           = render template: '/account/emails/index', locals: {job_application: @job_application}
         .tab-pane.fade#files{role: :tabpanel, aria: {labelledby: :files}}
-          = render partial: '/account/files/form', locals: {job_application: @job_application}
+          = render partial: '/account/job_application_files/form', locals: {job_application: @job_application}
         .tab-pane.fade#offer{role: :tabpanel, aria: {labelledby: :offer}}
           = render partial: '/job_offers/job_offer_content', locals: {job_offer: @job_offer}

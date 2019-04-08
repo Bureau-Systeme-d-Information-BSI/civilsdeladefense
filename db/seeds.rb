@@ -6,11 +6,13 @@ Faker::Config.locale = :fr
 employer_parent = Employer.create! name: 'EMA', code: 'EMA'
 employer = Employer.create! name: 'DIRISI', code: 'DRI', parent: employer_parent
 
+ENV['SEED_PASSWORD'] ||= '123PIPOmolo*'
+
 bant_admin = Administrator.new email: 'pipo@molo.fr',
   first_name: 'Pipo',
   last_name: 'Molo',
-  password: '123PIPOmolo*',
-  password_confirmation: '123PIPOmolo*',
+  password: ENV['SEED_PASSWORD'],
+  password_confirmation: ENV['SEED_PASSWORD'],
   very_first_account: true,
   role: 'bant'
 bant_admin.skip_confirmation_notification!
@@ -20,8 +22,8 @@ bant_admin.confirm
 employer_admin_1 = Administrator.new email: 'employer1@molo.fr',
   first_name: 'employer',
   last_name: 'Molo',
-  password: '123PIPOmolo*',
-  password_confirmation: '123PIPOmolo*',
+  password: ENV['SEED_PASSWORD'],
+  password_confirmation: ENV['SEED_PASSWORD'],
   very_first_account: true,
   role: 'employer',
   employer: employer
@@ -32,8 +34,8 @@ employer_admin_1.confirm
 employer_admin_2 = Administrator.new email: 'employer2@molo.fr',
   first_name: 'employer',
   last_name: 'Molo',
-  password: '123PIPOmolo*',
-  password_confirmation: '123PIPOmolo*',
+  password: ENV['SEED_PASSWORD'],
+  password_confirmation: ENV['SEED_PASSWORD'],
   very_first_account: true,
   role: 'employer',
   employer: employer
@@ -44,8 +46,8 @@ employer_admin_2.confirm
 brh_admin = Administrator.new email: 'brh@molo.fr',
   first_name: 'brh',
   last_name: 'Molo',
-  password: '123PIPOmolo*',
-  password_confirmation: '123PIPOmolo*',
+  password: ENV['SEED_PASSWORD'],
+  password_confirmation: ENV['SEED_PASSWORD'],
   very_first_account: true,
   employer: employer
 brh_admin.skip_confirmation_notification!
@@ -85,6 +87,59 @@ ExperienceLevel.create! name: '1 à 2 ans'
 ExperienceLevel.create! name: '3 à 4 ans'
 ExperienceLevel.create! name: '5 à 6 ans'
 ExperienceLevel.create! name: '> 7 ans'
+
+resume = JobApplicationFileType.create! name: "CV", kind: :applicant_provided, from_state: :initial, by_default: true
+cover_letter = JobApplicationFileType.create! name: "Lettre de Motivation", kind: :applicant_provided, from_state: :initial, by_default: true
+diploma = JobApplicationFileType.create! name: "Copie des diplômes",
+  kind: :applicant_provided,
+  from_state: :accepted,
+  by_default: true
+proof_of_address = JobApplicationFileType.create! name: "Justificatif de domicile de moins de 6 mois",
+  kind: :applicant_provided,
+  from_state: :accepted,
+  by_default: true
+identity = JobApplicationFileType.create! name: "Carte d'identité",
+  description: "Carte nationale d’identité recto/verso ou passeport",
+  kind: :applicant_provided,
+  from_state: :accepted,
+  by_default: true
+carte_vitale_certificate = JobApplicationFileType.create! name: "Carte Vitale",
+  description: "Attestation de carte vitale ou copie de carte vitale (mentionnant le n° INSEE)",
+  kind: :applicant_provided,
+  from_state: :accepted,
+  by_default: true
+medical_certificate = JobApplicationFileType.create! name: "Certificat Médical",
+  description: "Certificat médical d’aptitude fourni par le médecin de l’établissement ou à défaut par un médecin agréé",
+  kind: :applicant_provided,
+  from_state: :accepted,
+  by_default: true
+iban = JobApplicationFileType.create! name: "Relevé d'identité bancaire",
+  description: "RIB original au format BIC/IBAN comportant le logo de la banque au nom du signataire du contrat (les RIB sur compte épargne ne sont pas acceptés)",
+  kind: :applicant_provided,
+  from_state: :accepted,
+  by_default: true
+transport_ticket = JobApplicationFileType.create! name: "Copie d'un titre de transport (si vous postulez en Île-de-france)",
+  kind: :applicant_provided,
+  from_state: :accepted,
+  by_default: true
+JobApplicationFileType.create! name: "Fiche de poste",
+  description: "Fiche de poste comportant le code poste ALLIANCE actif et vacant au moment de la date d’effet du recrutement",
+  kind: :admin_only,
+  from_state: :accepted,
+  by_default: true
+JobApplicationFileType.create! name: "FICE transmis à officier sécurité",
+  kind: :check_only_admin_only,
+  from_state: :accepted,
+  by_default: true
+JobApplicationFileType.create! name: "Demande de B2",
+  kind: :check_only_admin_only,
+  from_state: :accepted,
+  by_default: true
+JobApplicationFileType.create! name: "Copie du livret de famille",
+  description: "Seulement si marié",
+  kind: :applicant_provided,
+  from_state: :accepted,
+  by_default: false
 
 job_offer = JobOffer.new do |j|
   j.owner = bant_admin
@@ -132,10 +187,6 @@ job_offer = JobOffer.new do |j|
   j.sector = Sector.first
   j.estimate_monthly_salary_net = "2500 - 3000€"
   j.estimate_annual_salary_gross = "39000 - 46000€"
-  j.option_cover_letter = :mandatory
-  j.option_resume = :mandatory
-  j.option_photo = :optional
-  j.option_website_url = :optional
   j.job_offer_actors.build({administrator: employer_admin_1, role: :employer})
   j.job_offer_actors.build({administrator: brh_admin, role: :brh})
 end
@@ -171,8 +222,9 @@ job_offer3.publish!
 user = User.new email: 'coin@pan.fr',
   first_name: 'Coin',
   last_name: 'Pan',
-  password: '123PIPOmolo*',
-  password_confirmation: '123PIPOmolo*'
+  password: ENV['SEED_PASSWORD'],
+  password_confirmation: ENV['SEED_PASSWORD'],
+  photo: File.open(Rails.root.join('spec', 'fixtures', 'files', 'avatar.jpg'))
 user.skip_confirmation_notification!
 user.save!
 user.confirm
@@ -190,9 +242,9 @@ job_application = JobApplication.new do |ja|
   ja.country = "FR"
 end
 file = File.open(Rails.root.join('spec', 'fixtures', 'files', 'document.pdf'))
-job_application.cover_letter = file
+job_application.job_application_files.build content: file, job_application_file_type: resume
 file = File.open(Rails.root.join('spec', 'fixtures', 'files', 'document.pdf'))
-job_application.resume = file
+job_application.job_application_files.build content: file, job_application_file_type: cover_letter
 job_application.save!
 
 Audited.audit_class.as_user(bant_admin) do
@@ -205,19 +257,19 @@ end
 user_candidate_of_all = User.new email: Faker::Internet.email,
   first_name: 'Nicolas' ,
   last_name: 'Agoini' ,
-  password: '123PIPOmolo*',
-  password_confirmation: '123PIPOmolo*'
+  password: ENV['SEED_PASSWORD'],
+  password_confirmation: ENV['SEED_PASSWORD']
 user_candidate_of_all.skip_confirmation_notification!
 user_candidate_of_all.save!
 user_candidate_of_all.confirm
 
 JobOffer.where.not(duration_contract: nil).each do |job_offer|
-  30.times do |i|
+  5.times do |i|
     user = User.new email: Faker::Internet.email,
       first_name: Faker::Name.first_name ,
       last_name: Faker::Name.last_name ,
-      password: '123PIPOmolo*',
-      password_confirmation: '123PIPOmolo*'
+      password: ENV['SEED_PASSWORD'],
+      password_confirmation: ENV['SEED_PASSWORD']
     user.skip_confirmation_notification!
     user.save!
     user.confirm
@@ -235,9 +287,9 @@ JobOffer.where.not(duration_contract: nil).each do |job_offer|
       ja.country = "FR"
     end
     file = File.open(Rails.root.join('spec', 'fixtures', 'files', 'document.pdf'))
-    job_application.cover_letter = file
+    job_application.job_application_files.build content: file, job_application_file_type: resume
     file = File.open(Rails.root.join('spec', 'fixtures', 'files', 'document.pdf'))
-    job_application.resume = file
+    job_application.job_application_files.build content: file, job_application_file_type: cover_letter
     job_application.job_offer.initial!
     job_application.save!
 
@@ -265,9 +317,9 @@ JobOffer.where.not(duration_contract: nil).each do |job_offer|
     ja.country = "FR"
   end
   file = File.open(Rails.root.join('spec', 'fixtures', 'files', 'document.pdf'))
-  job_application.cover_letter = file
+  job_application.job_application_files.build content: file, job_application_file_type: resume
   file = File.open(Rails.root.join('spec', 'fixtures', 'files', 'document.pdf'))
-  job_application.resume = file
+  job_application.job_application_files.build content: file, job_application_file_type: cover_letter
   job_application.job_offer.initial!
   job_application.save!
 
@@ -281,3 +333,4 @@ JobOffer.where.not(duration_contract: nil).each do |job_offer|
   end
 
 end
+

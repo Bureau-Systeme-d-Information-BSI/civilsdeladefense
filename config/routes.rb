@@ -44,10 +44,11 @@ Rails.application.routes.draw do
     resources :job_applications, path: 'candidatures' do
       member do
         patch :change_state
-        post :check_file
-        post :uncheck_file
-        (JobOffer::FILES + User::FILES).each do |field|
-          get field
+      end
+      resources :job_application_files do
+        member do
+          post :check
+          post :uncheck
         end
       end
       resources :messages, only: %i(create)
@@ -75,7 +76,8 @@ Rails.application.routes.draw do
         end
       end
       resources :salary_ranges
-      (JobOffer::SETTINGS + [:email_template]).each do |setting|
+      resources :job_application_file_types
+      (JobOffer::SETTINGS + [:email_template, :job_application_file_types]).each do |setting|
         resources setting.to_s.pluralize.to_sym, except: %i(show) do
           member do
             post :move_higher, :move_lower
@@ -93,10 +95,8 @@ Rails.application.routes.draw do
         collection do
           get :finished
         end
+        resources :job_application_files
         resources :emails, only: %i(index create)
-        (JobOffer::FILES + User::FILES).each do |field|
-          get field
-        end
       end
       resource :user, path: 'mon-compte', only: %i(show update destroy) do
         member do

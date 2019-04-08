@@ -17,35 +17,10 @@ function handleDrop(e) {
   let dt = e.dataTransfer
   let files = dt.files
   let form = e.currentTarget.closest('form')
-  let url = form.getAttribute('action')
   let input = form.querySelector('input[type=file]')
-  let inputName = input.getAttribute('name')
 
-  handleFiles(url, inputName, files)
-}
-
-function uploadFile(url, inputName, file) {
-  let formData = new FormData()
-  formData.append(inputName, file)
-
-  Rails.ajax({
-    type: 'PATCH',
-    url: url,
-    dataType: 'script',
-    data: formData,
-    success: (response) => {
-    },
-    error: (response) => {
-      console.log("error")
-      console.log(response)
-    }
-  })
-}
-
-function handleFiles(url, inputName, files) {
-  ([...files]).forEach((file) => {
-    uploadFile(url, inputName, file)
-  })
+  input.files = files
+  Rails.fire(form, 'submit')
 }
 
 function manageDropArea (dropArea) {
@@ -64,12 +39,10 @@ function manageDropArea (dropArea) {
   dropArea.addEventListener('drop', handleDrop, false)
 
   let form = dropArea.closest('form')
-  let url = form.getAttribute('action')
   let input = form.querySelector('input[type=file]')
-  let inputName = input.getAttribute('name')
 
   input.addEventListener('change', (e) => {
-    handleFiles(url, inputName, input.files)
+    Rails.fire(form, 'submit')
   }, false)
 }
 

@@ -24,6 +24,15 @@
       - klasses << 'active' if controller.controller_name == entry
       = link_to [:admin, :settings, entry.to_sym], class: klasses do
         = t(".#{ entry }")
+  - if can? :read, JobApplicationFileType
+    .list-group-item.menu
+      = t(".job_applications")
+    .list-group.stepper
+      - entry = 'job_application_file_types'
+      - klasses = %w(list-group-item d-flex justify-content-between align-items-center)
+      - klasses << 'active' if controller.controller_name == entry
+      = link_to [:admin, :settings, entry.to_sym], class: klasses do
+        = t(".#{ entry }")
   - entries = JobOffer::SETTINGS.map{|x| x.to_s.pluralize.to_sym} + [:salary_ranges]
   - if entries.any?{ |entry| can?(:manage, entry.to_s.singularize.classify.constantize) }
     .list-group-item.menu

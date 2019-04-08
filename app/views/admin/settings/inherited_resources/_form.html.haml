@@ -5,7 +5,17 @@
       = f.error_notification
       = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
       .form-inputs
-        - if resource.is_a?(EmailTemplate)
+        - if resource.is_a?(JobApplicationFileType)
+          = f.input :name
+          = f.input :description
+          - kinds = JobApplicationFileType.kinds.map {|k, v| [ JobApplicationFileType.human_attribute_name("kind/#{k}"), k] }
+          = f.input :kind, collection: kinds, prompt: true
+          - states = JobApplication.states.map {|k, v| [ JobApplication.human_attribute_name("state/#{k}"), v] }
+          = f.input :from_state, collection: states, prompt: true
+          = f.input :content
+          =# f.input :is_mandatory
+          = f.input :by_default
+        - elsif resource.is_a?(EmailTemplate)
           = f.input :title
           = f.input :subject
           = f.input :body, style: 'height:400px;'

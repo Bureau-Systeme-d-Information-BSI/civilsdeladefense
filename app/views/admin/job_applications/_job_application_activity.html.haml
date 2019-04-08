@@ -15,7 +15,7 @@
       %li
         .d-flex
           - model = audit.auditable_type == 'JobApplication' && audit.version == 1 ? @job_application : audit.user
-          - photo_obj = model == "unknown" ? nil : model&.photo
+          - photo_obj = model == "unknown" ? nil : (model.is_a?(JobApplication) ? model.user.photo : model&.photo)
           = image_user_tag photo_obj, width: 32, class: 'photo'
           .d-flex.flex-column
             .mb-1

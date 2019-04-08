@@ -17,35 +17,14 @@ class JobApplication < ApplicationRecord
   accepts_nested_attributes_for :user
   has_many :messages, dependent: :destroy
   has_many :emails, dependent: :destroy
+  has_many :job_application_files, index_errors: true
+  accepts_nested_attributes_for :job_application_files
 
   has_many :job_application_actors
   has_many :actors, through: :job_applications_actors, class_name: 'Administrator'
 
-  JobOffer::FILES.each do |field|
-    if field == :photo
-      mount_uploader :photo, PhotoUploader, mount_on: :photo_file_name
-      validates :photo,
-        file_size: { less_than: 1.megabytes },
-        file_content_type: { allow: /^image\/.*/ }
-    else
-      mount_uploader field.to_sym, DocumentUploader, mount_on: :"#{field}_file_name"
-      validates field.to_sym,
-        file_size: { less_than: 2.megabytes },
-        file_content_type: { allow: 'application/pdf' }
-    end
-    validates_presence_of field.to_sym,
-      if: Proc.new { |job_application|
-        job_application.job_offer.send("mandatory_option_#{field}?")
-      }
-  end
-
   validates :first_name, :last_name, :current_position, :phone, :address_1, :city, :country, presence: true
   validates :terms_of_service, :certify_majority, acceptance: true
-  JobOffer::URLS.each do |field|
-    validates field.to_sym, presence: true, if: Proc.new { |job_application|
-      job_application.job_offer.send("mandatory_option_#{field}?")
-    }
-  end
 
   before_validation :set_employer
   before_save :compute_notifications_counter
@@ -153,24 +132,25 @@ class JobApplication < ApplicationRecord
   end
 
   def compute_files_count
-    ary = JobOffer::FILES.inject([0, 0]) { |memo,obj|
-      if self.send("#{obj}?".to_sym)
-        memo[0] += 1
-        if self.send("#{obj}_is_validated".to_sym) == 0
-          memo[1] += 1
-        end
-      end
-      memo
-    }
-    ary = (User::FILES_JUST_AFTER_SUBMISSION + User::FILES_FOR_PAYROLL).inject(ary) { |memo,obj|
-      if self.user.send("#{obj}?".to_sym)
-        memo[0] += 1
-        if self.user.send("#{obj}_is_validated".to_sym) == 0
-          memo[1] += 1
-        end
-      end
-      memo
-    }
+    # ary = JobOffer::FILES.inject([0, 0]) { |memo,obj|
+    #   if self.send("#{obj}?".to_sym)
+    #     memo[0] += 1
+    #     if self.send("#{obj}_is_validated".to_sym) == 0
+    #       memo[1] += 1
+    #     end
+    #   end
+    #   memo
+    # }
+    # ary = (User::FILES_JUST_AFTER_SUBMISSION + User::FILES_FOR_PAYROLL).inject(ary) { |memo,obj|
+    #   if self.user.send("#{obj}?".to_sym)
+    #     memo[0] += 1
+    #     if self.user.send("#{obj}_is_validated".to_sym) == 0
+    #       memo[1] += 1
+    #     end
+    #   end
+    #   memo
+    # }
+    ary = [0, 0]
     self.files_count, self.files_unread_count = ary
   end
 
@@ -187,5 +167,31 @@ class JobApplication < ApplicationRecord
 
   def compute_administrator_notifications_count
     self.administrator_notifications_count = self.emails_administrator_unread_count + self.files_unread_count
+  end
+
+  def all_available_file_types
+    @all_available_file_types ||= JobApplicationFileType.all.to_a
+  end
+
+  def to_be_provided_files
+    @to_be_provided_files ||= begin
+      file_type_ids = job_application_files.map(&:job_application_file_type_id)
+      available_file_types = all_available_file_types.select{ |x|
+        (x.from_state >= self.state && x.by_default) || file_type_ids.include?(x.id)
+      }
+      available_file_types.map{ |x|
+        file = self.job_application_files.detect{ |y| y.job_application_file_type_id == x.id}
+        if file
+          file
+        else
+          JobApplicationFile.new job_application_file_type: x, job_application_file_type_id: x.id
+        end
+      }
+    end
+  end
+
+  def other_available_file_types
+    ary = to_be_provided_files.dup.map(&:job_application_file_type_id)
+    all_available_file_types.dup.delete_if{|x| ary.include?(x.id)}
   end
 end

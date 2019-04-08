@@ -1,14 +1,22 @@
-.card
+- to_be_provided_files = @job_application.to_be_provided_files
+- other_available_file_types = @job_application.other_available_file_types
+.card.job-application-files
   .card-header.with-subheader.bg-white.font-weight-bold.text-secondary
     = fa_icon('file-document', class: 'text-secondary')
-    = t(".title")
-  - ary = []
-  - ary << [t(".subtitle_1"), (User::FILES_DURING_SUBMISSION + User::FILES_JUST_AFTER_SUBMISSION)]
-  - ary << [t(".subtitle_2"), User::FILES_FOR_PAYROLL]
-  - ary.each do |subary|
-    - text = subary[0]
-    - fields = subary[1]
-    .card-subheader.bg-card-bg.font-weight-bold.text-muted
-      = text
-    .card-body.bg-white.files-list
-      = render partial: "job_application_file", locals: {job_application: @job_application}, collection: fields, as: :field
+    = t('.title')
+  .card-subheader.bg-card-bg.font-weight-bold.text-muted
+    = t('.subtitle_1')
+  .card-body.bg-white.files-list
+    - if to_be_provided_files.any?
+      = render partial: "/admin/job_application_files/job_application_file", locals: {job_application: @job_application}, collection: to_be_provided_files
+    - else
+      %em= t('.none_atm')
+  .card-subheader.bg-card-bg.font-weight-bold.text-muted
+    = t('.subtitle_2')
+  .card-body.bg-white.files-list
+    %small.text-italic.d-block.mb-3= t('.note')
+    - if other_available_file_types.any?
+      = render partial: "/admin/job_application_files/available_job_application_file_type", locals: {job_application: @job_application}, collection: other_available_file_types, as: :job_application_file_type
+    - else
+      %em= t('.none')
+

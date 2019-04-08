@@ -55,8 +55,7 @@ class Administrator < ApplicationRecord
   # Validations
 
   validates :photo,
-    file_size: { less_than: 1.megabytes },
-    file_content_type: { allow: /^image\/.*/ }
+    file_size: { less_than: 1.megabytes }
   validate :password_complexity
   validate :email_conformance
   validates :employer, presence: true, if: Proc.new { |a| %w(employer grand_employer).include?(a.role) }

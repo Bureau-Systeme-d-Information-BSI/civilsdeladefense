@@ -87,19 +87,13 @@ docker-compose run specs rspec
 
 ## Déploiement en préproduction
 
-Actuellement, la branche master est autodéployée sur la version Scalingo.
+Actuellement, la branche master est autodéployée sur Scalingo.
 
 ## Déploiement en production
 
-Au préalable, les variables d'environnement PRODUCTION_SERVER_IP et PRODUCTION_SERVER_USER doivent être définies sur votre poste local, par exemple dans un fichier .env à la racine du projet.
+Actuellement, la branche production est autodéployée sur Scalingo.
 
 Branchement sur "production" :
 ```
 git checkout master && git pull && git checkout production && git merge master && git push origin production && git checkout master
 ```
-
-Déploiement de la branche production avec Capistrano :
-```
-docker-compose run web cap production deploy
-```
-

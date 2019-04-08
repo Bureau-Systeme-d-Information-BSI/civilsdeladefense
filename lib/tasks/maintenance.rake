@@ -55,6 +55,8 @@ namespace :maintenance do
         by_default: false
 
       JobApplication.include(JobApplicationOldFilesCompat)
+      in_error = []
+      in_error_but_created = []
       %w(resume cover_letter).each do |file_type_key|
         file_type = eval(file_type_key)
         JobApplication.where("old_#{file_type_key}_file_name IS NOT NULL").all.each do |job_application|
@@ -62,16 +64,22 @@ namespace :maintenance do
           if already_created
             if already_created.content.blank?
               already_created.content = job_application.send(file_type_key)
-              already_created.save!
+              if !already_created.save
+                in_error_but_created << already_created
+              end
             end
           else
             new_one = job_application.job_application_files.build(job_application_file_type_id: file_type.id)
             new_one.content = job_application.send(file_type_key)
-            new_one.save!
+            if !new_one.save
+              in_error << new_one
+            end
           end
         end
       end
 
+      in_error_2 = []
+      in_error_but_created_2 = []
       User.include(UserOldFilesCompat)
       %w(diploma proof_of_address identity carte_vitale_certificate medical_certificate iban transport_ticket).each do |file_type_key|
         file_type = eval(file_type_key)
@@ -81,12 +89,16 @@ namespace :maintenance do
           if already_created
             if already_created.content.blank?
               already_created.content = user.send(file_type_key)
-              already_created.save!
+              if !already_created.save
+                in_error_but_created_2 << already_created
+              end
             end
           else
             new_one = job_application.job_application_files.build(job_application_file_type_id: file_type.id)
             new_one.content = user.send(file_type_key)
-            new_one.save!
+            if !new_one.save
+              in_error_2 << new_one
+            end
           end
         end
       end

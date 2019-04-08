@@ -180,8 +180,9 @@ class JobApplication < ApplicationRecord
 
   def to_be_provided_files
     @to_be_provided_files ||= begin
+      file_type_ids = job_application_files.map(&:job_application_file_type_id)
       available_file_types = all_available_file_types.select{ |x|
-        x.from_state >= self.state && x.by_default
+        (x.from_state >= self.state && x.by_default) || file_type_ids.include?(x.id)
       }
       available_file_types.map{ |x|
         file = self.job_application_files.detect{ |y| y.job_application_file_type_id == x.id}

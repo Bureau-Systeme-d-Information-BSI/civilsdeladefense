@@ -6,6 +6,43 @@ class Admin::JobApplicationFilesController < Admin::BaseController
   load_and_authorize_resource :job_application
   load_and_authorize_resource :job_application_file, through: :job_application
 
+  def create
+    @job_application_file.do_not_provide_immediately = true
+    @job_application_file.job_application = @job_application
+
+    respond_to do |format|
+      if @job_application_file.save
+        respond_to do |format|
+          format.html { redirect_to([:admin, @job_application], notice: t('.success')) }
+          format.js {
+            @notification = t('.success')
+            render :file_operation_total
+          }
+          format.json { render :show, status: :ok, location: [:admin, @job_application, @job_application_file] }
+        end
+      else
+        format.html { render :new }
+        format.json { render json: @job_application_file.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def update
+  end
+
+  def destroy
+    @job_application_file.destroy
+
+    respond_to do |format|
+      format.html { redirect_to([:admin, @job_application], notice: t('.success')) }
+      format.js {
+        @notification = t('.success')
+        render :file_operation_total
+      }
+      format.json { head :no_content, location: [:admin, @job_application] }
+    end
+  end
+
   def show
     if !@job_application_file.content.present?
       return render json: {
@@ -49,7 +86,7 @@ class Admin::JobApplicationFilesController < Admin::BaseController
     @job_application.compute_notifications_counter!
 
     respond_to do |format|
-      format.html { redirect_back(fallback_location: [:admin, @job_application, @job_application_file], notice: t('.success', state: state_i18n)) }
+      format.html { redirect_back(fallback_location: [:admin, @job_application, @job_application_file], notice: t('.success')) }
       format.js {
         @notification = t('.success')
         render :file_operation
@@ -63,7 +100,7 @@ class Admin::JobApplicationFilesController < Admin::BaseController
     @job_application.compute_notifications_counter!
 
     respond_to do |format|
-      format.html { redirect_back(fallback_location: [:admin, @job_application, @job_application_file], notice: t('.success', state: state_i18n)) }
+      format.html { redirect_back(fallback_location: [:admin, @job_application, @job_application_file], notice: t('.success')) }
       format.js {
         @notification = t('.success')
         render :file_operation
@@ -71,4 +108,10 @@ class Admin::JobApplicationFilesController < Admin::BaseController
       format.json { render :show, status: :ok, location: [:admin, @job_application, @job_application_file] }
     end
   end
+
+  private
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def job_application_file_params
+      params.require(:job_application_file).permit(:content, :job_application_file_type_id)
+    end
 end

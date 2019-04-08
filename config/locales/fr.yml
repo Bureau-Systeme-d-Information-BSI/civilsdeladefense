@@ -202,11 +202,14 @@ fr:
       job_application_head:
         nav_overview: "Candidature"
         nav_emails: "Courriels"
-        nav_files: "Fichiers"
+        nav_files: "Documents"
       job_application_files:
-        title: "Documents fournis par le candidat"
-        subtitle_1: "Pièces nécessaires pour établissement du contrat"
-        subtitle_2: "Pièces nécessaires pour la prise en charge"
+        title: "Documents du candidat"
+        subtitle_1: "Documents à fournir par le candidat"
+        subtitle_2: "Documents complémentaires"
+        none_atm: "Aucun fichiers demandés"
+        none: "Vous avez déjà demandé tous les fichiers possibles"
+        note: "Vous pouvez choisir de demander des pièces supplémentaires au candidat parmi la liste ci-dessous."
       other_job_applications:
         title: "Autres candidatures de ce candidat"
         image: "#"
@@ -226,8 +229,19 @@ fr:
       change_state:
         success: "Candidature passée en statut %{state} !"
     job_application_files:
+      available_job_application_file_type:
+        action_name: "Demander"
       check:
         success: "Fichier validé !"
+      destroy:
+        success: "Fichier supprimé de la liste"
+      create:
+        success: "Fichier ajouté"
+      job_application_file:
+        check: "Valider"
+        uncheck: "Invalider"
+        download: "Télécharger"
+        do_not_ask: "Ne plus demander"
       uncheck:
         success: "Fichier invalidé !"
     job_offers:

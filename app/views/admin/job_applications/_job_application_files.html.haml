@@ -1,20 +1,22 @@
 - to_be_provided_files = @job_application.to_be_provided_files
 - other_available_file_types = @job_application.other_available_file_types
-.card
+.card.job-application-files
   .card-header.with-subheader.bg-white.font-weight-bold.text-secondary
     = fa_icon('file-document', class: 'text-secondary')
-    = t(".title")
+    = t('.title')
   .card-subheader.bg-card-bg.font-weight-bold.text-muted
-    Fichiers à fournir par le candidat
+    = t('.subtitle_1')
   .card-body.bg-white.files-list
     - if to_be_provided_files.any?
       = render partial: "/admin/job_application_files/job_application_file", locals: {job_application: @job_application}, collection: to_be_provided_files
     - else
-      %em Aucun pour le moment
+      %em= t('.none_atm')
   .card-subheader.bg-card-bg.font-weight-bold.text-muted
-    Autres fichiers
+    = t('.subtitle_2')
   .card-body.bg-white.files-list
-    - other_available_file_types.each do |file_type|
-      .d-flex.align-items-center.border.py-1.px-2.file
-        .text-truncate= file_type.name
+    %small.text-italic.d-block.mb-3= t('.note')
+    - if other_available_file_types.any?
+      = render partial: "/admin/job_application_files/available_job_application_file_type", locals: {job_application: @job_application}, collection: other_available_file_types, as: :job_application_file_type
+    - else
+      %em= t('.none')
 

@@ -7,6 +7,11 @@ class JobApplicationFile < ApplicationRecord
     file_size: { less_than: 2.megabytes },
     file_content_type: { allow: 'application/pdf' }
 
-  validates :content, presence: true
-  validates :job_application_file_type_id, uniqueness: {scope: :job_application_id}
+  attr_accessor :do_not_provide_immediately
+
+  validates :content,
+    presence: true,
+    unless: Proc.new { |file| file.do_not_provide_immediately }
+  validates :job_application_file_type_id,
+    uniqueness: {scope: :job_application_id}
 end

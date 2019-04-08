@@ -1,0 +1,5 @@
+.d-flex.align-items-center.border.py-1.px-2.file
+  .text-truncate= job_application_file_type.name
+  .ml-auto.d-flex
+    - url = [:admin, job_application, :job_application_files, {job_application_file: {job_application_file_type_id: job_application_file_type.id}}]
+    = link_to t('.action_name'), url, method: :post, remote: true, class: "btn btn-primary btn-raised btn-sm mb-0"

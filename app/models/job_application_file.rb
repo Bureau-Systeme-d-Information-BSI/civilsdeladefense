@@ -4,8 +4,7 @@ class JobApplicationFile < ApplicationRecord
 
   mount_uploader :content, DocumentUploader, mount_on: :content_file_name
   validates :content,
-    file_size: { less_than: 2.megabytes },
-    file_content_type: { allow: 'application/pdf' }
+    file_size: { less_than: 2.megabytes }
 
   attr_accessor :do_not_provide_immediately
 

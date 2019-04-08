@@ -10,10 +10,9 @@
           = f.input :description
           - kinds = JobApplicationFileType.kinds.map {|k, v| [ JobApplicationFileType.human_attribute_name("kind/#{k}"), k] }
           = f.input :kind, collection: kinds, prompt: true
-          - states = JobApplication.states.map {|k, v| [ JobApplication.human_attribute_name("state/#{k}"), v] }
+          - states = JobApplication.states.map {|k, v| [ JobApplication.human_attribute_name("state/#{k}"), k] }
           = f.input :from_state, collection: states, prompt: true
           = f.input :content
-          =# f.input :is_mandatory
           = f.input :by_default
         - elsif resource.is_a?(EmailTemplate)
           = f.input :title

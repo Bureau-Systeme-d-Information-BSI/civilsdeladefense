@@ -19,4 +19,6 @@ class JobApplicationFileType < ApplicationRecord
     admin_only: 30,
     check_only_admin_only: 40,
   }
+
+  enum from_state: JobApplication.states
 end

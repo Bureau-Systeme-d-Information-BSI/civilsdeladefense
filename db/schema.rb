@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_08_074323) do
+ActiveRecord::Schema.define(version: 2019_04_08_111450) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -187,11 +187,12 @@ ActiveRecord::Schema.define(version: 2019_04_08_074323) do
     t.string "description"
     t.integer "kind"
     t.string "content_file_name"
-    t.string "from_state"
+    t.string "old_from_state"
     t.boolean "by_default", default: false
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "from_state"
   end
 
   create_table "job_application_files", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

@@ -92,7 +92,7 @@ class JobOffer < ApplicationRecord
     end
 
     event :suspend do
-      transitions from: [:published], to: :suspended
+      transitions from: [:published, :suspended], to: :suspended
     end
 
     event :unsuspend do
@@ -100,7 +100,7 @@ class JobOffer < ApplicationRecord
     end
 
     event :unarchive do
-      transitions from: [:archived], to: :draft
+      transitions from: [:archived, :draft], to: :draft
     end
   end
 

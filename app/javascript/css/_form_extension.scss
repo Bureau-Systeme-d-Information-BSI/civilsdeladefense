@@ -100,7 +100,7 @@ form {
     select {
       @extend .form-control, .custom-select;
       box-shadow: none;
-      width: 100%;
+      width: 100% !important;
     }
     .is-focused select, select:focus, select:active {
       border-bottom: 0;

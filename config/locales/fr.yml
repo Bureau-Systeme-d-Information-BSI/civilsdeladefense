@@ -86,8 +86,10 @@ fr:
     index:
       title: "Nos offres"
     filters:
-      profession: "Domaines professionnels"
-      contract: "Contrat"
+      select_category: "Secteur"
+      blank_category: "Tous les secteurs"
+      select_contract: "Contrat"
+      blank_contract: "Tous les contrats"
       search: "Rechercher"
     job_offers_list:
       job_offers_count:

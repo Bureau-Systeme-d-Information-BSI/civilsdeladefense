@@ -10,10 +10,12 @@
         - cache @categories_for_select do
           .form-group.input-group.mb-0.border-bottom-3.border-success
             - options = options_from_collection_for_select(@categories_for_select, "id", "name_with_depth", params[:category_id])
-            = select_tag "category_id", options, include_blank: true, data: {placeholder: t('.profession'), 'allow-clear': true}, class: 'filter'
+            - prompt = t('.select_category')
+            = select_tag "category_id", options, include_blank: false, prompt: prompt, data: {placeholder: t('.select_category'), 'allow-clear': true}, class: 'filter'
         - cache @contract_types do
           .form-group.input-group.mb-0.border-bottom-3.border-cyan
-            = select_tag "contract_type_id", options_from_collection_for_select(@contract_types, "id", "name", params[:contract_type_id]), include_blank: true, data: {placeholder: t('.contract'), 'allow-clear': true}, class: 'filter'
+            - prompt = t('.select_contract')
+            = select_tag "contract_type_id", options_from_collection_for_select(@contract_types, "id", "name", params[:contract_type_id]), include_blank: false, prompt: prompt, data: {placeholder: t('.contract'), 'allow-clear': true}, class: 'filter'
       = submit_tag t('.search'), name: nil, class: 'd-none'
     .d-flex.justify-content-end.pt-1.invisible
       = spinner

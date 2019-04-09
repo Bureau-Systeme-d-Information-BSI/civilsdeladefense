@@ -1,19 +1,20 @@
-%footer
-  .container-fluid
-    .row
-      .col-12.col-md-2
-        = image_tag asset_pack_path('images/minarm.svg'), class: 'minarm'
-      .col-12.col-md-2
-        %ul.list-unstyled.mb-0
-          %li= link_to t('.legal_notice'), legal_notice_path
-          %li= link_to t('.tos'), tos_path
-          %li= link_to t('.privacy'), privacy_path
-          %li= link_to t('.tracking'), tracking_path
-      .col-12.col-md-2
-        %ul.list-unstyled.mb-0
-          - links = ["service-public.fr", "legifrance.gouv.fr", "data.gouv.fr", "france.fr"]
-          - links.each do |link|
-            %li
-              = link_to 'https://www.'+link, target: '_blank', rel: 'noopener noreferrer' do
-                = link.capitalize
-                = fa_icon("open-in-new")
+- cache do
+  %footer
+    .container-fluid
+      .row
+        .col-12.col-md-2
+          = image_tag asset_pack_path('images/minarm.svg'), class: 'minarm'
+        .col-12.col-md-2
+          %ul.list-unstyled.mb-0
+            %li= link_to t('.legal_notice'), legal_notice_path
+            %li= link_to t('.tos'), tos_path
+            %li= link_to t('.privacy'), privacy_path
+            %li= link_to t('.tracking'), tracking_path
+        .col-12.col-md-2
+          %ul.list-unstyled.mb-0
+            - links = ["service-public.fr", "legifrance.gouv.fr", "data.gouv.fr", "france.fr"]
+            - links.each do |link|
+              %li
+                = link_to 'https://www.'+link, target: '_blank', rel: 'noopener noreferrer' do
+                  = link.capitalize
+                  = fa_icon("open-in-new")

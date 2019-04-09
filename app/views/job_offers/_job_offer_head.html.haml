@@ -1,46 +1,47 @@
 - inside_card ||= false
-.row
-  - klasses = inside_card ? %w() : %w(col-md-9 mx-md-auto)
-  .col-12{class: klasses}
-    %h1.text-quinary.text-center.mb-0{class: inside_card ? %w(h5) : %w(mt-3 h4)}= job_offer.title
-  - klasses = inside_card ? %w() : %w(col-md-10 mx-md-auto)
-  .col-12{class: klasses}
-    - klasses = inside_card ? %w(vertical) : %w(horizontal)
-    .basic-infos.my-4{class: klasses}
-      .info.mt-0.mt-md-1
-        = fa_icon 'briefcase', class: 'mr-1'
-        = [job_offer.contract_type.name, job_offer.duration_contract].join(' ')
-      .info.mt-1
-        = fa_icon 'calendar', class: 'mr-1'
-        - if job_offer.available_immediately?
-          = t('.available_immediately')
-        - else
-          = l job_offer.contract_start_on
-      - if job_offer.location.present?
+- cache [job_offer, inside_card] do
+  .row
+    - klasses = inside_card ? %w() : %w(col-md-9 mx-md-auto)
+    .col-12{class: klasses}
+      %h1.text-quinary.text-center.mb-0{class: inside_card ? %w(h5) : %w(mt-3 h4)}= job_offer.title
+    - klasses = inside_card ? %w() : %w(col-md-10 mx-md-auto)
+    .col-12{class: klasses}
+      - klasses = inside_card ? %w(vertical) : %w(horizontal)
+      .basic-infos.my-4{class: klasses}
+        .info.mt-0.mt-md-1
+          = fa_icon 'briefcase', class: 'mr-1'
+          = [job_offer.contract_type.name, job_offer.duration_contract].join(' ')
         .info.mt-1
-          = fa_icon 'map-marker', class: 'mr-1'
-          = job_offer.location
-      .info.mt-1
-        = fa_icon 'study', class: 'mr-1'
-        = job_offer.study_level.name
-      .info.mt-1
-        = fa_icon 'entity', class: 'mr-1'
-        = job_offer.category.name
-      .info.mt-1
-        = fa_icon 'target', class: 'mr-1'
-        Expérience pro :
-        = job_offer.experience_level.name
-      - if job_offer.estimate_annual_salary_gross.present?
+          = fa_icon 'calendar', class: 'mr-1'
+          - if job_offer.available_immediately?
+            = t('.available_immediately')
+          - else
+            = l job_offer.contract_start_on
+        - if job_offer.location.present?
+          .info.mt-1
+            = fa_icon 'map-marker', class: 'mr-1'
+            = job_offer.location
         .info.mt-1
-          .d-flex.flex-row.align-items-center
-            = fa_icon 'coin', class: 'mr-1'
-            .d-flex.flex-column.align-items-center
-              %div{style: 'line-height:1.1;'}
-                = succeed ' mensuel net' do
-                  = job_offer.estimate_monthly_salary_net
-              %div{style: 'line-height:1.1;'}
-                = succeed ' annuel brut' do
-                  = job_offer.estimate_annual_salary_gross
-              %div{style: 'line-height:1.1;'}
-                = surround '(', ')' do
-                  selon expérience
+          = fa_icon 'study', class: 'mr-1'
+          = job_offer.study_level.name
+        .info.mt-1
+          = fa_icon 'entity', class: 'mr-1'
+          = job_offer.category.name
+        .info.mt-1
+          = fa_icon 'target', class: 'mr-1'
+          Expérience pro :
+          = job_offer.experience_level.name
+        - if job_offer.estimate_annual_salary_gross.present?
+          .info.mt-1
+            .d-flex.flex-row.align-items-center
+              = fa_icon 'coin', class: 'mr-1'
+              .d-flex.flex-column.align-items-center
+                %div{style: 'line-height:1.1;'}
+                  = succeed ' mensuel net' do
+                    = job_offer.estimate_monthly_salary_net
+                %div{style: 'line-height:1.1;'}
+                  = succeed ' annuel brut' do
+                    = job_offer.estimate_annual_salary_gross
+                %div{style: 'line-height:1.1;'}
+                  = surround '(', ')' do
+                    selon expérience

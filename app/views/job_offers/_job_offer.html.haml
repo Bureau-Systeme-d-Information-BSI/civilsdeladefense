@@ -1,22 +1,23 @@
-.row.job-offer
-  .col-12
-    = link_to job_offer, class: 'job-application-summary' do
-      .d-flex.align-items-center
-        .d-flex.flex-column
-          - if category.depth == 2
+- cache [job_offer, category] do
+  .row.job-offer
+    .col-12
+      = link_to job_offer, class: 'job-application-summary' do
+        .d-flex.align-items-center
+          .d-flex.flex-column
+            - if category.depth == 2
+              %small
+                %small= category.name
+            .job-offer-title= job_offer.title
             %small
-              %small= category.name
-          .job-offer-title= job_offer.title
-          %small
-            .d-flex
-              .mr-1
-                = [job_offer.contract_type.name, job_offer.duration_contract].join(' ')
-              .mr-1
-                \-
-              = job_offer.location
-          %small
-            %small.mt-1= t('.published_date', time_ago_in_words: time_ago_in_words(job_offer.created_at))
-        %button.btn.btn-primary.btn-raised.btn-l.mb-0.ml-auto{title: t('.show')}
-          = fa_icon('chevron-right')
-    %hr.mb-0
+              .d-flex
+                .mr-1
+                  = [job_offer.contract_type.name, job_offer.duration_contract].join(' ')
+                .mr-1
+                  \-
+                = job_offer.location
+            %small
+              %small.mt-1= t('.published_date', time_ago_in_words: time_ago_in_words(job_offer.created_at))
+          %button.btn.btn-primary.btn-raised.btn-l.mb-0.ml-auto{title: t('.show')}
+            = fa_icon('chevron-right')
+      %hr.mb-0
 

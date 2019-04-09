@@ -30,8 +30,8 @@ module Civilsdeladefense
     if Rails.env.production?
       # Cache assets for 1 year
       config.public_file_server.headers = {
-        'Cache-Control' => "max-age=#{ 1.week.to_i }",
-        'Expires' => 1.week.from_now.httpdate
+        'Cache-Control' => "max-age=#{ 1.year.to_i }",
+        'Expires' => 1.year.from_now.httpdate
       }
 
       # Setup HSTS to ensure https

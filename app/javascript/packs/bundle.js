@@ -53,22 +53,12 @@ function cleanupInvalidFields () {
 
 document.addEventListener("DOMContentLoaded", function() {
 
-  $('select.filter').select2({
-    width: '100%',
-    minimumResultsForSearch: Infinity,
-    prompt: 'Select',
-    allowClear: true
-  }).on('select2:unselecting', function(ev) {
-    if (ev.params.args.originalEvent) {
-      // When unselecting (in multiple mode)
-      ev.params.args.originalEvent.stopPropagation();
-    } else {
-      // When clearing (in single mode)
-      $(this).one('select2:opening', function(ev) { ev.preventDefault(); })
-    }
-  }).on('change', function(e) {
-    let form = e.currentTarget.form
-    Rails.fire(form, 'submit')
+  var filters = document.querySelectorAll('select.filter')
+  ;[].forEach.call(filters, function(filter) {
+    filter.addEventListener('change', function(e) {
+      let form = e.currentTarget.form
+      form.submit()
+    })
   })
 
   ;[].forEach.call(document.querySelectorAll('.custom-file-input'), function(el) {

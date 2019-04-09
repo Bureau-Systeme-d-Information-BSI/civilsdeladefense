@@ -50,6 +50,7 @@ gem 'carrierwave'
 gem 'ransack'
 gem 'invisible_captcha'
 gem 'mail'
+gem 'redis'
 
 gem 'clockwork' # needed for staging on Scalingo
 

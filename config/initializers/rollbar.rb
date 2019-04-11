@@ -37,7 +37,8 @@ Rollbar.configure do |config|
     'ActionController::RoutingError' => 'ignore',
     'AbstractController::ActionNotFound' => 'ignore',
     'ActionController::BadRequest' => 'ignore',
-    'ActionController::UnknownFormat' => 'ignore'
+    'ActionController::UnknownFormat' => 'ignore',
+    'ActionController::InvalidAuthenticityToken' => 'ignore'
   })
 
   # Enable asynchronous reporting (uses girl_friday or Threading if girl_friday

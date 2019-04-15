@@ -25,6 +25,7 @@ module ErrorResponseActions
     # 403 Forbidden response
     respond_to do |format|
       format.html { render 'errors/error_403', status: 403 }
+      format.pdf { render plain: "Not Authorized", status: 403, layout: false }
       format.xml  { render xml: 'Access Denied', status: 403 }
       format.json { render json: 'Access Denied', status: 403 }
     end

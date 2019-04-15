@@ -11,6 +11,7 @@ const Rails = require('rails-ujs')
 Rails.start()
 
 import 'mdn-polyfills/Element.prototype.closest'
+import getLabelsForInputElement from 'js/polyfill-like-labels.js'
 
 import smoothscroll from 'smoothscroll-polyfill'
 // kick off the polyfill!
@@ -65,7 +66,8 @@ document.addEventListener("DOMContentLoaded", function() {
     el.addEventListener('change', function() {
       var input = this
       let fileName = input.value.split('\\').pop()
-      let label = input.labels[input.labels.length - 1]
+      let labels = getLabelsForInputElement(input)
+      let label = labels[labels.length - 1]
       label.classList.add('selected')
       var labelPlaceholder = label.innerHTML
       label.innerHTML = fileName

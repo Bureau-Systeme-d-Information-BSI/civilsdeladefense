@@ -34,9 +34,31 @@ function triggerRoleChange() {
   }
 }
 
+function initJobApplicationFileTypeKindChange() {
+  let select = document.getElementById('job_application_file_type_kind')
+  if (select !== null) {
+    select.addEventListener('change', triggerKindChange, false)
+    var event = new Event('change')
+    select.dispatchEvent(event)
+  }
+}
+
+function triggerKindChange() {
+  let content_input = document.getElementById('job_application_file_type_content')
+  let value = this.options[this.selectedIndex].value
+  if (value === 'template') {
+    content_input.disabled = false
+    content_input.closest('.form-group').classList.remove('d-none')
+  } else {
+    content_input.disabled = false
+    content_input.closest('.form-group').classList.add('d-none')
+  }
+}
+
 document.addEventListener("DOMContentLoaded", function() {
   initEmailTemplates()
   initRoleChange()
+  initJobApplicationFileTypeKindChange()
 })
 
 function initEmailTemplates() {

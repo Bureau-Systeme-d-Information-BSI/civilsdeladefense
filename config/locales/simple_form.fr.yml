@@ -70,7 +70,7 @@ fr:
         certify_majority: "Je certifie être majeur(e) et disposer de mes droits civiques"
       job_application_file_type:
         kind: "Type"
-        content: "Modèle de fichier"
+        content: "Fichier"
         from_state: "État à partir duquel ce type de fichier est visible"
         by_default: "Visible dès que l'état défini précédemment est atteint ?"
       job_offer:

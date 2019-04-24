@@ -1,0 +1,3 @@
+= form_for [:admin, job_application, job_application_file], namespace: file_type.name.parameterize, remote: true, html: {class: 'edit_job_application_file auto-submit'} do |form|
+  = form.label :content, fa_icon('arrow-up-bold'), class: 'btn btn-raised btn-sm mb-0 mr-1', title: t('.help')
+  = form.file_field :content

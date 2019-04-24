@@ -232,3 +232,9 @@ a.badge:not(.badge-danger) {
     }
   }
 }
+
+.edit_job_application_file {
+  input[type="file"] {
+    display: none;
+  }
+}

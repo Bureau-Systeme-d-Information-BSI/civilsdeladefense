@@ -46,6 +46,9 @@ require('js/in-place-edit.js')
 require('js/board.js')
 require('js/city-autocomplete.js')
 
+import formAutoSubmit from 'js/form-auto-submit'
+window.formAutoSubmit = formAutoSubmit
+
 $('body').bootstrapMaterialDesign()
 
 $( document ).ready(function() {
@@ -109,20 +112,6 @@ $( document ).ready(function() {
   }).on('change', function(e) {
     let form = e.currentTarget.form
     Rails.fire(form, 'submit')
-  })
-
-  ;[].forEach.call(document.querySelectorAll('form.auto-submit'), function(formElement) {
-    ;[].forEach.call(formElement.querySelectorAll('select'), function(selectElement) {
-      selectElement.addEventListener('change', function(e) {
-        Rails.fire(formElement, 'submit')
-      })
-    })
-
-    ;[].forEach.call(formElement.querySelectorAll('input[type=text]'), function(inputElement) {
-      inputElement.addEventListener('blur', function(e) {
-        Rails.fire(formElement, 'submit')
-      })
-    })
   })
 
   var alertNotice = document.querySelector('.alert.alert-info')
@@ -203,6 +192,7 @@ document.addEventListener("DOMContentLoaded", function() {
     inputSearchNode.addEventListener('click', function(e) {
     })
   })
+  formAutoSubmit()
 })
 
 $('#remoteContentModal').on('show.bs.modal', function (event) {
@@ -218,6 +208,7 @@ $('#remoteContentModal').on('show.bs.modal', function (event) {
       if (link.classList.contains('job-application-modal-link')) {
         initEmailTemplates()
       }
+      formAutoSubmit()
     },
     error: function(response){
       console.log("error")

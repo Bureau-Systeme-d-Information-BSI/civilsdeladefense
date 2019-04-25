@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_08_111450) do
+ActiveRecord::Schema.define(version: 2019_04_25_092710) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -308,6 +308,7 @@ ActiveRecord::Schema.define(version: 2019_04_08_111450) do
     t.string "country_code"
     t.string "postcode"
     t.string "region"
+    t.datetime "published_at"
     t.index ["category_id"], name: "index_job_offers_on_category_id"
     t.index ["contract_type_id"], name: "index_job_offers_on_contract_type_id"
     t.index ["employer_id"], name: "index_job_offers_on_employer_id"

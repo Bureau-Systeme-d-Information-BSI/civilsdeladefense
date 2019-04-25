@@ -75,7 +75,7 @@ class JobOffer < ApplicationRecord
   ## States and events
   aasm column: :state, enum: true do
     state :draft, initial: true
-    state :published
+    state :published, before_enter: :set_published_at
     state :suspended
     state :archived
 
@@ -110,6 +110,10 @@ class JobOffer < ApplicationRecord
 
   def set_identifier
     self.update_column :identifier, [employer.code, sequential_id].join('')
+  end
+
+  def set_published_at
+    self.published_at = Time.now
   end
 
   def update_category_counter

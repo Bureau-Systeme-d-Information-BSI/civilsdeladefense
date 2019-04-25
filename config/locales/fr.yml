@@ -240,11 +240,15 @@ fr:
         success: "Fichier supprimé de la liste"
       create:
         success: "Fichier ajouté"
+      update:
+        success: "Fichier mis à jour"
       job_application_file:
         check: "Valider"
         uncheck: "Invalider"
         download: "Télécharger"
         do_not_ask: "Ne plus demander"
+      job_application_file_upload:
+        help: "Téléverser un fichier à la place de l'utilisateur"
       uncheck:
         success: "Fichier invalidé !"
     job_offers:

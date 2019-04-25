@@ -28,6 +28,22 @@ class Admin::JobApplicationFilesController < Admin::BaseController
   end
 
   def update
+
+    respond_to do |format|
+      if @job_application_file.update_attributes(job_application_file_params)
+        respond_to do |format|
+          format.html { redirect_to([:admin, @job_application], notice: t('.success')) }
+          format.js {
+            @notification = t('.success')
+            render :file_operation_total
+          }
+          format.json { render :show, status: :ok, location: [:admin, @job_application, @job_application_file] }
+        end
+      else
+        format.html { render :new }
+        format.json { render json: @job_application_file.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def destroy

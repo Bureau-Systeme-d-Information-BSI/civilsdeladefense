@@ -240,8 +240,10 @@ fr:
         success: "Fichier supprimé de la liste"
       create:
         success: "Fichier ajouté"
+        failure: "Impossible de sauvegarder le fichier: %{message}"
       update:
         success: "Fichier mis à jour"
+        failure: "Impossible de sauvegarder le fichier: %{message}"
       job_application_file:
         check: "Valider"
         uncheck: "Invalider"
@@ -586,6 +588,10 @@ fr:
             photo:
               file_size_is_less_than_or_equal_to: "Est trop volumineuse (ne doit pas dépasser %{count})"
               allowed_file_content_types: "au mauvais format (seuls les formats JPG et PNG sont acceptés)"
+        job_application_file:
+          attributes:
+            content:
+              file_size_is_less_than: "Fichier trop volumineux, doit être max. 2Mo"
     models:
       job_offer: "Offre"
     attributes:

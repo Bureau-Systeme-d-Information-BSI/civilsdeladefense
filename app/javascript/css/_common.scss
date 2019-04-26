@@ -284,6 +284,13 @@ ul {
   }
 }
 
+a.drop-area {
+  outline: 0;
+  label {
+    border-color: #005bac;
+  }
+}
+
 .is-validated-1 {
   .drop-area {
     label {

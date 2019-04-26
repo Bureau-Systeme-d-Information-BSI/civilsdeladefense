@@ -12,16 +12,18 @@ class Admin::JobApplicationFilesController < Admin::BaseController
 
     respond_to do |format|
       if @job_application_file.save
-        respond_to do |format|
-          format.html { redirect_to([:admin, @job_application], notice: t('.success')) }
-          format.js {
-            @notification = t('.success')
-            render :file_operation_total
-          }
-          format.json { render :show, status: :ok, location: [:admin, @job_application, @job_application_file] }
-        end
+        format.html { redirect_to([:admin, @job_application], notice: t('.success')) }
+        format.js {
+          @notification = t('.success')
+          render :file_operation_total
+        }
+        format.json { render :show, status: :ok, location: [:admin, @job_application, @job_application_file] }
       else
         format.html { render :new }
+        format.js {
+          @notification = t('.failure', message: @job_application_file.errors.full_messages.join(', '))
+          render :file_operation_total
+        }
         format.json { render json: @job_application_file.errors, status: :unprocessable_entity }
       end
     end
@@ -41,6 +43,10 @@ class Admin::JobApplicationFilesController < Admin::BaseController
         end
       else
         format.html { render :new }
+        format.js {
+          @notification = t('.failure', message: @job_application_file.errors.full_messages.join(', '))
+          render :file_operation_total
+        }
         format.json { render json: @job_application_file.errors, status: :unprocessable_entity }
       end
     end

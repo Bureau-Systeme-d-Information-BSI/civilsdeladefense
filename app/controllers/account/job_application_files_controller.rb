@@ -22,6 +22,9 @@ class Account::JobApplicationFilesController < Account::BaseController
         format.json { render :show, status: :created, location: [:account, @job_application, @job_application_file] }
       else
         format.html { render :new }
+        format.js {
+          render :file_operation
+        }
         format.json { render json: @job_application_file.errors, status: :unprocessable_entity }
       end
     end
@@ -40,6 +43,9 @@ class Account::JobApplicationFilesController < Account::BaseController
         format.json { render :show, status: :created, location: [:account, @job_application, @job_application_file] }
       else
         format.html { render :new }
+        format.js {
+          render :file_operation
+        }
         format.json { render json: @job_application_file.errors, status: :unprocessable_entity }
       end
     end

@@ -27,6 +27,9 @@ importAll(require.context('icons/', true, /\.svg$/))
 require('js/offcanvas.js')
 require('js/file-drop.js')
 
+import formAutoSubmit from 'js/form-auto-submit'
+window.formAutoSubmit = formAutoSubmit
+
 import $ from 'jquery';
 window.jQuery = $;
 window.$ = $;
@@ -53,6 +56,9 @@ function cleanupInvalidFields () {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
+
+  formAutoSubmit()
+  manageDropAreas()
 
   var filters = document.querySelectorAll('select.filter')
   ;[].forEach.call(filters, function(filter) {

@@ -586,6 +586,10 @@ fr:
             photo:
               file_size_is_less_than_or_equal_to: "Est trop volumineuse (ne doit pas dépasser %{count})"
               allowed_file_content_types: "au mauvais format (seuls les formats JPG et PNG sont acceptés)"
+        job_application_file:
+          attributes:
+            content:
+              file_size_is_less_than: "Fichier trop volumineux, doit être max. 2Mo"
     models:
       job_offer: "Offre"
     attributes:

@@ -49,7 +49,8 @@ function manageDropArea (dropArea) {
 window.manageDropArea = manageDropArea
 
 function manageDropAreas () {
-  ;[].forEach.call(document.querySelectorAll('.drop-area'), function(dropArea) {
+  var elements = document.querySelectorAll('.drop-area')
+  ;[].forEach.call(elements, function(dropArea) {
     manageDropArea(dropArea)
   })
 }

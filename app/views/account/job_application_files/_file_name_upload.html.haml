@@ -2,7 +2,7 @@
 - is_validated_value = job_application_file.is_validated
 - hint_text = hint_text_for_file(job_application, job_application_file)
 - options = {remote: true}
-- klasses = %w(mb-4)
+- klasses = %w(mb-4 auto-submit)
 - klasses << "is-validated-#{ is_validated_value }"
 - options[:html] = {id: "job_application_file_#{file_type.name.parameterize}", class: klasses}
 - options[:namespace] = file_type.name.parameterize

@@ -21,3 +21,5 @@
       = render partial: "/admin/job_application_files/job_application_file_upload", locals: {job_application: job_application, job_application_file: job_application_file, file_type: file_type}
       - url = [:admin, job_application, job_application_file]
       = link_to t('.do_not_ask'), url, method: :delete, remote: true, data: {confirm: t('buttons.confirm')}, class: "btn btn-primary btn-raised btn-sm mb-0 ml-1"
+    - else
+      = render partial: "/admin/job_application_files/job_application_file_upload", locals: {job_application: job_application, job_application_file: job_application_file, file_type: file_type}

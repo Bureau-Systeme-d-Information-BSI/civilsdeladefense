@@ -240,8 +240,10 @@ fr:
         success: "Fichier supprimé de la liste"
       create:
         success: "Fichier ajouté"
+        failure: "Impossible de sauvegarder le fichier: %{message}"
       update:
         success: "Fichier mis à jour"
+        failure: "Impossible de sauvegarder le fichier: %{message}"
       job_application_file:
         check: "Valider"
         uncheck: "Invalider"

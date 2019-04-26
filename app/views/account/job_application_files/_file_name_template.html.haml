@@ -1,0 +1,11 @@
+- file_type = job_application_file.job_application_file_type
+- link = link_for_file(job_application, job_application_file)
+.simple_form
+  .form-inputs
+    %label= file_type.name
+    = link_to link, class: 'form-group drop-area job_application_file_content', target: '_blank' do
+      .custom-file-drop-area
+        %label
+          %u Télécharger le fichier
+
+

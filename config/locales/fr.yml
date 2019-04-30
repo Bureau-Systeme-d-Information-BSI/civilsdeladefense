@@ -109,7 +109,7 @@ fr:
       available_immediately: "Poste à pourvoir immédiatement"
     successful:
       subject: "Votre candidature à l'offre %{job_offer_identifier} Civils de la Défense"
-      body: "Nous avons bien reçu votre candidatiure à l'offre %{job_offer_identifier} au poste de '%{job_offer_title}'.\n\nNous y répondrons dans les meilleurs délais.\n\nL'équipe Civils de la Défense."
+      body: "Nous avons bien reçu votre candidature à l'offre %{job_offer_identifier} au poste de '%{job_offer_title}'.\n\nNous y répondrons dans les meilleurs délais.\n\nL'équipe Civils de la Défense."
       title: "Merci d'avoir soumis votre candidature !"
       subtitle_html: "Votre demande est prise en compte.<br/>Veuillez confirmer votre accès à l'aide du lien sur votre boîte courriel."
       link: "Retour à l'accueil"
@@ -535,7 +535,7 @@ fr:
         update:
           success: "Niveau d'étude mis à jour !"
         destroy:
-          success: "Niveau d'étude supprimé !"
+          success: "Niveau d'étude supprim !"
       experience_levels:
         index:
           card_title:

@@ -1,0 +1,21 @@
+AllCops:
+  Exclude:
+    - 'db/schema.rb'
+    - 'bin/*'
+    - 'node_modules/**/*'
+    - 'vendor/**/*'
+    - 'config/initializers/simple_form_bootstrap.rb'
+MethodLength:
+  Max: 25
+LineLength:
+  Max: 100
+  IgnoredPatterns: ['(\A|\s)#']
+BlockLength:
+  Exclude:
+    - 'config/routes.rb'
+    - 'config/environments/*'
+    - 'config/initializers/*'
+    - 'lib/tasks/*.rake'
+ClassLength:
+  Exclude:
+    - 'app/models/**/*'

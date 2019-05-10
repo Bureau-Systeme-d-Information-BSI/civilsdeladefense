@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ActsAsListIndexes < ActiveRecord::Migration[5.2]
   def change
     add_index :contract_types, :position

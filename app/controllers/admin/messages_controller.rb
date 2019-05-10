@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Admin::MessagesController < Admin::BaseController
   load_and_authorize_resource :job_application
   load_and_authorize_resource :message, through: :job_application
@@ -11,12 +13,12 @@ class Admin::MessagesController < Admin::BaseController
     respond_to do |format|
       if @message.save
         format.html { redirect_to [:admin, @message.job_application], notice: t('.success') }
-        format.js {
+        format.js do
           @message = Message.new
           @message.job_application = @job_application
           @notification = t('.success')
           render :create
-        }
+        end
         format.json { render :show, status: :created, location: @message }
       else
         format.html { render :new }
@@ -26,8 +28,9 @@ class Admin::MessagesController < Admin::BaseController
   end
 
   private
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def message_params
-      params.require(:message).permit(:body)
-    end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def message_params
+    params.require(:message).permit(:body)
+  end
 end

@@ -1,15 +1,38 @@
 AllCops:
   Exclude:
     - 'db/schema.rb'
+    - 'db/seeds.rb'
     - 'bin/*'
     - 'node_modules/**/*'
     - 'vendor/**/*'
+    - 'config/initializers/simple_form.rb'
     - 'config/initializers/simple_form_bootstrap.rb'
+    - 'lib/tasks/maintenance.rake'
+    - 'app/helpers/awesome_nested_helper.rb'
+Documentation:
+  Exclude:
+    - 'config/application.rb'
+    - 'app/controllers/**/*'
+    - 'app/helpers/**/*'
+    - 'app/uploaders/**/*'
+    - 'test/application_system_test_case.rb'
+    - 'test/test_helper.rb'
+ClassAndModuleChildren:
+  EnforcedStyle: compact
+  Exclude:
+    - 'config/application.rb'
+AbcSize:
+  Max: 40
 MethodLength:
   Max: 25
 LineLength:
   Max: 100
   IgnoredPatterns: ['(\A|\s)#']
+  Exclude:
+    - 'config/routes.rb'
+    - 'spec/routing/**/*'
+Style/EmptyMethod:
+  EnforcedStyle: expanded
 BlockLength:
   Exclude:
     - 'config/routes.rb'

@@ -1,3 +1,5 @@
 inherit_from: ../../.rubocop.yml
 MethodLength:
   Enabled: false
+Documentation:
+  Enabled: false

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddNewPaperclipFieldsToUsers < ActiveRecord::Migration[5.2]
   def up
     add_attachment :users, :transport_ticket

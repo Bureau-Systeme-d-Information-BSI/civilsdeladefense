@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
 ENV['RAILS_ENV'] ||= 'test'
-require File.expand_path('../../config/environment', __FILE__)
+require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
-abort("The Rails environment is running in production mode!") if Rails.env.production?
+abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'devise'
@@ -35,16 +37,17 @@ rescue ActiveRecord::PendingMigrationError => e
   exit 1
 end
 
+# Devise routing helpers
 module DeviseRoutingHelpers
   # workaround for this issue https://github.com/plataformatec/devise/issues/1670
   def mock_warden_for_route_tests!
     warden = double
-    allow_any_instance_of(ActionDispatch::Request).to receive(:env).
-      and_wrap_original { |orig, *args|
-      env = orig.call(*args)
-      env['warden'] = warden
-      env
-    }
+    allow_any_instance_of(ActionDispatch::Request).to(receive(:env))
+                                                  .and_wrap_original do |orig, *args|
+                                                    env = orig.call(*args)
+                                                    env['warden'] = warden
+                                                    env
+                                                  end
     allow(warden).to receive(:authenticate!).and_return(true)
   end
 end
@@ -82,7 +85,6 @@ RSpec.configure do |config|
   config.include Devise::Test::ControllerHelpers, type: :view
   config.extend ControllerMacros, type: :view
   config.include Devise::Test::IntegrationHelpers, type: :request
-
 
   config.include DeviseRoutingHelpers, type: :routing
 

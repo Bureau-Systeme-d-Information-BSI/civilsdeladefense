@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Number of year of experience in the field
 class ExperienceLevel < ApplicationRecord
   acts_as_list
   default_scope -> { order(position: :asc) }

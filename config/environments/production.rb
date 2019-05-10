@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.configure do
   # Verifies that versions and hashed value of the package contents in the project's package.json
   config.webpacker.check_yarn_integrity = false
@@ -55,12 +57,15 @@ Rails.application.configure do
   config.log_level = :debug
 
   # Prepend all log lines with the following tags.
-  config.log_tags = [ :request_id ]
+  config.log_tags = [:request_id]
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
   if ENV['REDIS_URL']
-    config.cache_store = :redis_cache_store, {url: ENV['REDIS_URL'], namespace: "#{ ENV['CONTAINER_VERSION'] }:cache", compress: true, expires_in: 1.hour}
+    config.cache_store = :redis_cache_store, { url: ENV['REDIS_URL'],
+                                               namespace: "#{ENV['CONTAINER_VERSION']}:cache",
+                                               compress: true,
+                                               expires_in: 1.hour }
   end
 
   # Use a real queuing backend for Active Job (and separate queues per environment)
@@ -73,7 +78,7 @@ Rails.application.configure do
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
 
-  config.action_mailer.default_url_options = {host: ENV['DEFAULT_HOST']}
+  config.action_mailer.default_url_options = { host: ENV['DEFAULT_HOST'] }
 
   smtp_uri = URI(ENV['MAIL_URL'])
 
@@ -82,9 +87,9 @@ Rails.application.configure do
     address: smtp_uri.host,
     port: smtp_uri.port,
     authentication: :login,
-    user_name: URI.unescape(smtp_uri.user),
-    password: URI.unescape(smtp_uri.password),
-    enable_starttls_auto: true,
+    user_name: CGI.unescape(smtp_uri.user),
+    password: CGI.unescape(smtp_uri.password),
+    enable_starttls_auto: true
   }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
@@ -101,7 +106,7 @@ Rails.application.configure do
   # require 'syslog/logger'
   # config.logger = ActiveSupport::TaggedLogging.new(Syslog::Logger.new 'app-name')
 
-  if ENV["RAILS_LOG_TO_STDOUT"].present?
+  if ENV['RAILS_LOG_TO_STDOUT'].present?
     logger           = ActiveSupport::Logger.new(STDOUT)
     logger.formatter = config.log_formatter
     config.logger    = ActiveSupport::TaggedLogging.new(logger)

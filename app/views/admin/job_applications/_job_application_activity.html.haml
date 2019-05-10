@@ -29,7 +29,7 @@
                 = t('.activities.message_html', admin_name: whodunnit, name: @job_application.full_name)
                 .card.my-2
                   .card-body= audited_changes['body']
-              - elsif audit.auditable_type == "Email" && audit.auditable.is_automatic_email?
+              - elsif audit.auditable_type == "Email" && audit.auditable.automatic_email?
                 = t('.activities.email_automatic_html', name: @job_application.full_name)
               - elsif audit.auditable_type == "Email" && (klass = audit.user.class.to_s) && %w(Administrator User NilClass).include?(klass)
                 - if klass == "Administrator"

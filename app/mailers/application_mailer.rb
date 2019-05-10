@@ -1,4 +1,7 @@
+# frozen_string_literal: true
+
+# Base mailer class
 class ApplicationMailer < ActionMailer::Base
-  default from: URI.unescape(URI(ENV['MAIL_URL']).user)
+  default from: CGI.unescape(URI(ENV['MAIL_URL']).user)
   layout 'mailer'
 end

@@ -1,5 +1,8 @@
+# frozen_string_literal: true
+
 class JobOffersController < ApplicationController
-  before_action :set_job_offer, only: [:show, :apply, :send_application, :successful]
+  before_action :set_job_offers, only: %i[index]
+  before_action :set_job_offer, only: %i[show apply send_application successful]
   invisible_captcha only: [:send_application], honeypot: :subtitle
 
   # GET /job_offers
@@ -7,21 +10,8 @@ class JobOffersController < ApplicationController
   def index
     @categories = Category.order('lft ASC').where('published_job_offers_count > ?', 0)
     @max_depth_limit = 1
-    @categories_for_select = @categories.select{|x| x.depth <= @max_depth_limit}
+    @categories_for_select = @categories.select { |x| x.depth <= @max_depth_limit }
     @contract_types = ContractType.all
-    @job_offers = JobOffer.publicly_visible.includes(:contract_type)
-    if params[:category_id].present?
-      @category = Category.find(params[:category_id])
-      @job_offers = @job_offers.where(category_id: @category.self_and_descendants)
-    end
-    %i(contract_type_id).each do |filter|
-      if params[filter].present? && (obj = filter.to_s.gsub('_id', '').classify.constantize.find(params[filter])).present?
-        @job_offers = @job_offers.where(filter => obj.id)
-        instance_variable_set("@#{ filter.to_s.gsub('_id', '') }", obj)
-      end
-    end
-    @job_offers = @job_offers.search_full_text(params[:q]) if params[:q].present?
-    @job_offers = @job_offers.to_a
 
     respond_to do |format|
       format.html {}
@@ -44,7 +34,7 @@ class JobOffersController < ApplicationController
     else
       @job_application = JobApplication.new
       @job_application.user = User.new
-      @job_application.country = "FR"
+      @job_application.country = 'FR'
     end
   end
 
@@ -62,17 +52,14 @@ class JobOffersController < ApplicationController
 
     respond_to do |format|
       if @job_application.save
-
         @job_offer.initial! if @job_offer.start?
+        @job_application.send_confirmation_email
 
-        job_offer_identifier = @job_offer.identifier
-        subject = t('job_offers.successful.subject', job_offer_identifier: job_offer_identifier)
-        body = t('job_offers.successful.body', first_name: @job_application.first_name, job_offer_title: @job_offer.title, job_offer_identifier: job_offer_identifier)
-        email = @job_application.emails.create(subject: subject, body: body)
-        ApplicantNotificationsMailer.new_email(email.id).deliver_now
-
-        format.html { redirect_to [:account, :job_applications] }
-        format.json { render json: @job_application.to_json(only: %i(id)), status: :created, location: [:successful, @job_offer] }
+        format.html { redirect_to %i[account job_applications] }
+        format.json do
+          json = @job_application.to_json(only: %i[id])
+          render json: json, status: :created, location: [:successful, @job_offer]
+        end
       else
         format.html { render :apply }
         format.json { render json: @job_application.errors, status: :unprocessable_entity }
@@ -86,22 +73,43 @@ class JobOffersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_job_offer
-      @job_offer = JobOffer.find(params[:id])
-      if !@job_offer.published? && params[:preview].blank?
-        raise JobOfferNotAvailableAnymore.new(job_offer_title: @job_offer.title)
-      end
-      if params[:id] != @job_offer.slug
-        return redirect_to @job_offer, status: :moved_permanently
-      end
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def job_application_params
-      permitted_params = [:first_name, :last_name, :current_position, :phone, :address_1, :address_2, :postal_code, :city, :country, :website_url, :terms_of_service, :certify_majority]
-      permitted_params << {user_attributes: [:photo, :email, :password, :password_confirmation]} unless user_signed_in?
-      permitted_params << {job_application_files_attributes: [:content, :job_application_file_type_id]}
-      params.require(:job_application).permit(permitted_params)
+  def set_job_offers
+    @job_offers = JobOffer.publicly_visible.includes(:contract_type)
+    if params[:category_id].present?
+      @category = Category.find(params[:category_id])
+      @job_offers = @job_offers.where(category_id: @category.self_and_descendants)
     end
+    if params[:contract_type_id].present?
+      @contract_type = ContractType.find(params[:contract_type_id])
+      if @contract_type.present?
+        @job_offers = @job_offers.where(contract_type_id: @contract_type.id)
+      end
+    end
+    @job_offers = @job_offers.search_full_text(params[:q]) if params[:q].present?
+    @job_offers = @job_offers.to_a
+  end
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_job_offer
+    @job_offer = JobOffer.find(params[:id])
+    if !@job_offer.published? && params[:preview].blank?
+      raise JobOfferNotAvailableAnymore.new(job_offer_title: @job_offer.title)
+    end
+    return redirect_to @job_offer, status: :moved_permanently if params[:id] != @job_offer.slug
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def job_application_params
+    permitted_params = %i[first_name last_name current_position phone
+                          address_1 address_2 postal_code city country
+                          website_url terms_of_service certify_majority]
+    unless user_signed_in?
+      user_attributes = %i[photo email password password_confirmation]
+      permitted_params << { user_attributes: user_attributes }
+    end
+    job_application_files_attributes = %i[content job_application_file_type_id]
+    permitted_params << { job_application_files_attributes: job_application_files_attributes }
+    params.require(:job_application).permit(permitted_params)
+  end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddSequentialIdToJobOffers < ActiveRecord::Migration[5.2]
   def change
     add_column :job_offers, :sequential_id, :integer

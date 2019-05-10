@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddFileValidationsFieldsToUsers < ActiveRecord::Migration[5.2]
   def change
     User::FILES.each do |file|

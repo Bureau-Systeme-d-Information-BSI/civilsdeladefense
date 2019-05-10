@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TransformCategoryAsTree < ActiveRecord::Migration[5.2]
   def change
     add_column :categories, :parent_id, :uuid, index: true

@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Internal messaging system exchanged by recruiters around a specific job application
 class Message < ApplicationRecord
   belongs_to :job_application
   belongs_to :administrator

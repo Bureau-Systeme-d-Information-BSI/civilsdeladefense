@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class Admin::Settings::AdministratorsController < Admin::Settings::BaseController
-  before_action :set_role_and_employer, only: %i(new create)
-  before_action :set_administrators, only: %i(index inactive)
+  before_action :set_role_and_employer, only: %i[new create]
+  before_action :set_administrators, only: %i[index inactive]
 
   # GET /admin/settings/administrators
   # GET /admin/settings/administrators.json
@@ -36,7 +38,7 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
     @administrator.inviter = current_administrator
     respond_to do |format|
       if @administrator.save
-        format.html { redirect_to [:admin, :settings, :root], notice: t('.success') }
+        format.html { redirect_to %i[admin settings root], notice: t('.success') }
         format.json { render :show, status: :created, location: @administrator }
       else
         format.html { render :new }
@@ -50,7 +52,7 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
   def update
     respond_to do |format|
       if @administrator.update(administrator_params)
-        format.html { redirect_to [:admin, :settings, :root], notice: t('.success') }
+        format.html { redirect_to %i[admin settings root], notice: t('.success') }
         format.json { render :show, status: :ok, location: @administrator }
       else
         format.html { render :edit }
@@ -64,7 +66,7 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
   def deactivate
     @administrator.deactivate
     respond_to do |format|
-      format.html { redirect_to [:admin, :settings, :root], notice: t('.success') }
+      format.html { redirect_to %i[admin settings root], notice: t('.success') }
       format.json { head :no_content }
     end
   end
@@ -74,7 +76,7 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
   def reactivate
     @administrator.reactivate
     respond_to do |format|
-      format.html { redirect_to [:admin, :settings, :root], notice: t('.success') }
+      format.html { redirect_to %i[admin settings root], notice: t('.success') }
       format.json { head :no_content }
     end
   end
@@ -84,35 +86,37 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
   def resend_confirmation_instructions
     respond_to do |format|
       @administrator.send_confirmation_instructions
-      format.html { redirect_to [:admin, :settings, :root], notice: t('.success') }
-      format.json { render :resend_confirmation_instructions, status: :ok, location: @administrator }
+      format.html { redirect_to %i[admin settings root], notice: t('.success') }
+      format.json do
+        render :resend_confirmation_instructions,
+               status: :ok,
+               location: @administrator
+      end
     end
   end
 
   private
 
-    def set_administrators
-      @q = Administrator.ransack(params[:q])
-      @q.sorts = 'created_at desc' if @q.sorts.empty?
-      @administrators_active = @q.result.active.includes(:employer)
-      @administrators_inactive = @q.result.inactive.includes(:employer)
-    end
+  def set_administrators
+    @q = Administrator.ransack(params[:q])
+    @q.sorts = 'created_at desc' if @q.sorts.empty?
+    @administrators_active = @q.result.active.includes(:employer)
+    @administrators_inactive = @q.result.inactive.includes(:employer)
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def administrator_params
-      params.require(:administrator).permit(permitted_fields)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def administrator_params
+    params.require(:administrator).permit(permitted_fields)
+  end
 
-    def permitted_fields
-      ary = %i(title first_name last_name email)
-      ary += %i(employer_id) if current_administrator.bant?
-      ary += %i(role) if current_administrator.bant? || current_administrator.employer?
-      ary
-    end
+  def permitted_fields
+    ary = %i[title first_name last_name email]
+    ary += %i[employer_id] if current_administrator.bant?
+    ary += %i[role] if current_administrator.bant? || current_administrator.employer?
+    ary
+  end
 
-    def set_role_and_employer
-      if !current_administrator.bant?
-        @administrator.employer = current_administrator.employer
-      end
-    end
+  def set_role_and_employer
+    @administrator.employer = current_administrator.employer unless current_administrator.bant?
+  end
 end

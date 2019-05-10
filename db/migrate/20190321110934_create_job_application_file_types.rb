@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateJobApplicationFileTypes < ActiveRecord::Migration[5.2]
   def change
     create_table :job_application_file_types, id: :uuid do |t|

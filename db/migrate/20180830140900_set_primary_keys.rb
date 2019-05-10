@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class SetPrimaryKeys < ActiveRecord::Migration[5.2]
   def change
     tables = ActiveRecord::Base.connection.tables.map(&:to_sym)

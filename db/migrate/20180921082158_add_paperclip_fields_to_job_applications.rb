@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddPaperclipFieldsToJobApplications < ActiveRecord::Migration[5.2]
   def up
     JobOffer::FILES.each do |file|

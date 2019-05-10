@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AdaptEmails < ActiveRecord::Migration[5.2]
   def change
     rename_column :emails, :title, :subject

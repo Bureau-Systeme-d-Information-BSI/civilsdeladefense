@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class DocumentUploader < CommonUploader
   def content_type_whitelist
-    /application\/pdf/
+    %r{application/pdf}
   end
 end

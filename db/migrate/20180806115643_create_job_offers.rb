@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
 class CreateJobOffers < ActiveRecord::Migration[5.2]
   def change
+    # rubocop:disable Metrics/BlockLength
     create_table :job_offers do |t|
-      t.references :owner, foreign_key: {to_table: :administrators}
+      t.references :owner, foreign_key: { to_table: :administrators }
       t.string :title
       t.string :slug, null: false
       t.text :description
@@ -29,6 +32,7 @@ class CreateJobOffers < ActiveRecord::Migration[5.2]
 
       t.timestamps
     end
+    # rubocop:enable Metrics/BlockLength
 
     add_index :job_offers, :slug, unique: true
   end

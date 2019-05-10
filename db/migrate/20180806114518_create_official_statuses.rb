@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateOfficialStatuses < ActiveRecord::Migration[5.2]
   def change
     create_table :official_statuses do |t|

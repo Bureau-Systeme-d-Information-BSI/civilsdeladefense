@@ -1,5 +1,7 @@
-class NotificationsMailer < ApplicationMailer
+# frozen_string_literal: true
 
+# Periodic notifications mailer
+class NotificationsMailer < ApplicationMailer
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
   #

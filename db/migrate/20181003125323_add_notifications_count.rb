@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddNotificationsCount < ActiveRecord::Migration[5.2]
   def change
     add_column :job_applications, :files_count, :integer, default: 0
@@ -10,6 +12,6 @@ class AddNotificationsCount < ActiveRecord::Migration[5.2]
     add_column :job_offers, :notifications_count, :integer, default: 0
     Email.all.update_all is_unread: true
     Email.counter_culture_fix_counts skip_unsupported: true
-    Email.all.map &:save
+    Email.all.map(&:save)
   end
 end

@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Represents people that should have write or read rights on a job offer and its depending applications
 class JobOfferActor < ApplicationRecord
   belongs_to :job_offer, inverse_of: :job_offer_actors
   belongs_to :administrator
@@ -5,26 +8,22 @@ class JobOfferActor < ApplicationRecord
   accepts_nested_attributes_for :administrator
 
   def administrator_attributes=(attributes)
-    existing = if attributes[:id].present?
-      Administrator.find attributes[:id]
-    else
-      Administrator.where(email: attributes[:email]).first
-    end
+    existing = nil
+    existing = Administrator.find(attributes[:id]) if attributes[:id].present?
+    existing ||= Administrator.where(email: attributes[:email]).first
     if existing
       if has_destroy_flag?(attributes)
-        self.mark_for_destruction
+        mark_for_destruction
       else
         self.administrator = existing
       end
+    elsif has_destroy_flag?(attributes)
+      mark_for_destruction
     else
-      if has_destroy_flag?(attributes)
-        self.mark_for_destruction
-      else
-        attributes.delete(:_destroy)
-        a = build_administrator(attributes)
-        a.inviter = self.job_offer&.owner
-        a
-      end
+      attributes.delete(:_destroy)
+      a = build_administrator(attributes)
+      a.inviter = job_offer&.owner
+      a
     end
   end
 

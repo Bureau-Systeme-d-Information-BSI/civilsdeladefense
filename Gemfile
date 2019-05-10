@@ -57,6 +57,8 @@ gem 'will_paginate'
 
 gem 'clockwork' # needed for staging on Scalingo
 
+gem 'faker', require: false
+
 group :development do
   gem 'letter_opener'
 end
@@ -66,7 +68,6 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
 
   gem 'factory_bot_rails'
-  gem 'faker'
   gem 'rspec-rails', '~> 3.7'
   gem 'rspec_junit_formatter'
   gem 'rubocop', require: false

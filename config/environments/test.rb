@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'faker'
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 

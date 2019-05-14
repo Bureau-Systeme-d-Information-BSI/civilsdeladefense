@@ -90,6 +90,7 @@ jobs:
           destination: test-results
       - store_artifacts:
           path: coverage
+          destination: coverage
   rubocop-brakeman:
     <<: *default
     docker:

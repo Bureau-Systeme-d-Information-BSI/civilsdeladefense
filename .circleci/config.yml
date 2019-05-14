@@ -88,7 +88,7 @@ jobs:
       - store_artifacts:
           path: /tmp/test-results
           destination: test-results
-  rubocop:
+  rubocop-brakeman:
     <<: *default
     docker:
       - image: circleci/ruby:2.6.3-node-browsers-legacy
@@ -99,6 +99,7 @@ jobs:
           at: ~/repo
       - run: bundle config --local path vendor/bundle
       - run: bundle exec rubocop
+      - run: bundle exec brakeman -z
 
 workflows:
   version: 2
@@ -108,6 +109,6 @@ workflows:
       - test:
           requires:
             - build
-      - rubocop:
+      - rubocop-brakeman:
           requires:
             - build

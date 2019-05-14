@@ -12,9 +12,9 @@
       .th{style: 'width: 180px;'}
         = SalaryRange.human_attribute_name(:experience_level)
       .th
-        != SalaryRange.human_attribute_name(:estimate_annual_salary_gross)
+        = strip_tags(SalaryRange.human_attribute_name(:estimate_annual_salary_gross_html))
       .th
-        != SalaryRange.human_attribute_name(:estimate_monthly_salary_net)
+        = strip_tags(SalaryRange.human_attribute_name(:estimate_monthly_salary_net_html))
       .th{style: 'width: 140px;'}
     = search_form_for [:admin, :settings, @q], wrapper: :inline_form, html: { class: 'form-inline tr thead auto-submit' }, builder: SimpleForm::FormBuilder do |f|
       .th

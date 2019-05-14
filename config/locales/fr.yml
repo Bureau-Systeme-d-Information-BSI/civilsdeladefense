@@ -651,8 +651,8 @@ fr:
         professional_category: "Catégorie"
         experience_level: "Expérience"
         sector: "Filière"
-        estimate_monthly_salary_net: "<div class='d-block'>Estimation mensuel net</div> (fonction publique)"
-        estimate_annual_salary_gross: "<div class='d-block'>Estimation annuel brut</div> (secteur privé)"
+        estimate_monthly_salary_net_html: "<div class='d-block'>Estimation mensuel net</div> (fonction publique)"
+        estimate_annual_salary_gross_html: "<div class='d-block'>Estimation annuel brut</div> (secteur privé)"
   helpers:
     submit:
       job_application:

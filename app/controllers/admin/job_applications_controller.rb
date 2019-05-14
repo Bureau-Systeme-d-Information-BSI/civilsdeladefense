@@ -37,7 +37,7 @@ class Admin::JobApplicationsController < Admin::BaseController
 
   def change_state
     @state = params[:state].to_s
-    @job_application.send("#{@state}!".to_sym)
+    @job_application.aasm.fire!(@state)
     @job_offer = @job_application.job_offer
     state_i18n = JobApplication.human_attribute_name("state/#{@state}")
 

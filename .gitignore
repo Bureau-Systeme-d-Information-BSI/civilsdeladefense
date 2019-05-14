@@ -35,5 +35,6 @@ vendor/.bundle/
 yarn-debug.log*
 .yarn-integrity
 *.sql
+coverage
 
 public/uploads/

@@ -51,6 +51,7 @@ gem 'ransack'
 gem 'invisible_captcha'
 gem 'mail'
 gem 'redis'
+gem 'sqreen', '>= 1.16'
 
 gem 'clockwork' # needed for staging on Scalingo
 

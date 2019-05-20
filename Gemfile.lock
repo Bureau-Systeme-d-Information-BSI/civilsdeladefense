@@ -369,6 +369,9 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    sq_mini_racer (0.2.4.sqreen3)
+    sqreen (1.17.0)
+      sq_mini_racer (~> 0.2.4.sqreen2)
     sshkit (1.18.0)
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
@@ -450,6 +453,7 @@ DEPENDENCIES
   simple_form
   spring
   spring-watcher-listen (~> 2.0.0)
+  sqreen (>= 1.16)
   tzinfo-data
   web-console (>= 3.3.0)
   webpacker

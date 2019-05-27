@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RemoveOptionFielsFromJobOffers < ActiveRecord::Migration[5.2]
   def change
     remove_column :job_offers, :option_cover_letter

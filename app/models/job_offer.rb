@@ -1,12 +1,16 @@
+# frozen_string_literal: true
+
+# Represents a job proposed on the platform
 class JobOffer < ApplicationRecord
-  SETTINGS = %i(category professional_category contract_type study_level experience_level sector).freeze
+  SETTINGS = %i[category professional_category contract_type study_level
+                experience_level sector].freeze
 
   include AASM
   audited
   has_associated_audits
 
   extend FriendlyId
-  friendly_id :title, use: [:slugged, :finders, :history]
+  friendly_id :title, use: %i[slugged finders history]
 
   acts_as_sequenced scope: :employer_id
 
@@ -16,9 +20,8 @@ class JobOffer < ApplicationRecord
     [:title, 'A'],
     [:description, 'B'],
     [:location, 'C']
-  ], associated_against: SETTINGS.inject({}) { |memo, obj|
-    memo[obj] = %i(name)
-    memo
+  ], associated_against: SETTINGS.each_with_object({}) { |obj, memo|
+    memo[obj] = %i[name]
   }
 
   ## Relationships
@@ -34,11 +37,13 @@ class JobOffer < ApplicationRecord
   has_many :administrators, through: :job_offer_actors
   accepts_nested_attributes_for :job_offer_actors
 
-  %i(employer grand_employer supervisor_employer brh).each do |actor_role|
-    relationship_1 = "job_offer_#{actor_role}_actors".to_sym
-    relationship_2 = "#{actor_role}_actors".to_sym
-    has_many relationship_1, -> { where(role: JobOfferActor.roles[actor_role]) }, class_name: 'JobOfferActor'
-    has_many relationship_2, through: relationship_1, source: 'administrator'
+  %i[employer grand_employer supervisor_employer brh].each do |actor_role|
+    relationship1 = "job_offer_#{actor_role}_actors".to_sym
+    relationship2 = "#{actor_role}_actors".to_sym
+    has_many relationship1,
+             -> { where(role: JobOfferActor.roles[actor_role]) },
+             class_name: 'JobOfferActor'
+    has_many relationship2, through: relationship1, source: 'administrator'
   end
 
   ## Validations
@@ -47,6 +52,9 @@ class JobOffer < ApplicationRecord
   validates :duration_contract, absence: true, unless: :contract_type_is_cdd?
 
   ## Scopes
+  scope :admin_index, -> { includes(:employer, :contract_type).order(created_at: :desc) }
+  scope :admin_index_active, -> { admin_index.where.not(state: :archived) }
+  scope :admin_index_archived, -> { admin_index.archived }
   scope :publicly_visible, -> { where(state: :published) }
   scope :search_import, -> { includes(*SETTINGS) }
 
@@ -88,11 +96,11 @@ class JobOffer < ApplicationRecord
     end
 
     event :archive do
-      transitions from: [:draft, :published, :suspended], to: :archived
+      transitions from: %i[draft published suspended], to: :archived
     end
 
     event :suspend do
-      transitions from: [:published, :suspended], to: :suspended
+      transitions from: %i[published suspended], to: :suspended
     end
 
     event :unsuspend do
@@ -100,7 +108,7 @@ class JobOffer < ApplicationRecord
     end
 
     event :unarchive do
-      transitions from: [:archived, :draft], to: :draft
+      transitions from: %i[archived draft], to: :draft
     end
   end
 
@@ -108,8 +116,31 @@ class JobOffer < ApplicationRecord
   after_create :set_identifier
   after_save :update_category_counter
 
+  def self.new_from_scratch(reference_administrator)
+    j = new
+    j.contract_start_on = 6.months.from_now
+    j.recruitment_process = I18n.t('.default_recruitment_process')
+    j.job_offer_actors.build(role: :employer).administrator = reference_administrator
+    grand_employer_administrator = reference_administrator.grand_employer_administrator
+    if grand_employer_administrator.present?
+      j.job_offer_actors.build(role: :grand_employer).administrator = grand_employer_administrator
+    end
+    supervisor_administrator = reference_administrator.supervisor_administrator
+    if supervisor_administrator.present?
+      j.job_offer_actors.build(role: :supervisor_employer).administrator = supervisor_administrator
+    end
+    j
+  end
+
+  def self.new_from_source(source)
+    j = source.dup
+    j.title = "Copie de #{j.title}"
+    j.state = nil
+    j
+  end
+
   def set_identifier
-    self.update_column :identifier, [employer.code, sequential_id].join('')
+    update_column :identifier, [employer.code, sequential_id].join('')
   end
 
   def set_published_at
@@ -117,13 +148,11 @@ class JobOffer < ApplicationRecord
   end
 
   def update_category_counter
-    category.self_and_ancestors.reverse.each do |cat|
-      cat.compute_published_job_offers_count!
-    end
+    category.self_and_ancestors.reverse.each(&:compute_published_job_offers_count!)
   end
 
   def contract_type_is_cdd?
-    self.contract_type&.name == "CDD"
+    contract_type&.name == 'CDD'
   end
 
   def compute_notifications_count!
@@ -132,6 +161,13 @@ class JobOffer < ApplicationRecord
   end
 
   def compute_notifications_count
-    self.notifications_count = job_applications.sum(:emails_administrator_unread_count) + job_applications.sum(:files_unread_count)
+    self.notifications_count = job_applications.sum(:emails_administrator_unread_count) +
+                               job_applications.sum(:files_unread_count)
+  end
+
+  def cleanup_actor_administrator_inviter(inviter)
+    job_offer_actors.each do |job_offer_actor|
+      job_offer_actor.administrator.inviter ||= inviter if job_offer_actor.administrator
+    end
   end
 end

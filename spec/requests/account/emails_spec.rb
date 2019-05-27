@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "Account::Emails", type: :request do
-  describe "GET /mon-compte/candidatures/XXX/emails" do
-    it "works! (now write some real specs)" do
+RSpec.describe 'Account::Emails', type: :request do
+  describe 'GET /mon-compte/candidatures/XXX/emails' do
+    it 'works! (now write some real specs)' do
       user = create(:user)
       user.confirm
       sign_in user

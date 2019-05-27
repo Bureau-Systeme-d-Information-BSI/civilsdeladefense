@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+require 'faker'
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -38,7 +42,7 @@ Rails.application.configure do
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
 
-  config.action_mailer.default_url_options = {host: ENV['DEFAULT_HOST']}
+  config.action_mailer.default_url_options = { host: ENV['DEFAULT_HOST'] }
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
@@ -46,9 +50,9 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
-  config.secret_key_base = ENV["SECRET_KEY_BASE"]
+  config.secret_key_base = ENV['SECRET_KEY_BASE']
 
-  config.i18n.available_locales += %w(en)
+  config.i18n.available_locales += %w[en]
 
   Faker::Config.locale = :fr
 end

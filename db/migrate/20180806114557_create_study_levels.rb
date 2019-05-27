@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateStudyLevels < ActiveRecord::Migration[5.2]
   def change
     create_table :study_levels do |t|

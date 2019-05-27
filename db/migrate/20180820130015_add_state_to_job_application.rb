@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddStateToJobApplication < ActiveRecord::Migration[5.2]
   def change
     add_column :job_applications, :state, :integer

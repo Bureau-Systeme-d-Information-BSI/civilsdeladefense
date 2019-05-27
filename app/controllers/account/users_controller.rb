@@ -1,6 +1,9 @@
-class Account::UsersController < Account::BaseController
+# frozen_string_literal: true
 
-  before_action :set_user, only: %i(show change_password change_email update update_password update_email destroy)
+class Account::UsersController < Account::BaseController
+  before_action :set_user, only: %i[show change_password change_email
+                                    update update_password update_email
+                                    destroy]
 
   def show
     @user_for_password_change = User.new
@@ -15,7 +18,7 @@ class Account::UsersController < Account::BaseController
     respond_to do |format|
       if @user.update(user_params)
         @user.update_column "#{@file_name}_is_validated", 0
-        format.html { redirect_to [:account, :user], notice: t('.success') }
+        format.html { redirect_to %i[account user], notice: t('.success') }
         format.js {}
         format.json { render :show, status: :ok, location: @user }
       else
@@ -32,15 +35,15 @@ class Account::UsersController < Account::BaseController
         # Sign in the user by passing validation in case their password changed
         bypass_sign_in(@user, scope: :user)
 
-        format.html { redirect_to [:change_password, :admin, :account], notice: t('.success') }
+        format.html { redirect_to %i[change_password admin account], notice: t('.success') }
         format.json { render :show, status: :ok, location: @user }
       else
-        format.html {
+        format.html do
           @user_for_password_change = @user
           @user_for_email_change = User.new
           @user_for_deletion = User.new
           render :show
-        }
+        end
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
@@ -52,15 +55,15 @@ class Account::UsersController < Account::BaseController
   def update_email
     respond_to do |format|
       if @user.update(user_email_params)
-        format.html { redirect_to [:change_email, :admin, :account], notice: t('.success') }
+        format.html { redirect_to %i[change_email admin account], notice: t('.success') }
         format.json { render :show, status: :ok, location: @user }
       else
-        format.html {
+        format.html do
           @user_for_password_change = User.new
           @user_for_deletion = User.new
           @user_for_email_change = @user
           render :show
-        }
+        end
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
@@ -80,28 +83,28 @@ class Account::UsersController < Account::BaseController
 
   private
 
-    def set_user
-      @user = current_user
-    end
+  def set_user
+    @user = current_user
+  end
 
-    def user_params
-      params.require(:user).permit(permitted_fields)
-    end
+  def user_params
+    params.require(:user).permit(permitted_fields)
+  end
 
-    def permitted_fields
-      ary = User::FILES
-      ary
-    end
+  def permitted_fields
+    ary = User::FILES
+    ary
+  end
 
-    def user_password_params
-      params.require(:user).permit(:current_password, :password, :password_confirmation)
-    end
+  def user_password_params
+    params.require(:user).permit(:current_password, :password, :password_confirmation)
+  end
 
-    def user_email_params
-      params.require(:user).permit(:email)
-    end
+  def user_email_params
+    params.require(:user).permit(:email)
+  end
 
-    def user_destroy_params
-      params.require(:user).permit(:current_password)
-    end
+  def user_destroy_params
+    params.require(:user).permit(:current_password)
+  end
 end

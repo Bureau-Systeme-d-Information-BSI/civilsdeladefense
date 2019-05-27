@@ -1,13 +1,14 @@
-module ErrorResponseActions
+# frozen_string_literal: true
 
-  ERROR_RESPONSE_ACTIONS = %[authentication_error
+module ErrorResponseActions
+  ERROR_RESPONSE_ACTIONS = %(authentication_error
                              authorization_error
                              resource_not_found
                              page_not_found
                              not_implmented
                              route_not_found
                              method_not_allowed
-                             resource_not_available_anymore].freeze
+                             resource_not_available_anymore)
 
   # def authentication_error
   #   respond_to do |format|
@@ -25,7 +26,7 @@ module ErrorResponseActions
     # 403 Forbidden response
     respond_to do |format|
       format.html { render 'errors/error_403', status: 403 }
-      format.pdf { render plain: "Not Authorized", status: 403, layout: false }
+      format.pdf { render plain: 'Not Authorized', status: 403, layout: false }
       format.xml  { render xml: 'Access Denied', status: 403 }
       format.json { render json: 'Access Denied', status: 403 }
     end
@@ -40,9 +41,7 @@ module ErrorResponseActions
   end
 
   def resource_not_available_anymore(exception)
-    if exception&.data
-      @page_title = "Cette offre n'est plus disponible"
-    end
+    @page_title = "Cette offre n'est plus disponible" if exception&.data
     respond_to do |format|
       format.html { render 'errors/error_404', status: 404 }
       format.xml  { render xml: 'Record Not Found', status: 404 }

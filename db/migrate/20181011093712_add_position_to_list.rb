@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddPositionToList < ActiveRecord::Migration[5.2]
   def change
     [ContractType, ExperienceLevel, Sector, StudyLevel].each do |klass|

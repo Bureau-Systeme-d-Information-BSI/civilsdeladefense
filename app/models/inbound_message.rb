@@ -1,8 +1,11 @@
+# frozen_string_literal: true
+
+# Inbound messages fetched from a POP3 mail server and then processed
 class InboundMessage
   def self.fetch_and_process
     outgoing_mail_uri = URI(ENV['MAIL_URL'])
-    user_name = URI.unescape(outgoing_mail_uri.user)
-    password = URI.unescape(outgoing_mail_uri.password)
+    user_name = CGI.unescape(outgoing_mail_uri.user)
+    password = CGI.unescape(outgoing_mail_uri.password)
     host = outgoing_mail_uri.host
 
     Mail.defaults do
@@ -23,7 +26,7 @@ class InboundMessage
       end
     else
       Mail.find(count: 100).each do |message|
-        res = ApplicantNotificationsMailer.receive(message)
+        ApplicantNotificationsMailer.receive(message)
       end
     end
   end

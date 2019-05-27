@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RemoveUnneededOptionFields < ActiveRecord::Migration[5.2]
   def change
     remove_column :job_offers, :option_portfolio_url, :integer

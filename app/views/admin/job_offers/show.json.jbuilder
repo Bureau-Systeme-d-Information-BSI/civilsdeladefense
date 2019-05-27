@@ -1,1 +1,3 @@
-json.partial! "job_offers/job_offer", job_offer: @job_offer
+# frozen_string_literal: true
+
+json.partial! 'job_offers/job_offer', job_offer: @job_offer

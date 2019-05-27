@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Top level organization regrouping recruiters
 class Employer < ApplicationRecord
   has_many :job_offers
 

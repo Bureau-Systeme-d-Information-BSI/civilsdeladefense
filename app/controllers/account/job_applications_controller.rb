@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class Account::JobApplicationsController < Account::BaseController
-  before_action :set_job_application, except: %i(index finished)
-  before_action :set_job_applications, only: %i(index finished)
+  before_action :set_job_application, except: %i[index finished]
+  before_action :set_job_applications, only: %i[index finished]
 
   # GET /account/job_applications
   # GET /account/job_applications.json
@@ -27,18 +29,19 @@ class Account::JobApplicationsController < Account::BaseController
 
   private
 
-    def set_job_applications
-      @job_applications_active = job_applications_root.not_finished
-      @job_applications_finished = job_applications_root.finished
-    end
+  def set_job_applications
+    @job_applications_active = job_applications_root.not_finished
+    @job_applications_finished = job_applications_root.finished
+  end
 
-    def job_applications_root
-      current_user.job_applications.includes(job_offer: [:contract_type]).order(created_at: :desc)
-    end
+  def job_applications_root
+    current_user.job_applications.includes(job_offer: [:contract_type]).order(created_at: :desc)
+  end
 
-    # Use callbacks to share common setup or constraints between actions.
-    def set_job_application
-      @job_application = current_user.job_applications.find(params[:job_application_id] || params[:id])
-      @job_offer = @job_application.job_offer
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_job_application
+    id = params[:job_application_id] || params[:id]
+    @job_application = current_user.job_applications.find(id)
+    @job_offer = @job_application.job_offer
+  end
 end

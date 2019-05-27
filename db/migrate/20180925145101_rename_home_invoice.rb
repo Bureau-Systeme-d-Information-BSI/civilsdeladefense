@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RenameHomeInvoice < ActiveRecord::Migration[5.2]
   def change
     rename_column :users, :home_invoice_file_name, :proof_of_address_file_name

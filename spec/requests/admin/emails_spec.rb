@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe "Admin::Emails", type: :request do
+RSpec.describe 'Admin::Emails', type: :request do
   # describe "GET /admin/emails" do
   #   it "works! (now write some real specs)" do
   #     get admin_emails_path

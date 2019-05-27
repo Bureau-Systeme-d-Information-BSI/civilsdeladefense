@@ -1,8 +1,9 @@
-xml.instruct! :xml, :version => "1.0", :encoding => "UTF-8"
-xml.instruct! 'xml-stylesheet', :type => "text/xsl", :href => "/sitemap.xsl"
+# frozen_string_literal: true
 
-xml.urlset "xmlns" => "http://www.sitemaps.org/schemas/sitemap/0.9" do
+xml.instruct! :xml, version: '1.0', encoding: 'UTF-8'
+xml.instruct! 'xml-stylesheet', type: 'text/xsl', href: '/sitemap.xsl'
 
+xml.urlset 'xmlns' => 'http://www.sitemaps.org/schemas/sitemap/0.9' do
   xml.url do
     link = job_offers_url
     xml.loc(link)

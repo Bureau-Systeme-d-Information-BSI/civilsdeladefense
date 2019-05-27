@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Administrator, type: :model do
@@ -5,11 +7,11 @@ RSpec.describe Administrator, type: :model do
     @administrator = create(:administrator)
   end
 
-  it "is valid with valid attributes" do
+  it 'is valid with valid attributes' do
     expect(@administrator).to be_valid
   end
 
-  it "has a unique email" do
+  it 'has a unique email' do
     administrator2 = build(:administrator, email: @administrator.email)
     expect(administrator2).to_not be_valid
   end
@@ -23,13 +25,13 @@ RSpec.describe Administrator, type: :model do
       ENV['ADMINISTRATOR_EMAIL_SUFFIX'] = nil
     end
 
-    it "is valid with valid attributes" do
-      administrator_valid = create(:administrator, email: "admin@gmail.com")
+    it 'is valid with valid attributes' do
+      administrator_valid = create(:administrator, email: 'admin@gmail.com')
       expect(administrator_valid).to be_valid
     end
 
-    it "is invalid with invalid attributes" do
-      administrator_invalid = build(:administrator, email: "admin@laposte.net")
+    it 'is invalid with invalid attributes' do
+      administrator_invalid = build(:administrator, email: 'admin@laposte.net')
       expect(administrator_invalid).to be_invalid
     end
   end

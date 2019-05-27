@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Recruiter on the platform
 class Administrator < ApplicationRecord
   devise :database_authenticatable,
          :recoverable, :trackable, :validatable,
@@ -6,7 +9,7 @@ class Administrator < ApplicationRecord
   #####################################
   # Relationships
   belongs_to :employer, optional: true
-  validates :employer, presence: true, if: Proc.new { |a| a.employer? || a.ensure_employer_is_set }
+  validates :employer, presence: true, if: proc { |a| a.employer? || a.ensure_employer_is_set }
   belongs_to :inviter, optional: true, class_name: 'Administrator'
   has_many :invitees, class_name: 'Administrator', foreign_key: 'inviter_id'
 
@@ -24,28 +27,28 @@ class Administrator < ApplicationRecord
   has_many :job_applications, through: :job_applications_actors
 
   def supervisor_administrator_attributes=(attributes)
-    if attributes[:email].present?
-      existing = Administrator.where(email: attributes[:email]).first
-      if existing
-        supervisor_administrator = existing
-      else
-        a = build_supervisor_administrator(attributes)
-        a.inviter = self
-        a
-      end
+    return if attributes[:email].blank?
+
+    existing = Administrator.where(email: attributes[:email]).first
+    if existing
+      existing
+    else
+      a = build_supervisor_administrator(attributes)
+      a.inviter = self
+      a
     end
   end
 
   def grand_employer_administrator_attributes=(attributes)
-    if attributes[:email].present?
-      existing = Administrator.where(email: attributes[:email]).first
-      if existing
-        self.grand_employer_administrator = existing
-      else
-        a = build_grand_employer_administrator(attributes)
-        a.inviter = self
-        a
-      end
+    return if attributes[:email].blank?
+
+    existing = Administrator.where(email: attributes[:email]).first
+    if existing
+      self.grand_employer_administrator = existing
+    else
+      a = build_grand_employer_administrator(attributes)
+      a.inviter = self
+      a
     end
   end
 
@@ -55,22 +58,22 @@ class Administrator < ApplicationRecord
   # Validations
 
   validates :photo,
-    file_size: { less_than: 1.megabytes }
+            file_size: { less_than: 1.megabytes }
   validate :password_complexity
   validate :email_conformance
-  validates :employer, presence: true, if: Proc.new { |a| %w(employer grand_employer).include?(a.role) }
-  validates :inviter, presence: true, unless: Proc.new { |a| a.very_first_account }, on: :create
+  validates :employer, presence: true, if: proc { |a| %w[employer grand_employer].include?(a.role) }
+  validates :inviter, presence: true, unless: proc { |a| a.very_first_account }, on: :create
   validates_inclusion_of :role,
-    in: ->(a) {
-      if a.very_first_account
-        a.class.roles.keys
-      else
-        (a.inviter&.authorized_roles_to_confer || a.class.roles.keys.last)
-      end
-    },
-    allow_blank: true,
-    message: :non_compliant_role,
-    on: :create
+                         in: lambda { |a|
+                           if a.very_first_account
+                             a.class.roles.keys
+                           else
+                             (a.inviter&.authorized_roles_to_confer || a.class.roles.keys.last)
+                           end
+                         },
+                         allow_blank: true,
+                         message: :non_compliant_role,
+                         on: :create
 
   ####################################
   # Scope
@@ -96,35 +99,47 @@ class Administrator < ApplicationRecord
   end
 
   def password_match?
-     self.errors[:password] << I18n.t('errors.messages.blank') if password.blank?
-     self.errors[:password_confirmation] << I18n.t('errors.messages.blank') if password_confirmation.blank?
-     self.errors[:password_confirmation] << I18n.translate("errors.messages.confirmation", attribute: "password") if password != password_confirmation
-     password == password_confirmation && !password.blank?
+    if password.blank?
+      msg = I18n.t('errors.messages.blank')
+      errors[:password] << msg
+    end
+    if password_confirmation.blank?
+      msg = I18n.t('errors.messages.blank')
+      errors[:password_confirmation] << msg
+    end
+    if password != password_confirmation
+      msg = I18n.translate('errors.messages.confirmation', attribute: 'password')
+      errors[:password_confirmation] << msg
+    end
+    password == password_confirmation && !password.blank?
   end
 
   # new function to return whether a password has been set
-  def has_no_password?
-    self.encrypted_password.blank?
+  def no_password?
+    encrypted_password.blank?
   end
 
   # Devise::Models:unless_confirmed` method doesn't exist in Devise 2.0.0 anymore.
   # Instead you should use `pending_any_confirmation`.
   def only_if_unconfirmed
-    pending_any_confirmation {yield}
+    pending_any_confirmation { yield }
   end
 
+  # If global suffix is provided, we should not let admin be invited when their email is not suffixed correctly.
+  # Adds a thin layer of security to force admin to invite only other admin with their official email address.
   def email_conformance
     suffix = ENV['ADMINISTRATOR_EMAIL_SUFFIX']
-    if suffix.present? && !(email.ends_with?(suffix))
-      error_i18n = I18n.t('activerecord.errors.messages.invalid_suffix', suffix: ENV['ADMINISTRATOR_EMAIL_SUFFIX'])
-      errors.add(:email, error_i18n)
-    end
+
+    return if suffix.blank? || email.ends_with?(suffix)
+
+    msg = I18n.t('activerecord.errors.messages.invalid_suffix', suffix: suffix)
+    errors.add(:email, msg)
   end
 
   def full_name
     @full_name ||= begin
       if first_name.present? || last_name.present?
-        [first_name, last_name].join(" ")
+        [first_name, last_name].join(' ')
       else
         email
       end
@@ -134,7 +149,7 @@ class Administrator < ApplicationRecord
   def full_name_with_title
     @full_name_with_title ||= begin
       if title.present? || first_name.present? || last_name.present?
-        [title, first_name, last_name].join(" ")
+        [title, first_name, last_name].join(' ')
       else
         email
       end
@@ -142,11 +157,10 @@ class Administrator < ApplicationRecord
   end
 
   def authorized_roles_to_confer
-    score = self.role_before_type_cast
     if bant?
       self.class.roles.map(&:first)
     elsif employer?
-      %w(employer)
+      %w[employer]
     end
   end
 
@@ -168,7 +182,8 @@ class Administrator < ApplicationRecord
 
   def password_complexity
     # Regexp extracted from https://stackoverflow.com/questions/19605150/regex-for-password-must-contain-at-least-eight-characters-at-least-one-number-a
-    return if password.blank? || password =~ /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,70}$/
+    regexp = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,70}$/
+    return if password.blank? || password =~ regexp
 
     errors.add :password, :not_strong_enough
   end

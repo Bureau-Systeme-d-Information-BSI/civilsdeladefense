@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateSalaryRanges < ActiveRecord::Migration[5.2]
   def change
     create_table :salary_ranges, id: :uuid do |t|

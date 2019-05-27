@@ -6,7 +6,7 @@
   .card-header.with-subheader.bg-white.font-weight-bold.text-secondary.d-flex.align-items-center
     .mr-auto
       = fa_icon('forum', class: 'text-secondary')
-      - if email.is_automatic_email?
+      - if email.automatic_email?
         %em Courriel automatique
       - else
         = precede 'de ' do

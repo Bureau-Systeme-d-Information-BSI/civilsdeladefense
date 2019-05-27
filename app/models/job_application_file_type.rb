@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+# The name/type of file attached to a job application.
+# The list of names/types is managed by the administrators of the platform.
 class JobApplicationFileType < ApplicationRecord
   acts_as_list
   default_scope -> { order(position: :asc) }
@@ -17,7 +21,7 @@ class JobApplicationFileType < ApplicationRecord
     applicant_provided: 10,
     template: 20,
     admin_only: 30,
-    check_only_admin_only: 40,
+    check_only_admin_only: 40
   }
 
   enum from_state: JobApplication.states

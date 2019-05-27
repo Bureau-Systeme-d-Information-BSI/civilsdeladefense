@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 module AwesomeNestedHelper
   def grouped_nested_set_options(class_or_item, mover = nil)
     if class_or_item.is_a? Array
-      items = class_or_item.reject { |e| !e.root? }
+      items = class_or_item.select { |e| e.root? }
     else
       class_or_item = class_or_item.roots if class_or_item.respond_to?(:scope)
       items = Array(class_or_item)
@@ -30,7 +32,7 @@ module AwesomeNestedHelper
   def nested_li(objects, &block)
     objects = objects.order(:lft) if objects.is_a? Class
 
-    return '' if objects.size == 0
+    return '' if objects.empty?
 
     output = '<ul><li>'
     path = [nil]
@@ -68,11 +70,11 @@ module AwesomeNestedHelper
   def sort_list(objects, order)
     objects = objects.order(:lft) if objects.is_a? Class
 
-   # Partition the results
+    # Partition the results
     children_of = {}
     objects.each do |o|
-      children_of[ o.parent_id ] ||= []
-      children_of[ o.parent_id ] << o
+      children_of[o.parent_id] ||= []
+      children_of[o.parent_id] << o
     end
 
     # Sort each sub-list individually
@@ -88,11 +90,9 @@ module AwesomeNestedHelper
   end
 
   def recombine_lists(results, children_of, parent_id)
-    if children_of[parent_id]
-      children_of[parent_id].each do |o|
-        results << o
-        recombine_lists(results, children_of, o.id)
-      end
+    children_of[parent_id]&.each do |o|
+      results << o
+      recombine_lists(results, children_of, o.id)
     end
   end
 end

@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Socio-Professional category of a job offer
 class ProfessionalCategory < ApplicationRecord
   acts_as_list
   default_scope -> { order(position: :asc) }

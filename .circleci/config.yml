@@ -1,10 +1,11 @@
-# Ruby CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-ruby/ for more details
-#
+---
+default: &default
+  working_directory: ~/repo
+
 version: 2
 jobs:
   build:
+    <<: *default
     docker:
       - image: circleci/ruby:2.6.3-node-browsers-legacy
         environment:
@@ -16,49 +17,59 @@ jobs:
           POSTGRES_USER: circleci
           POSTGRES_DB: civilsdeladefense_test
           POSTGRES_PASSWORD: ""
-
-    working_directory: ~/repo
-
     steps:
       - checkout
-
       # Download and cache dependencies
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "Gemfile.lock" }}
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
-
       - run:
           name: install dependencies
           command: |
             bundle install --jobs=4 --retry=3 --path vendor/bundle
-
       - save_cache:
           paths:
             - ./vendor/bundle
           key: v1-dependencies-{{ checksum "Gemfile.lock" }}
-
       - run:
           name: install js dependencies
           command: |
             yarn install
-
       - save_cache:
           paths:
             - ./node_modules
           key: v1-js-dependencies-{{ checksum "package.json" }}
-
       # Run webpack
       - run:
-          name: run wbepack
+          name: run webpack
           command: |
             bin/webpack
-
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+            - .
+  test:
+    <<: *default
+    docker:
+      - image: circleci/ruby:2.6.3-node-browsers-legacy
+        environment:
+          RAILS_ENV: test
+          DATABASE_URL_TEST: postgresql://circleci:@127.0.0.1:5432/civilsdeladefense_test
+          MAIL_URL: smtp://hello%40localhost@localhost
+      - image: circleci/postgres:10.5-alpine-ram
+        environment:
+          POSTGRES_USER: circleci
+          POSTGRES_DB: civilsdeladefense_test
+          POSTGRES_PASSWORD: ""
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run: bundle config --local path vendor/bundle
       # Database setup
       - run: bundle exec rake db:create
       - run: bundle exec rake db:schema:load
-
       # run tests!
       - run:
           name: run tests
@@ -71,10 +82,36 @@ jobs:
                             --out /tmp/test-results/rspec.xml \
                             --format progress \
                             $TEST_FILES
-
       # collect reports
       - store_test_results:
           path: /tmp/test-results
       - store_artifacts:
           path: /tmp/test-results
           destination: test-results
+      - store_artifacts:
+          path: coverage
+          destination: coverage
+  rubocop-brakeman:
+    <<: *default
+    docker:
+      - image: circleci/ruby:2.6.3-node-browsers-legacy
+        environment:
+          RAILS_ENV: test
+    steps:
+      - attach_workspace:
+          at: ~/repo
+      - run: bundle config --local path vendor/bundle
+      - run: bundle exec rubocop
+      - run: bundle exec brakeman -z
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      - rubocop-brakeman:
+          requires:
+            - build

@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Professional field
 class Category < ApplicationRecord
   validates :name, presence: true, uniqueness: true
 

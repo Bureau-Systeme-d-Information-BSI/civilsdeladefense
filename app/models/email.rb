@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Email exchanged between a candidate and a group of recruiters around a job application
 class Email < ApplicationRecord
   belongs_to :job_application
   belongs_to :sender, optional: true, polymorphic: true
@@ -11,8 +14,8 @@ class Email < ApplicationRecord
   attr_accessor :template
 
   counter_culture :job_application,
-    column_name: :emails_count,
-    touch: true
+                  column_name: :emails_count,
+                  touch: true
 
   after_save :compute_job_application_notifications_counter
 
@@ -20,7 +23,7 @@ class Email < ApplicationRecord
     job_application.compute_notifications_counter!
   end
 
-  def is_automatic_email?
+  def automatic_email?
     sender.nil?
   end
 end

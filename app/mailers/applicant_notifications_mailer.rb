@@ -1,5 +1,7 @@
-class ApplicantNotificationsMailer < ApplicationMailer
+# frozen_string_literal: true
 
+# Mail sent to candidate
+class ApplicantNotificationsMailer < ApplicationMailer
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
   #
@@ -18,7 +20,7 @@ class ApplicantNotificationsMailer < ApplicationMailer
 
     mail_uri = URI(ENV['MAIL_URL'])
     host = mail_uri.host
-    headers['Message-ID'] = "<#{ @email.id }@#{ host }>"
+    headers['Message-ID'] = "<#{@email.id}@#{host}>"
 
     @email.attachments.each do |attachment|
       attachments[attachment.filename.to_s] = attachment.blob.download
@@ -31,39 +33,39 @@ class ApplicantNotificationsMailer < ApplicationMailer
     references = message.header['References']
     original_email_id = references.value.split(/\<(.*)@/)[1]
     Rails.logger.debug "InboundMessage treating message #{message.inspect}"
-    if original_email_id.present?
-      begin
-        original_email = Email.find original_email_id
-      rescue ActiveRecord::RecordNotFound => e
-        original_email = nil
-      end
-      if original_email.blank?
-        return false
-      end
-      body = (message.text_part || message.html_part || message).body.decoded
-      body = ActionView::Base.full_sanitizer.sanitize(body)
-      if body.present?
-        job_application = original_email.job_application
-        subject = message.subject
-        sender_email = message.from.first
-        user = User.find_by_email sender_email
-        Audited.audit_class.as_user(user) do
-          email_params = {
-            subject: subject,
-            body: body
-          }
-          email = job_application.emails.build(email_params)
-          email.created_at = email.updated_at = message.date
-          email.sender = user
-          email.job_application = job_application
-          email.save!
-        end
-        return true
-      else
-        return false
-      end
-    else
-      return false
+
+    return false if original_email_id.blank?
+
+    original_email = Email.find_by(id: original_email_id)
+
+    return false if original_email.blank?
+
+    body = (message.text_part || message.html_part || message).body.decoded
+    body = ActionView::Base.full_sanitizer.sanitize(body)
+
+    return false if body.blank?
+
+    job_application = original_email.job_application
+    sender_email = message.from.first
+    user = User.find_by_email sender_email
+    create_email(user, job_application)
+
+    true
+  end
+
+  protected
+
+  def create_email(user, job_application)
+    Audited.audit_class.as_user(user) do
+      email_params = {
+        subject: subject,
+        body: body
+      }
+      email = job_application.emails.build(email_params)
+      email.created_at = email.updated_at = message.date
+      email.sender = user
+      email.job_application = job_application
+      email.save!
     end
   end
 end

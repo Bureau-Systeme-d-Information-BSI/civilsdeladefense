@@ -29,11 +29,12 @@
             = f.input :postal_code
           .col-12.col-md-6
             = f.input :country, priority: [ "FR" ]
-    .row
-      .col-12.col-md-6
-        = f.simple_fields_for :user do |user_form|
-          = user_form.label :photo, required: false
-          = user_form.input :photo, label: t('buttons.choose_file'), wrapper: :custom_file_without_label
+    - unless user_signed_in?
+      .row
+        .col-12.col-md-6
+          = f.simple_fields_for :user do |user_form|
+            = user_form.label :photo, required: false
+            = user_form.input :photo, label: t('buttons.choose_file'), wrapper: :custom_file_without_label
 
     %h2.h5.mt-4.mb-3.text-dark-gray= t('.your_profile')
     - job_application_files = @job_application.job_application_files.to_a

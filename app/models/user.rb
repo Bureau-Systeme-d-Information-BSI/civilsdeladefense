@@ -35,4 +35,8 @@ class User < ApplicationRecord
   def most_advanced_job_application
     job_applications.order(state: :desc).first
   end
+
+  def already_applied?(job_offer)
+    job_applications.select(:job_offer_id).map(&:job_offer_id).include?(job_offer.id)
+  end
 end

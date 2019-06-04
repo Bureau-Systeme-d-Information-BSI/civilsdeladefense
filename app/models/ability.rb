@@ -20,7 +20,7 @@ class Ability
       can :manage, Email
     else
       can :read, JobOffer, job_offer_actors: { administrator_id: administrator.id }
-      can :read, JobApplication, job_application_read_query
+      can :read, JobApplication, job_application_read_query(administrator)
       can :manage, JobApplication, brh_job_application_manage_query(administrator)
       can :manage, JobApplicationFile
       can :read, Message

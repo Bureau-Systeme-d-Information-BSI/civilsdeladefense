@@ -14,14 +14,14 @@ class Ability
     when 'employer'
       can :create, JobOffer
       can :manage, JobOffer, job_offer_actors: { administrator_id: administrator.id }
-      can :manage, JobApplication, employer_job_application_query
+      can :manage, JobApplication, employer_job_application_query(administrator)
       can :manage, JobApplicationFile
       can :manage, Message
       can :manage, Email
     else
       can :read, JobOffer, job_offer_actors: { administrator_id: administrator.id }
       can :read, JobApplication, job_application_read_query
-      can :manage, JobApplication, brh_job_application_manage_query
+      can :manage, JobApplication, brh_job_application_manage_query(administrator)
       can :manage, JobApplicationFile
       can :read, Message
       can :read, Email
@@ -30,7 +30,7 @@ class Ability
 
   private
 
-  def employer_job_application_query
+  def employer_job_application_query(administrator)
     {
       job_offer: {
         job_offer_actors: {
@@ -40,7 +40,7 @@ class Ability
     }
   end
 
-  def job_application_read_query
+  def job_application_read_query(administrator)
     {
       job_offer: {
         job_offer_actors: {
@@ -50,7 +50,7 @@ class Ability
     }
   end
 
-  def brh_job_application_manage_query
+  def brh_job_application_manage_query(administrator)
     role_brh_enum = JobOfferActor.roles[:brh]
     {
       job_offer: {

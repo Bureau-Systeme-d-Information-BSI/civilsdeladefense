@@ -2,10 +2,9 @@
 
 FactoryBot.define do
   factory :job_application_file_type do
-    name 'MyString'
-    content 'MyString'
-    from_state 'MyString'
-    kind 'MyString'
-    always_on false
+    name 'CV'
+    from_state :initial
+    kind :applicant_provided
+    by_default true
   end
 end

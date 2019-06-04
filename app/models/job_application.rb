@@ -39,6 +39,7 @@ class JobApplication < ApplicationRecord
             :country,
             presence: true
   validates :terms_of_service, :certify_majority, acceptance: true
+  validates :user_id, uniqueness: { scope: :job_offer_id }, on: :create
 
   before_validation :set_employer
   before_save :compute_notifications_counter

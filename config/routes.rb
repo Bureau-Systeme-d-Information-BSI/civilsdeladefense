@@ -43,7 +43,7 @@ Rails.application.routes.draw do
         end
       end
     end
-    resources :job_applications, path: 'candidatures' do
+    resources :job_applications, path: 'candidatures', only: %i[index show update] do
       member do
         patch :change_state
       end

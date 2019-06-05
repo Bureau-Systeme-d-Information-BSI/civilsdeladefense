@@ -3,6 +3,7 @@
 module ErrorResponseActions
   ERROR_RESPONSE_ACTIONS = %(authentication_error
                              authorization_error
+                             bad_request
                              resource_not_found
                              page_not_found
                              not_implmented
@@ -29,6 +30,17 @@ module ErrorResponseActions
       format.pdf { render plain: 'Not Authorized', status: 403, layout: false }
       format.xml  { render xml: 'Access Denied', status: 403 }
       format.json { render json: 'Access Denied', status: 403 }
+    end
+  end
+
+  # 400 Bad Request
+  def bad_request(exception)
+    @page_title = "Cette offre n'est plus disponible" if exception&.data
+    respond_to do |format|
+      format.html { render 'errors/error_400', status: 400 }
+      format.pdf { render plain: 'Bad Request', status: 400, layout: false }
+      format.xml  { render xml: 'Bad Request', status: 400 }
+      format.json { render json: { errors: exception.data }, status: 400 }
     end
   end
 

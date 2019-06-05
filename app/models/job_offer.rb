@@ -170,4 +170,9 @@ class JobOffer < ApplicationRecord
       job_offer_actor.administrator.inviter ||= inviter if job_offer_actor.administrator
     end
   end
+
+  def current_most_advanced_job_applications_state
+    ary = job_applications.select(:state, :created_at).group(:state, :created_at)
+    ary.map(&:state_before_type_cast).max
+  end
 end

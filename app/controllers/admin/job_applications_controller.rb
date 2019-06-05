@@ -36,18 +36,17 @@ class Admin::JobApplicationsController < Admin::BaseController
   end
 
   def change_state
-    @state = params[:state].to_s
-    @job_application.aasm.fire!(@state)
+    @state = params[:state]
+    known_aasm_state = @job_application.aasm.states.detect { |s| s.name.to_s == @state }
+    raise ForbiddenState.new(state: @state) if known_aasm_state.nil?
+
+    @job_application.send("#{known_aasm_state.name}!")
     @job_offer = @job_application.job_offer
     state_i18n = JobApplication.human_attribute_name("state/#{@state}")
 
-    val = @job_offer.job_applications.where(job_offer_id: @job_offer.id)
-    val = val.select(:state, :created_at)
-    val = val.group(:state, :created_at)
-    val = val.map(&:state_before_type_cast)
-    val = val.max
-    if @job_offer.most_advanced_job_applications_state_before_type_cast != val
-      @job_offer.update_column(:most_advanced_job_applications_state, val)
+    current_max = @job_offer.current_most_advanced_job_applications_state
+    if @job_offer.most_advanced_job_applications_state_before_type_cast != current_max
+      @job_offer.update_column(:most_advanced_job_applications_state, current_max)
     end
 
     respond_to do |format|
@@ -118,7 +117,7 @@ class Admin::JobApplicationsController < Admin::BaseController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def job_application_params
-    fields = %i[job_offer_id user_id first_name last_name current_position phone
+    fields = %i[first_name last_name current_position phone
                 address_1 address_2 postal_code city country website_url]
     params.require(:job_application).permit(fields)
   end

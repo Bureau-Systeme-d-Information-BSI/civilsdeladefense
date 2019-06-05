@@ -10,6 +10,7 @@ class ApplicationController < ActionController::Base
   rescue_from CanCan::AccessDenied, with: :authorization_error
   rescue_from ActiveRecord::RecordNotFound, with: :resource_not_found
   rescue_from JobOfferNotAvailableAnymore, with: :resource_not_available_anymore
+  rescue_from ForbiddenState, with: :bad_request
 
   private
 

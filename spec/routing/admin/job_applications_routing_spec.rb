@@ -9,7 +9,7 @@ RSpec.describe Admin::JobApplicationsController, type: :routing do
     end
 
     it 'routes to #new' do
-      expect(get: '/admin/candidatures/new').to route_to('admin/job_applications#new')
+      expect(get: '/admin/candidatures/new').to route_to('admin/job_applications#show', id: 'new')
     end
 
     it 'routes to #show' do
@@ -17,11 +17,11 @@ RSpec.describe Admin::JobApplicationsController, type: :routing do
     end
 
     it 'routes to #edit' do
-      expect(get: '/admin/candidatures/1/edit').to route_to('admin/job_applications#edit', id: '1')
+      expect(get: '/admin/candidatures/1/edit').not_to be_routable
     end
 
     it 'routes to #create' do
-      expect(post: '/admin/candidatures').to route_to('admin/job_applications#create')
+      expect(post: '/admin/candidatures').not_to be_routable
     end
 
     it 'routes to #update via PUT' do
@@ -32,8 +32,12 @@ RSpec.describe Admin::JobApplicationsController, type: :routing do
       expect(patch: '/admin/candidatures/1').to route_to('admin/job_applications#update', id: '1')
     end
 
+    it 'routes to #change_state via PATCH' do
+      expect(patch: '/admin/candidatures/1/change_state').to route_to('admin/job_applications#change_state', id: '1')
+    end
+
     it 'routes to #destroy' do
-      expect(delete: '/admin/candidatures/1').to route_to('admin/job_applications#destroy', id: '1')
+      expect(delete: '/admin/candidatures/1').not_to be_routable
     end
   end
 end

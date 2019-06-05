@@ -50,4 +50,13 @@ RSpec.describe JobOffer do
     expect(jb.state).to eq('published')
     expect(jb.published_at).not_to be_nil
   end
+
+  it 'should correctly find current most advanced job application state' do
+    job_offer = create(:job_offer)
+    job_applications = create_list(:job_application, 10, job_offer: job_offer)
+    expect(job_offer.current_most_advanced_job_applications_state).to eq(0)
+    last_state_name, last_state_enum = JobApplication.states.to_a.last
+    job_applications.last.send("#{last_state_name}!")
+    expect(job_offer.current_most_advanced_job_applications_state).to eq(last_state_enum)
+  end
 end

@@ -32,115 +32,81 @@ RSpec.describe Admin::JobApplicationsController, type: :controller do
   # JobApplication. As you add validations to JobApplication, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) do
-    skip('Add a hash of attributes valid for your model')
+    attributes_for(:job_application)
   end
 
   let(:invalid_attributes) do
-    skip('Add a hash of attributes invalid for your model')
+    { first_name: '', last_name: '' }
   end
-
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # JobApplicationsController. Be sure to keep this updated too.
-  let(:valid_session) { {} }
 
   describe 'GET #index' do
     it 'returns a success response' do
-      JobApplication.create! valid_attributes
-      get :index, params: {}, session: valid_session
+      create(:job_application)
+      get :index, params: {}
       expect(response).to be_successful
     end
   end
 
   describe 'GET #show' do
     it 'returns a success response' do
-      job_application = JobApplication.create! valid_attributes
-      get :show, params: { id: job_application.to_param }, session: valid_session
+      job_application = create(:job_application)
+      get :show, params: { id: job_application.to_param }
       expect(response).to be_successful
-    end
-  end
-
-  describe 'GET #new' do
-    it 'returns a success response' do
-      get :new, params: {}, session: valid_session
-      expect(response).to be_successful
-    end
-  end
-
-  describe 'GET #edit' do
-    it 'returns a success response' do
-      job_application = JobApplication.create! valid_attributes
-      get :edit, params: { id: job_application.to_param }, session: valid_session
-      expect(response).to be_successful
-    end
-  end
-
-  describe 'POST #create' do
-    context 'with valid params' do
-      it 'creates a new JobApplication' do
-        expect do
-          post :create, params: { job_application: valid_attributes }, session: valid_session
-        end.to change(JobApplication, :count).by(1)
-      end
-
-      it 'redirects to the created admin_job_application' do
-        post :create, params: { job_application: valid_attributes }, session: valid_session
-        expect(response).to redirect_to(JobApplication.last)
-      end
-    end
-
-    context 'with invalid params' do
-      it "returns a success response (i.e. to display the 'new' template)" do
-        post :create, params: { job_application: invalid_attributes }, session: valid_session
-        expect(response).to be_successful
-      end
     end
   end
 
   describe 'PUT #update' do
     context 'with valid params' do
       let(:new_attributes) do
-        skip('Add a hash of attributes valid for your model')
+        { first_name: 'Pipo', last_name: 'Molo' }
       end
 
       it 'updates the requested admin_job_application' do
-        job_application = JobApplication.create! valid_attributes
-        put :update, params: { id: job_application.to_param, job_application: new_attributes },
-                     session: valid_session
+        job_application = create(:job_application)
+        put :update, params: { id: job_application.to_param, job_application: new_attributes }
         job_application.reload
-        skip('Add assertions for updated state')
+        expect(job_application.first_name).to eq('Pipo')
+        expect(job_application.last_name).to eq('Molo')
       end
 
       it 'redirects to the admin_job_application' do
-        job_application = JobApplication.create! valid_attributes
-        put :update, params: { id: job_application.to_param, job_application: valid_attributes },
-                     session: valid_session
-        expect(response).to redirect_to(job_application)
+        job_application = create(:job_application)
+        put :update, params: { id: job_application.to_param, job_application: valid_attributes }
+        expect(response).to redirect_to([:admin, job_application])
       end
     end
 
     context 'with invalid params' do
       it "returns a success response (i.e. to display the 'edit' template)" do
-        job_application = JobApplication.create! valid_attributes
-        put :update, params: { id: job_application.to_param, job_application: invalid_attributes },
-                     session: valid_session
+        job_application = create(:job_application)
+        put :update, params: { id: job_application.to_param, job_application: invalid_attributes }
         expect(response).to be_successful
       end
     end
   end
 
-  describe 'DELETE #destroy' do
-    it 'destroys the requested admin_job_application' do
-      job_application = JobApplication.create! valid_attributes
-      expect do
-        delete :destroy, params: { id: job_application.to_param }, session: valid_session
-      end.to change(JobApplication, :count).by(-1)
+  describe 'PUT #change_state' do
+    context 'with valid params' do
+      it 'updates the state of the requested job_application' do
+        job_application = create(:job_application)
+        put :change_state, params: { id: job_application.to_param, state: 'affected' }
+        job_application.reload
+        expect(job_application.state).to eq('affected')
+      end
+
+      it 'redirects to the admin_job_application' do
+        job_application = create(:job_application)
+        put :change_state, params: { id: job_application.to_param, state: 'affected' }
+        expect(response).to redirect_to([:admin, job_application])
+      end
     end
 
-    it 'redirects to the admin_job_applications list' do
-      job_application = JobApplication.create! valid_attributes
-      delete :destroy, params: { id: job_application.to_param }, session: valid_session
-      expect(response).to redirect_to(admin_job_applications_url)
+    context 'with invalid params' do
+      it 'returns an error page' do
+        job_application = create(:job_application)
+        put :change_state, params: { id: job_application.to_param, state: 'non_existing_state' }
+        expect(response.status).to eq(400)
+      end
     end
   end
 end

@@ -1,0 +1,14 @@
+- content_for :content do
+  .container-fluid
+    .row
+      %aside.col-md-2.d-none.d-md-block.bg-white.sidebar
+        .sidebar-sticky
+          = render '/admin/job_offers/navbar'
+      %main.col-md-9.ml-sm-auto.col-lg-10{role: 'main'}
+        %nav.navbar.navbar-dark.bg-secondary.mb-5
+          %span.navbar-text#step_1= @page_title
+        .container
+          .row
+            .col-12.mx-md-auto
+              = yield
+= render template: 'layouts/admin'

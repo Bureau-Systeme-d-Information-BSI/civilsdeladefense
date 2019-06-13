@@ -254,6 +254,8 @@ fr:
       uncheck:
         success: "Fichier invalidé !"
     job_offers:
+      archived:
+        job_offers_count: "%{count} offres archivées"
       administrator:
         new_record: "Cliquer sur \"Enregistrer\" pour inviter"
         waiting: "En attente de confirmation"
@@ -263,6 +265,8 @@ fr:
         new_job_offer: "Ajouter une offre"
         active: "Offres en cours (%{count})"
         archived: "Offres archivées (%{count})"
+        job_offers_count: "%{count} offres actives"
+        job_offers_filtered: "%{count} résultats de recherche"
       new:
         title: "Rédaction d'une nouvelle offre"
         default_recruitment_process: "<ul><li>Si votre candidature est présélectionnée, vous serez contacté(e) par téléphone pour apprécier vos attentes et motivations.</li><li>Si vous êtes sélectionné(e) après cette première étape, vous serez reçu(e) en entretien par l’employeur et éventuellement le service des ressources humaines.</li><li>Vous serez à l’issue de cet entretien informé(e) par l’employeur des suites données à votre candidature.</li></ul>"

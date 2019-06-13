@@ -2,31 +2,46 @@
 .card
   .card-body
     .d-flex.flex-column.flex-md-row.align-items-start.align-items-md-center
-      %ul.nav.nav-tabs.mr-auto{role: :tablist}
-        %li.nav-item.mr-3
-          - klasses = %i(nav-link text-uppercase my-0)
-          - klasses << :active unless @archived_page
-          - url = [:admin, :job_offers]
-          - url << {q: params[:q]} if params[:q].present?
-          = link_to t('.active', count: @job_offers_active.values.flatten.size), url, class: klasses
-        %li.nav-item.mr-3
-          - klasses = %i(nav-link text-uppercase my-0)
-          - klasses << :active if @archived_page
-          - url = [:archived, :admin, :job_offers]
-          - url << {q: params[:q]} if params[:q].present?
-          = link_to t('.archived', count: @job_offers_archived.values.flatten.size), url, class: klasses
+      .h3.text-primary.mr-auto= t('.job_offers_count', count: @job_offers.count)
       - if can? :create, JobOffer
-        = link_to [:new, :admin, :job_offer], class: 'btn btn-primary btn-raised mb-0 mt-3 mt-md-0' do
+        = link_to [:new, :admin, :job_offer], class: 'btn btn-primary btn-raised mb-0 mt-3 mt-md-0 ml-auto' do
           = fa_icon 'plus', class: 'mr-1'
           = t('.new_job_offer')
     = render partial: 'search'
+    .d-flex.align-items-end
+      - if params[:q].present?
+        .h5.text-primary.mr-auto= t('.job_offers_filtered', count: @current_job_offers.count)
+      - else
+        .mr-auto
+      - klasses = %w[btn btn-link mb-0]
+      = sort_link(@q, :created_at, {}, {class: klasses}) do
+        Date de création
+        - unless @q.sorts.detect{|x| x.name == 'created_at'}
+          &nbsp;▼
     .row
       .col-12
-        - if @job_offers.any?
-          - @employers.each do |employer|
-            - job_offers = @job_offers[employer.id]
-            - if job_offers.present? && job_offers.any?
-              %h2.h6.text-uppercase.mt-4.mb-2= employer.name
-              = render partial: 'job_offer', collection: job_offers, as: :job_offer
+        - if @current_job_offers.any?
+          .card.bg-transparent
+            .card-body
+              .row
+                .col-12.job-offer-title
+                  Métier
+                .col-12.job-offer-bop
+                  / BOP
+                .col-12.job-offer-employer-name
+                  Employeur
+                .col-12.job-offer-localization
+                  Secteur
+                .col-12.job-offer-contract-type
+                  Type
+                .col-12.job-offer-contract-duration
+                  Durée
+                .col-12.job-offer-job-applications-number
+                  Candidats
+                .col-12.job-offer-job-applications-most-advanced-state
+                  Étape
+          = render partial: 'job_offer', collection: @current_job_offers
+          .mt-5
+            = will_paginate @current_job_offers, params: { controller: 'job_offers', action: controller.action_name }
         - else
           %em Aucun résultat

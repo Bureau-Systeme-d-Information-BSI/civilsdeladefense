@@ -1,18 +1,23 @@
 # frozen_string_literal: true
 
 class Admin::JobOffersController < Admin::BaseController
-  before_action :set_job_offers, only: %i[index]
+  before_action :set_job_offers, only: %i[index archived]
 
   include JobOfferStateActions
 
   # GET /admin/job_offers
   # GET /admin/job_offers.json
   def index
-    @archived_page = request.path =~ /archived/
-    @job_offers = @archived_page ? @job_offers_archived : @job_offers_active
+    @job_offers = action_name == 'index' ? @job_offers_active : @job_offers_archived
+    @q = @job_offers.ransack(params[:q])
+    @current_job_offers = @q.result
+    @current_job_offers = @current_job_offers.search_full_text(params[:s]) if params[:s].present?
+    @current_job_offers = @current_job_offers.page(params[:page]).per_page(20)
 
-    render layout: 'admin/simple'
+    render action: :index, layout: 'admin/job_offers'
   end
+
+  alias archived index
 
   # GET /admin/job_offers/1
   # GET /admin/job_offers/1.json
@@ -93,14 +98,8 @@ class Admin::JobOffersController < Admin::BaseController
 
   def set_job_offers
     @employers = Employer.all
-    @job_offers_active = job_offers_by_state('active')
-    @job_offers_archived = job_offers_by_state('archived')
-  end
-
-  def job_offers_by_state(state)
-    relation = @job_offers.send("admin_index_#{state}")
-    relation = relation.search_full_text(params[:q]) if params[:q].present?
-    relation.to_a.group_by(&:employer_id)
+    @job_offers_active = @job_offers.admin_index_active
+    @job_offers_archived = @job_offers.admin_index_archived
   end
 
   # Use callbacks to share common setup or constraints between actions.

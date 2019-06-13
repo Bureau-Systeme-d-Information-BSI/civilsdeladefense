@@ -4,45 +4,29 @@
   - notifications_count = job_offer.notifications_count
   - if notifications_count > 0
     .notification= notifications_count
-  .card-body
+  = link_to [:admin, job_offer], class: 'card-body' do
     .row
-      .col-12.col-md-8
-        - most_advanced_state = job_offer.most_advanced_job_applications_state
-        .card-title.font-weight-bold.d-flex.align-items-center.mb-0
-          = link_to [:admin, job_offer], class: 'text-truncate' do
-            = job_offer.title
-          %span.font-weight-normal.text-nowrap.ml-1
-            = precede ' - ' do
-              = job_offer.identifier
-          - unless (controller.action_name == 'index' && job_offer.state == 'published')
-            - klass = badge_class(job_offer.state.to_sym)
-            %small.badge.text-white.text-uppercase.text-nowrap.ml-2{class: klass}
-              = job_offer.aasm.human_state
-        - klass = badge_class(most_advanced_state.to_sym)
-        %small.badge.text-white.text-uppercase.text-nowrap.my-2{class: klass}
-          = JobApplication.human_attribute_name("state/#{most_advanced_state}")
-        .d-flex
-          .font-weight-bold.mr-3
-            = [job_offer.contract_type.name, job_offer.duration_contract].join(' ')
-          .font-weight-bold= job_offer.location
-      .col-12.col-md-4
-        .row
-          .col-6
-            .d-flex.flex-column.justify-content-center.align-items-center.text-center.mt-2
-              - count = job_offer.job_applications.where(state: :initial).count
-              - klasses = %w(badge-counter mb-1)
-              - klasses += count == 0 ? %w(text-dark-gray) : %w(bg-purple text-white)
-              = link_to count, [:admin, job_offer], class: klasses
-              %span= t('.job_applications_to_be_treated_count')
-          .col-6.border-left
-            .d-flex.flex-column.justify-content-center.align-items-center.text-center.mt-2
-              - count = job_offer.job_applications_count
-              = link_to count, [:admin, job_offer], class: %w(badge-counter text-dark-gray mb-1)
-              %span= t('.job_applications_count', count: count)
+      .col-12.job-offer-title
+        = job_offer.title
+      .col-12.job-offer-bop
+        / SSA
+      .col-12.job-offer-employer-name
+        = job_offer.employer.name
+      .col-12.job-offer-localization
+        %span{title: job_offer.location}= job_offer.location.split(',').first
+      .col-12.job-offer-contract-type
+        = job_offer.contract_type.name
+      .col-12.job-offer-contract-duration
+        = job_offer.duration_contract
+      .col-12.job-offer-job-applications-number
+        = job_offer.job_applications_count
+      .col-12.job-offer-job-applications-most-advanced-state
+        - title = JobApplication.human_attribute_name("state/#{job_offer.most_advanced_job_applications_state}")
+        %span{title: title}= job_offer.most_advanced_job_applications_state_as_number
   .card-footer.d-flex.flex-column.flex-md-row
     .mr-auto= t('.published_date', time_ago_in_words: time_ago_in_words(job_offer.created_at))
     %ul.list-inline.mb-0.actions.mt-2.mt-md-0
-      %li.list-inline-item
+      %li.list-inline-item.d-none
         = link_to '#' do
           = fa_icon 'star'
           = t('.follow')

@@ -9,6 +9,13 @@ export default function formAutoSubmit() {
       })
     })
 
+    var checkboxElements = formElement.querySelectorAll('input[type=checkbox]')
+    ;[].forEach.call(checkboxElements, function(checkboxElement) {
+      checkboxElement.addEventListener('change', function(e) {
+        Rails.fire(formElement, 'submit')
+      })
+    })
+
     var textElements = formElement.querySelectorAll('input[type=text]')
     ;[].forEach.call(textElements, function(inputElement) {
       inputElement.addEventListener('blur', function(e) {

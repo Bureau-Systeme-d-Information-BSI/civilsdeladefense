@@ -1,9 +1,18 @@
 .row.mt-4.mb-3
   .col-12
-    = form_tag request.original_url, method: :get do
+    = search_form_for [:admin, @q], class: 'auto-submit' do |f|
       .form-group.input-group.input-search
         .input-group-prepend
-          %span.input-group-text.bg-white.py-4
+          %span.input-group-text.bg-white
             = fa_icon('magnify')
-        = text_field_tag :q, params[:q]
+        = text_field_tag :s, params[:s]
+      .row.mt-5
+        .col-12.col-sm-3
+          = render partial: 'filter_state'
+        .col-12.col-sm-3
+          = render partial: 'filter_employer'
+        .col-12.col-sm-3
+          = render partial: 'filter_contract_type'
+        .col-12.col-sm-3
+          = render partial: 'filter_most_advanced_job_applications_state'
       = submit_tag 'Rechercher', name: nil, class: 'd-none'

@@ -14,6 +14,7 @@ class Ability
     when 'employer'
       can :create, JobOffer
       can :manage, JobOffer, job_offer_actors: { administrator_id: administrator.id }
+      can :manage, JobOffer, owner_id: administrator.id
       can :manage, JobApplication, employer_job_application_query(administrator)
       can :manage, JobApplicationFile
       can :manage, Message

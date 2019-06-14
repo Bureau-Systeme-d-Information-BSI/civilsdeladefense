@@ -7,6 +7,7 @@
   = link_to [:admin, job_offer], class: 'card-body' do
     .row
       .col-12.job-offer-title
+        = job_offer.identifier
         = job_offer.title
       .col-12.job-offer-bop
         / SSA

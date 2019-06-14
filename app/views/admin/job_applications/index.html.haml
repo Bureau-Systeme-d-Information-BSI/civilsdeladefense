@@ -5,8 +5,8 @@
     %li.nav-item
       = link_to t('.my_job_applications'), [:admin, :job_applications], class: 'nav-link'
 .bg-quaternary
-= render partial: "filters"
-= render partial: "list"
+= render partial: 'filters'
+= render partial: 'list'
 .modal.fade#remoteContentModal{tabindex: -1, role: :dialog, aria: {labelledby: :remoteContentModal, hidden: true}}
   .modal-dialog.modal-lg{role: :document}
     .modal-content

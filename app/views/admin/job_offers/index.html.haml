@@ -2,7 +2,7 @@
 .card
   .card-body
     .d-flex.flex-column.flex-md-row.align-items-start.align-items-md-center
-      .h3.text-primary.mr-auto= t('.job_offers_count', count: @job_offers.count)
+      .h3.text-primary.mr-auto= t(".job_offers_count_#{controller.action_name}", count: @job_offers.count)
       - if can? :create, JobOffer
         = link_to [:new, :admin, :job_offer], class: 'btn btn-primary btn-raised mb-0 mt-3 mt-md-0 ml-auto' do
           = fa_icon 'plus', class: 'mr-1'

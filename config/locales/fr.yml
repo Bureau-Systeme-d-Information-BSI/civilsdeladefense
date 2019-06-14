@@ -254,8 +254,6 @@ fr:
       uncheck:
         success: "Fichier invalidé !"
     job_offers:
-      archived:
-        job_offers_count: "%{count} offres archivées"
       administrator:
         new_record: "Cliquer sur \"Enregistrer\" pour inviter"
         waiting: "En attente de confirmation"
@@ -263,9 +261,8 @@ fr:
       index:
         title: "Offres du Ministère des Armées"
         new_job_offer: "Ajouter une offre"
-        active: "Offres en cours (%{count})"
-        archived: "Offres archivées (%{count})"
-        job_offers_count: "%{count} offres actives"
+        job_offers_count_index: "%{count} offres actives"
+        job_offers_count_archived: "%{count} offres archivées"
         job_offers_filtered: "%{count} résultats de recherche"
       new:
         title: "Rédaction d'une nouvelle offre"

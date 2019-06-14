@@ -200,6 +200,43 @@ a.badge:not(.badge-danger) {
   color: inherit;
 }
 
+a {
+  &.card-body {
+    &:hover, &:visited {
+      text-decoration: none;
+      outline: 0;
+    }
+  }
+}
+
+.dropdown {
+  &.dropdown-checks {
+    .form-control {
+      &.dropdown-toggle {
+        &::after {
+          margin-left: auto;
+        }
+      }
+    }
+    .dropdown-menu {
+      max-height: 200px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      padding: 1rem;
+      margin-top: 0;
+      width: 100%;
+      left: 0 !important;
+      ul {
+        list-style: none;
+        padding-left: 0;
+        ul {
+          padding-left: 20px;
+        }
+      }
+    }
+  }
+}
+
 .estimate_monthly_salary_net_reference, .estimate_annual_salary_gross_reference {
   @extend .font-italic;
 }
@@ -237,4 +274,73 @@ a.badge:not(.badge-danger) {
   input[type="file"] {
     display: none;
   }
+}
+
+.card {
+  &.bg-transparent {
+    box-shadow: none;
+    .card-body {
+      padding-bottom: 0;
+    }
+  }
+}
+
+.job-offer-title, .job-offer-bop, .job-offer-employer-name, .job-offer-localization, .job-offer-contract-type, .job-offer-contract-duration, .job-offer-job-applications-number, .job-offer-job-applications-most-advanced-state {
+  @extend .text-truncate, .font-weight-bold, .text-primary;
+}
+.job-offer {
+  .job-offer-title, .job-offer-bop, .job-offer-employer-name, .job-offer-localization, .job-offer-contract-type, .job-offer-contract-duration, .job-offer-job-applications-number, .job-offer-job-applications-most-advanced-state {
+    @extend .text-dark;
+  }
+}
+.job-offer-title {
+  padding-right: 5px;
+}
+.job-offer-job-applications-most-advanced-state {
+  padding-left: 5px;
+}
+.job-offer-employer-name, .job-offer-bop, .job-offer-localization, .job-offer-contract-type, .job-offer-contract-duration, .job-offer-job-applications-number {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.job-offer-title {
+  @extend .col-md-5;
+  flex: 0 0 39%;
+  max-width: 39%;
+}
+.job-offer-bop {
+  @extend .col-md-1;
+  flex: 0 0 5%;
+  max-width: 5%;
+}
+.job-offer-employer-name {
+  @extend .col-md-1;
+  flex: 0 0 11%;
+  max-width: 11%;
+}
+.job-offer-localization {
+  @extend .col-md-2;
+  flex: 0 0 11%;
+  max-width: 11%;
+
+}
+.job-offer-contract-type {
+  @extend .col-md-1;
+  flex: 0 0 8%;
+  max-width: 8%;
+}
+.job-offer-contract-duration {
+  @extend .col-md-1;
+  flex: 0 0 8%;
+  max-width: 8%;
+}
+.job-offer-job-applications-number {
+  @extend .col-md-1, .text-center;
+  flex: 0 0 10%;
+  max-width: 10%;
+}
+.job-offer-job-applications-most-advanced-state {
+  @extend .col-md-1, .text-center;
+  flex: 0 0 8%;
+  max-width: 8%;
 }

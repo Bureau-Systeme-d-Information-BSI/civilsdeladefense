@@ -175,4 +175,9 @@ class JobOffer < ApplicationRecord
     ary = job_applications.select(:state, :created_at).group(:state, :created_at)
     ary.map(&:state_before_type_cast).max
   end
+
+  def most_advanced_job_applications_state_as_number
+    state = most_advanced_job_applications_state.to_sym
+    JobApplication.aasm.states.index { |x| x.name == state }
+  end
 end

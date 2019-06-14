@@ -18,7 +18,14 @@ RSpec.describe 'admin/job_applications/index', type: :view do
 
     assign(:employers, employers)
     assign(:contract_types, contract_types)
-    assign(:job_applications, job_applications.paginate)
+    job_applications_ary = assign(:job_applications, job_applications)
+
+    assign(:q, JobApplication.ransack)
+    collection = WillPaginate::Collection.new(4, 10, 0)
+    job_applications_ary.each do |elt|
+      collection << elt
+    end
+    assign(:results, collection)
   end
 
   it 'renders a list of admin/job_applications' do

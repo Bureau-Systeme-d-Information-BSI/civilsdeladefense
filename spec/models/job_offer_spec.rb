@@ -59,4 +59,30 @@ RSpec.describe JobOffer do
     job_applications.last.send("#{last_state_name}!")
     expect(job_offer.current_most_advanced_job_applications_state).to eq(last_state_enum)
   end
+
+  it 'should be visible by owner' do
+    employer = create(:employer)
+    owner = create(:administrator, role: 'employer', employer: employer)
+    job_offer = create(:job_offer, owner: owner)
+    ability = Ability.new(owner)
+    expect(ability.can?(:manage, job_offer)).to be true
+  end
+
+  it 'should be visible by actors' do
+    employer = create(:employer)
+    brh = create(:administrator, role: nil, employer: employer)
+    other_admin = create(:administrator, role: nil, employer: employer)
+
+    job_offer = create(:job_offer) do |obj|
+      actor_attrs = attributes_for(:job_offer_actor, role: 'brh', administrator: brh)
+      obj.job_offer_actors.create(actor_attrs)
+    end
+
+    ability = Ability.new(brh)
+    expect(ability.can?(:read, job_offer)).to be true
+
+    ability = Ability.new(other_admin)
+    expect(ability.can?(:manage, job_offer)).to be false
+    expect(ability.can?(:read, job_offer)).to be false
+  end
 end

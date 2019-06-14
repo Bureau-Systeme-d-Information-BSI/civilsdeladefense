@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe 'admin/job_offers/index', type: :view do
+  login_admin
+
   before(:each) do
     employers = create_list(:employer, 5)
 
@@ -25,7 +27,7 @@ RSpec.describe 'admin/job_offers/index', type: :view do
                                                   contract_type: contract_type,
                                                   study_level: study_level,
                                                   experience_level: experience_level,
-                                                  sector: sector).group_by(&:employer_id))
+                                                  sector: sector))
     assign(:job_offers_archived, create_list(:job_offer,
                                              3,
                                              state: :archived,
@@ -36,8 +38,14 @@ RSpec.describe 'admin/job_offers/index', type: :view do
                                              contract_type: contract_type,
                                              study_level: study_level,
                                              experience_level: experience_level,
-                                             sector: sector).group_by(&:employer_id))
+                                             sector: sector))
     assign(:job_offers, ary1)
+    assign(:q, JobOffer.ransack)
+    collection = WillPaginate::Collection.new(4, 10, 0)
+    ary1.each do |elt|
+      collection << elt
+    end
+    assign(:current_job_offers, collection)
     assign(:employers, employers)
   end
 

@@ -8,9 +8,10 @@ class Admin::JobApplicationsController < Admin::BaseController
     @employers = Employer.all
 
     @job_applications = @job_applications.includes(:job_offer, :user)
-    apply_filters
-    @job_applications = @job_applications.search_full_text(params[:q]) if params[:q].present?
-    @job_applications = @job_applications.paginate(page: params[:page], per_page: 25)
+    @q = @job_applications.ransack(params[:q])
+    @results = @q.result
+    @results = @results.search_full_text(params[:s]) if params[:s].present?
+    @results = @results.paginate(page: params[:page], per_page: 25)
   end
 
   # GET /admin/job_applications/1
@@ -60,52 +61,6 @@ class Admin::JobApplicationsController < Admin::BaseController
       end
       format.json { render :show, status: :ok, location: @job_application }
     end
-  end
-
-  protected
-
-  def apply_filters
-    apply_filter_style_1('category')
-    apply_filter_style_1('contract_type')
-    apply_filter_style_2('employer')
-    apply_filter_style_3('state')
-  end
-
-  def apply_filter_style_1(filter)
-    foreign_key = filter.foreign_key
-
-    return if params[foreign_key].blank?
-
-    klass = filter.classify.constantize
-    obj = klass.find(params[foreign_key])
-
-    return if obj.blank?
-
-    @job_applications = @job_applications.where(job_offers: { foreign_key => obj.id })
-    instance_variable_set("@#{filter}", obj)
-  end
-
-  def apply_filter_style_2(filter)
-    foreign_key = filter.foreign_key
-
-    return if params[foreign_key].blank?
-
-    klass = filter.classify.constantize
-    obj = klass.find(params[foreign_key])
-
-    return if obj.blank?
-
-    @job_applications = @job_applications.where(foreign_key => obj.id)
-    instance_variable_set("@#{filter}", obj)
-  end
-
-  def apply_filter_style_3(filter)
-    foreign_key = filter.foreign_key
-
-    return if params[foreign_key].blank?
-
-    @job_applications = @job_applications.where(foreign_key => params[filter])
-    instance_variable_set("@#{filter}", params[filter])
   end
 
   private

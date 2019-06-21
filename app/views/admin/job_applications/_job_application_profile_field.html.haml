@@ -1,0 +1,12 @@
+= simple_form_for [:admin, @job_application], wrapper: :horizontal_form, remote: true, html: {class: 'form-horizontal auto-submit'} do |f|
+  - locals = {}
+  - locals[:field] = field if local_variables.include?(:field)
+  - locals[:association] = association if local_variables.include?(:association)
+  - locals[:choices] = choices if local_variables.include?(:choices)
+  - if obj.is_a?(JobApplication)
+    - locals[:f] = f
+    = render partial: 'job_application_profile_field_input', locals: locals
+  - else
+    = f.simple_fields_for obj.class.to_s.downcase.to_sym, obj do |g|
+      - locals[:f] = g
+      = render partial: 'job_application_profile_field_input', locals: locals

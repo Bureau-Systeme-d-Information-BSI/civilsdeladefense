@@ -1,6 +1,6 @@
 - website_url = job_application.website_url
 - job_offer = job_application.job_offer
-- tab_active ||= :overview
+- tab_active ||= :profile
 .row.bg-white.border-bottom.head
   .col-12.col-md-8.border-right{class: job_application_modal_section_classes('pb-0')}
     .d-flex.justify-content-start.head
@@ -27,6 +27,9 @@
             - else
               = link_to fa_icon('web', class: 'fa-w-20'), website_url, target: :_blank, class: 'mt-1 text-body-color'
     %ul.nav.nav-tabs.mt-3{role: :tablist}
+      %li.nav-item.mr-3
+        - klasses = tab_active == :profile ? %w(nav-link active) : %w(nav-link)
+        = link_to t('.nav_profile'), "#profile", class: klasses, data: {toggle: :tab}, role: :tab, aria: {controls: :profile, selected: true}
       %li.nav-item.mr-3
         - klasses = tab_active == :overview ? %w(nav-link active) : %w(nav-link)
         = link_to t('.nav_overview'), "#overview", class: klasses, data: {toggle: :tab}, role: :tab, aria: {controls: :overview, selected: true}

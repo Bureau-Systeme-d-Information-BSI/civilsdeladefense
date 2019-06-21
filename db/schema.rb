@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_25_092710) do
+ActiveRecord::Schema.define(version: 2019_06_17_073135) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -245,6 +245,8 @@ ActiveRecord::Schema.define(version: 2019_04_25_092710) do
     t.integer "emails_administrator_unread_count", default: 0
     t.integer "emails_user_unread_count", default: 0
     t.integer "administrator_notifications_count", default: 0
+    t.boolean "skills_fit_job_offer"
+    t.boolean "experiences_fit_job_offer"
     t.index ["employer_id"], name: "index_job_applications_on_employer_id"
     t.index ["job_offer_id"], name: "index_job_applications_on_job_offer_id"
     t.index ["state"], name: "index_job_applications_on_state"
@@ -485,9 +487,22 @@ ActiveRecord::Schema.define(version: 2019_04_25_092710) do
     t.bigint "old_transport_ticket_file_size"
     t.datetime "old_transport_ticket_updated_at"
     t.integer "transport_ticket_is_validated", limit: 2, default: 0
+    t.integer "gender", limit: 2
+    t.date "birth_date"
+    t.string "nationality", limit: 2
+    t.boolean "has_residence_permit"
+    t.boolean "is_currently_employed"
+    t.integer "availability_date_in_month"
+    t.uuid "study_level_id"
+    t.string "study_type"
+    t.string "specialization"
+    t.uuid "experience_level_id"
+    t.boolean "corporate_experience"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["experience_level_id"], name: "index_users_on_experience_level_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["study_level_id"], name: "index_users_on_study_level_id"
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
@@ -516,4 +531,6 @@ ActiveRecord::Schema.define(version: 2019_04_25_092710) do
   add_foreign_key "salary_ranges", "experience_levels"
   add_foreign_key "salary_ranges", "professional_categories"
   add_foreign_key "salary_ranges", "sectors"
+  add_foreign_key "users", "experience_levels"
+  add_foreign_key "users", "study_levels"
 end

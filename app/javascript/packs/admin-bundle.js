@@ -42,11 +42,12 @@ importAll(require.context('icons/', true, /\.svg$/))
 
 require('js/offcanvas.js')
 require('js/dependent-fields.js')
-require('js/in-place-edit.js')
 require('js/board.js')
 require('js/city-autocomplete.js')
 
 import salaryRangeInputsHandling from 'js/salary-range-inputs-handling'
+import inPlaceEdit from 'js/in-place-edit'
+window.inPlaceEdit = inPlaceEdit
 import formAutoSubmit from 'js/form-auto-submit'
 window.formAutoSubmit = formAutoSubmit
 
@@ -159,6 +160,7 @@ document.addEventListener("DOMContentLoaded", function() {
     })
   })
   formAutoSubmit()
+  inPlaceEdit()
   salaryRangeInputsHandling()
 })
 

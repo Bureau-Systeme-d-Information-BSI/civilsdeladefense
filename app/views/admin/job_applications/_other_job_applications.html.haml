@@ -6,13 +6,13 @@
     %table.table.table-hover.mb-0.mt-0.small
       %thead
         %tr
-          %th.border-0.text-center{ :style => "width: 23px;" }
+          %th.border-0.text-center{style: 'width: 23px;'}
             = t('.image')
-          %th.border-0{ :style => "width: 140px;" }
+          %th.border-0{style: 'width: 140px;'}
             = t('.offer')
           %th.border-0
             = t('.statut')
-          %th.border-0.text-right{ :style => "width: 110px;" }
+          %th.border-0.text-right{style: 'width: 110px;'}
             = t('.date')
       %tbody
         - for other_job_application in @other_job_applications
@@ -20,7 +20,7 @@
             %td.border-0.text-center
               = link_to other_job_application.job_offer.identifier, [:admin, other_job_application.job_offer]
             %td.border-0
-              .text-truncate{ :style => "width: 140px;" }
+              .text-truncate{style: 'width: 140px;'}
                 = other_job_application.job_offer.title
             %td.border-0
               = JobApplication.human_attribute_name("state/#{other_job_application.state}")

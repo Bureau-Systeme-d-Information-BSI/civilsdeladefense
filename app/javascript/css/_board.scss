@@ -14,10 +14,11 @@ $appbar-bg-color: #0067a3;
 $list-bg-color: #e2e4e6;
 
 .board {
-  height: calc(100vh - 100px);
+  height: calc(100vh - 286px);
   padding-top: $gap;
   padding-bottom: $gap;
   overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .lists {
@@ -27,6 +28,9 @@ $list-bg-color: #e2e4e6;
   > * {
     flex: 0 0 auto; // 'rigid' lists
     margin-left: $gap;
+    &:first-child {
+      margin-left: 0;
+    }
   }
   &::after {
     content: '';

@@ -5,10 +5,15 @@
         .sidebar-sticky
           = render '/admin/job_offers/navbar'
       %main.col-md-9.ml-sm-auto.col-lg-10{role: 'main'}
-        %nav.navbar.navbar-dark.bg-secondary.mb-5
+        %nav.navbar.navbar-dark.bg-secondary.mb-3
           %span.navbar-text#step_1= @page_title
-        .container
-          .row
-            .col-12.mx-md-auto
-              = yield
+        - if @layout_full_width
+          .col-12
+            = yield
+        - else
+          .container
+            .row
+              .col-12.mx-md-auto
+                = yield
+        = yield :sub_content
 = render template: 'layouts/admin'

@@ -619,6 +619,7 @@ fr:
       employer:
         code: "Libellé"
       job_offer:
+        job_applications_count: "Nombre de candidatures: %{count}"
         state: "État"
         state/draft: "Brouillon"
         state/published: "Publiée"

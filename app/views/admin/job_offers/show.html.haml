@@ -1,25 +1,12 @@
-- @page_title = @job_offer.title
-%nav.navbar.navbar-dark.bg-secondary.justify-content-start
-  %span.navbar-text.text-truncate= @page_title
-  - if can? :edit, @job_offer
-    = link_to [:edit, :admin, @job_offer], class: 'small ml-3 text-nowrap' do
-      = fa_icon('pencil')
-      = t('buttons.edit')
-- draggable = can? :manage, @job_applications.values.flatten.first
-.board#board{data: {draggable: draggable}}
-  .lists
-    - JobApplication.aasm.states.each do |state|
-      - state_name = state.name.to_s
-      - concerned_job_applications = @job_applications[state_name] || []
-      .list{id: "job-application--state-#{state_name}", data: {state: state_name}}
-        %header
-          = JobApplication.human_attribute_name("state/#{state_name}")
-          = surround '(', ')' do
-            %span.total= concerned_job_applications.size
-        .d-flex.flex-column.cards{data: {state: state_name}}
-          = render partial: '/admin/job_applications/job_application', collection: concerned_job_applications, locals: {with_header: false}
+- content_for :card_inner do
+  .card.mt-3
+    .card-body
+      = render partial: '/job_offers/job_offer_head', locals: {job_offer: @job_offer, inside_card: true, title_uncentered: true}
+      - fields = %i(description required_profile recruitment_process)
+      - fields.each_with_index do |field, index|
+        - klasses = index == 0 ? %w() : %w(mt-4)
+        %div{class: klasses}
+          %h2.h5.mt-2.mb-3.text-quinary= t('.'+field.to_s)
+          = sanitize(@job_offer.send(field))
+= render partial: '/admin/job_offers/navbar_job_offer'
 
-.modal.fade#remoteContentModal{tabindex: -1, role: :dialog, aria: {labelledby: :remoteContentModal, hidden: true}}
-  .modal-dialog.modal-lg{role: :document}
-    .modal-content
-      .modal-body.p-0

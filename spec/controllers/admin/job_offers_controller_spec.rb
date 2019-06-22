@@ -32,45 +32,56 @@ RSpec.describe Admin::JobOffersController, type: :controller do
   # JobOffer. As you add validations to JobOffer, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) do
-    skip('Add a hash of attributes valid for your model')
+    build(:job_offer).attributes
   end
 
   let(:invalid_attributes) do
-    skip('Add a hash of attributes invalid for your model')
+    { title: '' }
   end
-
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # JobOffersController. Be sure to keep this updated too.
-  let(:valid_session) { {} }
 
   describe 'GET #index' do
     it 'returns a success response' do
-      JobOffer.create! valid_attributes
-      get :index, params: {}, session: valid_session
+      create_list :job_offer, 5
+      get :index, params: {}
+      expect(response).to be_successful
+    end
+  end
+
+  describe 'GET #archived' do
+    it 'returns a success response' do
+      create_list :job_offer, 5
+      get :archived, params: {}
       expect(response).to be_successful
     end
   end
 
   describe 'GET #show' do
     it 'returns a success response' do
-      job_offer = JobOffer.create! valid_attributes
-      get :show, params: { id: job_offer.to_param }, session: valid_session
+      job_offer = create :job_offer
+      get :show, params: { id: job_offer.to_param }
+      expect(response).to be_successful
+    end
+  end
+
+  describe 'GET #board' do
+    it 'returns a success response' do
+      job_offer = create :job_offer
+      get :board, params: { id: job_offer.to_param }
       expect(response).to be_successful
     end
   end
 
   describe 'GET #new' do
     it 'returns a success response' do
-      get :new, params: {}, session: valid_session
+      get :new, params: {}
       expect(response).to be_successful
     end
   end
 
   describe 'GET #edit' do
     it 'returns a success response' do
-      job_offer = JobOffer.create! valid_attributes
-      get :edit, params: { id: job_offer.to_param }, session: valid_session
+      job_offer = create :job_offer
+      get :edit, params: { id: job_offer.to_param }
       expect(response).to be_successful
     end
   end
@@ -79,19 +90,19 @@ RSpec.describe Admin::JobOffersController, type: :controller do
     context 'with valid params' do
       it 'creates a new JobOffer' do
         expect do
-          post :create, params: { job_offer: valid_attributes }, session: valid_session
+          post :create, params: { job_offer: valid_attributes }
         end.to change(JobOffer, :count).by(1)
       end
 
       it 'redirects to the created job_offer' do
-        post :create, params: { job_offer: valid_attributes }, session: valid_session
-        expect(response).to redirect_to(JobOffer.last)
+        post :create, params: { job_offer: valid_attributes }
+        expect(response).to redirect_to(%i[admin job_offers])
       end
     end
 
     context 'with invalid params' do
       it "returns a success response (i.e. to display the 'new' template)" do
-        post :create, params: { job_offer: invalid_attributes }, session: valid_session
+        post :create, params: { job_offer: invalid_attributes }
         expect(response).to be_successful
       end
     end
@@ -100,30 +111,27 @@ RSpec.describe Admin::JobOffersController, type: :controller do
   describe 'PUT #update' do
     context 'with valid params' do
       let(:new_attributes) do
-        skip('Add a hash of attributes valid for your model')
+        { title: 'PIPO' }
       end
 
       it 'updates the requested job_offer' do
-        job_offer = JobOffer.create! valid_attributes
-        put :update, params: { id: job_offer.to_param, job_offer: new_attributes },
-                     session: valid_session
+        job_offer = create :job_offer
+        put :update, params: { id: job_offer.to_param, job_offer: new_attributes }
         job_offer.reload
-        skip('Add assertions for updated state')
+        expect(job_offer.title).to eq('PIPO')
       end
 
-      it 'redirects to the job_offer' do
-        job_offer = JobOffer.create! valid_attributes
-        put :update, params: { id: job_offer.to_param, job_offer: valid_attributes },
-                     session: valid_session
-        expect(response).to redirect_to(job_offer)
+      it 'redirects to job offers listing' do
+        job_offer = create :job_offer
+        put :update, params: { id: job_offer.to_param, job_offer: valid_attributes }
+        expect(response).to redirect_to(%i[admin job_offers])
       end
     end
 
     context 'with invalid params' do
       it "returns a success response (i.e. to display the 'edit' template)" do
-        job_offer = JobOffer.create! valid_attributes
-        put :update, params: { id: job_offer.to_param, job_offer: invalid_attributes },
-                     session: valid_session
+        job_offer = create :job_offer
+        put :update, params: { id: job_offer.to_param, job_offer: invalid_attributes }
         expect(response).to be_successful
       end
     end
@@ -131,15 +139,15 @@ RSpec.describe Admin::JobOffersController, type: :controller do
 
   describe 'DELETE #destroy' do
     it 'destroys the requested job_offer' do
-      job_offer = JobOffer.create! valid_attributes
+      job_offer = create :job_offer
       expect do
-        delete :destroy, params: { id: job_offer.to_param }, session: valid_session
+        delete :destroy, params: { id: job_offer.to_param }
       end.to change(JobOffer, :count).by(-1)
     end
 
     it 'redirects to the job_offers list' do
-      job_offer = JobOffer.create! valid_attributes
-      delete :destroy, params: { id: job_offer.to_param }, session: valid_session
+      job_offer = create :job_offer
+      delete :destroy, params: { id: job_offer.to_param }
       expect(response).to redirect_to(job_offers_url)
     end
   end

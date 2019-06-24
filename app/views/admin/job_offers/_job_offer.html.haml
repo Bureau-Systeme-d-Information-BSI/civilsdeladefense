@@ -20,7 +20,10 @@
       .col-12.job-offer-contract-duration
         = job_offer.duration_contract
       .col-12.job-offer-job-applications-number
-        = job_offer.job_applications_count
+        - count = job_offer.job_applications_count
+        - title = JobOffer.human_attribute_name('job_applications_count', count: count)
+        %span{title: title}
+          = count
       .col-12.job-offer-job-applications-most-advanced-state
         - title = JobApplication.human_attribute_name("state/#{job_offer.most_advanced_job_applications_state}")
         %span{title: title}= job_offer.most_advanced_job_applications_state_as_number

@@ -7,6 +7,8 @@ class User < ApplicationRecord
          :confirmable, :lockable
 
   has_many :job_applications, dependent: :destroy
+  belongs_to :study_level, optional: true
+  belongs_to :experience_level, optional: true
 
   mount_uploader :photo, PhotoUploader, mount_on: :photo_file_name
   validates :photo,
@@ -15,6 +17,14 @@ class User < ApplicationRecord
   validate :password_complexity
 
   after_save :compute_job_applications_notifications_counter
+
+  #####################################
+  # Enums
+  enum gender: {
+    female: 1,
+    male: 2,
+    other: 3
+  }
 
   def compute_job_applications_notifications_counter
     job_applications.each(&:compute_notifications_counter!)

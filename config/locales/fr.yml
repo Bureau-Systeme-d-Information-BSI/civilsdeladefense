@@ -1,4 +1,6 @@
 fr:
+  "yes": "Oui"
+  "no": "Non"
   time:
     formats:
       default: "%-d %b %Y %H:%M"
@@ -53,6 +55,7 @@ fr:
     choose_file: "Choisir un fichier"
     choose_file_drop_zone_html: "<u>Choisissez un fichier</u> ou transférez le par glisser/déposer."
     choose_file_validated_html: "Ce fichier a été validé !"
+    click_to_edit: "Cliquer pour éditer"
     close: "Fermer"
     confirm: "Êtes-vous sûr ?"
     copy: "Dupliquer"
@@ -203,9 +206,10 @@ fr:
       job_application:
         published_date: "Candidaté il y a %{time_ago_in_words}"
       job_application_head:
-        nav_overview: "Candidature"
         nav_emails: "Courriels"
         nav_files: "Documents"
+        nav_overview: "Candidature"
+        nav_profile: "Profil"
       job_application_files:
         title: "Documents du candidat"
         subtitle_1: "Documents à fournir par le candidat"
@@ -219,6 +223,9 @@ fr:
         offer: "Offre"
         statut: "Statut"
         date: "Date"
+      update:
+        success: "Profil mis à jour !"
+        failure: "Erreur dans la mise à jour du profil"
       job_application_activity:
         title: "Activité et commentaires"
         activities:
@@ -612,6 +619,7 @@ fr:
       employer:
         code: "Libellé"
       job_offer:
+        job_applications_count: "Nombre de candidatures: %{count}"
         state: "État"
         state/draft: "Brouillon"
         state/published: "Publiée"
@@ -654,6 +662,12 @@ fr:
         sector: "Filière"
         estimate_monthly_salary_net_html: "<div class='d-block'>Estimation mensuel net</div> (fonction publique)"
         estimate_annual_salary_gross_html: "<div class='d-block'>Estimation annuel brut</div> (secteur privé)"
+      user:
+        is_currently_employed/true: "En poste"
+        is_currently_employed/false: "Disponible immédiatement"
+        gender/female: "Femme"
+        gender/male: "Homme"
+        gender/other: "Autre"
   helpers:
     submit:
       job_application:

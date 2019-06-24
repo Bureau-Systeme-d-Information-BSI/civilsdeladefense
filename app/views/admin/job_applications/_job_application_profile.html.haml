@@ -1,0 +1,61 @@
+- user = @job_application.user
+%div{id: dom_id(@job_application, 'profile')}
+  .card
+    .card-header.bg-white.font-weight-bold.text-secondary
+      = fa_icon('file-document', class: 'text-secondary')
+      Données personnelles
+    .card-body.bg-white
+
+      - choices = User.genders.to_a.map{|x| [User.human_attribute_name("gender/#{ x.first }"), x.first]}
+      - hsh = {obj: user, field: :gender, choices: choices}
+      = render partial: 'job_application_profile_field', locals: hsh
+
+      - hsh = {obj: user, field: :birth_date}
+      = render partial: 'job_application_profile_field', locals: hsh
+
+      - hsh = {obj: user, field: :has_residence_permit}
+      = render partial: 'job_application_profile_field', locals: hsh
+
+      - hsh = {obj: user, field: :website_url}
+      = render partial: 'job_application_profile_field', locals: hsh
+
+  .card
+    .card-header.bg-white.font-weight-bold.text-secondary
+      = fa_icon('file-document', class: 'text-secondary')
+      Données professionnelles
+    .card-body.bg-white
+
+      - choices = [[User.human_attribute_name('is_currently_employed/true'), true], [User.human_attribute_name('is_currently_employed/false'), false]]
+      - hsh = {obj: user, field: :is_currently_employed, choices: choices}
+      = render partial: 'job_application_profile_field', locals: hsh
+
+      - choices = 1.upto(12).to_a
+      - hsh = {obj: user, field: :availability_date_in_month, choices: choices}
+      = render partial: 'job_application_profile_field', locals: hsh
+
+      - hsh = {obj: user, association: :study_level}
+      = render partial: 'job_application_profile_field', locals: hsh
+
+      - hsh = {obj: user, field: :study_type}
+      = render partial: 'job_application_profile_field', locals: hsh
+
+      - hsh = {obj: user, field: :specialization}
+      = render partial: 'job_application_profile_field', locals: hsh
+
+      - hsh = {obj: user, association: :experience_level}
+      = render partial: 'job_application_profile_field', locals: hsh
+
+      - hsh = {obj: user, field: :corporate_experience}
+      = render partial: 'job_application_profile_field', locals: hsh
+
+  .card
+    .card-header.bg-white.font-weight-bold.text-secondary
+      = fa_icon('file-document', class: 'text-secondary')
+      Spécificités vis-à-vis de l'offre sélectionnée
+    .card-body.bg-white
+
+      - hsh = {obj: @job_application, field: :skills_fit_job_offer}
+      = render partial: 'job_application_profile_field', locals: hsh
+
+      - hsh = {obj: @job_application, field: :experiences_fit_job_offer}
+      = render partial: 'job_application_profile_field', locals: hsh

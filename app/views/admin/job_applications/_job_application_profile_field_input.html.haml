@@ -1,0 +1,16 @@
+- in_place_icon = fa_icon('pencil', class: 'icon text-primary')
+- in_place_value = in_place_edit_value(f.object, field: field) if local_variables.include?(:field)
+- in_place_value = in_place_edit_value(f.object, association: association) if local_variables.include?(:association)
+- if local_variables.include?(:choices)
+  = f.input field, collection: choices, include_blank: true, wrapper: :horizontal_multi_select, label_html: {class: 'mb-0'}, input_html: {class: 'w-auto d-none'}, in_place_value: in_place_value, in_place_icon: in_place_icon
+- elsif local_variables.include?(:field)
+  - if field == :nationality
+    = f.input field, as: :country, include_blank: true, wrapper: :horizontal_multi_select, label_html: {class: 'mb-0'}, input_html: {class: 'w-auto d-none'}, in_place_value: in_place_value, in_place_icon: in_place_icon
+  - elsif field == :birth_date
+    = f.input field, start_year: 1900, include_blank: true, wrapper: :horizontal_multi_select, label_html: {class: 'mb-0'}, input_html: {class: 'w-auto d-none'}, in_place_value: in_place_value, in_place_icon: in_place_icon
+  - elsif f.object.class.columns.detect{|x| x.name == field.to_s}&.type == :boolean
+    = f.input field, as: :radio_buttons, wrapper: :horizontal_collection_inline, label_html: {class: 'mb-0'}
+  - else
+    = f.input field, label_html: {class: 'mb-0'}, input_html: {class: 'w-auto d-none'}, in_place_value: in_place_value, in_place_icon: in_place_icon
+- elsif local_variables.include?(:association)
+  = f.association association, wrapper: :horizontal_multi_select, label_html: {class: 'mb-0'}, input_html: {class: 'w-auto d-none'}, in_place_value: in_place_value, in_place_icon: in_place_icon

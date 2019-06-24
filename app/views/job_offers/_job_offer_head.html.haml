@@ -1,9 +1,12 @@
 - inside_card ||= false
+- title_uncentered ||= false
 - cache [job_offer, inside_card] do
   .row
     - klasses = inside_card ? %w() : %w(col-md-9 mx-md-auto)
     .col-12{class: klasses}
-      %h1.text-quinary.text-center.mb-0{class: inside_card ? %w(h5) : %w(mt-3 h4)}= job_offer.title
+      - klasses = inside_card ? %w(h5) : %w(mt-3 h4)
+      - klasses << 'text-center' unless title_uncentered
+      %h1.text-quinary.mb-0{class: klasses}= job_offer.title
     - klasses = inside_card ? %w() : %w(col-md-10 mx-md-auto)
     .col-12{class: klasses}
       - klasses = inside_card ? %w(vertical) : %w(horizontal)

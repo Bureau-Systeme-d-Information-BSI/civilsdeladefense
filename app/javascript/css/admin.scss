@@ -241,11 +241,28 @@ a {
   @extend .font-italic;
 }
 
-.in-place-edit {
+.form-horizontal.auto-submit {
+  .form-group {
+    @extend .mb-2;
+  }
+}
+
+.in-place-edit, .in-place-label {
   @extend .form-control;
   background-color: inherit;
   box-shadow: inherit;
   border-color: transparent;
+}
+
+.in-place-edit {
+  .icon {
+    visibility: hidden;
+  }
+  &:hover {
+    .icon {
+      visibility: visible;
+    }
+  }
 }
 
 .opacify {

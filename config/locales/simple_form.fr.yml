@@ -26,15 +26,18 @@ fr:
           <<: *options_defaults
     labels:
       defaults:
+        body: "Corps du courriel"
         email: "Courriel"
-        name: "Nom"
+        estimate_annual_salary_gross: "Estimation annuel brut (fonction publique)"
+        estimate_monthly_salary_net: "Estimation mensuel net (fonction publique)"
+        experience_level: "Expérience"
         first_name: "Prénom"
         last_name: "Nom"
-        title: "Fonction"
+        name: "Nom"
+        study_level: "Niveau d'études"
         subject: "Sujet"
-        body: "Corps du courriel"
-        estimate_monthly_salary_net: "Estimation mensuel net (fonction publique)"
-        estimate_annual_salary_gross: "Estimation annuel brut (fonction publique)"
+        title: "Fonction"
+        website_url: "Site web"
       administrator:
         current_password: 'Mot de passe actuel'
         password: 'Nouveau mot de passe'
@@ -53,21 +56,22 @@ fr:
         code: "Libellé"
         parent_id: "Grand Employeur"
       job_application:
-        first_name: "Prénom"
-        last_name: "Nom"
-        current_position: "Poste actuel"
-        phone: "Téléphone"
         address_1: "Adresse"
         address_2: "Complément d'adresse"
-        postal_code: "Code postal"
+        certify_majority: "Je certifie être majeur(e) et disposer de mes droits civiques"
         city: "Ville"
         country: "Pays"
-        photo: "Photo (facultative)"
         cover_letter: "Lettre de motivation"
+        current_position: "Poste actuel"
+        experiences_fit_job_offer: "Expérience pour l'offre"
+        first_name: "Prénom"
+        last_name: "Nom"
+        phone: "Téléphone"
+        photo: "Photo (facultative)"
+        postal_code: "Code postal"
         resume: "CV"
-        website_url: "Site web"
+        skills_fit_job_offer: "Adéquate pour l'offre"
         terms_of_service: "En soumettant ce formulaire, j'accepte que les informations saisies sur le Site Civils de la Défense soient exploitées pour l'instruction de ma candidature par le ministère des armées. Les informations personnelles portées sur ce formulaire et celles communiquées aux étapes ultérieures du processus de recrutement sont enregistrées dans un fichier informatisé administré par le ministère des armées conformément à la <a href='%{link}' target='_blank'>déclaration de confidentialité</a> du portail Civils de la Défense, dont j'ai pris connaissance"
-        certify_majority: "Je certifie être majeur(e) et disposer de mes droits civiques"
       job_application_file_type:
         kind: "Type"
         content: "Fichier"
@@ -87,8 +91,6 @@ fr:
         contract_start_on: "Début du contrat"
         is_remote_possible: "Télétravail possible ?"
         available_immediately: "Disponible immédiatement ?"
-        study_level: "Niveau d'études"
-        experience_level: "Expérience"
         sector: "Secteur / Filière"
         option_cover_letter: "Lettre de motivation"
         option_resume: "CV"
@@ -96,22 +98,31 @@ fr:
         option_website_url: "Site internet (URL)"
         identifier: "Référence de l'offre"
       user:
-        email: 'Courriel'
-        password: 'Mot de passe'
-        password_confirmation: 'Confirmation du mot de passe'
-        diploma: "Copie des diplômes"
-        identity: "Copie d’une pièce d’identité en cours de validité (carte nationale d’identité ou passeport)"
+        agent_statement: "Déclaration dûment remplie et signée par l’agent"
+        availability_date_in_month: "Disponible sous"
+        birth_date: "Date de naissance"
         carte_vitale_certificate: "Attestation de carte vitale (mentionnant le n° INSEE)"
-        proof_of_address: "Justificatif de domicile (facture EDF, téléphone, etc)"
+        contract: "Le contrat de travail préalablement signé par toutes les parties"
+        corporate_experience: "Expérience MINARM"
+        diploma: "Copie des diplômes"
+        email: 'Courriel'
+        gender: "Genre"
+        has_residence_permit: "Carte de séjour"
+        iban: "RIB original au format BIC/IBAN comportant le logo de la banque au nom du signataire du contrat (les RIB sur compte épargne ne sont pas acceptés)"
+        identity: "Copie d’une pièce d’identité en cours de validité (carte nationale d’identité ou passeport)"
+        is_currently_employed: "Statut actuel"
         medical_certificate: "Certificat médical d’aptitude fourni par le médecin de l’établissement ou
 à défaut par un médecin agréé"
-        contract: "Le contrat de travail préalablement signé par toutes les parties"
-        iban: "RIB original au format BIC/IBAN comportant le logo de la banque au nom du signataire du contrat (les RIB sur compte épargne ne sont pas acceptés)"
-        transport_ticket: "Copie d'un titre de transport (si vous postulez en Île-de-france)"
-        agent_statement: "Déclaration dûment remplie et signée par l’agent"
-        request_transport_costs: "Fiche de demande de prise en charge des frais de transport"
+        nationality: "Nationalité"
+        password: 'Mot de passe'
+        password_confirmation: 'Confirmation du mot de passe'
+        proof_of_address: "Justificatif de domicile (facture EDF, téléphone, etc)"
         request_family_supplement: "Demande d’attribution du supplément familial de traitement"
+        request_transport_costs: "Fiche de demande de prise en charge des frais de transport"
+        specialization: "Spécialisation"
         statement_sft: "Attestation de perception ou non perception du SFT par le conjoint ou l’ex-conjoint"
+        study_type: "Type de formation"
+        transport_ticket: "Copie d'un titre de transport (si vous postulez en Île-de-france)"
     placeholders:
       defaults:
         first_name: "Prénom"

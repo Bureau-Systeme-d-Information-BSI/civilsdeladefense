@@ -2,6 +2,7 @@
 
 class Admin::JobOffersController < Admin::BaseController
   before_action :set_job_offers, only: %i[index archived]
+  layout 'admin/job_offers', only: %i[index archived show board]
 
   include JobOfferStateActions
 
@@ -14,7 +15,7 @@ class Admin::JobOffersController < Admin::BaseController
     @current_job_offers = @current_job_offers.search_full_text(params[:s]) if params[:s].present?
     @current_job_offers = @current_job_offers.page(params[:page]).per_page(20)
 
-    render action: :index, layout: 'admin/job_offers'
+    render action: :index
   end
 
   alias archived index
@@ -22,6 +23,11 @@ class Admin::JobOffersController < Admin::BaseController
   # GET /admin/job_offers/1
   # GET /admin/job_offers/1.json
   def show
+  end
+
+  # GET /admin/job_offers/1/board
+  # GET /admin/job_offers/1/board.json
+  def board
     @job_applications = @job_offer.job_applications.group_by(&:state)
   end
 

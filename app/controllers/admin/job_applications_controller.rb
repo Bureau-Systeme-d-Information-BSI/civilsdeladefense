@@ -28,10 +28,16 @@ class Admin::JobApplicationsController < Admin::BaseController
     respond_to do |format|
       if @job_application.update(job_application_params)
         format.html { redirect_to [:admin, @job_application], notice: t('.success') }
-        format.json { render :show, status: :ok, location: @job_application }
+        format.js do
+          @notification = t('.success')
+          render :update
+        end
       else
         format.html { render :edit }
-        format.json { render json: @job_application.errors, status: :unprocessable_entity }
+        format.js do
+          @notification = t('.failure')
+          render :update, status: :unprocessable_entity
+        end
       end
     end
   end
@@ -73,7 +79,12 @@ class Admin::JobApplicationsController < Admin::BaseController
   # Never trust parameters from the scary internet, only allow the white list through.
   def job_application_params
     fields = %i[first_name last_name current_position phone
-                address_1 address_2 postal_code city country website_url]
+                address_1 address_2 postal_code city country website_url
+                skills_fit_job_offer experiences_fit_job_offer]
+    user_fields = %i[id gender birth_date nationality has_residence_permit is_currently_employed
+                     availability_date_in_month study_level_id study_type specialization
+                     experience_level_id corporate_experience website_url]
+    fields << { user_attributes: user_fields }
     params.require(:job_application).permit(fields)
   end
 end

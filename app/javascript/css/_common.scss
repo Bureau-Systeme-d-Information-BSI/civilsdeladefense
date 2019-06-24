@@ -206,12 +206,16 @@ ul {
 }
 
 .nav.nav-tabs {
-  @extend .justify-content-center;
   .nav-item {
     @extend .mr-0;
     .nav-link {
-      @extend .text-uppercase, .px-3;
+      @extend .text-uppercase, .mr-4;
       line-height: 2.5rem;
+    }
+    &:last-child {
+      .nav-link {
+        @extend .mr-0;
+      }
     }
   }
 }
@@ -360,7 +364,7 @@ b, strong {
   .notification {
     position: absolute;
     top: 3px;
-    right: -5px;
+    right: -19px;
     border: 1px solid #FFF;
     font-size: 9px;
     background: $danger;

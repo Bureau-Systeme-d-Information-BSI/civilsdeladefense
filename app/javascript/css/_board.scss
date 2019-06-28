@@ -14,8 +14,8 @@ $appbar-bg-color: #0067a3;
 $list-bg-color: #e2e4e6;
 
 .board {
-  height: calc(100vh - 286px);
-  padding-top: $gap;
+  @extend .mt-3;
+  height: calc(100vh - 252px);
   padding-bottom: $gap;
   overflow-x: auto;
   overflow-y: hidden;
@@ -24,7 +24,7 @@ $list-bg-color: #e2e4e6;
 .lists {
   display: flex;
   width: 100%; // This is needed for FF < 54
-  height: calc(100vh - 130px);
+  height: calc(100vh - 262px);
   > * {
     flex: 0 0 auto; // 'rigid' lists
     margin-left: $gap;

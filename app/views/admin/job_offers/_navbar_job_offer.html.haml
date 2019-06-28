@@ -1,4 +1,6 @@
-.card
+- klasses = []
+- klasses << 'mt-3' if controller.controller_name == 'job_offers' && %w[show board].include?(controller.action_name)
+.card{class: klasses}
   .card-body.pt-1.pl-3.pr-3.pb-3
     - base_link_klasses = %i[nav-link text-uppercase]
     %ul.nav.nav-tabs.mr-auto{role: :tablist}

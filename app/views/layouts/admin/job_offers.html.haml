@@ -5,8 +5,9 @@
         .sidebar-sticky
           = render '/admin/job_offers/navbar'
       %main.col-md-9.ml-sm-auto.col-lg-10{role: 'main'}
-        %nav.navbar.navbar-dark.bg-secondary.mb-3
-          %span.navbar-text#step_1= @page_title
+        - unless controller.controller_name == 'job_offers' && %w[show board].include?(controller.action_name)
+          %nav.navbar.navbar-dark.bg-secondary.mb-3
+            %span.navbar-text#step_1= @page_title
         - if @layout_full_width
           .col-12
             = yield

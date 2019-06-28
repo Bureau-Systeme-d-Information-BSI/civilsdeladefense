@@ -2,7 +2,7 @@
 
 class Admin::JobOffersController < Admin::BaseController
   before_action :set_job_offers, only: %i[index archived]
-  layout 'admin/job_offers', only: %i[index archived show board]
+  layout 'admin/job_offers_with_sidebar', only: %i[index archived show board]
 
   include JobOfferStateActions
 

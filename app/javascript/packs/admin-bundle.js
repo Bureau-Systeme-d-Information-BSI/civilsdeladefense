@@ -178,6 +178,7 @@ $('#remoteContentModal').on('show.bs.modal', function (event) {
         initEmailTemplates()
       }
       formAutoSubmit()
+      inPlaceEdit()
     },
     error: function(response){
       console.log("error")

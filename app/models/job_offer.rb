@@ -32,7 +32,6 @@ class JobOffer < ApplicationRecord
   end
 
   has_many :job_applications
-
   has_many :job_offer_actors, inverse_of: :job_offer
   has_many :administrators, through: :job_offer_actors
   accepts_nested_attributes_for :job_offer_actors
@@ -96,7 +95,7 @@ class JobOffer < ApplicationRecord
     end
 
     event :archive do
-      transitions from: %i[draft published suspended], to: :archived
+      transitions from: %i[published suspended], to: :archived
     end
 
     event :suspend do
@@ -108,7 +107,7 @@ class JobOffer < ApplicationRecord
     end
 
     event :unarchive do
-      transitions from: %i[archived draft], to: :draft
+      transitions from: %i[archived], to: :draft
     end
   end
 

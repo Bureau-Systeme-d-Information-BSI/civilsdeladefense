@@ -73,6 +73,8 @@ class Admin::JobOffersController < Admin::BaseController
     end
   end
 
+  alias create_and_draftize create
+
   # PATCH/PUT /admin/job_offers/1
   # PATCH/PUT /admin/job_offers/1.json
   def update

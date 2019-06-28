@@ -13,6 +13,9 @@
       - hsh = {obj: user, field: :birth_date}
       = render partial: 'job_application_profile_field', locals: hsh
 
+      - hsh = {obj: user, field: :nationality}
+      = render partial: 'job_application_profile_field', locals: hsh
+
       - hsh = {obj: user, field: :has_residence_permit}
       = render partial: 'job_application_profile_field', locals: hsh
 

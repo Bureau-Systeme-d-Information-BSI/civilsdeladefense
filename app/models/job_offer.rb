@@ -52,8 +52,8 @@ class JobOffer < ApplicationRecord
 
   ## Scopes
   scope :admin_index, -> { includes(:employer, :contract_type).order(created_at: :desc) }
-  scope :admin_index_active, -> { admin_index.where.not(state: :archived) }
-  scope :admin_index_archived, -> { admin_index.archived }
+  scope :admin_index_active, -> { admin_index.where.not(state: :archived).joins(:job_offer_actors) }
+  scope :admin_index_archived, -> { admin_index.archived.joins(:job_offer_actors) }
   scope :publicly_visible, -> { where(state: :published) }
   scope :search_import, -> { includes(*SETTINGS) }
 

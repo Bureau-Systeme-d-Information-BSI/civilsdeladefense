@@ -55,7 +55,7 @@ function triggerKindChange() {
   }
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener('DOMContentLoaded', function() {
   initEmailTemplates()
   initRoleChange()
   initJobApplicationFileTypeKindChange()
@@ -87,7 +87,7 @@ function triggerEmailTemplateChoice() {
   }
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener('DOMContentLoaded', function() {
   let type_contract = document.getElementById('job_offer_contract_type_id')
   if (type_contract !== null) {
     type_contract.addEventListener('change', triggerTypeContractChange, false)

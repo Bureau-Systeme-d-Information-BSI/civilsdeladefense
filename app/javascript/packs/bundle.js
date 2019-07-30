@@ -44,7 +44,7 @@ require('bootstrap-material-design')
 
 $('body').bootstrapMaterialDesign()
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener('DOMContentLoaded', function() {
 
   formAutoSubmit()
   manageDropAreas()

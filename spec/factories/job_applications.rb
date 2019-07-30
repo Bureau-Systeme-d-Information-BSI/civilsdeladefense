@@ -16,5 +16,9 @@ FactoryBot.define do
     website_url 'MyString'
     terms_of_service true
     certify_majority true
+    after(:create) do |job_application|
+      job_application.personal_profile = create(:personal_profile,
+                                                personal_profileable: job_application)
+    end
   end
 end

@@ -48,6 +48,8 @@ require('js/city-autocomplete.js')
 import salaryRangeInputsHandling from 'js/salary-range-inputs-handling'
 import inPlaceEdit from 'js/in-place-edit'
 window.inPlaceEdit = inPlaceEdit
+import addressAutocomplete from 'js/address-autocomplete'
+window.addressAutocomplete = addressAutocomplete
 import formAutoSubmit from 'js/form-auto-submit'
 window.formAutoSubmit = formAutoSubmit
 
@@ -154,13 +156,14 @@ $( document ).ready(function() {
   })
 })
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener('DOMContentLoaded', function() {
   ;[].forEach.call(document.querySelectorAll('.input-search'), function(inputSearchNode) {
     inputSearchNode.addEventListener('click', function(e) {
     })
   })
   formAutoSubmit()
   inPlaceEdit()
+  addressAutocomplete()
   salaryRangeInputsHandling()
 })
 
@@ -179,6 +182,7 @@ $('#remoteContentModal').on('show.bs.modal', function (event) {
       }
       formAutoSubmit()
       inPlaceEdit()
+      addressAutocomplete()
     },
     error: function(response){
       console.log("error")

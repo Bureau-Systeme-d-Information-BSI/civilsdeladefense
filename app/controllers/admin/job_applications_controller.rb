@@ -81,10 +81,11 @@ class Admin::JobApplicationsController < Admin::BaseController
     fields = %i[first_name last_name current_position phone
                 address_1 address_2 postal_code city country website_url
                 skills_fit_job_offer experiences_fit_job_offer]
-    user_fields = %i[id gender birth_date nationality has_residence_permit is_currently_employed
-                     availability_date_in_month study_level_id study_type specialization
-                     experience_level_id corporate_experience website_url]
-    fields << { user_attributes: user_fields }
+    profile_fields = %i[id gender birth_date nationality has_residence_permit is_currently_employed
+                        availability_date_in_month study_level_id study_type specialization
+                        experience_level_id corporate_experience website_url
+                        address_1 address_2 postcode city country phone]
+    fields << { user_attributes: [:id, personal_profile_attributes: profile_fields] }
     params.require(:job_application).permit(fields)
   end
 end

@@ -19,8 +19,9 @@ class JobApplication < ApplicationRecord
 
   belongs_to :job_offer
   belongs_to :user
-  belongs_to :employer
   accepts_nested_attributes_for :user
+  belongs_to :employer
+  has_one :personal_profile, as: :personal_profileable
   has_many :messages, dependent: :destroy
   has_many :emails, dependent: :destroy
   has_many :job_application_files, index_errors: true

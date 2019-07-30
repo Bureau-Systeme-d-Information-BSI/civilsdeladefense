@@ -8,35 +8,35 @@ end
 
 RSpec.describe JobOffer do
   it 'should be invalid if duration <> nil when type = CDI' do
-    le_type = build(:contract_type, name: 'CDI')
+    le_type = contract_types(:cdi)
     jb = build(:job_offer, contract_type: le_type, duration_contract: '2 mois')
 
     expect(jb.valid?).to be_falsey
   end
 
   it 'should be invalid if duration <> nil when type = Interim' do
-    le_type = build(:contract_type, name: 'Interim')
+    le_type = contract_types(:interim)
     jb = build(:job_offer, contract_type: le_type, duration_contract: '2 mois')
 
     expect(jb.valid?).to be_falsey
   end
 
   it 'should be valid if duration = nil when type = Interim' do
-    le_type = build(:contract_type, name: 'Interim')
+    le_type = contract_types(:interim)
     jb = build(:job_offer, contract_type: le_type, duration_contract: nil)
 
     expect(jb.valid?).to be_truthy
   end
 
   it 'should be invalid if duration = nil when type = CDD' do
-    le_type = build(:contract_type, name: 'CDD')
+    le_type = contract_types(:cdd)
     jb = build(:job_offer, contract_type: le_type, duration_contract: nil)
 
     expect(jb.valid?).to be_falsey
   end
 
   it 'should be valid cdd if duration is edit when type = CDD' do
-    le_type = build(:contract_type, name: 'CDD')
+    le_type = contract_types(:cdd)
     jb = build(:job_offer, contract_type: le_type, duration_contract: '2 mois')
 
     expect(jb.valid?).to be_truthy

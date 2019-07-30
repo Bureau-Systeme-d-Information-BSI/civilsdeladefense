@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_17_073135) do
+ActiveRecord::Schema.define(version: 2019_07_01_130558) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -342,6 +342,34 @@ ActiveRecord::Schema.define(version: 2019_06_17_073135) do
     t.index ["name"], name: "index_official_statuses_on_name", unique: true
   end
 
+  create_table "personal_profiles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "personal_profileable_type"
+    t.uuid "personal_profileable_id"
+    t.integer "gender"
+    t.date "birth_date"
+    t.string "nationality"
+    t.string "website_url"
+    t.string "address_1"
+    t.string "address_2"
+    t.string "postcode"
+    t.string "city"
+    t.string "country"
+    t.string "phone"
+    t.boolean "has_residence_permit"
+    t.boolean "is_currently_employed"
+    t.integer "availability_date_in_month"
+    t.uuid "study_level_id"
+    t.string "study_type"
+    t.string "specialization"
+    t.uuid "experience_level_id"
+    t.boolean "has_corporate_experience"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["experience_level_id"], name: "index_personal_profiles_on_experience_level_id"
+    t.index ["personal_profileable_type", "personal_profileable_id"], name: "index_personal_profileable_type_and_id"
+    t.index ["study_level_id"], name: "index_personal_profiles_on_study_level_id"
+  end
+
   create_table "professional_categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -487,22 +515,9 @@ ActiveRecord::Schema.define(version: 2019_06_17_073135) do
     t.bigint "old_transport_ticket_file_size"
     t.datetime "old_transport_ticket_updated_at"
     t.integer "transport_ticket_is_validated", limit: 2, default: 0
-    t.integer "gender", limit: 2
-    t.date "birth_date"
-    t.string "nationality", limit: 2
-    t.boolean "has_residence_permit"
-    t.boolean "is_currently_employed"
-    t.integer "availability_date_in_month"
-    t.uuid "study_level_id"
-    t.string "study_type"
-    t.string "specialization"
-    t.uuid "experience_level_id"
-    t.boolean "corporate_experience"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["experience_level_id"], name: "index_users_on_experience_level_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-    t.index ["study_level_id"], name: "index_users_on_study_level_id"
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
@@ -528,9 +543,9 @@ ActiveRecord::Schema.define(version: 2019_06_17_073135) do
   add_foreign_key "job_offers", "study_levels"
   add_foreign_key "messages", "administrators"
   add_foreign_key "messages", "job_applications"
+  add_foreign_key "personal_profiles", "experience_levels"
+  add_foreign_key "personal_profiles", "study_levels"
   add_foreign_key "salary_ranges", "experience_levels"
   add_foreign_key "salary_ranges", "professional_categories"
   add_foreign_key "salary_ranges", "sectors"
-  add_foreign_key "users", "experience_levels"
-  add_foreign_key "users", "study_levels"
 end

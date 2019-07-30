@@ -1,6 +1,6 @@
 var places = require('places.js')
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener('DOMContentLoaded', function() {
   var locationNode = document.querySelector('#job_offer_location')
   if (locationNode) {
     var placesAutocomplete = places({

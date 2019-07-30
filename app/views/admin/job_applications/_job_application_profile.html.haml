@@ -2,7 +2,8 @@
 - archived = @job_application.job_offer.archived?
 - core_object = archived ? @job_application.personal_profile : user
 %div{id: dom_id(@job_application, 'profile')}
-  %em Profile archivé
+  - if archived
+    %em Profile archivé
   .card
     .card-header.bg-white.font-weight-bold.text-secondary
       = fa_icon('file-document', class: 'text-secondary')

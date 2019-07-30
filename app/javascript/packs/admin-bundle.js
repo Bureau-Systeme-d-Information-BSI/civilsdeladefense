@@ -46,12 +46,12 @@ require('js/board.js')
 require('js/city-autocomplete.js')
 
 import salaryRangeInputsHandling from 'js/salary-range-inputs-handling'
-import inPlaceEdit from 'js/in-place-edit'
-window.inPlaceEdit = inPlaceEdit
 import addressAutocomplete from 'js/address-autocomplete'
 window.addressAutocomplete = addressAutocomplete
 import formAutoSubmit from 'js/form-auto-submit'
 window.formAutoSubmit = formAutoSubmit
+import inPlaceEdit from 'js/in-place-edit'
+window.inPlaceEdit = inPlaceEdit
 
 $('body').bootstrapMaterialDesign()
 

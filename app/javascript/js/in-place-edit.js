@@ -5,6 +5,8 @@ export default function inPlaceEdit() {
     let formElement = el.closest('form')
     formElement.addEventListener('ajax:complete', function(event) {
       inPlaceEdit()
+      addressAutocomplete()
+      formAutoSubmit()
     })
     el.addEventListener('click', function(e) {
       el.classList.add('d-none')

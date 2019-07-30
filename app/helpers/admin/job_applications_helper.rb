@@ -26,11 +26,20 @@ module Admin::JobApplicationsHelper
     end
   end
 
+  def address_formatted(obj)
+    c = ISO3166::Country.new(obj.country)
+    real_country = c && c.translations[I18n.locale.to_s]
+    ary = obj&.address_1 || ''
+    ary += '<br/>'
+    ary += "#{obj.postcode} #{obj.city}, #{real_country}"
+    ary.html_safe
+  end
+
   def in_place_edit_value(obj, opts = {})
     res = nil
 
     if (m = opts.delete(:field))
-      res = obj.send(m)
+      res = m == :address ? address_formatted(obj) : obj.send(m)
     elsif (association = opts.delete(:association))
       res = obj.send(association)&.name
     end

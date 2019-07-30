@@ -40,6 +40,6 @@ class PersonalProfile < ApplicationRecord
     real_country = c && c.translations[I18n.locale.to_s]
     ary = [address_1]
     ary << "#{postcode} #{city}, #{real_country}"
-    @address = ary.join('<br/>').html_safe
+    @address = ary.join(' ').html_safe
   end
 end

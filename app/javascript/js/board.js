@@ -12,7 +12,7 @@ function recomputeColumnTotal(stateName) {
 
 window.recomputeColumnTotal = recomputeColumnTotal
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener('DOMContentLoaded', function() {
   var board = document.getElementById('board')
   if (board !== null && board.getAttribute('data-draggable') !== null) {
     ;[].forEach.call(board.querySelectorAll('.lists .list'), function(listNode) {

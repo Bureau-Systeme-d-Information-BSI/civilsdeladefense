@@ -300,6 +300,24 @@ Audited.audit_class.as_user(bant_admin) do
   end
 end
 
+job_application2 = JobApplication.new do |ja|
+  ja.job_offer = job_offer2
+  ja.user = user
+  ja.first_name = user.first_name
+  ja.last_name = user.last_name
+  ja.current_position = 'Dev'
+  ja.phone = '0606060606'
+  ja.terms_of_service = ja.certify_majority = true
+  ja.city = 'Paris'
+  ja.address_1 = '1 avenue des Champs Elysées'
+  ja.country = 'FR'
+end
+job_application2.job_application_files.build content: file,
+                                            job_application_file_type: resume
+job_application2.job_application_files.build content: file,
+                                            job_application_file_type: cover_letter
+job_application2.save!
+
 user_candidate_of_all = User.new email: Faker::Internet.email,
                                  first_name: 'Nicolas',
                                  last_name: 'Agoini',

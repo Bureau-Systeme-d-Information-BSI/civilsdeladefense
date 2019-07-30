@@ -20,7 +20,7 @@ module Admin::JobApplicationsHelper
       c = ISO3166::Country.new(content)
       c.translations[I18n.locale.to_s]
     when :gender, :is_currently_employed
-      User.human_attribute_name("#{field}/#{content}")
+      PersonalProfile.human_attribute_name("#{field}/#{content}")
     else
       content
     end
@@ -38,5 +38,40 @@ module Admin::JobApplicationsHelper
     return content_tag('em', 'Non défini(e)') if res.blank?
 
     in_place_edit_value_formatted(res, m)
+  end
+
+  def personal_profile_fields1
+    %i[gender birth_date address address_2 phone nationality has_residence_permit website_url]
+  end
+
+  def personal_profile_fields2
+    %i[is_currently_employed availability_date_in_month study_level study_type specialization
+       experience_level has_corporate_experience]
+  end
+
+  def personal_profile_fields3
+    %i[skills_fit_job_offer experiences_fit_job_offer]
+  end
+
+  def address_fields
+    %i[address_1 postcode city country]
+  end
+
+  def choices_boolean
+    [
+      [PersonalProfile.human_attribute_name('is_currently_employed/true'), true],
+      [PersonalProfile.human_attribute_name('is_currently_employed/false'), false]
+    ]
+  end
+
+  def choices_month
+    1.upto(12).to_a
+  end
+
+  def choices_gender
+    PersonalProfile.genders.each_with_object([]) do |(k, _), ary|
+      str = PersonalProfile.human_attribute_name("gender/#{k}")
+      ary << [str, k]
+    end
   end
 end

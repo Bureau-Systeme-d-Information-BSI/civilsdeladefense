@@ -433,7 +433,7 @@ fr:
           title: "Modèles de courriels"
           add: "Ajouter"
           card_title:
-            zero: 'Aucun modèle'
+            zero: 'Aucun modle'
             one: '1 modèle'
             other: '%{count} modèles'
         new:
@@ -662,7 +662,7 @@ fr:
         sector: "Filière"
         estimate_monthly_salary_net_html: "<div class='d-block'>Estimation mensuel net</div> (fonction publique)"
         estimate_annual_salary_gross_html: "<div class='d-block'>Estimation annuel brut</div> (secteur privé)"
-      user:
+      personal_profile:
         is_currently_employed/true: "En poste"
         is_currently_employed/false: "Disponible immédiatement"
         gender/female: "Femme"

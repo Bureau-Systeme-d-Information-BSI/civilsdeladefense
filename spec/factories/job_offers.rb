@@ -6,17 +6,18 @@ FactoryBot.define do
     title { Faker::Job.title }
     description 'Un super poste'
     category
-    professional_category
+    professional_category { ProfessionalCategory.all.sample }
     location 'Rennes, FR'
     employer
     required_profile 'Un profil pointu'
     recruitment_process 'Des interviews'
-    contract_type
+    contract_type { ContractType.find_by_name('CDD') }
+    duration_contract '12 mois'
     contract_start_on { 1.year.from_now }
     is_remote_possible false
-    study_level
-    experience_level
-    sector
+    study_level { StudyLevel.all.sample }
+    experience_level { ExperienceLevel.all.sample }
+    sector { Sector.all.sample }
     estimate_monthly_salary_net '3k€'
     estimate_annual_salary_gross '36k€'
   end

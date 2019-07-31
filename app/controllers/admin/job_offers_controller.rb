@@ -2,7 +2,7 @@
 
 class Admin::JobOffersController < Admin::BaseController
   before_action :set_job_offers, only: %i[index archived]
-  layout 'admin/job_offers_with_sidebar', only: %i[index archived show board]
+  layout :choose_layout
 
   include JobOfferStateActions
 
@@ -99,6 +99,16 @@ class Admin::JobOffersController < Admin::BaseController
     respond_to do |format|
       format.html { redirect_to job_offers_url, notice: t('.success') }
       format.json { head :no_content }
+    end
+  end
+
+  protected
+
+  def choose_layout
+    if %w[index archived show board].include?(action_name)
+      'admin/job_offers_with_sidebar'
+    else
+      'admin'
     end
   end
 

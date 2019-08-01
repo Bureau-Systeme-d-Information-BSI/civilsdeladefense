@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_31_145151) do
+ActiveRecord::Schema.define(version: 2019_08_01_125252) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -209,16 +209,6 @@ ActiveRecord::Schema.define(version: 2019_07_31_145151) do
   end
 
   create_table "job_applications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
-    t.string "current_position"
-    t.string "phone"
-    t.string "address_1"
-    t.string "address_2"
-    t.string "postal_code"
-    t.string "city"
-    t.string "country"
-    t.string "website_url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "state"
@@ -367,6 +357,7 @@ ActiveRecord::Schema.define(version: 2019_07_31_145151) do
     t.boolean "has_corporate_experience"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "current_position"
     t.index ["experience_level_id"], name: "index_personal_profiles_on_experience_level_id"
     t.index ["personal_profileable_type", "personal_profileable_id"], name: "index_personal_profileable_type_and_id"
     t.index ["study_level_id"], name: "index_personal_profiles_on_study_level_id"
@@ -434,14 +425,6 @@ ActiveRecord::Schema.define(version: 2019_07_31_145151) do
     t.datetime "updated_at", null: false
     t.string "first_name"
     t.string "last_name"
-    t.string "current_position"
-    t.string "phone"
-    t.string "address_1"
-    t.string "address_2"
-    t.string "postal_code"
-    t.string "city"
-    t.string "country"
-    t.string "website_url"
     t.string "photo_file_name"
     t.string "photo_content_type"
     t.bigint "photo_file_size"

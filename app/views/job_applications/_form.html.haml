@@ -1,34 +1,37 @@
 -# frozen_string_literal: true
+- personal_profile = @job_application.personal_profile
 = simple_form_for(@job_application, url: [:send_application, @job_offer], method: :post, remote: true, html: {data: {type: :json}}) do |f|
   .form-inputs.mt-3
     = f.error_notification
     = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
     %h2.h5.mb-3.text-dark-gray= t('.general_informations')
-    .row
-      .col-12.col-md-6
-        = f.input :first_name
-      .col-12.col-md-6
-        = f.input :last_name
-    .row
-      .col-12.col-md-6
-        = f.input :current_position
-    .row
-      .col-12.col-md-6
-        = f.input :phone
-    .row
-      .col-12.col-md-6
-        = f.input :address_1
-      .col-12.col-md-6
-        = f.input :address_2
-    .row
-      .col-12.col-md-6
-        = f.input :city
-      .col-12.col-md-6
-        .row
-          .col-12.col-md-6
-            = f.input :postal_code
-          .col-12.col-md-6
-            = f.input :country, priority: [ "FR" ]
+    = f.simple_fields_for :user do |user_form|
+      .row
+        .col-12.col-md-6
+          = user_form.input :first_name, readonly: user_signed_in?
+        .col-12.col-md-6
+          = user_form.input :last_name, readonly: user_signed_in?
+    = f.simple_fields_for :personal_profile, personal_profile do |profile_form|
+      .row
+        .col-12.col-md-6
+          = profile_form.input :current_position
+      .row
+        .col-12.col-md-6
+          = profile_form.input :phone
+      .row
+        .col-12.col-md-6
+          = profile_form.input :address_1
+        .col-12.col-md-6
+          = profile_form.input :address_2
+      .row
+        .col-12.col-md-6
+          = profile_form.input :city
+        .col-12.col-md-6
+          .row
+            .col-12.col-md-6
+              = profile_form.input :postcode
+            .col-12.col-md-6
+              = profile_form.input :country, priority: [ "FR" ]
     - unless user_signed_in?
       .row
         .col-12.col-md-6
@@ -51,9 +54,10 @@
             = file_form.input :content, label: t('buttons.choose_file'), wrapper: :custom_file_without_label
 
     %h2.h5.mt-4.mb-3.text-dark-gray= t('.your_internet_presence')
-    .row
-      .col-12
-        = f.input :website_url, required: false
+    = f.simple_fields_for :personal_profile, personal_profile do |profile_form|
+      .row
+        .col-12
+          = profile_form.input :website_url, required: false
 
     - unless user_signed_in?
       %h2.h5.mt-4.mb-3.text-dark-gray= t('.your_account_creation')

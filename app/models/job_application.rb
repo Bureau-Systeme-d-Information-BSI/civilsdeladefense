@@ -10,18 +10,19 @@ class JobApplication < ApplicationRecord
   has_associated_audits
 
   include PgSearch::Model
-  pg_search_scope :search_full_text, against: [
-    [:first_name, 'A'],
-    [:last_name, 'A']
-  ], associated_against: {
-    job_offer: %i[identifier title]
-  }
+  pg_search_scope :search_full_text,
+                  against: [],
+                  associated_against: {
+                    user: %i[first_name last_name],
+                    job_offer: %i[identifier title]
+                  }
 
   belongs_to :job_offer
   belongs_to :user
   accepts_nested_attributes_for :user
   belongs_to :employer
   has_one :personal_profile, as: :personal_profileable
+  accepts_nested_attributes_for :personal_profile
   has_many :messages, dependent: :destroy
   has_many :emails, dependent: :destroy
   has_many :job_application_files, index_errors: true
@@ -32,14 +33,6 @@ class JobApplication < ApplicationRecord
            through: :job_applications_actors,
            class_name: 'Administrator'
 
-  validates :first_name,
-            :last_name,
-            :current_position,
-            :phone,
-            :address_1,
-            :city,
-            :country,
-            presence: true
   validates :terms_of_service, :certify_majority, acceptance: true
   validates :user_id, uniqueness: { scope: :job_offer_id }, on: :create
 
@@ -121,17 +114,6 @@ class JobApplication < ApplicationRecord
   scope :finished, -> { where(state: FINISHED_STATES) }
   scope :not_finished, -> { where.not(state: FINISHED_STATES) }
 
-  def full_name
-    [first_name, last_name].join(' ')
-  end
-
-  def address_short
-    ary = []
-    ary << city if city.present?
-    ary << country if country.present?
-    ary.join(' ')
-  end
-
   def set_employer
     self.employer_id ||= job_offer.employer_id
   end
@@ -211,7 +193,7 @@ class JobApplication < ApplicationRecord
   def send_confirmation_email
     job_offer_identifier = job_offer.identifier
     subject = I18n.t('job_offers.successful.subject', job_offer_identifier: job_offer_identifier)
-    body = I18n.t('job_offers.successful.body', first_name: first_name,
+    body = I18n.t('job_offers.successful.body', first_name: user.first_name,
                                                 job_offer_title: job_offer.title,
                                                 job_offer_identifier: job_offer_identifier)
     email = emails.create(subject: subject, body: body)

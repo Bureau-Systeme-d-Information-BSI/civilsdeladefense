@@ -1,3 +1,4 @@
+- full_name = @job_application.user.full_name
 .activity{id: dom_id(@job_application, 'activity')}
   .font-weight-bold.text-secondary.mb-3
     = fa_icon('forum', class: 'text-secondary')
@@ -20,24 +21,24 @@
           .d-flex.flex-column
             .mb-1
               - if audit.version == 1 && audit.auditable_type == 'JobApplication'
-                = t('.activities.creation_html', name: @job_application.full_name)
+                = t('.activities.creation_html', name: full_name)
               - elsif audited_changes.key?('state')
                 - state_name = audited_changes['state'].last
                 - state_name_i18n = JobApplication.human_attribute_name("state/#{state_name}")
-                = t('.activities.change_state_html', admin_name: whodunnit, name: @job_application.full_name, state_name: state_name_i18n)
+                = t('.activities.change_state_html', admin_name: whodunnit, name: full_name, state_name: state_name_i18n)
               - elsif audit.auditable_type == "Message"
-                = t('.activities.message_html', admin_name: whodunnit, name: @job_application.full_name)
+                = t('.activities.message_html', admin_name: whodunnit, name: full_name)
                 .card.my-2
                   .card-body= audited_changes['body']
               - elsif audit.auditable_type == "Email" && audit.auditable.automatic_email?
-                = t('.activities.email_automatic_html', name: @job_application.full_name)
+                = t('.activities.email_automatic_html', name: full_name)
               - elsif audit.auditable_type == "Email" && (klass = audit.user.class.to_s) && %w(Administrator User NilClass).include?(klass)
                 - if klass == "Administrator"
-                  = t('.activities.email_html', admin_name: whodunnit, name: @job_application.full_name)
+                  = t('.activities.email_html', admin_name: whodunnit, name: full_name)
                 - elsif klass == "User"
                   = t('.activities.email_simple_html', from_name: whodunnit)
               - elsif audited_changes.key?('photo_updated_at')
-                = t('.activities.updated_photo_html', admin_name: whodunnit, name: @job_application.full_name)
+                = t('.activities.updated_photo_html', admin_name: whodunnit, name: full_name)
               - else
                 %code= audited_changes
             %small.text-muted.time-ago

@@ -14,6 +14,8 @@ class User < ApplicationRecord
   validates :photo,
             file_size: { less_than: 1.megabytes }
 
+  validates :first_name, :last_name, presence: true
+
   validate :password_complexity
 
   after_save :compute_job_applications_notifications_counter

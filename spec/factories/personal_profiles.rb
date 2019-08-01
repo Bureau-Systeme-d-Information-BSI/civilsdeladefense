@@ -2,6 +2,14 @@
 
 FactoryBot.define do
   factory :personal_profile do
+    current_position 'CEO'
+    phone '06'
+    address_1 'MyString'
+    address_2 'MyString'
+    postcode 'MyString'
+    city 'MyString'
+    country 'MyString'
+    website_url 'MyString'
     gender 1
     nationality 'FR'
     has_residence_permit false

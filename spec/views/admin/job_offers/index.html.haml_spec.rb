@@ -24,7 +24,7 @@ RSpec.describe 'admin/job_offers/index', type: :view do
                                              owner: owner,
                                              category: category,
                                              employer: employer))
-    assign(:job_offers, ary1)
+    assign(:job_offers, JobOffer.all)
     assign(:q, JobOffer.ransack)
     collection = WillPaginate::Collection.new(4, 10, 0)
     ary1.each do |elt|

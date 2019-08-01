@@ -11,7 +11,7 @@ class Admin::JobOffersController < Admin::BaseController
   def index
     @job_offers = action_name == 'index' ? @job_offers_active : @job_offers_archived
     @q = @job_offers.ransack(params[:q])
-    @current_job_offers = @q.result
+    @current_job_offers = @q.result(distinct: true)
     @current_job_offers = @current_job_offers.search_full_text(params[:s]) if params[:s].present?
     @current_job_offers = @current_job_offers.page(params[:page]).per_page(20)
 

@@ -1,22 +1,23 @@
-- website_url = job_application.website_url
 - job_offer = job_application.job_offer
+- profile = job_application.personal_profile
+- website_url = profile.website_url
 - tab_active ||= :profile
 .row.bg-white.border-bottom.head
   .col-12.col-md-8.border-right{class: job_application_modal_section_classes('pb-0')}
     .d-flex.justify-content-start.head
       = image_user_tag job_application.user.photo, width: 80, class: 'mr-4'
       .d-flex.flex-column
-        .h5.secondary.mb-0= job_application.full_name
+        .h5.secondary.mb-0= job_application.user.full_name
         %small
           = [job_offer.identifier, job_offer.title].join(' ')
           = link_to(fa_icon('open-in-new'), [:admin, job_offer], target: '_blank', class: 'ml-1')
-        .my-1= job_application.current_position
+        .my-1= profile.current_position
         .d-flex.justify-content.justify-content-start
-          - if (phone = job_application.phone).present?
+          - if (phone = profile.phone).present?
             %span.mr-2
               = fa_icon "phone"
               = phone
-          - if (address_short = job_application.address_short).present?
+          - if (address_short = profile.address_short).present?
             %span.mr-2
               = fa_icon "map-marker"
               = address_short

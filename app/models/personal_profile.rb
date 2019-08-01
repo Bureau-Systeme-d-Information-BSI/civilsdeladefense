@@ -6,6 +6,17 @@ class PersonalProfile < ApplicationRecord
   belongs_to :study_level, optional: true
   belongs_to :experience_level, optional: true
 
+  #####################################
+  # Validations
+
+  validates :current_position,
+            :phone,
+            :address_1,
+            :postcode,
+            :city,
+            :country,
+            presence: true
+
   attr_writer :address
 
   #####################################
@@ -16,22 +27,36 @@ class PersonalProfile < ApplicationRecord
     other: 3
   }
 
-  after_save :datalake_to_job_applications,
-             if: proc { |profile| profile.personal_profileable_type == 'User' }
+  def datalake_attributes
+    attributes.except('id',
+                      'personal_profileable_type',
+                      'personal_profileable_id',
+                      'created_at',
+                      'updated_at')
+  end
 
-  def datalake_to_job_applications
-    attributes_filtered = attributes.except('id',
-                                            'personal_profileable_type',
-                                            'personal_profileable_id',
-                                            'created_at',
-                                            'updated_at')
+  def datalake_to_job_application_profiles!(options = {})
+    relation = personal_profileable.job_applications_active
 
-    personal_profileable.job_applications_active.each do |job_application|
+    if (except = options.delete(:except))
+      relation = relation.where.not('job_applications.id = ?', except)
+    end
+
+    relation.each do |job_application|
       if job_application.personal_profile.nil?
-        job_application.create_personal_profile(attributes_filtered)
+        job_application.create_personal_profile(datalake_attributes)
       else
-        job_application.personal_profile.update_attributes(attributes_filtered)
+        job_application.personal_profile.update_attributes(datalake_attributes)
       end
+    end
+  end
+
+  def datalake_to_user_profile!
+    user = personal_profileable.user
+    if user.personal_profile.nil?
+      user.create_personal_profile(datalake_attributes)
+    else
+      user.personal_profile.update_attributes(datalake_attributes)
     end
   end
 
@@ -41,5 +66,12 @@ class PersonalProfile < ApplicationRecord
     ary = [address_1]
     ary << "#{postcode} #{city}, #{real_country}"
     @address = ary.join(' ').html_safe
+  end
+
+  def address_short
+    ary = []
+    ary << city if city.present?
+    ary << country if country.present?
+    ary.join(' ')
   end
 end

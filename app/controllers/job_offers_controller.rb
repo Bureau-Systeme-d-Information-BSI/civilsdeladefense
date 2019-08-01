@@ -33,7 +33,7 @@ class JobOffersController < ApplicationController
     else
       @job_application = JobApplication.new
       @job_application.user = User.new
-      @job_application.country = 'FR'
+      @job_application.build_personal_profile(country: 'FR')
     end
   end
 
@@ -44,15 +44,11 @@ class JobOffersController < ApplicationController
     @job_application.job_offer = @job_offer
     @job_application.user = current_user if user_signed_in?
 
-    if @job_application.user
-      @job_application.user.first_name = @job_application.first_name
-      @job_application.user.last_name = @job_application.last_name
-    end
-
     respond_to do |format|
       if @job_application.save
         @job_offer.initial! if @job_offer.start?
         @job_application.send_confirmation_email
+        @job_application.personal_profile.datalake_to_user_profile!
 
         format.html { redirect_to %i[account job_applications] }
         format.json do
@@ -100,13 +96,14 @@ class JobOffersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def job_application_params
-    permitted_params = %i[first_name last_name current_position phone
-                          address_1 address_2 postal_code city country
-                          website_url terms_of_service certify_majority]
-    unless user_signed_in?
-      user_attributes = %i[photo email password password_confirmation]
-      permitted_params << { user_attributes: user_attributes }
-    end
+    permitted_params = %i[terms_of_service certify_majority]
+
+    profile_fields = %i[id current_position phone website_url
+                        address_1 address_2 postcode city country]
+    permitted_params << [personal_profile_attributes: profile_fields]
+    user_attributes = %i[first_name last_name]
+    user_attributes += %i[photo email password password_confirmation] unless user_signed_in?
+    permitted_params << { user_attributes: user_attributes }
     job_application_files_attributes = %i[content job_application_file_type_id]
     permitted_params << { job_application_files_attributes: job_application_files_attributes }
     params.require(:job_application).permit(permitted_params)

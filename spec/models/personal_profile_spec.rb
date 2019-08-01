@@ -32,6 +32,8 @@ RSpec.describe PersonalProfile, type: :model do
     expect(@user.job_applications.count).to eq(2)
 
     @personal_profile.update_attributes nationality: 'FR'
+    @personal_profile.datalake_to_job_application_profiles!
+
     expect(@personal_profile.nationality).to eq('FR')
     job_application.personal_profile.reload
     expect(job_application.personal_profile.nationality).to eq('FR')
@@ -39,6 +41,8 @@ RSpec.describe PersonalProfile, type: :model do
     expect(job_application2.personal_profile.nationality).to eq('FR')
 
     @personal_profile.update_attributes nationality: 'DE'
+    @personal_profile.datalake_to_job_application_profiles!
+
     expect(@personal_profile.nationality).to eq('DE')
     job_application.personal_profile.reload
     expect(job_application.personal_profile.nationality).to eq('DE')
@@ -46,6 +50,8 @@ RSpec.describe PersonalProfile, type: :model do
     expect(job_application2.personal_profile.nationality).to eq('DE')
 
     @personal_profile.update_attributes gender: 'female'
+    @personal_profile.datalake_to_job_application_profiles!
+
     expect(@personal_profile.gender).to eq('female')
     job_application.personal_profile.reload
     expect(job_application.personal_profile.gender).to eq('female')
@@ -53,6 +59,8 @@ RSpec.describe PersonalProfile, type: :model do
     expect(job_application2.personal_profile.gender).to eq('female')
 
     @personal_profile.update_attributes gender: 'male'
+    @personal_profile.datalake_to_job_application_profiles!
+
     expect(@personal_profile.gender).to eq('male')
     job_application.personal_profile.reload
     expect(job_application.personal_profile.gender).to eq('male')
@@ -62,6 +70,8 @@ RSpec.describe PersonalProfile, type: :model do
     job_offer2.archive!
 
     @personal_profile.update_attributes nationality: 'FR'
+    @personal_profile.datalake_to_job_application_profiles!
+
     expect(@personal_profile.nationality).to eq('FR')
     job_application.personal_profile.reload
     expect(job_application.personal_profile.nationality).to eq('FR')
@@ -69,10 +79,43 @@ RSpec.describe PersonalProfile, type: :model do
     expect(job_application2.personal_profile.nationality).to eq('DE')
 
     @personal_profile.update_attributes gender: 'female'
+    @personal_profile.datalake_to_job_application_profiles!
+
     expect(@personal_profile.gender).to eq('female')
     job_application.personal_profile.reload
     expect(job_application.personal_profile.gender).to eq('female')
     job_application2.personal_profile.reload
     expect(job_application2.personal_profile.gender).to eq('male')
+  end
+
+  it 'correctly copies data to linked profiles and take care of except parameter' do
+    job_offer = create(:job_offer)
+    job_offer.publish!
+    job_application = create(:job_application,
+                             user: @user,
+                             job_offer: job_offer)
+    job_offer2 = create(:job_offer)
+    job_offer2.publish!
+    job_application2 = create(:job_application,
+                              user: @user,
+                              job_offer: job_offer2)
+
+    @personal_profile.update_attributes nationality: 'FR'
+    @personal_profile.datalake_to_job_application_profiles!
+
+    expect(@personal_profile.nationality).to eq('FR')
+    job_application.personal_profile.reload
+    expect(job_application.personal_profile.nationality).to eq('FR')
+    job_application2.personal_profile.reload
+    expect(job_application2.personal_profile.nationality).to eq('FR')
+
+    @personal_profile.update_attributes nationality: 'DE'
+    @personal_profile.datalake_to_job_application_profiles!(except: job_application2.id)
+
+    expect(@personal_profile.nationality).to eq('DE')
+    job_application.personal_profile.reload
+    expect(job_application.personal_profile.nationality).to eq('DE')
+    job_application2.personal_profile.reload
+    expect(job_application2.personal_profile.nationality).to eq('FR')
   end
 end

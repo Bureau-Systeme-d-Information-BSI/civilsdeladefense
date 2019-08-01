@@ -36,7 +36,7 @@ RSpec.describe Admin::JobApplicationsController, type: :controller do
   end
 
   let(:invalid_attributes) do
-    { first_name: '', last_name: '' }
+    { user_attributes: { personal_profile_attributes: { phone: '' } } }
   end
 
   describe 'GET #index' do
@@ -58,15 +58,24 @@ RSpec.describe Admin::JobApplicationsController, type: :controller do
   describe 'PUT #update' do
     context 'with valid params' do
       let(:new_attributes) do
-        { first_name: 'Pipo', last_name: 'Molo' }
       end
 
       it 'updates the requested admin_job_application' do
         job_application = create(:job_application)
+
+        new_attributes = {
+          user_attributes: {
+            id: job_application.user.id,
+            personal_profile_attributes: {
+              id: job_application.user.personal_profile.id,
+              phone: '07'
+            }
+          }
+        }
+
         put :update, params: { id: job_application.to_param, job_application: new_attributes }
         job_application.reload
-        expect(job_application.first_name).to eq('Pipo')
-        expect(job_application.last_name).to eq('Molo')
+        expect(job_application.personal_profile.phone).to eq('07')
       end
 
       it 'redirects to the admin_job_application' do

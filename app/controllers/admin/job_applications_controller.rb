@@ -7,7 +7,7 @@ class Admin::JobApplicationsController < Admin::BaseController
     @contract_types = ContractType.all
     @employers = Employer.all
 
-    @job_applications = @job_applications.includes(:job_offer, :user)
+    @job_applications = @job_applications.includes(:job_offer, :user, :personal_profile)
     @q = @job_applications.ransack(params[:q])
     @results = @q.result
     @results = @results.search_full_text(params[:s]) if params[:s].present?
@@ -27,6 +27,8 @@ class Admin::JobApplicationsController < Admin::BaseController
   def update
     respond_to do |format|
       if @job_application.update(job_application_params)
+        personal_profile = @job_application.user.personal_profile
+        personal_profile.datalake_to_job_application_profiles!
         format.html { redirect_to [:admin, @job_application], notice: t('.success') }
         format.js do
           @notification = t('.success')
@@ -78,9 +80,7 @@ class Admin::JobApplicationsController < Admin::BaseController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def job_application_params
-    fields = %i[first_name last_name current_position phone
-                address_1 address_2 postal_code city country website_url
-                skills_fit_job_offer experiences_fit_job_offer]
+    fields = %i[skills_fit_job_offer experiences_fit_job_offer]
     profile_fields = %i[id gender birth_date nationality has_residence_permit is_currently_employed
                         availability_date_in_month study_level_id study_type specialization
                         experience_level_id corporate_experience website_url

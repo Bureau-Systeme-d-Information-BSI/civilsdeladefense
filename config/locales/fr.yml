@@ -268,7 +268,7 @@ fr:
       index:
         title: "Offres du Ministère des Armées"
         new_job_offer: "Ajouter une offre"
-        job_offers_count_index: "%{count} offres actives"
+        job_offers_count_index: "%{count} offres"
         job_offers_count_archived: "%{count} offres archivées"
         job_offers_filtered: "%{count} résultats de recherche"
       new:

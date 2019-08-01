@@ -12,25 +12,23 @@ RSpec.describe 'admin/job_applications/edit', type: :view do
 
     url = admin_job_application_path(@job_application)
     assert_select 'form[action=?][method=?]', url, 'post' do
-      assert_select 'input[name=?]', 'job_application[first_name]'
+      prefix = 'job_application[personal_profile_attributes]'
 
-      assert_select 'input[name=?]', 'job_application[last_name]'
+      assert_select 'input[name=?]', "#{prefix}[current_position]"
 
-      assert_select 'input[name=?]', 'job_application[current_position]'
+      assert_select 'input[name=?]', "#{prefix}[phone]"
 
-      assert_select 'input[name=?]', 'job_application[phone]'
+      assert_select 'input[name=?]', "#{prefix}[address_1]"
 
-      assert_select 'input[name=?]', 'job_application[address_1]'
+      assert_select 'input[name=?]', "#{prefix}[address_2]"
 
-      assert_select 'input[name=?]', 'job_application[address_2]'
+      assert_select 'input[name=?]', "#{prefix}[postcode]"
 
-      assert_select 'input[name=?]', 'job_application[postal_code]'
+      assert_select 'input[name=?]', "#{prefix}[city]"
 
-      assert_select 'input[name=?]', 'job_application[city]'
+      assert_select 'select[name=?]', "#{prefix}[country]"
 
-      assert_select 'select[name=?]', 'job_application[country]'
-
-      assert_select 'input[name=?]', 'job_application[website_url]'
+      assert_select 'input[name=?]', "#{prefix}[website_url]"
     end
   end
 end

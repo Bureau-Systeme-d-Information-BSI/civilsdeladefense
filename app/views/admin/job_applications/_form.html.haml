@@ -6,16 +6,15 @@
   .form-inputs
     = f.association :job_offer
     = f.association :user
-    = f.input :first_name
-    = f.input :last_name
-    = f.input :current_position
-    = f.input :phone
-    = f.input :address_1
-    = f.input :address_2
-    = f.input :postal_code
-    = f.input :city
-    = f.input :country
-    = f.input :website_url
+    = f.simple_fields_for :personal_profile do |profile_form|
+      = profile_form.input :current_position
+      = profile_form.input :phone
+      = profile_form.input :address_1
+      = profile_form.input :address_2
+      = profile_form.input :postcode
+      = profile_form.input :city
+      = profile_form.input :country
+      = profile_form.input :website_url
 
   .form-actions
     = f.button :submit

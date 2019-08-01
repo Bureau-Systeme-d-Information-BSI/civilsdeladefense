@@ -9,7 +9,7 @@ class JobApplication < ApplicationRecord
                      skills_fit_job_offer experiences_fit_job_offer]
   has_associated_audits
 
-  include PgSearch
+  include PgSearch::Model
   pg_search_scope :search_full_text, against: [
     [:first_name, 'A'],
     [:last_name, 'A']

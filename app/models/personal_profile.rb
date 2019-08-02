@@ -12,7 +12,6 @@ class PersonalProfile < ApplicationRecord
   validates :current_position,
             :phone,
             :address_1,
-            :postcode,
             :city,
             :country,
             presence: true

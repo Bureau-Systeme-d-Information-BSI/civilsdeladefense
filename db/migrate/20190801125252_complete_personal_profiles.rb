@@ -15,8 +15,8 @@ class CompletePersonalProfiles < ActiveRecord::Migration[5.2]
         country: job_application.country,
         website_url: job_application.website_url
       }
-      job_application.create_personal_profile(params)
-      job_application.user.create_personal_profile(params)
+      job_application.create_personal_profile!(params)
+      job_application.user.create_personal_profile!(params)
     end
 
     remove_column :job_applications, :first_name, :string

@@ -1,5 +1,5 @@
 - klasses = []
-- klasses << 'mt-3' if controller.controller_name == 'job_offers' && %w[show board].include?(controller.action_name)
+- klasses << 'mt-3' if controller.controller_name == 'job_offers' && %w[show board stats].include?(controller.action_name)
 .card{class: klasses}
   .card-body.pt-1.pl-3.pr-3.pb-3
     - base_link_klasses = %i[nav-link text-uppercase]
@@ -7,10 +7,15 @@
       %li.mr-3.nav-item
         - klasses = base_link_klasses.dup
         - klasses << :active if controller.action_name == 'show'
-        = link_to 'description', [:admin, @job_offer], class: klasses
+        = link_to t('.show'), [:admin, @job_offer], class: klasses
+      - if show_stats?
+        %li.mr-3.nav-item
+          - klasses = base_link_klasses.dup
+          - klasses << :active if controller.action_name == 'stats'
+          = link_to t('.stats'), [:stats, :admin, @job_offer], class: klasses
       %li.mr-3.nav-item
         - klasses = base_link_klasses.dup
         - klasses << :active if controller.action_name == 'board'
-        = link_to 'candidatures', [:board, :admin, @job_offer], class: klasses
+        = link_to t('.board'), [:board, :admin, @job_offer], class: klasses
     = render partial: 'job_offer', locals: {job_offer: @job_offer}
     = yield :card_inner

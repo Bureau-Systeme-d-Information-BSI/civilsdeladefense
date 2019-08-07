@@ -1,6 +1,14 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
+  def show_stats?
+    Rails.env.development? || ENV['SHOW_STATS'].present?
+  end
+
+  def show_stats_debug?
+    Rails.env.development? || params[:debug].present?
+  end
+
   def time_ago_in_words_minimal(time)
     res = time_ago_in_words(time)
     res.split(' ').map do |x|

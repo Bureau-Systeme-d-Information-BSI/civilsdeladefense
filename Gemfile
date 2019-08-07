@@ -55,6 +55,9 @@ gem 'simple_form'
 gem 'sqreen', '>= 1.16'
 gem 'will_paginate'
 
+gem 'groupdate'
+gem 'chartkick'
+
 gem 'clockwork' # needed for staging on Scalingo
 
 gem 'faker', require: false

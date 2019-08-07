@@ -1,0 +1,45 @@
+- content_for :card_inner do
+  - @page_title = t('.title')
+  - published_since_days = (Date.current - @job_offer.published_at.to_date).to_i
+  .card.mt-3
+    .card-body
+      %h1.h4= @page_title
+      %strong.text-quaternary.d-block= t('.published_since_days', count: published_since_days)
+      .row.mt-3.mb-5
+        .col-12
+          .d-flex.flex-row
+            .date-start.d-flex.flex-column.mr-4
+              %strong.mb-2
+                Période du
+              = text_field_tag :date_start, @date_start_display, style: 'width:14ch;', class: 'form-control'
+            .date-end.d-flex.flex-column
+              %strong.mb-2
+                au
+              = text_field_tag :date_end, @date_end_display, style: 'width:14ch;', class: 'form-control'
+      .mt-4
+        = line_chart @per_day, charts_per_day_options
+      - if show_stats_debug?
+        %code= @per_day
+      %hr
+      .row.flex-wrap
+        .col-12.col-md-3.d-flex.flex-column.border-right
+          %strong.text-quaternary.flex-fill
+            = t('.title_job_applications_number_html')
+          .d-flex.justify-content-center
+            .h1.text-quaternary.my-2
+              = @per_day.values.sum
+        .col-12.col-md-3.d-flex.flex-column.border-right
+          %strong.text-quaternary.flex-fill
+            = t('.title_new_job_applications_number_html')
+          .d-flex.justify-content-center
+            .h1.text-quaternary.my-2
+              = @per_day.values.sum
+        .col-12.col-md-3.d-flex.flex-column.border-right
+          %strong.text-quaternary.flex-fill
+            = t('.title_job_applications_no_rejected_html')
+          .d-flex.justify-content-center
+            .h1.text-quaternary.my-2
+              = @per_day.values.sum
+      = render partial: 'applicant_stats'
+= render partial: '/admin/job_offers/navbar_job_offer'
+

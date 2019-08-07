@@ -8,8 +8,8 @@
 // layout file, like app/views/layouts/application.html.erb
 
 import Url from 'domurl'
-import flatpickr from 'flatpickr'
-import { French } from "flatpickr/dist/l10n/fr"
+import Lightpick from 'lightpick'
+import moment from 'moment'
 import $ from 'jquery'
 window.jQuery = $
 window.$ = $
@@ -20,6 +20,8 @@ import Popper from 'popper.js'
 window.Popper = Popper
 require('snackbarjs')
 require('bootstrap-material-design')
+require('chartkick')
+require('chart.js')
 
 const Rails = require('rails-ujs')
 Rails.start()
@@ -94,13 +96,6 @@ $( document ).ready(function() {
     $(this).next('.custom-file-label').addClass("selected").html(fileName)
   })
 
-  flatpickr("#job_offer_contract_start_on", {
-    locale: French,
-    altInput: true,
-    altFormat: "d/m/Y",
-    dateFormat: "Y-m-d"
-  })
-
   $('.new_job_offer, .edit_job_offer').on('click', '.remove_record', function(event) {
     var hidden_field, hidden_value, job_offer_actor_node
     job_offer_actor_node = $(this).closest('.job-offer-actor')
@@ -165,6 +160,44 @@ document.addEventListener('DOMContentLoaded', function() {
   inPlaceEdit()
   addressAutocomplete()
   salaryRangeInputsHandling()
+
+  // flatpickr('#job_offer_contract_start_on', {
+  //   locale: French,
+  //   altInput: true,
+  //   altFormat: "d/m/Y",
+  //   dateFormat: "Y-m-d"
+  // })
+
+  var job_offer_contract_start_on_node = document.getElementById('job_offer_contract_start_on')
+  if (job_offer_contract_start_on_node !== null) {
+    new Lightpick({
+      field: document.getElementById('job_offer_contract_start_on'),
+      minDate: moment()
+    })
+  }
+
+  var date_start_node = document.getElementById('date_start')
+  var date_end_node = document.getElementById('date_end')
+  if ((date_start_node !== null) && (date_end_node !== null)) {
+    new Lightpick({
+      field: document.getElementById('date_start'),
+      secondField: document.getElementById('date_end'),
+      singleDate: false,
+      numberOfColumns: 2,
+      numberOfMonths: 2,
+      maxDate: moment(),
+      onClose: function() {
+        var start = this._opts.startDate
+        var end = this._opts.endDate
+        var path = window.location.href;
+
+        var newURL = window.location.protocol + "//" + window.location.host + "/" + window.location.pathname
+        newURL += '?' + 'start=' + start.format('YYYYMMDD') + '&end=' + end.format('YYYYMMDD')
+
+        window.location.href = newURL
+      }
+    })
+  }
 })
 
 $('#remoteContentModal').on('show.bs.modal', function (event) {

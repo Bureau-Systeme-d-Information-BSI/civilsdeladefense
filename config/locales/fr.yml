@@ -301,8 +301,29 @@ fr:
           other: 'Candidatures'
         job_applications_to_be_treated_count:
           "Nouvelles candidatures"
+      navbar_job_offer:
+        show: "Description"
+        stats: "Statistiques"
+        board: "Candidatures"
       publish:
         success: "Annonce publiée !"
+      stats:
+        title: "Statistiques de l'offre"
+        published_since_days:
+          one: "Offre publiée depuis 1 jour"
+          other: "Offre publiée depuis %{count} jours"
+        title_views_number_html: "Nombre de vues"
+        title_job_applications_number_html: "Nombre&nbsp;de candidatures"
+        title_new_job_applications_number_html: "Nouvelles candidatures"
+        title_job_applications_no_rejected_html: "Nombre&nbsp;de candidatures non&nbsp;rejetées"
+      applicant_stats:
+        title: "Statistiques des candidatures"
+        title_per_gender: "Genres"
+        title_per_nationality: "Nationalités"
+        job_applications_count:
+          zero: "Aucune candidature pour cette offre"
+          one: "1 candidature pour cette offre"
+          other: "%{count} candidatures pour cette offre"
       create:
         success: "Annonce créée !"
       create_and_publish:

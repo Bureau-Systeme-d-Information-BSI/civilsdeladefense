@@ -1,12 +1,7 @@
-var jobApplicationModal = document.getElementById('remoteContentModal')
-if (jobApplicationModal !== null) {
-  var headNode = jobApplicationModal.querySelector('.head')
-  if (headNode !== null) {
-    var headHtml = '<%= j render(partial: 'job_application_head', locals: { job_application: @job_application }) %>'
-    var frag = document.createRange().createContextualFragment(headHtml)
-    headNode.replaceWith(frag)
-  }
-}
+var activityNode = document.getElementById('<%= dom_id(@job_application, 'activity') %>')
+var html = '<%= j render(partial: '/admin/job_applications/job_application_activity') %>'
+var frag = document.createRange().createContextualFragment(html)
+activityNode.replaceWith(frag)
 
 var cardNode = document.getElementById('<%= dom_id(@job_application) %>')
 if (cardNode !== null) {
@@ -22,8 +17,7 @@ if (cardNode !== null) {
       containerNode.insertAdjacentHTML('afterbegin', html)
     }
   }
-
-  $.snackbar({content: '<%= @notification %>'})
 }
 
+$.snackbar({content: '<%= @notification %>'})
 window.recomputeColumnTotal('<%= @state %>')

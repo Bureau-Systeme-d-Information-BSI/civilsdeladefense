@@ -19,6 +19,7 @@ class JobApplication < ApplicationRecord
 
   belongs_to :job_offer
   belongs_to :user
+  belongs_to :rejection_reason, optional: true
   accepts_nested_attributes_for :user
   belongs_to :employer
   has_one :personal_profile, as: :personal_profileable

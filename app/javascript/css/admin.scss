@@ -209,15 +209,20 @@ a {
   }
 }
 
+.dropdown-menu {
+  z-index: 1031; //just above top navbar
+}
+
+.dropdown-toggle {
+  @extend .d-flex, .align-items-center, .bg-white;
+  text-align: left;
+  &::after {
+    @extend .ml-auto;
+  }
+}
+
 .dropdown {
   &.dropdown-checks {
-    .form-control {
-      &.dropdown-toggle {
-        &::after {
-          margin-left: auto;
-        }
-      }
-    }
     .dropdown-menu {
       max-height: 200px;
       overflow-x: hidden;

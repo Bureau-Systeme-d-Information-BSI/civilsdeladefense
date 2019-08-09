@@ -169,25 +169,27 @@ document.addEventListener('DOMContentLoaded', function() {
 
 $('#remoteContentModal').on('show.bs.modal', function (event) {
   var link = event.relatedTarget
-  var href = link.href
-  var modal = $(this)
-  Rails.ajax({
-    type: "GET",
-    url: href,
-    success: function(response){
-      var content = $(response).find('body').html()
-      modal.find('.modal-body').html(content)
-      if (link.classList.contains('job-application-modal-link')) {
-        initEmailTemplates()
+  if (link !== undefined) {
+    var href = link.href
+    var modal = $(this)
+    Rails.ajax({
+      type: "GET",
+      url: href,
+      success: function(response){
+        var content = $(response).find('body').html()
+        modal.find('.modal-body').html(content)
+        if (link.classList.contains('job-application-modal-link')) {
+          initEmailTemplates()
+        }
+        formAutoSubmit()
+        inPlaceEdit()
+        addressAutocomplete()
+      },
+      error: function(response){
+        console.log("error")
+        console.log(response)
       }
-      formAutoSubmit()
-      inPlaceEdit()
-      addressAutocomplete()
-    },
-    error: function(response){
-      console.log("error")
-      console.log(response)
-    }
-  })
+    })
+  }
 })
 

@@ -1,7 +1,7 @@
 - job_offer = job_application.job_offer
 - profile = job_application.personal_profile
 - website_url = profile.website_url
-- tab_active ||= :profile
+- tab_active = job_applications_tab_active
 .row.bg-white.border-bottom.head
   .col-12{class: job_application_modal_section_classes('pb-0')}
     %button.close{type: :button, data: { dismiss: :modal }, aria: { label: t("buttons.close") }}

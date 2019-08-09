@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_01_125252) do
+ActiveRecord::Schema.define(version: 2019_08_08_100641) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -239,8 +239,10 @@ ActiveRecord::Schema.define(version: 2019_08_01_125252) do
     t.integer "administrator_notifications_count", default: 0
     t.boolean "skills_fit_job_offer"
     t.boolean "experiences_fit_job_offer"
+    t.uuid "rejection_reason_id"
     t.index ["employer_id"], name: "index_job_applications_on_employer_id"
     t.index ["job_offer_id"], name: "index_job_applications_on_job_offer_id"
+    t.index ["rejection_reason_id"], name: "index_job_applications_on_rejection_reason_id"
     t.index ["state"], name: "index_job_applications_on_state"
     t.index ["user_id"], name: "index_job_applications_on_user_id"
   end
@@ -370,6 +372,12 @@ ActiveRecord::Schema.define(version: 2019_08_01_125252) do
     t.integer "position"
     t.index ["name"], name: "index_professional_categories_on_name", unique: true
     t.index ["position"], name: "index_professional_categories_on_position"
+  end
+
+  create_table "rejection_reasons", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "salary_ranges", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -515,6 +523,7 @@ ActiveRecord::Schema.define(version: 2019_08_01_125252) do
   add_foreign_key "job_application_files", "job_applications"
   add_foreign_key "job_applications", "employers"
   add_foreign_key "job_applications", "job_offers"
+  add_foreign_key "job_applications", "rejection_reasons"
   add_foreign_key "job_applications", "users"
   add_foreign_key "job_offer_actors", "administrators"
   add_foreign_key "job_offer_actors", "job_offers"

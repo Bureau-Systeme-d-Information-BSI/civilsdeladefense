@@ -33,7 +33,7 @@
       - klasses << 'active' if controller.controller_name == entry
       = link_to [:admin, :settings, entry.to_sym], class: klasses do
         = t(".#{ entry }")
-  - entries = JobOffer::SETTINGS.map{|x| x.to_s.pluralize.to_sym} + [:salary_ranges]
+  - entries = JobOffer::SETTINGS.map{|x| x.to_s.pluralize.to_sym} + [:salary_ranges, :rejection_reasons]
   - if entries.any?{ |entry| can?(:manage, entry.to_s.singularize.classify.constantize) }
     .list-group-item.menu
       = t(".writing_job_offers")

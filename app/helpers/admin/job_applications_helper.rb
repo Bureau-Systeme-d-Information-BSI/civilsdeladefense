@@ -10,6 +10,10 @@ module Admin::JobApplicationsHelper
     end
   end
 
+  def job_applications_tab_active
+    params[:tabopen].present? ? params[:tabopen].to_sym : :profile
+  end
+
   def in_place_edit_value_formatted(content, field)
     case field
     when :birth_date

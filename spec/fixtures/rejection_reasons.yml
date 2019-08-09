@@ -1,0 +1,4 @@
+not_enough_qualified:
+  name: Pas assez qualifié
+other:
+  name: Autre

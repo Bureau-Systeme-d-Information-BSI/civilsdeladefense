@@ -45,6 +45,13 @@ rescue ActiveRecord::PendingMigrationError => e
   exit 1
 end
 
+Shoulda::Matchers.configure do |config|
+  config.integrate do |with|
+    with.test_framework :rspec
+    with.library :rails
+  end
+end
+
 # Devise routing helpers
 module DeviseRoutingHelpers
   # workaround for this issue https://github.com/plataformatec/devise/issues/1670

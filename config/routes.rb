@@ -78,6 +78,7 @@ Rails.application.routes.draw do
           post :move_left, :move_right
         end
       end
+      resources :rejection_reasons
       resources :salary_ranges
       resources :job_application_file_types
       (JobOffer::SETTINGS + %i[email_template job_application_file_types]).each do |setting|

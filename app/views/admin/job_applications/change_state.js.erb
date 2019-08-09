@@ -1,11 +1,8 @@
-var jobApplicationModal = document.getElementById('remoteContentModal')
-if (jobApplicationModal !== null) {
-  var headNode = jobApplicationModal.querySelector('.head')
-  if (headNode !== null) {
-    var headHtml = '<%= j render(partial: 'job_application_head', locals: { job_application: @job_application }) %>'
-    var frag = document.createRange().createContextualFragment(headHtml)
-    headNode.replaceWith(frag)
-  }
+var activityNode = document.getElementById('<%= dom_id(@job_application, 'activity') %>')
+if (activityNode !== null) {
+  var html = '<%= j render(partial: '/admin/job_applications/job_application_activity') %>'
+  var frag = document.createRange().createContextualFragment(html)
+  activityNode.replaceWith(frag)
 }
 
 var cardNode = document.getElementById('<%= dom_id(@job_application) %>')
@@ -22,8 +19,14 @@ if (cardNode !== null) {
       containerNode.insertAdjacentHTML('afterbegin', html)
     }
   }
-
-  $.snackbar({content: '<%= @notification %>'})
 }
 
+<%- if @job_application.rejected? %>
+  var url = '<%= url_for([:admin, @job_application]) %>' + '?tabopen=emails'
+  $('#remoteContentModal').find('.modal-content').load(url, function() {
+    $('#remoteContentModal').modal( 'show' );
+  });
+<%- end %>
+
+$.snackbar({content: '<%= @notification %>'})
 window.recomputeColumnTotal('<%= @state %>')

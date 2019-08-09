@@ -1,18 +1,19 @@
+- tab_active = job_applications_tab_active
 .container-fluid
   = render partial: 'job_application_head', locals: {job_application: @job_application}
   .row.bg-card-bg
     .col-12.col-md-8.border-right{class: job_application_modal_section_classes}
       .tab-content
-        .tab-pane.fade.show.active#profile{role: :tabpanel, aria: {labelledby: :profile}}
+        .tab-pane.fade.show#profile{class: tab_active == :profile && 'active show', role: :tabpanel, aria: {labelledby: :profile}}
           = render partial: 'job_application_profile', locals: {job_application: @job_application}
           - if @other_job_applications.any?
             = render partial: "other_job_applications", locals: {other_job_applications: @other_job_applications}
-        .tab-pane.fade.show#overview{role: :tabpanel, aria: {labelledby: :overview}}
+        .tab-pane.fade.show#overview{class: tab_active == :overview && 'active show', role: :tabpanel, aria: {labelledby: :overview}}
           = render partial: 'job_application_overview', locals: {job_application: @job_application}
         - if can? :manage, Email
-          .tab-pane.fade#emails{role: :tabpanel, aria: {labelledby: :emails}}
+          .tab-pane.fade#emails{class: tab_active == :emails && 'active show', role: :tabpanel, aria: {labelledby: :emails}}
             = render partial: 'job_application_emails', locals: {job_application: @job_application}
-        .tab-pane.fade#files{role: :tabpanel, aria: {labelledby: :files}}
+        .tab-pane.fade#files{class: tab_active == :files && 'active show', role: :tabpanel, aria: {labelledby: :files}}
           = render partial: 'job_application_files', locals: {job_application: @job_application}
     .col-12.col-md-4{class: job_application_modal_section_classes}
       = render partial: "job_application_activity"

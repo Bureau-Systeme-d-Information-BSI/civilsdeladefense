@@ -228,6 +228,7 @@ fr:
         failure: "Erreur dans la mise à jour du profil"
       job_application_activity:
         title: "Activité et commentaires"
+        title_state: "État de la candidature"
         activities:
           creation_html: "<span class='user-name'>%{name}</span> a postulé"
           change_state_html: "<span class='user-name'>%{admin_name}</span> a déplacé <span class='user-name'>%{name}</span> dans la colonne “%{state_name}”"
@@ -357,6 +358,7 @@ fr:
           contract_types: "Types de contrat"
           study_levels: "Niveaux d'études"
           experience_levels: "Expériences"
+          rejection_reasons: "Motifs de refus"
           sectors: "Secteurs / Filières"
           salary_ranges: "Estimations salariales"
           company : "Entreprise"
@@ -514,6 +516,20 @@ fr:
           success: "Type de contrat mis à jour !"
         destroy:
           success: "Type de contrat supprimé !"
+      rejection_reasons:
+        index:
+          title: "Motifs de rejet d'une candidature"
+          add: "Ajouter"
+          card_title:
+            zero: 'Aucun motif pour le moment'
+            one: '1 motif'
+            other: '%{count} motifs'
+        new:
+          title: "Ajouter un motif"
+        create:
+          success: "Motif ajouté !"
+        destroy:
+          success: "Motif supprimé !"
       salary_ranges:
         index:
           title: "Estimations salariales"

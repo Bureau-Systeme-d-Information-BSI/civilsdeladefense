@@ -144,6 +144,8 @@ autres membres de votre équipe.'
     prompts:
       administrator:
         role: 'Sélectionner un rôle'
+      job_application:
+        rejection_reason_id: 'Choisissez un motif de refus'
     include_blanks:
       administrator:
         role: 'Aucun rôle'

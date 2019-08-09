@@ -28,7 +28,7 @@ class Admin::JobApplicationsController < Admin::BaseController
     respond_to do |format|
       if @job_application.update(job_application_params)
         personal_profile = @job_application.user.personal_profile
-        personal_profile.datalake_to_job_application_profiles!
+        personal_profile&.datalake_to_job_application_profiles!
         format.html { redirect_to [:admin, @job_application], notice: t('.success') }
         format.js do
           @notification = t('.success')
@@ -84,7 +84,8 @@ class Admin::JobApplicationsController < Admin::BaseController
     profile_fields = %i[id gender birth_date nationality has_residence_permit is_currently_employed
                         availability_date_in_month study_level_id study_type specialization
                         experience_level_id corporate_experience website_url
-                        address_1 address_2 postcode city country phone]
+                        address_1 address_2 postcode city country phone
+                        rejection_reason_id]
     fields << { user_attributes: [:id, personal_profile_attributes: profile_fields] }
     params.require(:job_application).permit(fields)
   end

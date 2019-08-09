@@ -19,6 +19,7 @@ class JobApplication < ApplicationRecord
 
   belongs_to :job_offer
   belongs_to :user
+  belongs_to :rejection_reason, optional: true
   accepts_nested_attributes_for :user
   belongs_to :employer
   has_one :personal_profile, as: :personal_profileable
@@ -38,6 +39,7 @@ class JobApplication < ApplicationRecord
 
   before_validation :set_employer
   before_save :compute_notifications_counter
+  before_save :cleanup_rejection_reason, unless: proc { |ja| ja.rejected? }
 
   FINISHED_STATES = %i[rejected phone_meeting_rejected after_meeting_rejected affected].freeze
   enum state: {
@@ -116,6 +118,10 @@ class JobApplication < ApplicationRecord
 
   def set_employer
     self.employer_id ||= job_offer.employer_id
+  end
+
+  def cleanup_rejection_reason
+    self.rejection_reason = nil
   end
 
   def compute_notifications_counter!

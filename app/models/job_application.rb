@@ -116,7 +116,7 @@ class JobApplication < ApplicationRecord
   scope :finished, -> { where(state: FINISHED_STATES) }
   scope :not_finished, -> { where.not(state: FINISHED_STATES) }
   # scope :group_by_day, -> { group('date_trunc(\'month\', created_at)').unscope(:order) }
-  scope :between, -> (a, b) { where(created_at: b..a) }
+  scope :between, ->(a, b) { where(created_at: b..a) }
 
   def set_employer
     self.employer_id ||= job_offer.employer_id

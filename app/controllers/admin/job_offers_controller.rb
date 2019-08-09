@@ -5,6 +5,7 @@ class Admin::JobOffersController < Admin::BaseController
   layout :choose_layout
 
   include JobOfferStateActions
+  include JobOfferStatisticsActions
 
   # GET /admin/job_offers
   # GET /admin/job_offers.json
@@ -23,28 +24,6 @@ class Admin::JobOffersController < Admin::BaseController
   # GET /admin/job_offers/1
   # GET /admin/job_offers/1.json
   def show
-  end
-
-  # GET /admin/job_offers/1/stats
-  # GET /admin/job_offers/1/stats.json
-  def stats
-    date_end = Date.parse(params[:end]) if params[:end].present?
-    date_end ||= Date.today
-    date_start = Date.parse(params[:start]) if params[:start].present?
-    date_start ||= date_end - 7.days
-
-    @date_start_display = date_start.to_date.strftime('%d/%m/%Y')
-    @date_end_display = date_end.to_date.strftime('%d/%m/%Y')
-
-    @per_day = @job_offer.job_applications.unscope(:order).group_by_day(:created_at, range: date_start..date_end).count
-    stats_relationship = @job_offer.job_applications.joins(:personal_profile).unscope(:order).where(job_applications: {created_at: date_start..date_end})
-    @per_gender = stats_relationship.group(:gender).count
-    @per_nationality = stats_relationship.group(:nationality).count
-  end
-
-  # GET /admin/job_offers/1/applicant_stats
-  # GET /admin/job_offers/1/applicant_stats.json
-  def applicant_stats
   end
 
   # GET /admin/job_offers/1/board

@@ -40,6 +40,7 @@ gem 'devise'
 gem 'file_validators'
 gem 'fog-openstack'
 gem 'friendly_id'
+gem 'groupdate'
 gem 'haml-rails'
 gem 'inherited_resources'
 gem 'invisible_captcha'
@@ -55,7 +56,7 @@ gem 'simple_form'
 gem 'sqreen', '>= 1.16'
 gem 'will_paginate'
 
-gem 'clockwork' # needed for staging on Scalingo
+gem 'clockwork' # simulate cron on Scalingo
 
 gem 'faker', require: false
 

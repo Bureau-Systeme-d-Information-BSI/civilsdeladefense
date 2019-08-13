@@ -9,7 +9,7 @@
 
 import Url from 'domurl'
 import flatpickr from 'flatpickr'
-import { French } from "flatpickr/dist/l10n/fr"
+import { French } from 'flatpickr/dist/l10n/fr'
 import $ from 'jquery'
 window.jQuery = $
 window.$ = $
@@ -20,6 +20,66 @@ import Popper from 'popper.js'
 window.Popper = Popper
 require('snackbarjs')
 require('bootstrap-material-design')
+import Highcharts from 'highcharts'
+Highcharts.setOptions({
+  lang: {
+    loading: 'Chargement...',
+    months: ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'],
+    weekdays: ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'],
+    shortMonths: ['jan', 'fév', 'mar', 'avr', 'mai', 'juin', 'juil', 'août', 'sep', 'oct', 'nov', 'déc'],
+    exportButtonTitle: "Exporter",
+    printButtonTitle: "Imprimer",
+    rangeSelectorFrom: "Du",
+    rangeSelectorTo: "au",
+    rangeSelectorZoom: "Période",
+    downloadPNG: 'Télécharger en PNG',
+    downloadJPEG: 'Télécharger en JPEG',
+    downloadPDF: 'Télécharger en PDF',
+    downloadSVG: 'Télécharger en SVG',
+    resetZoom: "Réinitialiser le zoom",
+    resetZoomTitle: "Réinitialiser le zoom",
+    thousandsSep: " ",
+    decimalPoint: ','
+  }
+});
+
+const chart = Highcharts.chart('per-day-graph', {
+  height: '200px',
+  title: {
+    text: null
+  },
+  credits: {
+    enabled: false
+  },
+  tooltip: {
+    crosshairs: true
+  },
+  legend: {
+    enabled: false
+  },
+  xAxis: {
+    type: 'datetime'
+  },
+  yAxis: {
+    allowDecimals: false,
+    legend: {
+      enable: false
+    },
+    title: {
+      text: null
+    }
+  },
+  series: [{
+    type: 'column',
+    name: 'Nombre de candidatures',
+    data: per_day_data.map(function(point) {
+      return [
+        new Date(point[0]).getTime(),
+        point[1]
+      ];
+    })
+  }]
+})
 
 const Rails = require('rails-ujs')
 Rails.start()

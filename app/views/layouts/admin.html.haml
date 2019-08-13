@@ -20,7 +20,6 @@
       - elsif flash[:success]
         .d-none.alert.alert-success= flash[:success]
       = content_for?(:content) ? yield(:content) : yield
-      = javascript_pack_tag 'admin-bundle'
       - if ENV['INCLUDE_TRACKERS']
         = render partial: "/shared/trackers"
     - else
@@ -44,3 +43,4 @@
       = javascript_pack_tag 'devise-bundle'
       - if ENV['INCLUDE_TRACKERS']
         = render partial: "/shared/trackers"
+    = javascript_pack_tag 'admin-bundle'

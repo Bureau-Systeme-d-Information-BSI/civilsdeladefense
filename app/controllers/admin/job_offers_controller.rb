@@ -5,6 +5,7 @@ class Admin::JobOffersController < Admin::BaseController
   layout :choose_layout
 
   include JobOfferStateActions
+  include JobOfferStatisticsActions
 
   # GET /admin/job_offers
   # GET /admin/job_offers.json
@@ -105,7 +106,7 @@ class Admin::JobOffersController < Admin::BaseController
   protected
 
   def choose_layout
-    if %w[index archived show board].include?(action_name)
+    if %w[index archived show board stats applicant_stats].include?(action_name)
       'admin/job_offers_with_sidebar'
     else
       'admin'

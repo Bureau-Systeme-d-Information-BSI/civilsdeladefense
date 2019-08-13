@@ -83,8 +83,8 @@ class JobOffer < ApplicationRecord
   aasm column: :state, enum: true do
     state :draft, initial: true
     state :published, before_enter: :set_published_at
-    state :suspended
-    state :archived
+    state :suspended, before_enter: :set_suspended_at
+    state :archived, before_enter: :set_archived_at
 
     event :publish do
       transitions from: [:draft], to: :published
@@ -144,6 +144,14 @@ class JobOffer < ApplicationRecord
 
   def set_published_at
     self.published_at = Time.now
+  end
+
+  def set_archived_at
+    self.archived_at = Time.now
+  end
+
+  def set_suspended_at
+    self.suspended_at = Time.now
   end
 
   def update_category_counter

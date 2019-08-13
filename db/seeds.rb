@@ -276,15 +276,20 @@ user.confirm
 job_application = JobApplication.new do |ja|
   ja.job_offer = job_offer
   ja.user = user
-  ja.first_name = user.first_name
-  ja.last_name = user.last_name
-  ja.current_position = 'Dev'
-  ja.phone = '0606060606'
-  ja.terms_of_service = ja.certify_majority = true
-  ja.city = 'Paris'
-  ja.address_1 = '1 avenue des Champs Elysées'
-  ja.country = 'FR'
+  ja.terms_of_service = true
+  ja.certify_majority = true
 end
+job_application.build_personal_profile({
+  gender: 'male',
+  nationality: 'FR',
+  current_position: 'Dev',
+  phone: '0606060606',
+  address_1: '1 avenue des Champs Elysées',
+  postcode: '75008',
+  city: 'Paris',
+  country: 'FR'
+
+})
 job_application.job_application_files.build content: file,
                                             job_application_file_type: resume
 job_application.job_application_files.build content: file,
@@ -303,15 +308,19 @@ end
 job_application2 = JobApplication.new do |ja|
   ja.job_offer = job_offer2
   ja.user = user
-  ja.first_name = user.first_name
-  ja.last_name = user.last_name
-  ja.current_position = 'Dev'
-  ja.phone = '0606060606'
-  ja.terms_of_service = ja.certify_majority = true
-  ja.city = 'Paris'
-  ja.address_1 = '1 avenue des Champs Elysées'
-  ja.country = 'FR'
+  ja.terms_of_service = true
+  ja.certify_majority = true
 end
+job_application2.build_personal_profile({
+  gender: 'male',
+  nationality: 'FR',
+  current_position: 'Dev',
+  phone: '0606060606',
+  address_1: '1 avenue des Champs Elysées',
+  postcode: '75008',
+  city: 'Paris',
+  country: 'FR'
+})
 job_application2.job_application_files.build content: file,
                                             job_application_file_type: resume
 job_application2.job_application_files.build content: file,
@@ -327,8 +336,10 @@ user_candidate_of_all.skip_confirmation_notification!
 user_candidate_of_all.save!
 user_candidate_of_all.confirm
 
+nationalities = %w[FR BE DE EN]
+
 JobOffer.where.not(duration_contract: nil).each do |job_offer|
-  5.times do |_i|
+  15.times do |_i|
     user = User.new email: Faker::Internet.email,
                     first_name: Faker::Name.first_name,
                     last_name: Faker::Name.last_name,
@@ -341,15 +352,20 @@ JobOffer.where.not(duration_contract: nil).each do |job_offer|
     job_application = JobApplication.new do |ja|
       ja.job_offer = job_offer
       ja.user = user
-      ja.first_name = user.first_name
-      ja.last_name = user.last_name
-      ja.current_position = 'Dev'
-      ja.phone = '0606060606'
-      ja.terms_of_service = ja.certify_majority = true
-      ja.city = 'Paris'
-      ja.address_1 = '1 avenue des Champs Elysées'
-      ja.country = 'FR'
+      ja.terms_of_service = true
+      ja.certify_majority = true
+      ja.created_at = 1.upto(6).map{|x| x.days.ago}
     end
+    job_application.build_personal_profile({
+      gender: PersonalProfile.genders.keys.sample,
+      nationality: nationalities.sample,
+      current_position: 'Dev',
+      phone: '0606060606',
+      address_1: '1 avenue des Champs Elysées',
+      postcode: '75008',
+      city: 'Paris',
+      country: 'FR'
+    })
     job_application.job_application_files.build content: file,
                                                 job_application_file_type: resume
     job_application.job_application_files.build content: file,
@@ -376,15 +392,19 @@ JobOffer.where.not(duration_contract: nil).each do |job_offer|
   job_application = JobApplication.new do |ja|
     ja.job_offer = job_offer
     ja.user = user_candidate_of_all
-    ja.first_name = user_candidate_of_all.first_name
-    ja.last_name = user_candidate_of_all.last_name
-    ja.current_position = 'Dev'
-    ja.phone = '0606060606'
-    ja.terms_of_service = ja.certify_majority = true
-    ja.city = 'Paris'
-    ja.address_1 = '1 avenue des Champs Elysées'
-    ja.country = 'FR'
+    ja.terms_of_service = true
+    ja.certify_majority = true
   end
+  job_application.build_personal_profile({
+    gender: PersonalProfile.genders.keys.sample,
+    nationality: nationalities.sample,
+    current_position: 'Dev',
+    phone: '0606060606',
+    address_1: '1 avenue des Champs Elysées',
+    postcode: '75008',
+    city: 'Paris',
+    country: 'FR'
+  })
   job_application.job_application_files.build content: file,
                                               job_application_file_type: resume
   job_application.job_application_files.build content: file,

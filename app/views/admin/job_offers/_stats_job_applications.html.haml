@@ -1,0 +1,62 @@
+%h1.h4.mt-5.mb-3= t('.title')
+
+%hr.mb-0
+.statistics-row
+  .col-12.col-md-3.statistic__block
+    .statistic__name
+      = t('.title_job_applications_processed_number_html')
+    .statistic__value
+      = @per_state.values_at('initial', 'phone_meeting', 'to_be_met').compact.sum
+  .col-12.col-md-3.statistic__block
+    .statistic__name
+      = t('.title_job_applications_initial_number_html')
+    .statistic__value
+      = @per_state.values_at('initial').compact.sum
+  .col-12.col-md-3.statistic__block
+    .statistic__name
+      = t('.title_job_applications_phone_meeting_number_html')
+    .statistic__value
+      = @per_state.values_at('phone_meeting').compact.sum
+  .col-12.col-md-3.statistic__block
+    .statistic__name
+      = t('.title_job_applications_to_be_met_number_html')
+    .statistic__value
+      = @per_state.values_at('to_be_met').compact.sum
+%hr.my-0
+.statistics-row
+  .col-12.col-md-3.statistic__block
+    .statistic__name
+      = t('.title_job_applications_all_rejected_number_html')
+    .statistic__value
+      = @per_state.values_at('rejected', 'phone_meeting_rejected', 'after_meeting_rejected').compact.sum
+  .col-12.col-md-3.statistic__block
+    .statistic__name
+      = t('.title_new_job_applications_after_selection_number_html')
+    .statistic__value
+      = @per_state.values_at('rejected').compact.sum
+  .col-12.col-md-3.statistic__block
+    .statistic__name
+      = t('.title_job_applications_after_phone_call_number_html')
+    .statistic__value
+      = @per_state.values_at('phone_meeting_rejected').compact.sum
+  .col-12.col-md-3.statistic__block
+    .statistic__name
+      = t('.title_job_applications_after_meeting_number_html')
+    .statistic__value
+      = @per_state.values_at('after_meeting_rejected').compact.sum
+%hr.mt-0
+
+%strong.text-quaternary.d-block.mt-4= t('.rejection_reasons')
+.pl-3.mt-2
+  - total = @per_rejection_reason.values.sum
+  - @per_rejection_reason.each_with_index do |(k, v), index|
+    .d-flex.align-items-center.mb-2
+      %div{style: 'width: 100px;'}
+        = @rejection_reasons.detect{|x| x.id == k&.id}&.name || t('unknown')
+      %div{style: 'width: 100px;'}
+        - percentage = (v * 100.0) / total
+        = "#{percentage.to_i }%"
+      .flex-grow-1
+        .bg-quaternary{style: "height:15px; width: #{percentage}%;opacity:0.8;"}
+- if show_stats_debug?
+  %code= @per_rejection_reason

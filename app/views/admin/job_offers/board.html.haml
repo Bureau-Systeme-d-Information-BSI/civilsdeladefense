@@ -1,5 +1,5 @@
 - @layout_full_width = true
-- @page_title = @job_offer.title
+- @page_title = t('.title', job_offer_identifier: @job_offer.identifier)
 = render partial: '/admin/job_offers/navbar_job_offer'
 - draggable = can? :manage, @job_applications.values.flatten.first
 .board#board{data: {draggable: draggable}}

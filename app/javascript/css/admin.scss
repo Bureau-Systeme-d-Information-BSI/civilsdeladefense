@@ -372,3 +372,23 @@ a {
     display: none;
   }
 }
+
+.statistic__block {
+  @extend .d-flex, .flex-column, .border-right, .px-4, .py-4;
+}
+.statistics-row {
+  @extend .d-flex, .flex-wrap;
+  > .statistic__block {
+    &:last-child {
+      @extend .border-right-0;
+    }
+  }
+}
+.statistic__name {
+  @extend .font-weight-bold, .text-quaternary, .flex-fill;
+  line-height: 1.1;
+}
+.statistic__value {
+  @extend .d-flex, .justify-content-center, .h1, .text-quaternary, .mt-3, .mb-0;
+  line-height: 1;
+}

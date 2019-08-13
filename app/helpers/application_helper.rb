@@ -6,7 +6,7 @@ module ApplicationHelper
   end
 
   def show_stats_debug?
-    Rails.env.development? || params[:debug].present?
+    params[:debug].present?
   end
 
   def time_ago_in_words_minimal(time)

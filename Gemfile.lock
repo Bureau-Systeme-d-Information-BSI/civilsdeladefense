@@ -93,7 +93,6 @@ GEM
       activemodel (>= 4.0.0)
       activesupport (>= 4.0.0)
       mime-types (>= 1.16)
-    chartkick (3.2.1)
     childprocess (0.9.0)
       ffi (~> 1.0, >= 1.0.11)
     chromedriver-helper (1.2.0)
@@ -416,7 +415,6 @@ DEPENDENCIES
   cancancan
   capybara (>= 2.15, < 4.0)
   carrierwave
-  chartkick
   chromedriver-helper
   clockwork
   counter_culture

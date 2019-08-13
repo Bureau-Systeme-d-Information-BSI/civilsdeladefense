@@ -1,0 +1,34 @@
+%h1.h4.mt-5.mb-3= t('.title')
+%strong.text-quaternary.d-block= t('.title_per_gender')
+.pl-3.mt-2
+  - total = @per_gender.values.sum
+  - @per_gender.each_with_index do |(k, v), index|
+    .d-flex.align-items-center.mb-2
+      %div{style: 'width: 100px;'}
+        - if k.present?
+          - val = PersonalProfile.genders.key(k)
+          = PersonalProfile.human_attribute_name("gender/#{val}")
+        - else
+          = t('unknown')
+      %div{style: 'width: 100px;'}
+        - percentage = (v * 100.0) / total
+        = "#{percentage.to_i }%"
+      .flex-grow-1
+        .bg-quaternary{style: "height:15px; width: #{percentage}%;opacity:0.8;"}
+- if show_stats_debug?
+  %code= @per_gender
+.mt-4
+  %strong.text-quaternary.d-block= t('.title_per_nationality')
+  .pl-3.mt-2
+    - total = @per_nationality.values.sum
+    - @per_nationality.each_with_index do |(k, v), index|
+      .d-flex.align-items-center.mb-2
+        %div{style: 'width: 100px;'}
+          = k.present? ? k : t('unknown')
+        %div{style: 'width: 100px;'}
+          - percentage = (v * 100.0) / total
+          = "#{percentage.to_i }%"
+        .flex-grow-1
+          .bg-quaternary{style: "height:15px; width: #{percentage}%;opacity:0.8;"}
+  - if show_stats_debug?
+    %code= @per_nationality

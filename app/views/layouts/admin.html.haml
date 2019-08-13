@@ -6,7 +6,6 @@
     %meta{name: "viewport", content: "width=device-width, initial-scale=1, shrink-to-fit=no"}
     = stylesheet_link_tag 'https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500|Roboto+Mono:400,500'
     = stylesheet_pack_tag 'admin-style'
-    = javascript_pack_tag 'admin-bundle'
     = csrf_meta_tags
     = csp_meta_tag
   - style = 'overflow: hidden;' if controller.controller_name == 'job_offers' && controller.action_name == 'board'
@@ -44,3 +43,4 @@
       = javascript_pack_tag 'devise-bundle'
       - if ENV['INCLUDE_TRACKERS']
         = render partial: "/shared/trackers"
+    = javascript_pack_tag 'admin-bundle'

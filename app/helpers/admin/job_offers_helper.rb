@@ -5,10 +5,17 @@ module Admin::JobOffersHelper
     {
       height: '200px',
       library: {
-        elements: {
-          line: {
-            tension: 0
-          }
+        tooltip: {
+          crosshairs: true
+        },
+        legend: {
+          enabled: false
+        },
+        xAxis: {
+          type: 'datetime'
+        },
+        yAxis: {
+          allowDecimals: false
         }
       }
     }

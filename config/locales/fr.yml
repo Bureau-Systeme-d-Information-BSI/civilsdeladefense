@@ -1,6 +1,8 @@
 fr:
   "yes": "Oui"
   "no": "Non"
+  non_applicable: "N/A"
+  unknown: "Inconnu"
   time:
     formats:
       default: "%-d %b %Y %H:%M"
@@ -266,6 +268,8 @@ fr:
         new_record: "Cliquer sur \"Enregistrer\" pour inviter"
         waiting: "En attente de confirmation"
         active: "Utilisateur actif"
+      board:
+        title: "Gestion des candidatures de l'offre %{job_offer_identifier}"
       index:
         title: "Offres du Ministère des Armées"
         new_job_offer: "Ajouter une offre"
@@ -308,22 +312,34 @@ fr:
       publish:
         success: "Annonce publiée !"
       stats:
-        title: "Statistiques de l'offre"
+        title: "Statistiques de l'offre %{job_offer_identifier}"
         published_since_days:
-          one: "Offre publiée depuis 1 jour"
-          other: "Offre publiée depuis %{count} jours"
+          one: "Publiée depuis 1 jour"
+          other: "Publiée depuis %{count} jours"
+        job_applications_count_html:
+          zero: "<span class='text-tall'>Aucune</span> candidature pour le moment"
+          one: "<span class='text-tall'>1</span> candidature au total"
+          other: "<span class='text-tall'>%{count}</span> candidatures au total"
+      stats_intro:
         title_views_number_html: "Nombre de vues"
-        title_job_applications_number_html: "Nombre&nbsp;de candidatures"
-        title_new_job_applications_number_html: "Nouvelles candidatures"
-        title_job_applications_no_rejected_html: "Nombre&nbsp;de candidatures non&nbsp;rejetées"
-      applicant_stats:
-        title: "Statistiques des candidatures"
+        title_job_applications_number_html: "Nombre de candidatures total"
+        title_job_applications_processed_number_html: "Nombre de candidatures en&nbsp;cours&nbsp;de&nbsp;traitement"
+        title_job_applications_rejected_number_html: "Nombre de candidatures rejetées"
+      stats_applicants:
+        title: "Statistiques des candidats"
         title_per_gender: "Genres"
         title_per_nationality: "Nationalités"
-        job_applications_count:
-          zero: "Aucune candidature pour cette offre"
-          one: "1 candidature pour cette offre"
-          other: "%{count} candidatures pour cette offre"
+      stats_job_applications:
+        title: "Statistiques des candidatures"
+        rejection_reasons: "Motif des refus"
+        title_job_applications_processed_number_html: "Nombre de candidatures en cours de recrutement"
+        title_job_applications_initial_number_html: "En attente sélection"
+        title_job_applications_phone_meeting_number_html: "En attente entretien téléphonique"
+        title_job_applications_to_be_met_number_html: "En attente entretien physique"
+        title_job_applications_all_rejected_number_html: "Nombre de candidatures refusées"
+        title_new_job_applications_after_selection_number_html: "Après sélection des candidats"
+        title_job_applications_after_phone_call_number_html: "Après entretiens téléphoniques"
+        title_job_applications_after_meeting_number_html: "Après entretiens physiques"
       create:
         success: "Annonce créée !"
       create_and_publish:
@@ -636,6 +652,10 @@ fr:
         job_application_file:
           attributes:
             content:
+              file_size_is_less_than: "Fichier trop volumineux, doit être max. 2Mo"
+        user:
+          attributes:
+            photo:
               file_size_is_less_than: "Fichier trop volumineux, doit être max. 2Mo"
     models:
       job_offer: "Offre"

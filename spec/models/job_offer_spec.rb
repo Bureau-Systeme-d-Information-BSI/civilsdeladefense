@@ -50,7 +50,7 @@ RSpec.describe JobOffer do
     expect(jb.state).to eq('published')
     expect(jb.published_at).not_to be_nil
   end
-  it 'should set published_at date when state is published' do
+  it 'should set archived_at date when state is archived' do
     jb = create(:job_offer)
     expect(jb.state).to eq('draft')
     expect(jb.archived_at).to be_nil
@@ -58,6 +58,16 @@ RSpec.describe JobOffer do
     jb.archive!
     expect(jb.state).to eq('archived')
     expect(jb.archived_at).not_to be_nil
+  end
+
+  it 'should set suspended_at date when state is suspended' do
+    jb = create(:job_offer)
+    expect(jb.state).to eq('draft')
+    expect(jb.suspended_at).to be_nil
+    jb.publish!
+    jb.suspend!
+    expect(jb.state).to eq('suspended')
+    expect(jb.suspended_at).not_to be_nil
   end
 
   it 'should correctly find current most advanced job application state' do

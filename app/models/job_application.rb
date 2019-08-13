@@ -26,7 +26,7 @@ class JobApplication < ApplicationRecord
   accepts_nested_attributes_for :personal_profile
   has_many :messages, dependent: :destroy
   has_many :emails, dependent: :destroy
-  has_many :job_application_files, index_errors: true
+  has_many :job_application_files, index_errors: true, dependent: :destroy
   accepts_nested_attributes_for :job_application_files
 
   has_many :job_application_actors

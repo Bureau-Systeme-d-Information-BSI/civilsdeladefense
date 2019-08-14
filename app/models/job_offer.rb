@@ -180,10 +180,9 @@ class JobOffer < ApplicationRecord
 
   def possible_events
     @possible_events ||= begin
-      aasm.events.inject([]) do |memo, event|
+      aasm.events.each_with_object([]) do |event, memo|
         event_name = event.name.to_s
         memo << event_name unless state.starts_with?(event_name)
-        memo
       end
     end
   end

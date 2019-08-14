@@ -79,7 +79,7 @@ RSpec.describe JobOffer do
     archived_at = job_offer.archived_at
     expect(archived_at).not_to be_nil
 
-    job_offer.update_columns({archived_at: nil, published_at: nil})
+    job_offer.update_columns(archived_at: nil, published_at: nil)
     expect(job_offer.published_at).to be_nil
     expect(job_offer.archived_at).to be_nil
 

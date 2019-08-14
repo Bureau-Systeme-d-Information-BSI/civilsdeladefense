@@ -4,10 +4,8 @@
 module JobOfferStateTimestamp
   extend ActiveSupport::Concern
 
-  def aasm_event_fired(event, from, to)
-    if %i[published archived suspended].include?(to)
-      self.send("#{to}_at=", updated_at)
-    end
+  def aasm_event_fired(_event, _from, to)
+    send("#{to}_at=", updated_at) if %i[published archived suspended].include?(to)
   end
 
   def rebuild_published_timestamp!
@@ -24,7 +22,8 @@ module JobOfferStateTimestamp
 
   def rebuild_timestamp!(state_name)
     target_audit = audits.reorder(version: :desc).detect do |audit|
-      audit.audited_changes.keys.include?('state') && audit.audited_changes['state'].last == state_name
+      state_has_changed = audit.audited_changes.keys.include?('state')
+      state_has_changed && audit.audited_changes['state'].last == state_name
     end
     update_column "#{state_name}_at", target_audit.created_at if target_audit
   end

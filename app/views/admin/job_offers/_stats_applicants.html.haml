@@ -43,7 +43,7 @@
     .statistic__name
       = t('.title_new_job_applications_experiences_fit_job_offer_number_html')
     .statistic__value
-      - if job_applications_count > 0
+      - if @job_applications_count > 0
         - percentage = (@experiences_fit_job_offer_count * 100.0) / @job_applications_count
         = number_to_percentage(percentage, precision: 0)
       - else
@@ -52,7 +52,7 @@
     .statistic__name
       = t('.title_job_applications_has_corporate_experience_number_html')
     .statistic__value
-      - if job_applications_count > 0
+      - if @job_applications_count > 0
         - percentage = (@has_corporate_experience_count * 100.0) / @job_applications_count
         = number_to_percentage(percentage, precision: 0)
       - else
@@ -61,7 +61,7 @@
     .statistic__name
       = t('.title_job_applications_is_currently_employed_number_html')
     .statistic__value
-      - if job_applications_count > 0
+      - if @job_applications_count > 0
         - percentage = (@is_currently_employed_count * 100.0) / @job_applications_count
         = number_to_percentage(percentage, precision: 0)
       - else

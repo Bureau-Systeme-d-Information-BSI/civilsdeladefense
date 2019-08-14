@@ -8,11 +8,14 @@
         - klasses = base_link_klasses.dup
         - klasses << :active if controller.action_name == 'show'
         = link_to t('.show'), [:admin, @job_offer], class: klasses
-      - if show_stats?
-        %li.mr-3.nav-item
+      %li.mr-3.nav-item
+        - unless @job_offer.draft?
           - klasses = base_link_klasses.dup
           - klasses << :active if controller.action_name == 'stats'
           = link_to t('.stats'), [:stats, :admin, @job_offer], class: klasses
+        - else
+          - klasses = base_link_klasses.dup
+          .nav-link{title: t('non_accessible')}= t('.stats')
       %li.mr-3.nav-item
         - klasses = base_link_klasses.dup
         - klasses << :active if controller.action_name == 'board'

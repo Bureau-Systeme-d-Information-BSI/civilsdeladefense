@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
-  def show_stats?
-    Rails.env.development? || ENV['SHOW_STATS'].present?
-  end
-
   def show_stats_debug?
     params[:debug].present?
   end

@@ -2,6 +2,7 @@ fr:
   "yes": "Oui"
   "no": "Non"
   non_applicable: "N/A"
+  non_accessible: "Pas accessible pour le moment"
   unknown: "Inconnu"
   time:
     formats:

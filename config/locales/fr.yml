@@ -306,7 +306,7 @@ fr:
           other: 'Candidatures'
         job_applications_to_be_treated_count:
           "Nouvelles candidatures"
-      navbar_job_offer:
+      job_offer_nav:
         show: "Description"
         stats: "Statistiques"
         board: "Candidatures"

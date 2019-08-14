@@ -22,7 +22,7 @@ class JobApplication < ApplicationRecord
   belongs_to :rejection_reason, optional: true
   accepts_nested_attributes_for :user
   belongs_to :employer
-  has_one :personal_profile, as: :personal_profileable
+  has_one :personal_profile, as: :personal_profileable, required: true
   accepts_nested_attributes_for :personal_profile
   has_many :messages, dependent: :destroy
   has_many :emails, dependent: :destroy

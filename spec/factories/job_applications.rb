@@ -6,7 +6,8 @@ FactoryBot.define do
     user
     terms_of_service true
     certify_majority true
-    after(:create) do |job_application|
+
+    before(:create) do |job_application|
       job_application.personal_profile = create(:personal_profile,
                                                 personal_profileable: job_application)
     end

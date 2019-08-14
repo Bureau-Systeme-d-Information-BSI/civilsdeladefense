@@ -2,6 +2,9 @@
 @import 'devise';
 @import 'board';
 
+$colors: $secondary $primary $tertiary $quaternary $quinary $dark-gray;
+@import '~highcharts/css/highcharts.scss';
+
 th {
   font-weight: $font-weight-bold;
 }
@@ -385,10 +388,25 @@ a {
   }
 }
 .statistic__name {
-  @extend .font-weight-bold, .text-quaternary, .flex-fill;
+  @extend .flex-fill, .text-quaternary, .font-weight-bold;
   line-height: 1.1;
 }
 .statistic__value {
-  @extend .d-flex, .justify-content-center, .h1, .text-quaternary, .mt-3, .mb-0;
+  @extend .d-flex, .justify-content-center, .text-quaternary, .mt-3, .mb-0, .font-weight-bold;
   line-height: 1;
+  font-size: 400%;
+}
+
+.bar-chart__category_name {
+  width: 100px;
+}
+
+.bar-chart__category_percentage {
+  @extend .text-secondary, .font-weight-bold;
+  width: 100px;
+}
+
+.bar-chart__bar {
+  @extend .bg-secondary;
+  height: 15px;
 }

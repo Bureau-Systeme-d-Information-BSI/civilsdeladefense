@@ -3,7 +3,7 @@
   - published_since_days = (Date.current - @job_offer.published_at.to_date).to_i
   .card.mt-3.stats
     .card-body
-      %h1.h4= @page_title
+      %h1.h4.text-quaternary= @page_title
       = t('.published_since_days', count: published_since_days)
       = render partial: 'stats_graph'
       = render partial: 'stats_intro'

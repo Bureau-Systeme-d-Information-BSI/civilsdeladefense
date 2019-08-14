@@ -192,6 +192,9 @@ document.addEventListener('DOMContentLoaded', function() {
   if (perDayChartNode !== null && perDayData !== undefined) {
     const perDayChart = Highcharts.chart(perDayChartNode, {
       height: '200px',
+      chart: {
+        styledMode: true
+      },
       title: {
         text: null
       },

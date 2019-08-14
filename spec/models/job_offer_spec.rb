@@ -56,6 +56,7 @@ RSpec.describe JobOffer do
     expect(job_offer.archived_at).to be_nil
     job_offer.publish!
     job_offer.archive!
+    job_offer.reload
     expect(job_offer.state).to eq('archived')
     expect(job_offer.archived_at).not_to be_nil
   end
@@ -66,6 +67,7 @@ RSpec.describe JobOffer do
     expect(job_offer.suspended_at).to be_nil
     job_offer.publish!
     job_offer.suspend!
+    job_offer.reload
     expect(job_offer.state).to eq('suspended')
     expect(job_offer.suspended_at).not_to be_nil
   end

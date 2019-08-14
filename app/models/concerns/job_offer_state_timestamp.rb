@@ -4,7 +4,8 @@
 module JobOfferStateTimestamp
   extend ActiveSupport::Concern
 
-  def aasm_event_fired(_event, _from, to)
+  def set_timestamp
+    to = aasm.to_state
     send("#{to}_at=", updated_at) if %i[published archived suspended].include?(to)
   end
 

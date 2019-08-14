@@ -84,9 +84,9 @@ class JobOffer < ApplicationRecord
   ## States and events
   aasm column: :state, enum: true do
     state :draft, initial: true
-    state :published
-    state :suspended
-    state :archived
+    state :published, before_enter: :set_timestamp
+    state :suspended, before_enter: :set_timestamp
+    state :archived, before_enter: :set_timestamp
 
     event :publish do
       transitions from: [:draft], to: :published

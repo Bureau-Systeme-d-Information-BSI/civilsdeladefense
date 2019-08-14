@@ -82,6 +82,7 @@ fr:
     suspend: "Mettre en pause"
     unarchive: "Désarchiver"
     update: "Mettre à jour"
+    unsuspend: "Republier"
   job_applications:
     form:
       general_informations: "Informations générales"
@@ -363,6 +364,12 @@ fr:
         success: "Annonce mise à jour et archivée !"
       suspend:
         success: "Annonce mise en pause !"
+      update_and_suspend:
+        success: "Annonce mise à jour et en pause !"
+      unsuspend:
+        success: "Annonce republiée !"
+      update_and_unsuspend:
+        success: "Annonce mise à jour et republiée !"
     emails:
       create:
         success: "Courriel envoyé !"

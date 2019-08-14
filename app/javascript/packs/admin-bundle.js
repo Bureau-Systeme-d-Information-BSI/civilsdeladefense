@@ -43,44 +43,6 @@ Highcharts.setOptions({
   }
 });
 
-const chart = Highcharts.chart('per-day-graph', {
-  height: '200px',
-  title: {
-    text: null
-  },
-  credits: {
-    enabled: false
-  },
-  tooltip: {
-    crosshairs: true
-  },
-  legend: {
-    enabled: false
-  },
-  xAxis: {
-    type: 'datetime'
-  },
-  yAxis: {
-    allowDecimals: false,
-    legend: {
-      enable: false
-    },
-    title: {
-      text: null
-    }
-  },
-  series: [{
-    type: 'column',
-    name: 'Nombre de candidatures',
-    data: per_day_data.map(function(point) {
-      return [
-        new Date(point[0]).getTime(),
-        point[1]
-      ];
-    })
-  }]
-})
-
 const Rails = require('rails-ujs')
 Rails.start()
 
@@ -225,6 +187,47 @@ document.addEventListener('DOMContentLoaded', function() {
   inPlaceEdit()
   addressAutocomplete()
   salaryRangeInputsHandling()
+
+  var perDayChartNode = document.getElementById('per-day-graph')
+  if (perDayChartNode !== null && perDayData !== undefined) {
+    const perDayChart = Highcharts.chart(perDayChartNode, {
+      height: '200px',
+      title: {
+        text: null
+      },
+      credits: {
+        enabled: false
+      },
+      tooltip: {
+        crosshairs: true
+      },
+      legend: {
+        enabled: false
+      },
+      xAxis: {
+        type: 'datetime'
+      },
+      yAxis: {
+        allowDecimals: false,
+        legend: {
+          enable: false
+        },
+        title: {
+          text: null
+        }
+      },
+      series: [{
+        type: 'column',
+        name: 'Nombre de candidatures',
+        data: perDayData.map(function(point) {
+          return [
+            new Date(point[0]).getTime(),
+            point[1]
+          ];
+        })
+      }]
+    })
+  }
 })
 
 $('#remoteContentModal').on('show.bs.modal', function (event) {

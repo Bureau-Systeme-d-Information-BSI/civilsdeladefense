@@ -1,5 +1,5 @@
 .mt-4
   #per-day-graph{style: 'height:200px;'}
-  = javascript_tag "var per_day_data = #{@per_day.to_a.to_json.html_safe};"
+  = javascript_tag "var perDayData = #{@per_day.to_a.to_json.html_safe};"
 - if show_stats_debug?
   %code= @per_day

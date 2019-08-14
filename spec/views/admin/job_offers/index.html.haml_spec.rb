@@ -24,13 +24,13 @@ RSpec.describe 'admin/job_offers/index', type: :view do
                                              owner: owner,
                                              category: category,
                                              employer: employer))
-    assign(:job_offers, JobOffer.all)
+    assign(:job_offers_unfiltered, JobOffer.all)
     assign(:q, JobOffer.ransack)
     collection = WillPaginate::Collection.new(4, 10, 0)
     ary1.each do |elt|
       collection << elt
     end
-    assign(:current_job_offers, collection)
+    assign(:job_offers_filtered, collection)
     assign(:employers, employers)
   end
 

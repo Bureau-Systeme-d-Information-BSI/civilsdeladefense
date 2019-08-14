@@ -10,12 +10,16 @@ class Admin::JobOffersController < Admin::BaseController
   # GET /admin/job_offers
   # GET /admin/job_offers.json
   def index
-    @job_offers = action_name == 'index' ? @job_offers_active : @job_offers_archived
-    @q = @job_offers.ransack(params[:q])
-    @current_job_offers = @q.result(distinct: true)
-    @current_job_offers = @current_job_offers.search_full_text(params[:s]).unscope(:order) if params[:s].present?
-    @current_job_offers = @current_job_offers.page(params[:page]).per_page(20)
-
+    @job_offers_unfiltered = action_name == 'index' ? @job_offers_active : @job_offers_archived
+    job_offers_nearly_filtered = @job_offers_unfiltered
+    if params[:s].present?
+      job_offers_nearly_filtered = job_offers_nearly_filtered.search_full_text(params[:s])
+                                                             .unscope(:order)
+    end
+    @q = job_offers_nearly_filtered.ransack(params[:q])
+    @job_offers_filtered = @q.result(distinct: true)
+                             .page(params[:page])
+                             .per_page(20)
     render action: :index
   end
 

@@ -1,4 +1,3 @@
-- job_applications_count = @job_offer.job_applications.count
 %hr.mb-0
 .statistics-row
   .col-12.col-md-3.statistic__block
@@ -10,7 +9,7 @@
     .statistic__name
       = t('.title_job_applications_number_html')
     .statistic__value
-      = job_applications_count
+      = @job_applications_count
   .col-12.col-md-3.statistic__block
     .statistic__name
       = t('.title_job_applications_processed_number_html')

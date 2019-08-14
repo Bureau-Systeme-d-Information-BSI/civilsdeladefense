@@ -329,6 +329,10 @@ fr:
         title: "Statistiques des candidats"
         title_per_gender: "Genres"
         title_per_nationality: "Nationalités"
+        title_new_job_applications_geo_number_html: "Localisés dans le bassin de l'offre"
+        title_new_job_applications_experiences_fit_job_offer_number_html: "Éxpérimentés pour l'offre"
+        title_job_applications_has_corporate_experience_number_html: "Éxpérimentés dans MinArm"
+        title_job_applications_is_currently_employed_number_html: "Candidats en poste"
       stats_job_applications:
         title: "Statistiques des candidatures"
         rejection_reasons: "Motif des refus"
@@ -394,7 +398,7 @@ fr:
           professional_categories: "Catégories professionnelles"
           contract_types: "Types de contrat"
           study_levels: "Niveaux d'études"
-          experience_levels: "Expériences"
+          experience_levels: "Éxpériences"
           rejection_reasons: "Motifs de refus"
           sectors: "Secteurs / Filières"
           salary_ranges: "Estimations salariales"
@@ -715,7 +719,7 @@ fr:
         kind/check_only_admin_only: "Fichier géré hors outil"
       salary_range:
         professional_category: "Catégorie"
-        experience_level: "Expérience"
+        experience_level: "Éxpérience"
         sector: "Filière"
         estimate_monthly_salary_net_html: "<div class='d-block'>Estimation mensuel net</div> (fonction publique)"
         estimate_annual_salary_gross_html: "<div class='d-block'>Estimation annuel brut</div> (secteur privé)"

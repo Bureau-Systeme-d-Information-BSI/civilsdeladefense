@@ -31,3 +31,30 @@
         .bar-chart__bar{style: "width: #{percentage}%;"}
 - if show_stats_debug?
   %code= @per_nationality
+
+%hr.mb-0.mt-5
+.statistics-row
+  .col-12.col-md-3.statistic__block
+    .statistic__name
+      = t('.title_new_job_applications_geo_number_html')
+    .statistic__value
+      = t('non_applicable')
+  .col-12.col-md-3.statistic__block
+    .statistic__name
+      = t('.title_new_job_applications_experiences_fit_job_offer_number_html')
+    .statistic__value
+      - percentage = (@experiences_fit_job_offer_count * 100.0) / @job_applications_count
+      = number_to_percentage(percentage, precision: 0)
+  .col-12.col-md-3.statistic__block
+    .statistic__name
+      = t('.title_job_applications_has_corporate_experience_number_html')
+    .statistic__value
+      - percentage = (@has_corporate_experience_count * 100.0) / @job_applications_count
+      = number_to_percentage(percentage, precision: 0)
+  .col-12.col-md-3.statistic__block
+    .statistic__name
+      = t('.title_job_applications_is_currently_employed_number_html')
+    .statistic__value
+      - percentage = (@is_currently_employed_count * 100.0) / @job_applications_count
+      = number_to_percentage(percentage, precision: 0)
+%hr.mt-0

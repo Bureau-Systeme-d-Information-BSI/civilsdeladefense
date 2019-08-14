@@ -6,7 +6,8 @@
       .card.job-offer-head-sticky
         .card-body
           = render partial: 'job_offer_head', locals: {job_offer: @job_offer, inside_card: true}
-          .text-center
-            = link_to t('.apply'), [:apply, @job_offer], class: 'btn btn-primary btn-raised btn-lg'
+          - unless preview_mode?
+            .text-center
+              = link_to t('.apply'), [:apply, @job_offer], class: 'btn btn-primary btn-raised btn-lg'
     .col-12.col-md-7
       = render partial: 'job_offer_content', locals: {job_offer: @job_offer}

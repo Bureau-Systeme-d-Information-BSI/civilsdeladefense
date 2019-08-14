@@ -5,6 +5,12 @@
 $colors: $secondary $primary $tertiary $quaternary $quinary $dark-gray;
 @import '~highcharts/css/highcharts.scss';
 
+@supports (position: sticky) {
+  [role="main"] .card {
+    z-index: unset;
+  }
+}
+
 th {
   font-weight: $font-weight-bold;
 }

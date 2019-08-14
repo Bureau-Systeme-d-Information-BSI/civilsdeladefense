@@ -177,4 +177,14 @@ class JobOffer < ApplicationRecord
     state = most_advanced_job_applications_state.to_sym
     JobApplication.aasm.states.index { |x| x.name == state }
   end
+
+  def possible_events
+    @possible_events ||= begin
+      aasm.events.inject([]) do |memo, event|
+        event_name = event.name.to_s
+        memo << event_name unless state.starts_with?(event_name)
+        memo
+      end
+    end
+  end
 end

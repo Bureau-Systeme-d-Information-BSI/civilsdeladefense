@@ -52,9 +52,10 @@ class JobOffer < ApplicationRecord
   validates :duration_contract, absence: true, unless: :contract_type_is_cdd?
 
   ## Scopes
-  scope :admin_index, -> { includes(:employer, :contract_type).order(created_at: :desc) }
-  scope :admin_index_active, -> { admin_index.where.not(state: :archived).includes(:job_offer_actors) }
-  scope :admin_index_archived, -> { admin_index.archived.includes(:job_offer_actors) }
+  default_scope { order(created_at: :desc) }
+  scope :admin_index, -> { includes(:employer, :contract_type, :job_offer_actors) }
+  scope :admin_index_active, -> { admin_index.where.not(state: :archived) }
+  scope :admin_index_archived, -> { admin_index.archived }
   scope :publicly_visible, -> { where(state: :published) }
   scope :search_import, -> { includes(*SETTINGS) }
 

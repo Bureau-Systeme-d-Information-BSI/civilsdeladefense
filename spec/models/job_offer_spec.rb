@@ -9,65 +9,91 @@ end
 RSpec.describe JobOffer do
   it 'should be invalid if duration <> nil when type = CDI' do
     le_type = contract_types(:cdi)
-    jb = build(:job_offer, contract_type: le_type, duration_contract: '2 mois')
+    job_offer = build(:job_offer, contract_type: le_type, duration_contract: '2 mois')
 
-    expect(jb.valid?).to be_falsey
+    expect(job_offer.valid?).to be_falsey
   end
 
   it 'should be invalid if duration <> nil when type = Interim' do
     le_type = contract_types(:interim)
-    jb = build(:job_offer, contract_type: le_type, duration_contract: '2 mois')
+    job_offer = build(:job_offer, contract_type: le_type, duration_contract: '2 mois')
 
-    expect(jb.valid?).to be_falsey
+    expect(job_offer.valid?).to be_falsey
   end
 
   it 'should be valid if duration = nil when type = Interim' do
     le_type = contract_types(:interim)
-    jb = build(:job_offer, contract_type: le_type, duration_contract: nil)
+    job_offer = build(:job_offer, contract_type: le_type, duration_contract: nil)
 
-    expect(jb.valid?).to be_truthy
+    expect(job_offer.valid?).to be_truthy
   end
 
   it 'should be invalid if duration = nil when type = CDD' do
     le_type = contract_types(:cdd)
-    jb = build(:job_offer, contract_type: le_type, duration_contract: nil)
+    job_offer = build(:job_offer, contract_type: le_type, duration_contract: nil)
 
-    expect(jb.valid?).to be_falsey
+    expect(job_offer.valid?).to be_falsey
   end
 
   it 'should be valid cdd if duration is edit when type = CDD' do
     le_type = contract_types(:cdd)
-    jb = build(:job_offer, contract_type: le_type, duration_contract: '2 mois')
+    job_offer = build(:job_offer, contract_type: le_type, duration_contract: '2 mois')
 
-    expect(jb.valid?).to be_truthy
+    expect(job_offer.valid?).to be_truthy
   end
 
   it 'should set published_at date when state is published' do
-    jb = create(:job_offer)
-    expect(jb.state).to eq('draft')
-    expect(jb.published_at).to be_nil
-    jb.publish!
-    expect(jb.state).to eq('published')
-    expect(jb.published_at).not_to be_nil
+    job_offer = create(:job_offer)
+    expect(job_offer.state).to eq('draft')
+    expect(job_offer.published_at).to be_nil
+    job_offer.publish!
+    expect(job_offer.state).to eq('published')
+    expect(job_offer.published_at).not_to be_nil
   end
   it 'should set archived_at date when state is archived' do
-    jb = create(:job_offer)
-    expect(jb.state).to eq('draft')
-    expect(jb.archived_at).to be_nil
-    jb.publish!
-    jb.archive!
-    expect(jb.state).to eq('archived')
-    expect(jb.archived_at).not_to be_nil
+    job_offer = create(:job_offer)
+    expect(job_offer.state).to eq('draft')
+    expect(job_offer.archived_at).to be_nil
+    job_offer.publish!
+    job_offer.archive!
+    expect(job_offer.state).to eq('archived')
+    expect(job_offer.archived_at).not_to be_nil
   end
 
   it 'should set suspended_at date when state is suspended' do
-    jb = create(:job_offer)
-    expect(jb.state).to eq('draft')
-    expect(jb.suspended_at).to be_nil
-    jb.publish!
-    jb.suspend!
-    expect(jb.state).to eq('suspended')
-    expect(jb.suspended_at).not_to be_nil
+    job_offer = create(:job_offer)
+    expect(job_offer.state).to eq('draft')
+    expect(job_offer.suspended_at).to be_nil
+    job_offer.publish!
+    job_offer.suspend!
+    expect(job_offer.state).to eq('suspended')
+    expect(job_offer.suspended_at).not_to be_nil
+  end
+
+  it 'should correctly rebuild timestamp from audit log' do
+    job_offer = create(:job_offer)
+    job_offer.publish!
+    published_at = job_offer.published_at
+    expect(published_at).not_to be_nil
+    job_offer.archive!
+    archived_at = job_offer.archived_at
+    expect(archived_at).not_to be_nil
+
+    job_offer.update_columns({archived_at: nil, published_at: nil})
+    expect(job_offer.published_at).to be_nil
+    expect(job_offer.archived_at).to be_nil
+
+    job_offer.rebuild_published_timestamp!
+    job_offer.reload
+    expect(job_offer.published_at).not_to be_nil
+    time_diff = (published_at - job_offer.published_at).abs
+    expect(time_diff).to be_within(1.0).of(1.0)
+
+    job_offer.rebuild_archived_timestamp!
+    job_offer.reload
+    expect(job_offer.archived_at).not_to be_nil
+    time_diff = (published_at - job_offer.published_at).abs
+    expect(time_diff).to be_within(1.0).of(1.0)
   end
 
   it 'should correctly find current most advanced job application state' do

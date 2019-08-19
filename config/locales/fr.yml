@@ -315,13 +315,6 @@ fr:
         success: "Annonce publiée !"
       stats:
         title: "Statistiques de l'offre %{job_offer_identifier}"
-        published_since_days:
-          one: "Publiée depuis 1 jour"
-          other: "Publiée depuis %{count} jours"
-        job_applications_count_html:
-          zero: "<span class='text-tall'>Aucune</span> candidature pour le moment"
-          one: "<span class='text-tall'>1</span> candidature au total"
-          other: "<span class='text-tall'>%{count}</span> candidatures au total"
       stats_applicants:
         title: "Statistiques des candidats"
         title_per_gender: "Genres"
@@ -342,6 +335,9 @@ fr:
         title_job_applications_after_phone_call_number_html: "Après entretiens téléphoniques"
         title_job_applications_after_meeting_number_html: "Après entretiens physiques"
       stats_job_offer:
+        published_since_days:
+          one: "Publiée depuis 1 jour"
+          other: "Publiée depuis %{count} jours"
         title_views_number_html: "Nombre de vues"
         title_job_applications_number_html: "Nombre de candidatures total"
         title_job_applications_processed_number_html: "Nombre de candidatures en&nbsp;cours&nbsp;de&nbsp;traitement"

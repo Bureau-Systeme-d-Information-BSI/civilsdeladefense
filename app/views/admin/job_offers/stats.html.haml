@@ -3,7 +3,8 @@
   .card.mt-3.stats
     .card-body
       = render partial: 'stats_job_offer'
-      = render partial: 'stats_job_applications'
-      = render partial: 'stats_applicants'
+      - if @job_applications_count > 0
+        = render partial: 'stats_job_applications'
+        = render partial: 'stats_applicants'
 = render partial: '/admin/job_offers/navbar_job_offer'
 

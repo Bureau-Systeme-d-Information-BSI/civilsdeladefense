@@ -361,6 +361,7 @@ user_candidate_of_all.save!
 user_candidate_of_all.confirm
 
 nationalities = %w[FR BE DE EN]
+boolean_choices = [true, false, nil]
 
 JobOffer.where.not(duration_contract: nil).where.not(id: [job_offer4.id, job_offer5.id]).each do |job_offer|
   15.times do |_i|
@@ -379,6 +380,7 @@ JobOffer.where.not(duration_contract: nil).where.not(id: [job_offer4.id, job_off
       ja.terms_of_service = true
       ja.certify_majority = true
       ja.created_at = 1.upto(6).map{|x| x.days.ago}
+      ja.experiences_fit_job_offer = boolean_choices.sample
     end
     job_application.build_personal_profile({
       gender: PersonalProfile.genders.keys.sample,
@@ -388,7 +390,9 @@ JobOffer.where.not(duration_contract: nil).where.not(id: [job_offer4.id, job_off
       address_1: '1 avenue des Champs Elysées',
       postcode: '75008',
       city: 'Paris',
-      country: 'FR'
+      country: 'FR',
+      is_currently_employed: boolean_choices.sample,
+      has_corporate_experience: boolean_choices.sample
     })
     job_application.job_application_files.build content: file,
                                                 job_application_file_type: resume

@@ -1,5 +1,5 @@
+- @page_title = t('.title', job_offer_identifier: @job_offer.identifier)
 - content_for :card_inner do
-  - @page_title = t('.title', job_offer_identifier: @job_offer.identifier)
   .card.mt-3.stats
     .card-body
       = render partial: 'stats_job_offer'

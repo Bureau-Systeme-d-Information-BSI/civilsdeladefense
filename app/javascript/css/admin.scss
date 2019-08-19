@@ -398,7 +398,8 @@ a {
   line-height: 1.1;
 }
 .statistic__value {
-  @extend .d-flex, .justify-content-center, .text-quaternary, .mt-3, .mb-0, .font-weight-bold;
+  @extend .d-flex, .justify-content-center, .mt-3, .mb-0, .font-weight-bold;
+  color: $secondary;
   line-height: 1;
   font-size: 400%;
 }

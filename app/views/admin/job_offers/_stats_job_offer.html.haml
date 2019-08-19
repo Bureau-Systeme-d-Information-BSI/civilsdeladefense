@@ -26,8 +26,10 @@
       = @per_state.values_at(*concerned_states).compact.sum
   .col-12.col-md-3.statistic__block
     .statistic__name
-      = t('.title_job_applications_rejected_number_html')
-    .statistic__value
-      - concerned_states = JobApplication.states.keys.select{|x| x =~ /rejected/ }
-      = @per_state.values_at(*concerned_states).compact.sum
+      = t('.title_job_applications_accepted_number_html')
+    - accepted_value = JobApplication.states['accepted']
+    - concerned_states = JobApplication.states.each_with_object([]) { |(k, v), memo| memo << k if v >= accepted_value }
+    - value = @per_state.values_at(*concerned_states).compact.sum
+    .statistic__value{class: value > 0 ? 'text-success' : 'text-danger'}
+      = value
 %hr.mt-0

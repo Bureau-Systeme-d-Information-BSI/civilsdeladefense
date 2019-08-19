@@ -15,7 +15,6 @@ module JobOfferStatisticsActions
 
     root_rel = @job_offer.job_applications
                          .unscope(:order)
-                         .where(job_applications: { created_at: date_start..date_end })
     root_rel_profile = root_rel.joins(:personal_profile)
 
     @per_gender = root_rel_profile.group(:gender).count

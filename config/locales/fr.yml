@@ -345,7 +345,7 @@ fr:
         title_views_number_html: "Nombre de vues"
         title_job_applications_number_html: "Nombre de candidatures total"
         title_job_applications_processed_number_html: "Nombre de candidatures en&nbsp;cours&nbsp;de&nbsp;traitement"
-        title_job_applications_rejected_number_html: "Nombre de candidatures rejetées"
+        title_job_applications_accepted_number_html: "Nombre de candidatures retenues"
       create:
         success: "Annonce créée !"
       create_and_publish:

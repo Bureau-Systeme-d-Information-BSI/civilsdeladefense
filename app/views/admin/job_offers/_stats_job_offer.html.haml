@@ -1,3 +1,11 @@
+- published_since_days = (Date.current - @job_offer.published_at.to_date).to_i
+%h1.h2.text-quaternary= @page_title
+= t('.published_since_days', count: published_since_days)
+.mt-4
+  #per-day-graph{style: 'height:200px;'}
+  = javascript_tag "var perDayData = #{@per_day.to_a.to_json.html_safe};"
+- if show_stats_debug?
+  %code= @per_day
 %hr.mb-0
 .statistics-row
   .col-12.col-md-3.statistic__block

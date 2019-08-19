@@ -322,11 +322,6 @@ fr:
           zero: "<span class='text-tall'>Aucune</span> candidature pour le moment"
           one: "<span class='text-tall'>1</span> candidature au total"
           other: "<span class='text-tall'>%{count}</span> candidatures au total"
-      stats_intro:
-        title_views_number_html: "Nombre de vues"
-        title_job_applications_number_html: "Nombre de candidatures total"
-        title_job_applications_processed_number_html: "Nombre de candidatures en&nbsp;cours&nbsp;de&nbsp;traitement"
-        title_job_applications_rejected_number_html: "Nombre de candidatures rejetées"
       stats_applicants:
         title: "Statistiques des candidats"
         title_per_gender: "Genres"
@@ -346,6 +341,11 @@ fr:
         title_new_job_applications_after_selection_number_html: "Après sélection des candidats"
         title_job_applications_after_phone_call_number_html: "Après entretiens téléphoniques"
         title_job_applications_after_meeting_number_html: "Après entretiens physiques"
+      stats_job_offer:
+        title_views_number_html: "Nombre de vues"
+        title_job_applications_number_html: "Nombre de candidatures total"
+        title_job_applications_processed_number_html: "Nombre de candidatures en&nbsp;cours&nbsp;de&nbsp;traitement"
+        title_job_applications_rejected_number_html: "Nombre de candidatures rejetées"
       create:
         success: "Annonce créée !"
       create_and_publish:

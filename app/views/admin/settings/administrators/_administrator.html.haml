@@ -1,0 +1,43 @@
+%tr
+  %td
+    = image_user_tag administrator.photo, width: 40, class: 'mr-2'
+  %td
+    .text-muted
+      = administrator.full_name.truncate(60, separator: '…')
+    .text-dark
+      = administrator.email.truncate(60, separator: '…')
+  %td.text-dark
+    = administrator&.employer&.code
+  %td
+    .badge.badge-light-gray.text-white
+      - if administrator.role?
+        = Administrator.human_attribute_name("role.#{administrator.role}")
+      - else
+        = t('.no_role')
+  %td.text-dark
+    .d-block.text-nowrap
+      = l administrator.created_at
+    %small
+      %small
+        .d-block.text-nowrap
+          = t('.last_connection')
+          - if administrator.last_sign_in_at
+            = l administrator.last_sign_in_at
+          - else
+            %em= t('.never_connected')
+        - if administrator.inviter_id.present?
+          .d-block.text-nowrap
+            = t('.invited_by')
+            %em= administrator.inviter.full_name
+  %td.text-right
+    %ul.list-inline.mb-0.actions
+      %li.list-inline-item
+        - if can?(:update, administrator)
+          = link_to fa_icon('pencil'), [:edit, :admin, :settings, administrator], title: t('buttons.edit')
+        - unless administrator.confirmed_at.present?
+          - if can?(:manage, administrator)
+            = link_to fa_icon('refresh'), [:resend_confirmation_instructions, :admin, :settings, administrator], method: :postr, title: t('buttons.resend_confirmation_instructions'), data: {confirm: t('buttons.confirm')}
+        - if can?(:deactivate, administrator) && administrator.active?
+          = link_to fa_icon('close'), [:deactivate, :admin, :settings, administrator], method: :post, title: t('buttons.deactivate'), data: {confirm: t('buttons.confirm')}
+        - if can?(:reactivate, administrator) && administrator.inactive?
+          = link_to fa_icon('close'), [:reactivate, :admin, :settings, administrator], method: :post, title: t('buttons.reactivate'), data: {confirm: t('buttons.confirm')}

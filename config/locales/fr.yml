@@ -414,11 +414,14 @@ fr:
         index:
           title: "Paramètres"
       administrators:
+        administrator:
+          last_connection: "Dernière conn. :"
+          invited_by: "Invité par"
+          never_connected: "Jamais connecté"
+          no_role: "Aucun rôle"
         index:
           title: "Comptes admin"
           add: "Ajouter un compte admin"
-          never_connected: "Jamais connecté"
-          no_role: "Aucun rôle"
           table:
             photo: "Avatar"
             name: "Nom"

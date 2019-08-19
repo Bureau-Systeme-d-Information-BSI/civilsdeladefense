@@ -2,33 +2,39 @@
 %strong.text-quaternary.d-block= t('.title_per_gender')
 .pl-3.mt-2
   - total = @per_gender.values.sum
-  - @per_gender.each_with_index do |(k, v), index|
-    .d-flex.align-items-center.mb-2
-      .bar-chart__category_name
-        - if k.present?
-          - val = PersonalProfile.genders.key(k)
-          = PersonalProfile.human_attribute_name("gender/#{val}")
-        - else
-          = t('unknown')
-      .bar-chart__category_percentage
-        - percentage = (v * 100.0) / total
-        = "#{percentage.to_i }%"
-      .flex-grow-1
-        .bar-chart__bar{style: "width: #{percentage}%;"}
+  - if total > 0
+    - @per_gender.each_with_index do |(k, v), index|
+      .d-flex.align-items-center.mb-2
+        .bar-chart__category_name
+          - if k.present?
+            - val = PersonalProfile.genders.key(k)
+            = PersonalProfile.human_attribute_name("gender/#{val}")
+          - else
+            = t('unknown')
+        .bar-chart__category_percentage
+          - percentage = (v * 100.0) / total
+          = "#{percentage.to_i }%"
+        .flex-grow-1
+          .bar-chart__bar{style: "width: #{percentage}%;"}
+  - else
+    %em= t('.no_stats')
 - if show_stats_debug?
   %code= @per_gender
 %strong.text-quaternary.d-block.mt-4= t('.title_per_nationality')
 .pl-3.mt-2
   - total = @per_nationality.values.sum
-  - @per_nationality.each_with_index do |(k, v), index|
-    .d-flex.align-items-center.mb-2
-      .bar-chart__category_name
-        = k.present? ? k : t('unknown')
-      .bar-chart__category_percentage
-        - percentage = (v * 100.0) / total
-        = "#{percentage.to_i }%"
-      .flex-grow-1
-        .bar-chart__bar{style: "width: #{percentage}%;"}
+  - if total > 0
+    - @per_nationality.each_with_index do |(k, v), index|
+      .d-flex.align-items-center.mb-2
+        .bar-chart__category_name
+          = k.present? ? k : t('unknown')
+        .bar-chart__category_percentage
+          - percentage = (v * 100.0) / total
+          = "#{percentage.to_i }%"
+        .flex-grow-1
+          .bar-chart__bar{style: "width: #{percentage}%;"}
+  - else
+    %em= t('.no_stats')
 - if show_stats_debug?
   %code= @per_nationality
 
@@ -43,8 +49,9 @@
     .statistic__name
       = t('.title_new_job_applications_experiences_fit_job_offer_number_html')
     .statistic__value
-      - if @job_applications_count > 0
-        - percentage = (@experiences_fit_job_offer_count * 100.0) / @job_applications_count
+      - experiences_fit_job_offer_count = @per_experiences_fit_job_offer[true]
+      - if @job_applications_count > 0 && experiences_fit_job_offer_count > 0
+        - percentage = (experiences_fit_job_offer_count * 100.0) / @job_applications_count
         = number_to_percentage(percentage, precision: 0)
       - else
         = t('non_applicable')
@@ -52,8 +59,9 @@
     .statistic__name
       = t('.title_job_applications_has_corporate_experience_number_html')
     .statistic__value
-      - if @job_applications_count > 0
-        - percentage = (@has_corporate_experience_count * 100.0) / @job_applications_count
+      - has_corporate_experience_count  = @per_has_corporate_experience[true]
+      - if @job_applications_count > 0 && has_corporate_experience_count > 0
+        - percentage = (has_corporate_experience_count * 100.0) / @job_applications_count
         = number_to_percentage(percentage, precision: 0)
       - else
         = t('non_applicable')
@@ -61,8 +69,9 @@
     .statistic__name
       = t('.title_job_applications_is_currently_employed_number_html')
     .statistic__value
-      - if @job_applications_count > 0
-        - percentage = (@is_currently_employed_count * 100.0) / @job_applications_count
+      - is_currently_employed_count = @per_is_currently_employed[true]
+      - if @job_applications_count > 0 && is_currently_employed_count > 0
+        - percentage = (is_currently_employed_count * 100.0) / @job_applications_count
         = number_to_percentage(percentage, precision: 0)
       - else
         = t('non_applicable')

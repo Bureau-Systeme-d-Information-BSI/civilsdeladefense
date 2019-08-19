@@ -316,6 +316,7 @@ fr:
       stats:
         title: "Statistiques de l'offre %{job_offer_identifier}"
       stats_applicants:
+        no_stats: "Aucune statistique disponible"
         title: "Statistiques des candidats"
         title_per_gender: "Genres"
         title_per_nationality: "Nationalités"

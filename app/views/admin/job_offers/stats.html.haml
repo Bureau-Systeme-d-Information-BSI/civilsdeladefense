@@ -1,13 +1,10 @@
+- @page_title = t('.title', job_offer_identifier: @job_offer.identifier)
 - content_for :card_inner do
-  - @page_title = t('.title', job_offer_identifier: @job_offer.identifier)
-  - published_since_days = (Date.current - @job_offer.published_at.to_date).to_i
   .card.mt-3.stats
     .card-body
-      %h1.h4.text-quaternary= @page_title
-      = t('.published_since_days', count: published_since_days)
-      = render partial: 'stats_graph'
-      = render partial: 'stats_intro'
-      = render partial: 'stats_applicants'
-      = render partial: 'stats_job_applications'
+      = render partial: 'stats_job_offer'
+      - if @job_applications_count > 0
+        = render partial: 'stats_job_applications'
+        = render partial: 'stats_applicants'
 = render partial: '/admin/job_offers/navbar_job_offer'
 

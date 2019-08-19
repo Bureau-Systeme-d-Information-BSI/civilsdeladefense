@@ -1,11 +1,10 @@
-%h1.h4.mt-5.mb-3= t('.title')
-
+%h1.h2.mt-5.mb-3= t('.title')
 %hr.mb-0
 .statistics-row
   .col-12.col-md-3.statistic__block
     .statistic__name
       = t('.title_job_applications_processed_number_html')
-    .statistic__value
+    .statistic__value.text-success
       = @per_state.values_at('initial', 'phone_meeting', 'to_be_met').compact.sum
   .col-12.col-md-3.statistic__block
     .statistic__name
@@ -27,7 +26,7 @@
   .col-12.col-md-3.statistic__block
     .statistic__name
       = t('.title_job_applications_all_rejected_number_html')
-    .statistic__value
+    .statistic__value.text-danger
       = @per_state.values_at('rejected', 'phone_meeting_rejected', 'after_meeting_rejected').compact.sum
   .col-12.col-md-3.statistic__block
     .statistic__name

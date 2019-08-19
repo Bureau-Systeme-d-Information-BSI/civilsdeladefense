@@ -1,0 +1,35 @@
+- published_since_days = (Date.current - @job_offer.published_at.to_date).to_i
+%h1.h2.text-quaternary= @page_title
+= t('.published_since_days', count: published_since_days)
+.mt-4
+  #per-day-graph{style: 'height:200px;'}
+  = javascript_tag "var perDayData = #{@per_day.to_a.to_json.html_safe};"
+- if show_stats_debug?
+  %code= @per_day
+%hr.mb-0
+.statistics-row
+  .col-12.col-md-3.statistic__block
+    .statistic__name
+      = t('.title_views_number_html')
+    .statistic__value
+      = t('non_applicable')
+  .col-12.col-md-3.statistic__block
+    .statistic__name
+      = t('.title_job_applications_number_html')
+    .statistic__value
+      = @job_applications_count
+  .col-12.col-md-3.statistic__block
+    .statistic__name
+      = t('.title_job_applications_processed_number_html')
+    .statistic__value
+      - concerned_states = JobApplication.states.keys.delete_if{|x| x =~ /rejected/ }
+      = @per_state.values_at(*concerned_states).compact.sum
+  .col-12.col-md-3.statistic__block
+    .statistic__name
+      = t('.title_job_applications_accepted_number_html')
+    - accepted_value = JobApplication.states['accepted']
+    - concerned_states = JobApplication.states.each_with_object([]) { |(k, v), memo| memo << k if v >= accepted_value }
+    - value = @per_state.values_at(*concerned_states).compact.sum
+    .statistic__value{class: value > 0 ? 'text-success' : 'text-danger'}
+      = value
+%hr.mt-0

@@ -256,9 +256,33 @@ job_offer3.job_offer_actors.build(administrator: employer_admin_2, role: :employ
 job_offer3.job_offer_actors.build(administrator: brh_admin, role: :brh)
 job_offer3.save!
 
+job_offer4 = job_offer.dup
+job_offer4.owner = employer_admin_2
+job_offer4.title = 'Responsable Achat d’Infrastructures (H/F)'
+job_offer4.category = sub_sub_infrastructure
+job_offer4.location = 'Brest, FR'
+job_offer4.identifier = nil
+job_offer4.sequential_id = nil
+job_offer4.job_offer_actors.build(administrator: employer_admin_2, role: :employer)
+job_offer4.job_offer_actors.build(administrator: brh_admin, role: :brh)
+job_offer4.save!
+
+job_offer5 = job_offer.dup
+job_offer5.owner = employer_admin_2
+job_offer5.title = 'Responsable Achat d’Infrastructures (H/F)'
+job_offer5.category = sub_sub_infrastructure
+job_offer5.location = 'Brest, FR'
+job_offer5.identifier = nil
+job_offer5.sequential_id = nil
+job_offer5.job_offer_actors.build(administrator: employer_admin_2, role: :employer)
+job_offer5.job_offer_actors.build(administrator: brh_admin, role: :brh)
+job_offer5.save!
+
 job_offer.publish!
 job_offer2.publish!
 job_offer3.publish!
+job_offer4.publish!
+job_offer5.publish!
 
 photo = File.open(Rails.root.join('spec', 'fixtures', 'files', 'avatar.jpg'))
 file = File.open(Rails.root.join('spec', 'fixtures', 'files', 'document.pdf'))
@@ -337,8 +361,9 @@ user_candidate_of_all.save!
 user_candidate_of_all.confirm
 
 nationalities = %w[FR BE DE EN]
+boolean_choices = [true, false, nil]
 
-JobOffer.where.not(duration_contract: nil).each do |job_offer|
+JobOffer.where.not(duration_contract: nil).where.not(id: [job_offer4.id, job_offer5.id]).each do |job_offer|
   15.times do |_i|
     user = User.new email: Faker::Internet.email,
                     first_name: Faker::Name.first_name,
@@ -355,6 +380,7 @@ JobOffer.where.not(duration_contract: nil).each do |job_offer|
       ja.terms_of_service = true
       ja.certify_majority = true
       ja.created_at = 1.upto(6).map{|x| x.days.ago}
+      ja.experiences_fit_job_offer = boolean_choices.sample
     end
     job_application.build_personal_profile({
       gender: PersonalProfile.genders.keys.sample,
@@ -364,7 +390,9 @@ JobOffer.where.not(duration_contract: nil).each do |job_offer|
       address_1: '1 avenue des Champs Elysées',
       postcode: '75008',
       city: 'Paris',
-      country: 'FR'
+      country: 'FR',
+      is_currently_employed: boolean_choices.sample,
+      has_corporate_experience: boolean_choices.sample
     })
     job_application.job_application_files.build content: file,
                                                 job_application_file_type: resume

@@ -98,7 +98,7 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
   private
 
   def set_administrators
-    @q = Administrator.ransack(params[:q])
+    @q = Administrator.includes(:inviter).ransack(params[:q])
     @q.sorts = 'created_at desc' if @q.sorts.empty?
     @administrators_active = @q.result.active.includes(:employer)
     @administrators_inactive = @q.result.inactive.includes(:employer)

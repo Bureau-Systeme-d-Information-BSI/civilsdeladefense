@@ -336,13 +336,14 @@ fr:
         title_job_applications_after_phone_call_number_html: "Après entretiens téléphoniques"
         title_job_applications_after_meeting_number_html: "Après entretiens physiques"
       stats_job_offer:
-        published_since_days:
-          one: "Publiée depuis 1 jour"
-          other: "Publiée depuis %{count} jours"
+        title: "Évolution des candidatures"
         title_views_number_html: "Nombre de vues"
         title_job_applications_number_html: "Nombre de candidatures total"
         title_job_applications_processed_number_html: "Nombre de candidatures en&nbsp;cours&nbsp;de&nbsp;traitement"
         title_job_applications_accepted_number_html: "Nombre de candidatures retenues"
+        published_since_days:
+          one: "Publiée depuis 1 jour"
+          other: "Publiée depuis %{count} jours"
       create:
         success: "Annonce créée !"
       create_and_publish:

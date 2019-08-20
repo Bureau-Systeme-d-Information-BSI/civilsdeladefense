@@ -2,6 +2,7 @@
 - if @job_offer.published_at.present?
   - published_since_days = (Date.current - @job_offer.published_at.to_date).to_i
   = t('.published_since_days', count: published_since_days)
+%em= t('.title')
 .mt-4
   #per-day-graph{style: 'height:200px;'}
   = javascript_tag "var perDayData = #{@per_day.to_a.to_json.html_safe};"

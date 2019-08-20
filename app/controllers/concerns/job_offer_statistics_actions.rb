@@ -30,13 +30,14 @@ module JobOfferStatisticsActions
   def date_start
     @date_start ||= begin
       res = Date.parse(params[:start]) if params[:start].present?
-      res || @job_offer.published_at.to_date
+      res || @job_offer.published_at&.to_date
     end
   end
 
   def date_end
     @date_end ||= begin
       res = Date.parse(params[:end]) if params[:end].present?
+      res ||= @job_offer.archived_at&.to_date
       res || Date.today.to_time.to_date
     end
   end

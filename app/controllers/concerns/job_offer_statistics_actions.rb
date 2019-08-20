@@ -8,8 +8,9 @@ module JobOfferStatisticsActions
   # GET /admin/job_offers/1/stats.json
   def stats
     @job_applications_count = @job_offer.job_applications.count
+    range = date_start..date_end if date_start.present? && date_end.present?
     @per_day = @job_offer.job_applications.unscope(:order)
-                         .group_by_day(:created_at, range: date_start..date_end).count
+                         .group_by_day(:created_at, range: range).count
 
     @per_day.transform_keys! { |key| key.to_time.iso8601 }
 

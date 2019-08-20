@@ -1,6 +1,7 @@
-- published_since_days = (Date.current - @job_offer.published_at.to_date).to_i
 %h1.h2.text-quaternary= @page_title
-= t('.published_since_days', count: published_since_days)
+- if @job_offer.published_at.present?
+  - published_since_days = (Date.current - @job_offer.published_at.to_date).to_i
+  = t('.published_since_days', count: published_since_days)
 .mt-4
   #per-day-graph{style: 'height:200px;'}
   = javascript_tag "var perDayData = #{@per_day.to_a.to_json.html_safe};"

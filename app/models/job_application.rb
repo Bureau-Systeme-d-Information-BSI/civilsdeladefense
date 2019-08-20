@@ -41,7 +41,9 @@ class JobApplication < ApplicationRecord
   before_save :compute_notifications_counter
   before_save :cleanup_rejection_reason, unless: proc { |ja| ja.rejected? }
 
-  FINISHED_STATES = %i[rejected phone_meeting_rejected after_meeting_rejected affected].freeze
+  FINISHED_STATES = %w[rejected phone_meeting_rejected after_meeting_rejected affected].freeze
+  REJECTED_STATES = %w[rejected phone_meeting_rejected after_meeting_rejected].freeze
+  PROCESSING_STATES = %w[initial phone_meeting to_be_met].freeze
   enum state: {
     initial: 0,
     rejected: 1,
@@ -208,16 +210,16 @@ class JobApplication < ApplicationRecord
   end
 
   def rejected_state?
-    !(state =~ self.class.rejected_regexp).nil?
+    REJECTED_STATES.include?(state)
   end
 
   class << self
     def rejected_states
-      JobApplication.states.keys.select { |x| x =~ rejected_regexp }
+      REJECTED_STATES
     end
 
-    def rejected_regexp
-      /rejected/
+    def processing_states
+      PROCESSING_STATES
     end
   end
 end

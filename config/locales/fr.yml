@@ -333,9 +333,9 @@ fr:
         title_job_applications_phone_meeting_number_html: "En attente entretien téléphonique"
         title_job_applications_to_be_met_number_html: "En attente entretien physique"
         title_job_applications_all_rejected_number_html: "Nombre de candidatures refusées"
-        title_new_job_applications_after_selection_number_html: "Après sélection des candidats"
-        title_job_applications_after_phone_call_number_html: "Après entretiens téléphoniques"
-        title_job_applications_after_meeting_number_html: "Après entretiens physiques"
+        title_job_applications_rejected_number_html: "Après sélection des candidats"
+        title_job_applications_phone_meeting_rejected_number_html: "Après entretiens téléphoniques"
+        title_job_applications_after_meeting_rejected_number_html: "Après entretiens physiques"
       stats_job_offer:
         title: "Évolution des candidatures"
         title_views_number_html: "Nombre de vues"

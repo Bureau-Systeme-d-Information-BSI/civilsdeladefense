@@ -6,6 +6,7 @@
         = render partial: 'stats_job_offer'
         - if @job_applications_count > 0
           = render partial: 'stats_job_applications'
+          = render partial: 'stats_job_applications_rejection_reasons'
           = render partial: 'stats_applicants'
       - else
         %em= t('nothing_to_see')

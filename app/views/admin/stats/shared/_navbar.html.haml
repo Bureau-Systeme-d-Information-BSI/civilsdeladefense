@@ -1,0 +1,13 @@
+.list-group.stepper
+  .list-group-item.menu
+    = t(".title")
+  .list-group.stepper
+  - entries = [:job_applications, :recruitments]
+  - if true #entries.any?{ |entry| can?(:manage, entry.to_s.singularize.classify.constantize) }
+    .list-group.stepper
+      - entries.each do |entry|
+        - if true #can? :read, entry.to_s.singularize.classify.constantize
+          - klasses = %w(list-group-item d-flex justify-content-between align-items-center)
+          - klasses << 'active' if controller.controller_name == entry.to_s
+          = link_to [:admin, :stats, entry], class: klasses do
+            = t(".#{ entry }")

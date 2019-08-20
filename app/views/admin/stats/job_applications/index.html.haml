@@ -1,0 +1,7 @@
+- @page_title = t('.title')
+.card
+  .card-header
+    .card-title.d-md-flex.align-items-center
+      = @page_title
+    = render partial: 'search'
+    = render partial: 'results'

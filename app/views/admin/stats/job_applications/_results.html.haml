@@ -1,0 +1,10 @@
+%h2.h5.text-primary.mb-0.mt-4= t('.title')
+
+.card.mt-2
+  .card-body
+    %strong.text-secondary #{@job_applications_count} candidats
+    #per-day-graph.mt-3{style: 'height:200px;'}
+      = javascript_tag "var perDayData = #{@per_day.to_a.to_json.html_safe};"
+    = render partial: 'stats_job_applications'
+    = render partial: '/admin/job_offers/stats_job_applications_rejection_reasons'
+    = render partial: '/admin/job_offers/stats_applicants'

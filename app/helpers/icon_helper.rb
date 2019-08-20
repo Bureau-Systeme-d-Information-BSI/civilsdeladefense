@@ -28,6 +28,8 @@ module IconHelper
       :'account-multiple'
     when :settings
       :settings
+    when :stats
+      :statistics
     end
   end
 end

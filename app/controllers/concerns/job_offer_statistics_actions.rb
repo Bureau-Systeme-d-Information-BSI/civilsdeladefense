@@ -28,6 +28,8 @@ module JobOfferStatisticsActions
     @rejection_reasons = RejectionReason.all
   end
 
+  protected
+
   def date_start
     @date_start ||= begin
       res = Date.parse(params[:start]) if params[:start].present?

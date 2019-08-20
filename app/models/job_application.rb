@@ -221,5 +221,9 @@ class JobApplication < ApplicationRecord
     def processing_states
       PROCESSING_STATES
     end
+
+    def not_initial_not_rejected_stats
+      states.keys - %w[initial] - REJECTED_STATES
+    end
   end
 end

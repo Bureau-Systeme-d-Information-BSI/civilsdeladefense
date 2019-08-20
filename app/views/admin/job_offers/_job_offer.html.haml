@@ -32,7 +32,8 @@
       - klass = badge_class(job_offer.state.to_sym)
       %small.badge.text-white.text-uppercase.text-nowrap.mr-1{class: klass}
         = job_offer.aasm.human_state
-      = t('.published_date', time_ago_in_words: time_ago_in_words(job_offer.created_at))
+      - if job_offer.published_at.present? && !(job_offer.suspended? || job_offer.draft?)
+        = t('.published_date', time_ago_in_words: time_ago_in_words(job_offer.published_at))
     %ul.list-inline.mb-0.actions.mt-2.mt-md-0
       %li.list-inline-item.d-none
         = link_to '#' do

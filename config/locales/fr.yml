@@ -3,6 +3,7 @@ fr:
   "no": "Non"
   non_applicable: "N/A"
   non_accessible: "Pas accessible pour le moment"
+  nothing_to_see: "Rien à voir pour le moment"
   unknown: "Inconnu"
   time:
     formats:

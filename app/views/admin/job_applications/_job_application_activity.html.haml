@@ -14,7 +14,7 @@
           = link_to JobApplication.human_attribute_name("state/#{ state }"), [:change_state, :admin, @job_application, {state: state}], method: :patch, remote: true, class: klasses
     - else
       = link_to @job_application.aasm.human_state, "#", class: "btn btn-raised w-100 text-left"
-  - if @job_application.rejected?
+  - if @job_application.rejected_state?
     = simple_form_for [:admin, @job_application], remote: true, html: {class: 'mt-2 auto-submit'} do |f|
       = f.input :rejection_reason_id, collection: RejectionReason.all, label: false, prompt: :translate
 

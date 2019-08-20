@@ -206,4 +206,18 @@ class JobApplication < ApplicationRecord
     email = emails.create(subject: subject, body: body)
     ApplicantNotificationsMailer.new_email(email.id).deliver_now
   end
+
+  def rejected_state?
+    !(state =~ self.class.rejected_regexp).nil?
+  end
+
+  class << self
+    def rejected_states
+      JobApplication.states.keys.select { |x| x =~ rejected_regexp }
+    end
+
+    def rejected_regexp
+      /rejected/
+    end
+  end
 end

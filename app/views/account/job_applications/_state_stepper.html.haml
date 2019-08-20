@@ -5,7 +5,7 @@
     - klasses = []
     - klasses << "active-step" if i <= current_number
     - klasses << "step-done" if i < current_number
-    - klasses << "step-rejected" if state_name.to_s =~ /rejected/ && i == current_number
+    - klasses << "step-rejected" if job_application.rejected_state? && i == current_number
     .mdl-stepper-step{class: klasses}
       .mdl-stepper-circle
         %span= i

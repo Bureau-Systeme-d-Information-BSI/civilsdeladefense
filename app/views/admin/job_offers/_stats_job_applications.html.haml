@@ -18,7 +18,7 @@
     .statistic__name
       = t('.title_job_applications_all_rejected_number_html')
     .statistic__value.text-danger
-      = @per_state.values_at(JobApplication.rejected_states).compact.sum
+      = @per_state.values_at(*JobApplication.rejected_states).compact.sum
   - JobApplication.rejected_states.each do |rejected_state|
     .col-12.col-md-3.statistic__block
       .statistic__name

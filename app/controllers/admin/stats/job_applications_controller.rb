@@ -44,8 +44,8 @@ class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
 
   def build_stats_vacancy
     @per_vacancy = root_rel.joins(:job_offer)
-                           .where(job_offers: {published_at: date_range})
-                           .where(job_offers: {accepted_job_applications_count: 0})
+                           .where(job_offers: { published_at: date_range })
+                           .where(job_offers: { accepted_job_applications_count: 0 })
                            .group('job_offers.slug')
                            .count
   end

@@ -231,7 +231,9 @@ class JobApplication < ApplicationRecord
     end
 
     def all_states_greater_than(state_name)
-      JobApplication.states.each_with_object([]){|(name,number), memo| memo << name if number > JobApplication.states[state_name]}
+      JobApplication.states.each_with_object([]) do |(name, number), memo|
+        memo << name if number > JobApplication.states[state_name]
+      end
     end
   end
 end

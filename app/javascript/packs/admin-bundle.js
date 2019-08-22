@@ -10,6 +10,8 @@
 import Url from 'domurl'
 import flatpickr from 'flatpickr'
 import { French } from 'flatpickr/dist/l10n/fr'
+import Lightpick from 'lightpick'
+import moment from 'moment'
 import $ from 'jquery'
 window.jQuery = $
 window.$ = $
@@ -229,6 +231,29 @@ document.addEventListener('DOMContentLoaded', function() {
           ];
         })
       }]
+    })
+  }
+
+  var date_start_node = document.getElementById('date_start')
+  var date_end_node = document.getElementById('date_end')
+  if ((date_start_node !== null) && (date_end_node !== null)) {
+    new Lightpick({
+      field: document.getElementById('date_start'),
+      secondField: document.getElementById('date_end'),
+      singleDate: false,
+      numberOfColumns: 2,
+      numberOfMonths: 2,
+      maxDate: moment(),
+      onClose: function() {
+        var start = this._opts.startDate
+        var end = this._opts.endDate
+        var path = window.location.href;
+
+        var newURL = window.location.protocol + "//" + window.location.host + "/" + window.location.pathname
+        newURL += '?' + 'start=' + start.format('YYYYMMDD') + '&end=' + end.format('YYYYMMDD')
+
+        window.location.href = newURL
+      }
     })
   }
 })

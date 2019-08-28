@@ -16,6 +16,7 @@ class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
     build_stats
     build_stats_per_profile
     build_stats_vacancy
+    build_employer_ids unless current_administrator.bant?
   end
 
   protected
@@ -48,6 +49,10 @@ class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
                            .where(job_offers: { accepted_job_applications_count: 0 })
                            .group('job_offers.slug')
                            .count
+  end
+
+  def build_employer_ids
+    @employer_ids = @job_applications_filtered.map(&:employer_id).uniq
   end
 
   def filter_by_full_text

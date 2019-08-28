@@ -1,6 +1,6 @@
 .row.mt-4.mb-3
   .col-12
-    - url = controller.action_name == 'archived' ? [:archived, :admin, @q] : [:admin, @q]
+    - url = [:admin, :stats, @q]
     = search_form_for url, class: 'auto-submit' do |f|
       .form-group.input-group.input-search
         .input-group-prepend

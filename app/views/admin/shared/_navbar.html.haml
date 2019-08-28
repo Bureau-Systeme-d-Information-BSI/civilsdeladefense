@@ -1,4 +1,5 @@
 - nav_items = [[:job_offers], [:job_applications]]
+- nav_items << [:stats, :root]
 - nav_items << [:settings, :root] if current_administrator.bant?
 %nav.navbar.navbar-expand-md.navbar-light.bg-white.fixed-top
   %button.navbar-toggler.p-0.border-0{type: :button, data: {toggle: 'offcanvas'}}
@@ -10,8 +11,9 @@
       - nav_items.each do |item|
         - klass = nil
         - klass = item.first.to_s.singularize.classify.constantize if item.size == 1
-        - if klass && can?(:read, klass) || klass.nil?
-          - extra_klass = controller.class.to_s.underscore =~ /#{ item.first.to_s }/ && 'active'
+        - if klass.nil? || can?(:read, klass)
+          - target_controller_path = Rails.application.routes.recognize_path(url_for(item.dup.unshift('admin')))[:controller]
+          - extra_klass = target_controller_path == controller.controller_path && 'active'
           %li.nav-item.mr-3{class: extra_klass}
             = fa_icon(icon_for_controller(item))
             - ary = [:admin] + item

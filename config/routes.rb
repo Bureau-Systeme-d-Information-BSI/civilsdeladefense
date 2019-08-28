@@ -62,6 +62,11 @@ Rails.application.routes.draw do
         end
       end
     end
+    namespace :stats do
+      root to: 'job_applications#index'
+      resources :job_applications, path: 'candidatures', only: %i[index]
+      resources :recruitments, path: 'recrutements'
+    end
     namespace :settings, path: 'parametres' do
       resources :administrators, path: 'administrateurs', except: %i[destroy] do
         collection do

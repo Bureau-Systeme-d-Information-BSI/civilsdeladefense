@@ -1,5 +1,5 @@
-%h1.h2.mt-5.mb-3= t('.title')
-%strong.text-quaternary.d-block= t('.title_per_gender')
+%h1.h5.text-primary.mt-5= t('.title')
+%strong.text-quaternary.d-block.mt-4= t('.title_per_gender')
 .pl-3.mt-2
   - total = @per_gender.values.sum
   - if total > 0
@@ -38,8 +38,7 @@
 - if show_stats_debug?
   %code= @per_nationality
 
-%hr.mb-0.mt-5
-.statistics-row
+.statistics-row.mt-5
   .col-12.col-md-3.statistic__block
     .statistic__name
       = t('.title_new_job_applications_geo_number_html')
@@ -75,4 +74,3 @@
         = number_to_percentage(percentage, precision: 0)
       - else
         = t('non_applicable')
-%hr.mt-0

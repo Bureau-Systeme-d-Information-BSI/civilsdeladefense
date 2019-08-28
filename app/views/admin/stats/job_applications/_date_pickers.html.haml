@@ -1,0 +1,9 @@
+.d-flex.flex-row.mt-3.mb-5
+  .date-start.d-flex.flex-column.mr-4
+    %strong.mb-2
+      Période du
+    = text_field_tag :date_start, datepicker_display(@date_start), style: 'width:14ch;', class: 'form-control'
+  .date-end.d-flex.flex-column
+    %strong.mb-2
+      au
+    = text_field_tag :date_end, datepicker_display(@date_end), style: 'width:14ch;', class: 'form-control'

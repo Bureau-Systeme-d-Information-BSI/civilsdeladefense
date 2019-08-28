@@ -1,0 +1,15 @@
+- @page_title = t('.title')
+.card
+  .card-header
+    .card-title.d-md-flex.align-items-center
+      = @page_title
+    = render partial: 'search'
+    %h2.h5.text-primary.mb-0.mt-4= t('.title')
+    .card.mt-2
+      .card-body
+        %strong.text-secondary #{@job_applications_count} candidatures
+        = render partial: 'date_pickers'
+        = render partial: 'graph'
+        = render partial: 'stats_job_applications'
+        = render partial: '/admin/job_offers/stats_job_applications_rejection_reasons'
+        = render partial: '/admin/job_offers/stats_applicants'

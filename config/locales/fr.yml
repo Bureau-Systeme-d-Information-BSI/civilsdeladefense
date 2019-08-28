@@ -327,7 +327,6 @@ fr:
         title_job_applications_is_currently_employed_number_html: "Candidats en poste"
       stats_job_applications:
         title: "Statistiques des candidatures"
-        rejection_reasons: "Motif des refus"
         title_job_applications_processed_number_html: "Nombre de candidatures en cours de recrutement"
         title_job_applications_initial_number_html: "En attente sélection"
         title_job_applications_phone_meeting_number_html: "En attente entretien téléphonique"
@@ -345,6 +344,8 @@ fr:
         published_since_days:
           one: "Publiée depuis 1 jour"
           other: "Publiée depuis %{count} jours"
+      stats_job_applications_rejection_reasons:
+        title: "Motif des refus"
       create:
         success: "Annonce créée !"
       create_and_publish:
@@ -390,6 +391,7 @@ fr:
       navbar:
         job_offers: "Offres"
         job_applications: "Vivier"
+        stats: "Statistiques"
         settings: "Paramètres"
         account: "Mon compte"
         logout: "Déconnexion"
@@ -643,6 +645,28 @@ fr:
           success: "Filière mise à jour !"
         destroy:
           success: "Filière supprimée !"
+    stats:
+      job_applications:
+        index:
+          title: "Candidatures"
+        results:
+          title: "Résultats de la recherche"
+        stats_job_applications:
+          title_1: "Statistiques des candidatures - pourvoi des postes"
+          title_2: "Statistiques des candidats refusés"
+          title_job_applications_selected_number_html: "Nombre de candidatures sélectionnées"
+          title_job_applications_phone_meeting_gt_number_html: "Nombre d'entretien faits"
+          title_job_applications_affected_number_html: "Nombre de candidats recrutés"
+          title_job_applications_vacancy_number_html: "Nombre de postes vacants"
+          title_job_applications_all_rejected_number_html: "Nombre de candidatures refusées"
+          title_job_applications_rejected_number_html: "Après sélection des candidats"
+          title_job_applications_phone_meeting_rejected_number_html: "Après entretiens téléphoniques"
+          title_job_applications_after_meeting_rejected_number_html: "Après entretiens physiques"
+      shared:
+        navbar:
+          title: "Statistiques"
+          job_applications: "Candidatures"
+          recruitments: "Recrutements"
   attributes:
     name: "Nom"
   activerecord:

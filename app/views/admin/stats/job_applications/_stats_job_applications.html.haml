@@ -1,18 +1,26 @@
-%h2.h5.text-primary.mb-0.mt-5= t('.title')
-.statistics-row.mt-4
-  .col-12.col-md-3.statistic__block
-    .statistic__name
-      = t('.title_job_applications_processed_number_html')
-    .statistic__value.text-success
-      = @per_state.values_at(JobApplication.processing_states).compact.sum
-  - JobApplication.processing_states.each do |state|
+%h1.h5.text-primary.mt-4= t('.title_1')
+.statistics-row.mt-3
+  - %w[selected phone_meeting_gt].each do |set_name|
+    .col-12.col-md-3.statistic__block
+      .statistic__name
+        = t(".title_job_applications_#{set_name}_number_html")
+      .statistic__value.text-success
+        = @per_state.values_at(*JobApplication.send("#{set_name}_states".to_sym)).compact.sum
+  - %w[affected].each do |state|
     .col-12.col-md-3.statistic__block
       .statistic__name
         = t(".title_job_applications_#{state}_number_html")
       .statistic__value
         = @per_state.values_at(state).compact.sum
-%hr.my-0
-.statistics-row.mb-4
+  .col-12.col-md-3.statistic__block
+    .statistic__name
+      = t(".title_job_applications_vacancy_number_html")
+    .statistic__value
+      = @per_vacancy.keys.size
+- if show_stats_debug?
+  %code= @per_vacancy
+%h1.h5.text-primary.mt-4= t('.title_2')
+.statistics-row.mt-3
   .col-12.col-md-3.statistic__block
     .statistic__name
       = t('.title_job_applications_all_rejected_number_html')

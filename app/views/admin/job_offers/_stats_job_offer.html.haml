@@ -2,13 +2,12 @@
 - if @job_offer.published_at.present?
   - published_since_days = (Time.zone.now.to_date - @job_offer.published_at.to_date).to_i
   = t('.published_since_days', count: published_since_days)
-%strong.d-flex.mt-4= t('.title')
+%h2.h5.text-primary.mt-4= t('.title')
 #per-day-graph.mt-3{style: 'height:200px;'}
   = javascript_tag "var perDayData = #{@per_day.to_a.to_json.html_safe};"
 - if show_stats_debug?
   %code= @per_day
-%hr.mb-0
-.statistics-row
+.statistics-row.mt-4
   .col-12.col-md-3.statistic__block
     .statistic__name
       = t('.title_views_number_html')
@@ -33,4 +32,3 @@
     - value = @per_state.values_at(*concerned_states).compact.sum
     .statistic__value{class: value > 0 ? 'text-success' : 'text-danger'}
       = value
-%hr.mt-0

@@ -221,5 +221,19 @@ class JobApplication < ApplicationRecord
     def processing_states
       PROCESSING_STATES
     end
+
+    def selected_states
+      states.keys - %w[initial rejected]
+    end
+
+    def phone_meeting_gt_states
+      all_states_greater_than('phone_meeting')
+    end
+
+    def all_states_greater_than(state_name)
+      JobApplication.states.each_with_object([]) do |(name, number), memo|
+        memo << name if number > JobApplication.states[state_name]
+      end
+    end
   end
 end

@@ -21,9 +21,10 @@ class InboundMessage
 
     Mail.find(count: 100).each do |message, imap, uid|
       to_be_trashed = ApplicantNotificationsMailer.receive(message)
+      debugger
       if to_be_trashed
-        imap.copy(uid, 'TRASH')
-        # imap.store(uid, "+FLAGS", [:Deleted])
+        imap.uid_copy(uid, "TRASH")
+        # imap.uid_store(uid, "+FLAGS", [:Deleted])
       end
     end
   end

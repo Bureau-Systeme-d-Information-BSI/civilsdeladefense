@@ -30,7 +30,7 @@ class ApplicantNotificationsMailer < ApplicationMailer
   end
 
   def receive(message)
-    Rails.logger.debug "InboundMessage treating message #{message.inspect}"
+    Rails.logger.debug "InboundMessage treating message from #{message[:from]} to #{message[:to]}"
     references = message.header['References']
     message_id_parent = references&.value
     original_email_id = message_id_parent&.scan(/<(.*)@/)&.flatten&.first
@@ -49,14 +49,14 @@ class ApplicantNotificationsMailer < ApplicationMailer
     job_application = original_email.job_application
     sender_email = message.from.first
     user = User.find_by_email sender_email
-    create_email(user, job_application)
+    create_email(user, job_application, body, message.subject)
 
     true
   end
 
   protected
 
-  def create_email(user, job_application)
+  def create_email(user, job_application, body, subject)
     Audited.audit_class.as_user(user) do
       email_params = {
         subject: subject,

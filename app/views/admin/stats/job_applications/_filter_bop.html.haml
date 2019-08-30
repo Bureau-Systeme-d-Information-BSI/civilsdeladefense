@@ -1,0 +1,15 @@
+- ary = params.dig(:q, :job_offer_bop_id_in)  || []
+.dropdown.dropdown-checks.form-group
+  %button.form-control.dropdown-toggle.text-left.d-flex.align-items-center#dropdownContractType{type: 'button', data: {toggle: 'dropdown'}, aria: {haspopup: true, expanded: false}}
+    BOP
+    - if ary.any?
+      = "(#{ary.size})"
+  .dropdown-menu.dropdown-menu-right{aria: {labelledby: 'dropdownContractType'}}
+    %ul
+      - for bop in @bops
+        - input_id = dom_id(bop)
+        %li
+          .form-check.form-check-inline.w-100
+            - checked = ary.include?(bop.id)
+            = check_box_tag 'q[job_offer_bop_id_in][]', bop.id, checked, class: 'form-check-input', id: input_id
+            %label.form-check-label.text-truncate.d-block{for: input_id}= bop.name

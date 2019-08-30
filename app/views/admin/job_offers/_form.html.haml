@@ -1,6 +1,6 @@
 -# frozen_string_literal: true
 - suffix = @job_offer.new_record? ? 'new' : 'edit'
-- card_1_title = t(".card_1_title_#{ suffix }")
+- card_1_title = t(".card_1_title_#{ suffix }", job_offer_identifier: @job_offer.identifier)
 - card_2_title = t('.card_2_title')
 .container-fluid
   .row
@@ -36,7 +36,7 @@
                           - employers = [current_administrator.employer]
                           = f.association :employer, collection: employers.map{|x| [x.code, x.id]}, disabled: true, include_blank: false
                       .col-12.col-md-3
-                        = f.input :identifier, input_html: {disabled: true}
+                        = f.association :bop
                     .row
                       .col-12.col-md-6
                         = f.input :location

@@ -283,10 +283,10 @@ fr:
         title: "Rédaction d'une nouvelle offre"
         default_recruitment_process: "<ul><li>Si votre candidature est présélectionnée, vous serez contacté(e) par téléphone pour apprécier vos attentes et motivations.</li><li>Si vous êtes sélectionné(e) après cette première étape, vous serez reçu(e) en entretien par l’employeur et éventuellement le service des ressources humaines.</li><li>Vous serez à l’issue de cet entretien informé(e) par l’employeur des suites données à votre candidature.</li></ul>"
       edit:
-        title: "Édition de l'offre '%{job_offer_title}'"
+        title: "Édition de l'offre %{job_offer_identifier}"
       form:
         card_1_title_new: "1. Rédaction de l'offre"
-        card_1_title_edit: "1. Édition de l'offre"
+        card_1_title_edit: "1. Édition de l'offre %{job_offer_identifier}"
         card_1_1_title: "1.1 Description de l'offre"
         card_1_1_title: "1.1 Description de l'offre"
         card_1_2_title: "1.2 Paramètres de l'offre"
@@ -399,6 +399,7 @@ fr:
       shared:
         navbar:
           administrators: "Comptes admin"
+          bops: "BOPs"
           employers: "Employeurs"
           email_templates: "Courriels"
           job_applications: "Candidatures"
@@ -505,6 +506,22 @@ fr:
         element:
           affirmative: "Oui"
           negative: "Non"
+      bops:
+        index:
+          card_title:
+            zero: 'Aucun BOP'
+            one: '1 BOP'
+            other: '%{count} BOPs'
+        new:
+          title: "Ajouter un BOP"
+        edit:
+          title: "Modifier le BOP '%{name}'"
+        create:
+          success: "BOP créé !"
+        update:
+          success: "BOP mis à jour !"
+        destroy:
+          success: "BOP supprimé !"
       categories:
         index:
           card_title:

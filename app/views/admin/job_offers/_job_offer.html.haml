@@ -10,7 +10,7 @@
         = job_offer.identifier
         = job_offer.title
       .col-12.job-offer-bop
-        / SSA
+        = job_offer.bop&.name
       .col-12.job-offer-employer-name
         = job_offer.employer.name
       .col-12.job-offer-localization

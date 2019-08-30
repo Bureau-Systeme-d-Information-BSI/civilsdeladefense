@@ -31,6 +31,7 @@ class JobOffer < ApplicationRecord
   SETTINGS.each do |setting|
     belongs_to setting
   end
+  belongs_to :bop, optional: true
 
   has_many :job_applications
   has_many :job_offer_actors, inverse_of: :job_offer
@@ -53,7 +54,7 @@ class JobOffer < ApplicationRecord
 
   ## Scopes
   default_scope { order(created_at: :desc) }
-  scope :admin_index, -> { includes(:employer, :contract_type, :job_offer_actors) }
+  scope :admin_index, -> { includes(:bop, :contract_type, :employer, :job_offer_actors) }
   scope :admin_index_active, -> { admin_index.where.not(state: :archived) }
   scope :admin_index_archived, -> { admin_index.archived }
   scope :publicly_visible, -> { where(state: :published) }

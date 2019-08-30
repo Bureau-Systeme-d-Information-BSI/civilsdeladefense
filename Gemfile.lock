@@ -227,7 +227,7 @@ GEM
     mime-types-data (3.2018.0812)
     mimemagic (0.3.3)
     mini_magick (4.9.5)
-    mini_mime (1.0.1)
+    mini_mime (1.0.2)
     mini_portile2 (2.4.0)
     minitest (5.11.3)
     money (6.12.0)

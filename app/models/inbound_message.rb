@@ -21,11 +21,13 @@ class InboundMessage
 
     Mail.find(count: 100) do |message, imap, uid|
       to_be_trashed = ApplicantNotificationsMailer.receive(message)
-      if to_be_trashed
-        from, to = message[:from], message[:to]
-        Rails.logger.debug "Message from #{from} to #{to} will be trashed"
-        imap.uid_move(uid, ENV['MAIL_FOLDER_TRASH'])
-      end
+
+      next unless to_be_trashed
+
+      from = message[:from]
+      to = message[:to]
+      Rails.logger.debug "Message from #{from} to #{to} will be trashed"
+      imap.uid_move(uid, ENV['MAIL_FOLDER_TRASH'])
     end
   end
 end

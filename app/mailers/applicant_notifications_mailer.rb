@@ -30,7 +30,8 @@ class ApplicantNotificationsMailer < ApplicationMailer
   end
 
   def receive(message)
-    Rails.logger.debug "InboundMessage treating message from #{message[:from]} to #{message[:to]}"
+    from, to = message[:from], message[:to]
+    Rails.logger.debug "InboundMessage treating message from #{from} to #{to}"
     references = message.header['References']
     message_id_parent = references&.value
     original_email_id = message_id_parent&.scan(/<(.*)@/)&.flatten&.first

@@ -19,11 +19,12 @@ class InboundMessage
       )
     end
 
-    Mail.find(count: 100).each do |message, imap, uid|
+    Mail.find(count: 100) do |message, imap, uid|
       to_be_trashed = ApplicantNotificationsMailer.receive(message)
       if to_be_trashed
-        imap.uid_copy(uid, 'TRASH')
-        # imap.uid_store(uid, "+FLAGS", [:Deleted])
+        Rails.logger.debug "Message from #{message[:from]} to #{message[:to]} will be trashed"
+        imap.uid_copy(uid, 'INBOX.INBOX.Trash')
+        imap.uid_store(uid, "+FLAGS", [:Deleted])
       end
     end
   end

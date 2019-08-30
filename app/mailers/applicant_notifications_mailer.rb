@@ -30,9 +30,10 @@ class ApplicantNotificationsMailer < ApplicationMailer
   end
 
   def receive(message)
-    references = message.header['References']
-    original_email_id = references.value.split(/\<(.*)@/)[1]
     Rails.logger.debug "InboundMessage treating message #{message.inspect}"
+    references = message.header['References']
+    message_id_parent = references&.value
+    original_email_id = message_id_parent&.scan(/<(.*)@/)&.flatten&.first
 
     return false if original_email_id.blank?
 

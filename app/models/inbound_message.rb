@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Inbound messages fetched from a POP3 mail server and then processed
+# Inbound messages fetched from a IMAP mail server and then processed
 class InboundMessage
   def self.fetch_and_process
     outgoing_mail_uri = URI(ENV['MAIL_URL'])
@@ -10,23 +10,20 @@ class InboundMessage
 
     Mail.defaults do
       retriever_method(
-        :pop3,
+        :imap,
         address: host,
-        port: 995,
+        port: 993,
         enable_ssl: true,
         user_name: user_name,
         password: password
       )
     end
 
-    if Rails.env.production?
-      Mail.find_and_delete(count: 100).each do |message|
-        res = ApplicantNotificationsMailer.receive(message)
-        message.mark_for_delete = res
-      end
-    else
-      Mail.find(count: 100).each do |message|
-        ApplicantNotificationsMailer.receive(message)
+    Mail.find(count: 100).each do |message, imap, uid|
+      to_be_trashed = ApplicantNotificationsMailer.receive(message)
+      if to_be_trashed
+        imap.copy(uid, 'TRASH')
+        # imap.store(uid, "+FLAGS", [:Deleted])
       end
     end
   end

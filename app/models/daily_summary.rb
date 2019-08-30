@@ -114,7 +114,7 @@ class DailySummary
   protected
 
   def build_title_kind(state, job_application, job_offer)
-    ary = ["#{job_application.personal_profile.full_name} ##{job_offer.identifier}"]
+    ary = ["#{job_application.user.full_name} ##{job_offer.identifier}"]
     ary << state.present? ? "#{state.capitalize}JobApplication" : 'NewJobApplication'
   end
 

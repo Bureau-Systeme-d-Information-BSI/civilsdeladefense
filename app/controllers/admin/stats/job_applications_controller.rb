@@ -80,6 +80,8 @@ class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
   end
 
   def fetch_base_ressources
+    @bops = Bop.all
+    @contract_types = ContractType.all
     @employers = Employer.all
     @rejection_reasons = RejectionReason.all
   end

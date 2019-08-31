@@ -92,6 +92,7 @@ fr:
         description: "Descriptif de l’offre"
         required_profile: "Profil recherché"
         recruitment_process: "Process de recrutement"
+        bop: "BOP"
         contract_type: "Type de contrat"
         duration_contract: "Durée du contrat"
         contract_start_on: "Début du contrat"

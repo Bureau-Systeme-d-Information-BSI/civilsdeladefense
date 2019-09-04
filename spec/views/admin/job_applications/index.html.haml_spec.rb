@@ -23,7 +23,7 @@ RSpec.describe 'admin/job_applications/index', type: :view do
     job_applications_ary.each do |elt|
       collection << elt
     end
-    assign(:results, collection)
+    assign(:job_applications_filtered, collection)
   end
 
   it 'renders a list of admin/job_applications' do

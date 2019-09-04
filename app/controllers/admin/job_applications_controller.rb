@@ -1,29 +1,37 @@
 # frozen_string_literal: true
 
 class Admin::JobApplicationsController < Admin::BaseController
-  # GET /admin/job_applications
-  # GET /admin/job_applications.json
+  # GET /admin/candidatures
+  # GET /admin/candidatures.json
   def index
     @contract_types = ContractType.all
     @employers = Employer.all
 
-    @job_applications = @job_applications.includes(:job_offer, :user, :personal_profile)
+    @job_applications = @job_applications.includes(:job_offer, user: %i[personal_profile])
     @q = @job_applications.ransack(params[:q])
-    @results = @q.result
-    @results = @results.search_full_text(params[:s]) if params[:s].present?
-    @results = @results.paginate(page: params[:page], per_page: 25)
+    @job_applications_filtered = @q.result.yield_self do |relation|
+      if params[:s].present?
+        relation.search_full_text(params[:s])
+      else
+        relation
+      end
+    end.yield_self do |relation|
+      relation.paginate(page: params[:page], per_page: 25)
+    end
+
+    render layout: 'admin/pool'
   end
 
-  # GET /admin/job_applications/1
-  # GET /admin/job_applications/1.json
+  # GET /admin/candidatures/1
+  # GET /admin/candidatures/1.json
   def show
     user = @job_application.user
     @other_job_applications = user.job_applications.where.not(id: @job_application.id)
     render layout: request.xhr? ? false : 'admin/simple'
   end
 
-  # PATCH/PUT /admin/job_applications/1
-  # PATCH/PUT /admin/job_applications/1.json
+  # PATCH/PUT /admin/candidatures/1
+  # PATCH/PUT /admin/candidatures/1.json
   def update
     respond_to do |format|
       if @job_application.update(job_application_params)

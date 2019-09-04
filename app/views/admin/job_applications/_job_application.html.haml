@@ -1,29 +1,37 @@
-- with_header = true if with_header.nil?
-- change_state_url = url_for([:change_state, :admin, job_application, {state: job_application.state}])
-.card.job-application{id: dom_id(job_application), class: "job-application--state-#{job_application.state}", data: {state: job_application.state, change: {state: {url: change_state_url}}}}
-  - if controller.controller_name == "job_offers" && controller.action_name == "show" && job_application.administrator_notifications_count > 0
-    .notification= job_application.administrator_notifications_count
-  - if with_header
-    .card-header.d-flex
-      %small.d-block.text-truncate.mr-auto
-        = job_application.job_offer.title
-      - klass = badge_class(job_application.state.to_sym)
-      %small.badge{class: klass}
-        = job_application.aasm.human_state
+- user = job_application.user
+- profile = user.personal_profile
+.card.job-application.mt-3{id: dom_id(job_application)}
   .card-body
-    - if can?(:manage, job_application)
-      = link_to [:admin, job_application], class: 'job-application-modal-link', data: { toggle: :modal, target: '#remoteContentModal' } do
-        = render "/admin/job_applications/job_application_card_body", job_application: job_application
-    - else
-      .job-application-modal-link
-        = render "/admin/job_applications/job_application_card_body", job_application: job_application
+    - link_url = can?(:manage, job_application) ? [:admin, job_application] : '#'
+    - link_options = can?(:manage, job_application) ? {class: 'job-application-modal-link', data: { toggle: :modal, target: '#remoteContentModal' }} : {}
+    = link_to link_url, link_options do
+      .row
+        .col-12.user-full-name
+          .d-flex
+            = image_user_tag job_application.user.photo, width: 32, class: 'mr-2'
+            = user.full_name
+        .col-12.personal-profile-current-position
+          - current_position = profile.current_position
+          - if current_position
+            %span{title: current_position}
+              = current_position
+        .col-12.personal-profile-is-currently-employed
+          - is_currently_employed = profile.is_currently_employed
+          - if is_currently_employed
+            = PersonalProfile.human_attribute_name('is_currently_employed/'+profile.is_currently_employed.to_s)
+          - else
+            = t('non_applicable')
+        .col-12.user-job-applications-count
+          = user.job_applications_count
+        .col-12.personal-profile-address-short
+          - address_short = profile.address_short
+          - if address_short
+            %span{title: address_short}
+              = address_short
   .card-footer.d-flex.flex-column.flex-md-row
-    .mr-auto= t('.published_date', time_ago_in_words: time_ago_in_words(job_application.created_at))
-    - klasses = %w(emails-count badge job-application-modal-link mr-2)
-    = link_to [:admin, job_application], class: klasses, data: { toggle: :modal, target: '#remoteContentModal' } do
-      = fa_icon "email", style: "width: 0.8rem; height: auto; vertical-align: -0.15rem;"
-      = job_application.emails_count
-    - klasses = %w(emails-count badge job-application-modal-link mr-0)
-    = link_to [:admin, job_application], class: klasses, data: { toggle: :modal, target: '#remoteContentModal' } do
-      = fa_icon "link-variant", style: "width: 0.8rem; height: auto; vertical-align: -0.15rem;"
-      = job_application.files_count
+    .mr-auto
+      - klass = badge_class(job_application.state.to_sym)
+      %small.badge.text-white.text-uppercase.text-nowrap.mr-1{class: klass}
+        = job_application.aasm.human_state
+      %small
+        Inscrit le #{ I18n.l job_application.created_at.to_date }

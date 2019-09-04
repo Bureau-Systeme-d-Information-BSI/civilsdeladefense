@@ -1,12 +1,38 @@
-.bg-secondary.text-center
-  %ul.navbar-nav.flex-row.justify-content-center
-    %li.nav-item.active
-      = link_to t('.search'), [:admin, :job_applications], class: 'nav-link'
-    %li.nav-item
-      = link_to t('.my_job_applications'), [:admin, :job_applications], class: 'nav-link'
-.bg-quaternary
-= render partial: 'filters'
-= render partial: 'list'
+- @page_title = t('.title')
+.card
+  .card-header
+    .h4.text-primary.d-md-flex.align-items-center
+      #{@job_applications.count} candidatures
+    = render partial: 'search'
+    .d-flex.align-items-end
+      .h5.text-primary.mr-auto= t('.job_applications_filtered', count: @job_applications_filtered.count)
+      - klasses = %w[btn btn-link mb-0]
+      = sort_link(@q, :created_at, {}, {class: klasses}) do
+        Date de création
+        - unless @q.sorts.detect{|x| x.name == 'created_at'}
+          &nbsp;▼
+    .row
+      .col-12
+        - if @job_applications_filtered.any?
+          .card.bg-transparent
+            .card-body
+              .row
+                .col-12.user-full-name
+                  Nom
+                .col-12.personal-profile-current-position
+                  Métier
+                .col-12.personal-profile-is-currently-employed
+                  Statut
+                .col-12.user-job-applications-count
+                  Candidatures
+                .col-12.personal-profile-address-short
+                  Secteur
+          = render partial: 'job_application', collection: @job_applications_filtered
+          .mt-5
+            = will_paginate @job_applications_filtered, params: { controller: 'job_applications', action: controller.action_name }
+        - else
+          %em Aucun résultat
+
 .modal.fade#remoteContentModal{tabindex: -1, role: :dialog, aria: {labelledby: :remoteContentModal, hidden: true}}
   .modal-dialog.modal-lg{role: :document}
     .modal-content

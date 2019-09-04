@@ -196,9 +196,11 @@ fr:
         success: "Vos informations ont été mises à jour"
     job_applications:
       index:
-        title: "Candidats"
-        search: "Recherche"
-        my_job_applications: "Mes candidatures"
+        job_applications_filtered:
+          zero: "Aucun résultat de recherche"
+          one: "1 résultat de recherche"
+          other: "%{count} résultats de recherche"
+        title: "Vivier de candidatures"
       filters:
         profession: "Domaines professionnels"
         contract: "Contrat"
@@ -662,6 +664,11 @@ fr:
           success: "Filière mise à jour !"
         destroy:
           success: "Filière supprimée !"
+    pool:
+      shared:
+        navbar:
+          job_applications: "Candidatures"
+          title: "Vivier"
     stats:
       job_applications:
         index:

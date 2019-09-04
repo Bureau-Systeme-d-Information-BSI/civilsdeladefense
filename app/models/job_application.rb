@@ -113,6 +113,9 @@ class JobApplication < ApplicationRecord
                   column_name: :notifications_count,
                   delta_column: 'administrator_notifications_count',
                   touch: true
+  counter_culture :user,
+                  column_name: 'job_applications_count',
+                  touch: true
 
   default_scope { order(created_at: :desc) }
   scope :finished, -> { where(state: FINISHED_STATES) }

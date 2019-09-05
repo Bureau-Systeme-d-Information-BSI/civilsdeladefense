@@ -44,6 +44,11 @@ Rails.application.routes.draw do
         end
       end
     end
+    resources :preferred_users
+    resources :preferred_users_lists, path: 'candidatures-listes' do
+      resources :preferred_users
+    end
+    resources :users, only: %i[show]
     resources :job_applications, path: 'candidatures', only: %i[index show update] do
       member do
         patch :change_state

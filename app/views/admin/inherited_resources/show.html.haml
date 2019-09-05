@@ -1,0 +1,12 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @admin_settings_category.name
+%p
+  %b Position:
+  = @admin_settings_category.position
+
+= link_to 'Edit', edit_admin_settings_category_path(@admin_settings_category)
+\|
+= link_to 'Back', admin_settings_categories_path

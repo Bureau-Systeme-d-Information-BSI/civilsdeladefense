@@ -1,0 +1,32 @@
+- @page_title = t("admin.#{ resource_class.to_s.tableize }.#{controller.action_name}.title")
+- resource_symbol = resource_class.to_s.tableize.singularize.to_sym
+.card
+  .card-header.border-bottom-0
+    .card-title.d-md-flex.align-items-center
+      = t("admin.#{ resource_class.to_s.tableize }.index.card_title", count: collection.size)
+      = link_to [:new, :admin, resource_symbol], class: 'btn btn-primary btn-raised ml-auto mt-2 mt-md-0 mb-0' do
+        = fa_icon 'plus', class: 'mr-1'
+        = t('buttons.add')
+  %table.table.table-hover.mb-0.mt-3
+    %thead
+      %tr
+        - if resource_class == EmailTemplate
+          %th= resource_class.human_attribute_name(:title)
+        - else
+          %th= resource_class.human_attribute_name(:name)
+          - if resource_class == JobApplicationFileType
+            %th= resource_class.human_attribute_name(:from_state)
+            %th= resource_class.human_attribute_name(:kind)
+            %th= resource_class.human_attribute_name(:by_default)
+          - if resource_class == Employer
+            %th= resource_class.human_attribute_name(:code)
+          - if resource_class.reflect_on_association(:job_offers)
+            %th.text-center{style: 'width:100px;'} Nombre d'offres
+        %th{style: 'width:120px;'}
+    %tbody
+      - if resource_class == Category
+        - Category.roots.each do |root|
+          - Category.each_with_level(root.self_and_descendants) do |category, level|
+            = render partial: "/admin/inherited_resources/element", locals: {element: category, level: level}
+      - else
+        = render partial: "/admin/inherited_resources/element", collection: collection, as: :element

@@ -104,6 +104,8 @@ fr:
         option_photo: "Photo"
         option_website_url: "Site internet (URL)"
         identifier: "Référence de l'offre"
+      preferred_user:
+        preferred_users_list: "Ajouter à la liste..."
       user:
         agent_statement: "Déclaration dûment remplie et signée par l’agent"
         carte_vitale_certificate: "Attestation de carte vitale (mentionnant le n° INSEE)"

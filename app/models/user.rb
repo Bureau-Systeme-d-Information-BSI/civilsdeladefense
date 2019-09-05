@@ -7,6 +7,7 @@ class User < ApplicationRecord
          :confirmable, :lockable
 
   has_many :job_applications, dependent: :destroy
+  has_many :preferred_users
   has_one :personal_profile, as: :personal_profileable
   accepts_nested_attributes_for :personal_profile
 

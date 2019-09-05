@@ -275,6 +275,20 @@ $('#remoteContentModal').on('show.bs.modal', function (event) {
         formAutoSubmit()
         inPlaceEdit()
         addressAutocomplete()
+
+        $('.new_preferred_users_list, .edit_preferred_users_list').on('ajax:success', function(event) {
+          let detail = event.detail
+          let xhr = detail[2]
+          let redirect_url = xhr.getResponseHeader('Location')
+          if (redirect_url != undefined) {
+            window.location.href = redirect_url
+          }
+        }).on('ajax:error', function(event) {
+          let detail = event.detail
+          let data = detail[0]
+          var content = $(data).find('body').html()
+          modal.find('.modal-body').html(content)
+        })
       },
       error: function(response){
         console.log("error")

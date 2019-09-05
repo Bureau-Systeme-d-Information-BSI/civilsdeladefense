@@ -98,11 +98,6 @@ $card-spacer-x-normal: 1rem;
         }
       }
     }
-    .card-footer {
-      font-size: 60%;
-      @extend .text-muted;
-      padding: ($card-spacer-x-normal * 0.25) ($card-spacer-x-normal * 0.75);
-    }
   }
   &.job-offer {
     .dropdown-menu {

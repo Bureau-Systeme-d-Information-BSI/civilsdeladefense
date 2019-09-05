@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/plataformatec/simple_form.git
+  revision: fc25ab40a28ad477e1ac0e45ddcf7ad2b64891f3
+  specs:
+    simple_form (4.1.0)
+      actionpack (>= 5.0)
+      activemodel (>= 5.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -348,9 +356,6 @@ GEM
     shellany (0.0.1)
     shoulda-matchers (4.1.2)
       activesupport (>= 4.2.0)
-    simple_form (4.0.1)
-      actionpack (>= 5.0)
-      activemodel (>= 5.0)
     simplecov (0.16.1)
       docile (~> 1.1)
       json (>= 1.8, < 3)
@@ -450,7 +455,7 @@ DEPENDENCIES
   selenium-webdriver
   sequenced
   shoulda-matchers
-  simple_form
+  simple_form!
   simplecov
   spring
   spring-watcher-listen (~> 2.0.0)

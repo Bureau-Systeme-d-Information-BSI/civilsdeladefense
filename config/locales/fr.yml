@@ -210,8 +210,6 @@ fr:
           zero: "Aucune candidature trouvée"
           one: "1 candidature trouvée"
           other: "%{count} candidatures trouvées"
-      job_application:
-        published_date: "Candidaté il y a %{time_ago_in_words}"
       job_application_head:
         nav_emails: "Courriels"
         nav_files: "Documents"
@@ -397,6 +395,12 @@ fr:
         settings: "Paramètres"
         account: "Mon compte"
         logout: "Déconnexion"
+    users:
+      user:
+        applied_on: "Candidaté le %{date}"
+        my_preferred_user_lists: "Mon vivier"
+        remove_user: "Supprimer de cette liste"
+        subscribed_on: "Inscrit le %{date}"
     settings:
       shared:
         navbar:
@@ -664,11 +668,36 @@ fr:
           success: "Filière mise à jour !"
         destroy:
           success: "Filière supprimée !"
+    preferred_users_lists:
+      index:
+        title: "Mes listes de candidats"
+        card_title:
+          zero: "Aucune liste de candidats"
+          one: "1 liste de candidats"
+          other: "%{count} listes de candidats"
+      show:
+        title: "Liste de candidats '%{name}'"
+        users_filtered:
+          zero: "Aucun candidat trouvé"
+          one: "1 candidat trouvé"
+          other: "%{count} candidats trouvés"
+      new:
+        title: "Ajouter une nouvelle liste"
+      edit:
+        title: "Modifier la liste '%{name}'"
+      create:
+        success: "Liste créée !"
+      update:
+        success: "Liste mise à jour !"
+      destroy:
+        success: "Liste supprimée !"
     pool:
       shared:
         navbar:
-          job_applications: "Candidatures"
-          title: "Vivier"
+          job_applications_title: "Vivier"
+          job_applications: "Toutes les candidatures"
+          preferred_users_lists_title: "Mes listes de candidats"
+          create_preferred_users_list_title: "+ Créer une nouvelle liste"
     stats:
       job_applications:
         index:

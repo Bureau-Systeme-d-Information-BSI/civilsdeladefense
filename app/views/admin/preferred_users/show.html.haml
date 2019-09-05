@@ -1,0 +1,12 @@
+- user = @preferred_user.user
+- personal_profile = user.personal_profile
+- tab_active = job_applications_tab_active
+.container-fluid
+  = render partial: '/admin/job_applications/job_application_head', locals: {user: user, profile: personal_profile}
+  .row.bg-card-bg
+    .col-12.col-md-8.border-right{class: job_application_modal_section_classes}
+      .tab-content
+        .tab-pane.fade.show#profile{class: tab_active == :profile && 'active show', role: :tabpanel, aria: {labelledby: :profile}}
+          = render partial: '/admin/personal_profiles/personal_profile', locals: {user: user}
+    .col-12.col-md-4{class: job_application_modal_section_classes}
+      =# render partial: "job_application_activity"

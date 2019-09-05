@@ -1,0 +1,28 @@
+%tr
+  %td
+    - if defined?(level) && level > 0
+      %span.text-light-grey{style: "opacity: 0.6;"}= "└#{'──' * (level-1)}"
+    = element.try(:name) || element.try(:title)
+  - if resource_class == Employer
+    %td
+      = element.code
+  - if resource_class == JobApplicationFileType
+    %td
+      = JobApplication.human_attribute_name("state/#{element.from_state}")
+    %td
+      = JobApplicationFileType.human_attribute_name("kind/#{element.kind}")
+    %td
+      = element.by_default? ? t('.affirmative') : t('.negative')
+  - if resource_class.reflect_on_association(:job_offers)
+    %td.text-center
+      = element.job_offers.publicly_visible.count
+  %td.text-right
+    %ul.list-inline.mb-0.actions
+      %li.list-inline-item
+        - if resource_class == Category
+          = link_to fa_icon('plus'), [:new, :admin, :category, {parent_id: element.id}], title: t('buttons.add_child')
+        - if element.has_attribute?(:position)
+          = link_to fa_icon('arrow-up'), [:move_higher, :admin, element], method: :post, title: t('buttons.move_higher'), data: {confirm: t('buttons.confirm')}
+          = link_to fa_icon('arrow-down'), [:move_lower, :admin, element], method: :post, title: t('buttons.move_lower'), data: {confirm: t('buttons.confirm')}
+        = link_to fa_icon('pencil'), [:edit, :admin, element], title: t('buttons.edit')
+        = link_to fa_icon('delete'), [:admin, element], method: :delete, title: t('buttons.delete'), data: {confirm: t('buttons.confirm')}

@@ -1,7 +1,7 @@
-- user = @job_application.user
-- archived = @job_application.job_offer.archived?
+- user ||= @job_application.user
+- archived = defined?(@job_application) ? @job_application.job_offer.archived? : nil
 - core_object = archived ? @job_application.personal_profile : user
-%div{id: dom_id(@job_application, 'profile')}
+%div{id: dom_id(@job_application || user, 'profile')}
   - if archived
     %em Profile archivé
   .card
@@ -13,7 +13,7 @@
       - fields.each do |field|
         - hsh = {obj: core_object, field: field, disabled: archived}
         - hsh[:choices] = choices_gender if field == :gender
-        = render partial: 'job_application_profile_field', locals: hsh
+        = render partial: '/admin/personal_profiles/personal_profile_field', locals: hsh
   .card
     .card-header.bg-white.font-weight-bold.text-secondary
       = fa_icon('file-document', class: 'text-secondary')
@@ -26,13 +26,14 @@
         - hsh[:association] = field if field =~ /_level/
         - hsh[:choices] = choices_boolean if field == :is_currently_employed
         - hsh[:choices] = choices_month if field == :availability_date_in_month
-        = render partial: 'job_application_profile_field', locals: hsh
-  .card
-    .card-header.bg-white.font-weight-bold.text-secondary
-      = fa_icon('file-document', class: 'text-secondary')
-      Spécificités vis-à-vis de l'offre sélectionnée
-    .card-body.bg-white
-      - fields = personal_profile_fields3
-      - fields.each do |field|
-        - hsh = {obj: @job_application, field: field, disabled: archived}
-        = render partial: 'job_application_profile_field', locals: hsh
+        = render partial: '/admin/personal_profiles/personal_profile_field', locals: hsh
+  - if defined?(@job_application)
+    .card
+      .card-header.bg-white.font-weight-bold.text-secondary
+        = fa_icon('file-document', class: 'text-secondary')
+        Spécificités vis-à-vis de l'offre sélectionnée
+      .card-body.bg-white
+        - fields = personal_profile_fields3
+        - fields.each do |field|
+          - hsh = {obj: @job_application, field: field, disabled: archived}
+          = render partial: '/admin/personal_profiles/personal_profile_field', locals: hsh

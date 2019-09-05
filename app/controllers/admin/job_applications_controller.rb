@@ -6,6 +6,7 @@ class Admin::JobApplicationsController < Admin::BaseController
   def index
     @contract_types = ContractType.all
     @employers = Employer.all
+    @preferred_users_lists = current_administrator.preferred_users_lists
 
     @job_applications = @job_applications.includes(:job_offer, user: %i[personal_profile])
     @q = @job_applications.ransack(params[:q])
@@ -19,7 +20,7 @@ class Admin::JobApplicationsController < Admin::BaseController
       relation.paginate(page: params[:page], per_page: 25)
     end
 
-    render layout: 'admin/pool'
+    render action: :index, layout: 'admin/pool'
   end
 
   # GET /admin/candidatures/1

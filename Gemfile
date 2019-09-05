@@ -52,7 +52,7 @@ gem 'ransack'
 gem 'redis'
 gem 'rollbar'
 gem 'sequenced'
-gem 'simple_form'
+gem 'simple_form', github: 'plataformatec/simple_form'
 gem 'sqreen', '>= 1.16'
 gem 'will_paginate'
 

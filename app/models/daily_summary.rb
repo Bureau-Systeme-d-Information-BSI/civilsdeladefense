@@ -115,7 +115,7 @@ class DailySummary
 
   def build_title_kind(state, job_application, job_offer)
     ary = ["#{job_application.user.full_name} ##{job_offer.identifier}"]
-    ary << state.present? ? "#{state.capitalize}JobApplication" : 'NewJobApplication'
+    ary.push(state.present? ? "#{state.capitalize}JobApplication" : 'NewJobApplication')
   end
 
   def build_administrators(state, job_offer)

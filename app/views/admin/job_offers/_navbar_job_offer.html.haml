@@ -1,7 +1,6 @@
-- klasses = []
-- klasses << 'mt-3' if controller.controller_name == 'job_offers' && %w[show board stats].include?(controller.action_name)
-.card{class: klasses}
+.card
   .card-body.pt-1.pl-3.pr-3.pb-3
-    = render partial: 'job_offer_nav', locals: {job_offer: @job_offer, active_tab: controller.action_name}
-    = render partial: 'job_offer', locals: {job_offer: @job_offer}
+    - tab_hash = { action_name: controller.action_name, controller_name: controller.controller_name }
+    = render partial: '/admin/job_offers/job_offer_nav', locals: {job_offer: @job_offer, active_tab: tab_hash}
+    = render partial: '/admin/job_offers/job_offer', locals: {job_offer: @job_offer}
     = yield :card_inner

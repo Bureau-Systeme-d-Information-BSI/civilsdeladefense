@@ -28,7 +28,7 @@ class Admin::JobApplicationsController < Admin::BaseController
   def show
     user = @job_application.user
     @other_job_applications = user.job_applications.where.not(id: @job_application.id)
-    render layout: request.xhr? ? false : 'admin/simple'
+    render layout: request.xhr? ? false : layout_choice
   end
 
   # PATCH/PUT /admin/candidatures/1
@@ -98,5 +98,15 @@ class Admin::JobApplicationsController < Admin::BaseController
                         rejection_reason_id]
     fields << { user_attributes: [:id, personal_profile_attributes: profile_fields] }
     params.require(:job_application).permit(fields)
+  end
+
+  def layout_choice
+    if params[:job_offer_id].present?
+      @job_offer = JobOffer.find(params[:job_offer_id])
+      @layout_full_width = true
+      'admin/job_offer_single'
+    else
+      'admin/pool'
+    end
   end
 end

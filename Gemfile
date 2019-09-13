@@ -54,6 +54,7 @@ gem 'rollbar'
 gem 'sequenced'
 gem 'simple_form', github: 'plataformatec/simple_form'
 gem 'sqreen', '>= 1.16'
+gem 'turbolinks'
 gem 'will_paginate'
 
 gem 'clockwork' # simulate cron on Scalingo

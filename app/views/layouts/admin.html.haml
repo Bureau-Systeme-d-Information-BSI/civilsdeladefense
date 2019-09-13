@@ -4,13 +4,17 @@
     %title= [@page_title, 'Civils de la Défense'].delete_if(&:blank?).join(' - ')
     %meta{charset: "utf-8"}
     %meta{name: "viewport", content: "width=device-width, initial-scale=1, shrink-to-fit=no"}
-    = stylesheet_link_tag 'https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500|Roboto+Mono:400,500'
-    = stylesheet_pack_tag 'admin-style'
+    = stylesheet_link_tag 'https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500|Roboto+Mono:400,500', 'data-turbolinks-track': 'reload'
+    = javascript_pack_tag 'admin-bundle', 'data-turbolinks-track': 'reload'
+    - if ENV['INCLUDE_TRACKERS']
+      = render partial: '/shared/trackers', 'data-turbolinks-track': 'reload'
+    = stylesheet_pack_tag 'admin-style', 'data-turbolinks-track': 'reload'
     = csrf_meta_tags
     = csp_meta_tag
   - style = 'overflow: hidden;' if controller.controller_name == 'job_offers' && controller.action_name == 'board'
   - klasses = %w(mt-0 pb-0) if !administrator_signed_in?
   %body{class: klasses, style: style}
+    #__SVG_SPRITE_NODE__{'data-turbolinks-permanent': true}
     - if administrator_signed_in?
       = render partial: '/admin/shared/navbar'
       - if flash[:notice]
@@ -20,8 +24,6 @@
       - elsif flash[:success]
         .d-none.alert.alert-success= flash[:success]
       = content_for?(:content) ? yield(:content) : yield
-      - if ENV['INCLUDE_TRACKERS']
-        = render partial: "/shared/trackers"
     - else
       .container-fluid.devise
         .row
@@ -43,4 +45,3 @@
       = javascript_pack_tag 'devise-bundle'
       - if ENV['INCLUDE_TRACKERS']
         = render partial: "/shared/trackers"
-    = javascript_pack_tag 'admin-bundle'

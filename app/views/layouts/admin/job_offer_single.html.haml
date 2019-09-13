@@ -1,0 +1,29 @@
+- content_for :content do
+  .container-fluid
+    .row
+      %aside.col-md-2.d-none.d-md-block.bg-white.sidebar
+        .sidebar-sticky
+          = render '/admin/job_offers/navbar'
+      %main.col-md-9.ml-sm-auto.col-lg-10{role: 'main'}
+        - if @layout_full_width
+          .col-12
+            .mt-5
+            - if defined?(@job_offer)
+              = render partial: '/admin/job_offers/navbar_job_offer'
+              .mb-3
+              = yield
+            - else
+              = yield
+        - else
+          .container
+            .row
+              .col-12.mx-md-auto
+                .mt-5
+                - if defined?(@job_offer)
+                  = render partial: '/admin/job_offers/navbar_job_offer'
+                  .mb-3
+                  = yield
+                - else
+                  = yield
+        = yield :sub_content
+= render template: 'layouts/admin'

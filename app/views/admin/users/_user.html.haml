@@ -3,8 +3,7 @@
 .card.job-application.mt-3{id: dom_id(user)}
   .card-body
     - link_url = job_application_user_modal_link_url(user, job_application)
-    - link_options = job_application_user_modal_link_options(user, job_application)
-    = link_to link_url, link_options do
+    = link_to link_url do
       .row
         .col-12.user-full-name
           .d-flex

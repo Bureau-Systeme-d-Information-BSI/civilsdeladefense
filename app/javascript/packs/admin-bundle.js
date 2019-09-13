@@ -7,6 +7,9 @@
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
 
+import Turbolinks from 'turbolinks'
+Turbolinks.start()
+
 import Url from 'domurl'
 import flatpickr from 'flatpickr'
 import { French } from 'flatpickr/dist/l10n/fr'
@@ -79,7 +82,7 @@ window.inPlaceEdit = inPlaceEdit
 
 $('body').bootstrapMaterialDesign()
 
-$( document ).ready(function() {
+document.addEventListener('turbolinks:load', function() {
   tinymce.init({
     selector: '.ckeditor',
     branding: false,
@@ -178,9 +181,30 @@ $( document ).ready(function() {
 
     return event.preventDefault()
   })
+
+  $('.new_preferred_users_list, .edit_preferred_users_list').on('ajax:success', function(event) {
+    let detail = event.detail
+    let xhr = detail[2]
+    let redirect_url = xhr.getResponseHeader('Location')
+    if (redirect_url != undefined) {
+      window.location.href = redirect_url
+    }
+  }).on('ajax:error', function(event) {
+    let detail = event.detail
+    let data = detail[0]
+    var content = $(data).find('body').html()
+    modal.find('.modal-body').html(content)
+  })
 })
 
-document.addEventListener('DOMContentLoaded', function() {
+// document.addEventListener('DOMContentLoaded', function() {
+//   var svgSpriteNode = document.getElementById('__SVG_SPRITE_NODE__')
+//   if (svgSpriteNode !== null) {
+//     svgSpriteNode.setAttribute('data-turbolinks-permanent', '')
+//   }
+// })
+
+document.addEventListener('turbolinks:load', function() {
   ;[].forEach.call(document.querySelectorAll('.input-search'), function(inputSearchNode) {
     inputSearchNode.addEventListener('click', function(e) {
     })
@@ -258,43 +282,4 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 })
 
-$('#remoteContentModal').on('show.bs.modal', function (event) {
-  var link = event.relatedTarget
-  if (link !== undefined) {
-    var href = link.href
-    var modal = $(this)
-    Rails.ajax({
-      type: "GET",
-      url: href,
-      success: function(response){
-        var content = $(response).find('body').html()
-        modal.find('.modal-body').html(content)
-        if (link.classList.contains('job-application-modal-link')) {
-          initEmailTemplates()
-        }
-        formAutoSubmit()
-        inPlaceEdit()
-        addressAutocomplete()
-
-        $('.new_preferred_users_list, .edit_preferred_users_list').on('ajax:success', function(event) {
-          let detail = event.detail
-          let xhr = detail[2]
-          let redirect_url = xhr.getResponseHeader('Location')
-          if (redirect_url != undefined) {
-            window.location.href = redirect_url
-          }
-        }).on('ajax:error', function(event) {
-          let detail = event.detail
-          let data = detail[0]
-          var content = $(data).find('body').html()
-          modal.find('.modal-body').html(content)
-        })
-      },
-      error: function(response){
-        console.log("error")
-        console.log(response)
-      }
-    })
-  }
-})
 

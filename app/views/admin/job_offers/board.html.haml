@@ -1,6 +1,5 @@
 - @layout_full_width = true
 - @page_title = t('.title', job_offer_identifier: @job_offer.identifier)
-= render partial: '/admin/job_offers/navbar_job_offer'
 - draggable = can? :manage, @job_applications.values.flatten.first
 .board#board{data: {draggable: draggable}}
   .lists
@@ -13,9 +12,4 @@
           = surround '(', ')' do
             %span.total= concerned_job_applications.size
         .d-flex.flex-column.cards{data: {state: state_name}}
-          = render partial: '/admin/job_applications/job_application', collection: concerned_job_applications, locals: {with_header: false}
-
-.modal.fade#remoteContentModal{tabindex: -1, role: :dialog, aria: {labelledby: :remoteContentModal, hidden: true}}
-  .modal-dialog.modal-lg{role: :document}
-    .modal-content
-      .modal-body.p-0
+          = render partial: 'job_application', collection: concerned_job_applications, locals: {with_header: false}

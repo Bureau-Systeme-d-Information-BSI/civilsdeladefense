@@ -111,7 +111,7 @@ class Admin::JobOffersController < Admin::BaseController
 
   def choose_layout
     if %w[index archived show board stats applicant_stats].include?(action_name)
-      'admin/job_offers_with_sidebar'
+      'admin/job_offer_single'
     else
       'admin'
     end

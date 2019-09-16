@@ -56,9 +56,7 @@ class Admin::JobOffersController < Admin::BaseController
 
   # GET /admin/job_offers/new
   def new
-    source = nil
-    source = JobOffer.find(params[:job_offer_id]) if params[:job_offer_id].present?
-    @job_offer = JobOffer.new_from_source(source) if source.present?
+    @job_offer = JobOffer.new_from_source(params[:job_offer_id])
     @job_offer ||= JobOffer.new_from_scratch(current_administrator)
     @job_offer.employer = current_administrator.employer unless current_administrator.bant?
   end

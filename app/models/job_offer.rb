@@ -134,7 +134,10 @@ class JobOffer < ApplicationRecord
     j
   end
 
-  def self.new_from_source(source)
+  def self.new_from_source(source_id)
+    return nil if source_id.blank?
+
+    source = find(source_id)
     j = source.dup
     j.title = "Copie de #{j.title}"
     j.state = nil

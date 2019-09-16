@@ -11,4 +11,7 @@
   %li.mr-3.nav-item
     - klasses = base_link_klasses.dup
     - klasses << :active if (active_tab[:action_name] == 'board') || (active_tab[:controller_name] == 'job_applications')
-    = link_to t('.board'), [:board, :admin, job_offer], class: klasses
+    = link_to [:board, :admin, job_offer], class: klasses do
+      = t('.board')
+      = surround '(', ')' do
+        = job_offer.job_applications_count

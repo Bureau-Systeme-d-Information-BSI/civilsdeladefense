@@ -182,7 +182,7 @@ document.addEventListener('turbolinks:load', function() {
     return event.preventDefault()
   })
 
-  $('.new_preferred_users_list, .edit_preferred_users_list').on('ajax:success', function(event) {
+  $('.new_preferred_user, .edit_preferred_user').on('ajax:success', function(event) {
     let detail = event.detail
     let xhr = detail[2]
     let redirect_url = xhr.getResponseHeader('Location')
@@ -196,13 +196,6 @@ document.addEventListener('turbolinks:load', function() {
     modal.find('.modal-body').html(content)
   })
 })
-
-// document.addEventListener('DOMContentLoaded', function() {
-//   var svgSpriteNode = document.getElementById('__SVG_SPRITE_NODE__')
-//   if (svgSpriteNode !== null) {
-//     svgSpriteNode.setAttribute('data-turbolinks-permanent', '')
-//   }
-// })
 
 document.addEventListener('turbolinks:load', function() {
   ;[].forEach.call(document.querySelectorAll('.input-search'), function(inputSearchNode) {

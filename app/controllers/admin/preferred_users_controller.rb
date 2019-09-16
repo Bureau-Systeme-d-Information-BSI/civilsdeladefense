@@ -8,7 +8,7 @@ class Admin::PreferredUsersController < Admin::InheritedResourcesController
   def create
     create! do |success, failure|
       success.html do
-        render json: {}.to_json, status: :created, location: [:admin, resource]
+        render json: {}.to_json, status: :created, location: [:admin, resource.preferred_users_list]
       end
       failure.html do
         layout_type = request.xhr? ? false : 'admin/pool'

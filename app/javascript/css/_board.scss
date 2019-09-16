@@ -15,7 +15,7 @@ $list-bg-color: #e2e4e6;
 
 .board {
   @extend .mt-3;
-  height: calc(100vh - 285px);
+  height: calc(100vh - 252px);
   padding-bottom: $gap;
   overflow-x: auto;
   overflow-y: hidden;

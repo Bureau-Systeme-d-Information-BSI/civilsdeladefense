@@ -8,4 +8,6 @@ class PreferredUser < ApplicationRecord
   counter_culture :preferred_users_list,
                   column_name: 'preferred_users_count',
                   touch: true
+
+  validates :user_id, uniqueness: { scope: :preferred_users_list_id }
 end

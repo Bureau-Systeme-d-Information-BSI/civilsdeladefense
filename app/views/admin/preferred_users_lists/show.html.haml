@@ -27,7 +27,7 @@
                   Candidatures
                 .col-12.personal-profile-address-short
                   Secteur
-          = render @users_filtered
+          = render collection: @users_filtered
           .mt-5
             = will_paginate @users_filtered, params: { controller: 'users', action: controller.action_name }
         - else

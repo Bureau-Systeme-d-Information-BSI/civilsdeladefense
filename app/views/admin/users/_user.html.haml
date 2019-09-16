@@ -34,7 +34,7 @@
         %small.badge.text-white.text-uppercase.text-nowrap.mr-1{class: klass}
           = job_application.aasm.human_state
         %small
-          = t('.applied_on', date: I18n.l(job_application.created_at.to_date))
+          = t('admin.job_applications.job_application.applied_on', date: I18n.l(job_application.created_at.to_date))
       - else
         %small
           = t('.subscribed_on', date: I18n.l(user.created_at.to_date))

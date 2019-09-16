@@ -20,6 +20,7 @@
   }
   .card-header {
     &:not(.with-subheader) {
+      @extend .px-4;
       border-bottom: $border-width-normal solid $card-border-color;
     }
     .card-title {
@@ -41,7 +42,7 @@
 
 @include media-breakpoint-up(md) {
   .card-body {
-    padding: $card-spacer-x;
+    padding: ($card-spacer-x * 0.75);
   }
 }
 

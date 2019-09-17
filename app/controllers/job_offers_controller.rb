@@ -93,7 +93,7 @@ class JobOffersController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_job_offer
     @job_offer = JobOffer.find(params[:id])
-    if !@job_offer.published? && params[:preview].blank?
+    if !@job_offer.published? && !administrator_signed_in?
       raise JobOfferNotAvailableAnymore.new(job_offer_title: @job_offer.title)
     end
     return redirect_to @job_offer, status: :moved_permanently if params[:id] != @job_offer.slug

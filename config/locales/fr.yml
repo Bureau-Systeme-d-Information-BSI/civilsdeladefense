@@ -403,6 +403,9 @@ fr:
         my_preferred_user_lists: "Mon vivier"
         remove_user: "Supprimer de cette liste"
         subscribed_on: "Inscrit le %{date}"
+      update:
+        success: "Profil mis à jour !"
+        failure: "Erreur dans la mise à jour du profil"
     settings:
       shared:
         navbar:

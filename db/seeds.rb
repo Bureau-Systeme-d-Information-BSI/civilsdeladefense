@@ -292,7 +292,15 @@ user = User.new email: 'coin@pan.fr',
                 last_name: 'Pan',
                 password: ENV['SEED_PASSWORD'],
                 password_confirmation: ENV['SEED_PASSWORD'],
-                photo: photo
+                photo: photo,
+                personal_profile_attributes: {
+                  current_position: 'Développeur',
+                  address_1: '1 avenue des Champs-Elysées',
+                  postcode: '75008',
+                  city: 'Paris',
+                  country: 'FR',
+                  phone: '0606060606'
+                }
 user.skip_confirmation_notification!
 user.save!
 user.confirm
@@ -355,7 +363,15 @@ user_candidate_of_all = User.new email: Faker::Internet.email,
                                  first_name: 'Nicolas',
                                  last_name: 'Agoini',
                                  password: ENV['SEED_PASSWORD'],
-                                 password_confirmation: ENV['SEED_PASSWORD']
+                                 password_confirmation: ENV['SEED_PASSWORD'],
+                                 personal_profile_attributes: {
+                                   current_position: 'Développeur',
+                                   address_1: '1 avenue des Champs-Elysées',
+                                   postcode: '75008',
+                                   city: 'Paris',
+                                   country: 'FR',
+                                   phone: '0606060606'
+                                 }
 user_candidate_of_all.skip_confirmation_notification!
 user_candidate_of_all.save!
 user_candidate_of_all.confirm
@@ -369,7 +385,15 @@ JobOffer.where.not(duration_contract: nil).where.not(id: [job_offer4.id, job_off
                     first_name: Faker::Name.first_name,
                     last_name: Faker::Name.last_name,
                     password: ENV['SEED_PASSWORD'],
-                    password_confirmation: ENV['SEED_PASSWORD']
+                    password_confirmation: ENV['SEED_PASSWORD'],
+                    personal_profile_attributes: {
+                      current_position: 'Développeur',
+                      address_1: '1 avenue des Champs-Elysées',
+                      postcode: '75008',
+                      city: 'Paris',
+                      country: 'FR',
+                      phone: '0606060606'
+                    }
     user.skip_confirmation_notification!
     user.save!
     user.confirm

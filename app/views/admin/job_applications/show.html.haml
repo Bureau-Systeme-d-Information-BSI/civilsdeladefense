@@ -5,9 +5,14 @@
     .col-12.col-md-8.border-right{class: job_application_modal_section_classes}
       .tab-content
         .tab-pane.fade.show#profile{class: tab_active == :profile && 'active show', role: :tabpanel, aria: {labelledby: :profile}}
+
           = render partial: '/admin/personal_profiles/personal_profile', locals: {job_application: @job_application, user: @job_application.user}
+
+          = render partial: 'job_application_profile', locals: { job_application: @job_application }
+
           - if @other_job_applications.any?
             = render partial: 'user_job_applications', locals: {job_applications: @other_job_applications}
+
         .tab-pane.fade.show#overview{class: tab_active == :overview && 'active show', role: :tabpanel, aria: {labelledby: :overview}}
           = render partial: 'job_application_overview', locals: {job_application: @job_application}
         - if can? :manage, Email

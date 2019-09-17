@@ -1,17 +1,16 @@
-- user = @user
-- personal_profile = user.personal_profile
+- personal_profile = @user.personal_profile || @user.build_personal_profile
 - tab_active = job_applications_tab_active
 - if @preferred_users_list
   - url_opts = request.referrer ? 'javascript:history.back()' : [:admin, @preferred_users_list]
   = link_to url_opts, class: 'mb-3 d-block' do
     ← Retour à la liste de candidats '#{@preferred_users_list.name}'
 .container-fluid
-  = render partial: '/admin/job_applications/job_application_head', locals: {user: user, profile: personal_profile}
+  = render partial: '/admin/job_applications/job_application_head', locals: {user: @user, profile: personal_profile}
   .row.bg-card-bg
     .col-12.col-md-8.border-right{class: job_application_modal_section_classes}
       .tab-content
         .tab-pane.fade.show#profile{class: tab_active == :profile && 'active show', role: :tabpanel, aria: {labelledby: :profile}}
-          = render partial: '/admin/personal_profiles/personal_profile', locals: {user: user}
-    .col-12.col-md-4{class: job_application_modal_section_classes}
-      - if (job_applications = @user.job_applications).any?
-        = render partial: "/admin/job_applications/user_job_applications", locals: {job_applications: job_applications, narrow: true}
+          = render partial: '/admin/personal_profiles/personal_profile', locals: {user: @user}
+
+          - if (job_applications = @user.job_applications).any?
+            = render partial: "/admin/job_applications/user_job_applications", locals: {job_applications: job_applications, narrow: true}

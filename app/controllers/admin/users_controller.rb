@@ -9,6 +9,25 @@ class Admin::UsersController < Admin::InheritedResourcesController
     render layout: layout_choice
   end
 
+  def update
+    update! do |success, failure|
+      success.html do
+        datalake_to_job_application_profiles
+        redirect_to [:admin, @user], notice: t('.success')
+      end
+      success.js do
+        datalake_to_job_application_profiles
+        @notification = t('.success')
+        render :update
+      end
+      failure.html { render :edit }
+      failure.js do
+        @notification = t('.failure')
+        render :update, status: :unprocessable_entity
+      end
+    end
+  end
+
   protected
 
   def layout_choice
@@ -25,5 +44,24 @@ class Admin::UsersController < Admin::InheritedResourcesController
   end
 
   def load_job_offer
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def permitted_params
+    profile_fields = %i[id gender birth_date nationality has_residence_permit is_currently_employed
+                        availability_date_in_month study_level_id study_type specialization
+                        experience_level_id corporate_experience website_url
+                        has_corporate_experience
+                        address_1 address_2 postcode city country phone
+                        rejection_reason_id]
+    fields = [:first_name, :last_name, { personal_profile_attributes: profile_fields }]
+    params.require(:user).permit(fields)
+  end
+
+  alias resource_params permitted_params
+
+  def datalake_to_job_application_profiles
+    personal_profile = @user.personal_profile
+    personal_profile&.datalake_to_job_application_profiles!
   end
 end

@@ -47,9 +47,9 @@ Rails.application.routes.draw do
     end
     resources :preferred_users
     resources :preferred_users_lists, path: 'candidatures-listes' do
-      resources :users, path: 'candidats'
+      resources :users, path: 'candidats', except: %i[create index]
     end
-    resources :users, path: 'candidats'
+    resources :users, path: 'candidats', except: %i[create index]
     resources :job_applications, path: 'candidatures', only: %i[index show update] do
       member do
         patch :change_state

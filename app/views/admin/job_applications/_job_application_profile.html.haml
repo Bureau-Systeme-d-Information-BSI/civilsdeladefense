@@ -1,0 +1,11 @@
+- job_offer = job_application.job_offer
+.card{id: dom_id(job_application, 'profile')}
+  .card-header.bg-white.font-weight-bold.text-secondary
+    = fa_icon('file-document', class: 'text-secondary')
+    Spécificités vis-à-vis de l'offre sélectionnée
+  .card-body.bg-white
+    - fields = job_application_profile_fields
+    - fields.each do |field|
+      - hsh = { job_application: job_application, field: field, disabled: job_offer.archived? }
+      = render partial: '/admin/personal_profiles/personal_profile_field', locals: hsh
+

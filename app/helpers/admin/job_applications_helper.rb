@@ -33,10 +33,12 @@ module Admin::JobApplicationsHelper
   def address_formatted(obj)
     c = ISO3166::Country.new(obj.country)
     real_country = c && c.translations[I18n.locale.to_s]
-    ary = obj&.address_1 || ''
-    ary += '<br/>'
-    ary += "#{obj.postcode} #{obj.city}, #{real_country}"
-    ary.html_safe
+    postcode_line = [obj.postcode, obj.city].reject(&:blank?).join(' ')
+    country_line = [postcode_line, real_country].reject(&:blank?).join(', ')
+    ary = []
+    ary << obj&.address_1 if obj&.address_1
+    ary << country_line
+    ary.join('<br/>').html_safe
   end
 
   def in_place_edit_value(obj, opts = {})
@@ -62,7 +64,7 @@ module Admin::JobApplicationsHelper
        experience_level has_corporate_experience]
   end
 
-  def personal_profile_fields3
+  def job_application_profile_fields
     %i[skills_fit_job_offer experiences_fit_job_offer]
   end
 

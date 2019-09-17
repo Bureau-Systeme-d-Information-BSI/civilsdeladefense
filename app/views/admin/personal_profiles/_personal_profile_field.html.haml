@@ -1,6 +1,6 @@
 - input_html = disabled ? { disabled: true, readonly: true } : {}
-- object = @job_application || obj
-= simple_form_for [:admin, object], wrapper: :horizontal_form, remote: true, html: {class: 'form-horizontal auto-submit'}, defaults: { input_html: input_html } do |f|
+- obj = defined?(job_application) ? job_application : user
+= simple_form_for [:admin, obj], wrapper: :horizontal_form, remote: true, html: {class: 'form-horizontal auto-submit'}, defaults: { input_html: input_html } do |f|
   - locals = {}
   - locals[:field] = field if local_variables.include?(:field)
   - locals[:association] = association if local_variables.include?(:association)
@@ -9,9 +9,6 @@
     - locals[:f] = f
     = render partial: '/admin/personal_profiles/personal_profile_field_input', locals: locals
   - else
-    = f.simple_fields_for obj.class.to_s.downcase.to_sym, obj do |g|
-      - personal_profile = obj if obj.is_a?(PersonalProfile)
-      - personal_profile ||= obj.personal_profile || obj.build_personal_profile
-      = g.simple_fields_for :personal_profile, personal_profile do |profile_form|
-        - locals[:f] = profile_form
-        = render partial: '/admin/personal_profiles/personal_profile_field_input', locals: locals
+    = f.simple_fields_for :personal_profile, personal_profile do |profile_form|
+      - locals[:f] = profile_form
+      = render partial: '/admin/personal_profiles/personal_profile_field_input', locals: locals

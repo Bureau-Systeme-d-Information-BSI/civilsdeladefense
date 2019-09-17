@@ -2,13 +2,16 @@
 %ul.nav.nav-tabs.mr-auto{role: :tablist, id: dom_id(job_offer, 'nav')}
   %li.mr-3.nav-item
     - klasses = base_link_klasses.dup
-    - klasses << :active if active_tab == 'show'
+    - klasses << :active if active_tab[:action_name] == 'show' && active_tab[:controller_name] == 'job_offers'
     = link_to t('.show'), [:admin, job_offer], class: klasses
   %li.mr-3.nav-item
     - klasses = base_link_klasses.dup
-    - klasses << :active if active_tab == 'stats'
+    - klasses << :active if active_tab[:action_name] == 'stats'
     = link_to t('.stats'), [:stats, :admin, job_offer], class: klasses
   %li.mr-3.nav-item
     - klasses = base_link_klasses.dup
-    - klasses << :active if active_tab == 'board'
-    = link_to t('.board'), [:board, :admin, job_offer], class: klasses
+    - klasses << :active if (active_tab[:action_name] == 'board') || (active_tab[:controller_name] == 'job_applications')
+    = link_to [:board, :admin, job_offer], class: klasses do
+      = t('.board')
+      = surround '(', ')' do
+        = job_offer.job_applications_count

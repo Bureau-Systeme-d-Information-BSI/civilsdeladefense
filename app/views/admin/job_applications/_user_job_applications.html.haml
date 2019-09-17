@@ -1,0 +1,35 @@
+.card
+  .card-header.bg-white.font-weight-bold.text-secondary
+    = fa_icon('file-document', class: 'text-secondary')
+    - if defined?(narrow)
+      = t('.title_narrow')
+    - else
+      = t('.title')
+  .card-body.bg-white.py-0{class: defined?(narrow) ? 'px-0' : nil}
+    %table.table.table-hover.mb-0.mt-0.small
+      %thead
+        %tr
+          %th.border-0.text-center{style: 'width: 23px;'}
+            = t('.image')
+          - unless defined?(narrow)
+            %th.border-0{style: 'width: 140px;'}
+              = t('.offer')
+          %th.border-0
+            = t('.statut')
+          %th.border-0.text-right{style: 'width: 10char;'}
+            = t('.date')
+      %tbody
+        - for job_application in job_applications
+          - job_offer = job_application.job_offer
+          %tr
+            %td.border-0.text-center
+              = link_to job_offer.identifier, [:admin, job_offer], title: job_offer.title
+            - unless defined?(narrow)
+              %td.border-0
+                .text-truncate{style: 'width: 140px;'}
+                  = job_offer.title
+            %td.border-0
+              = link_to [:admin, job_offer, job_application] do
+                = JobApplication.human_attribute_name("state/#{job_application.state}")
+            %td.border-0.text-right
+              = l job_application.created_at.to_date

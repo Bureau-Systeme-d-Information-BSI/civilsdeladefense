@@ -43,7 +43,13 @@ Rails.application.routes.draw do
           patch :update, constraints: CommitParamConstraint.new(action_name), action: action_name
         end
       end
+      resources :job_applications, path: 'candidatures'
     end
+    resources :preferred_users
+    resources :preferred_users_lists, path: 'candidatures-listes' do
+      resources :users, path: 'candidats', except: %i[create index]
+    end
+    resources :users, path: 'candidats', except: %i[create index]
     resources :job_applications, path: 'candidatures', only: %i[index show update] do
       member do
         patch :change_state

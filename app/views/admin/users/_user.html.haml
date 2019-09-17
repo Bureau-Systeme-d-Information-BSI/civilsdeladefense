@@ -1,0 +1,62 @@
+- profile = user.personal_profile
+- job_application = defined?(job_application) ? job_application : nil
+.card.job-application.mt-3{id: dom_id(user)}
+  .card-body
+    - link_url = job_application_user_modal_link_url(user, job_application)
+    = link_to link_url do
+      .row
+        .col-12.user-full-name
+          .d-flex
+            = image_user_tag user.photo, width: 32, class: 'mr-2'
+            = user.full_name
+        .col-12.personal-profile-current-position
+          - current_position = profile&.current_position
+          - if current_position
+            %span{title: current_position}
+              = current_position
+        .col-12.personal-profile-is-currently-employed
+          - is_currently_employed = profile&.is_currently_employed
+          - if is_currently_employed
+            = PersonalProfile.human_attribute_name('is_currently_employed/'+profile&.is_currently_employed.to_s)
+          - else
+            = t('non_applicable')
+        .col-12.user-job-applications-count
+          = user.job_applications_count
+        .col-12.personal-profile-address-short
+          - address_short = profile&.address_short
+          - if address_short
+            %span{title: address_short}
+              = address_short
+  .card-footer.d-flex.flex-column.flex-md-row
+    .mr-auto
+      - if job_application
+        - klass = badge_class(job_application.state.to_sym)
+        %small.badge.text-white.text-uppercase.text-nowrap.mr-1{class: klass}
+          = job_application.aasm.human_state
+        %small
+          = t('admin.job_applications.job_application.applied_on', date: I18n.l(job_application.created_at.to_date))
+      - else
+        %small
+          = t('.subscribed_on', date: I18n.l(user.created_at.to_date))
+    %ul.list-inline.mb-0.actions.mt-2.mt-md-0
+      - if job_application
+        - if can?(:manage, PreferredUsersList)
+          %li.list-inline-item
+            .dropdown
+              = link_to '#', role: :button, data: { toggle: "dropdown" }, aria: { haspopup: true, expanded: false } do
+                = fa_icon 'star'
+                = t('.my_preferred_user_lists')
+              .dropdown-menu.py-0{"aria-labelledby" => "dropdownMenuLink"}
+                - new_preferred_user = PreferredUser.new(user_id: user.id)
+                = simple_form_for new_preferred_user, url: [:admin, :preferred_users], remote: true, namespace: user.id do |f|
+                  = f.hidden_field :user_id
+                  = f.association :preferred_users_list, collection: @preferred_users_lists, as: :radio_buttons, wrapper: :custom_collection, item_wrapper_class: 'custom-control custom-control-inline custom-radio', label: false, item_label_class: 'custom-control-label'
+                  = f.submit t('buttons.add'), class: "btn btn-primary btn-raised btn-block mb-0"
+      - else
+        %li.list-inline-item
+          .dropdown
+            - existing_preferred_user = user.preferred_users.detect{|x| x.preferred_users_list_id == @preferred_users_list.id}
+            = link_to [:admin, existing_preferred_user], method: :delete, data: {confirm: t('buttons.confirm')} do
+              = fa_icon 'delete'
+              = t('.remove_user')
+

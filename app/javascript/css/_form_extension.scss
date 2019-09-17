@@ -147,7 +147,7 @@ label {
 }
 
 .form-group {
-  &.radio_buttons {
+  &.radio_buttons:not(.preferred_user_preferred_users_list) {
     .form-check {
       @extend .mr-0, .ml-5;
       &:first-of-type {
@@ -168,6 +168,27 @@ label {
     > .form-check:first-child {
       @extend .ml-2;
     }
+  }
+  &.preferred_user_preferred_users_list {
+    @extend .mb-0, .py-2, .px-2, .d-flex, .flex-column;
+    legend {
+      @extend .pb-0, .pt-2;
+      abbr {
+        display: none;
+      }
+    }
+    .form-check {
+      input {
+        @extend .mr-1;
+        display: unset;
+      }
+    }
+  }
+}
+
+.dropdown-menu {
+  .new_preferred_user {
+    min-width: 14rem;
   }
 }
 

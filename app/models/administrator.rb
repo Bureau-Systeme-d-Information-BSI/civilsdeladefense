@@ -26,6 +26,9 @@ class Administrator < ApplicationRecord
   has_many :job_application_actors
   has_many :job_applications, through: :job_applications_actors
 
+  has_many :preferred_users
+  has_many :preferred_users_lists
+
   def supervisor_administrator_attributes=(attributes)
     return if attributes[:email].blank?
 

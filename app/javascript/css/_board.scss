@@ -14,9 +14,7 @@ $appbar-bg-color: #0067a3;
 $list-bg-color: #e2e4e6;
 
 .board {
-  @extend .mt-3;
-  height: calc(100vh - 252px);
-  padding-bottom: $gap;
+  height: calc(100vh - 268px);
   overflow-x: auto;
   overflow-y: hidden;
 }

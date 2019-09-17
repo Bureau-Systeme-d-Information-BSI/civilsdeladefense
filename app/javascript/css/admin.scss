@@ -353,7 +353,6 @@ a {
   @extend .col-md-2;
   flex: 0 0 11%;
   max-width: 11%;
-
 }
 .job-offer-contract-type {
   @extend .col-md-1;
@@ -375,6 +374,52 @@ a {
   flex: 0 0 8%;
   max-width: 8%;
 }
+
+
+.user-full-name, .personal-profile-current-position, .personal-profile-is-currently-employed, .user-job-applications-count, .personal-profile-address-short {
+  @extend .text-truncate, .font-weight-bold, .text-primary;
+}
+.job-application {
+  .user-full-name, .personal-profile-current-position, .personal-profile-is-currently-employed, .user-job-applications-count, .personal-profile-address-short {
+    @extend .text-dark;
+  }
+}
+.user-full-name {
+  padding-right: 5px;
+}
+.personal-profile-address-short {
+  padding-left: 5px;
+}
+.personal-profile-current-position, .personal-profile-is-currently-employed, .user-job-applications-count {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.user-full-name {
+  @extend .col-md-5;
+  flex: 0 0 30%;
+  max-width: 30%;
+}
+.personal-profile-current-position {
+  @extend .col-md-5;
+  flex: 0 0 36%;
+  max-width: 36%;
+}
+.personal-profile-is-currently-employed {
+  @extend .col-md-1;
+  flex: 0 0 8%;
+  max-width: 8%;
+}
+.user-job-applications-count {
+  @extend .col-md-1, .text-center;
+  flex: 0 0 11%;
+  max-width: 11%;
+}
+.personal-profile-address-short {
+  @extend .col-md-2;
+  flex: 0 0 15%;
+  max-width: 15%;
+}
+
 
 .job_application_user_personal_profile_address {
   .ap-icon-pin {

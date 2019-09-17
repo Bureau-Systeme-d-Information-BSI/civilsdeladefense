@@ -1,0 +1,9 @@
+var dom_id = '#<%= dom_id(@user, 'profile') %>';
+var node = document.querySelector(dom_id)
+if (node !== null) {
+  var html = '<%= j render(partial: '/admin/personal_profiles/personal_profile', locals: { user: @user }) %>'
+  var frag = document.createRange().createContextualFragment(html)
+  node.replaceWith(frag)
+}
+$.snackbar({content: '<%= @notification %>'})
+formAutoSubmit()

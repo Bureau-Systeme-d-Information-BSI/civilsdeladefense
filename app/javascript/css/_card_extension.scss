@@ -20,6 +20,7 @@
   }
   .card-header {
     &:not(.with-subheader) {
+      @extend .px-4;
       border-bottom: $border-width-normal solid $card-border-color;
     }
     .card-title {
@@ -41,7 +42,7 @@
 
 @include media-breakpoint-up(md) {
   .card-body {
-    padding: $card-spacer-x;
+    padding: ($card-spacer-x * 0.75);
   }
 }
 
@@ -97,11 +98,6 @@ $card-spacer-x-normal: 1rem;
           text-decoration: none;
         }
       }
-    }
-    .card-footer {
-      font-size: 60%;
-      @extend .text-muted;
-      padding: ($card-spacer-x-normal * 0.25) ($card-spacer-x-normal * 0.75);
     }
   }
   &.job-offer {

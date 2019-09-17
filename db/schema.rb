@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_08_30_133547) do
+ActiveRecord::Schema.define(version: 2019_09_05_064054) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -344,7 +344,6 @@ ActiveRecord::Schema.define(version: 2019_08_30_133547) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.uuid "uuid_temp", default: -> { "gen_random_uuid()" }, null: false
     t.index ["name"], name: "index_official_statuses_on_name", unique: true
   end
 
@@ -375,6 +374,24 @@ ActiveRecord::Schema.define(version: 2019_08_30_133547) do
     t.index ["experience_level_id"], name: "index_personal_profiles_on_experience_level_id"
     t.index ["personal_profileable_type", "personal_profileable_id"], name: "index_personal_profileable_type_and_id"
     t.index ["study_level_id"], name: "index_personal_profiles_on_study_level_id"
+  end
+
+  create_table "preferred_users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id"
+    t.uuid "preferred_users_list_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["preferred_users_list_id"], name: "index_preferred_users_on_preferred_users_list_id"
+    t.index ["user_id"], name: "index_preferred_users_on_user_id"
+  end
+
+  create_table "preferred_users_lists", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.uuid "administrator_id"
+    t.integer "preferred_users_count", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["administrator_id"], name: "index_preferred_users_lists_on_administrator_id"
   end
 
   create_table "professional_categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -522,6 +539,7 @@ ActiveRecord::Schema.define(version: 2019_08_30_133547) do
     t.bigint "old_transport_ticket_file_size"
     t.datetime "old_transport_ticket_updated_at"
     t.integer "transport_ticket_is_validated", limit: 2, default: 0
+    t.integer "job_applications_count", default: 0, null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -554,6 +572,9 @@ ActiveRecord::Schema.define(version: 2019_08_30_133547) do
   add_foreign_key "messages", "job_applications"
   add_foreign_key "personal_profiles", "experience_levels"
   add_foreign_key "personal_profiles", "study_levels"
+  add_foreign_key "preferred_users", "preferred_users_lists"
+  add_foreign_key "preferred_users", "users"
+  add_foreign_key "preferred_users_lists", "administrators"
   add_foreign_key "salary_ranges", "experience_levels"
   add_foreign_key "salary_ranges", "professional_categories"
   add_foreign_key "salary_ranges", "sectors"

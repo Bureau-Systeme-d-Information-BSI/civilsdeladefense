@@ -185,8 +185,7 @@ ul {
       &:last-child {
         @extend .mr-0;
       }
-      > a {
-        // @extend .font-weight-bold;
+      > a, > .dropdown > a {
         color: $body-color;
         outline: 0;
         svg {

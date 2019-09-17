@@ -10,17 +10,24 @@ class Admin::JobOffersController < Admin::BaseController
   # GET /admin/job_offers
   # GET /admin/job_offers.json
   def index
-    @job_offers_unfiltered = action_name == 'index' ? @job_offers_active : @job_offers_archived
-    job_offers_nearly_filtered = @job_offers_unfiltered
-    if params[:s].present?
-      job_offers_nearly_filtered = job_offers_nearly_filtered.search_full_text(params[:s])
-                                                             .unscope(:order)
+    respond_to do |format|
+      format.html do
+        @job_offers_unfiltered = action_name == 'index' ? @job_offers_active : @job_offers_archived
+        job_offers_nearly_filtered = @job_offers_unfiltered
+        if params[:s].present?
+          job_offers_nearly_filtered = job_offers_nearly_filtered.search_full_text(params[:s])
+                                                                 .unscope(:order)
+        end
+        @q = job_offers_nearly_filtered.ransack(params[:q])
+        @job_offers_filtered = @q.result(distinct: true)
+                                 .page(params[:page])
+                                 .per_page(20)
+        render action: :index
+      end
+      format.js do
+        render action: :index
+      end
     end
-    @q = job_offers_nearly_filtered.ransack(params[:q])
-    @job_offers_filtered = @q.result(distinct: true)
-                             .page(params[:page])
-                             .per_page(20)
-    render action: :index
   end
 
   alias archived index
@@ -49,9 +56,7 @@ class Admin::JobOffersController < Admin::BaseController
 
   # GET /admin/job_offers/new
   def new
-    source = nil
-    source = JobOffer.find(params[:job_offer_id]) if params[:job_offer_id].present?
-    @job_offer = JobOffer.new_from_source(source) if source.present?
+    @job_offer = JobOffer.new_from_source(params[:job_offer_id])
     @job_offer ||= JobOffer.new_from_scratch(current_administrator)
     @job_offer.employer = current_administrator.employer unless current_administrator.bant?
   end
@@ -111,7 +116,7 @@ class Admin::JobOffersController < Admin::BaseController
 
   def choose_layout
     if %w[index archived show board stats applicant_stats].include?(action_name)
-      'admin/job_offers_with_sidebar'
+      'admin/job_offer_single'
     else
       'admin'
     end

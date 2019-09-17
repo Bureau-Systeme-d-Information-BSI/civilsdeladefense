@@ -71,6 +71,6 @@ class PersonalProfile < ApplicationRecord
     ary = []
     ary << city if city.present?
     ary << country if country.present?
-    ary.join(' ')
+    ary.join(', ')
   end
 end

@@ -1,0 +1,16 @@
+- content_for :content do
+  .container-fluid
+    .row
+      %aside.col-md-2.d-none.d-md-block.bg-white.sidebar
+        .sidebar-sticky
+          = render '/admin/pool/shared/navbar'
+      %main.col-md-9.ml-sm-auto.col-lg-10.pt-5{role: 'main'}
+        .container
+          .row
+            .col-12.mx-md-auto
+              = yield
+  .modal.fade#remoteContentModal{tabindex: -1, role: :dialog, aria: {labelledby: :remoteContentModal, hidden: true}}
+    .modal-dialog.modal-lg{role: :document}
+      .modal-content
+        .modal-body.p-0
+= render template: 'layouts/admin'

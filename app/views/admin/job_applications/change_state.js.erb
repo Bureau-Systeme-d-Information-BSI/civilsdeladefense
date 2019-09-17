@@ -14,7 +14,7 @@ if (cardNode !== null) {
   if (listNode !== null) {
     var containerNode = listNode.querySelector('.cards')
     if (containerNode !== null) {
-      var html = '<%= j render(partial: 'job_application', locals: { job_application: @job_application, with_header: false }) %>'
+      var html = '<%= j render(partial: '/admin/job_offers/job_application', locals: { job_application: @job_application, with_header: false }) %>'
       var frag = document.createRange().createContextualFragment(html)
       containerNode.insertAdjacentHTML('afterbegin', html)
     }

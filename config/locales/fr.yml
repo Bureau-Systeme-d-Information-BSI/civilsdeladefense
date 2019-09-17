@@ -196,9 +196,11 @@ fr:
         success: "Vos informations ont été mises à jour"
     job_applications:
       index:
-        title: "Candidats"
-        search: "Recherche"
-        my_job_applications: "Mes candidatures"
+        job_applications_filtered:
+          zero: "Aucun résultat de recherche"
+          one: "1 résultat de recherche"
+          other: "%{count} résultats de recherche"
+        title: "Vivier de candidatures"
       filters:
         profession: "Domaines professionnels"
         contract: "Contrat"
@@ -209,7 +211,7 @@ fr:
           one: "1 candidature trouvée"
           other: "%{count} candidatures trouvées"
       job_application:
-        published_date: "Candidaté il y a %{time_ago_in_words}"
+        applied_on: "Candidaté le %{date}"
       job_application_head:
         nav_emails: "Courriels"
         nav_files: "Documents"
@@ -222,8 +224,9 @@ fr:
         none_atm: "Aucun fichiers demandés"
         none: "Vous avez déjà demandé tous les fichiers possibles"
         note: "Vous pouvez choisir de demander des pièces supplémentaires au candidat parmi la liste ci-dessous."
-      other_job_applications:
+      user_job_applications:
         title: "Autres candidatures de ce candidat"
+        title_narrow: "Toutes ses candidatures"
         image: "#"
         offer: "Offre"
         statut: "Statut"
@@ -301,7 +304,7 @@ fr:
       job_offer:
         follow: 'Suivre'
         unfollow: 'Ne plus suivre'
-        published_date: 'Publié il y a %{time_ago_in_words}'
+        published_date: 'Publié le %{date}'
         job_applications_count:
           zero: 'Candidature'
           one: 'Candidature'
@@ -395,6 +398,14 @@ fr:
         settings: "Paramètres"
         account: "Mon compte"
         logout: "Déconnexion"
+    users:
+      user:
+        my_preferred_user_lists: "Mon vivier"
+        remove_user: "Supprimer de cette liste"
+        subscribed_on: "Inscrit le %{date}"
+      update:
+        success: "Profil mis à jour !"
+        failure: "Erreur dans la mise à jour du profil"
     settings:
       shared:
         navbar:
@@ -662,6 +673,36 @@ fr:
           success: "Filière mise à jour !"
         destroy:
           success: "Filière supprimée !"
+    preferred_users_lists:
+      index:
+        title: "Mes listes de candidats"
+        card_title:
+          zero: "Aucune liste de candidats"
+          one: "1 liste de candidats"
+          other: "%{count} listes de candidats"
+      show:
+        title: "Liste de candidats '%{name}'"
+        users_filtered:
+          zero: "Aucun candidat trouvé"
+          one: "1 candidat trouvé"
+          other: "%{count} candidats trouvés"
+      new:
+        title: "Ajouter une nouvelle liste"
+      edit:
+        title: "Modifier la liste '%{name}'"
+      create:
+        success: "Liste créée !"
+      update:
+        success: "Liste mise à jour !"
+      destroy:
+        success: "Liste supprimée !"
+    pool:
+      shared:
+        navbar:
+          job_applications_title: "Vivier"
+          job_applications: "Toutes les candidatures"
+          preferred_users_lists_title: "Mes listes de candidats"
+          create_preferred_users_list_title: "+ Créer une nouvelle liste"
     stats:
       job_applications:
         index:

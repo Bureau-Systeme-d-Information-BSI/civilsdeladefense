@@ -1,0 +1,16 @@
+- resource.parent_id = params[:parent_id] if params[:parent_id].present? && resource.new_record?
+.card
+  .card-body
+    = simple_form_for([:admin, resource]) do |f|
+      = f.error_notification
+      = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+      .form-inputs
+        = f.input :name
+      .form-actions.text-right.mt-4
+        %ul.list-inline.mb-0
+          %li.list-inline-item
+            = link_to(t('buttons.cancel'), collection_url, class: 'btn btn-body-color mb-0')
+          %li.list-inline-item
+            = button_tag(type: 'submit', class: 'btn btn-primary btn-raised mb-0') do
+              = t("buttons.#{ resource.new_record? ? 'add' : 'edit' }")
+              = fa_icon('send', class: 'ml-1')

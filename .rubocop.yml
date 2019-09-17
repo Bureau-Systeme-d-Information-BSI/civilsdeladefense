@@ -33,6 +33,8 @@ LineLength:
     - 'spec/routing/**/*'
 Style/EmptyMethod:
   EnforcedStyle: expanded
+Style/MultilineBlockChain:
+  Enabled: false
 BlockLength:
   Exclude:
     - 'config/routes.rb'

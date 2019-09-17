@@ -1,0 +1,9 @@
+.row.mt-4.mb-3
+  .col-12
+    = search_form_for @q, url: [:admin, @preferred_users_list], class: 'auto-submit' do |f|
+      .form-group.input-group.input-search
+        .input-group-prepend
+          %span.input-group-text.bg-white
+            = fa_icon('magnify')
+        = text_field_tag :s, params[:s]
+      = submit_tag 'Rechercher', name: nil, class: 'd-none'

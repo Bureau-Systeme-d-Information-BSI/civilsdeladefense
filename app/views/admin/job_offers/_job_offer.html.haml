@@ -45,7 +45,7 @@
             = fa_icon 'pencil'
             = t('buttons.edit')
       %li.list-inline-item
-        = link_to [job_offer, preview: true], target: '_blank' do
+        = link_to [job_offer], target: '_blank' do
           = fa_icon 'eye'
           = t('buttons.preview')
       - if can? :manage, job_offer

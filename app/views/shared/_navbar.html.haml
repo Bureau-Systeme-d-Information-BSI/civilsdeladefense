@@ -32,7 +32,7 @@
         = link_to t('.job_applications'), [:account, :job_applications], class: 'nav-link'
       %li.nav-item{class: controller.controller_name == 'users' && 'active'}
         = link_to t('.account'), [:account, :user], class: 'nav-link'
-- elsif !(controller.class.to_s =~ /Devise/)
+- elsif !(controller.class.to_s =~ /Devise|Users/)
   .bg-secondary
   .bg-quaternary
 %aside.offcanvas-collapse

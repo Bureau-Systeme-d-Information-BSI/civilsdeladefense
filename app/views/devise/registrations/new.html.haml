@@ -5,6 +5,18 @@
 
   .form-inputs
     = f.input :email, required: true, autofocus: true
+    - if resource.is_a?(User)
+      - personal_profile = resource.personal_profile || resource.build_personal_profile
+      = f.input :first_name
+      = f.input :last_name
+      = f.simple_fields_for :personal_profile, personal_profile do |profile_form|
+        = profile_form.input :current_position
+        = profile_form.input :phone
+        = profile_form.input :address_1
+        = profile_form.input :address_2
+        = profile_form.input :city
+        = profile_form.input :postcode
+        = profile_form.input :country, priority: [ "FR" ]
     = f.input :password, required: true
     = f.input :password_confirmation, required: true
   .form-actions

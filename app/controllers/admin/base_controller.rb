@@ -14,10 +14,6 @@ class Admin::BaseController < ApplicationController
   end
 
   def authenticated_user_or_administrator
-    if current_administrator
-      current_administrator
-    else
-      'unknown'
-    end
+    current_administrator || 'unknown'
   end
 end

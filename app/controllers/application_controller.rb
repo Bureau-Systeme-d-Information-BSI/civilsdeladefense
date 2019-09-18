@@ -40,10 +40,6 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticated_user_or_administrator
-    if current_user
-      current_user
-    else
-      'unknown'
-    end
+    current_user || 'unknown'
   end
 end

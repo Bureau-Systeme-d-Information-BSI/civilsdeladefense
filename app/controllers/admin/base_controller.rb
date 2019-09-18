@@ -12,4 +12,12 @@ class Admin::BaseController < ApplicationController
   def current_ability
     @current_ability ||= Ability.new(current_administrator)
   end
+
+  def authenticated_user_or_administrator
+    if current_administrator
+      current_administrator
+    else
+      'unknown'
+    end
+  end
 end

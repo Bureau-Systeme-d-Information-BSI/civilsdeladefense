@@ -7,7 +7,7 @@ module Admin::BaseHelper
 
   def job_application_user_modal_link_url(user, job_application)
     if job_application && can?(:manage, job_application)
-      [:admin, job_application]
+      [:admin, job_application.job_offer, job_application]
     elsif can?(:manage, user)
       [:admin, @preferred_users_list, user]
     else

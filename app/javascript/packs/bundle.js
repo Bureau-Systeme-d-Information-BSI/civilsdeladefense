@@ -35,8 +35,6 @@ import $ from 'jquery';
 window.jQuery = $;
 window.$ = $;
 
-import 'select2'; // globally assign select2 fn to $ element
-
 import Popper from 'popper.js'
 window.Popper = Popper
 require('snackbarjs')

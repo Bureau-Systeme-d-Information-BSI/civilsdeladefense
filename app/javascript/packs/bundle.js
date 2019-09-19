@@ -35,8 +35,6 @@ import $ from 'jquery';
 window.jQuery = $;
 window.$ = $;
 
-import 'select2'; // globally assign select2 fn to $ element
-
 import Popper from 'popper.js'
 window.Popper = Popper
 require('snackbarjs')
@@ -49,14 +47,6 @@ document.addEventListener('DOMContentLoaded', function() {
   formAutoSubmit()
   manageDropAreas()
   manageSendApplicationForm()
-
-  var filters = document.querySelectorAll('select.filter')
-  ;[].forEach.call(filters, function(filter) {
-    filter.addEventListener('change', function(e) {
-      let form = e.currentTarget.form
-      form.submit()
-    })
-  })
 
   ;[].forEach.call(document.querySelectorAll('.custom-file-input'), function(el) {
     el.addEventListener('change', function() {
@@ -83,20 +73,6 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         label.parentNode.appendChild(element)
       }
-    })
-  })
-
-  let jobOffersFilterings = document.getElementById
-  ;[].forEach.call(document.querySelectorAll('.job-offers-filtering'), function(el) {
-    el.addEventListener("ajax:beforeSend", function(event) {
-      var spinner = el.nextElementSibling
-      spinner.classList.remove('invisible')
-      spinner.classList.add('visible')
-    })
-    el.addEventListener("ajax:complete", function(event) {
-      var spinner = el.nextElementSibling
-      spinner.classList.remove('visible')
-      spinner.classList.add('invisible')
     })
   })
 })

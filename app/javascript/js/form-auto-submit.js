@@ -2,6 +2,18 @@ const Rails = require('rails-ujs')
 
 export default function formAutoSubmit() {
   ;[].forEach.call(document.querySelectorAll('form.auto-submit'), function(formElement) {
+    var spinnerElement = formElement.nextElementSibling
+    if (spinnerElement.classList.contains('spinner')) {
+      formElement.addEventListener("ajax:beforeSend", function(event) {
+        spinnerElement.classList.remove('invisible')
+        spinnerElement.classList.add('visible')
+      })
+      formElement.addEventListener("ajax:complete", function(event) {
+        spinnerElement.classList.remove('visible')
+        spinnerElement.classList.add('invisible')
+      })
+    }
+
     var selectElements = formElement.querySelectorAll('select')
     ;[].forEach.call(selectElements, function(selectElement) {
       selectElement.addEventListener('change', function(e) {

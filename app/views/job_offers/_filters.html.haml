@@ -1,6 +1,6 @@
 .row.pushed-top
   .col-12
-    = form_tag request.original_url, method: :get, class: 'filters job-offers-filtering' do
+    = form_tag request.original_url, method: :get, class: 'auto-submit filters' do
       .form-group.input-group.filter.mb-0.border-bottom
         .input-group-prepend
           %span.input-group-text.bg-white.py-4
@@ -17,5 +17,5 @@
             - prompt = t('.select_contract')
             = select_tag "contract_type_id", options_from_collection_for_select(@contract_types, "id", "name", params[:contract_type_id]), include_blank: false, prompt: prompt, data: {placeholder: t('.contract'), 'allow-clear': true}, class: 'filter'
       = submit_tag t('.search'), name: nil, class: 'd-none'
-    .d-flex.justify-content-end.pt-1.invisible
+    .d-flex.justify-content-end.pt-1.invisible.spinner
       = spinner

@@ -195,6 +195,45 @@ document.addEventListener('turbolinks:load', function() {
     var content = $(data).find('body').html()
     modal.find('.modal-body').html(content)
   })
+
+  $('#remoteContentModal').on('show.bs.modal', function (event) {
+    var link = event.relatedTarget
+    if (link !== undefined) {
+      var href = link.href
+      var modal = $(this)
+      Rails.ajax({
+        type: "GET",
+        url: href,
+        success: function(response){
+          var content = $(response).find('body').html()
+          modal.find('.modal-body').html(content)
+          if (link.classList.contains('job-application-modal-link')) {
+            initEmailTemplates()
+          }
+          formAutoSubmit()
+          inPlaceEdit()
+          addressAutocomplete()
+          $('.new_preferred_users_list, .edit_preferred_users_list').on('ajax:success', function(event) {
+            let detail = event.detail
+            let xhr = detail[2]
+            let redirect_url = xhr.getResponseHeader('Location')
+            if (redirect_url != undefined) {
+              window.location.href = redirect_url
+            }
+          }).on('ajax:error', function(event) {
+            let detail = event.detail
+            let data = detail[0]
+            var content = $(data).find('body').html()
+            modal.find('.modal-body').html(content)
+          })
+        },
+        error: function(response){
+          console.log("error")
+          console.log(response)
+        }
+      })
+    }
+  })
 })
 
 document.addEventListener('turbolinks:load', function() {

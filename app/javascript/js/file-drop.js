@@ -37,13 +37,6 @@ function manageDropArea (dropArea) {
   })
 
   dropArea.addEventListener('drop', handleDrop, false)
-
-  let form = dropArea.closest('form')
-  let input = form.querySelector('input[type=file]')
-
-  input.addEventListener('change', (e) => {
-    Rails.fire(form, 'submit')
-  }, false)
 }
 
 window.manageDropArea = manageDropArea

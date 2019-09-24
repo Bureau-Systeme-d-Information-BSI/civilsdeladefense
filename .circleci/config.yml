@@ -7,12 +7,12 @@ jobs:
   build:
     <<: *default
     docker:
-      - image: circleci/ruby:2.6.3-node-browsers-legacy
+      - image: circleci/ruby:2.6.4-node-browsers-legacy
         environment:
           RAILS_ENV: test
           DATABASE_URL_TEST: postgresql://circleci:@127.0.0.1:5432/civilsdeladefense_test
           MAIL_URL: smtp://hello%40localhost@localhost
-      - image: circleci/postgres:10.5-alpine-ram
+      - image: circleci/postgres:11.5-alpine-ram
         environment:
           POSTGRES_USER: circleci
           POSTGRES_DB: civilsdeladefense_test
@@ -53,12 +53,12 @@ jobs:
   test:
     <<: *default
     docker:
-      - image: circleci/ruby:2.6.3-node-browsers-legacy
+      - image: circleci/ruby:2.6.4-node-browsers-legacy
         environment:
           RAILS_ENV: test
           DATABASE_URL_TEST: postgresql://circleci:@127.0.0.1:5432/civilsdeladefense_test
           MAIL_URL: smtp://hello%40localhost@localhost
-      - image: circleci/postgres:10.5-alpine-ram
+      - image: circleci/postgres:11.5-alpine-ram
         environment:
           POSTGRES_USER: circleci
           POSTGRES_DB: civilsdeladefense_test
@@ -94,7 +94,7 @@ jobs:
   rubocop-brakeman:
     <<: *default
     docker:
-      - image: circleci/ruby:2.6.3-node-browsers-legacy
+      - image: circleci/ruby:2.6.4-node-browsers-legacy
         environment:
           RAILS_ENV: test
     steps:

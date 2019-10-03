@@ -21,16 +21,16 @@ class Admin::PreferredUsersListsController < Admin::InheritedResourcesController
   end
 
   def show
-    @users = @preferred_users_list.users
-    @q = @users.ransack(params[:q])
-    @users_filtered = @q.result.yield_self do |relation|
+    @preferred_users = @preferred_users_list.preferred_users.includes(user: [:personal_profile])
+    @q = @preferred_users.ransack(params[:q])
+    @preferred_users_filtered = @q.result.yield_self do |relation|
       if params[:s].present?
         relation.search_full_text(params[:s])
       else
         relation
       end
     end.yield_self do |relation|
-      relation.includes(:personal_profile, :preferred_users).paginate(page: params[:page])
+      relation.paginate(page: params[:page])
     end
 
     render action: :show, layout: 'admin/pool'

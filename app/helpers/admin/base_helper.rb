@@ -5,7 +5,7 @@ module Admin::BaseHelper
     datetime&.to_date&.strftime('%d/%m/%Y')
   end
 
-  def job_application_user_modal_link_url(user, job_application)
+  def user_detailed_info_url(user, job_application)
     if job_application && can?(:manage, job_application)
       [:admin, job_application.job_offer, job_application]
     elsif can?(:manage, user)

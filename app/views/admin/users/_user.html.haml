@@ -1,8 +1,9 @@
 - profile = user.personal_profile
 - job_application = defined?(job_application) ? job_application : nil
+- preferred_user = defined?(preferred_user) ? preferred_user : nil
 .card.job-application.mt-3{id: dom_id(user)}
   .card-body
-    - link_url = job_application_user_modal_link_url(user, job_application)
+    - link_url = user_detailed_info_url(preferred_user, job_application)
     = link_to link_url do
       .row
         .col-12.user-full-name
@@ -61,7 +62,7 @@
         %li.list-inline-item
           .dropdown
             - existing_preferred_user = user.preferred_users.detect{|x| x.preferred_users_list_id == @preferred_users_list.id}
-            = link_to [:admin, existing_preferred_user], method: :delete, data: {confirm: t('buttons.confirm')} do
+            = link_to [:admin, @preferred_users_list, existing_preferred_user], method: :delete, data: {confirm: t('buttons.confirm')} do
               = fa_icon 'delete'
               = t('.remove_user')
 

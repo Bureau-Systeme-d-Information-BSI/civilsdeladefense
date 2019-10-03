@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_05_064054) do
+ActiveRecord::Schema.define(version: 2019_10_03_203512) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -381,6 +381,7 @@ ActiveRecord::Schema.define(version: 2019_09_05_064054) do
     t.uuid "preferred_users_list_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "note"
     t.index ["preferred_users_list_id"], name: "index_preferred_users_on_preferred_users_list_id"
     t.index ["user_id"], name: "index_preferred_users_on_user_id"
   end

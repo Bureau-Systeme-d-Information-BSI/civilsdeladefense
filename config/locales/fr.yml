@@ -673,6 +673,9 @@ fr:
           success: "Filière mise à jour !"
         destroy:
           success: "Filière supprimée !"
+    preferred_users:
+      form:
+        title: "Note personnelle"
     preferred_users_lists:
       index:
         title: "Mes listes de candidats"
@@ -682,7 +685,7 @@ fr:
           other: "%{count} listes de candidats"
       show:
         title: "Liste de candidats '%{name}'"
-        users_filtered:
+        preferred_users_filtered:
           zero: "Aucun candidat trouvé"
           one: "1 candidat trouvé"
           other: "%{count} candidats trouvés"

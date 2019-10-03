@@ -2,10 +2,11 @@
 .card
   .card-header
     .h4.text-primary.d-md-flex.align-items-center
-      #{@preferred_users.count} candidats
+      = t('.preferred_users_html', count: @preferred_users.count, list_name: @preferred_users_list.name)
     = render partial: 'search'
     .d-flex.align-items-end
-      .h5.text-primary.mr-auto= t('.preferred_users_filtered', count: @preferred_users_filtered.count)
+      .h5.text-primary.mr-auto
+        = t('.preferred_users_filtered', count: @preferred_users_filtered.count)
       - klasses = %w[btn btn-link mb-0]
       = sort_link(@q, :created_at, {}, {class: klasses}) do
         Date de création

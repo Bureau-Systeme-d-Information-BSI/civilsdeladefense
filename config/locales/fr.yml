@@ -689,6 +689,10 @@ fr:
           zero: "Aucun candidat trouvé"
           one: "1 candidat trouvé"
           other: "%{count} candidats trouvés"
+        preferred_users_html:
+          zero: "Aucun candidat dans la liste&nbsp;<u>%{list_name}</u>"
+          one: "1 candidat dans la liste&nbsp;<u>%{list_name}</u>"
+          other: "%{count} candidats dans la liste&nbsp;<u>%{list_name}</u>"
       new:
         title: "Ajouter une nouvelle liste"
       edit:

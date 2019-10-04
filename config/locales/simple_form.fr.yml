@@ -47,6 +47,7 @@ fr:
         last_name: "Nom"
         name: "Nom"
         nationality: "Nationalité"
+        note: "Note"
         phone: "Téléphone"
         postal_code: "Code postal"
         postcode: "Code postal"

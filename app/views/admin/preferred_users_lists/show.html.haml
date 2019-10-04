@@ -1,11 +1,15 @@
 - @page_title = t('.title', name: @preferred_users_list.name)
 .card
   .card-header
-    .h4.text-primary.d-md-flex.align-items-center
-      #{@users.count} candidats
+    .d-flex.align-items-center
+      .h4.text-primary.d-md-flex.align-items-center.mr-auto
+        = t('.preferred_users_html', count: @preferred_users.count, list_name: @preferred_users_list.name)
+      = link_to [:edit, :admin, :preferred_users_list], class: 'btn btn-primary btn-raised', data: {toggle: 'modal', target: '#remoteContentModal'} do
+        = t('buttons.edit')
     = render partial: 'search'
     .d-flex.align-items-end
-      .h5.text-primary.mr-auto= t('.users_filtered', count: @users_filtered.count)
+      .h5.text-primary.mr-auto
+        = t('.preferred_users_filtered', count: @preferred_users_filtered.count)
       - klasses = %w[btn btn-link mb-0]
       = sort_link(@q, :created_at, {}, {class: klasses}) do
         Date de création
@@ -13,7 +17,7 @@
           &nbsp;▼
     .row
       .col-12
-        - if @users_filtered.any?
+        - if @preferred_users_filtered.any?
           .card.bg-transparent
             .card-body
               .row
@@ -27,13 +31,8 @@
                   Candidatures
                 .col-12.personal-profile-address-short
                   Secteur
-          = render partial: '/admin/users/user', collection: @users_filtered
+          = render partial: '/admin/preferred_users/preferred_user', collection: @preferred_users_filtered
           .mt-5
-            = will_paginate @users_filtered, params: { controller: 'users', action: controller.action_name }
+            = will_paginate @preferred_users_filtered, params: { controller: 'users', action: controller.action_name }
         - else
           %em Aucun résultat
-
-.modal.fade#remoteContentModal{tabindex: -1, role: :dialog, aria: {labelledby: :remoteContentModal, hidden: true}}
-  .modal-dialog.modal-lg{role: :document}
-    .modal-content
-      .modal-body.p-0

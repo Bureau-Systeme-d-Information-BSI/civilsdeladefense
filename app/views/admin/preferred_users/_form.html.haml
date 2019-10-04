@@ -1,0 +1,14 @@
+.font-weight-bold.text-secondary.mb-3.mt-4
+  = fa_icon('forum', class: 'text-secondary')
+  = t('.title')
+= simple_form_for([:admin, @preferred_users_list, @preferred_user]) do |f|
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  .form-inputs
+    = f.input :note, label: false, placeholder: true
+
+  .form-actions.text-right
+    = button_tag(type: 'submit', class: 'btn btn-primary') do
+      = t('buttons.send')
+      = fa_icon('send', class: 'ml-1')

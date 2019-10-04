@@ -1,10 +1,15 @@
 .card
   .card-body
+    - action_text = nil
+    - action_text = 'new' if %w[new create].include?(controller.action_name)
+    - action_text = 'edit' if %w[edit update].include?(controller.action_name)
+    %h4.mb-3= t(".title_#{action_text}")
     = simple_form_for([:admin, resource], remote: true) do |f|
       = f.error_notification
       = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
       .form-inputs
         = f.input :name
+        = f.input :note
       .form-actions.text-right.mt-4
         %ul.list-inline.mb-0
           %li.list-inline-item

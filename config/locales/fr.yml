@@ -673,7 +673,13 @@ fr:
           success: "Filière mise à jour !"
         destroy:
           success: "Filière supprimée !"
+    preferred_users:
+      form:
+        title: "Note personnelle"
     preferred_users_lists:
+      form:
+        title_new: "Ajout d'une nouvelle liste de candidats"
+        title_edit: "Édition d'une liste de candidats"
       index:
         title: "Mes listes de candidats"
         card_title:
@@ -682,10 +688,14 @@ fr:
           other: "%{count} listes de candidats"
       show:
         title: "Liste de candidats '%{name}'"
-        users_filtered:
+        preferred_users_filtered:
           zero: "Aucun candidat trouvé"
           one: "1 candidat trouvé"
           other: "%{count} candidats trouvés"
+        preferred_users_html:
+          zero: "Aucun candidat dans la liste&nbsp;<u>%{list_name}</u>"
+          one: "1 candidat dans la liste&nbsp;<u>%{list_name}</u>"
+          other: "%{count} candidats dans la liste&nbsp;<u>%{list_name}</u>"
       new:
         title: "Ajouter une nouvelle liste"
       edit:

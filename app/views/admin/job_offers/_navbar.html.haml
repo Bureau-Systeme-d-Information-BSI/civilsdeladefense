@@ -1,14 +1,15 @@
+- archived_state_activated = controller.action_name == 'archived' || (@job_offer && @job_offer.archived?)
 .list-group.stepper
   .list-group-item.menu
   .list-group-item.menu
     Offres publiées
   .list-group.stepper
     - klasses = %w(list-group-item d-flex justify-content-between align-items-center)
-    - klasses << 'active' if controller.action_name != 'archived'
+    - klasses << 'active' if !archived_state_activated
     = link_to [:admin, :job_offers], class: klasses do
       Offres actives
   .list-group.stepper
     - klasses = %w(list-group-item d-flex justify-content-between align-items-center)
-    - klasses << 'active' if controller.action_name == 'archived'
+    - klasses << 'active' if archived_state_activated
     = link_to [:archived, :admin, :job_offers], class: klasses do
       Offres archivées

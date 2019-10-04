@@ -7,6 +7,10 @@ class Admin::PreferredUsersListsController < Admin::InheritedResourcesController
     render layout: request.xhr? ? false : 'admin/pool'
   end
 
+  def edit
+    render layout: request.xhr? ? false : 'admin/pool'
+  end
+
   def create
     resource.administrator ||= current_administrator
     create! do |success, failure|
@@ -16,6 +20,18 @@ class Admin::PreferredUsersListsController < Admin::InheritedResourcesController
       failure.html do
         layout_choice = request.xhr? ? false : 'admin/pool'
         render action: 'new', status: :unprocessable_entity, layout: layout_choice
+      end
+    end
+  end
+
+  def update
+    update! do |success, failure|
+      success.html do
+        render json: {}.to_json, status: :created, location: [:admin, resource]
+      end
+      failure.html do
+        layout_choice = request.xhr? ? false : 'admin/pool'
+        render action: 'edit', status: :unprocessable_entity, layout: layout_choice
       end
     end
   end
@@ -40,5 +56,9 @@ class Admin::PreferredUsersListsController < Admin::InheritedResourcesController
 
   def begin_of_association_chain
     current_administrator
+  end
+
+  def permitted_fields
+    %i[name note]
   end
 end

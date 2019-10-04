@@ -677,6 +677,9 @@ fr:
       form:
         title: "Note personnelle"
     preferred_users_lists:
+      form:
+        title_new: "Ajout d'une nouvelle liste de candidats"
+        title_edit: "Édition d'une liste de candidats"
       index:
         title: "Mes listes de candidats"
         card_title:

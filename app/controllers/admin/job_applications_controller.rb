@@ -19,6 +19,7 @@ class Admin::JobApplicationsController < Admin::BaseController
     end.yield_self do |relation|
       relation.paginate(page: params[:page], per_page: 25)
     end
+    build_employer_ids
 
     render action: :index, layout: 'admin/pool'
   end
@@ -87,6 +88,8 @@ class Admin::JobApplicationsController < Admin::BaseController
     @job_application = JobApplication.find(params[:id])
   end
 
+  protected
+
   # Never trust parameters from the scary internet, only allow the white list through.
   def job_application_params
     fields = %i[skills_fit_job_offer experiences_fit_job_offer]
@@ -101,5 +104,9 @@ class Admin::JobApplicationsController < Admin::BaseController
     else
       'admin/pool'
     end
+  end
+
+  def build_employer_ids
+    @employer_ids = @job_applications_filtered.map(&:employer_id).uniq
   end
 end

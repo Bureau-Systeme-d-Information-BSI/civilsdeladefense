@@ -7,7 +7,7 @@ jobs:
   build:
     <<: *default
     docker:
-      - image: circleci/ruby:2.6.4-node-browsers-legacy
+      - image: circleci/ruby:2.6.5-node-browsers-legacy
         environment:
           RAILS_ENV: test
           DATABASE_URL_TEST: postgresql://circleci:@127.0.0.1:5432/civilsdeladefense_test
@@ -53,7 +53,7 @@ jobs:
   test:
     <<: *default
     docker:
-      - image: circleci/ruby:2.6.4-node-browsers-legacy
+      - image: circleci/ruby:2.6.5-node-browsers-legacy
         environment:
           RAILS_ENV: test
           DATABASE_URL_TEST: postgresql://circleci:@127.0.0.1:5432/civilsdeladefense_test
@@ -94,7 +94,7 @@ jobs:
   rubocop-brakeman:
     <<: *default
     docker:
-      - image: circleci/ruby:2.6.4-node-browsers-legacy
+      - image: circleci/ruby:2.6.5-node-browsers-legacy
         environment:
           RAILS_ENV: test
     steps:

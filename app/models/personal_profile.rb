@@ -45,7 +45,7 @@ class PersonalProfile < ApplicationRecord
       if job_application.personal_profile.nil?
         job_application.create_personal_profile(datalake_attributes)
       else
-        job_application.personal_profile.update_attributes(datalake_attributes)
+        job_application.personal_profile.update(datalake_attributes)
       end
     end
   end
@@ -55,7 +55,7 @@ class PersonalProfile < ApplicationRecord
     if user.personal_profile.nil?
       user.create_personal_profile(datalake_attributes)
     else
-      user.personal_profile.update_attributes(datalake_attributes)
+      user.personal_profile.update(datalake_attributes)
     end
   end
 

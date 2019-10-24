@@ -6,7 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.6.5'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.0'
+gem 'rails', '~> 6.0.0'
 gem 'rails-i18n'
 
 # Use postgresql as the database for Active Record
@@ -16,7 +16,7 @@ gem 'puma', '~> 3.11'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'webpacker', '~> 4.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.5'
+gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
@@ -26,7 +26,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'mini_magick', '~> 4.8'
 
 # Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', '>= 1.1.0', require: false
+gem 'bootsnap', '>= 1.4.2', require: false
 
 gem 'aasm'
 gem 'acts_as_list'
@@ -52,8 +52,8 @@ gem 'ransack'
 gem 'redis'
 gem 'rollbar'
 gem 'sequenced'
-gem 'simple_form', github: 'plataformatec/simple_form'
-gem 'sqreen', '>= 1.16'
+gem 'simple_form'
+gem 'sqreen'
 gem 'turbolinks'
 gem 'will_paginate'
 
@@ -70,7 +70,7 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
 
   gem 'factory_bot_rails'
-  gem 'rspec-rails', '~> 3.7'
+  gem 'rspec-rails', '~> 4.0.0.beta3'
   gem 'rspec_junit_formatter'
   gem 'rubocop', require: false
   gem 'shoulda-matchers'
@@ -93,10 +93,10 @@ end
 group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 2.15', '< 4.0'
-  gem 'selenium-webdriver'
-  # Easy installation and use of chromedriver to run system tests with Chrome
-  gem 'chromedriver-helper'
   gem 'guard-rspec'
+  gem 'selenium-webdriver'
+  # Easy installation and use of web drivers to run system tests with browsers
+  gem 'webdrivers'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

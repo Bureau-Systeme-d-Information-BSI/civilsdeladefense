@@ -45,7 +45,7 @@
                 - elsif flash[:success]
                   .alert.alert-success= flash[:success]
                 = yield
-          .col-12.col-md-5.col-xl-6{style: "background-size: cover;background-image: url(#{ asset_pack_path('images/background.png') })"}
+          .col-12.col-md-5.col-xl-6{style: "background-size: cover;background-image: url(#{ asset_pack_path('media/images/background.png') })"}
     - if resource.is_a?(User)
       = render partial: '/shared/footer'
     = javascript_pack_tag 'devise-bundle'

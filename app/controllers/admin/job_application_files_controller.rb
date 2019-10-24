@@ -34,7 +34,7 @@ class Admin::JobApplicationFilesController < Admin::BaseController
   end
 
   def update
-    if @job_application_file.update_attributes(job_application_file_params)
+    if @job_application_file.update(job_application_file_params)
       respond_to do |format|
         format.html { redirect_to([:admin, @job_application], notice: t('.success')) }
         format.js do

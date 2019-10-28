@@ -12,7 +12,7 @@ class Administrators::ConfirmationsController < Devise::ConfirmationsController
   def update
     with_unconfirmed_confirmable do
       if @confirmable.no_password?
-        if @confirmable.update_attributes(permitted_params)
+        if @confirmable.update(permitted_params)
           do_confirm
         else
           do_show

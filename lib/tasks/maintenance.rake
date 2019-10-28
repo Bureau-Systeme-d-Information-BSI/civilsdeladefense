@@ -1,4 +1,46 @@
 namespace :maintenance do
+  # needed when migrating from audited 4.8 to 4.9
+  # see https://github.com/collectiveidea/audited/issues/517
+  task migrate_audits_enum_to_new_format: :environment do
+    class Audit < ActiveRecord::Base; end
+    cases = {
+      JobApplication => %w[state],
+      JobOffer => %w[state most_advanced_job_applications_state]
+    }
+
+    cases.each do |klass, fields|
+      fields.each do |field|
+        Audit.where(auditable_type: klass.to_s)
+             .where("audited_changes->'#{field}' IS NOT NULL").each do |audit|
+          audited_change = audit.audited_changes[field]
+          enum_list = klass.send(field.pluralize.to_sym)
+          if audited_change.is_a?(Integer)
+            # nothing to do
+          elsif audited_change.is_a?(String)
+            audited_changes = audit.audited_changes
+            enum_str = audited_changes[field]
+            enum_id = enum_list[enum_str]
+            audited_changes[field] = enum_id
+            audit.update_column :audited_changes, audited_changes
+          elsif audited_change.is_a?(Array)
+            if audited_change.all? { |x| x.is_a?(Integer) }
+              # nothing to do
+            elsif audited_change.all? { |x| x.is_a?(String) }
+              audited_changes = audit.audited_changes
+              enum_ary = audited_changes[field]
+              enum_ids = enum_ary.map { |enum_str| enum_list[enum_str] }
+              audited_changes[field] = enum_ids
+              audit.update_column :audited_changes, audited_changes
+            else
+              debugger
+            end
+          else
+            debugger
+          end
+        end
+      end
+    end
+  end
   task fixup_duplicate_files: :environment do
     rel = JobApplicationFile.select(:job_application_file_type_id, :job_application_id)
                             .group(:job_application_file_type_id, :job_application_id)

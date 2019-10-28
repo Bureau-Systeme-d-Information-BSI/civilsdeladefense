@@ -54,4 +54,4 @@ module PaginationHelper
 end
 # rubocop:enable Style/ClassAndModuleChildren
 
-WillPaginate::ActionView::LinkRenderer.send :include, PaginationHelper::BootstrapRenderer
+WillPaginate::ActionView::LinkRenderer.include PaginationHelper::BootstrapRenderer

@@ -2,8 +2,8 @@
 
 FactoryBot.define do
   factory :preferred_user do
-    administrator nil
-    user nil
-    preferred_users_list nil
+    administrator { nil }
+    user { nil }
+    preferred_users_list { nil }
   end
 end

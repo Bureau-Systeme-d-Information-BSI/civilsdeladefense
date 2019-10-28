@@ -32,7 +32,10 @@ RSpec.describe Admin::JobOffersController, type: :controller do
   # JobOffer. As you add validations to JobOffer, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) do
-    build(:job_offer).attributes
+    hsh = build(:job_offer).attributes
+    hsh[:employer_id] = create(:employer).id
+    hsh[:category_id] = create(:category).id
+    hsh
   end
 
   let(:invalid_attributes) do

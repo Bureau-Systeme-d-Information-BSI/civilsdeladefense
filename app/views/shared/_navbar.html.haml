@@ -24,7 +24,7 @@
           .dropdown-menu.dropdown-menu-right
             = link_to t('.logout'), destroy_user_session_path, method: :delete, class: 'dropdown-item'
 - if @with_background_image
-  %section.intro-bg{style: "background-image: url(#{ asset_pack_path('images/background-fo.jpg') });"}
+  %section.intro-bg{style: "background-image: url(#{ asset_pack_path('media/images/background-fo.jpg') });"}
 - elsif controller.class.send(:_layout) == 'account'
   .bg-secondary.text-center.d-none.d-md-block
     %ul.navbar-nav.flex-row.justify-content-center

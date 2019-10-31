@@ -5,6 +5,27 @@ require 'faker'
 I18n.config.available_locales = %w[fr en]
 I18n.reload!
 Faker::Config.locale = :fr
+
+organization = Organization.create! name: 'Civils de la Défense',
+                                    name_business_owner: 'Ministère des Armées',
+                                    administrator_email_suffix: '@intradef.gouv.fr',
+                                    subdomain: 'cvd',
+                                    domain: 'civilsdeladefense.fabnum.fr'
+
+File.open('spec/fixtures/files/logo_horizontal.svg') do |f|
+  organization.logo_horizontal = f
+end
+File.open('spec/fixtures/files/logo_vertical.svg') do |f|
+  organization.logo_vertical = f
+end
+File.open('spec/fixtures/files/logo_vertical_negative.svg') do |f|
+  organization.logo_vertical_negative = f
+end
+File.open('spec/fixtures/files/image_background.jpg') do |f|
+  organization.image_background = f
+end
+organization.save!
+
 employer_parent = Employer.create! name: 'EMA',
                                    code: 'EMA'
 employer = Employer.create! name: 'DIRISI',

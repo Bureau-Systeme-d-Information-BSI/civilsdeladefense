@@ -12,6 +12,8 @@ class ApplicationController < ActionController::Base
   rescue_from JobOfferNotAvailableAnymore, with: :resource_not_available_anymore
   rescue_from ForbiddenState, with: :bad_request
 
+  helper_method :current_organization
+
   private
 
   def basic_auth
@@ -41,5 +43,9 @@ class ApplicationController < ActionController::Base
 
   def authenticated_user_or_administrator
     current_user || 'unknown'
+  end
+
+  def current_organization
+    @current_organization ||= Organization.first
   end
 end

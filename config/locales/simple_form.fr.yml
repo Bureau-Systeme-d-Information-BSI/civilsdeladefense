@@ -105,6 +105,17 @@ fr:
         option_photo: "Photo"
         option_website_url: "Site internet (URL)"
         identifier: "Référence de l'offre"
+      organization:
+        name: "Nom de la plateform"
+        name_business_owner: "Nom de l'entité légale"
+        administrator_email_suffix: "Suffixe d'email obligatoire pour les comptes admin"
+        subdomain: "Sous-domaine"
+        domain: "Nom de domaine officiel"
+        logo_vertical: "Logo au format vertical (affichage fond blanc)"
+        logo_horizontal: "Logo au format horizontal (affichage fond blanc)"
+        logo_vertical_negative: "Logo au format vertical (affichage fond coloré)"
+        logo_horizontal_negative: "Logo au format horizontal (affichage fond coloré)"
+        image_background: "Image d'arrière plan"
       preferred_user:
         preferred_users_list: "Ajouter à la liste..."
       user:

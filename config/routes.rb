@@ -74,6 +74,7 @@ Rails.application.routes.draw do
       resources :recruitments, path: 'recrutements'
     end
     namespace :settings, path: 'parametres' do
+      resource :organization
       resources :administrators, path: 'administrateurs', except: %i[destroy] do
         collection do
           get :inactive

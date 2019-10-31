@@ -97,3 +97,15 @@ Branchement sur "production" :
 ```
 git checkout master && git pull && git checkout production && git merge master && git push origin production && git checkout master
 ```
+
+## Services externes
+
+Envoie de mail SMTP
+Configuration par la variable d'environnement MAIL_URL :
+`MAIL_URL=smtp://username_url_encoded:password@host:port`
+
+Récupération mail IMAP
+Configuration par la variable d'environnement MAIL_URL :
+`MAIL_URL=smtp://username_url_encoded:password@host:port`
+Le protocole spécifié dans la chaîne de connexion sera ignoré et remplacé par imap (avec TLS), de même pour le port qui sera remplacé par 993.
+

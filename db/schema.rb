@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_04_064340) do
+ActiveRecord::Schema.define(version: 2019_10_28_103154) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -345,6 +345,36 @@ ActiveRecord::Schema.define(version: 2019_10_04_064340) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_official_statuses_on_name", unique: true
+  end
+
+  create_table "organizations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "name_business_owner"
+    t.string "administrator_email_suffix"
+    t.string "subdomain"
+    t.string "domain"
+    t.string "logo_vertical_file_name"
+    t.string "logo_vertical_content_type"
+    t.bigint "logo_vertical_file_size"
+    t.datetime "logo_vertical_updated_at"
+    t.string "logo_horizontal_file_name"
+    t.string "logo_horizontal_content_type"
+    t.bigint "logo_horizontal_file_size"
+    t.datetime "logo_horizontal_updated_at"
+    t.string "logo_vertical_negative_file_name"
+    t.string "logo_vertical_negative_content_type"
+    t.bigint "logo_vertical_negative_file_size"
+    t.datetime "logo_vertical_negative_updated_at"
+    t.string "logo_horizontal_negative_file_name"
+    t.string "logo_horizontal_negative_content_type"
+    t.bigint "logo_horizontal_negative_file_size"
+    t.datetime "logo_horizontal_negative_updated_at"
+    t.string "image_background_file_name"
+    t.string "image_background_content_type"
+    t.bigint "image_background_file_size"
+    t.datetime "image_background_updated_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "personal_profiles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

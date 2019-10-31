@@ -3,7 +3,8 @@
     .container-fluid
       .row
         .col-12.col-md-2
-          = image_tag asset_pack_path('images/minarm.svg'), class: 'minarm'
+          - if current_organization.logo_vertical_negative.present?
+            = image_tag(current_organization.logo_vertical_negative.url, class: 'logo-business-owner')
         .col-12.col-md-2
           %ul.list-unstyled.mb-0
             %li= link_to t('.legal_notice'), legal_notice_path

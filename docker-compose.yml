@@ -35,6 +35,11 @@ services:
       DATABASE_URL: postgresql://admin:admin-secret@postgresql:5432/civilsdeladefense_development
       DATABASE_URL_TEST: postgresql://admin:admin-secret@postgresql:5432/civilsdeladefense_test
       WEBPACKER_DEV_SERVER_HOST: 172.17.0.1
+      OSC_AK: "${OSC_AK}"
+      OSC_SK: "${OSC_SK}"
+      OSC_BUCKET: "${OSC_BUCKET}"
+      OSC_REGION: "${OSC_REGION}"
+      OSC_ENDPOINT: "${OSC_ENDPOINT}"
     links:
       - postgresql
       - webpack

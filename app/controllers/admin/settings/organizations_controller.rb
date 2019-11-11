@@ -1,13 +1,17 @@
 # frozen_string_literal: true
 
-class Admin::Settings::OrganizationsController < Admin::Settings::InheritedResourcesController
-  defaults singleton: true
-
+class Admin::Settings::OrganizationsController < Admin::Settings::BaseController
   before_action :set_organization
 
   def edit
-    key = "admin.#{resource_class.to_s.tableize}.edit.success"
-    edit!(notice: t(key))
+  end
+
+  def update
+    if @organization.update(permitted_params)
+      redirect_to action: :edit, notice: t('.success')
+    else
+      render action: :edit
+    end
   end
 
   private
@@ -17,6 +21,10 @@ class Admin::Settings::OrganizationsController < Admin::Settings::InheritedResou
   end
 
   protected
+
+  def permitted_params
+    params.require(:organization).permit(permitted_fields)
+  end
 
   def permitted_fields
     %i[name name_business_owner administrator_email_suffix subdomain domain

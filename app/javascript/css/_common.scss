@@ -181,24 +181,27 @@ aside.sidebar {
 ul {
   &.actions {
     > li {
-      @extend .mr-2;
+      @extend .mr-0;
       &:last-child {
         @extend .mr-0;
       }
-      > a, > .dropdown > a {
-        color: $body-color;
-        outline: 0;
-        svg {
-          fill: $body-color;
-          @extend .mr-1;
-        }
-        &:hover, &:focus, &.active {
-          text-decoration: none;
-          color: $primary;
-          svg {
-            fill: $primary;
-          }
-        }
+    }
+  }
+}
+
+.actions {
+  > a, > .dropdown > a {
+    color: $body-color;
+    outline: 0;
+    svg {
+      fill: $body-color;
+      @extend .mr-1;
+    }
+    &:hover, &:focus, &.active {
+      text-decoration: none;
+      color: $primary;
+      svg {
+        fill: $primary;
       }
     }
   }

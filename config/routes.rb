@@ -75,6 +75,11 @@ Rails.application.routes.draw do
     end
     namespace :settings, path: 'parametres' do
       resource :organization
+      resources :pages do
+        member do
+          post :move_higher, :move_lower
+        end
+      end
       resources :administrators, path: 'administrateurs', except: %i[destroy] do
         collection do
           get :inactive
@@ -130,6 +135,7 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :pages, only: %w[show]
   resource :robots, only: %w[show]
   resource :sitemap
 

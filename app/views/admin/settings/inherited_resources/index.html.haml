@@ -3,10 +3,12 @@
 .card
   .card-header.border-bottom-0
     .card-title.d-md-flex.align-items-center
-      = t("admin.settings.#{ resource_class.to_s.tableize }.index.card_title", count: collection.size)
-      = link_to [:new, :admin, :settings, resource_symbol], class: 'btn btn-primary btn-raised ml-auto mt-2 mt-md-0 mb-0' do
-        = fa_icon 'plus', class: 'mr-1'
-        = t('buttons.add')
+      - unless resource_class == Page
+        = t("admin.settings.#{ resource_class.to_s.tableize }.index.card_title", count: collection.size)
+      - unless resource_class == Page
+        = link_to [:new, :admin, :settings, resource_symbol], class: 'btn btn-primary btn-raised ml-auto mt-2 mt-md-0 mb-0' do
+          = fa_icon 'plus', class: 'mr-1'
+          = t('buttons.add')
   %table.table.table-hover.mb-0.mt-3
     %thead
       %tr
@@ -28,5 +30,8 @@
         - Category.roots.each do |root|
           - Category.each_with_level(root.self_and_descendants) do |category, level|
             = render partial: "/admin/settings/inherited_resources/element", locals: {element: category, level: level}
+      - elsif resource_class == Page
+        - Page.each_with_level(current_organization.pages.root.self_and_descendants) do |page, level|
+          = render partial: "/admin/settings/inherited_resources/element", locals: {element: page, level: level}
       - else
         = render partial: "/admin/settings/inherited_resources/element", collection: collection, as: :element

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_28_103154) do
+ActiveRecord::Schema.define(version: 2019_11_12_104015) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -377,6 +377,28 @@ ActiveRecord::Schema.define(version: 2019_10_28_103154) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "pages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "title"
+    t.string "slug"
+    t.boolean "only_link", default: false, null: false
+    t.uuid "parent_id"
+    t.integer "lft", null: false
+    t.integer "rgt", null: false
+    t.integer "depth"
+    t.integer "children_count", default: 0, null: false
+    t.text "body"
+    t.string "url"
+    t.string "og_title"
+    t.string "og_description"
+    t.uuid "organization_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["lft"], name: "index_pages_on_lft"
+    t.index ["organization_id"], name: "index_pages_on_organization_id"
+    t.index ["parent_id"], name: "index_pages_on_parent_id"
+    t.index ["rgt"], name: "index_pages_on_rgt"
+  end
+
   create_table "personal_profiles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "personal_profileable_type"
     t.uuid "personal_profileable_id"
@@ -602,6 +624,7 @@ ActiveRecord::Schema.define(version: 2019_10_28_103154) do
   add_foreign_key "job_offers", "study_levels"
   add_foreign_key "messages", "administrators"
   add_foreign_key "messages", "job_applications"
+  add_foreign_key "pages", "organizations"
   add_foreign_key "personal_profiles", "experience_levels"
   add_foreign_key "personal_profiles", "study_levels"
   add_foreign_key "preferred_users", "preferred_users_lists"

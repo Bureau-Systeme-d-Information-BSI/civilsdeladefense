@@ -1,4 +1,4 @@
 - @with_background_image = true
-- @page_title = t('.title')
+- @page_title = @page&.title || t('.title')
 = render partial: 'filters'
 = render partial: 'job_offers_list'

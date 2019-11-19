@@ -116,6 +116,13 @@ fr:
         logo_vertical_negative: "Logo au format vertical (affichage fond coloré)"
         logo_horizontal_negative: "Logo au format horizontal (affichage fond coloré)"
         image_background: "Image d'arrière plan"
+      page:
+        body: "Corps de texte"
+        only_link: "Seulement un lien ?"
+        og_title: "Tag og:title"
+        og_description: "Tag og:description"
+        title: "Titre"
+        url: "Lien"
       preferred_user:
         preferred_users_list: "Ajouter à la liste..."
       user:

@@ -3,6 +3,8 @@
 # Top level organization where all other resources are tight to
 # aka a customer for the SaaS platform
 class Organization < ApplicationRecord
+  has_many :pages
+
   validates :name, :name_business_owner, :subdomain, presence: true
 
   %i[logo_vertical logo_horizontal logo_vertical_negative logo_horizontal_negative].each do |field|

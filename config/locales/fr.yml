@@ -54,6 +54,7 @@ fr:
   buttons:
     add: "Ajouter"
     add_child: "Ajouter une sous-catégorie"
+    add_page_child: "Ajouter une page"
     archive: "Archiver"
     cancel: "Annuler"
     choose_file: "Choisir un fichier"
@@ -410,6 +411,7 @@ fr:
     settings:
       shared:
         navbar:
+          admin: "Administration"
           administrators: "Comptes admin"
           bops: "BOPs"
           categories: "Domaines professionnels"
@@ -421,6 +423,7 @@ fr:
           job_application_file_types: "Types de fichier"
           job_applications: "Candidatures"
           organization: "Paramètres du site"
+          pages: "Gestion des pages"
           professional_categories: "Catégories professionnelles"
           rejection_reasons: "Motifs de refus"
           salary_ranges: "Estimations salariales"
@@ -522,6 +525,13 @@ fr:
       organizations:
         edit:
           title: "Édition des paramètres du site"
+        update:
+          success: "Paramètres modifiés !"
+      pages:
+        edit:
+          title: "Édition de page"
+        new:
+          title: "Ajout de page"
       bops:
         index:
           card_title:

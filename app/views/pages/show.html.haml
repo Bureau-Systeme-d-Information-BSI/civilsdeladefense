@@ -1,2 +1,2 @@
 - @page_title = @page.title
-!= @page.body
+= sanitize @page.body, tags: %w(div p strong em a ul ol li a br)

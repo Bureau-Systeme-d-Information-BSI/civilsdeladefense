@@ -24,6 +24,8 @@
             %th= resource_class.human_attribute_name(:code)
           - if resource_class.reflect_on_association(:job_offers)
             %th.text-center{style: 'width:100px;'} Nombre d'offres
+        - if resource_class == Page
+          %th
         %th{style: 'width:120px;'}
     %tbody
       - if resource_class == Category

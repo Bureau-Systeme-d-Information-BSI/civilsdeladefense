@@ -24,6 +24,10 @@
   - if resource_class.reflect_on_association(:job_offers)
     %td.text-center
       = element.job_offers.publicly_visible.count
+  - if resource_class == Page
+    %td
+      - if level != 0
+        = link_to fa_icon('link-variant'), element, title: t('buttons.show'), target: :_blank
   %td.text-right
     .d-flex.flex-row.actions
       - if resource_class == Category

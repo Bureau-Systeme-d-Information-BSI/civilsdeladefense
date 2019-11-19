@@ -48,6 +48,7 @@ class JobOffersController < ApplicationController
   def send_application
     @job_application = JobApplication.new(job_application_params)
     @job_application.job_offer = @job_offer
+    @job_application.organization = @job_offer.organization
     @job_application.user = current_user if user_signed_in?
 
     respond_to do |format|

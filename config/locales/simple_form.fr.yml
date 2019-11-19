@@ -78,7 +78,7 @@ fr:
         certify_majority: "Je certifie être majeur(e) et disposer de mes droits civiques"
         experiences_fit_job_offer: "Expérience pour l'offre"
         skills_fit_job_offer: "Adéquate pour l'offre"
-        terms_of_service: "En soumettant ce formulaire, j'accepte que les informations saisies sur le Site Civils de la Défense soient exploitées pour l'instruction de ma candidature par le ministère des armées. Les informations personnelles portées sur ce formulaire et celles communiquées aux étapes ultérieures du processus de recrutement sont enregistrées dans un fichier informatisé administré par le ministère des armées conformément à la <a href='%{link}' target='_blank'>déclaration de confidentialité</a> du portail Civils de la Défense, dont j'ai pris connaissance"
+        terms_of_service: "En soumettant ce formulaire, j'accepte que les informations saisies sur le site %{site_name} soient exploitées pour l'instruction de ma candidature par %{business_owner_name}. Les informations personnelles portées sur ce formulaire et celles communiquées aux étapes ultérieures du processus de recrutement sont enregistrées dans un fichier informatisé administré par %{business_owner_name} conformément à la <a href='%{link}' target='_blank'>déclaration de confidentialité</a> du portail %{site_name}, dont j'ai pris connaissance"
       job_application_file_type:
         kind: "Type"
         content: "Fichier"

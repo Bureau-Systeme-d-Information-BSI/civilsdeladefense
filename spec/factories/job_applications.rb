@@ -3,6 +3,7 @@
 FactoryBot.define do
   factory :job_application do
     job_offer
+    organization { Organization.first }
     user
     terms_of_service { true }
     certify_majority { true }

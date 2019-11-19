@@ -18,6 +18,7 @@ class JobApplication < ApplicationRecord
                   }
 
   belongs_to :job_offer
+  belongs_to :organization
   belongs_to :user
   belongs_to :rejection_reason, optional: true
   accepts_nested_attributes_for :user
@@ -204,10 +205,13 @@ class JobApplication < ApplicationRecord
 
   def send_confirmation_email
     job_offer_identifier = job_offer.identifier
-    subject = I18n.t('job_offers.successful.subject', job_offer_identifier: job_offer_identifier)
+    site_name = job_offer.organization.name
+    subject = I18n.t('job_offers.successful.subject', job_offer_identifier: job_offer_identifier,
+                                                      site_name: site_name)
     body = I18n.t('job_offers.successful.body', first_name: user.first_name,
                                                 job_offer_title: job_offer.title,
-                                                job_offer_identifier: job_offer_identifier)
+                                                job_offer_identifier: job_offer_identifier,
+                                                site_name: site_name)
     email = emails.create(subject: subject, body: body)
     ApplicantNotificationsMailer.new_email(email.id).deliver_now
   end

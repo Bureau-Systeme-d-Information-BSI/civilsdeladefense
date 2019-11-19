@@ -3,6 +3,7 @@
 FactoryBot.define do
   factory :job_offer do
     owner
+    organization { Organization.first }
     title { Faker::Job.title }
     description { 'Un super poste' }
     category

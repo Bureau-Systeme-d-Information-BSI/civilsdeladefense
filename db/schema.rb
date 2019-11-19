@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_12_104015) do
+ActiveRecord::Schema.define(version: 2019_11_19_144016) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -248,8 +248,10 @@ ActiveRecord::Schema.define(version: 2019_11_12_104015) do
     t.boolean "skills_fit_job_offer"
     t.boolean "experiences_fit_job_offer"
     t.uuid "rejection_reason_id"
+    t.uuid "organization_id"
     t.index ["employer_id"], name: "index_job_applications_on_employer_id"
     t.index ["job_offer_id"], name: "index_job_applications_on_job_offer_id"
+    t.index ["organization_id"], name: "index_job_applications_on_organization_id"
     t.index ["rejection_reason_id"], name: "index_job_applications_on_rejection_reason_id"
     t.index ["state"], name: "index_job_applications_on_state"
     t.index ["user_id"], name: "index_job_applications_on_user_id"
@@ -316,12 +318,14 @@ ActiveRecord::Schema.define(version: 2019_11_12_104015) do
     t.datetime "archived_at"
     t.datetime "suspended_at"
     t.uuid "bop_id"
+    t.uuid "organization_id"
     t.index ["bop_id"], name: "index_job_offers_on_bop_id"
     t.index ["category_id"], name: "index_job_offers_on_category_id"
     t.index ["contract_type_id"], name: "index_job_offers_on_contract_type_id"
     t.index ["employer_id"], name: "index_job_offers_on_employer_id"
     t.index ["experience_level_id"], name: "index_job_offers_on_experience_level_id"
     t.index ["identifier"], name: "index_job_offers_on_identifier", unique: true
+    t.index ["organization_id"], name: "index_job_offers_on_organization_id"
     t.index ["owner_id"], name: "index_job_offers_on_owner_id"
     t.index ["professional_category_id"], name: "index_job_offers_on_professional_category_id"
     t.index ["sector_id"], name: "index_job_offers_on_sector_id"

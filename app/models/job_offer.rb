@@ -27,6 +27,7 @@ class JobOffer < ApplicationRecord
 
   ## Relationships
   belongs_to :owner, class_name: 'Administrator'
+  belongs_to :organization
   belongs_to :employer
   SETTINGS.each do |setting|
     belongs_to setting

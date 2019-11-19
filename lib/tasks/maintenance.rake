@@ -1,4 +1,71 @@
 namespace :maintenance do
+  task create_cvd_org: :environment do
+    hsh = {
+      name: 'Civils de la Défense',
+      name_business_owner: 'le Ministère des Armées',
+      administrator_email_suffix: '@intradef.gouv.fr',
+      subdomain: 'cvd',
+      domain: 'civilsdeladefense.fabnum.fr'
+    }
+    organization = Organization.create!(hsh)
+    JobOffer.update_all(organization_id: organization.id)
+    JobApplication.update_all(organization_id: organization.id)
+
+    root_page = organization.pages.create!({
+      title: 'Plateforme de recrutement de personnel civils contractuels pour le Ministère des Armées',
+      only_link: false
+    })
+    branch_1_page_1 = organization.pages.create!({
+      parent: root_page,
+      title: 'Mentions légales',
+      only_link: false,
+      body: 'Ici afficher mentions légales'
+    })
+    branch_1_page_2 = organization.pages.create!({
+      parent: branch_1_page_1,
+      title: 'Conditions générales d’utilisation',
+      only_link: false,
+      body: 'Ici afficher conditions générales d’utilisation'
+    })
+    branch_1_page_3 = organization.pages.create!({
+      parent: branch_1_page_2,
+      title: 'Politique de confidentialité',
+      only_link: false,
+      body: 'Ici afficher politique de confidentialité'
+    })
+    branch_1_page_4 = organization.pages.create!({
+      parent: branch_1_page_3,
+      title: 'Suivi d\'audience et vie privée',
+      only_link: false,
+      body: 'Ici afficher suivi d\'audience et vie privée'
+    })
+
+    branch_2_page_1 = organization.pages.create!({
+      parent: root_page,
+      title: 'Service-public.fr',
+      only_link: true,
+      url: 'https://www.service-public.fr'
+    })
+    branch_2_page_2 = organization.pages.create!({
+      parent: branch_2_page_1,
+      title: 'Legifrance.gouv.fr',
+      only_link: true,
+      url: 'https://www.legifrance.gouv.fr'
+    })
+    branch_2_page_3 = organization.pages.create!({
+      parent: branch_2_page_2,
+      title: 'Data.gouv.fr',
+      only_link: true,
+      url: 'https://www.data.gouv.fr'
+    })
+    branch_2_page_4 = organization.pages.create!({
+      parent: branch_2_page_3,
+      title: 'France.fr',
+      only_link: true,
+      url: 'https://www.france.fr'
+    })
+  end
+
   # needed when migrating from audited 4.8 to 4.9
   # see https://github.com/collectiveidea/audited/issues/517
   task migrate_audits_enum_to_new_format: :environment do
@@ -41,6 +108,7 @@ namespace :maintenance do
       end
     end
   end
+
   task fixup_duplicate_files: :environment do
     rel = JobApplicationFile.select(:job_application_file_type_id, :job_application_id)
                             .group(:job_application_file_type_id, :job_application_id)

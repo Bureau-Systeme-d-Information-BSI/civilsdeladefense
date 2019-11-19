@@ -4,6 +4,9 @@ require 'rails_helper'
 
 RSpec.describe NotificationsMailer, type: :mailer do
   describe 'daily_summary' do
+    let(:organization) do
+      Organization.first
+    end
     let(:administrator) do
       create(:administrator, email: 'to@example.org')
     end
@@ -15,11 +18,13 @@ RSpec.describe NotificationsMailer, type: :mailer do
           kind: 'NewJobOffer'
         }
       ]
-      NotificationsMailer.daily_summary(administrator, data)
+      site_name = organization.name
+      NotificationsMailer.daily_summary(administrator, data, site_name)
     end
 
     it 'renders the headers' do
       expect(mail.subject).to match('Rapport')
+      expect(mail.subject).to match(organization.name)
       expect(mail.to).to eq(['to@example.org'])
     end
 

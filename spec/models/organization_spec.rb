@@ -3,10 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe Organization, type: :model do
-  before(:all) do
-    @organization = organizations(:cvd)
-  end
-
   it 'is valid with valid attributes' do
     @organization = organizations(:cvd)
     expect(@organization).to be_valid

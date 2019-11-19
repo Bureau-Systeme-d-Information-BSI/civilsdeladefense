@@ -11,6 +11,11 @@ class Admin::Settings::PagesController < Admin::Settings::InheritedResourcesCont
     end
   end
 
+  def update
+    resource.slug = nil
+    super
+  end
+
   def move_higher
     resource.move_higher
 

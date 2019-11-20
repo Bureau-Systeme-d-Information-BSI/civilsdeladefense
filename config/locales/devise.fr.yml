@@ -53,30 +53,30 @@ fr:
     mailer:
       confirmation_instructions:
         action: "Je confirme mon courriel"
-        greeting: "Bienvenue sur Civils de la Défense %{recipient}"
+        greeting: "Bienvenue sur %{site_name} %{recipient}"
         instruction: 'Vous pouvez confirmer votre courriel en cliquant sur le bouton ci-dessous :'
-        subject: "[Civils de la Défense] Instructions de confirmation"
+        subject: "[%{site_name}] Instructions de confirmation"
       email_changed:
         greeting: "Bonjour %{recipient},"
         message: Nous vous contactons pour vous notifier que votre adresse de courriel a été changée en %{email}.
-        subject: "[Civils de la Défense] Courriel modifié"
+        subject: "[%{site_name}] Courriel modifié"
       password_change:
         greeting: "Bonjour %{recipient},"
         message: Nous vous contactons pour vous notifier que votre mot de passe a été modifié.
-        subject: "[Civils de la Défense] Mot de passe modifié"
+        subject: "[%{site_name}] Mot de passe modifié"
       reset_password_instructions:
         action: Changer mon mot de passe
         greeting: "Bonjour %{recipient},"
         instruction: 'Quelqu''un a demandé un lien pour changer votre mot de passe, le voici :'
         instruction_2: Si vous n'avez pas émis cette demande, merci d'ignorer ce courriel.
         instruction_3: Votre mot de passe ne changera pas tant que vous n'aurez pas cliqué sur ce lien et renseigné un nouveau mot de passe.
-        subject: "[Civils de la Défense] Instructions pour changer le mot de passe"
+        subject: "[%{site_name}] Instructions pour changer le mot de passe"
       unlock_instructions:
         action: Débloquer mon compte
         greeting: "Bonjour %{recipient},"
         instruction: 'Suivez ce lien pour débloquer votre compte:'
         message: Votre compte a été bloqué suite à un nombre d'essais de connexions manquées trop important
-        subject: "[Civils de la Défense] Instructions pour déverrouiller le compte"
+        subject: "[%{site_name}] Instructions pour déverrouiller le compte"
     omniauth_callbacks:
       failure: 'Nous ne pouvons pas vous authentifier depuis %{kind} pour la raison suivante : ''%{reason}''.'
       success: Autorisé avec succès par votre compte %{kind}.

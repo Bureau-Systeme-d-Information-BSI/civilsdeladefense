@@ -6,6 +6,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable, :lockable
 
+  belongs_to :organization
   has_many :job_applications, dependent: :destroy
   has_many :job_offers, through: :job_applications
   has_many :preferred_users

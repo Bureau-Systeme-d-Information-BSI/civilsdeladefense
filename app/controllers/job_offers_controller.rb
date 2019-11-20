@@ -50,6 +50,7 @@ class JobOffersController < ApplicationController
     @job_application.job_offer = @job_offer
     @job_application.organization = @job_offer.organization
     @job_application.user = current_user if user_signed_in?
+    @job_application.user.organization_id = current_organization.id if @job_application.user
 
     respond_to do |format|
       if @job_application.save

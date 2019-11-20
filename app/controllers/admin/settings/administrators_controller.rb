@@ -36,6 +36,7 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
   # POST /admin/settings/administrators.json
   def create
     @administrator.inviter = current_administrator
+    @administrator.organization = current_organization
     respond_to do |format|
       if @administrator.save
         format.html { redirect_to %i[admin settings root], notice: t('.success') }

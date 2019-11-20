@@ -8,8 +8,10 @@ namespace :maintenance do
       domain: 'civilsdeladefense.fabnum.fr'
     }
     organization = Organization.create!(hsh)
-    JobOffer.update_all(organization_id: organization.id)
+    Administrator.update_all(organization_id: organization.id)
+    User.update_all(organization_id: organization.id)
     JobApplication.update_all(organization_id: organization.id)
+    JobOffer.update_all(organization_id: organization.id)
 
     root_page = organization.pages.create!({
       title: 'Plateforme de recrutement de personnel civils contractuels pour le Ministère des Armées',

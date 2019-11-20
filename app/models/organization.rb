@@ -3,6 +3,8 @@
 # Top level organization where all other resources are tight to
 # aka a customer for the SaaS platform
 class Organization < ApplicationRecord
+  has_many :users
+  has_many :administrators
   has_many :job_offers
   has_many :job_applications
   has_many :pages

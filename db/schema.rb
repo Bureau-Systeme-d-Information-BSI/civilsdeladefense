@@ -72,11 +72,13 @@ ActiveRecord::Schema.define(version: 2019_11_19_144016) do
     t.datetime "deleted_at"
     t.uuid "supervisor_administrator_id"
     t.uuid "grand_employer_administrator_id"
+    t.uuid "organization_id"
     t.index ["confirmation_token"], name: "index_administrators_on_confirmation_token", unique: true
     t.index ["email"], name: "index_administrators_on_email", unique: true
     t.index ["employer_id"], name: "index_administrators_on_employer_id"
     t.index ["grand_employer_administrator_id"], name: "index_administrators_on_grand_employer_administrator_id"
     t.index ["inviter_id"], name: "index_administrators_on_inviter_id"
+    t.index ["organization_id"], name: "index_administrators_on_organization_id"
     t.index ["reset_password_token"], name: "index_administrators_on_reset_password_token", unique: true
     t.index ["supervisor_administrator_id"], name: "index_administrators_on_supervisor_administrator_id"
     t.index ["unlock_token"], name: "index_administrators_on_unlock_token", unique: true
@@ -598,8 +600,10 @@ ActiveRecord::Schema.define(version: 2019_11_19_144016) do
     t.datetime "old_transport_ticket_updated_at"
     t.integer "transport_ticket_is_validated", limit: 2, default: 0
     t.integer "job_applications_count", default: 0, null: false
+    t.uuid "organization_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["organization_id"], name: "index_users_on_organization_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end

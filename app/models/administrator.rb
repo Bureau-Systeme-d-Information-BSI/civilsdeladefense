@@ -8,6 +8,7 @@ class Administrator < ApplicationRecord
 
   #####################################
   # Relationships
+  belongs_to :organization
   belongs_to :employer, optional: true
   validates :employer, presence: true, if: proc { |a| a.employer? || a.ensure_employer_is_set }
   belongs_to :inviter, optional: true, class_name: 'Administrator'

@@ -7,6 +7,7 @@ class Admin::Settings::InheritedResourcesController < Admin::Settings::BaseContr
 
   def create
     key = "admin.settings.#{resource_class.to_s.tableize}.create.success"
+    resource.organization = current_organization if resource.has_attribute?(:organization_id)
     create!(notice: t(key))
   end
 

@@ -12,32 +12,38 @@ class DailySummary
   end
 
   def prepare_and_send
-    prepare
-    send_mail
+    Organization.all.each do |organization|
+      prepare(organization)
+      send_mail(organization)
+    end
   end
 
   def all_bants
     @all_bants ||= Administrator.where(role: :bant).all
   end
 
-  def prepare
-    prepare_new_job_offers
-    prepare_new_job_applications
-    prepare_job_applications
+  def prepare(organization)
+    prepare_new_job_offers(organization)
+    prepare_new_job_applications(organization)
+    prepare_job_applications(organization)
   end
 
-  def send_mail
+  def send_mail(organization)
+    site_name = organization.name
     administrators = Administrator.find @concerned_administrators.map(&:uuid)
 
     @concerned_administrators.each do |concerned_administrator|
       administrator = administrators.detect { |x| x.id == concerned_administrator.uuid }
       data = concerned_administrator.summary_infos
-      NotificationsMailer.daily_summary(administrator, data).deliver
+      NotificationsMailer.daily_summary(administrator, data, site_name).deliver
     end
   end
 
-  def prepare_new_job_offers
-    @job_offers = JobOffer.where(created_at: @day_begin..@day_end).order(created_at: :asc).to_a
+  def prepare_new_job_offers(organization)
+    @job_offers = organization.job_offers
+                              .where(created_at: @day_begin..@day_end)
+                              .order(created_at: :asc)
+                              .to_a
     @job_offers.each do |job_offer|
       add_summary_infos_for_job_offer(job_offer)
     end
@@ -61,8 +67,8 @@ class DailySummary
     end
   end
 
-  def prepare_new_job_applications
-    query = JobApplication.where(created_at: @day_begin..@day_end)
+  def prepare_new_job_applications(organization)
+    query = organization.job_applications.where(created_at: @day_begin..@day_end)
     query = query.includes(:job_offer)
     query = query.order(created_at: :asc).to_a
     @job_applications = query
@@ -91,12 +97,14 @@ class DailySummary
     end
   end
 
-  def prepare_job_applications
+  def prepare_job_applications(organization)
     %w[accepted contract_received affected].each do |state|
       audits = find_job_applications_by_state(state)
       audits.all.each do |element|
         job_application = element.auditable
-        add_summary_infos_for_job_application(job_application, state)
+        if job_application.organization_id == organization.id
+          add_summary_infos_for_job_application(job_application, state)
+        end
       end
     end
   end

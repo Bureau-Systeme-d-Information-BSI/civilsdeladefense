@@ -54,6 +54,7 @@ fr:
   buttons:
     add: "Ajouter"
     add_child: "Ajouter une sous-catégorie"
+    add_page_child: "Ajouter une page"
     archive: "Archiver"
     cancel: "Annuler"
     choose_file: "Choisir un fichier"
@@ -116,14 +117,14 @@ fr:
     job_offer_head:
       available_immediately: "Poste à pourvoir immédiatement"
     successful:
-      subject: "Votre candidature à l'offre %{job_offer_identifier} Civils de la Défense"
-      body: "Nous avons bien reçu votre candidature à l'offre %{job_offer_identifier} au poste de '%{job_offer_title}'.\n\nNous y répondrons dans les meilleurs délais.\n\nL'équipe Civils de la Défense."
+      subject: "Votre candidature à l'offre %{job_offer_identifier} sur %{site_name}"
+      body: "Nous avons bien reçu votre candidature à l'offre %{job_offer_identifier} au poste de '%{job_offer_title}'.\n\nNous y répondrons dans les meilleurs délais.\n\nL'équipe %{site_name}."
       title: "Merci d'avoir soumis votre candidature !"
       subtitle_html: "Votre demande est prise en compte.<br/>Veuillez confirmer votre accès à l'aide du lien sur votre boîte courriel."
       link: "Retour à l'accueil"
   notifications_mailer:
     daily_summary:
-      subject: "[Civilsdeladefense] Rapport journalier"
+      subject: "[%{site_name}] Rapport journalier"
       generic_title: "Candidatures %{state}"
       new_job_offers:
         title: "Nouvelles offres"
@@ -136,11 +137,12 @@ fr:
       privacy: "Politique de confidentialité"
       tracking: "Suivi d'audience et vie privée"
     navbar:
-      job_offers: "Nos offres"
       account: "Mon compte"
-      logout: "Déconnexion"
-      job_applications: "Mes candidatures"
       account_root: "Mon espace candidat"
+      home_link: "Accueil"
+      job_applications: "Mes candidatures"
+      job_offers: "Nos offres"
+      logout: "Déconnexion"
   account:
     job_applications:
       index:
@@ -409,21 +411,24 @@ fr:
     settings:
       shared:
         navbar:
+          admin: "Administration"
           administrators: "Comptes admin"
           bops: "BOPs"
-          employers: "Employeurs"
-          email_templates: "Courriels"
-          job_applications: "Candidatures"
-          job_application_file_types: "Types de fichier"
           categories: "Domaines professionnels"
-          professional_categories: "Catégories professionnelles"
-          contract_types: "Types de contrat"
-          study_levels: "Niveaux d'études"
-          experience_levels: "Éxpériences"
-          rejection_reasons: "Motifs de refus"
-          sectors: "Secteurs / Filières"
-          salary_ranges: "Estimations salariales"
           company : "Entreprise"
+          contract_types: "Types de contrat"
+          email_templates: "Courriels"
+          employers: "Employeurs"
+          experience_levels: "Éxpériences"
+          job_application_file_types: "Types de fichier"
+          job_applications: "Candidatures"
+          organization: "Paramètres du site"
+          pages: "Gestion des pages"
+          professional_categories: "Catégories professionnelles"
+          rejection_reasons: "Motifs de refus"
+          salary_ranges: "Estimations salariales"
+          sectors: "Secteurs / Filières"
+          study_levels: "Niveaux d'études"
           templates : "Modèles"
           writing_job_offers: "Rédaction offres d'emploi"
       base:
@@ -517,6 +522,16 @@ fr:
         element:
           affirmative: "Oui"
           negative: "Non"
+      organizations:
+        edit:
+          title: "Édition des paramètres du site"
+        update:
+          success: "Paramètres modifiés !"
+      pages:
+        edit:
+          title: "Édition de page"
+        new:
+          title: "Ajout de page"
       bops:
         index:
           card_title:

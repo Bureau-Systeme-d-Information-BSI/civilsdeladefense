@@ -74,6 +74,12 @@ Rails.application.routes.draw do
       resources :recruitments, path: 'recrutements'
     end
     namespace :settings, path: 'parametres' do
+      resource :organization
+      resources :pages do
+        member do
+          post :move_higher, :move_lower
+        end
+      end
       resources :administrators, path: 'administrateurs', except: %i[destroy] do
         collection do
           get :inactive
@@ -129,13 +135,16 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :pages, only: %w[show]
   resource :robots, only: %w[show]
   resource :sitemap
 
-  get '/politique-confidentialite' => 'legals#privacy', as: :privacy
-  get '/cgu' => 'legals#tos', as: :tos
-  get '/mentions-legales' => 'legals#notice', as: :legal_notice
-  get '/suivi' => 'legals#tracking', as: :tracking
+  unless ENV['DYNAMIC_FOOTER']
+    get '/politique-confidentialite' => 'legals#privacy', as: :privacy
+    get '/cgu' => 'legals#tos', as: :tos
+    get '/mentions-legales' => 'legals#notice', as: :legal_notice
+    get '/suivi' => 'legals#tracking', as: :tracking
+  end
 
   root to: 'job_offers#index'
 end

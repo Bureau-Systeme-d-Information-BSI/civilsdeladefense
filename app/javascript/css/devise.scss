@@ -3,12 +3,8 @@
 
 .devise {
   .logos {
-    @extend .d-flex, .justify-content-start, .mb-3;
-    .minarm {
-      height: 80px;
-    }
+    @extend .mb-3;
     .logo {
-      margin-left: 15px;
       height: 60px;
     }
   }

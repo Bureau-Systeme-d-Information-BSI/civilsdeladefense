@@ -11,12 +11,14 @@ class ApplicantNotificationsMailer < ApplicationMailer
     @email = Email.find email_id
     @job_application = @email.job_application
     @job_offer = @job_application.job_offer
+    @organization = @job_offer.organization
     @user = @job_application.user
 
     to = @user.email
     subject = @email.subject
     @body = @email.body
     @answer_url = account_job_applications_url
+    @site_name = @organization.name
 
     mail_uri = URI(ENV['MAIL_URL'])
     host = mail_uri.host

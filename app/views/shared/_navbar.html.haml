@@ -4,8 +4,10 @@
     %span.navbar-toggler-icon= fa_icon "menu", style: "width:1.5em;height:auto;"
   = link_to root_path, class: "navbar-brand py-0" do
     .d-flex.align-items-center
-      = image_tag(asset_pack_path("images/minarm_horizontal.svg"))
-      = image_tag asset_pack_path('images/logo.svg'), class: 'logo ml-2'
+      - if current_organization.logo_horizontal.present?
+        = image_tag(current_organization.logo_horizontal.url, class: 'logo')
+      - else
+        = t('.home_link')
   .collapse.navbar-collapse.offcanvas-collapse.ml-md-5
     %ul.navbar-nav.ml-auto
       - nav_items.each do |item|
@@ -23,8 +25,8 @@
             = image_user_tag current_user.photo, width: 40
           .dropdown-menu.dropdown-menu-right
             = link_to t('.logout'), destroy_user_session_path, method: :delete, class: 'dropdown-item'
-- if @with_background_image
-  %section.intro-bg{style: "background-image: url(#{ asset_pack_path('media/images/background-fo.jpg') });"}
+- if @with_background_image && current_organization.image_background.present?
+  %section.intro-bg{style: "background-image: url(#{ current_organization.image_background.url });"}
 - elsif controller.class.send(:_layout) == 'account'
   .bg-secondary.text-center.d-none.d-md-block
     %ul.navbar-nav.flex-row.justify-content-center

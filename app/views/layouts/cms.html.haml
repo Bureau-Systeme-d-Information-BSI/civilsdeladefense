@@ -1,0 +1,6 @@
+- content_for :content do
+  .card.pushed-top
+    .card-body
+      %h1= @page_title
+      = yield
+= render template: "layouts/application"

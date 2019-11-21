@@ -19,9 +19,7 @@ class Admin::JobOffersController < Admin::BaseController
                                                                  .unscope(:order)
         end
         @q = job_offers_nearly_filtered.ransack(params[:q])
-        @job_offers_filtered = @q.result(distinct: true)
-                                 .page(params[:page])
-                                 .per_page(20)
+        @job_offers_filtered = @q.result(distinct: true).page(params[:page]).per_page(20)
         render action: :index
       end
       format.js do
@@ -69,6 +67,7 @@ class Admin::JobOffersController < Admin::BaseController
   # POST /admin/job_offers.json
   def create
     @job_offer.owner = current_administrator
+    @job_offer.organization = current_organization
     @job_offer.employer = current_administrator.employer unless current_administrator.bant?
     @job_offer.cleanup_actor_administrator_inviter(current_administrator)
 

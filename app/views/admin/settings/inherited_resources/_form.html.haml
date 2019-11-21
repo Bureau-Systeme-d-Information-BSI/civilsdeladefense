@@ -14,6 +14,17 @@
           - states = JobApplication.states.map {|k, v| [ JobApplication.human_attribute_name("state/#{k}"), k] }
           = f.input :from_state, collection: states, prompt: true
           = f.input :by_default
+        - elsif resource.is_a?(Organization)
+          = f.input :name
+          = f.input :name_business_owner
+          = f.input :administrator_email_suffix
+          = f.input :subdomain
+          = f.input :domain
+          = f.input :logo_vertical
+          = f.input :logo_horizontal
+          = f.input :logo_vertical_negative
+          = f.input :logo_horizontal_negative
+          = f.input :image_background
         - elsif resource.is_a?(EmailTemplate)
           = f.input :title
           = f.input :subject
@@ -34,8 +45,9 @@
             = f.input :parent_id, collection: Employer.roots
       .form-actions.text-right.mt-4
         %ul.list-inline.mb-0
-          %li.list-inline-item
-            = link_to(t('buttons.cancel'), collection_url, class: 'btn btn-body-color mb-0')
+          - unless resource_class == Organization
+            %li.list-inline-item
+              = link_to(t('buttons.cancel'), collection_url, class: 'btn btn-body-color mb-0')
           %li.list-inline-item
             = button_tag(type: 'submit', class: 'btn btn-primary btn-raised mb-0') do
               = t("buttons.#{ resource.new_record? ? 'add' : 'edit' }")

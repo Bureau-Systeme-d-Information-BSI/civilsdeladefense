@@ -1,8 +1,9 @@
 footer {
   @extend .px-5, .py-5, .bg-quaternary;
   color: white;
-  .minarm {
-    height: 150px;
+  .logo-business-owner {
+    width: 100%;
+    height: auto;
   }
   ul {
     li {

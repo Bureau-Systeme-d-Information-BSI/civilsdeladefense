@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_04_064340) do
+ActiveRecord::Schema.define(version: 2019_11_19_144016) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -72,11 +72,13 @@ ActiveRecord::Schema.define(version: 2019_10_04_064340) do
     t.datetime "deleted_at"
     t.uuid "supervisor_administrator_id"
     t.uuid "grand_employer_administrator_id"
+    t.uuid "organization_id"
     t.index ["confirmation_token"], name: "index_administrators_on_confirmation_token", unique: true
     t.index ["email"], name: "index_administrators_on_email", unique: true
     t.index ["employer_id"], name: "index_administrators_on_employer_id"
     t.index ["grand_employer_administrator_id"], name: "index_administrators_on_grand_employer_administrator_id"
     t.index ["inviter_id"], name: "index_administrators_on_inviter_id"
+    t.index ["organization_id"], name: "index_administrators_on_organization_id"
     t.index ["reset_password_token"], name: "index_administrators_on_reset_password_token", unique: true
     t.index ["supervisor_administrator_id"], name: "index_administrators_on_supervisor_administrator_id"
     t.index ["unlock_token"], name: "index_administrators_on_unlock_token", unique: true
@@ -248,8 +250,10 @@ ActiveRecord::Schema.define(version: 2019_10_04_064340) do
     t.boolean "skills_fit_job_offer"
     t.boolean "experiences_fit_job_offer"
     t.uuid "rejection_reason_id"
+    t.uuid "organization_id"
     t.index ["employer_id"], name: "index_job_applications_on_employer_id"
     t.index ["job_offer_id"], name: "index_job_applications_on_job_offer_id"
+    t.index ["organization_id"], name: "index_job_applications_on_organization_id"
     t.index ["rejection_reason_id"], name: "index_job_applications_on_rejection_reason_id"
     t.index ["state"], name: "index_job_applications_on_state"
     t.index ["user_id"], name: "index_job_applications_on_user_id"
@@ -316,12 +320,14 @@ ActiveRecord::Schema.define(version: 2019_10_04_064340) do
     t.datetime "archived_at"
     t.datetime "suspended_at"
     t.uuid "bop_id"
+    t.uuid "organization_id"
     t.index ["bop_id"], name: "index_job_offers_on_bop_id"
     t.index ["category_id"], name: "index_job_offers_on_category_id"
     t.index ["contract_type_id"], name: "index_job_offers_on_contract_type_id"
     t.index ["employer_id"], name: "index_job_offers_on_employer_id"
     t.index ["experience_level_id"], name: "index_job_offers_on_experience_level_id"
     t.index ["identifier"], name: "index_job_offers_on_identifier", unique: true
+    t.index ["organization_id"], name: "index_job_offers_on_organization_id"
     t.index ["owner_id"], name: "index_job_offers_on_owner_id"
     t.index ["professional_category_id"], name: "index_job_offers_on_professional_category_id"
     t.index ["sector_id"], name: "index_job_offers_on_sector_id"
@@ -345,6 +351,58 @@ ActiveRecord::Schema.define(version: 2019_10_04_064340) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_official_statuses_on_name", unique: true
+  end
+
+  create_table "organizations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "name_business_owner"
+    t.string "administrator_email_suffix"
+    t.string "subdomain"
+    t.string "domain"
+    t.string "logo_vertical_file_name"
+    t.string "logo_vertical_content_type"
+    t.bigint "logo_vertical_file_size"
+    t.datetime "logo_vertical_updated_at"
+    t.string "logo_horizontal_file_name"
+    t.string "logo_horizontal_content_type"
+    t.bigint "logo_horizontal_file_size"
+    t.datetime "logo_horizontal_updated_at"
+    t.string "logo_vertical_negative_file_name"
+    t.string "logo_vertical_negative_content_type"
+    t.bigint "logo_vertical_negative_file_size"
+    t.datetime "logo_vertical_negative_updated_at"
+    t.string "logo_horizontal_negative_file_name"
+    t.string "logo_horizontal_negative_content_type"
+    t.bigint "logo_horizontal_negative_file_size"
+    t.datetime "logo_horizontal_negative_updated_at"
+    t.string "image_background_file_name"
+    t.string "image_background_content_type"
+    t.bigint "image_background_file_size"
+    t.datetime "image_background_updated_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "pages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "title"
+    t.string "slug"
+    t.boolean "only_link", default: false, null: false
+    t.uuid "parent_id"
+    t.integer "lft", null: false
+    t.integer "rgt", null: false
+    t.integer "depth"
+    t.integer "children_count", default: 0, null: false
+    t.text "body"
+    t.string "url"
+    t.string "og_title"
+    t.string "og_description"
+    t.uuid "organization_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["lft"], name: "index_pages_on_lft"
+    t.index ["organization_id"], name: "index_pages_on_organization_id"
+    t.index ["parent_id"], name: "index_pages_on_parent_id"
+    t.index ["rgt"], name: "index_pages_on_rgt"
   end
 
   create_table "personal_profiles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -542,8 +600,10 @@ ActiveRecord::Schema.define(version: 2019_10_04_064340) do
     t.datetime "old_transport_ticket_updated_at"
     t.integer "transport_ticket_is_validated", limit: 2, default: 0
     t.integer "job_applications_count", default: 0, null: false
+    t.uuid "organization_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["organization_id"], name: "index_users_on_organization_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
@@ -572,6 +632,7 @@ ActiveRecord::Schema.define(version: 2019_10_04_064340) do
   add_foreign_key "job_offers", "study_levels"
   add_foreign_key "messages", "administrators"
   add_foreign_key "messages", "job_applications"
+  add_foreign_key "pages", "organizations"
   add_foreign_key "personal_profiles", "experience_levels"
   add_foreign_key "personal_profiles", "study_levels"
   add_foreign_key "preferred_users", "preferred_users_lists"

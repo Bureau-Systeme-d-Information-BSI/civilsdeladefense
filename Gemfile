@@ -38,6 +38,7 @@ gem 'counter_culture'
 gem 'country_select'
 gem 'devise'
 gem 'file_validators'
+gem 'fog-aws'
 gem 'fog-openstack'
 gem 'friendly_id'
 gem 'groupdate'
@@ -87,7 +88,6 @@ group :development do
 end
 
 group :production do
-  gem 'aws-sdk-s3', require: false
 end
 
 group :test do

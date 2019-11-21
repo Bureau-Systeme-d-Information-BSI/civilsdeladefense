@@ -5,6 +5,83 @@ require 'faker'
 I18n.config.available_locales = %w[fr en]
 I18n.reload!
 Faker::Config.locale = :fr
+
+organization = Organization.create! name: 'Civils de la Défense',
+                                    name_business_owner: 'le Ministère des Armées',
+                                    administrator_email_suffix: '@intradef.gouv.fr',
+                                    subdomain: 'cvd',
+                                    domain: 'civilsdeladefense.fabnum.fr'
+
+Page.destroy_all
+organization ||= Organization.first
+root_page = organization.pages.create!({
+  title: 'Plateforme de recrutement de personnel civils contractuels pour le Ministère des Armées',
+  only_link: false
+})
+branch_1_page_1 = organization.pages.create!({
+  parent: root_page,
+  title: 'Mentions légales',
+  only_link: false,
+  body: 'Ici afficher mentions légales'
+})
+branch_1_page_2 = organization.pages.create!({
+  parent: branch_1_page_1,
+  title: 'Conditions générales d’utilisation',
+  only_link: false,
+  body: 'Ici afficher conditions générales d’utilisation'
+})
+branch_1_page_3 = organization.pages.create!({
+  parent: branch_1_page_2,
+  title: 'Politique de confidentialité',
+  only_link: false,
+  body: 'Ici afficher politique de confidentialité'
+})
+branch_1_page_4 = organization.pages.create!({
+  parent: branch_1_page_3,
+  title: 'Suivi d\'audience et vie privée',
+  only_link: false,
+  body: 'Ici afficher suivi d\'audience et vie privée'
+})
+
+branch_2_page_1 = organization.pages.create!({
+  parent: root_page,
+  title: 'Service-public.fr',
+  only_link: true,
+  url: 'https://www.service-public.fr'
+})
+branch_2_page_2 = organization.pages.create!({
+  parent: branch_2_page_1,
+  title: 'Legifrance.gouv.fr',
+  only_link: true,
+  url: 'https://www.legifrance.gouv.fr'
+})
+branch_2_page_3 = organization.pages.create!({
+  parent: branch_2_page_2,
+  title: 'Data.gouv.fr',
+  only_link: true,
+  url: 'https://www.data.gouv.fr'
+})
+branch_2_page_4 = organization.pages.create!({
+  parent: branch_2_page_3,
+  title: 'France.fr',
+  only_link: true,
+  url: 'https://www.france.fr'
+})
+
+File.open('spec/fixtures/files/logo_horizontal.svg') do |f|
+  organization.logo_horizontal = f
+end
+File.open('spec/fixtures/files/logo_vertical.svg') do |f|
+  organization.logo_vertical = f
+end
+File.open('spec/fixtures/files/logo_vertical_negative.svg') do |f|
+  organization.logo_vertical_negative = f
+end
+File.open('spec/fixtures/files/image_background.jpg') do |f|
+  organization.image_background = f
+end
+organization.save!
+
 employer_parent = Employer.create! name: 'EMA',
                                    code: 'EMA'
 employer = Employer.create! name: 'DIRISI',

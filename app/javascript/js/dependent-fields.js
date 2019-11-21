@@ -34,6 +34,37 @@ function triggerRoleChange() {
   }
 }
 
+function initPageChange() {
+  let onlyLinkCheckBox = document.getElementById('page_only_link')
+  if (onlyLinkCheckBox !== null) {
+    onlyLinkCheckBox.addEventListener('change', triggerPageChange, false)
+    var event = new Event('change')
+    onlyLinkCheckBox.dispatchEvent(event)
+  }
+}
+
+function triggerPageChange() {
+  let onlyLinkCheckBox = document.getElementById('page_only_link')
+  if (onlyLinkCheckBox !== null) {
+    let value = onlyLinkCheckBox.value
+    if (onlyLinkCheckBox.checked == true) {
+      ;[].forEach.call(document.querySelectorAll('.form-group.page_url'), function(el) {
+        el.classList.remove('d-none')
+      })
+      ;[].forEach.call(document.querySelectorAll('.form-group.page_body, .form-group.page_og_title, .form-group.page_og_description'), function(el) {
+        el.classList.add('d-none')
+      })
+    } else {
+      ;[].forEach.call(document.querySelectorAll('.form-group.page_url'), function(el) {
+        el.classList.add('d-none')
+      })
+      ;[].forEach.call(document.querySelectorAll('.form-group.page_body, .form-group.page_og_title, .form-group.page_og_description'), function(el) {
+        el.classList.remove('d-none')
+      })
+    }
+  }
+}
+
 function initJobApplicationFileTypeKindChange() {
   let select = document.getElementById('job_application_file_type_kind')
   if (select !== null) {
@@ -59,6 +90,7 @@ document.addEventListener('DOMContentLoaded', function() {
   initEmailTemplates()
   initRoleChange()
   initJobApplicationFileTypeKindChange()
+  initPageChange()
 })
 
 function initEmailTemplates() {

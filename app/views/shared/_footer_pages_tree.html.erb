@@ -1,0 +1,21 @@
+<%- if current_organization.pages.root %>
+<% Page.each_with_level(current_organization.pages.root.descendants) do |page, level| %>
+  <% if level == 1 %>
+  <div class="col-12 col-md-2">
+    <ul class="list-unstyled mb-0">
+  <% end %>
+  <li>
+    <% if page.only_link? %>
+      <%= link_to page.url, target: '_blank', rel: 'noopener noreferrer' do %>
+        <%= page.title %>
+        <%= fa_icon("open-in-new") %>
+      <% end %>
+    <% else %>
+    <%= link_to page.title, page_path(page) %></li>
+    <% end %>
+  <% if page.leaf? %>
+    </ul>
+  </div>
+  <% end %>
+<% end %>
+<%- end %>

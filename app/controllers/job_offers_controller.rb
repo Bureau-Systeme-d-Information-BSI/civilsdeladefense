@@ -8,6 +8,7 @@ class JobOffersController < ApplicationController
   # GET /job_offers
   # GET /job_offers.json
   def index
+    @page = current_organization.pages.where(parent_id: nil).first
     @categories = Category.order('lft ASC').where('published_job_offers_count > ?', 0)
     @max_depth_limit = 1
     @categories_for_select = @categories.select { |x| x.depth <= @max_depth_limit }
@@ -47,7 +48,9 @@ class JobOffersController < ApplicationController
   def send_application
     @job_application = JobApplication.new(job_application_params)
     @job_application.job_offer = @job_offer
+    @job_application.organization = @job_offer.organization
     @job_application.user = current_user if user_signed_in?
+    @job_application.user.organization_id = current_organization.id if @job_application.user
 
     respond_to do |format|
       if @job_application.save

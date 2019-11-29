@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class PhotoUploader < CommonUploader
+  encrypt
+
   include CarrierWave::MiniMagick
 
   version :small do

@@ -14,7 +14,6 @@ CarrierWave.configure do |config|
       aws_access_key_id: ENV['OSC_AK'],
       aws_secret_access_key: ENV['OSC_SK'],
       region: ENV['OSC_REGION'],
-      host: ENV['OSC_HOST'],
       endpoint: ENV['OSC_ENDPOINT'],
       aws_signature_version: 2
     }

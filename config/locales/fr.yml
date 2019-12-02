@@ -5,6 +5,7 @@ fr:
   non_accessible: "Pas accessible pour le moment"
   nothing_to_see: "Rien à voir pour le moment"
   unknown: "Inconnu"
+  default_recruitment_process: "<ul><li>Si votre candidature est présélectionnée, vous serez contacté(e) par téléphone pour apprécier vos attentes et motivations.</li><li>Si vous êtes sélectionné(e) après cette première étape, vous serez reçu(e) en entretien par l’employeur et éventuellement le service des ressources humaines.</li><li>Vous serez à l’issue de cet entretien informé(e) par l’employeur des suites données à votre candidature.</li></ul>"
   time:
     formats:
       default: "%-d %b %Y %H:%M"
@@ -286,7 +287,6 @@ fr:
         job_offers_filtered: "%{count} résultats de recherche"
       new:
         title: "Rédaction d'une nouvelle offre"
-        default_recruitment_process: "<ul><li>Si votre candidature est présélectionnée, vous serez contacté(e) par téléphone pour apprécier vos attentes et motivations.</li><li>Si vous êtes sélectionné(e) après cette première étape, vous serez reçu(e) en entretien par l’employeur et éventuellement le service des ressources humaines.</li><li>Vous serez à l’issue de cet entretien informé(e) par l’employeur des suites données à votre candidature.</li></ul>"
       edit:
         title: "Édition de l'offre %{job_offer_identifier}"
       form:

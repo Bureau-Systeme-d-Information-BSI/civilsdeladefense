@@ -96,7 +96,8 @@ bant_admin = Administrator.new email: 'pipo@molo.fr',
                                password: ENV['SEED_PASSWORD'],
                                password_confirmation: ENV['SEED_PASSWORD'],
                                very_first_account: true,
-                               role: 'bant'
+                               role: 'bant',
+                               organization: organization
 bant_admin.skip_confirmation_notification!
 bant_admin.save!
 bant_admin.confirm
@@ -108,7 +109,8 @@ employer_admin_1 = Administrator.new email: 'employer1@molo.fr',
                                      password_confirmation: ENV['SEED_PASSWORD'],
                                      very_first_account: true,
                                      role: 'employer',
-                                     employer: employer
+                                     employer: employer,
+                                     organization: organization
 employer_admin_1.skip_confirmation_notification!
 employer_admin_1.save!
 employer_admin_1.confirm
@@ -120,7 +122,8 @@ employer_admin_2 = Administrator.new email: 'employer2@molo.fr',
                                      password_confirmation: ENV['SEED_PASSWORD'],
                                      very_first_account: true,
                                      role: 'employer',
-                                     employer: employer
+                                     employer: employer,
+                                     organization: organization
 employer_admin_2.skip_confirmation_notification!
 employer_admin_2.save!
 employer_admin_2.confirm
@@ -131,7 +134,8 @@ brh_admin = Administrator.new email: 'brh@molo.fr',
                               password: ENV['SEED_PASSWORD'],
                               password_confirmation: ENV['SEED_PASSWORD'],
                               very_first_account: true,
-                              employer: employer
+                              employer: employer,
+                              organization: organization
 brh_admin.skip_confirmation_notification!
 brh_admin.save!
 brh_admin.confirm
@@ -245,6 +249,7 @@ JobApplicationFileType.create! name: 'Copie du livret de famille',
                                by_default: false
 
 job_offer = JobOffer.new do |j|
+  j.organization = organization
   j.owner = bant_admin
   j.title = 'Ingénieur expert en systemes d’information, réseau et active directory - ' +
             'Chef de section'
@@ -367,6 +372,7 @@ file = File.open(Rails.root.join('spec', 'fixtures', 'files', 'document.pdf'))
 user = User.new email: 'coin@pan.fr',
                 first_name: 'Coin',
                 last_name: 'Pan',
+                organization: organization,
                 password: ENV['SEED_PASSWORD'],
                 password_confirmation: ENV['SEED_PASSWORD'],
                 photo: photo,
@@ -383,6 +389,7 @@ user.save!
 user.confirm
 
 job_application = JobApplication.new do |ja|
+  ja.organization = organization
   ja.job_offer = job_offer
   ja.user = user
   ja.terms_of_service = true
@@ -408,13 +415,14 @@ job_application.save!
 Audited.audit_class.as_user(bant_admin) do
   4.times do
     Email.create! subject: 'subject',
-                  body: Faker::Lorem.paragraph(2),
+                  body: Faker::Lorem.paragraph(sentence_count: 2),
                   job_application: job_application,
                   sender: bant_admin
   end
 end
 
 job_application2 = JobApplication.new do |ja|
+  ja.organization = organization
   ja.job_offer = job_offer2
   ja.user = user
   ja.terms_of_service = true
@@ -437,6 +445,7 @@ job_application2.job_application_files.build content: file,
 job_application2.save!
 
 user_candidate_of_all = User.new email: Faker::Internet.email,
+                                 organization: organization,
                                  first_name: 'Nicolas',
                                  last_name: 'Agoini',
                                  password: ENV['SEED_PASSWORD'],
@@ -459,6 +468,7 @@ boolean_choices = [true, false, nil]
 JobOffer.where.not(duration_contract: nil).where.not(id: [job_offer4.id, job_offer5.id]).each do |job_offer|
   15.times do |_i|
     user = User.new email: Faker::Internet.email,
+                    organization: organization,
                     first_name: Faker::Name.first_name,
                     last_name: Faker::Name.last_name,
                     password: ENV['SEED_PASSWORD'],
@@ -476,6 +486,7 @@ JobOffer.where.not(duration_contract: nil).where.not(id: [job_offer4.id, job_off
     user.confirm
 
     job_application = JobApplication.new do |ja|
+      ja.organization = organization
       ja.job_offer = job_offer
       ja.user = user
       ja.terms_of_service = true
@@ -505,13 +516,13 @@ JobOffer.where.not(duration_contract: nil).where.not(id: [job_offer4.id, job_off
     3.times do
       Audited.audit_class.as_user(bant_admin) do
         Email.create! subject: 'About your application',
-                      body: Faker::Lorem.paragraph(2),
+                      body: Faker::Lorem.paragraph(sentence_count: 2),
                       job_application: job_application,
                       sender: bant_admin
       end
       Audited.audit_class.as_user(user) do
         Email.create! subject: 'My application',
-                      body: Faker::Lorem.paragraph(2),
+                      body: Faker::Lorem.paragraph(sentence_count: 2),
                       job_application: job_application,
                       sender: user
       end
@@ -519,6 +530,7 @@ JobOffer.where.not(duration_contract: nil).where.not(id: [job_offer4.id, job_off
   end
 
   job_application = JobApplication.new do |ja|
+    ja.organization = organization
     ja.job_offer = job_offer
     ja.user = user_candidate_of_all
     ja.terms_of_service = true
@@ -544,13 +556,13 @@ JobOffer.where.not(duration_contract: nil).where.not(id: [job_offer4.id, job_off
   3.times do
     Audited.audit_class.as_user(bant_admin) do
       Email.create! subject: 'About your application',
-                    body: Faker::Lorem.paragraph(2),
+                    body: Faker::Lorem.paragraph(sentence_count: 2),
                     job_application: job_application,
                     sender: bant_admin
     end
     Audited.audit_class.as_user(user_candidate_of_all) do
       Email.create! subject: 'My application',
-                    body: Faker::Lorem.paragraph(2),
+                    body: Faker::Lorem.paragraph(sentence_count: 2),
                     job_application: job_application,
                     sender: user_candidate_of_all
     end

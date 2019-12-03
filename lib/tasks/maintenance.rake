@@ -68,6 +68,37 @@ namespace :maintenance do
     })
   end
 
+  task migrate_to_encrypted_files: :environment do
+    Administrator.find_in_batches do |group|
+      group.each do |a|
+        legacy = LegacyUploader::Administrator.find(a.id)
+        a.remote_photo_url = legacy.photo.url
+        a.save
+      end
+    end
+    User.find_in_batches do |group|
+      group.each do |u|
+        legacy = LegacyUploader::User.find(u.id)
+        u.remote_photo_url = legacy.photo.url
+        u.save
+      end
+    end
+    JobApplicationFileType.find_in_batches do |group|
+      group.each do |j|
+        legacy = LegacyUploader::JobApplicationFileType.find(j.id)
+        j.remote_content_url = legacy.content.url
+        j.save
+      end
+    end
+    JobApplicationFile.find_in_batches do |group|
+      group.each do |j|
+        legacy = LegacyUploader::JobApplicationFile.find(j.id)
+        j.remote_content_url = legacy.content.url
+        j.save
+      end
+    end
+  end
+
   # needed when migrating from audited 4.8 to 4.9
   # see https://github.com/collectiveidea/audited/issues/517
   task migrate_audits_enum_to_new_format: :environment do

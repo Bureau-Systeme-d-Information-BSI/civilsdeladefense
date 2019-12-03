@@ -20,6 +20,7 @@ services:
       PRODUCTION_SERVER_IP: "${PRODUCTION_SERVER_IP}"
       PRODUCTION_SERVER_USER: "${PRODUCTION_SERVER_USER}"
       DEFAULT_HOST: "${DEFAULT_HOST}"
+      LOCKBOX_MASTER_KEY: "${LOCKBOX_MASTER_KEY}"
       MAIL_URL: "${MAIL_URL}"
       OS_PASSWORD: "${OS_PASSWORD}"
       OS_USER_DOMAIN_NAME: "${OS_USER_DOMAIN_NAME}"
@@ -61,10 +62,11 @@ services:
     volumes:
       - ./:/usr/src/app/
     environment:
-      RAILS_ENV: test
-      MAIL_URL: smtp://hello%40localhost@localhost
       DEFAULT_HOST: http://localhost:3000
       DATABASE_URL_TEST: postgresql://admin:admin-secret@postgresql:5432/civilsdeladefense_test
+      LOCKBOX_MASTER_KEY: "${LOCKBOX_MASTER_KEY}"
+      MAIL_URL: smtp://hello%40localhost@localhost
+      RAILS_ENV: test
     links:
       - postgresql
     command: "tail -F /dev/null"

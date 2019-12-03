@@ -99,6 +99,8 @@ RSpec.describe JobOffersController, type: :controller do
         expect(response).to be_successful
 
         hsh = valid_attributes
+        file_content = fixture_file_upload('files/document.pdf', 'application/pdf')
+        hsh[:job_application_files_attributes].first[:content] = file_content
         hsh[:terms_of_service] = 1
         hsh[:certify_majority] = 1
         expect do

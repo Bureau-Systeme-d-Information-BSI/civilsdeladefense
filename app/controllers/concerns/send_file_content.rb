@@ -5,7 +5,9 @@ module SendFileContent
   include ActionController::Live
 
   def send_job_application_file_content
-    if ENV['OS_AUTH_URL'].present?
+    if ENV['OSC_AK'].present?
+      proxy_encrypted_job_application_file_content
+    elsif ENV['OS_AUTH_URL'].present?
       proxy_job_application_file_content
     else
       send_content_directly
@@ -42,5 +44,12 @@ module SendFileContent
         end
       end
     end
+  end
+
+  # use Lockbox read method to send file back to the browser
+  def proxy_encrypted_job_application_file_content
+    send_data @job_application_file.content.read, filename: "#{action_name}.pdf",
+                                                  type: 'application/pdf',
+                                                  disposition: 'inline'
   end
 end

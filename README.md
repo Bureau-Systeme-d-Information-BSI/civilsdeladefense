@@ -35,7 +35,17 @@ DEFAULT_FROM=hello@localhost
 DEFAULT_HOST=http://localhost:3000
 ```
 
-Optionnellement ce fichier .env peut contenir les variables suivantes pour configurer un Object Storage basé sur Swift :
+Optionnellement ce fichier .env peut contenir les variables suivantes pour configurer un Object Storage basé sur OSU/S3 :
+
+```
+OSC_AK=XXX
+OSC_SK=YYY
+OSC_BUCKET=ZZZ
+OSC_REGION=eu-west-2
+OSC_ENDPOINT=https://osu.eu-west-2.outscale.com
+```
+
+Ou contenir les variables suivantes pour configurer un Object Storage basé sur Swift :
 
 ```
 OS_AUTH_URL=XXX

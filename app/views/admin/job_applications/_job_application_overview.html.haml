@@ -1,6 +1,8 @@
 - target_state = JobApplication.states.first.last
 - target_file_type_ids = JobApplicationFileType.where(by_default: true, from_state: target_state, kind: :applicant_provided).select(:id).all.map(&:id)
-- job_application.job_application_files.where(job_application_file_type_id: target_file_type_ids).each do |job_application_file|
+- job_application_files = job_application.job_application_files.where(job_application_file_type_id: target_file_type_ids)
+- job_application_files = job_application_files.sort_by{|job_application_file| target_file_type_ids.index(job_application_file.job_application_file_type_id) }
+- job_application_files.each do |job_application_file|
   - if job_application_file.content.present?
     - file_type = job_application_file.job_application_file_type
     .card

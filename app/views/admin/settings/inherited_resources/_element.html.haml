@@ -1,6 +1,6 @@
 %tr
-  %td
-    - if defined?(level)
+  - if defined?(level)
+    %td
       .d-flex
         - if resource_class == Page && level > 0
           .text-light-grey.mr-2{style: 'opacity: 0.6;width:7ch;text-align:right;'}
@@ -15,6 +15,8 @@
     %td
       = element.code
   - if resource_class == JobApplicationFileType
+    %td
+      = element.name
     %td
       = JobApplication.human_attribute_name("state/#{element.from_state}")
     %td

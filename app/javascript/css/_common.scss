@@ -190,7 +190,13 @@ ul {
 }
 
 .actions {
-  > a, > .dropdown > a {
+  > li > a {
+    @extend .mr-2;
+    svg {
+      @extend .mr-0;
+    }
+  }
+  > a, > .dropdown > a, > li > a {
     color: $body-color;
     outline: 0;
     svg {

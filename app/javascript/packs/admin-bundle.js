@@ -303,12 +303,10 @@ document.addEventListener('turbolinks:load', function() {
       onClose: function() {
         var start = this._opts.startDate
         var end = this._opts.endDate
-        var path = window.location.href;
-
-        var newURL = window.location.protocol + "//" + window.location.host + "/" + window.location.pathname
-        newURL += '?' + 'start=' + start.format('YYYYMMDD') + '&end=' + end.format('YYYYMMDD')
-
-        window.location.href = newURL
+        var url = new URL(window.location.href)
+        url.searchParams.set('start', start.format('YYYYMMDD'))
+        url.searchParams.set('end', end.format('YYYYMMDD'))
+        window.location.href = url.href
       }
     })
   }

@@ -108,6 +108,47 @@ Branchement sur "production" :
 git checkout master && git pull && git checkout production && git merge master && git push origin production && git checkout master
 ```
 
+### Premier déploiement
+
+Charger le schéma de données :
+```
+rails db:schema:load
+```
+
+Créer la première organisation :
+```
+hsh = {
+  name: 'Civils de la Défense',
+  name_business_owner: 'le Ministère des Armées',
+  subdomain: 'XXX',
+  domain: 'XXX.YYY.ZZZ'
+}
+organization = Organization.create!(hsh)
+```
+
+Créer le premier compte admin :
+```
+bant_admin = Administrator.new email: 'prenom.nom@domaine.com',
+                               first_name: 'Prénom',
+                               last_name: 'Nom',
+                               password: 'xxxxxxxxxx',
+                               password_confirmation: 'xxxxxxxxxx',
+                               very_first_account: true,
+                               role: 'bant',
+                               organization: organization
+bant_admin.skip_confirmation_notification!
+bant_admin.save!
+bant_admin.confirm
+```
+
+Créer la première page :
+```
+root_page = organization.pages.create!({
+  title: 'Plateforme de recrutement de personnel civils contractuels pour le Ministère des Armées',
+  only_link: false
+})
+```
+
 ## Services externes
 
 Envoie de mail SMTP

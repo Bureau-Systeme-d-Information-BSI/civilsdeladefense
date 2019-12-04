@@ -25,7 +25,10 @@ module UsersHelper
   def image_user_url(photo, width)
     if photo&.present?
       style = image_user_style(width)
-      photo.url(style)
+      Rails.cache.fetch(photo.model) do
+        base_64 = Base64.encode64(photo.read)
+        "data:#{photo.content_type};base64,#{base_64}"
+      end
     else
       asset_pack_path('images/default_user_avatar.svg')
     end

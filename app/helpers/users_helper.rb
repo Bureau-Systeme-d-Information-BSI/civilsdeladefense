@@ -28,6 +28,10 @@ module UsersHelper
       Rails.cache.fetch(photo.model) do
         encoded = Base64.encode64(photo.read)
         "data:#{photo.content_type};base64,#{encoded}"
+      rescue NoMethodError => e
+        if e.to_s == 'undefined method `body\' for nil:NilClass'
+          asset_pack_path('images/default_user_avatar.svg')
+        end
       end
     else
       asset_pack_path('images/default_user_avatar.svg')

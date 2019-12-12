@@ -23,7 +23,12 @@
                   .card-title= t('.card_1_1_title')
                 .card-body
                   .form-inputs
-                    = f.input :title
+                    .row
+                      .col-12{class: f.object.new_record? ? nil : "col-md-9"}
+                        = f.input :title
+                      - if !f.object.new_record?
+                        .col-12.col-md-3
+                          = f.input :identifier, readonly: true
                     .row
                       .col-12.col-md-6
                         - grouped_options = nested_set_options(Category, @category) {|i| "#{'-' * i.level} #{i.name}" }

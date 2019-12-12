@@ -505,7 +505,7 @@ fr:
           title: "Modèles de courriels"
           add: "Ajouter"
           card_title:
-            zero: 'Aucun modle'
+            zero: 'Aucun modèle'
             one: '1 modèle'
             other: '%{count} modèles'
         new:

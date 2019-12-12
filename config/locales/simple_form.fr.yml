@@ -172,6 +172,8 @@ autres membres de votre équipe.'
       administrator:
         role: 'Aucun rôle'
     hints:
+      defaults:
+        current_position: "Si aucun poste occupé actuellement, saisir \"sans emploi\"."
       administrator:
         title: "Facultatif. Ex. : Chef de département Qualité"
         first_name: "Facultatif"

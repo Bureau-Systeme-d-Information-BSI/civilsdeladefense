@@ -106,7 +106,7 @@ fr:
         option_website_url: "Site internet (URL)"
         identifier: "Référence de l'offre"
       organization:
-        name: "Nom de la plateform"
+        name: "Nom de la plateforme"
         name_business_owner: "Nom de l'entité légale"
         administrator_email_suffix: "Suffixe d'email obligatoire pour les comptes admin"
         subdomain: "Sous-domaine"

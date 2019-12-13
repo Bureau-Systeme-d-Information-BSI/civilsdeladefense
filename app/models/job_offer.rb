@@ -13,6 +13,10 @@ class JobOffer < ApplicationRecord
   extend FriendlyId
   friendly_id :title, use: %i[slugged finders history]
 
+  ## Callbacks
+  before_save :unset_sequential_id, if: -> { employer_id_changed? }
+  after_save :set_identifier, if: -> { saved_change_to_employer_id? }
+  after_save :update_category_counter
   acts_as_sequenced scope: :employer_id
 
   include PgSearch::Model
@@ -115,10 +119,6 @@ class JobOffer < ApplicationRecord
     end
   end
 
-  ## Callbacks
-  after_create :set_identifier
-  after_save :update_category_counter
-
   def self.new_from_scratch(reference_administrator)
     j = new
     j.contract_start_on = 6.months.from_now
@@ -143,6 +143,10 @@ class JobOffer < ApplicationRecord
     j.title = "Copie de #{j.title}"
     j.state = nil
     j
+  end
+
+  def unset_sequential_id
+    self.sequential_id = nil
   end
 
   def set_identifier

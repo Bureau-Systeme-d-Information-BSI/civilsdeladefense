@@ -3,10 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe JobOffer, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
-end
-
-RSpec.describe JobOffer do
   it 'should be invalid if duration <> nil when type = CDI' do
     le_type = contract_types(:cdi)
     job_offer = build(:job_offer, contract_type: le_type, duration_contract: '2 mois')
@@ -131,5 +127,20 @@ RSpec.describe JobOffer do
     ability = Ability.new(other_admin)
     expect(ability.can?(:manage, job_offer)).to be false
     expect(ability.can?(:read, job_offer)).to be false
+  end
+
+  it 'should set identifier correctly even when employer has been changed' do
+    job_offer1 = create(:job_offer)
+    expect(job_offer1.identifier).to eq "#{job_offer1.employer.code}1"
+
+    job_offer2 = create(:job_offer, employer: job_offer1.employer)
+    expect(job_offer2.identifier).to eq "#{job_offer1.employer.code}2"
+
+    job_offer3 = create(:job_offer)
+    expect(job_offer3.identifier).to eq "#{job_offer3.employer.code}1"
+
+    job_offer3.employer = job_offer1.employer
+    job_offer3.save
+    expect(job_offer3.identifier).to eq "#{job_offer1.employer.code}3"
   end
 end

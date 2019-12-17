@@ -90,7 +90,7 @@ Rails.application.routes.draw do
           post :reactivate
         end
       end
-      resources :employers do
+      resources :employers, :categories do
         member do
           post :move_left, :move_right
         end

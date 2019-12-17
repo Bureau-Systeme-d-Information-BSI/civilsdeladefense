@@ -142,6 +142,15 @@ namespace :maintenance do
     end
   end
 
+  task add_missing_position: :environment do
+    klasses = [RejectionReason]
+    klasses.each do |klass|
+      klass.order(:updated_at).each.with_index(1) do |item, index|
+        item.update_column(:position, index) if item.position.nil?
+      end
+    end
+  end
+
   task fixup_duplicate_files: :environment do
     rel = JobApplicationFile.select(:job_application_file_type_id, :job_application_id)
                             .group(:job_application_file_type_id, :job_application_id)

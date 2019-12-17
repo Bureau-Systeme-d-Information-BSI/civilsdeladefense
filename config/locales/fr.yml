@@ -794,6 +794,8 @@ fr:
         grand_employer: "Grand Employeur"
         supervisor_employer: "Employeur Superviseur"
         brh: "RH"
+      email_template:
+        title: "Titre"
       employer:
         code: "Libellé"
       job_offer:

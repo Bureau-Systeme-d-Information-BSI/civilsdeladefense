@@ -35,7 +35,7 @@ class Account::UsersController < Account::BaseController
         # Sign in the user by passing validation in case their password changed
         bypass_sign_in(@user, scope: :user)
 
-        format.html { redirect_to %i[change_password admin account], notice: t('.success') }
+        format.html { redirect_to %i[account user], notice: t('.success') }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html do
@@ -55,7 +55,7 @@ class Account::UsersController < Account::BaseController
   def update_email
     respond_to do |format|
       if @user.update(user_email_params)
-        format.html { redirect_to %i[change_email admin account], notice: t('.success') }
+        format.html { redirect_to %i[account user], notice: t('.success') }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html do

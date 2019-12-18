@@ -166,15 +166,19 @@ fr:
       form:
         title: "Envoyer un courriel"
     users:
-      change_password:
-        title: "Changement de mot de passe"
       change_email:
         title: "Changement de courriel"
+      change_password:
+        title: "Changement de mot de passe"
+      destroy:
+        success: "Votre compte a bien été supprimé"
+      update_email:
+        success: "Votre adresse de courriel a bien été modifié"
+      update_password:
+        success: "Votre mot de passe a bien été modifié"
       want_destroy:
         title: "Danger"
         destroy: "Je veux supprimer mon compte"
-      destroy:
-        success: "Votre compte a bien été supprimé"
   admin:
     accounts:
       navbar:

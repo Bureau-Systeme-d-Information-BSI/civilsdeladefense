@@ -58,6 +58,16 @@
                   = t('.activities.email_simple_html', from_name: whodunnit)
               - elsif audited_changes.key?('photo_updated_at')
                 = t('.activities.updated_photo_html', admin_name: whodunnit, name: full_name)
+              - elsif audited_changes.key?('rejection_reason_id')
+                - ids = audited_changes['rejection_reason_id']
+                - if ids.first.nil?
+                  - rejection_reason = RejectionReason.find ids.last
+                  = t('.activities.rejection_reason_creation_html', name: whodunnit, current_name: rejection_reason.name)
+                - else
+                  - rejection_reasons = RejectionReason.find(ids).index_by(&:id).values_at(*ids)
+                  - previous_name = rejection_reasons.first.name
+                  - current_name = rejection_reasons.last.name
+                  = t('.activities.rejection_reason_update_html', name: whodunnit, previous_name: previous_name, current_name: current_name)
               - else
                 %code= audited_changes
             %small.text-muted.time-ago

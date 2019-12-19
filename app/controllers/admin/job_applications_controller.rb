@@ -92,7 +92,7 @@ class Admin::JobApplicationsController < Admin::BaseController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def job_application_params
-    fields = %i[skills_fit_job_offer experiences_fit_job_offer]
+    fields = %i[skills_fit_job_offer experiences_fit_job_offer rejection_reason_id]
     params.require(:job_application).permit(fields)
   end
 

@@ -16,6 +16,18 @@ RSpec.describe Administrator, type: :model do
     expect(administrator2).to_not be_valid
   end
 
+  it 'lock the administrator after 10 wrong authentication attempts' do
+    1.upto(9) do |i|
+      @administrator.valid_for_authentication? { false }
+      expect(@administrator.failed_attempts).to eq(i)
+      expect(@administrator.locked_at).to be_nil
+    end
+
+    @administrator.valid_for_authentication? { false }
+    expect(@administrator.failed_attempts).to eq(10)
+    expect(@administrator.locked_at).to_not be_nil
+  end
+
   describe 'with ADMINISTRATOR_EMAIL_SUFFIX env variable defined' do
     before(:all) do
       ENV['ADMINISTRATOR_EMAIL_SUFFIX'] = '@gmail.com'

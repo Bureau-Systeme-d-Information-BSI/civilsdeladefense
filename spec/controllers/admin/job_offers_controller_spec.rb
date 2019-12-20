@@ -111,6 +111,98 @@ RSpec.describe Admin::JobOffersController, type: :controller do
     end
   end
 
+  describe 'POST #add_actor' do
+    context 'with valid params' do
+      it 'returns a successful response' do
+        job_offer = create :job_offer
+        administrator = create :administrator
+
+        valid_attributes = {
+          id: job_offer.to_param,
+          email: administrator.email,
+          role: 'employer'
+        }
+
+        post :add_actor, params: valid_attributes
+
+        expect(response).to be_successful
+      end
+
+      it 'renders the actor widget with an existing user' do
+        job_offer = create :job_offer
+        administrator = create :administrator
+
+        valid_attributes = {
+          id: job_offer.to_param,
+          email: administrator.email,
+          role: 'employer'
+        }
+
+        post :add_actor, params: valid_attributes
+
+        expect(subject).to render_template(:add_actor)
+      end
+
+      it 'returns a successful response with a non existing user' do
+        job_offer = create :job_offer
+
+        valid_attributes = {
+          id: job_offer.to_param,
+          email: 'non-existing@user.fr',
+          role: 'employer'
+        }
+
+        post :add_actor, params: valid_attributes
+
+        expect(response).to be_successful
+      end
+
+      it 'renders the actor widget with a non existing user' do
+        job_offer = create :job_offer
+
+        valid_attributes = {
+          id: job_offer.to_param,
+          email: 'non-existing@user.fr',
+          role: 'employer'
+        }
+
+        post :add_actor, params: valid_attributes
+
+        expect(subject).to render_template(:add_actor)
+      end
+    end
+
+    context 'with invalid params' do
+      it 'returns a non successful response' do
+        job_offer = create :job_offer
+
+        invalid_attributes = {
+          id: job_offer.to_param,
+          email: 'pipo'
+        }
+
+        post :add_actor, params: invalid_attributes
+
+        expect(response).to_not be_successful
+      end
+
+      it 'returns a json filled with errors' do
+        job_offer = create :job_offer
+
+        invalid_attributes = {
+          id: job_offer.to_param,
+          email: 'pipo'
+        }
+
+        post :add_actor, params: invalid_attributes
+
+        parsed_body = JSON.parse(response.body)
+
+        expect(parsed_body.keys).to eq(['email'])
+      end
+    end
+  end
+
   describe 'PUT #update' do
     context 'with valid params' do
       let(:new_attributes) do

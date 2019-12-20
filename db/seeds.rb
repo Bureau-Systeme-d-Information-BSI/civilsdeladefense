@@ -88,7 +88,7 @@ employer = Employer.create! name: 'DIRISI',
                             code: 'DRI',
                             parent: employer_parent
 
-ENV['SEED_PASSWORD'] ||= '123PIPOmolo*'
+ENV['SEED_PASSWORD'] ||= '123PIPOmolo***'
 
 bant_admin = Administrator.new email: 'pipo@molo.fr',
                                first_name: 'Pipo',

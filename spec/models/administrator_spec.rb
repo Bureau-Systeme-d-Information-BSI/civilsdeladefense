@@ -16,6 +16,28 @@ RSpec.describe Administrator, type: :model do
     expect(administrator2).to_not be_valid
   end
 
+  it 'validates the password length' do
+    administrator = build(:administrator)
+
+    administrator.password = '*2E45678'
+    expect(administrator).to be_invalid
+
+    administrator.password = '*2E4567890'
+    expect(administrator).to be_invalid
+
+    administrator.password = '*2E45678901234'
+    expect(administrator).to be_invalid
+
+    administrator.password = '0' * 128 + '*' + 'A' + 'a'
+    expect(administrator).to be_invalid
+
+    administrator.password = '0' * 125 + '*' + 'A' + 'a'
+    expect(administrator).to be_valid
+
+    administrator.password = '*2E456789012e4'
+    expect(administrator).to be_valid
+  end
+
   describe 'with ADMINISTRATOR_EMAIL_SUFFIX env variable defined' do
     before(:all) do
       ENV['ADMINISTRATOR_EMAIL_SUFFIX'] = '@gmail.com'

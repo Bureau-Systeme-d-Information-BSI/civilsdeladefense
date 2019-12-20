@@ -45,6 +45,7 @@ class Admin::JobOffersController < Admin::BaseController
     job_offer_id = params[:job_offer_id]
     @job_offer = job_offer_id.present? ? JobOffer.find(job_offer_id) : JobOffer.new
     @administrator = find_attach_or_build_administrator
+    @administrator.organization = current_organization
     if @administrator.valid?
       render action: 'add_actor', layout: false
     else

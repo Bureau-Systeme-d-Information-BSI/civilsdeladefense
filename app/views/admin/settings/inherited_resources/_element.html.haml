@@ -11,7 +11,7 @@
         - elsif level > 0
           %span.text-light-grey{style: "opacity: 0.6;"}= "└#{'──' * (level-1)}"
         = element.try(:name) || element.try(:title)
-  - if resource_class == Employer
+  - elsif resource_class == Employer
     %td
       = element.code
   - elsif resource_class == JobApplicationFileType
@@ -32,7 +32,8 @@
   - if resource_class == Page
     %td
       - if level != 0
-        = link_to fa_icon('link-variant'), element, title: t('buttons.show'), target: :_blank
+        - url = element.only_link? ? element.url : element
+        = link_to fa_icon('link-variant'), url, title: t('buttons.show'), target: :_blank
   %td.text-right
     .d-flex.flex-row.actions
       - if resource_class == Category

@@ -1,0 +1,28 @@
+%table.table.table-hover.mb-0.mt-3
+  %thead
+    %tr
+      - if resource_class == EmailTemplate
+        %th= resource_class.human_attribute_name(:title)
+      - else
+        %th= resource_class.human_attribute_name(:name)
+        - if resource_class == JobApplicationFileType
+          %th= resource_class.human_attribute_name(:from_state)
+          %th= resource_class.human_attribute_name(:kind)
+          %th= resource_class.human_attribute_name(:by_default)
+        - if resource_class == Employer
+          %th= resource_class.human_attribute_name(:code)
+        - if resource_class.reflect_on_association(:job_offers)
+          %th.text-center{style: 'width:100px;'} Nombre d'offres
+      - if resource_class == Page
+        %th
+      %th{style: 'width:120px;'}
+  %tbody
+    - if resource_class == Category
+      - Category.roots.each do |root|
+        - Category.each_with_level(root.self_and_descendants) do |category, level|
+          = render partial: "/admin/settings/inherited_resources/element", locals: {element: category, level: level}
+    - elsif resource_class == Page
+      - Page.each_with_level(current_organization.pages.root.self_and_descendants) do |page, level|
+        = render partial: "/admin/settings/inherited_resources/element", locals: {element: page, level: level}
+    - else
+      = render partial: "/admin/settings/inherited_resources/element", collection: collection, as: :element

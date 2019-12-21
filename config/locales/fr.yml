@@ -55,6 +55,7 @@ fr:
   buttons:
     add: "Ajouter"
     add_child: "Ajouter une sous-catégorie"
+    add_first_page: "Ajouter la première page"
     add_page_child: "Ajouter une page"
     archive: "Archiver"
     cancel: "Annuler"

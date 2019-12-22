@@ -105,7 +105,18 @@ Actuellement, la branche production est autodéployée sur Scalingo.
 
 Branchement sur "production" :
 ```
-git checkout master && git pull && git checkout production && git merge master && git push origin production && git checkout master
+# One-liner
+git checkout master && git fetch origin && git reset --hard origin/master && git checkout production && git reset --hard origin/production && git merge master && git push origin production && git checkout master
+
+# Version lisible
+git checkout master && \
+  git fetch origin && \
+  git reset --hard origin/master && \
+  git checkout production && \
+  git reset --hard origin/production && \
+  git merge master && \
+  git push origin production && \
+  git checkout master
 ```
 
 ### Premier déploiement

@@ -132,7 +132,8 @@ class Administrator < ApplicationRecord
   # If global suffix is provided, we should not let admin be invited when their email is not suffixed correctly.
   # Adds a thin layer of security to force admin to invite only other admin with their official email address.
   def email_conformance
-    suffix = ENV['ADMINISTRATOR_EMAIL_SUFFIX']
+    suffix = organization.try(:administrator_email_suffix)
+    suffix ||= ENV['ADMINISTRATOR_EMAIL_SUFFIX']
 
     return if suffix.blank? || email.ends_with?(suffix)
 

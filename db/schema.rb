@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_17_161709) do
+ActiveRecord::Schema.define(version: 2019_12_22_201244) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -213,6 +213,7 @@ ActiveRecord::Schema.define(version: 2019_12_17_161709) do
     t.uuid "job_application_file_type_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "encrypted_file_transfer_in_error", default: false
     t.index ["job_application_file_type_id"], name: "index_job_application_files_on_job_application_file_type_id"
     t.index ["job_application_id"], name: "index_job_application_files_on_job_application_id"
   end
@@ -600,6 +601,7 @@ ActiveRecord::Schema.define(version: 2019_12_17_161709) do
     t.integer "transport_ticket_is_validated", limit: 2, default: 0
     t.integer "job_applications_count", default: 0, null: false
     t.uuid "organization_id"
+    t.boolean "encrypted_file_transfer_in_error", default: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["organization_id"], name: "index_users_on_organization_id"

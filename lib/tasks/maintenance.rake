@@ -107,6 +107,28 @@ namespace :maintenance do
     end
   end
 
+  task check_migrate_to_encrypted_files: :environment do
+    hsh = {
+      User => :photo,
+      JobApplicationFile => :content
+    }
+    hsh.each do |klass, attachment|
+      klass.find_in_batches do |group|
+        group.each do |item|
+          legacy = "LegacyUploader::#{klass.to_s}".constantize.find(item.id)
+          if legacy.send("#{attachment}?")
+            if legacy.send(attachment).file.exists? && !item.send(attachment).file.exists?
+              item.send("#{attachment}=", legacy.send(attachment))
+              if !item.save
+                item.update_attribute :encrypted_file_transfer_in_error, true
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+
   # needed when migrating from audited 4.8 to 4.9
   # see https://github.com/collectiveidea/audited/issues/517
   task migrate_audits_enum_to_new_format: :environment do

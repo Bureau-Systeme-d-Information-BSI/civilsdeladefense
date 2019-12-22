@@ -72,29 +72,37 @@ namespace :maintenance do
     Administrator.find_in_batches do |group|
       group.each do |a|
         legacy = LegacyUploader::Administrator.find(a.id)
-        a.remote_photo_url = legacy.photo.url
-        a.save
+        if legacy.photo?
+          a.remote_photo_url = legacy.photo.url
+          a.save
+        end
       end
     end
     User.find_in_batches do |group|
       group.each do |u|
         legacy = LegacyUploader::User.find(u.id)
-        u.remote_photo_url = legacy.photo.url
-        u.save
+        if legacy.photo?
+          u.remote_photo_url = legacy.photo.url
+          u.save
+        end
       end
     end
     JobApplicationFileType.find_in_batches do |group|
       group.each do |j|
         legacy = LegacyUploader::JobApplicationFileType.find(j.id)
-        j.remote_content_url = legacy.content.url
-        j.save
+        if legacy.content?
+          j.remote_content_url = legacy.content.url
+          j.save
+        end
       end
     end
     JobApplicationFile.find_in_batches do |group|
       group.each do |j|
         legacy = LegacyUploader::JobApplicationFile.find(j.id)
-        j.remote_content_url = legacy.content.url
-        j.save
+        if legacy.content?
+          j.remote_content_url = legacy.content.url
+          j.save
+        end
       end
     end
   end

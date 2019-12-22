@@ -1,0 +1,14 @@
+.card
+  .card-header
+    .card-title= t('.title')
+  .card-body
+    = simple_form_for(@organization_form_general, url: [:update_general, :admin, :settings, :organization], method: :patch) do |f|
+      = f.error_notification
+      = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+      = f.input :name
+      = f.input :name_business_owner
+      =# f.input :subdomain not used ATM
+      =# f.input :domain not used ATM
+      .form-actions.mt-4
+        = button_tag(type: 'submit', class: 'btn btn-primary btn-raised mb-0 ml-auto') do
+          = t('buttons.save')

@@ -1,6 +1,7 @@
 fr:
   "yes": "Oui"
   "no": "Non"
+  help: "Aide"
   non_applicable: "N/A"
   non_accessible: "Pas accessible pour le moment"
   nothing_to_see: "Rien à voir pour le moment"
@@ -532,6 +533,12 @@ fr:
       organizations:
         edit:
           title: "Édition des paramètres du site"
+        form_display:
+          title: "Paramètres d'affichage"
+        form_general:
+          title: "Paramètres généraux"
+        form_security:
+          title: "Paramètres de sécurité"
         update:
           success: "Paramètres modifiés !"
       pages:

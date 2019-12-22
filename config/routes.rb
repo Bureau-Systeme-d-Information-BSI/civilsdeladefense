@@ -74,7 +74,11 @@ Rails.application.routes.draw do
       resources :recruitments, path: 'recrutements'
     end
     namespace :settings, path: 'parametres' do
-      resource :organization
+      resource :organization do
+        member do
+          patch :update_general, :update_display, :update_security
+        end
+      end
       resources :pages do
         member do
           post :move_higher, :move_lower

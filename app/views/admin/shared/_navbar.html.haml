@@ -4,9 +4,9 @@
 %nav.navbar.navbar-expand-md.navbar-light.bg-white.fixed-top
   %button.navbar-toggler.p-0.border-0{type: :button, data: {toggle: 'offcanvas'}}
     %span.navbar-toggler-icon= fa_icon "menu", style: "width:1.5em;height:auto;"
-  = link_to admin_root_path, id: 'logo', class: 'navbar-brand py-0' do
+  = link_to admin_root_path, class: 'navbar-brand py-0' do
     - if current_organization.logo_horizontal.present?
-      = image_tag(current_organization.logo_horizontal.url)
+      = image_tag(current_organization.logo_horizontal.url, class: 'logo')
     - else
       = t('shared.navbar.home_link')
   .collapse.navbar-collapse.offcanvas-collapse.ml-md-5

@@ -113,15 +113,14 @@ namespace :maintenance do
       JobApplicationFile => :content
     }
     hsh.each do |klass, attachment|
-      klass.find_in_batches do |group|
+      klass.update_all encrypted_file_transfer_in_error: false
+      klass.where.not("#{attachment}_file_name" => nil).find_in_batches do |group|
         group.each do |item|
           legacy = "LegacyUploader::#{klass.to_s}".constantize.find(item.id)
-          if legacy.send("#{attachment}?")
-            if legacy.send(attachment).file.exists? && !item.send(attachment).file.exists?
-              item.send("#{attachment}=", legacy.send(attachment))
-              if !item.save
-                item.update_attribute :encrypted_file_transfer_in_error, true
-              end
+          if !item.send(attachment).file.exists? && legacy.send(attachment).file.exists?
+            item.send("#{attachment}=", legacy.send(attachment))
+            if !item.save
+              item.update_column :encrypted_file_transfer_in_error, true
             end
           end
         end

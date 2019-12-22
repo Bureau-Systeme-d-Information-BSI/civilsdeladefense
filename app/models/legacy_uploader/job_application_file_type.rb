@@ -6,5 +6,5 @@
 class LegacyUploader::JobApplicationFileType < ApplicationRecord
   self.table_name = 'job_application_file_types'
 
-  mount_uploader :content, DocumentUploader, mount_on: :content_file_name
+  mount_uploader :content, LegacyDocumentUploader, mount_on: :content_file_name
 end

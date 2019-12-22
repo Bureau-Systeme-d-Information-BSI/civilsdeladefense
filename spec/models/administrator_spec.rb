@@ -34,5 +34,23 @@ RSpec.describe Administrator, type: :model do
       administrator_invalid = build(:administrator, email: 'admin@laposte.net')
       expect(administrator_invalid).to be_invalid
     end
+
+    it 'is valid with valid attributes and org takes precedence' do
+      administrator_valid = create(:administrator, email: 'admin@gmail.com')
+      expect(administrator_valid).to be_valid
+
+      org = administrator_valid.organization
+      org.update_attribute(:administrator_email_suffix, '@laposte.net')
+      expect(administrator_valid).to be_invalid
+    end
+
+    it 'is invalid with invalid attributes and org takes precedence' do
+      administrator_invalid = build(:administrator, email: 'admin@laposte.net')
+      expect(administrator_invalid).to be_invalid
+
+      org = administrator_invalid.organization
+      org.update_attribute(:administrator_email_suffix, '@laposte.net')
+      expect(administrator_invalid).to be_valid
+    end
   end
 end

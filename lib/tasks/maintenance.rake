@@ -120,7 +120,7 @@ namespace :maintenance do
             if legacy.send(attachment).file.exists? && !item.send(attachment).file.exists?
               item.send("#{attachment}=", legacy.send(attachment))
               if !item.save
-                item.update_attribute :encrypted_file_transfer_in_error, true
+                item.update_column :encrypted_file_transfer_in_error, true
               end
             end
           end

@@ -3,11 +3,12 @@
   - total = @per_rejection_reason.values.sum
   - @per_rejection_reason.each_with_index do |(k, v), index|
     .d-flex.align-items-center.mb-2
-      .bar-chart__category_name
-        = @rejection_reasons.detect{|x| x.id == k&.id}&.name || t('unknown')
+      - txt = @rejection_reasons.detect{|x| x.id == k}&.name || t('unknown')
+      .bar-chart__category_name.text-truncate{title: txt}
+        = txt
       .bar-chart__category_percentage
         - percentage = (v * 100.0) / total
-        = "#{percentage.to_i }%"
+        = number_to_percentage(percentage, precision: 2)
       .flex-grow-1
         .bar-chart__bar{style: "width: #{percentage}%;"}
 - if show_stats_debug?

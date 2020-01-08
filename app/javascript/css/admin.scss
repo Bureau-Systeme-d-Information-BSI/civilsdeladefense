@@ -450,12 +450,12 @@ a {
 }
 
 .bar-chart__category_name {
-  width: 100px;
+  width: 25ch;
 }
 
 .bar-chart__category_percentage {
   @extend .text-secondary, .font-weight-bold;
-  width: 100px;
+  width: 8ch;
 }
 
 .bar-chart__bar {

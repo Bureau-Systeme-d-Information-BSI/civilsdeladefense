@@ -1,6 +1,6 @@
 var places = require('places.js')
 
-document.addEventListener('DOMContentLoaded', function() {
+export default function cityAutocomplete() {
   var locationNode = document.querySelector('#job_offer_location')
   if (locationNode) {
     var placesAutocomplete = places({
@@ -26,4 +26,4 @@ document.addEventListener('DOMContentLoaded', function() {
       document.querySelector('#job_offer_region').value = e.suggestion.administrative || ''
     })
   }
-})
+}

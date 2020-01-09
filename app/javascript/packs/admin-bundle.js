@@ -68,10 +68,10 @@ importAll(require.context('images/', true, /\.(ico|png|jpe?g|svg|gif)$/))
 importAll(require.context('icons/', true, /\.svg$/))
 
 require('js/offcanvas.js')
-require('js/dependent-fields.js')
 require('js/board.js')
-require('js/city-autocomplete.js')
 
+import dependentFields from 'js/dependent-fields'
+import cityAutocomplete from 'js/city-autocomplete'
 import salaryRangeInputsHandling from 'js/salary-range-inputs-handling'
 import addressAutocomplete from 'js/address-autocomplete'
 window.addressAutocomplete = addressAutocomplete
@@ -245,6 +245,8 @@ document.addEventListener('turbolinks:load', function() {
   inPlaceEdit()
   addressAutocomplete()
   salaryRangeInputsHandling()
+  dependentFields()
+  cityAutocomplete()
 
   var perDayChartNode = document.getElementById('per-day-graph')
   if (perDayChartNode !== null && perDayData !== undefined) {

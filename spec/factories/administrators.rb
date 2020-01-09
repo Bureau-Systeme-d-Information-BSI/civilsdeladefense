@@ -8,7 +8,7 @@ FactoryBot.define do
     email { Faker::Internet.safe_email }
     role { 'bant' }
     very_first_account { true }
-    password { 'f4k3p455w0rD!' }
+    password { 'f4k3p455w0rD!!' }
     confirmed_at { DateTime.now }
   end
 end

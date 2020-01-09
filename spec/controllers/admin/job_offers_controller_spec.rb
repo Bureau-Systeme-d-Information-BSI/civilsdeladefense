@@ -70,6 +70,22 @@ RSpec.describe Admin::JobOffersController, type: :controller do
       end
     end
 
+    describe 'GET #board' do
+      it 'returns a success response' do
+        job_offer = create :job_offer
+        get :board, params: { id: job_offer.to_param }
+        expect(response).to be_successful
+      end
+    end
+
+    describe 'GET #stats' do
+      it 'returns a success response' do
+        job_offer = create :job_offer
+        get :stats, params: { id: job_offer.to_param }
+        expect(response).to be_successful
+      end
+    end
+
     describe 'GET #new' do
       it 'returns a success response' do
         get :new, params: {}
@@ -272,6 +288,30 @@ RSpec.describe Admin::JobOffersController, type: :controller do
         get :archived, params: {}
         expect(response).to be_successful
         expect(assigns(:job_offers_archived).size).to eq(3)
+      end
+    end
+
+    describe 'GET #board' do
+      it 'returns a success response' do
+        attrs = [{
+          administrator_id: subject.current_administrator.id,
+          role: :grand_employer
+        }]
+        job_offer = create :job_offer, job_offer_actors_attributes: attrs
+        get :board, params: { id: job_offer.to_param }
+        expect(response).to be_successful
+      end
+    end
+
+    describe 'GET #stats' do
+      it 'returns a success response' do
+        attrs = [{
+          administrator_id: subject.current_administrator.id,
+          role: :grand_employer
+        }]
+        job_offer = create :job_offer, job_offer_actors_attributes: attrs
+        get :stats, params: { id: job_offer.to_param }
+        expect(response).to be_successful
       end
     end
   end

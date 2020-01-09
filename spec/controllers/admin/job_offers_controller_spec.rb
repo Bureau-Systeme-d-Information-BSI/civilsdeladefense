@@ -26,224 +26,253 @@ require 'rails_helper'
 # `rails-controller-testing` gem.
 
 RSpec.describe Admin::JobOffersController, type: :controller do
-  login_admin
+  context 'when logged in as BANT administrator' do
+    login_admin
 
-  # This should return the minimal set of attributes required to create a valid
-  # JobOffer. As you add validations to JobOffer, be sure to
-  # adjust the attributes here as well.
-  let(:valid_attributes) do
-    hsh = build(:job_offer).attributes
-    hsh[:employer_id] = create(:employer).id
-    hsh[:category_id] = create(:category).id
-    hsh
-  end
-
-  let(:invalid_attributes) do
-    { title: '' }
-  end
-
-  describe 'GET #index' do
-    it 'returns a success response' do
-      create_list :job_offer, 5
-      get :index, params: {}
-      expect(response).to be_successful
+    # This should return the minimal set of attributes required to create a valid
+    # JobOffer. As you add validations to JobOffer, be sure to
+    # adjust the attributes here as well.
+    let(:valid_attributes) do
+      hsh = build(:job_offer).attributes
+      hsh[:employer_id] = create(:employer).id
+      hsh[:category_id] = create(:category).id
+      hsh
     end
-  end
 
-  describe 'GET #archived' do
-    it 'returns a success response' do
-      create_list :job_offer, 5
-      get :archived, params: {}
-      expect(response).to be_successful
+    let(:invalid_attributes) do
+      { title: '' }
     end
-  end
 
-  describe 'GET #show' do
-    it 'returns a success response' do
-      job_offer = create :job_offer
-      get :show, params: { id: job_offer.to_param }
-      expect(response).to be_successful
+    describe 'GET #index' do
+      it 'returns a success response' do
+        create_list :job_offer, 5
+        get :index, params: {}
+        expect(response).to be_successful
+        expect(assigns(:job_offers_active).size).to eq(5)
+      end
     end
-  end
 
-  describe 'GET #board' do
-    it 'returns a success response' do
-      job_offer = create :job_offer
-      get :board, params: { id: job_offer.to_param }
-      expect(response).to be_successful
+    describe 'GET #archived' do
+      it 'returns a success response' do
+        create_list :job_offer, 5
+        create_list :job_offer, 3, state: :archived
+        get :archived, params: {}
+        expect(response).to be_successful
+        expect(assigns(:job_offers_archived).size).to eq(3)
+      end
     end
-  end
 
-  describe 'GET #new' do
-    it 'returns a success response' do
-      get :new, params: {}
-      expect(response).to be_successful
+    describe 'GET #show' do
+      it 'returns a success response' do
+        job_offer = create :job_offer
+        get :show, params: { id: job_offer.to_param }
+        expect(response).to be_successful
+      end
     end
-  end
 
-  describe 'GET #edit' do
-    it 'returns a success response' do
-      job_offer = create :job_offer
-      get :edit, params: { id: job_offer.to_param }
-      expect(response).to be_successful
+    describe 'GET #new' do
+      it 'returns a success response' do
+        get :new, params: {}
+        expect(response).to be_successful
+      end
     end
-  end
 
-  describe 'POST #create' do
-    context 'with valid params' do
-      it 'creates a new JobOffer' do
-        expect do
+    describe 'GET #edit' do
+      it 'returns a success response' do
+        job_offer = create :job_offer
+        get :edit, params: { id: job_offer.to_param }
+        expect(response).to be_successful
+      end
+    end
+
+    describe 'POST #create' do
+      context 'with valid params' do
+        it 'creates a new JobOffer' do
+          expect do
+            post :create, params: { job_offer: valid_attributes }
+          end.to change(JobOffer, :count).by(1)
+        end
+
+        it 'redirects to the created job_offer' do
           post :create, params: { job_offer: valid_attributes }
-        end.to change(JobOffer, :count).by(1)
+          expect(response).to redirect_to(%i[admin job_offers])
+        end
       end
 
-      it 'redirects to the created job_offer' do
-        post :create, params: { job_offer: valid_attributes }
-        expect(response).to redirect_to(%i[admin job_offers])
-      end
-    end
-
-    context 'with invalid params' do
-      it "returns a success response (i.e. to display the 'new' template)" do
-        post :create, params: { job_offer: invalid_attributes }
-        expect(response).to be_successful
-      end
-    end
-  end
-
-  describe 'POST #add_actor' do
-    context 'with valid params' do
-      it 'returns a successful response' do
-        job_offer = create :job_offer
-        administrator = create :administrator
-
-        valid_attributes = {
-          id: job_offer.to_param,
-          email: administrator.email,
-          role: 'employer'
-        }
-
-        post :add_actor, params: valid_attributes
-
-        expect(response).to be_successful
-      end
-
-      it 'renders the actor widget with an existing user' do
-        job_offer = create :job_offer
-        administrator = create :administrator
-
-        valid_attributes = {
-          id: job_offer.to_param,
-          email: administrator.email,
-          role: 'employer'
-        }
-
-        post :add_actor, params: valid_attributes
-
-        expect(subject).to render_template(:add_actor)
-      end
-
-      it 'returns a successful response with a non existing user' do
-        job_offer = create :job_offer
-
-        valid_attributes = {
-          id: job_offer.to_param,
-          email: 'non-existing@user.fr',
-          role: 'employer'
-        }
-
-        post :add_actor, params: valid_attributes
-
-        expect(response).to be_successful
-      end
-
-      it 'renders the actor widget with a non existing user' do
-        job_offer = create :job_offer
-
-        valid_attributes = {
-          id: job_offer.to_param,
-          email: 'non-existing@user.fr',
-          role: 'employer'
-        }
-
-        post :add_actor, params: valid_attributes
-
-        expect(subject).to render_template(:add_actor)
+      context 'with invalid params' do
+        it "returns a success response (i.e. to display the 'new' template)" do
+          post :create, params: { job_offer: invalid_attributes }
+          expect(response).to be_successful
+        end
       end
     end
 
-    context 'with invalid params' do
-      it 'returns a non successful response' do
-        job_offer = create :job_offer
+    describe 'POST #add_actor' do
+      context 'with valid params' do
+        it 'returns a successful response' do
+          job_offer = create :job_offer
+          administrator = create :administrator
 
-        invalid_attributes = {
-          id: job_offer.to_param,
-          email: 'pipo'
-        }
+          valid_attributes = {
+            id: job_offer.to_param,
+            email: administrator.email,
+            role: 'employer'
+          }
 
-        post :add_actor, params: invalid_attributes
+          post :add_actor, params: valid_attributes
 
-        expect(response).to_not be_successful
+          expect(response).to be_successful
+        end
+
+        it 'renders the actor widget with an existing user' do
+          job_offer = create :job_offer
+          administrator = create :administrator
+
+          valid_attributes = {
+            id: job_offer.to_param,
+            email: administrator.email,
+            role: 'employer'
+          }
+
+          post :add_actor, params: valid_attributes
+
+          expect(subject).to render_template(:add_actor)
+        end
+
+        it 'returns a successful response with a non existing user' do
+          job_offer = create :job_offer
+
+          valid_attributes = {
+            id: job_offer.to_param,
+            email: 'non-existing@user.fr',
+            role: 'employer'
+          }
+
+          post :add_actor, params: valid_attributes
+
+          expect(response).to be_successful
+        end
+
+        it 'renders the actor widget with a non existing user' do
+          job_offer = create :job_offer
+
+          valid_attributes = {
+            id: job_offer.to_param,
+            email: 'non-existing@user.fr',
+            role: 'employer'
+          }
+
+          post :add_actor, params: valid_attributes
+
+          expect(subject).to render_template(:add_actor)
+        end
       end
 
-      it 'returns a json filled with errors' do
-        job_offer = create :job_offer
+      context 'with invalid params' do
+        it 'returns a non successful response' do
+          job_offer = create :job_offer
 
-        invalid_attributes = {
-          id: job_offer.to_param,
-          email: 'pipo'
-        }
+          invalid_attributes = {
+            id: job_offer.to_param,
+            email: 'pipo'
+          }
 
-        post :add_actor, params: invalid_attributes
+          post :add_actor, params: invalid_attributes
 
-        parsed_body = JSON.parse(response.body)
+          expect(response).to_not be_successful
+        end
 
-        expect(parsed_body.keys).to eq(['email'])
+        it 'returns a json filled with errors' do
+          job_offer = create :job_offer
+
+          invalid_attributes = {
+            id: job_offer.to_param,
+            email: 'pipo'
+          }
+
+          post :add_actor, params: invalid_attributes
+
+          parsed_body = JSON.parse(response.body)
+
+          expect(parsed_body.keys).to eq(['email'])
+        end
       end
     end
-  end
 
-  describe 'PUT #update' do
-    context 'with valid params' do
-      let(:new_attributes) do
-        { title: 'PIPO' }
+    describe 'PUT #update' do
+      context 'with valid params' do
+        let(:new_attributes) do
+          { title: 'PIPO' }
+        end
+
+        it 'updates the requested job_offer' do
+          job_offer = create :job_offer
+          put :update, params: { id: job_offer.to_param, job_offer: new_attributes }
+          job_offer.reload
+          expect(job_offer.title).to eq('PIPO')
+        end
+
+        it 'redirects to job offers listing' do
+          job_offer = create :job_offer
+          put :update, params: { id: job_offer.to_param, job_offer: valid_attributes }
+          expect(response).to redirect_to(%i[admin job_offers])
+        end
       end
 
-      it 'updates the requested job_offer' do
-        job_offer = create :job_offer
-        put :update, params: { id: job_offer.to_param, job_offer: new_attributes }
-        job_offer.reload
-        expect(job_offer.title).to eq('PIPO')
-      end
-
-      it 'redirects to job offers listing' do
-        job_offer = create :job_offer
-        put :update, params: { id: job_offer.to_param, job_offer: valid_attributes }
-        expect(response).to redirect_to(%i[admin job_offers])
+      context 'with invalid params' do
+        it "returns a success response (i.e. to display the 'edit' template)" do
+          job_offer = create :job_offer
+          put :update, params: { id: job_offer.to_param, job_offer: invalid_attributes }
+          expect(response).to be_successful
+        end
       end
     end
 
-    context 'with invalid params' do
-      it "returns a success response (i.e. to display the 'edit' template)" do
+    describe 'DELETE #destroy' do
+      it 'destroys the requested job_offer' do
         job_offer = create :job_offer
-        put :update, params: { id: job_offer.to_param, job_offer: invalid_attributes }
-        expect(response).to be_successful
+        expect do
+          delete :destroy, params: { id: job_offer.to_param }
+        end.to change(JobOffer, :count).by(-1)
       end
-    end
-  end
 
-  describe 'DELETE #destroy' do
-    it 'destroys the requested job_offer' do
-      job_offer = create :job_offer
-      expect do
+      it 'redirects to the job_offers list' do
+        job_offer = create :job_offer
         delete :destroy, params: { id: job_offer.to_param }
-      end.to change(JobOffer, :count).by(-1)
+        expect(response).to redirect_to(job_offers_url)
+      end
+    end
+  end
+
+  context 'when logged in as Grand Employeur administrator' do
+    login_grand_employer
+
+    describe 'GET #index' do
+      it 'returns a success response' do
+        create_list :job_offer, 5
+        get :index, params: {}
+        expect(response).to be_successful
+      end
     end
 
-    it 'redirects to the job_offers list' do
-      job_offer = create :job_offer
-      delete :destroy, params: { id: job_offer.to_param }
-      expect(response).to redirect_to(job_offers_url)
+    describe 'GET #archived' do
+      it 'returns a success response' do
+        create_list :job_offer, 5
+        get :archived, params: {}
+        expect(response).to be_successful
+        expect(assigns(:job_offers_archived).size).to eq(0)
+
+        create_list(:job_offer,
+                    3,
+                    state: :archived,
+                    job_offer_actors_attributes: [{
+                      administrator_id: subject.current_administrator.id,
+                      role: :grand_employer
+                    }])
+        get :archived, params: {}
+        expect(response).to be_successful
+        expect(assigns(:job_offers_archived).size).to eq(3)
+      end
     end
   end
 end

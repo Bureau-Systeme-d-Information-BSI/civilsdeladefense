@@ -86,13 +86,6 @@ function triggerKindChange() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-  initEmailTemplates()
-  initRoleChange()
-  initJobApplicationFileTypeKindChange()
-  initPageChange()
-})
-
 function initEmailTemplates() {
   let email_template = document.getElementById('email_template')
   if (email_template !== null) {
@@ -119,13 +112,13 @@ function triggerEmailTemplateChoice() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+function initJobContractTypes() {
   let type_contract = document.getElementById('job_offer_contract_type_id')
   if (type_contract !== null) {
     type_contract.addEventListener('change', triggerTypeContractChange, false)
     triggerTypeContractChange(false)
   }
-})
+}
 
 function triggerTypeContractChange(event_change = true) {
   let duration_contract = document.getElementById('job_offer_duration_contract')
@@ -148,3 +141,12 @@ function triggerTypeContractChange(event_change = true) {
     }
   }
 }
+
+export default function dependentFields() {
+  initEmailTemplates()
+  initRoleChange()
+  initJobApplicationFileTypeKindChange()
+  initPageChange()
+  initJobContractTypes()
+}
+

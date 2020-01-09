@@ -11,6 +11,15 @@ module ControllerMacros
     end
   end
 
+  def login_grand_employer
+    before(:each) do
+      @request.env['devise.mapping'] = Devise.mappings[:admin]
+      admin = FactoryBot.create(:administrator, role: nil)
+      admin.confirm
+      sign_in admin
+    end
+  end
+
   def login_user
     before(:each) do
       @request.env['devise.mapping'] = Devise.mappings[:user]

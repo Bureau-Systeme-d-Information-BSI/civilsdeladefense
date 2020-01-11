@@ -133,6 +133,8 @@ fr:
         title: "Nouvelles offres"
       new_job_applications:
         title: "Nouvelles candidatures"
+      published_job_offers:
+        title: "Offres publiées récemment"
   shared:
     footer:
       legal_notice: "Mentions légales"

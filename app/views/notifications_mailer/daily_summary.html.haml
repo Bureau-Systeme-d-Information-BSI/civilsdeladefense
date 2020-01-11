@@ -5,7 +5,7 @@
   - link = data_line[:link]
   - kind_underscored = kind.underscore
   - if kind != current_kind
-    - if %w(NewJobOffer NewJobApplication).include?(kind)
+    - if %w(NewJobOffer PublishedJobOffer NewJobApplication).include?(kind)
       %strong= t(".#{kind_underscored.pluralize}.title")
     - else
       - state = JobApplication.human_attribute_name("state/#{kind_underscored.split('_').first}")

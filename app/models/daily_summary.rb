@@ -24,6 +24,7 @@ class DailySummary
 
   def prepare(organization)
     prepare_new_job_offers(organization)
+    prepare_published_job_offers(organization)
     prepare_new_job_applications(organization)
     prepare_job_applications(organization)
   end
@@ -45,11 +46,21 @@ class DailySummary
                               .order(created_at: :asc)
                               .to_a
     @job_offers.each do |job_offer|
-      add_summary_infos_for_job_offer(job_offer)
+      add_summary_infos_for_job_offer(job_offer, 'NewJobOffer')
     end
   end
 
-  def add_summary_infos_for_job_offer(job_offer)
+  def prepare_pubblished_job_offers(organization)
+    @job_offers = organization.job_offers
+                              .where(published_at: @day_begin..@day_end)
+                              .order(published_at: :asc)
+                              .to_a
+    @job_offers.each do |job_offer|
+      add_summary_infos_for_job_offer(job_offer, 'PublishedJobOffer')
+    end
+  end
+
+  def add_summary_infos_for_job_offer(job_offer, kind)
     administrators = build_all_administrators(job_offer)
     administrators.each do |administrator|
       concerned_administrator = @concerned_administrators.detect { |x| x.uuid == administrator.id }
@@ -61,7 +72,7 @@ class DailySummary
       concerned_administrator.add_summary_info(
         title: job_offer.title,
         link: url_helpers.edit_admin_job_offer_url(job_offer),
-        kind: 'NewJobOffer'
+        kind: kind
       )
       @concerned_administrators << concerned_administrator unless prexisting
     end

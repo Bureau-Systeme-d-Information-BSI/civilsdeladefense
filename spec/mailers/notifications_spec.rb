@@ -13,9 +13,14 @@ RSpec.describe NotificationsMailer, type: :mailer do
     let(:mail) do
       data = [
         {
-          title: 'TEST OFFRE',
+          title: 'Data Scientist',
           link: 'https://google.com',
           kind: 'NewJobOffer'
+        },
+        {
+          title: 'Chef des Pompiers',
+          link: 'https://google.com',
+          kind: 'PublishedJobOffer'
         }
       ]
       site_name = organization.name
@@ -29,7 +34,12 @@ RSpec.describe NotificationsMailer, type: :mailer do
     end
 
     it 'renders the body' do
-      expect(mail.body.encoded).to match('TEST OFFRE')
+      expect(mail.body.encoded).to match('Data Scientist')
+      txt = I18n.t('notifications_mailer.daily_summary.new_job_offers.title')
+      expect(mail.body.encoded).to match(txt)
+      expect(mail.body.encoded).to match('Chef des Pompiers')
+      txt = I18n.t('notifications_mailer.daily_summary.published_job_offers.title')
+      expect(mail.body.encoded).to match(txt)
     end
   end
 end

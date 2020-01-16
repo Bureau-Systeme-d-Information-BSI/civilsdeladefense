@@ -2,8 +2,8 @@
 
 # Represents a job proposed on the platform
 class JobOffer < ApplicationRecord
-  SETTINGS = %i[category professional_category contract_type study_level
-                experience_level sector].freeze
+  SETTINGS = %i[category contract_type experience_level professional_category
+                sector study_level].freeze
 
   include JobOfferStateTimestamp
   include AASM
@@ -36,6 +36,7 @@ class JobOffer < ApplicationRecord
   SETTINGS.each do |setting|
     belongs_to setting
   end
+  belongs_to :benefit, optional: true
   belongs_to :bop, optional: true
 
   has_many :job_applications

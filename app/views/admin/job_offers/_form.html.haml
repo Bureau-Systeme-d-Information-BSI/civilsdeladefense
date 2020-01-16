@@ -63,12 +63,17 @@
                     .row
                       .col-12.col-md-3
                         = f.association :contract_type
+                      .col-12.col-md-3
                         = f.input :duration_contract, as: :string
+                    .row
                       .col-12.col-md-3
                         = f.input :contract_start_on, as: :string
-                      .col-12.col-md-6.pl-md-5
-                        = f.input :is_remote_possible, as: :radio_buttons
                     .row
+                      .col-12.col-md-3
+                        = f.association :benefit
+                    .row
+                      .col-12.col-md-3
+                        = f.input :is_remote_possible, as: :radio_buttons
                       .col-12.col-md-6
                         = f.input :available_immediately, as: :radio_buttons
               .card.mt-5

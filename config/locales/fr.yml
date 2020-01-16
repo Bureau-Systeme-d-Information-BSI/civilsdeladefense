@@ -119,6 +119,7 @@ fr:
       recruitment_process: "Process de recrutement"
     job_offer_head:
       available_immediately: "Poste à pourvoir immédiatement"
+      benefit: "Bénéfice en nature: "
     successful:
       subject: "Votre candidature à l'offre %{job_offer_identifier} sur %{site_name}"
       body: "Nous avons bien reçu votre candidature à l'offre %{job_offer_identifier} au poste de '%{job_offer_title}'.\n\nNous y répondrons dans les meilleurs délais.\n\nL'équipe %{site_name}."
@@ -423,6 +424,7 @@ fr:
         navbar:
           admin: "Administration"
           administrators: "Comptes admin"
+          benefits: "Bénéfices en nature"
           bops: "BOPs"
           categories: "Domaines professionnels"
           company : "Entreprise"
@@ -548,6 +550,22 @@ fr:
           title: "Édition de page"
         new:
           title: "Ajout de page"
+      benefits:
+        index:
+          card_title:
+            zero: 'Aucun bénéfice en nature'
+            one: '1 bénéfice en nature'
+            other: '%{count} bénéfices en nature'
+        new:
+          title: "Ajouter un bénéfice en nature"
+        edit:
+          title: "Modifier '%{name}'"
+        create:
+          success: "Avantage en nature créé !"
+        update:
+          success: "Avantage en nature mis à jour !"
+        destroy:
+          success: "Avantage en nature supprimé !"
       bops:
         index:
           card_title:

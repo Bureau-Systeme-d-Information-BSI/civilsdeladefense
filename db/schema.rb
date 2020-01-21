@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_22_201244) do
+ActiveRecord::Schema.define(version: 2020_01_16_104238) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -104,6 +104,14 @@ ActiveRecord::Schema.define(version: 2019_12_22_201244) do
     t.index ["created_at"], name: "index_audits_on_created_at"
     t.index ["request_uuid"], name: "index_audits_on_request_uuid"
     t.index ["user_id", "user_type"], name: "user_index"
+  end
+
+  create_table "benefits", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.integer "position"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["position"], name: "index_benefits_on_position"
   end
 
   create_table "bops", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -321,6 +329,8 @@ ActiveRecord::Schema.define(version: 2019_12_22_201244) do
     t.datetime "suspended_at"
     t.uuid "bop_id"
     t.uuid "organization_id"
+    t.uuid "benefit_id"
+    t.index ["benefit_id"], name: "index_job_offers_on_benefit_id"
     t.index ["bop_id"], name: "index_job_offers_on_bop_id"
     t.index ["category_id"], name: "index_job_offers_on_category_id"
     t.index ["contract_type_id"], name: "index_job_offers_on_contract_type_id"

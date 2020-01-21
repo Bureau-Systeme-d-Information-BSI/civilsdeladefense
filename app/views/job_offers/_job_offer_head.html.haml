@@ -48,3 +48,7 @@
                 %div{style: 'line-height:1.1;'}
                   = surround '(', ')' do
                     selon expérience
+                - if job_offer.benefit.present?
+                  %div{style: 'line-height:1.1;'}
+                    = t('.benefit')
+                    = job_offer.benefit.name

@@ -27,6 +27,8 @@ class DailySummary
     prepare_published_job_offers(organization)
     prepare_new_job_applications(organization)
     prepare_job_applications(organization)
+
+    true
   end
 
   def send_mail(organization)
@@ -50,7 +52,7 @@ class DailySummary
     end
   end
 
-  def prepare_pubblished_job_offers(organization)
+  def prepare_published_job_offers(organization)
     @job_offers = organization.job_offers
                               .where(published_at: @day_begin..@day_end)
                               .order(published_at: :asc)

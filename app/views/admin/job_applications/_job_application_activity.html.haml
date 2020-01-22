@@ -41,8 +41,7 @@
               - if audit.version == 1 && audit.auditable_type == 'JobApplication'
                 = t('.activities.creation_html', name: full_name)
               - elsif audited_changes.key?('state')
-                - state_name = JobApplication.states.key(audited_changes['state'].last)
-
+                - state_name = audited_changes['state'].last
                 - state_name_i18n = JobApplication.human_attribute_name("state/#{state_name}")
                 = t('.activities.change_state_html', admin_name: whodunnit, name: full_name, state_name: state_name_i18n)
               - elsif audit.auditable_type == "Message"
@@ -63,6 +62,9 @@
                 - if ids.first.nil?
                   - rejection_reason = RejectionReason.find ids.last
                   = t('.activities.rejection_reason_creation_html', name: whodunnit, current_name: rejection_reason.name)
+                - elsif ids.last.nil?
+                  - rejection_reason = RejectionReason.find ids.first
+                  = t('.activities.rejection_reason_deletion_html', name: whodunnit, current_name: rejection_reason.name)
                 - else
                   - rejection_reasons = RejectionReason.find(ids).index_by(&:id).values_at(*ids)
                   - previous_name = rejection_reasons.first.name

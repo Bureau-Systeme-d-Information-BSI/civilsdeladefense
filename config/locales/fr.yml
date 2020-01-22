@@ -258,6 +258,7 @@ fr:
           email_automatic_html: "Courriel automatique envoyé à <span class='user-name'>%{name}</span>"
           updated_photo_html: "<span class='user-name'>%{name}</span> a mis à jour sa photo"
           rejection_reason_creation_html: "<span class='user-name'>%{name}</span> a spécifié le motif de refus à <span class='user-name'>%{current_name}</span>"
+          rejection_reason_deletion_html: "<span class='user-name'>%{name}</span> a supprimé le motif de refus"
           rejection_reason_update_html: "<span class='user-name'>%{name}</span> a mis à jour le motif de refus à <span class='user-name'>%{current_name}</span>"
       change_state:
         success: "Candidature passée en statut %{state} !"

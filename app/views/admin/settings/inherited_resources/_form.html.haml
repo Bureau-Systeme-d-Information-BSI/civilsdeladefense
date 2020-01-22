@@ -35,6 +35,10 @@
           = f.input :sector, collection: Sector.all
           = f.input :estimate_annual_salary_gross
           = f.input :estimate_monthly_salary_net
+        - elsif resource.is_a?(OrganizationDefault)
+          - kinds = OrganizationDefault.kinds.map {|k, v| [ OrganizationDefault.human_attribute_name("kind/#{k}"), k] }
+          = f.input :kind, collection: kinds, prompt: true
+          = f.input :value, input_html: { class: :ckeditor }
         - else
           = f.input :name
           - if resource.is_a?(Employer)

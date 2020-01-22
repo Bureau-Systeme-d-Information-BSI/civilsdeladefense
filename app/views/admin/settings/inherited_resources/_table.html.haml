@@ -3,6 +3,8 @@
     %tr
       - if resource_class == EmailTemplate
         %th= resource_class.human_attribute_name(:title)
+      - elsif resource_class == OrganizationDefault
+        %th= resource_class.human_attribute_name(:kind)
       - else
         %th= resource_class.human_attribute_name(:name)
         - if resource_class == JobApplicationFileType

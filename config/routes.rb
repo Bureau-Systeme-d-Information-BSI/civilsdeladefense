@@ -79,6 +79,7 @@ Rails.application.routes.draw do
           patch :update_general, :update_display, :update_security
         end
       end
+      resources :organization_defaults
       resources :pages do
         member do
           post :move_higher, :move_lower

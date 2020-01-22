@@ -1,23 +1,31 @@
 .list-group.stepper
-  - if can?(:read, Administrator) || can?(:read, Organization) || can?(:read, Page)
+  - if can?(:read, Administrator) || can?(:read, Page)
     .list-group-item.menu
       = t(".admin")
-  - if can? :read, Administrator
-    - entry = 'administrators'
-    - klasses = %w(list-group-item d-flex justify-content-between align-items-center)
-    - klasses << 'active' if controller.controller_name == entry
-    = link_to [:admin, :settings, entry.to_sym], class: klasses do
-      = t(".#{ entry }")
-  - if can? :read, Organization
-    - klasses = %w(list-group-item d-flex justify-content-between align-items-center)
-    - klasses << 'active' if controller.controller_name == 'organizations'
-    = link_to [:edit, :admin, :settings, :organization], class: klasses do
-      = t(".organization")
-  - if can? :read, Page
-    - klasses = %w(list-group-item d-flex justify-content-between align-items-center)
-    - klasses << 'active' if controller.controller_name == 'pages'
-    = link_to [:admin, :settings, :pages], class: klasses do
-      = t(".pages")
+    - if can? :read, Administrator
+      - entry = 'administrators'
+      - klasses = %w(list-group-item d-flex justify-content-between align-items-center)
+      - klasses << 'active' if controller.controller_name == entry
+      = link_to [:admin, :settings, entry.to_sym], class: klasses do
+        = t(".#{ entry }")
+  - if can?(:read, Organization) || can?(:read, OrganizationDefault) || can?(:read, Page)
+    .list-group-item.menu
+      = t(".configuration")
+    - if can? :read, Organization
+      - klasses = %w(list-group-item d-flex justify-content-between align-items-center)
+      - klasses << 'active' if controller.controller_name == 'organizations'
+      = link_to [:edit, :admin, :settings, :organization], class: klasses do
+        = t(".organization")
+    - if can? :read, OrganizationDefault
+      - klasses = %w(list-group-item d-flex justify-content-between align-items-center)
+      - klasses << 'active' if controller.controller_name == 'organization_defaults'
+      = link_to [:admin, :settings, :organization_defaults], class: klasses do
+        = t(".organization_defaults")
+    - if can? :read, Page
+      - klasses = %w(list-group-item d-flex justify-content-between align-items-center)
+      - klasses << 'active' if controller.controller_name == 'pages'
+      = link_to [:admin, :settings, :pages], class: klasses do
+        = t(".pages")
   - if can? :read, Employer
     .list-group-item.menu
       = t(".company")

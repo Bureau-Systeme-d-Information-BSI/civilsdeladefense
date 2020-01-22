@@ -123,7 +123,12 @@ class JobOffer < ApplicationRecord
   def self.new_from_scratch(reference_administrator)
     j = new
     j.contract_start_on = 6.months.from_now
-    j.recruitment_process = I18n.t('default_recruitment_process')
+    organization = reference_administrator.organization
+    organization.organization_defaults.each do |organization_default|
+      field = organization_default.kind.gsub('job_offer_', '')
+      value = organization_default.value
+      j.send("#{field}=", value)
+    end
     j.job_offer_actors.build(role: :employer).administrator = reference_administrator
     grand_employer_administrator = reference_administrator.grand_employer_administrator
     if grand_employer_administrator.present?

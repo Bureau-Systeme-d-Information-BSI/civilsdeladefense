@@ -429,6 +429,7 @@ fr:
           bops: "BOPs"
           categories: "Domaines professionnels"
           company : "Entreprise"
+          configuration: "Configuration"
           contract_types: "Types de contrat"
           email_templates: "Courriels"
           employers: "Employeurs"
@@ -436,6 +437,7 @@ fr:
           job_application_file_types: "Types de fichier"
           job_applications: "Candidatures"
           organization: "Paramètres du site"
+          organization_defaults: "Valeurs par défaut"
           pages: "Gestion des pages"
           professional_categories: "Catégories professionnelles"
           rejection_reasons: "Motifs de refus"
@@ -723,6 +725,22 @@ fr:
           success: "Filière mise à jour !"
         destroy:
           success: "Filière supprimée !"
+      organization_defaults:
+        index:
+          card_title:
+            zero: 'Aucune valeur par défaut'
+            one: '1 valeur par défaut'
+            other: '%{count} valeurs par défaut'
+        new:
+          title: "Définir une valeur par défaut"
+        edit:
+          title: "Modifier la valeur de '%{name}'"
+        create:
+          success: "Valeur par défaut créée !"
+        update:
+          success: "Valeur par défaut mise à jour !"
+        destroy:
+          success: "Valeur par défaut supprimée !"
     preferred_users:
       form:
         title: "Note personnelle"
@@ -824,22 +842,10 @@ fr:
         employer: "Employeur"
         grand_employer: "Grand Employeur"
         brh: "RH"
-      job_offer_actor/role:
-        employer: "Employeur"
-        grand_employer: "Grand Employeur"
-        supervisor_employer: "Employeur Superviseur"
-        brh: "RH"
       email_template:
         title: "Titre"
       employer:
         code: "Libellé"
-      job_offer:
-        job_applications_count: "Nombre de candidatures: %{count}"
-        state: "État"
-        state/draft: "Brouillon"
-        state/published: "Publiée"
-        state/suspended: "En pause"
-        state/archived: "Archivée"
       job_application:
         state: "État"
         state/start: "N'a encore aucune candidature"
@@ -871,18 +877,34 @@ fr:
         kind/template: "Modèle de fichiers"
         kind/admin_only: "Seulement admin"
         kind/check_only_admin_only: "Fichier géré hors outil"
-      salary_range:
-        professional_category: "Catégorie"
-        experience_level: "Éxpérience"
-        sector: "Filière"
-        estimate_monthly_salary_net_html: "<div class='d-block'>Estimation mensuel net</div> (fonction publique)"
-        estimate_annual_salary_gross_html: "<div class='d-block'>Estimation annuel brut</div> (secteur privé)"
+      job_offer:
+        job_applications_count: "Nombre de candidatures: %{count}"
+        state: "État"
+        state/draft: "Brouillon"
+        state/published: "Publiée"
+        state/suspended: "En pause"
+        state/archived: "Archivée"
+      job_offer_actor/role:
+        employer: "Employeur"
+        grand_employer: "Grand Employeur"
+        supervisor_employer: "Employeur Superviseur"
+        brh: "RH"
+      organization_default:
+        kind: "Type"
+        kind/job_offer_description: "Offre d'emploi / Description"
+        kind/job_offer_recruitment_process: "Offre d'emploi / Process de recrutement"
       personal_profile:
         is_currently_employed/true: "En poste"
         is_currently_employed/false: "Disponible immédiatement"
         gender/female: "Femme"
         gender/male: "Homme"
         gender/other: "Autre"
+      salary_range:
+        professional_category: "Catégorie"
+        experience_level: "Éxpérience"
+        sector: "Filière"
+        estimate_monthly_salary_net_html: "<div class='d-block'>Estimation mensuel net</div> (fonction publique)"
+        estimate_annual_salary_gross_html: "<div class='d-block'>Estimation annuel brut</div> (secteur privé)"
   helpers:
     submit:
       job_application:

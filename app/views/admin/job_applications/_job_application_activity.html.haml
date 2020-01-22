@@ -63,6 +63,9 @@
                 - if ids.first.nil?
                   - rejection_reason = RejectionReason.find ids.last
                   = t('.activities.rejection_reason_creation_html', name: whodunnit, current_name: rejection_reason.name)
+                - elsif ids.last.nil?
+                  - rejection_reason = RejectionReason.find ids.first
+                  = t('.activities.rejection_reason_deletion_html', name: whodunnit, current_name: rejection_reason.name)
                 - else
                   - rejection_reasons = RejectionReason.find(ids).index_by(&:id).values_at(*ids)
                   - previous_name = rejection_reasons.first.name

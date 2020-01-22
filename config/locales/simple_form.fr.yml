@@ -117,6 +117,9 @@ fr:
         logo_vertical_negative: "Logo au format vertical (affichage fond coloré)"
         logo_horizontal_negative: "Logo au format horizontal (affichage fond coloré)"
         image_background: "Image d'arrière plan"
+      organization_default:
+        kind: "Nom du champ"
+        value: "Valeur par défaut"
       page:
         body: "Corps de texte"
         only_link: "Seulement un lien ?"

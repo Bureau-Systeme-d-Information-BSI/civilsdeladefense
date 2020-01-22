@@ -23,6 +23,9 @@
       = JobApplicationFileType.human_attribute_name("kind/#{element.kind}")
     %td
       = element.by_default? ? t('.affirmative') : t('.negative')
+  - elsif resource_class == OrganizationDefault
+    %td
+      = OrganizationDefault.human_attribute_name("kind/#{element.kind}")
   - else
     %td
       = element.try(:title) || element.try(:name)

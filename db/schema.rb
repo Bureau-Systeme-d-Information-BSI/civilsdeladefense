@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_16_104238) do
+ActiveRecord::Schema.define(version: 2020_01_22_133844) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -363,6 +363,16 @@ ActiveRecord::Schema.define(version: 2020_01_16_104238) do
     t.index ["name"], name: "index_official_statuses_on_name", unique: true
   end
 
+  create_table "organization_defaults", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.text "value"
+    t.integer "kind"
+    t.uuid "organization_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["kind"], name: "index_organization_defaults_on_kind"
+    t.index ["organization_id"], name: "index_organization_defaults_on_organization_id"
+  end
+
   create_table "organizations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "name_business_owner"
@@ -643,6 +653,7 @@ ActiveRecord::Schema.define(version: 2020_01_16_104238) do
   add_foreign_key "job_offers", "study_levels"
   add_foreign_key "messages", "administrators"
   add_foreign_key "messages", "job_applications"
+  add_foreign_key "organization_defaults", "organizations"
   add_foreign_key "pages", "organizations"
   add_foreign_key "personal_profiles", "experience_levels"
   add_foreign_key "personal_profiles", "study_levels"

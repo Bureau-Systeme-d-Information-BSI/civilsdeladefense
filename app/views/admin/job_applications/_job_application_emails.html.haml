@@ -1,4 +1,8 @@
 - id = dom_id(@job_application, 'emails')
+- emails = @job_application.emails.order(created_at: :desc).includes(:sender)
 .d-flex.flex-column{id: id}
-  = render partial: '/admin/emails/form'
-  = render partial: '/admin/emails/email', collection: @job_application.emails.order(created_at: :desc).includes(:sender), as: :email
+  = render partial: '/admin/emails/form' if can? :manage, Email
+  - if emails.any?
+    = render partial: '/admin/emails/email', collection: emails, as: :email
+  - else
+    %em Aucun courrier échangé.

@@ -41,7 +41,7 @@
         %li.nav-item.mr-3
           - klasses = tab_active == :overview ? %w(nav-link active) : %w(nav-link)
           = link_to t('.nav_overview'), "#overview", class: klasses, data: {toggle: :tab}, role: :tab, aria: {controls: :overview, selected: true}
-      - if defined?(job_application) && can?(:manage, Email)
+      - if defined?(job_application) && can?(:read, Email)
         %li.nav-item.mr-3
           - klasses = tab_active == :emails ? %w(nav-link active) : %w(nav-link)
           = link_to "#emails", class: klasses, data: {toggle: :tab}, role: :tab, aria: {controls: :emails, selected: false} do

@@ -15,7 +15,7 @@
 
         .tab-pane.fade.show#overview{class: tab_active == :overview && 'active show', role: :tabpanel, aria: {labelledby: :overview}}
           = render partial: 'job_application_overview', locals: {job_application: @job_application}
-        - if can? :manage, Email
+        - if can? :read, Email
           .tab-pane.fade#emails{class: tab_active == :emails && 'active show', role: :tabpanel, aria: {labelledby: :emails}}
             = render partial: 'job_application_emails', locals: {job_application: @job_application}
         .tab-pane.fade#files{class: tab_active == :files && 'active show', role: :tabpanel, aria: {labelledby: :files}}

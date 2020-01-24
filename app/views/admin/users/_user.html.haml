@@ -49,7 +49,7 @@
                 = t('.my_preferred_user_lists')
               .dropdown-menu.py-0{"aria-labelledby" => "dropdownMenuLink"}
                 - new_preferred_user = PreferredUser.new(user_id: user.id)
-                - if @preferred_users_lists.any?
+                - if defined?(@preferred_users_lists) && @preferred_users_lists.any?
                   = simple_form_for new_preferred_user, url: [:admin, :preferred_users], remote: true, namespace: user.id do |f|
                     = f.hidden_field :user_id
                     = f.association :preferred_users_list, collection: @preferred_users_lists, as: :radio_buttons, wrapper: :custom_collection, item_wrapper_class: 'custom-control custom-control-inline custom-radio', label: false, item_label_class: 'custom-control-label'

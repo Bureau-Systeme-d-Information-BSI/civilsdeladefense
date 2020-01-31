@@ -51,7 +51,7 @@ module JobOfferStateActions
 
   def update_and_state_action(event_name)
     @job_offer.assign_attributes(job_offer_params)
-    @job_offer.cleanup_actor_administrator_inviter(current_administrator)
+    @job_offer.cleanup_actor_administrator_dep(current_administrator, current_organization)
 
     respond_to do |format|
       if @job_offer.save && @job_offer.send("#{event_name}!")

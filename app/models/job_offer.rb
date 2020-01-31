@@ -177,9 +177,12 @@ class JobOffer < ApplicationRecord
                                job_applications.sum(:files_unread_count)
   end
 
-  def cleanup_actor_administrator_inviter(inviter)
+  def cleanup_actor_administrator_dep(inviter, inviter_org)
     job_offer_actors.each do |job_offer_actor|
-      job_offer_actor.administrator.inviter ||= inviter if job_offer_actor.administrator
+      if job_offer_actor.administrator
+        job_offer_actor.administrator.inviter ||= inviter
+        job_offer_actor.administrator.organization ||= inviter_org
+      end
     end
   end
 

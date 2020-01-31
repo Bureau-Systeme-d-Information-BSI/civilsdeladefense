@@ -70,7 +70,7 @@ class Admin::JobOffersController < Admin::BaseController
     @job_offer.owner = current_administrator
     @job_offer.organization = current_organization
     @job_offer.employer = current_administrator.employer unless current_administrator.bant?
-    @job_offer.cleanup_actor_administrator_inviter(current_administrator)
+    @job_offer.cleanup_actor_administrator_dep(current_administrator, current_organization)
 
     respond_to do |format|
       if @job_offer.save
@@ -89,7 +89,7 @@ class Admin::JobOffersController < Admin::BaseController
   # PATCH/PUT /admin/job_offers/1.json
   def update
     @job_offer.assign_attributes(job_offer_params)
-    @job_offer.cleanup_actor_administrator_inviter(current_administrator)
+    @job_offer.cleanup_actor_administrator_dep(current_administrator, current_organization)
 
     respond_to do |format|
       if @job_offer.save

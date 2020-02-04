@@ -31,7 +31,7 @@
       = element.try(:title) || element.try(:name)
   - if resource_class.reflect_on_association(:job_offers)
     %td.text-center
-      = element.job_offers.publicly_visible.count
+      = element.job_offers.count
   - if resource_class == Page
     %td
       - if level != 0

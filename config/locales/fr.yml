@@ -633,6 +633,8 @@ fr:
           success: "Statut mis à jour !"
         destroy:
           success: "Statut supprimé !"
+          failure:
+            foreign_key_violation: "Impossible de supprimer : il existe des offres liées."
       contract_types:
         index:
           card_title:

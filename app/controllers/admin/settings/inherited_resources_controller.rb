@@ -19,6 +19,9 @@ class Admin::Settings::InheritedResourcesController < Admin::Settings::BaseContr
   def destroy
     key = "admin.settings.#{resource_class.to_s.tableize}.destroy.success"
     destroy!(notice: t(key))
+  rescue ActiveRecord::InvalidForeignKey
+    key = "admin.settings.#{resource_class.to_s.tableize}.destroy.failure.foreign_key_violation"
+    redirect_to({ action: :index }, flash: { notice: t(key) })
   end
 
   def move_higher

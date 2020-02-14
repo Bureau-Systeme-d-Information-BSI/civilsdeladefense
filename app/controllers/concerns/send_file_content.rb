@@ -7,8 +7,6 @@ module SendFileContent
   def send_job_application_file_content
     if ENV['OSC_AK'].present?
       proxy_encrypted_job_application_file_content
-    elsif ENV['OS_AUTH_URL'].present?
-      proxy_job_application_file_content
     else
       send_content_directly
     end

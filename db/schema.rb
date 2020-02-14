@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_22_133844) do
+ActiveRecord::Schema.define(version: 2020_02_14_102541) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -206,7 +206,6 @@ ActiveRecord::Schema.define(version: 2020_01_22_133844) do
     t.string "description"
     t.integer "kind"
     t.string "content_file_name"
-    t.string "old_from_state"
     t.boolean "by_default", default: false
     t.integer "position"
     t.datetime "created_at", null: false
@@ -233,21 +232,6 @@ ActiveRecord::Schema.define(version: 2020_01_22_133844) do
     t.uuid "job_offer_id"
     t.uuid "user_id"
     t.uuid "employer_id"
-    t.integer "old_cover_letter_is_validated", limit: 2, default: 0
-    t.integer "old_resume_is_validated", limit: 2, default: 0
-    t.integer "old_photo_is_validated", limit: 2, default: 0
-    t.string "old_cover_letter_file_name"
-    t.string "old_cover_letter_content_type"
-    t.bigint "old_cover_letter_file_size"
-    t.datetime "old_cover_letter_updated_at"
-    t.string "old_resume_file_name"
-    t.string "old_resume_content_type"
-    t.bigint "old_resume_file_size"
-    t.datetime "old_resume_updated_at"
-    t.string "old_photo_file_name"
-    t.string "old_photo_content_type"
-    t.bigint "old_photo_file_size"
-    t.datetime "old_photo_updated_at"
     t.integer "emails_unread_count", default: 0
     t.integer "files_count", default: 0
     t.integer "files_unread_count", default: 0
@@ -548,58 +532,6 @@ ActiveRecord::Schema.define(version: 2020_01_22_133844) do
     t.string "photo_content_type"
     t.bigint "photo_file_size"
     t.datetime "photo_updated_at"
-    t.string "old_resume_file_name"
-    t.string "old_resume_content_type"
-    t.bigint "old_resume_file_size"
-    t.datetime "old_resume_updated_at"
-    t.string "old_cover_letter_file_name"
-    t.string "old_cover_letter_content_type"
-    t.bigint "old_cover_letter_file_size"
-    t.datetime "old_cover_letter_updated_at"
-    t.string "old_diploma_file_name"
-    t.string "old_diploma_content_type"
-    t.bigint "old_diploma_file_size"
-    t.datetime "old_diploma_updated_at"
-    t.string "old_identity_file_name"
-    t.string "old_identity_content_type"
-    t.bigint "old_identity_file_size"
-    t.datetime "old_identity_updated_at"
-    t.string "old_carte_vitale_certificate_file_name"
-    t.string "old_carte_vitale_certificate_content_type"
-    t.bigint "old_carte_vitale_certificate_file_size"
-    t.datetime "old_carte_vitale_certificate_updated_at"
-    t.string "old_proof_of_address_file_name"
-    t.string "old_proof_of_address_content_type"
-    t.bigint "old_proof_of_address_file_size"
-    t.datetime "old_proof_of_address_updated_at"
-    t.string "old_medical_certificate_file_name"
-    t.string "old_medical_certificate_content_type"
-    t.bigint "old_medical_certificate_file_size"
-    t.datetime "old_medical_certificate_updated_at"
-    t.string "old_contract_file_name"
-    t.string "old_contract_content_type"
-    t.bigint "old_contract_file_size"
-    t.datetime "old_contract_updated_at"
-    t.string "old_iban_file_name"
-    t.string "old_iban_content_type"
-    t.bigint "old_iban_file_size"
-    t.datetime "old_iban_updated_at"
-    t.string "old_agent_statement_file_name"
-    t.string "old_agent_statement_content_type"
-    t.bigint "old_agent_statement_file_size"
-    t.datetime "old_agent_statement_updated_at"
-    t.string "old_request_transport_costs_file_name"
-    t.string "old_request_transport_costs_content_type"
-    t.bigint "old_request_transport_costs_file_size"
-    t.datetime "old_request_transport_costs_updated_at"
-    t.string "old_request_family_supplement_file_name"
-    t.string "old_request_family_supplement_content_type"
-    t.bigint "old_request_family_supplement_file_size"
-    t.datetime "old_request_family_supplement_updated_at"
-    t.string "old_statement_sft_file_name"
-    t.string "old_statement_sft_content_type"
-    t.bigint "old_statement_sft_file_size"
-    t.datetime "old_statement_sft_updated_at"
     t.integer "photo_is_validated", limit: 2, default: 0
     t.integer "resume_is_validated", limit: 2, default: 0
     t.integer "cover_letter_is_validated", limit: 2, default: 0
@@ -614,10 +546,6 @@ ActiveRecord::Schema.define(version: 2020_01_22_133844) do
     t.integer "request_transport_costs_is_validated", limit: 2, default: 0
     t.integer "request_family_supplement_is_validated", limit: 2, default: 0
     t.integer "statement_sft_is_validated", limit: 2, default: 0
-    t.string "old_transport_ticket_file_name"
-    t.string "old_transport_ticket_content_type"
-    t.bigint "old_transport_ticket_file_size"
-    t.datetime "old_transport_ticket_updated_at"
     t.integer "transport_ticket_is_validated", limit: 2, default: 0
     t.integer "job_applications_count", default: 0, null: false
     t.uuid "organization_id"

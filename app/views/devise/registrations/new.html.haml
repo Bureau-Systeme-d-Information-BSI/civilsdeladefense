@@ -12,11 +12,6 @@
       = f.simple_fields_for :personal_profile, personal_profile do |profile_form|
         = profile_form.input :current_position
         = profile_form.input :phone
-        = profile_form.input :address_1
-        = profile_form.input :address_2
-        = profile_form.input :city
-        = profile_form.input :postcode
-        = profile_form.input :country, priority: [ "FR" ]
     = f.input :password, required: true
     = f.input :password_confirmation, required: true
   .form-actions

@@ -15,19 +15,7 @@ RSpec.describe 'admin/job_applications/edit', type: :view do
       prefix = 'job_application[personal_profile_attributes]'
 
       assert_select 'input[name=?]', "#{prefix}[current_position]"
-
       assert_select 'input[name=?]', "#{prefix}[phone]"
-
-      assert_select 'input[name=?]', "#{prefix}[address_1]"
-
-      assert_select 'input[name=?]', "#{prefix}[address_2]"
-
-      assert_select 'input[name=?]', "#{prefix}[postcode]"
-
-      assert_select 'input[name=?]', "#{prefix}[city]"
-
-      assert_select 'select[name=?]', "#{prefix}[country]"
-
       assert_select 'input[name=?]', "#{prefix}[website_url]"
     end
   end

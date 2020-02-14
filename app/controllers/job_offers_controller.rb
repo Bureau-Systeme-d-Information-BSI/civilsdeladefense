@@ -34,12 +34,12 @@ class JobOffersController < ApplicationController
       if current_user.personal_profile.present?
         @job_application.personal_profile = current_user.personal_profile.dup
       else
-        @job_application.build_personal_profile(country: 'FR')
+        @job_application.build_personal_profile
       end
     else
       @job_application = JobApplication.new
       @job_application.user = User.new
-      @job_application.build_personal_profile(country: 'FR')
+      @job_application.build_personal_profile
     end
   end
 
@@ -106,8 +106,7 @@ class JobOffersController < ApplicationController
   def job_application_params
     permitted_params = %i[terms_of_service certify_majority]
 
-    profile_fields = %i[id current_position phone website_url
-                        address_1 address_2 postcode city country]
+    profile_fields = %i[id current_position phone website_url]
     permitted_params << [personal_profile_attributes: profile_fields]
     user_attributes = %i[first_name last_name]
     user_attributes += %i[photo email password password_confirmation] unless user_signed_in?

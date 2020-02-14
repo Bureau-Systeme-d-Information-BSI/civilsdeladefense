@@ -29,10 +29,7 @@ RSpec.describe Users::RegistrationsController, type: :controller do
   describe 'POST /resource' do
     it 'correctly creates a valid account linked to an organization' do
       profile_attrs = attributes_for(:personal_profile).slice(:current_position,
-                                                              :phone,
-                                                              :address_1,
-                                                              :city,
-                                                              :country)
+                                                              :phone)
 
       user_attrs = attributes_for(:user).slice(:first_name,
                                                :last_name,

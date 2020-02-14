@@ -13,8 +13,5 @@
   - else
     - do_not_truncate = true if field == :address
     = f.input field, label_html: {class: 'mb-0'}, input_html: {class: 'w-100 d-none'}, in_place_value: in_place_value, in_place_icon: in_place_icon, do_not_truncate: do_not_truncate
-    - if field == :address
-      - address_fields.each do |field|
-        = f.hidden_field field
 - elsif local_variables.include?(:association)
   = f.association association, wrapper: :horizontal_multi_select, label_html: {class: 'mb-0'}, input_html: {class: 'w-100 d-none'}, in_place_value: in_place_value, in_place_icon: in_place_icon

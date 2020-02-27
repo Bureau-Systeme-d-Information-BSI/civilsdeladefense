@@ -11,12 +11,7 @@ class PersonalProfile < ApplicationRecord
 
   validates :current_position,
             :phone,
-            :address_1,
-            :city,
-            :country,
             presence: true
-
-  attr_writer :address
 
   #####################################
   # Enums
@@ -57,20 +52,5 @@ class PersonalProfile < ApplicationRecord
     else
       user.personal_profile.update(datalake_attributes)
     end
-  end
-
-  def address
-    c = ISO3166::Country.new(country)
-    real_country = c && c.translations[I18n.locale.to_s]
-    ary = [address_1]
-    ary << "#{postcode} #{city}, #{real_country}"
-    @address = ary.join(' ').html_safe
-  end
-
-  def address_short
-    ary = []
-    ary << city if city.present?
-    ary << country if country.present?
-    ary.join(', ')
   end
 end

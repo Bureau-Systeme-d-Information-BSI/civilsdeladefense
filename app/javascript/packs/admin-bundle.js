@@ -73,8 +73,6 @@ require('js/board.js')
 import dependentFields from 'js/dependent-fields'
 import cityAutocomplete from 'js/city-autocomplete'
 import salaryRangeInputsHandling from 'js/salary-range-inputs-handling'
-import addressAutocomplete from 'js/address-autocomplete'
-window.addressAutocomplete = addressAutocomplete
 import formAutoSubmit from 'js/form-auto-submit'
 window.formAutoSubmit = formAutoSubmit
 import inPlaceEdit from 'js/in-place-edit'
@@ -212,7 +210,6 @@ document.addEventListener('turbolinks:load', function() {
           }
           formAutoSubmit()
           inPlaceEdit()
-          addressAutocomplete()
           $('.new_preferred_users_list, .edit_preferred_users_list').on('ajax:success', function(event) {
             let detail = event.detail
             let xhr = detail[2]
@@ -243,7 +240,6 @@ document.addEventListener('turbolinks:load', function() {
   })
   formAutoSubmit()
   inPlaceEdit()
-  addressAutocomplete()
   salaryRangeInputsHandling()
   dependentFields()
   cityAutocomplete()

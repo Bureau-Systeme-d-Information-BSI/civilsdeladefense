@@ -26,9 +26,6 @@ fr:
           <<: *options_defaults
     labels:
       defaults:
-        address: "Adresse"
-        address_1: "Adresse"
-        address_2: "Complément d'adresse"
         availability_date_in_month: "Disponible sous"
         birth_date: "Date de naissance"
         body: "Corps du courriel"
@@ -130,22 +127,8 @@ fr:
       preferred_user:
         preferred_users_list: "Ajouter à la liste..."
       user:
-        agent_statement: "Déclaration dûment remplie et signée par l’agent"
-        carte_vitale_certificate: "Attestation de carte vitale (mentionnant le n° INSEE)"
-        contract: "Le contrat de travail préalablement signé par toutes les parties"
-        diploma: "Copie des diplômes"
-        email: 'Courriel'
-        iban: "RIB original au format BIC/IBAN comportant le logo de la banque au nom du signataire du contrat (les RIB sur compte épargne ne sont pas acceptés)"
-        identity: "Copie d’une pièce d’identité en cours de validité (carte nationale d’identité ou passeport)"
-        medical_certificate: "Certificat médical d’aptitude fourni par le médecin de l’établissement ou
-à défaut par un médecin agréé"
         password: 'Mot de passe'
         password_confirmation: 'Confirmation du mot de passe'
-        proof_of_address: "Justificatif de domicile (facture EDF, téléphone, etc)"
-        request_family_supplement: "Demande d’attribution du supplément familial de traitement"
-        request_transport_costs: "Fiche de demande de prise en charge des frais de transport"
-        statement_sft: "Attestation de perception ou non perception du SFT par le conjoint ou l’ex-conjoint"
-        transport_ticket: "Copie d'un titre de transport (si vous postulez en Île-de-france)"
     placeholders:
       defaults:
         first_name: "Prénom"

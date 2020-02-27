@@ -30,22 +30,11 @@ module Admin::JobApplicationsHelper
     end
   end
 
-  def address_formatted(obj)
-    c = ISO3166::Country.new(obj.country)
-    real_country = c && c.translations[I18n.locale.to_s]
-    postcode_line = [obj.postcode, obj.city].reject(&:blank?).join(' ')
-    country_line = [postcode_line, real_country].reject(&:blank?).join(', ')
-    ary = []
-    ary << obj&.address_1 if obj&.address_1
-    ary << country_line
-    ary.join('<br/>').html_safe
-  end
-
   def in_place_edit_value(obj, opts = {})
     res = nil
 
     if (m = opts.delete(:field))
-      res = m == :address ? address_formatted(obj) : obj.send(m)
+      res = obj.send(m)
     elsif (association = opts.delete(:association))
       res = obj.send(association)&.name
     end
@@ -56,7 +45,7 @@ module Admin::JobApplicationsHelper
   end
 
   def personal_profile_fields1
-    %i[gender birth_date address address_2 phone nationality has_residence_permit website_url]
+    %i[gender birth_date phone nationality has_residence_permit website_url]
   end
 
   def personal_profile_fields2
@@ -66,10 +55,6 @@ module Admin::JobApplicationsHelper
 
   def job_application_profile_fields
     %i[skills_fit_job_offer experiences_fit_job_offer]
-  end
-
-  def address_fields
-    %i[address_1 postcode city country]
   end
 
   def choices_boolean

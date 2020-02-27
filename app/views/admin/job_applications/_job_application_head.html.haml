@@ -23,10 +23,6 @@
             %span.mr-2
               = fa_icon "phone"
               = phone
-          - if (address_short = profile.address_short).present?
-            %span.mr-2
-              = fa_icon "map-marker"
-              = address_short
         - if website_url.present?
           .d-flex.justify-content.justify-content-start
             - if website_url =~ /linkedin/

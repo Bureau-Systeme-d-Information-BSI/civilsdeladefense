@@ -18,20 +18,6 @@
       .row
         .col-12.col-md-6
           = profile_form.input :phone
-      .row
-        .col-12.col-md-6
-          = profile_form.input :address_1
-        .col-12.col-md-6
-          = profile_form.input :address_2
-      .row
-        .col-12.col-md-6
-          = profile_form.input :city
-        .col-12.col-md-6
-          .row
-            .col-12.col-md-6
-              = profile_form.input :postcode
-            .col-12.col-md-6
-              = profile_form.input :country, priority: [ "FR" ]
     - unless user_signed_in?
       .row
         .col-12.col-md-6

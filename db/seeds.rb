@@ -377,10 +377,6 @@ user = User.new email: 'coin@pan.fr',
                 photo: photo,
                 personal_profile_attributes: {
                   current_position: 'Développeur',
-                  address_1: '1 avenue des Champs-Elysées',
-                  postcode: '75008',
-                  city: 'Paris',
-                  country: 'FR',
                   phone: '0606060606'
                 }
 user.skip_confirmation_notification!
@@ -398,12 +394,7 @@ job_application.build_personal_profile({
   gender: 'male',
   nationality: 'FR',
   current_position: 'Dev',
-  phone: '0606060606',
-  address_1: '1 avenue des Champs Elysées',
-  postcode: '75008',
-  city: 'Paris',
-  country: 'FR'
-
+  phone: '0606060606'
 })
 job_application.job_application_files.build content: file,
                                             job_application_file_type: resume
@@ -431,11 +422,7 @@ job_application2.build_personal_profile({
   gender: 'male',
   nationality: 'FR',
   current_position: 'Dev',
-  phone: '0606060606',
-  address_1: '1 avenue des Champs Elysées',
-  postcode: '75008',
-  city: 'Paris',
-  country: 'FR'
+  phone: '0606060606'
 })
 job_application2.job_application_files.build content: file,
                                             job_application_file_type: resume
@@ -451,10 +438,6 @@ user_candidate_of_all = User.new email: Faker::Internet.email,
                                  password_confirmation: ENV['SEED_PASSWORD'],
                                  personal_profile_attributes: {
                                    current_position: 'Développeur',
-                                   address_1: '1 avenue des Champs-Elysées',
-                                   postcode: '75008',
-                                   city: 'Paris',
-                                   country: 'FR',
                                    phone: '0606060606'
                                  }
 user_candidate_of_all.skip_confirmation_notification!
@@ -474,10 +457,6 @@ JobOffer.where.not(duration_contract: nil).where.not(id: [job_offer4.id, job_off
                     password_confirmation: ENV['SEED_PASSWORD'],
                     personal_profile_attributes: {
                       current_position: 'Développeur',
-                      address_1: '1 avenue des Champs-Elysées',
-                      postcode: '75008',
-                      city: 'Paris',
-                      country: 'FR',
                       phone: '0606060606'
                     }
     user.skip_confirmation_notification!
@@ -498,10 +477,6 @@ JobOffer.where.not(duration_contract: nil).where.not(id: [job_offer4.id, job_off
       nationality: nationalities.sample,
       current_position: 'Dev',
       phone: '0606060606',
-      address_1: '1 avenue des Champs Elysées',
-      postcode: '75008',
-      city: 'Paris',
-      country: 'FR',
       is_currently_employed: boolean_choices.sample,
       has_corporate_experience: boolean_choices.sample
     })
@@ -539,11 +514,7 @@ JobOffer.where.not(duration_contract: nil).where.not(id: [job_offer4.id, job_off
     gender: PersonalProfile.genders.keys.sample,
     nationality: nationalities.sample,
     current_position: 'Dev',
-    phone: '0606060606',
-    address_1: '1 avenue des Champs Elysées',
-    postcode: '75008',
-    city: 'Paris',
-    country: 'FR'
+    phone: '0606060606'
   })
   job_application.job_application_files.build content: file,
                                               job_application_file_type: resume

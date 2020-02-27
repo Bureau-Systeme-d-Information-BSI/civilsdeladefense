@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_14_102541) do
+ActiveRecord::Schema.define(version: 2020_02_14_111725) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -416,11 +416,6 @@ ActiveRecord::Schema.define(version: 2020_02_14_102541) do
     t.date "birth_date"
     t.string "nationality"
     t.string "website_url"
-    t.string "address_1"
-    t.string "address_2"
-    t.string "postcode"
-    t.string "city"
-    t.string "country"
     t.string "phone"
     t.boolean "has_residence_permit"
     t.boolean "is_currently_employed"
@@ -533,20 +528,6 @@ ActiveRecord::Schema.define(version: 2020_02_14_102541) do
     t.bigint "photo_file_size"
     t.datetime "photo_updated_at"
     t.integer "photo_is_validated", limit: 2, default: 0
-    t.integer "resume_is_validated", limit: 2, default: 0
-    t.integer "cover_letter_is_validated", limit: 2, default: 0
-    t.integer "diploma_is_validated", limit: 2, default: 0
-    t.integer "identity_is_validated", limit: 2, default: 0
-    t.integer "carte_vitale_certificate_is_validated", limit: 2, default: 0
-    t.integer "proof_of_address_is_validated", limit: 2, default: 0
-    t.integer "medical_certificate_is_validated", limit: 2, default: 0
-    t.integer "contract_is_validated", limit: 2, default: 0
-    t.integer "iban_is_validated", limit: 2, default: 0
-    t.integer "agent_statement_is_validated", limit: 2, default: 0
-    t.integer "request_transport_costs_is_validated", limit: 2, default: 0
-    t.integer "request_family_supplement_is_validated", limit: 2, default: 0
-    t.integer "statement_sft_is_validated", limit: 2, default: 0
-    t.integer "transport_ticket_is_validated", limit: 2, default: 0
     t.integer "job_applications_count", default: 0, null: false
     t.uuid "organization_id"
     t.boolean "encrypted_file_transfer_in_error", default: false

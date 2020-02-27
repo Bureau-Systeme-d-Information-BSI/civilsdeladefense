@@ -102,7 +102,9 @@ Rails.application.routes.draw do
       end
       resources :salary_ranges
       resources :job_application_file_types
-      (JobOffer::SETTINGS + %i[email_template job_application_file_types rejection_reasons bops]).each do |setting|
+      other_settings = %i[benefit bops email_template job_application_file_types
+                          rejection_reasons]
+      (JobOffer::SETTINGS + other_settings).each do |setting|
         resources setting.to_s.pluralize.to_sym, except: %i[show] do
           member do
             post :move_higher, :move_lower

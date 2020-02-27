@@ -7055,10 +7055,10 @@ timsort@^0.3.0:
   resolved "https://registry.yarnpkg.com/timsort/-/timsort-0.3.0.tgz#405411a8e7e6339fe64db9a234de11dc31e02bd4"
   integrity sha1-QFQRqOfmM5/mTbmiNN4R3DHgK9Q=
 
-tinymce@^5.0.1:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-5.1.0.tgz#34eff28ada9b93305a0d08860cf82d2edff269ca"
-  integrity sha512-zprr8gLHNCxxT4ebgwwIg1erhxQs1GUb3YHgNlRAuGRButDsrn35e1HW9YtMli/AnuY+ECcqyqhEI/wUNMYEFw==
+tinymce@^5.1.4:
+  version "5.1.4"
+  resolved "https://registry.yarnpkg.com/tinymce/-/tinymce-5.1.4.tgz#a45282a68e66d0959bcae19a972f8ae52a358667"
+  integrity sha512-Y7JYnByNF2A4BzR2KIbKEQV90PHZ5OwsU5An1Qj1zbSI8aXCOOhffL04LqlGw5UP/ookaC/V9V41H5XJbp/l9w==
 
 to-arraybuffer@^1.0.0:
   version "1.0.1"

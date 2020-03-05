@@ -44,7 +44,7 @@ module Admin::JobApplicationsHelper
   end
 
   def personal_profile_fields2
-    %i[is_currently_employed availability_date_in_month study_level study_type specialization
+    %i[is_currently_employed availability_date_in_month study_level
        experience_level has_corporate_experience]
   end
 

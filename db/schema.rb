@@ -418,8 +418,6 @@ ActiveRecord::Schema.define(version: 2020_02_27_171056) do
     t.boolean "is_currently_employed"
     t.integer "availability_date_in_month"
     t.uuid "study_level_id"
-    t.string "study_type"
-    t.string "specialization"
     t.uuid "experience_level_id"
     t.boolean "has_corporate_experience"
     t.datetime "created_at", null: false

@@ -24,11 +24,6 @@
 .statistics-row.mt-5
   .col-12.col-md-3.statistic__block
     .statistic__name
-      = t('.title_new_job_applications_geo_number_html')
-    .statistic__value
-      = t('non_applicable')
-  .col-12.col-md-3.statistic__block
-    .statistic__name
       = t('.title_new_job_applications_experiences_fit_job_offer_number_html')
     .statistic__value
       - experiences_fit_job_offer_count = @per_experiences_fit_job_offer[true] || 0

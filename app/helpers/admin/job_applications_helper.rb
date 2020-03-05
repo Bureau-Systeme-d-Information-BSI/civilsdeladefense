@@ -16,13 +16,8 @@ module Admin::JobApplicationsHelper
 
   def in_place_edit_value_formatted(content, field)
     case field
-    when :birth_date
-      "Né(e) le #{I18n.l(content)}"
     when :availability_date_in_month
       "#{content} mois"
-    when :nationality
-      c = ISO3166::Country.new(content)
-      c.translations[I18n.locale.to_s]
     when :gender, :is_currently_employed
       PersonalProfile.human_attribute_name("#{field}/#{content}")
     else
@@ -45,11 +40,11 @@ module Admin::JobApplicationsHelper
   end
 
   def personal_profile_fields1
-    %i[gender birth_date phone nationality has_residence_permit website_url]
+    %i[gender phone website_url]
   end
 
   def personal_profile_fields2
-    %i[is_currently_employed availability_date_in_month study_level study_type specialization
+    %i[is_currently_employed availability_date_in_month study_level
        experience_level has_corporate_experience]
   end
 

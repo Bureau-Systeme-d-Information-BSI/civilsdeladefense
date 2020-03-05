@@ -12,13 +12,6 @@
         = t(".title_job_applications_#{state}_number_html")
       .statistic__value
         = @per_state.values_at(state).compact.sum
-  .col-12.col-md-3.statistic__block
-    .statistic__name
-      = t(".title_job_applications_vacancy_number_html")
-    .statistic__value
-      = @per_vacancy.keys.size
-- if show_stats_debug?
-  %code= @per_vacancy
 %h1.h5.text-primary.mt-4= t('.title_2')
 .statistics-row.mt-3
   .col-12.col-md-3.statistic__block

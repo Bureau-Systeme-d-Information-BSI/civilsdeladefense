@@ -19,7 +19,6 @@ module JobOfferStatisticsActions
     root_rel_profile = root_rel.joins(:personal_profile)
 
     @per_gender = root_rel_profile.group(:gender).count
-    @per_nationality = root_rel_profile.group(:nationality).count
     @per_experiences_fit_job_offer = root_rel.group(:experiences_fit_job_offer).count
     @per_has_corporate_experience = root_rel_profile.group(:has_corporate_experience).count
     @per_is_currently_employed = root_rel_profile.group(:is_currently_employed).count

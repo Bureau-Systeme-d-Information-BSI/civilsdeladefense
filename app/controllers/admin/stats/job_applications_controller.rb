@@ -15,7 +15,6 @@ class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
     @job_applications_count = @job_applications_filtered.count
     build_stats
     build_stats_per_profile
-    build_stats_vacancy
     build_employer_ids unless current_administrator.bant?
   end
 
@@ -40,14 +39,6 @@ class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
     @per_gender = root_rel_profile.group(:gender).count
     @per_has_corporate_experience = root_rel_profile.group(:has_corporate_experience).count
     @per_is_currently_employed = root_rel_profile.group(:is_currently_employed).count
-  end
-
-  def build_stats_vacancy
-    @per_vacancy = root_rel.joins(:job_offer)
-                           .where(job_offers: { published_at: date_range })
-                           .where(job_offers: { accepted_job_applications_count: 0 })
-                           .group('job_offers.slug')
-                           .count
   end
 
   def build_employer_ids

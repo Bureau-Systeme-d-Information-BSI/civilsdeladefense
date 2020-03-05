@@ -392,7 +392,6 @@ job_application = JobApplication.new do |ja|
 end
 job_application.build_personal_profile({
   gender: 'male',
-  nationality: 'FR',
   current_position: 'Dev',
   phone: '0606060606'
 })
@@ -420,7 +419,6 @@ job_application2 = JobApplication.new do |ja|
 end
 job_application2.build_personal_profile({
   gender: 'male',
-  nationality: 'FR',
   current_position: 'Dev',
   phone: '0606060606'
 })
@@ -444,7 +442,6 @@ user_candidate_of_all.skip_confirmation_notification!
 user_candidate_of_all.save!
 user_candidate_of_all.confirm
 
-nationalities = %w[FR BE DE EN]
 boolean_choices = [true, false, nil]
 
 JobOffer.where.not(duration_contract: nil).where.not(id: [job_offer4.id, job_offer5.id]).each do |job_offer|
@@ -474,7 +471,6 @@ JobOffer.where.not(duration_contract: nil).where.not(id: [job_offer4.id, job_off
     end
     job_application.build_personal_profile({
       gender: PersonalProfile.genders.keys.sample,
-      nationality: nationalities.sample,
       current_position: 'Dev',
       phone: '0606060606',
       is_currently_employed: boolean_choices.sample,
@@ -512,7 +508,6 @@ JobOffer.where.not(duration_contract: nil).where.not(id: [job_offer4.id, job_off
   end
   job_application.build_personal_profile({
     gender: PersonalProfile.genders.keys.sample,
-    nationality: nationalities.sample,
     current_position: 'Dev',
     phone: '0606060606'
   })

@@ -6,8 +6,6 @@ FactoryBot.define do
     phone { '06' }
     website_url { 'MyString' }
     gender { 1 }
-    nationality { 'FR' }
-    has_residence_permit { false }
     is_currently_employed { false }
     availability_date_in_month { 1 }
     study_level { StudyLevel.all.sample }

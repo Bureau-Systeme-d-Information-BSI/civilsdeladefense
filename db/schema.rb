@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_14_111725) do
+ActiveRecord::Schema.define(version: 2020_02_27_171056) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -413,11 +413,8 @@ ActiveRecord::Schema.define(version: 2020_02_14_111725) do
     t.string "personal_profileable_type"
     t.uuid "personal_profileable_id"
     t.integer "gender"
-    t.date "birth_date"
-    t.string "nationality"
     t.string "website_url"
     t.string "phone"
-    t.boolean "has_residence_permit"
     t.boolean "is_currently_employed"
     t.integer "availability_date_in_month"
     t.uuid "study_level_id"

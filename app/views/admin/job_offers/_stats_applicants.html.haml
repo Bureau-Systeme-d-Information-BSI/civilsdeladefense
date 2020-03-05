@@ -20,23 +20,6 @@
     %em= t('.no_stats')
 - if show_stats_debug?
   %code= @per_gender
-%strong.text-quaternary.d-block.mt-4= t('.title_per_nationality')
-.pl-3.mt-2
-  - total = @per_nationality.values.sum
-  - if total > 0
-    - @per_nationality.each_with_index do |(k, v), index|
-      .d-flex.align-items-center.mb-2
-        .bar-chart__category_name
-          = k.present? ? k : t('unknown')
-        .bar-chart__category_percentage
-          - percentage = (v * 100.0) / total
-          = "#{percentage.to_i }%"
-        .flex-grow-1
-          .bar-chart__bar{style: "width: #{percentage}%;"}
-  - else
-    %em= t('.no_stats')
-- if show_stats_debug?
-  %code= @per_nationality
 
 .statistics-row.mt-5
   .col-12.col-md-3.statistic__block

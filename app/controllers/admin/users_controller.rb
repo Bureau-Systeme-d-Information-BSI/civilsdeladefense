@@ -48,7 +48,7 @@ class Admin::UsersController < Admin::InheritedResourcesController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def permitted_params
-    profile_fields = %i[id gender birth_date nationality has_residence_permit is_currently_employed
+    profile_fields = %i[id gender is_currently_employed
                         availability_date_in_month study_level_id study_type specialization
                         experience_level_id corporate_experience website_url
                         has_corporate_experience phone rejection_reason_id]

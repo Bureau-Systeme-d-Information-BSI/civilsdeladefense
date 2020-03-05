@@ -337,7 +337,6 @@ fr:
         no_stats: "Aucune statistique disponible"
         title: "Statistiques des candidats"
         title_per_gender: "Genres"
-        title_per_nationality: "Nationalités"
         title_new_job_applications_geo_number_html: "Localisés dans le bassin de l'offre"
         title_new_job_applications_experiences_fit_job_offer_number_html: "Éxpérimentés pour l'offre"
         title_job_applications_has_corporate_experience_number_html: "Éxpérimentés dans MinArm"

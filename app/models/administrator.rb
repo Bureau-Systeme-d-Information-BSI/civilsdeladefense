@@ -38,6 +38,7 @@ class Administrator < ApplicationRecord
       existing
     else
       a = build_supervisor_administrator(attributes)
+      a.organization = organization
       a.inviter = self
       a
     end
@@ -51,6 +52,7 @@ class Administrator < ApplicationRecord
       self.grand_employer_administrator = existing
     else
       a = build_grand_employer_administrator(attributes)
+      a.organization = organization
       a.inviter = self
       a
     end

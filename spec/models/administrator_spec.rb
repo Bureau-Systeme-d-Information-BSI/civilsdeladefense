@@ -28,6 +28,62 @@ RSpec.describe Administrator, type: :model do
     expect(@administrator.locked_at).to_not be_nil
   end
 
+  it 'creates provided supervisor administrator' do
+    administrator = build(:administrator)
+    employer = create(:employer)
+
+    attrs = {
+      email: 'supervisor@gmail.com',
+      ensure_employer_is_set: true,
+      employer_id: employer.id
+    }
+
+    expect do
+      administrator.supervisor_administrator_attributes = attrs
+      administrator.save
+    end.to change(Administrator, :count).by(2)
+  end
+
+  it 'creates provided grand employer administrator' do
+    administrator = build(:administrator)
+    employer = create(:employer)
+
+    attrs = {
+      email: 'grand.employer@gmail.com',
+      ensure_employer_is_set: true,
+      employer_id: employer.id
+    }
+
+    expect do
+      administrator.grand_employer_administrator_attributes = attrs
+      administrator.save
+    end.to change(Administrator, :count).by(2)
+  end
+
+  it 'creates provided supervisor administrator and grand employer administrator' do
+    administrator = build(:administrator)
+    employer1 = create(:employer)
+    employer2 = create(:employer)
+
+    attrs1 = {
+      email: 'supervisor@gmail.com',
+      ensure_employer_is_set: true,
+      employer_id: employer1.id
+    }
+
+    attrs2 = {
+      email: 'grand.employer@gmail.com',
+      ensure_employer_is_set: true,
+      employer_id: employer2.id
+    }
+
+    expect do
+      administrator.supervisor_administrator_attributes = attrs1
+      administrator.grand_employer_administrator_attributes = attrs2
+      administrator.save
+    end.to change(Administrator, :count).by(3)
+  end
+
   describe 'with ADMINISTRATOR_EMAIL_SUFFIX env variable defined' do
     before(:all) do
       ENV['ADMINISTRATOR_EMAIL_SUFFIX'] = '@gmail.com'

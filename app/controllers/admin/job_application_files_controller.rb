@@ -115,6 +115,8 @@ class Admin::JobApplicationFilesController < Admin::BaseController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def job_application_file_params
-    params.require(:job_application_file).permit(:content, :job_application_file_type_id)
+    params.require(:job_application_file).permit(:content,
+                                                 :job_application_file_type_id,
+                                                 :is_validated)
   end
 end

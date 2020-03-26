@@ -25,7 +25,7 @@ Metrics/AbcSize:
   Max: 40
 Metrics/MethodLength:
   Max: 25
-Metrics/LineLength:
+Layout/LineLength:
   Max: 100
   IgnoredPatterns: ['(\A|\s)#']
   Exclude:

@@ -11,17 +11,18 @@
           - klasses << 'active' if controller.controller_name == entry.to_s
           = link_to [:admin, entry], class: klasses do
             = t(".#{ entry }")
-  .list-group-item.menu
-    = t(".preferred_users_lists_title")
-  - current_administrator.preferred_users_lists.each do |list|
-    - klasses = %w(list-group-item d-flex justify-content-between align-items-center)
-    - klasses << 'active' if @preferred_users_list == list
-    = link_to [:admin, list], class: klasses do
-      = list.name
-      %small
-        = surround '(', ')' do
-          = list.preferred_users_count
-  .list-group.stepper
-    - klasses = %w(list-group-item d-flex justify-content-between align-items-center)
-    = link_to [:new, :admin, :preferred_users_list], class: klasses, data: {toggle: 'modal', target: '#remoteContentModal'} do
-      = t('.create_preferred_users_list_title')
+  - if can?(:manage, PreferredUsersList)
+    .list-group-item.menu
+      = t(".preferred_users_lists_title")
+    - current_administrator.preferred_users_lists.each do |list|
+      - klasses = %w(list-group-item d-flex justify-content-between align-items-center)
+      - klasses << 'active' if @preferred_users_list == list
+      = link_to [:admin, list], class: klasses do
+        = list.name
+        %small
+          = surround '(', ')' do
+            = list.preferred_users_count
+    .list-group.stepper
+      - klasses = %w(list-group-item d-flex justify-content-between align-items-center)
+      = link_to [:new, :admin, :preferred_users_list], class: klasses, data: {toggle: 'modal', target: '#remoteContentModal'} do
+        = t('.create_preferred_users_list_title')

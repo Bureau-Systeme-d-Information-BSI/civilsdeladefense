@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/LineLength
+# rubocop:disable Layout/LineLength
 class Admin::Settings::OrganizationDefaultsController < Admin::Settings::InheritedResourcesController
   protected
 
@@ -12,4 +12,4 @@ class Admin::Settings::OrganizationDefaultsController < Admin::Settings::Inherit
     %i[kind value]
   end
 end
-# rubocop:enable Metrics/LineLength
+# rubocop:enable Layout/LineLength

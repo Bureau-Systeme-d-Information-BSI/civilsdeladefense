@@ -17,20 +17,19 @@ services:
     environment:
       ALGOLIA_APP_ID: "${ALGOLIA_APP_ID}"
       ALGOLIA_API_KEY: "${ALGOLIA_API_KEY}"
-      PRODUCTION_SERVER_IP: "${PRODUCTION_SERVER_IP}"
-      PRODUCTION_SERVER_USER: "${PRODUCTION_SERVER_USER}"
+      DATABASE_URL: postgresql://admin:admin-secret@postgresql:5432/civilsdeladefense_development
+      DATABASE_URL_TEST: postgresql://admin:admin-secret@postgresql:5432/civilsdeladefense_test
+      DEFAULT_FROM: "${DEFAULT_FROM}"
       DEFAULT_HOST: "${DEFAULT_HOST}"
       LOCKBOX_MASTER_KEY: "${LOCKBOX_MASTER_KEY}"
       MAIL_URL: "${MAIL_URL}"
-      SEED_PASSWORD: "${SEED_PASSWORD}"
-      DATABASE_URL: postgresql://admin:admin-secret@postgresql:5432/civilsdeladefense_development
-      DATABASE_URL_TEST: postgresql://admin:admin-secret@postgresql:5432/civilsdeladefense_test
-      WEBPACKER_DEV_SERVER_HOST: 172.17.0.1
       OSC_AK: "${OSC_AK}"
       OSC_SK: "${OSC_SK}"
       OSC_BUCKET: "${OSC_BUCKET}"
       OSC_REGION: "${OSC_REGION}"
       OSC_ENDPOINT: "${OSC_ENDPOINT}"
+      SEED_PASSWORD: "${SEED_PASSWORD}"
+      WEBPACKER_DEV_SERVER_HOST: 172.17.0.1
     links:
       - postgresql
       - webpack
@@ -52,6 +51,7 @@ services:
     volumes:
       - ./:/usr/src/app/
     environment:
+      DEFAULT_FROM: hello@localhost
       DEFAULT_HOST: http://localhost:3000
       DATABASE_URL_TEST: postgresql://admin:admin-secret@postgresql:5432/civilsdeladefense_test
       LOCKBOX_MASTER_KEY: "${LOCKBOX_MASTER_KEY}"

@@ -29,6 +29,7 @@ services:
       OSC_REGION: "${OSC_REGION}"
       OSC_ENDPOINT: "${OSC_ENDPOINT}"
       SEED_PASSWORD: "${SEED_PASSWORD}"
+      SMTP_URL: "${SMTP_URL}"
       WEBPACKER_DEV_SERVER_HOST: 172.17.0.1
     links:
       - postgresql
@@ -55,8 +56,9 @@ services:
       DEFAULT_HOST: http://localhost:3000
       DATABASE_URL_TEST: postgresql://admin:admin-secret@postgresql:5432/civilsdeladefense_test
       LOCKBOX_MASTER_KEY: 0000000000000000000000000000000000000000000000000000000000000000
-      MAIL_URL: smtp://hello%40localhost@localhost
+      MAIL_URL: imaps://hello%40localhost@localhost
       RAILS_ENV: test
+      SMTP_URL: smtp://hello%40localhost@localhost
     links:
       - postgresql
     command: "tail -F /dev/null"

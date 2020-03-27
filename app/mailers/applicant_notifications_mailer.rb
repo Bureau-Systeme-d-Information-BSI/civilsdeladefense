@@ -20,7 +20,7 @@ class ApplicantNotificationsMailer < ApplicationMailer
     @answer_url = account_job_applications_url
     @site_name = @organization.name
 
-    mail_uri = URI(ENV['MAIL_URL'])
+    mail_uri = URI(ENV['SMTP_URL'])
     host = mail_uri.host
     headers['Message-ID'] = "<#{@email.id}@#{host}>"
 

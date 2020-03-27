@@ -11,7 +11,7 @@ jobs:
         environment:
           RAILS_ENV: test
           DATABASE_URL_TEST: postgresql://circleci:@127.0.0.1:5432/civilsdeladefense_test
-          MAIL_URL: smtp://hello%40localhost@localhost
+          SMTP_URL: smtp://hello%40localhost@localhost
       - image: circleci/postgres:11.5-alpine-ram
         environment:
           POSTGRES_USER: circleci
@@ -57,7 +57,7 @@ jobs:
         environment:
           RAILS_ENV: test
           DATABASE_URL_TEST: postgresql://circleci:@127.0.0.1:5432/civilsdeladefense_test
-          MAIL_URL: smtp://hello%40localhost@localhost
+          SMTP_URL: smtp://hello%40localhost@localhost
           LOCKBOX_MASTER_KEY: 0000000000000000000000000000000000000000000000000000000000000000
       - image: circleci/postgres:11.5-alpine-ram
         environment:

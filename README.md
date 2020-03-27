@@ -163,8 +163,8 @@ root_page = organization.pages.create!({
 ## Services externes
 
 Envoie de mail SMTP
-Configuration par la variable d'environnement MAIL_URL :
-`MAIL_URL=smtp://username_url_encoded:password@host:port`
+Configuration par la variable d'environnement SMTP_URL :
+`SMTP_URL=smtp://username_url_encoded:password@host:port`
 
 Récupération mail IMAP
 Configuration par la variable d'environnement MAIL_URL :

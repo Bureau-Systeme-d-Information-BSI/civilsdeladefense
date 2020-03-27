@@ -7,6 +7,7 @@ module JobOfferStateActions
   def create_and_publish
     @job_offer = JobOffer.new(job_offer_params)
     @job_offer.owner = current_administrator
+    @job_offer.organization = current_organization
     @job_offer.employer = current_administrator.employer unless current_administrator.bant?
     @job_offer.job_offer_actors.each do |job_offer_actor|
       if job_offer_actor.administrator

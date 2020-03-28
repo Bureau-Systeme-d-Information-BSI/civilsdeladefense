@@ -12,6 +12,11 @@ class CommitParamConstraint
 end
 
 Rails.application.routes.draw do
+  get '/mentions-legales', to: redirect('/pages/mentions-legales')
+  get '/cgu', to: redirect('/pages/conditions-generales-d-utilisation')
+  get '/politique-confidentialite', to: redirect('/pages/politique-de-confidentialite')
+  get '/suivi', to: redirect('/pages/suivi-d-audience-et-vie-privee')
+
   as :administrator do
     patch '/admin/confirmation' => 'administrators/confirmations#update', as: :update_administrator_confirmation
   end
@@ -145,13 +150,6 @@ Rails.application.routes.draw do
   resources :pages, only: %w[show]
   resource :robots, only: %w[show]
   resource :sitemap
-
-  unless ENV['DYNAMIC_FOOTER']
-    get '/politique-confidentialite' => 'legals#privacy', as: :privacy
-    get '/cgu' => 'legals#tos', as: :tos
-    get '/mentions-legales' => 'legals#notice', as: :legal_notice
-    get '/suivi' => 'legals#tracking', as: :tracking
-  end
 
   root to: 'job_offers#index'
 end

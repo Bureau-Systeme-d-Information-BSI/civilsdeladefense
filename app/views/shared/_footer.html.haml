@@ -5,20 +5,4 @@
         .col-12.col-md-2
           - if current_organization.logo_vertical_negative.present?
             = image_tag(current_organization.logo_vertical_negative.url, class: 'logo-business-owner')
-        - if ENV['DYNAMIC_FOOTER']
-          = render partial: '/shared/footer_pages_tree'
-        - else
-          .col-12.col-md-2
-            %ul.list-unstyled.mb-0
-              %li= link_to t('.legal_notice'), legal_notice_path
-              %li= link_to t('.tos'), tos_path
-              %li= link_to t('.privacy'), privacy_path
-              %li= link_to t('.tracking'), tracking_path
-          .col-12.col-md-2
-            %ul.list-unstyled.mb-0
-              - links = ["service-public.fr", "legifrance.gouv.fr", "data.gouv.fr", "france.fr"]
-              - links.each do |link|
-                %li
-                  = link_to 'https://www.'+link, target: '_blank', rel: 'noopener noreferrer' do
-                    = link.capitalize
-                    = fa_icon("open-in-new")
+        = render partial: '/shared/footer_pages_tree'

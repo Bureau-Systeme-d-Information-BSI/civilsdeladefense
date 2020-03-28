@@ -65,7 +65,7 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = { host: ENV['DEFAULT_HOST'] }
 
-  smtp_uri = URI(ENV['MAIL_URL'])
+  smtp_uri = URI(ENV['SMTP_URL'])
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {

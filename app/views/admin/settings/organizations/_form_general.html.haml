@@ -7,6 +7,7 @@
       = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
       = f.input :name
       = f.input :name_business_owner
+      = f.input :privacy_policy_url
       =# f.input :subdomain not used ATM
       =# f.input :domain not used ATM
       .form-actions.mt-4

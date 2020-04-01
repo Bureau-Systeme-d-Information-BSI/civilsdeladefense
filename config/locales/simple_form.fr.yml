@@ -109,6 +109,7 @@ fr:
         logo_vertical_negative: "Logo au format vertical (affichage fond coloré)"
         logo_horizontal_negative: "Logo au format horizontal (affichage fond coloré)"
         image_background: "Image d'arrière plan"
+        privacy_policy_url: "Lien vers la politique de confidentialité"
       organization_default:
         kind: "Nom du champ"
         value: "Valeur par défaut"
@@ -162,12 +163,15 @@ autres membres de votre équipe.'
         last_name: "Facultatif"
         employer_id: "Actif seulement si le rôle est \"Employeur\""
         password: "8 caractères minimum, dont au moins 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial parmi #?!@$%^&*-'"
+      employer:
+        code: "Ce champ est utilisé pour construire l'identifiant unique d'une annonce."
       job_application:
         photo: "Format JPG ou PNG, max. 2Mo"
         resume: "Format PDF, max. 2Mo"
         cover_letter: "Format PDF, max. 2Mo"
         website_url: "LinkedIn, Viadeo, portfolio, etc."
-      employer:
-        code: "Ce champ est utilisé pour construire l'identifiant unique d'une annonce."
+      organization:
+        privacy_policy_url: "Ce lien est utilisé dans le formulaire de soumission d'une candidature"
       user:
         password: "8 caractères minimum, dont au moins 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial parmi #?!@$%^&*-'"
+

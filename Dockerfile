@@ -1,4 +1,4 @@
-FROM ruby:2.6.5
+FROM ruby:2.7.1
 
 RUN apt-get update
 RUN apt-get install apt-transport-https
@@ -12,7 +12,7 @@ RUN apt-get install -y imagemagick
 RUN apt-get install -y locales
 RUN apt-get install -y postgresql-client
 
-ENV NODE_VERSION 8.11.3
+ENV NODE_VERSION 12.16.1
 
 RUN cd /opt && \
     curl -L "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz" | tar -xJf - && \

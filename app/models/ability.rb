@@ -22,7 +22,8 @@ class Ability
       can :manage, Message
       can :manage, Email
       can :manage, User, employer_users_query(administrator)
-      can :manage, PreferredUsersList
+      can :manage, PreferredUsersList, administrator_id: administrator.id
+      can :manage, PreferredUser, preferred_users_list: { administrator_id: administrator.id }
     else
       can :read, JobOffer, job_offer_actors: { administrator_id: administrator.id }
       can :read, JobApplication, job_application_read_query(administrator)

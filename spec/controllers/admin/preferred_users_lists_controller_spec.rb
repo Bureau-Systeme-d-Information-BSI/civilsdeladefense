@@ -63,6 +63,28 @@ RSpec.describe Admin::PreferredUsersListsController, type: :controller do
     end
   end
 
+  context 'when logged in as Employeur administrator' do
+    login_employer
+
+    # This should return the minimal set of attributes required to create a valid
+    # PreferredUsersList. As you add validations to PreferredUsersList, be sure to
+    # adjust the attributes here as well.
+    let(:valid_attributes) do
+      build(:preferred_users_list).attributes
+    end
+
+    describe 'POST #create' do
+      context 'with valid params' do
+        it 'creates a new PreferredUsersList' do
+          expect do
+            post :create, params: { preferred_users_list: valid_attributes }
+          end.to change(PreferredUsersList, :count).by(1)
+          expect(response).to be_successful
+        end
+      end
+    end
+  end
+
   context 'when logged in as Grand Employeur administrator' do
     login_grand_employer
 
@@ -75,7 +97,7 @@ RSpec.describe Admin::PreferredUsersListsController, type: :controller do
 
     describe 'POST #create' do
       context 'with valid params' do
-        it 'creates a new PreferredUsersList' do
+        it 'does not create a new PreferredUsersList' do
           expect do
             post :create, params: { preferred_users_list: valid_attributes }
           end.to change(PreferredUsersList, :count).by(0)

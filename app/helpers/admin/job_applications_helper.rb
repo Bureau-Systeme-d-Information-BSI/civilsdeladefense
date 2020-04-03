@@ -34,7 +34,7 @@ module Admin::JobApplicationsHelper
       res = obj.send(association)&.name
     end
 
-    return content_tag('em', 'Non défini(e)') if res.blank?
+    return content_tag('em', 'Non défini(e)') if res.to_s.blank?
 
     in_place_edit_value_formatted(res, m)
   end

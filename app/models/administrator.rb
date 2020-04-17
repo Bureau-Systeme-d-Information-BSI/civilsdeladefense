@@ -95,11 +95,6 @@ class Administrator < ApplicationRecord
 
   attr_accessor :ensure_employer_is_set
 
-  # ensure user account is active
-  def active_for_authentication?
-    super && !deleted_at
-  end
-
   def password_required?
     # Password is required if it is being set, but not for new records
     if !persisted?

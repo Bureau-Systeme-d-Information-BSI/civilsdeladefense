@@ -29,15 +29,24 @@
           .d-block.text-nowrap
             = t('.invited_by')
             %em= administrator.inviter.full_name
+      - if can?(:send_unlock_instructions, administrator) && administrator.access_locked?
+        %small
+          %em{style: 'line-height:1;'}= t('.lock_explanation')
+        = link_to [:send_unlock_instructions, :admin, :settings, administrator], method: :post, data: {confirm: t('buttons.confirm')}, class: 'btn btn-danger' do
+          = fa_icon('refresh')
+          = t('buttons.send_unlock_instructions')
   %td.text-right
     %ul.list-inline.mb-0.actions
-      %li.list-inline-item
-        - if can?(:update, administrator)
+      - if can?(:update, administrator)
+        %li.list-inline-item
           = link_to fa_icon('pencil'), [:edit, :admin, :settings, administrator], title: t('buttons.edit')
-        - unless administrator.confirmed_at.present?
-          - if can?(:manage, administrator)
+      - unless administrator.confirmed_at.present?
+        - if can?(:manage, administrator)
+          %li.list-inline-item
             = link_to fa_icon('refresh'), [:resend_confirmation_instructions, :admin, :settings, administrator], method: :postr, title: t('buttons.resend_confirmation_instructions'), data: {confirm: t('buttons.confirm')}
-        - if can?(:deactivate, administrator) && administrator.active?
+      - if can?(:deactivate, administrator) && administrator.active?
+        %li.list-inline-item
           = link_to fa_icon('close'), [:deactivate, :admin, :settings, administrator], method: :post, title: t('buttons.deactivate'), data: {confirm: t('buttons.confirm')}
-        - if can?(:reactivate, administrator) && administrator.inactive?
+      - if can?(:reactivate, administrator) && administrator.inactive?
+        %li.list-inline-item
           = link_to fa_icon('close'), [:reactivate, :admin, :settings, administrator], method: :post, title: t('buttons.reactivate'), data: {confirm: t('buttons.confirm')}

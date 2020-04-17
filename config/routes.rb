@@ -96,6 +96,7 @@ Rails.application.routes.draw do
         end
         member do
           post :resend_confirmation_instructions
+          post :send_unlock_instructions
           post :deactivate
           post :reactivate
         end

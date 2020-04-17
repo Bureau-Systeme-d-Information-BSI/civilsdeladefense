@@ -83,6 +83,7 @@ fr:
     search: "Rechercher"
     send: "Envoyer"
     send_to_candidate: "Envoyer au candidat"
+    send_unlock_instructions: "Envoyer les instructions de débloquage"
     show: "Voir"
     suspend: "Mettre en pause"
     unarchive: "Désarchiver"
@@ -453,6 +454,7 @@ fr:
           invited_by: "Invité par"
           never_connected: "Jamais connecté"
           no_role: "Aucun rôle"
+          lock_explanation: "Ce compte est bloqué car trop de tentatives infructueuses de se connecter"
         index:
           title: "Comptes admin"
           add: "Ajouter un compte admin"

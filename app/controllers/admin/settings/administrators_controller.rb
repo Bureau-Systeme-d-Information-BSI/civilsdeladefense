@@ -62,6 +62,16 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
     end
   end
 
+  # POST /admin/settings/administrators/1/send_unlock_instructions
+  # POST /admin/settings/administrators/1/send_unlock_instructions.json
+  def send_unlock_instructions
+    @administrator.send_unlock_instructions
+    respond_to do |format|
+      format.html { redirect_to %i[admin settings root], notice: t('.success') }
+      format.json { head :no_content }
+    end
+  end
+
   # POST /admin/settings/administrators/1/deactivate
   # POST /admin/settings/administrators/1/deactivate.json
   def deactivate

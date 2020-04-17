@@ -4,7 +4,6 @@
 class InboundMessage
   def self.fetch_and_process
     config = retriever_method_configuration
-    debugger
     Mail.defaults do
       retriever_method(*config)
     end

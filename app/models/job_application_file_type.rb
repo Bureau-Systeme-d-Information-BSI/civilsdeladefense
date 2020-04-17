@@ -25,4 +25,8 @@ class JobApplicationFileType < ApplicationRecord
   }
 
   enum from_state: JobApplication.states
+
+  #####################################
+  # Relations
+  has_many :job_applications
 end

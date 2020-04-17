@@ -3,8 +3,10 @@
 # Inbound messages fetched from a IMAP mail server and then processed
 class InboundMessage
   def self.fetch_and_process
+    config = retriever_method_configuration
+    debugger
     Mail.defaults do
-      retriever_method(*retriever_method_configuration)
+      retriever_method(*config)
     end
 
     Mail.find(count: 100) do |message, imap, uid|

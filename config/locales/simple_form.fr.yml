@@ -122,6 +122,8 @@ fr:
         url: "Lien"
       preferred_user:
         preferred_users_list: "Ajouter à la liste..."
+      study_level:
+        official_level: "Niveau officiel"
       user:
         password: 'Mot de passe'
         password_confirmation: 'Confirmation du mot de passe'
@@ -174,4 +176,3 @@ autres membres de votre équipe.'
         privacy_policy_url: "Ce lien est utilisé dans le formulaire de soumission d'une candidature"
       user:
         password: "8 caractères minimum, dont au moins 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial parmi #?!@$%^&*-'"
-

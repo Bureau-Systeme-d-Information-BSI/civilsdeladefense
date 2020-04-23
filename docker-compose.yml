@@ -58,6 +58,7 @@ services:
       DATABASE_URL_TEST: postgresql://admin:admin-secret@postgresql:5432/civilsdeladefense_test
       LOCKBOX_MASTER_KEY: 0000000000000000000000000000000000000000000000000000000000000000
       MAIL_URL: imaps://hello%40localhost@localhost
+      RUBYOPT: "-W:no-deprecated"
       RAILS_ENV: test
       SMTP_URL: smtp://hello%40localhost@localhost
     links:

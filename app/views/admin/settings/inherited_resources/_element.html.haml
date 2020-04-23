@@ -26,6 +26,11 @@
   - elsif resource_class == OrganizationDefault
     %td
       = OrganizationDefault.human_attribute_name("kind/#{element.kind}")
+  - elsif resource_class == StudyLevel
+    %td
+      = element.name
+    %td.text-center
+      = element.official_level
   - else
     %td
       = element.try(:title) || element.try(:name)

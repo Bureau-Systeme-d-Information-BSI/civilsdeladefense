@@ -14,7 +14,7 @@ export default function cityAutocomplete() {
     })
 
     placesAutocomplete.on('change', function resultSelected(e) {
-      document.querySelector('#job_offer_city').value = e.suggestion.city || ''
+      document.querySelector('#job_offer_city').value = e.suggestion.name || ''
       document.querySelector('#job_offer_county').value = e.suggestion.county || ''
       var postcode = e.suggestion.postcode || ''
       if (postcode !== '') {

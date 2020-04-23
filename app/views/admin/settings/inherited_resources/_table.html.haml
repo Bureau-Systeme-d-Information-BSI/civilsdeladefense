@@ -13,6 +13,9 @@
           %th= resource_class.human_attribute_name(:by_default)
         - if resource_class == Employer
           %th= resource_class.human_attribute_name(:code)
+        - if resource_class == StudyLevel
+          %th.text-center{style: 'width:100px;'}
+            = resource_class.human_attribute_name(:official_level)
         - if resource_class.reflect_on_association(:job_offers)
           %th.text-center{style: 'width:100px;'} Nombre d'offres
       - if resource_class == Page

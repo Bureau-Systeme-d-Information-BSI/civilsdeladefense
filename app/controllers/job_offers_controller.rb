@@ -17,6 +17,7 @@ class JobOffersController < ApplicationController
     respond_to do |format|
       format.html {}
       format.js {}
+      format.json {}
     end
   end
 
@@ -79,6 +80,7 @@ class JobOffersController < ApplicationController
 
   def set_job_offers
     @job_offers = JobOffer.publicly_visible.includes(:contract_type)
+    @job_offers = @job_offers.includes(:study_level) if request.format.json?
     if params[:category_id].present?
       @category = Category.find(params[:category_id])
       @job_offers = @job_offers.where(category_id: @category.self_and_descendants)

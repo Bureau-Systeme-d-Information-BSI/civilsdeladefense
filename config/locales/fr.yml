@@ -906,6 +906,8 @@ fr:
         sector: "Filière"
         estimate_monthly_salary_net_html: "<div class='d-block'>Estimation mensuel net</div> (fonction publique)"
         estimate_annual_salary_gross_html: "<div class='d-block'>Estimation annuel brut</div> (secteur privé)"
+      study_level:
+        official_level: "Niveau officiel"
   helpers:
     submit:
       job_application:

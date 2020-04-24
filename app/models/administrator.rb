@@ -35,7 +35,7 @@ class Administrator < ApplicationRecord
 
     existing = Administrator.where(email: attributes[:email]).first
     if existing
-      existing
+      self.supervisor_administrator = existing
     else
       a = build_supervisor_administrator(attributes)
       a.organization = organization

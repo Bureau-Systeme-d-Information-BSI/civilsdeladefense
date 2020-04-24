@@ -28,7 +28,7 @@ RSpec.describe Administrator, type: :model do
     expect(@administrator.locked_at).to_not be_nil
   end
 
-  it 'creates provided supervisor administrator' do
+  it 'creates provided supervisor administrator when non-preexisting' do
     administrator = build(:administrator)
     employer = create(:employer)
 
@@ -42,9 +42,30 @@ RSpec.describe Administrator, type: :model do
       administrator.supervisor_administrator_attributes = attrs
       administrator.save
     end.to change(Administrator, :count).by(2)
+
+    expect(administrator.supervisor_administrator.email).to eq('supervisor@gmail.com')
   end
 
-  it 'creates provided grand employer administrator' do
+  it 'creates provided supervisor administrator when preexisting' do
+    employer = create(:employer)
+    supervisor_administrator = create(:administrator, employer: employer)
+    administrator = build(:administrator)
+
+    attrs = {
+      email: supervisor_administrator.email,
+      ensure_employer_is_set: true,
+      employer_id: employer.id
+    }
+
+    expect do
+      administrator.supervisor_administrator_attributes = attrs
+      administrator.save
+    end.to change(Administrator, :count).by(1)
+
+    expect(administrator.supervisor_administrator.email).to eq(supervisor_administrator.email)
+  end
+
+  it 'creates provided grand employer administrator when non-preexisting' do
     administrator = build(:administrator)
     employer = create(:employer)
 
@@ -58,6 +79,28 @@ RSpec.describe Administrator, type: :model do
       administrator.grand_employer_administrator_attributes = attrs
       administrator.save
     end.to change(Administrator, :count).by(2)
+
+    expect(administrator.grand_employer_administrator.email).to eq('grand.employer@gmail.com')
+  end
+
+  it 'creates provided grand employer administrator when preexisting' do
+    employer = create(:employer)
+    grand_employer_administrator = create(:administrator, employer: employer)
+    email = grand_employer_administrator.email
+    administrator = build(:administrator)
+
+    attrs = {
+      email: email,
+      ensure_employer_is_set: true,
+      employer_id: employer.id
+    }
+
+    expect do
+      administrator.grand_employer_administrator_attributes = attrs
+      administrator.save
+    end.to change(Administrator, :count).by(1)
+
+    expect(administrator.grand_employer_administrator.email).to eq(email)
   end
 
   it 'creates provided supervisor administrator and grand employer administrator' do

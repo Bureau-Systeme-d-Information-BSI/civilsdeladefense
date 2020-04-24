@@ -33,7 +33,7 @@ RSpec.describe 'JobOffers', type: :request do
     include Rack::Test::Methods
 
     it 'returns the response CORS headers' do
-      get root_path, nil,  'HTTP_ORIGIN' => '*'
+      get root_path, nil, 'HTTP_ORIGIN' => '*'
       expect(last_response.headers['Access-Control-Allow-Origin']).to be_nil
 
       get job_offers_path(format: :json), nil, 'HTTP_ORIGIN' => '*'

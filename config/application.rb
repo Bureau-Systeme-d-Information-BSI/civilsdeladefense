@@ -46,7 +46,7 @@ module Civilsdeladefense
     config.middleware.insert_before 0, Rack::Cors do
       allow do
         origins '*'
-        resource '/offresdemploi.json', headers: :any, methods: [:get, :options]
+        resource '/offresdemploi.json', headers: :any, methods: %i[get options]
       end
     end
 

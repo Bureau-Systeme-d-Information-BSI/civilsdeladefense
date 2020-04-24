@@ -43,6 +43,13 @@ module Civilsdeladefense
       config.ssl_options = { hsts: { subdomains: false, preload: true, expires: 1.year } }
     end
 
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins '*'
+        resource '/offresdemploi.json', headers: :any, methods: %i[get options]
+      end
+    end
+
     config.middleware.insert_before(Rack::Runtime, Rack::Rewrite) do
       r301 %r{^/administrators/(.*)}, '/admin/$1'
     end

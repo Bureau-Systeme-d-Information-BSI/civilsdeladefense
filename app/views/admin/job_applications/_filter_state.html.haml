@@ -6,7 +6,7 @@
     État
     - if ary.any?
       = "(#{ary.size})"
-  .dropdown-menu.dropdown-menu-right{aria: {labelledby: 'dropdownContractType'}}
+  .dropdown-menu.dropdown-menu-right.allow-focus{aria: {labelledby: 'dropdownContractType'}}
     %ul
       - for state_ary in states
         - state_name = state_ary[0]

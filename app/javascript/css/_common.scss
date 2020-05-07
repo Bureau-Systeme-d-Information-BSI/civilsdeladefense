@@ -391,3 +391,17 @@ b, strong {
 .text-tall {
   font-size: 150%;
 }
+
+.text-underline {
+  text-decoration: underline;
+}
+
+.text-grey, .text-gray {
+  color: $body-color;
+}
+
+a.text-grey, a.text-gray {
+  &:hover {
+    color: darken($body-color, 10%);
+  }
+}

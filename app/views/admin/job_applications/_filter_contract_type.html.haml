@@ -5,7 +5,7 @@
     Contrat
     - if ary.any?
       = "(#{ary.size})"
-  .dropdown-menu.dropdown-menu-right{aria: {labelledby: 'dropdownContractType'}}
+  .dropdown-menu.dropdown-menu-right.allow-focus{aria: {labelledby: 'dropdownContractType'}}
     %ul
       - for contract_type in @contract_types
         - input_id = dom_id(contract_type)

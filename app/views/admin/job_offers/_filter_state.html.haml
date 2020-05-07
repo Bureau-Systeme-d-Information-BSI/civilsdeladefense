@@ -6,7 +6,7 @@
     État
     - if ary.any?
       = "(#{ary.size})"
-  .dropdown-menu.dropdown-menu-right{aria: {labelledby: 'dropdownState'}}
+  .dropdown-menu.dropdown-menu-right.allow-focus{aria: {labelledby: 'dropdownState'}}
     %ul
       - all_states = JobOffer.states.to_a.delete_if{|x| x.first == 'archived'}
       - all_states = JobOffer.states.to_a.select{|x| x.first == 'archived'} if controller.action_name == 'archived'

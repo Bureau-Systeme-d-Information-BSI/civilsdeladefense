@@ -5,7 +5,7 @@
     Employeur
     - if ary.any?
       = "(#{ary.size})"
-  .dropdown-menu.dropdown-menu-right{aria: {labelledby: 'dropdownEmployeur'}}
+  .dropdown-menu.dropdown-menu-right.allow-focus{aria: {labelledby: 'dropdownEmployeur'}}
     - grouped_options = Employer.roots.map{|x| [x.name, x.children]}
     %ul
       - for option in grouped_options

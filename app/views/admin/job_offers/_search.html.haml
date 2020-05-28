@@ -18,5 +18,5 @@
           = render partial: 'filter_most_advanced_job_applications_state'
       .d-flex.flex-row-reverse.align-items-center
         = submit_tag t('buttons.search'), name: nil, class: 'btn btn-primary btn-raised btn-small'
-        = link_to 'Réinitialiser', [:admin, :job_applications], class: 'mr-3 text-grey text-underline'
+        = link_to 'Réinitialiser', url_for, class: 'mr-3 text-grey text-underline'
     %hr

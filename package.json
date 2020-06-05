@@ -2,7 +2,6 @@
   "name": "civilsdeladefense",
   "private": true,
   "dependencies": {
-    "@ckeditor/ckeditor5-build-classic": "^11.0.1",
     "@rails/webpacker": "^4.0.7",
     "bootstrap": "^4.3.1",
     "bootstrap-material-design": "^4.1.2",
@@ -23,6 +22,7 @@
     "svgo": "^1.0.5",
     "svgo-loader": "^2.1.0",
     "tinymce": "^5.1.4",
+    "trix": "^1.2.3",
     "turbolinks": "^5.2.0",
     "webpack": "^4.41.2"
   },

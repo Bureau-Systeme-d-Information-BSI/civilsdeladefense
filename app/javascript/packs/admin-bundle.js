@@ -10,6 +10,15 @@
 import Turbolinks from 'turbolinks'
 Turbolinks.start()
 
+// Import Rails UJS
+const Rails = require('rails-ujs')
+Rails.start()
+
+// Import Trix
+const Trix = require('trix')
+Trix.config.blockAttributes.default.tagName = "p"
+Trix.config.blockAttributes.default.breakOnReturn = true
+
 import Url from 'domurl'
 import flatpickr from 'flatpickr'
 import { French } from 'flatpickr/dist/l10n/fr'
@@ -48,18 +57,6 @@ Highcharts.setOptions({
   }
 });
 
-const Rails = require('rails-ujs')
-Rails.start()
-
-// Import TinyMCE
-import tinymce from 'tinymce/tinymce'
-// A theme is also required
-import 'tinymce/themes/silver/theme'
-// Any plugins you want to use has to be imported
-import 'tinymce/plugins/paste'
-import 'tinymce/plugins/link'
-import 'tinymce/plugins/lists'
-
 function importAll(r) {
   return r.keys().map(r)
 }
@@ -81,15 +78,6 @@ window.inPlaceEdit = inPlaceEdit
 $('body').bootstrapMaterialDesign()
 
 document.addEventListener('turbolinks:load', function() {
-  tinymce.init({
-    selector: '.ckeditor',
-    branding: false,
-    menubar: false,
-    height: 300,
-    toolbar: 'undo redo | paste | bold italic link | bullist numlist',
-    plugins: ['paste', 'lists']
-  })
-
   $('select.filter').select2({
     width: '100%',
     minimumResultsForSearch: Infinity,

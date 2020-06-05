@@ -54,7 +54,7 @@ gem 'redis'
 gem 'rollbar'
 gem 'sequenced'
 gem 'simple_form'
-gem 'sqreen'
+gem 'trix-rails', require: 'trix'
 gem 'turbolinks'
 gem 'will_paginate'
 

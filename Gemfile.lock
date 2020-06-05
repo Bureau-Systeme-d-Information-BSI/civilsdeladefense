@@ -208,7 +208,6 @@ GEM
       addressable (~> 2.7)
     letter_opener (1.7.0)
       launchy (~> 2.2)
-    libsqreen (0.3.0.0.3)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -383,14 +382,12 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
-    sq_mini_racer (0.2.5.0.1.beta3)
-    sqreen (1.18.6)
-      libsqreen (~> 0.3.0.0)
-      sq_mini_racer (~> 0.2.4.sqreen2)
     temple (0.8.2)
     thor (1.0.1)
     thread_safe (0.3.6)
     tilt (2.0.10)
+    trix-rails (2.2.0)
+      rails (> 4.1, < 6.1)
     turbolinks (5.2.1)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
@@ -476,7 +473,7 @@ DEPENDENCIES
   simplecov
   spring
   spring-watcher-listen (~> 2.0.0)
-  sqreen
+  trix-rails
   turbolinks
   tzinfo-data
   web-console (>= 3.3.0)

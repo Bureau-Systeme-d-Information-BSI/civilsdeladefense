@@ -9,7 +9,7 @@
         = f.input :title
         = f.input :only_link
         = f.input :url, wrapper_html: { class: !resource.only_link? && 'd-none' }
-        = f.input :body, input_html: { class: :ckeditor }, wrapper_html: { class: resource.only_link? && 'd-none' }
+        = f.input :body, as: :trix_editor, wrapper_html: { class: resource.only_link? && 'd-none' }
         = f.input :og_title, wrapper_html: { class: resource.only_link? && 'd-none' }
         = f.input :og_description, wrapper_html: { class: resource.only_link? && 'd-none' }
       .form-actions.text-right.mt-4

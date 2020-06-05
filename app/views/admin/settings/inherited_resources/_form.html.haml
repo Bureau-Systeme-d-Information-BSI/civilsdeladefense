@@ -38,7 +38,7 @@
         - elsif resource.is_a?(OrganizationDefault)
           - kinds = OrganizationDefault.kinds.map {|k, v| [ OrganizationDefault.human_attribute_name("kind/#{k}"), k] }
           = f.input :kind, collection: kinds, prompt: true
-          = f.input :value, input_html: { class: :ckeditor }
+          = f.input :value, as: :trix_editor
         - else
           = f.input :name
           - if resource.is_a?(Employer)

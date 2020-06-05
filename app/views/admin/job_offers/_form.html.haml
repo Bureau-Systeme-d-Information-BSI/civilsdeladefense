@@ -51,10 +51,9 @@
                         = f.input :country_code, as: :hidden
                         = f.input :postcode, as: :hidden
                         = f.input :region, as: :hidden
-                    = f.input :description, input_html: { class: :ckeditor }
-                    = f.input :required_profile, input_html: { class: :ckeditor }
-                    = f.input :recruitment_process, input_html: { class: :ckeditor }
-
+                    = f.input :description, as: :trix_editor
+                    = f.input :required_profile, as: :trix_editor
+                    = f.input :recruitment_process, as: :trix_editor
               .card.mt-5
                 .card-header
                   .card-title= t('.card_1_2_title')

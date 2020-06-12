@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_23_090546) do
+ActiveRecord::Schema.define(version: 2020_06_11_135139) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -386,6 +386,7 @@ ActiveRecord::Schema.define(version: 2020_04_23_090546) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "privacy_policy_url"
+    t.integer "inbound_email_config", default: 0
   end
 
   create_table "pages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

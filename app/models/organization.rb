@@ -21,4 +21,13 @@ class Organization < ApplicationRecord
   mount_uploader :image_background, LogoUploader, mount_on: :image_background_file_name
   validates :image_background,
             file_size: { less_than: 1.megabytes }
+
+  #####################################
+  # Enums
+  INBOUND_EMAIL_CONFIGS = {
+    not_available: 0,
+    hidden_headers: 10,
+    catch_all: 20
+  }.freeze
+  enum inbound_email_config: INBOUND_EMAIL_CONFIGS, _prefix: true
 end

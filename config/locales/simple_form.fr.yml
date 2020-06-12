@@ -24,6 +24,11 @@ fr:
           <<: *options_defaults
         option_website_url:
           <<: *options_defaults
+      organization:
+        inbound_email_config:
+          not_available: "Pas disponible"
+          hidden_headers: "Avec en-tête caché"
+          catch_all: "Avec signe + dans le champ reply_to"
     labels:
       defaults:
         availability_date_in_month: "Disponible sous"
@@ -104,6 +109,7 @@ fr:
         administrator_email_suffix: "Suffixe d'email obligatoire pour les comptes admin"
         subdomain: "Sous-domaine"
         domain: "Nom de domaine officiel"
+        inbound_email_config: "Configuration passerelle mail/plateforme"
         logo_vertical: "Logo au format vertical (affichage fond blanc)"
         logo_horizontal: "Logo au format horizontal (affichage fond blanc)"
         logo_vertical_negative: "Logo au format vertical (affichage fond coloré)"

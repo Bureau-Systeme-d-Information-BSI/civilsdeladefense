@@ -22,22 +22,27 @@ class ApplicantNotificationsMailer < ApplicationMailer
 
     mail_uri = URI(ENV['SMTP_URL'])
     host = mail_uri.host
-    headers['Message-ID'] = "<#{@email.id}@#{host}>"
 
     @email.attachments.each do |attachment|
       attachments[attachment.filename.to_s] = attachment.blob.download
     end
 
-    mail to: to, subject: subject
+    reply_to = nil
+    if @organization.inbound_email_config_catch_all?
+      default_from = ENV['DEFAULT_FROM']
+      reply_to = default_from.gsub('@', "+#{@email.id}@")
+    elsif @organization.inbound_email_config_hidden_headers?
+      headers['Message-ID'] = "<#{@email.id}@#{host}>"
+    end
+
+    mail to: to, subject: subject, reply_to: reply_to
   end
 
   def receive(message)
     from = message[:from]
     to = message[:to]
     Rails.logger.debug "InboundMessage treating message from #{from} to #{to}"
-    references = message.header['References']
-    message_id_parent = references&.value
-    original_email_id = message_id_parent&.scan(/<(.*)@/)&.flatten&.first
+    original_email_id = fetch_original_email_id(message)
 
     return false if original_email_id.blank?
 
@@ -59,6 +64,18 @@ class ApplicantNotificationsMailer < ApplicationMailer
   end
 
   protected
+
+  def fetch_original_email_id(message)
+    current_organization = Organization.first
+    if current_organization.inbound_email_config_catch_all?
+      from = message[:from]
+      from.split(/\+(.*)@/)[1]
+    elsif @organization.inbound_email_config_hidden_headers?
+      references = message.header['References']
+      message_id_parent = references&.value
+      message_id_parent&.scan(/<(.*)@/)&.flatten&.first
+    end
+  end
 
   def create_email(user, job_application, body, subject)
     Audited.audit_class.as_user(user) do

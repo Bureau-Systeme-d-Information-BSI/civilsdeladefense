@@ -8,6 +8,7 @@
       = f.input :name
       = f.input :name_business_owner
       = f.input :privacy_policy_url
+      = f.input :inbound_email_config, collection: Organization.inbound_email_configs.keys.map(&:to_sym), include_blank: false
       =# f.input :subdomain not used ATM
       =# f.input :domain not used ATM
       .form-actions.mt-4

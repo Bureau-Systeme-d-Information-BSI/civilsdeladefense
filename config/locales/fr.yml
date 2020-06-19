@@ -548,6 +548,12 @@ fr:
           title: "Paramètres de sécurité"
         update:
           success: "Paramètres modifiés !"
+        update_general:
+          success: "Paramètres généraux modifiés !"
+        update_display:
+          success: "Paramètres d'affichage modifiés !"
+        update_security:
+          success: "Paramètres de sécurité modifiés !"
       pages:
         edit:
           title: "Édition de page"

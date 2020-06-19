@@ -11,7 +11,7 @@ class Admin::Settings::OrganizationsController < Admin::Settings::BaseController
 
   def update_general
     if @organization.update(general_permitted_params)
-      redirect_to action: :edit, notice: t('.success')
+      redirect_to({action: :edit}, notice: t('.success'))
     else
       @organization_form_general = @organization
       @organization_form_display = @organization_cloned
@@ -23,7 +23,7 @@ class Admin::Settings::OrganizationsController < Admin::Settings::BaseController
 
   def update_display
     if @organization.update(display_permitted_params)
-      redirect_to action: :edit, notice: t('.success')
+      redirect_to({action: :edit}, notice: t('.success'))
     else
       @organization_form_general = @organization_cloned
       @organization_form_display = @organization
@@ -35,7 +35,7 @@ class Admin::Settings::OrganizationsController < Admin::Settings::BaseController
 
   def update_security
     if @organization.update(security_permitted_params)
-      redirect_to action: :edit, notice: t('.success')
+      redirect_to({action: :edit}, notice: t('.success'))
     else
       @organization_form_general = @organization_cloned
       @organization_form_display = @organization_cloned

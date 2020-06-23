@@ -18,6 +18,6 @@
               = I18n.l email.created_at, format: :short
             = t('.time_ago', time_ago_in_words: time_ago_in_words(email.created_at))
       .card-subheader.bg-card-bg.font-weight-bold.text-muted
-        = email.subject
+        = sanitize(email.subject, tags: %w())
       .card-body.bg-white
-        = simple_format email.body
+        = simple_format(sanitize(email.body, tags: %w()))

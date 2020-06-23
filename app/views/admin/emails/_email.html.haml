@@ -30,9 +30,9 @@
       = link_to url, method: :post, remote: true, class: klasses, title: title do
         = fa_icon icon
   .card-subheader.bg-card-bg.font-weight-bold.text-muted
-    = email.subject
+    = sanitize(email.subject, tags: %w())
   .card-body.bg-white
-    = simple_format email.body
+    = simple_format(sanitize(email.body, tags: %w()))
     - if email.attachments.any?
       %ul.list-unstyled.mb-0
         - for attachment in email.attachments

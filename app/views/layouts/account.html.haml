@@ -21,5 +21,3 @@
             .d-none.alert.alert-success= flash[:success]
           = yield
     = javascript_pack_tag 'bundle'
-    - if ENV['INCLUDE_TRACKERS']
-      = render partial: "/shared/trackers"

@@ -68,8 +68,8 @@ class ApplicantNotificationsMailer < ApplicationMailer
   def fetch_original_email_id(message)
     current_organization = Organization.first
     if current_organization.inbound_email_config_catch_all?
-      from = message[:from]
-      from.split(/\+(.*)@/)[1]
+      recipient = message[:to].to_s
+      recipient.split(/\+(.*)@/)[1]
     elsif @organization.inbound_email_config_hidden_headers?
       references = message.header['References']
       message_id_parent = references&.value

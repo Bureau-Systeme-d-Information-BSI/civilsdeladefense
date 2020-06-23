@@ -1,4 +1,5 @@
-- cache @job_offer do
+- display_apply_button = @job_offer.published?
+- cache [@job_offer, display_apply_button] do
   - @with_background_image = true
   - @page_title = @job_offer.title + ' ' + @job_offer.location
   .row
@@ -6,7 +7,7 @@
       .card.job-offer-head-sticky
         .card-body
           = render partial: 'job_offer_head', locals: {job_offer: @job_offer, inside_card: true}
-          - unless preview_mode?
+          - if display_apply_button
             .text-center
               = link_to t('.apply'), [:apply, @job_offer], class: 'btn btn-primary btn-raised btn-lg'
     .col-12.col-md-7

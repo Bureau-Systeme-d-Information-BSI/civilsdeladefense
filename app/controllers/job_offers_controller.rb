@@ -98,7 +98,7 @@ class JobOffersController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_job_offer
     @job_offer = JobOffer.find(params[:id])
-    if !@job_offer.published? && !administrator_signed_in?
+    if !@job_offer.published? && !always_display_job_offer(@job_offer)
       raise JobOfferNotAvailableAnymore.new(job_offer_title: @job_offer.title)
     end
     return redirect_to @job_offer, status: :moved_permanently if params[:id] != @job_offer.slug
@@ -116,5 +116,9 @@ class JobOffersController < ApplicationController
     job_application_files_attributes = %i[content job_application_file_type_id]
     permitted_params << { job_application_files_attributes: job_application_files_attributes }
     params.require(:job_application).permit(permitted_params)
+  end
+
+  def always_display_job_offer(job_offer)
+    administrator_signed_in? || (user_signed_in? && current_user.already_applied?(job_offer))
   end
 end

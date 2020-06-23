@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
-  def preview_mode?
-    params[:preview].present?
-  end
-
   def show_stats_debug?
     params[:debug].present?
   end

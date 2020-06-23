@@ -12,7 +12,7 @@ class Page < ApplicationRecord
 
   validates :title, presence: true
 
-  belongs_to :organization
+  belongs_to :organization, touch: true
 
   def reinsert_children_branch
     return unless children_count.positive?

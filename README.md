@@ -171,3 +171,6 @@ Configuration par la variable d'environnement MAIL_URL :
 `MAIL_URL=imaps://username_url_encoded:password@host:port`
 Le protocole spécifié dans la chaîne de connexion sera ignoré et remplacé par imap (avec TLS), de même pour le port qui sera remplacé par 993.
 
+Transfert des emails dans la corbeille après traitement 
+Configuration par la variable d'environnement MAIL_FOLDER_TRASH :
+`MAIL_FOLDER_TRASH=Trash`

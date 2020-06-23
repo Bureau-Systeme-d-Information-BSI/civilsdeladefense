@@ -16,7 +16,7 @@ class InboundMessage
       from = message[:from]
       to = message[:to]
       Rails.logger.debug "Message from #{from} to #{to} will be trashed"
-      imap.uid_move(uid, ENV['MAIL_FOLDER_TRASH'])
+      imap.uid_move(uid, ENV['MAIL_FOLDER_TRASH']) if !Rails.env.development? && ENV['MAIL_FOLDER_TRASH'].present?
     end
   end
 

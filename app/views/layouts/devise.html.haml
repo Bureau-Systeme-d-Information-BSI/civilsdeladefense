@@ -49,5 +49,3 @@
     - if resource.is_a?(User)
       = render partial: '/shared/footer'
     = javascript_pack_tag 'devise-bundle'
-    - if ENV['INCLUDE_TRACKERS']
-      = render partial: "/shared/trackers"

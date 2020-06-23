@@ -6,8 +6,6 @@
     %meta{name: "viewport", content: "width=device-width, initial-scale=1, shrink-to-fit=no"}
     = stylesheet_link_tag 'https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500|Roboto+Mono:400,500', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'admin-bundle', 'data-turbolinks-track': 'reload'
-    - if ENV['INCLUDE_TRACKERS']
-      = render partial: '/shared/trackers'
     = stylesheet_pack_tag 'admin-style', 'data-turbolinks-track': 'reload'
     = csrf_meta_tags
     = csp_meta_tag

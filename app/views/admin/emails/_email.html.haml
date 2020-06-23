@@ -1,42 +1,43 @@
 - unread_by_administrator = email.is_unread? && email.sender.is_a?(User)
 - id = dom_id(email)
-.email.card{id: id}
-  - if unread_by_administrator
-    .notification 1
-  .card-header.with-subheader.bg-white.font-weight-bold.text-secondary.d-flex.align-items-center
-    .mr-auto
-      = fa_icon('forum', class: 'text-secondary')
-      - if email.automatic_email?
-        %em Courriel automatique
-      - else
-        = precede 'de ' do
-          = email.sender&.full_name
-      %br
-      %small.datetime
-        = surround 'le ', ' - ' do
-          = I18n.l email.created_at, format: :short
-        = t('.time_ago', time_ago_in_words: time_ago_in_words(email.created_at))
-    - if email.sender && email.sender.is_a?(User)
-      - klasses = %w(btn bmd-btn-icon)
-      - if unread_by_administrator
-        - klasses << 'opaque'
-        - url = [:mark_as_read, :admin, @job_application, email]
-        - title = t('.mark_as_read')
-        - icon = 'email'
-      - else
-        - url = [:mark_as_unread, :admin, @job_application, email]
-        - title = t('.mark_as_unread')
-        - icon = 'email-open'
-      = link_to url, method: :post, remote: true, class: klasses, title: title do
-        = fa_icon icon
-  .card-subheader.bg-card-bg.font-weight-bold.text-muted
-    = sanitize(email.subject, tags: %w())
-  .card-body.bg-white
-    = simple_format(sanitize(email.body, tags: %w()))
-    - if email.attachments.any?
-      %ul.list-unstyled.mb-0
-        - for attachment in email.attachments
-          %li
-            = link_to rails_blob_path(attachment, disposition: "attachment") do
-              = fa_icon('file-document')
-              = attachment.filename
+= cache email do
+  .email.card{id: id}
+    - if unread_by_administrator
+      .notification 1
+    .card-header.with-subheader.bg-white.font-weight-bold.text-secondary.d-flex.align-items-center
+      .mr-auto
+        = fa_icon('forum', class: 'text-secondary')
+        - if email.automatic_email?
+          %em Courriel automatique
+        - else
+          = precede 'de ' do
+            = email.sender&.full_name
+        %br
+        %small.datetime
+          = surround 'le ', ' - ' do
+            = I18n.l email.created_at, format: :short
+          = t('.time_ago', time_ago_in_words: time_ago_in_words(email.created_at))
+      - if email.sender && email.sender.is_a?(User)
+        - klasses = %w(btn bmd-btn-icon)
+        - if unread_by_administrator
+          - klasses << 'opaque'
+          - url = [:mark_as_read, :admin, @job_application, email]
+          - title = t('.mark_as_read')
+          - icon = 'email'
+        - else
+          - url = [:mark_as_unread, :admin, @job_application, email]
+          - title = t('.mark_as_unread')
+          - icon = 'email-open'
+        = link_to url, method: :post, remote: true, class: klasses, title: title do
+          = fa_icon icon
+    .card-subheader.bg-card-bg.font-weight-bold.text-muted
+      = sanitize(email.subject, tags: %w())
+    .card-body.bg-white
+      = simple_format(sanitize(email.body, tags: %w()))
+      - if email.attachments.any?
+        %ul.list-unstyled.mb-0
+          - for attachment in email.attachments
+            %li
+              = link_to rails_blob_path(attachment, disposition: "attachment") do
+                = fa_icon('file-document')
+                = attachment.filename

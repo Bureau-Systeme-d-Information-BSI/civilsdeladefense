@@ -1,7 +1,7 @@
 .container
   .row.bg-white.border-bottom
     .col-12
-      %button.close.mt-2{type: :button, data: { dismiss: :modal }, aria: { label: t("buttons.close") }}
+      = link_to({action: :index}, class: 'close mt-2') do
         %span{ aria: { hidden: true }}
           &times
       = render partial: '/job_offers/job_offer_head', locals: {job_offer: @job_offer}

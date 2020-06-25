@@ -32,15 +32,15 @@ class JobOffersController < ApplicationController
     if user_signed_in? && (@previous_job_application = current_user.job_applications.first)
       @job_application = @previous_job_application.dup
       @job_application.state = JobApplication.new.state
-      if current_user.personal_profile.present?
-        @job_application.personal_profile = current_user.personal_profile.dup
-      else
-        @job_application.build_personal_profile
-      end
+      @job_application.personal_profile = current_user.personal_profile.dup
     else
       @job_application = JobApplication.new
-      @job_application.user = User.new
-      @job_application.build_personal_profile
+      if user_signed_in?
+        @job_application.personal_profile = current_user.personal_profile.dup
+      else
+        @job_application.user = User.new
+        @job_application.build_personal_profile
+      end
     end
   end
 
@@ -106,12 +106,15 @@ class JobOffersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def job_application_params
-    permitted_params = %i[terms_of_service certify_majority]
+    permitted_params = %i[]
 
     profile_fields = %i[id current_position phone website_url]
     permitted_params << [personal_profile_attributes: profile_fields]
     user_attributes = %i[first_name last_name]
-    user_attributes += %i[photo email password password_confirmation] unless user_signed_in?
+    base_user_attributes = %i[photo email
+                              password password_confirmation
+                              terms_of_service certify_majority]
+    user_attributes += base_user_attributes unless user_signed_in?
     permitted_params << { user_attributes: user_attributes }
     job_application_files_attributes = %i[content job_application_file_type_id]
     permitted_params << { job_application_files_attributes: job_application_files_attributes }

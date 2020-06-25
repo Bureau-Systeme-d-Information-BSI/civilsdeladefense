@@ -7,6 +7,8 @@ FactoryBot.define do
     last_name { Faker::Name.last_name }
     email { Faker::Internet.safe_email }
     password { 'f4k3p455w0rD!' }
+    terms_of_service { true }
+    certify_majority { true }
     after(:create) do |user|
       user.personal_profile = create(:personal_profile, personal_profileable: user)
     end

@@ -18,7 +18,7 @@ class User < ApplicationRecord
             file_size: { less_than: 1.megabytes }
 
   validates :first_name, :last_name, presence: true
-
+  validates :terms_of_service, :certify_majority, acceptance: true
   validate :password_complexity
 
   def full_name

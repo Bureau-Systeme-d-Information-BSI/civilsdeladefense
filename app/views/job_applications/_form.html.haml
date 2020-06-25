@@ -57,15 +57,14 @@
           .col-12.col-md-6
             = user_form.input :password_confirmation, required: true
 
-    .row.mt-4.mb-3
-      .col-12
+        .mt-4.mb-3
         - privacy_policy_url = current_organization.privacy_policy_url
         - site_name = current_organization.name
         - business_owner_name = current_organization.name_business_owner
-        - label = t('simple_form.labels.job_application.terms_of_service', link: privacy_policy_url, site_name: site_name, business_owner_name: business_owner_name).html_safe
-        = f.input :terms_of_service, as: :boolean, label: label, label_html: { class: 'ml-2' }
-        = f.input :certify_majority, as: :boolean, label_html: { class: 'ml-2' }
-        = f.invisible_captcha :subtitle
+        - label = t('simple_form.labels.user.terms_of_service', link: privacy_policy_url, site_name: site_name, business_owner_name: business_owner_name).html_safe
+        = user_form.input :terms_of_service, as: :boolean, label: label, label_html: { class: 'ml-2' }
+        = user_form.input :certify_majority, as: :boolean, label_html: { class: 'ml-2' }
+    = f.invisible_captcha :subtitle
 
   .form-actions.text-center.mt-md-4
     = button_tag(type: 'submit', class: 'btn btn-primary btn-raised btn-lg d-none d-md-inline mb-0') do

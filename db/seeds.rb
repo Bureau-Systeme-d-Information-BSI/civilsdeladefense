@@ -374,6 +374,8 @@ user = User.new email: 'coin@pan.fr',
                 organization: organization,
                 password: ENV['SEED_PASSWORD'],
                 password_confirmation: ENV['SEED_PASSWORD'],
+                terms_of_service: true,
+                certify_majority: true,
                 photo: photo,
                 personal_profile_attributes: {
                   current_position: 'Développeur',
@@ -387,8 +389,6 @@ job_application = JobApplication.new do |ja|
   ja.organization = organization
   ja.job_offer = job_offer
   ja.user = user
-  ja.terms_of_service = true
-  ja.certify_majority = true
 end
 job_application.build_personal_profile({
   gender: 'male',
@@ -414,8 +414,6 @@ job_application2 = JobApplication.new do |ja|
   ja.organization = organization
   ja.job_offer = job_offer2
   ja.user = user
-  ja.terms_of_service = true
-  ja.certify_majority = true
 end
 job_application2.build_personal_profile({
   gender: 'male',
@@ -434,6 +432,8 @@ user_candidate_of_all = User.new email: Faker::Internet.email,
                                  last_name: 'Agoini',
                                  password: ENV['SEED_PASSWORD'],
                                  password_confirmation: ENV['SEED_PASSWORD'],
+                                 terms_of_service: true,
+                                 certify_majority: true,             
                                  personal_profile_attributes: {
                                    current_position: 'Développeur',
                                    phone: '0606060606'
@@ -452,6 +452,8 @@ JobOffer.where.not(duration_contract: nil).where.not(id: [job_offer4.id, job_off
                     last_name: Faker::Name.last_name,
                     password: ENV['SEED_PASSWORD'],
                     password_confirmation: ENV['SEED_PASSWORD'],
+                    terms_of_service: true,
+                    certify_majority: true,
                     personal_profile_attributes: {
                       current_position: 'Développeur',
                       phone: '0606060606'
@@ -464,8 +466,6 @@ JobOffer.where.not(duration_contract: nil).where.not(id: [job_offer4.id, job_off
       ja.organization = organization
       ja.job_offer = job_offer
       ja.user = user
-      ja.terms_of_service = true
-      ja.certify_majority = true
       ja.created_at = 1.upto(6).map{|x| x.days.ago}
       ja.experiences_fit_job_offer = boolean_choices.sample
     end
@@ -503,8 +503,6 @@ JobOffer.where.not(duration_contract: nil).where.not(id: [job_offer4.id, job_off
     ja.organization = organization
     ja.job_offer = job_offer
     ja.user = user_candidate_of_all
-    ja.terms_of_service = true
-    ja.certify_majority = true
   end
   job_application.build_personal_profile({
     gender: PersonalProfile.genders.keys.sample,

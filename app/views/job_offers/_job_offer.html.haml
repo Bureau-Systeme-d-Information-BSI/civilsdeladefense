@@ -15,8 +15,9 @@
                 .mr-1
                   \-
                 = job_offer.location
-            %small
-              %small.mt-1= t('.published_date', time_ago_in_words: time_ago_in_words(job_offer.created_at))
+            - if job_offer.published_at.present?
+              %small
+                %small.mt-1= t('.published_date', time_ago_in_words: time_ago_in_words(job_offer.published_at))
           %button.btn.btn-primary.btn-raised.btn-l.mb-0.ml-auto{title: t('.show')}
             = fa_icon('chevron-right')
       %hr.mb-0

@@ -25,6 +25,6 @@
     .mr-auto= t('.published_date', time_ago_in_words: time_ago_in_words(job_application.created_at))
     %ul.list-inline.mb-0.actions.mt-2.mt-md-0
       %li.list-inline-item
-        = link_to [job_offer, preview: true], target: '_blank' do
+        = link_to [job_offer], target: '_blank' do
           = fa_icon 'eye'
           = t('buttons.preview')

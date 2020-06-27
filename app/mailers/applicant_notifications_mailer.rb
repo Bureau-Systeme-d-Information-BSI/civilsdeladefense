@@ -70,7 +70,7 @@ class ApplicantNotificationsMailer < ApplicationMailer
     if current_organization.inbound_email_config_catch_all?
       recipient = message[:to].to_s
       recipient.split(/\+(.*)@/)[1]
-    elsif @organization.inbound_email_config_hidden_headers?
+    elsif current_organization.inbound_email_config_hidden_headers?
       references = message.header['References']
       message_id_parent = references&.value
       message_id_parent&.scan(/<(.*)@/)&.flatten&.first

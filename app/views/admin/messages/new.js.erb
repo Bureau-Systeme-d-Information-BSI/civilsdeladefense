@@ -1,0 +1,6 @@
+var formMessageNode = document.getElementById('new_message')
+var html = '<%= j render(partial: '/admin/messages/form') %>'
+var frag = document.createRange().createContextualFragment(html)
+formMessageNode.replaceWith(frag)
+$.snackbar({content: '<%= @notification %>'})
+

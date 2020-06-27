@@ -22,7 +22,10 @@ class Admin::MessagesController < Admin::BaseController
         format.json { render :show, status: :created, location: @message }
       else
         format.html { render :new }
-        format.json { render json: @message.errors, status: :unprocessable_entity }
+        format.js do
+          @notification = t('.failure')
+          render :new
+        end
       end
     end
   end

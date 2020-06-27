@@ -1,5 +1,6 @@
 - real_action_name = controller.action_name == 'index' ? 'active' : 'finished'
-- @page_title = t('.' + real_action_name).split('(').first
+- title = t('.' + real_action_name, count: @job_applications.count).split('(').first
+- @page_title = strip_tags(title)
 .card
   .card-body
     .d-flex.flex-column.flex-md-row.align-items-start.align-items-md-center

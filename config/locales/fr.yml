@@ -403,6 +403,8 @@ fr:
     messages:
       create:
         success: "Message envoyé !"
+      create:
+        failure: "Une erreur est survenue, veuillez réessayer."
     shared:
       navbar:
         job_offers: "Offres"

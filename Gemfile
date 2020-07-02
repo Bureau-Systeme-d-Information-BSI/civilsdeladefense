@@ -55,7 +55,7 @@ gem 'rollbar'
 gem 'sequenced'
 gem 'simple_form'
 gem 'trix-rails', require: 'trix'
-gem 'turbolinks'
+gem 'turbolinks', require: false
 gem 'will_paginate'
 
 gem 'clockwork' # simulate cron on Scalingo

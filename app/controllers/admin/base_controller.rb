@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'turbolinks/redirection'
+
 class Admin::BaseController < ApplicationController
   include Turbolinks::Redirection
 

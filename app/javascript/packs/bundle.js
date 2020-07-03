@@ -11,7 +11,6 @@ const Rails = require('rails-ujs')
 Rails.start()
 
 import 'mdn-polyfills/Element.prototype.closest'
-import getLabelsForInputElement from 'js/polyfill-like-labels.js'
 
 import smoothscroll from 'smoothscroll-polyfill'
 // kick off the polyfill!
@@ -27,6 +26,7 @@ importAll(require.context('icons/', true, /\.svg$/))
 require('js/file-drop.js')
 
 import offCanvas from 'js/off-canvas'
+import customFileInput from 'js/custom-file-input'
 import manageSendApplicationForm from 'js/manage-send-application-form'
 import formAutoSubmit from 'js/form-auto-submit'
 window.formAutoSubmit = formAutoSubmit
@@ -43,39 +43,11 @@ require('bootstrap-material-design')
 $('body').bootstrapMaterialDesign()
 
 document.addEventListener('DOMContentLoaded', function() {
-
   formAutoSubmit()
   manageDropAreas()
   manageSendApplicationForm()
+  customFileInput()
   offCanvas()
-
-  ;[].forEach.call(document.querySelectorAll('.custom-file-input'), function(el) {
-    el.addEventListener('change', function() {
-      var input = this
-      let fileName = input.value.split('\\').pop()
-      let labels = getLabelsForInputElement(input)
-      let label = labels[labels.length - 1]
-      label.classList.add('selected')
-      var labelPlaceholder = label.innerHTML
-      label.innerHTML = fileName
-      var elementAlreadyExisting = label.parentNode.querySelector('.delete')
-      if (elementAlreadyExisting === null) {
-        var element = document.createElement('div')
-        element.classList.add('delete')
-        element.innerHTML = '✕'
-        element.addEventListener("click", (e) => {
-          if (confirm("Êtes-vous sûr?")) {
-            input.value = ''
-            input.classList.remove('is-invalid')
-            label.classList.remove('selected')
-            label.innerHTML = labelPlaceholder
-            element.parentNode.removeChild(element)
-          }
-        })
-        label.parentNode.appendChild(element)
-      }
-    })
-  })
 })
 
 $( document ).ready(function() {

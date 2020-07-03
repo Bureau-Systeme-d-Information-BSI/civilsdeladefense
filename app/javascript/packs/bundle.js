@@ -24,9 +24,9 @@ function importAll(r) {
 importAll(require.context('images/', true, /\.(ico|png|jpe?g|svg|gif)$/))
 importAll(require.context('icons/', true, /\.svg$/))
 
-require('js/offcanvas.js')
 require('js/file-drop.js')
 
+import offCanvas from 'js/off-canvas'
 import manageSendApplicationForm from 'js/manage-send-application-form'
 import formAutoSubmit from 'js/form-auto-submit'
 window.formAutoSubmit = formAutoSubmit
@@ -47,6 +47,7 @@ document.addEventListener('DOMContentLoaded', function() {
   formAutoSubmit()
   manageDropAreas()
   manageSendApplicationForm()
+  offCanvas()
 
   ;[].forEach.call(document.querySelectorAll('.custom-file-input'), function(el) {
     el.addEventListener('change', function() {

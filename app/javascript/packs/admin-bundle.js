@@ -64,9 +64,9 @@ function importAll(r) {
 importAll(require.context('images/', true, /\.(ico|png|jpe?g|svg|gif)$/))
 importAll(require.context('icons/', true, /\.svg$/))
 
-require('js/offcanvas.js')
 require('js/board.js')
 
+import offCanvas from 'js/off-canvas'
 import dependentFields from 'js/dependent-fields'
 import cityAutocomplete from 'js/city-autocomplete'
 import salaryRangeInputsHandling from 'js/salary-range-inputs-handling'
@@ -226,6 +226,7 @@ document.addEventListener('turbolinks:load', function() {
     inputSearchNode.addEventListener('click', function(e) {
     })
   })
+  offCanvas()
   formAutoSubmit()
   inPlaceEdit()
   salaryRangeInputsHandling()

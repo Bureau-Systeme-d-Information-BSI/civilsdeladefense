@@ -4,16 +4,19 @@
     = fa_icon('forum', class: 'text-secondary')
     = t('.title_state')
 
-  .btn-group.mt-0.w-100
-    - if can? :manage, @job_application
-      = simple_form_for [:change_state, :admin, @job_application], method: :patch, remote: true, html: {class: 'auto-submit w-100'} do |f|
-        - opts = @job_application.aasm.states.map{ |state| [JobApplication.human_attribute_name("state/#{ state }"), state] }
-        = f.input :state, collection: opts, label: false, prompt: :translate
-    - else
-      = link_to @job_application.aasm.human_state, "#", class: "btn btn-raised w-100 text-left"
+  - if can? :manage, @job_application
+    - url = [:change_state, :admin, @job_application]
+    = simple_form_for url, method: :patch, remote: true, wrapper: :inline_form, html: { class: 'form-inline auto-submit w-100 px-1 py-1', data: {flash: true}} do |f|
+      - opts = @job_application.aasm.states.map{ |state| [JobApplication.human_attribute_name("state/#{ state }"), state] }
+      = f.input :state, collection: opts, label: false, prompt: :translate, wrapper: :custom_multi_select_full_wide
+  - else
+    = link_to @job_application.aasm.human_state, "#", class: "btn btn-raised w-100 text-left"
+  
   - if @job_application.rejected_state?
-    = simple_form_for [:admin, @job_application], remote: true, html: {class: 'auto-submit w-100'} do |f|
-      = f.input :rejection_reason_id, collection: RejectionReason.all, label: false, prompt: :translate
+    .my-3
+    - url = [:admin, @job_application]
+    = simple_form_for url, remote: true, wrapper: :inline_form, html: { class: 'form-inline auto-submit w-100 px-1 py-1', data: {flash: true}} do |f|
+      = f.input :rejection_reason_id, collection: RejectionReason.all, label: false, prompt: :translate, wrapper: :custom_multi_select_full_wide
 
   .font-weight-bold.text-secondary.mb-3.mt-4
     = fa_icon('forum', class: 'text-secondary')

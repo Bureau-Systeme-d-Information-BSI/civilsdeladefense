@@ -1,0 +1,10 @@
+.flash {
+  animation: flash 1s ease-out;
+  animation-iteration-count: 1;
+}
+
+@keyframes flash {
+  0% { background-color: transparent; }
+  50% { background-color: #fbf8b2; }
+  100% { background-color: transparent; }
+}

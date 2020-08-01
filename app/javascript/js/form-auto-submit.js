@@ -16,6 +16,15 @@ export default function formAutoSubmit() {
       }
     }
 
+    if (formElement.getAttribute('data-flash') !== null) {
+      formElement.addEventListener("ajax:success", function(event) {
+        formElement.classList.add('flash')
+        setTimeout( function() {
+          formElement.classList.remove('flash')
+        }, 1000)
+      })
+    }
+
     var selectElements = formElement.querySelectorAll('select')
     ;[].forEach.call(selectElements, function(selectElement) {
       selectElement.addEventListener('change', function(e) {

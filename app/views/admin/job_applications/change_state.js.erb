@@ -1,6 +1,6 @@
+Snackbar.show({text: '<%= @notification %>', showAction: false})
 window.boardRedraw()
 <%- if @job_application.rejected? %>
 var url = '<%= url_for([:admin, @job_application]) %>' + '?tabopen=emails'
 window.boardShowRejectionModal(url)
 <%- end %>
-//$.snackbar({content: '<%= @notification %>'})

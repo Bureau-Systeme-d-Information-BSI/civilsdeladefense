@@ -5,5 +5,5 @@ if (node !== null) {
   var frag = document.createRange().createContextualFragment(html)
   node.replaceWith(frag)
 }
-// $.snackbar({content: '<%= @notification %>'})
+Snackbar.show({text: '<%= @notification %>', showAction: false})
 formAutoSubmit()

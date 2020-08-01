@@ -2,5 +2,5 @@ var node = document.getElementById('<%= dom_id(@job_application, 'emails') %>')
 var html = '<%= j render(template: '/account/emails/index') %>'
 var frag = document.createRange().createContextualFragment(html)
 node.replaceWith(frag)
-// $.snackbar({content: '<%= @notification %>'})
+Snackbar.show({showAction: false, text: '<%= @notification %>'})
 

@@ -1,4 +1,4 @@
-import Rails from 'rails-ujs'
+import Rails from '@rails/ujs'
 
 function preventDefaults (e) {
   e.preventDefault()

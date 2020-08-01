@@ -1,5 +1,5 @@
 import Sortable from 'sortablejs'
-import Rails from 'rails-ujs'
+import Rails from '@rails/ujs'
 import BSN from 'bootstrap.native/dist/bootstrap-native.js'
 import formAutoSubmit from 'js/form-auto-submit'
 

@@ -11,7 +11,7 @@ import Turbolinks from 'turbolinks'
 Turbolinks.start()
 
 // Import Rails UJS
-const Rails = require('rails-ujs')
+import Rails from '@rails/ujs'
 Rails.start()
 
 // Import Trix

@@ -1,4 +1,4 @@
-import Rails from 'rails-ujs'
+import Rails from '@rails/ujs'
 import Url from 'domurl'
 
 export default function jobOfferManagement() {

@@ -1,4 +1,4 @@
-const Rails = require('rails-ujs')
+import Rails from '@rails/ujs'
 
 export default function formAutoSubmit() {
   ;[].forEach.call(document.querySelectorAll('form.auto-submit'), function(formElement) {

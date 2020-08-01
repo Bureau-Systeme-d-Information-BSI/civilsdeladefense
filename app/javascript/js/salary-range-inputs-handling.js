@@ -1,4 +1,4 @@
-const Rails = require('rails-ujs')
+import Rails from '@rails/ujs'
 
 export default function salaryRangeInputsHandling() {
   var reactiveElements = ['job_offer_professional_category_id', 'job_offer_experience_level_id', 'job_offer_sector_id']

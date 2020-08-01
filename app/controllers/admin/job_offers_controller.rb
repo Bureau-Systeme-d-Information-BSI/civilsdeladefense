@@ -39,9 +39,7 @@ class Admin::JobOffersController < Admin::BaseController
   # GET /admin/job_offers/1/board.json
   def board
     @job_applications = @job_offer.job_applications.group_by(&:state)
-    if request.xhr?
-      render layout: false
-    end
+    request.xhr? && render(layout: false)
   end
 
   def add_actor
@@ -118,11 +116,7 @@ class Admin::JobOffersController < Admin::BaseController
   protected
 
   def choose_layout
-    if %w[index archived show board stats applicant_stats].include?(action_name)
-      'admin/job_offer_single'
-    else
-      'admin'
-    end
+    %w[index archived show board].include?(action_name) ? 'admin/job_offer_single' : 'admin'
   end
 
   private

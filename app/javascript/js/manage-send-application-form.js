@@ -1,3 +1,7 @@
+import 'mdn-polyfills/Element.prototype.closest'
+import smoothscroll from 'smoothscroll-polyfill'
+smoothscroll.polyfill()
+
 const Rails = require('rails-ujs')
 
 function cleanupInvalidFields () {

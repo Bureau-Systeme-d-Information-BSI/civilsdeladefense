@@ -1,3 +1,5 @@
+import 'mdn-polyfills/Element.prototype.closest'
+
 const Rails = require('rails-ujs')
 
 export default function inPlaceEdit() {

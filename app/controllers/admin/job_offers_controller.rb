@@ -39,6 +39,9 @@ class Admin::JobOffersController < Admin::BaseController
   # GET /admin/job_offers/1/board.json
   def board
     @job_applications = @job_offer.job_applications.group_by(&:state)
+    if request.xhr?
+      render layout: false
+    end
   end
 
   def add_actor

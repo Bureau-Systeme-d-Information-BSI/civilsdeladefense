@@ -22,5 +22,5 @@
             .d-none.alert.alert-success= flash[:success]
           = content_for?(:content) ? yield(:content) : yield
     = render partial: '/shared/footer'
-    = javascript_pack_tag 'bundle'
+    = javascript_pack_tag 'bundle', defer: true
     = render partial: "/shared/trackers"

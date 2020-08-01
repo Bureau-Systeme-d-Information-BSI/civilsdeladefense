@@ -6,16 +6,13 @@
 
   .btn-group.mt-0.w-100
     - if can? :manage, @job_application
-      = link_to @job_application.aasm.human_state, "#", class: "btn btn-raised dropdown-toggle w-100 d-flex", style: 'text-align:left;', data: {toggle: :dropdown}, aria: {haspopup: true, expanded: false}
-      .dropdown-menu
-        - @job_application.aasm.states.map(&:name).each do |state|
-          - klasses = %w(dropdown-item)
-          - klasses << 'disabled' if @job_application.state.to_sym == state
-          = link_to JobApplication.human_attribute_name("state/#{ state }"), [:change_state, :admin, @job_application, {state: state}], method: :patch, remote: true, class: klasses
+      = simple_form_for [:change_state, :admin, @job_application], method: :patch, remote: true, html: {class: 'auto-submit w-100'} do |f|
+        - opts = @job_application.aasm.states.map{ |state| [JobApplication.human_attribute_name("state/#{ state }"), state] }
+        = f.input :state, collection: opts, label: false, prompt: :translate
     - else
       = link_to @job_application.aasm.human_state, "#", class: "btn btn-raised w-100 text-left"
   - if @job_application.rejected_state?
-    = simple_form_for [:admin, @job_application], remote: true, html: {class: 'mt-2 auto-submit'} do |f|
+    = simple_form_for [:admin, @job_application], remote: true, html: {class: 'auto-submit w-100'} do |f|
       = f.input :rejection_reason_id, collection: RejectionReason.all, label: false, prompt: :translate
 
   .font-weight-bold.text-secondary.mb-3.mt-4

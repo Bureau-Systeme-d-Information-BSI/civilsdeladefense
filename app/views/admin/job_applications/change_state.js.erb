@@ -1,32 +1,6 @@
-var activityNode = document.getElementById('<%= dom_id(@job_application, 'activity') %>')
-if (activityNode !== null) {
-  var html = '<%= j render(partial: '/admin/job_applications/job_application_activity') %>'
-  var frag = document.createRange().createContextualFragment(html)
-  activityNode.replaceWith(frag)
-}
-
-var cardNode = document.getElementById('<%= dom_id(@job_application) %>')
-if (cardNode !== null) {
-  cardNode.remove()
-  var newState = '<%= @state %>'
-  var listId = "job-application--state-" + newState
-  var listNode = document.getElementById(listId)
-  if (listNode !== null) {
-    var containerNode = listNode.querySelector('.cards')
-    if (containerNode !== null) {
-      var html = '<%= j render(partial: '/admin/job_offers/job_application', locals: { job_application: @job_application, with_header: false }) %>'
-      var frag = document.createRange().createContextualFragment(html)
-      containerNode.insertAdjacentHTML('afterbegin', html)
-    }
-  }
-}
-
+window.boardRedraw()
 <%- if @job_application.rejected? %>
-  var url = '<%= url_for([:admin, @job_application]) %>' + '?tabopen=emails'
-  $('#remoteContentModal').find('.modal-content').load(url, function() {
-    $('#remoteContentModal').modal( 'show' );
-  });
+var url = '<%= url_for([:admin, @job_application]) %>' + '?tabopen=emails'
+window.boardShowRejectionModal(url)
 <%- end %>
-
-$.snackbar({content: '<%= @notification %>'})
-window.recomputeColumnTotal('<%= @state %>')
+//$.snackbar({content: '<%= @notification %>'})

@@ -1,3 +1,5 @@
+import 'mdn-polyfills/Element.prototype.closest'
+
 function initRoleChange() {
   let role_select = document.getElementById('administrator_role')
   if (role_select !== null) {

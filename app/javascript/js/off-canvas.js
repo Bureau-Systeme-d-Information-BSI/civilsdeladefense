@@ -1,15 +1,15 @@
-export default function offCancas() {
-  ;[].forEach.call(document.querySelectorAll('[data-toggle="offcanvas"]'), function(offcancasButtonNode) {
-    offcancasButtonNode.addEventListener('click', function(evt) {
-      ;[].forEach.call(document.querySelectorAll('.offcanvas-collapse'), function(offcancasMenu) {
-        offcancasMenu.classList.toggle('open')
+export default function offCanvas() {
+  ;[].forEach.call(document.querySelectorAll('[data-toggle="offcanvas"]'), function(offcanvasButtonNode) {
+    offcanvasButtonNode.addEventListener('click', function(evt) {
+      ;[].forEach.call(document.querySelectorAll('.offcanvas-collapse'), function(offcanvasMenu) {
+        offcanvasMenu.classList.toggle('open')
       })
     })
   })
 
-  ;[].forEach.call(document.querySelectorAll('.offcanvas-collapse'), function(offcancasMenu) {
-    offcancasMenu.addEventListener('click', function(evt) {
-      offcancasMenu.classList.toggle('open')
+  ;[].forEach.call(document.querySelectorAll('.offcanvas-collapse'), function(offcanvasMenu) {
+    offcanvasMenu.addEventListener('click', function(evt) {
+      offcanvasMenu.classList.toggle('open')
     })
   })
 }

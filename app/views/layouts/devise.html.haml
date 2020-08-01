@@ -48,4 +48,4 @@
           .col-12.col-md-5.col-xl-6{style: style_value}
     - if resource.is_a?(User)
       = render partial: '/shared/footer'
-    = javascript_pack_tag 'devise-bundle'
+    = javascript_pack_tag 'devise-bundle', defer: true

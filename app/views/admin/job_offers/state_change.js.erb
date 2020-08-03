@@ -12,4 +12,4 @@ var jobOffer = document.getElementById('<%= dom_id(@job_offer) %>')
 var html = '<%= j render(partial: 'job_offer', locals: { job_offer: @job_offer }) %>'
 var frag = document.createRange().createContextualFragment(html)
 jobOffer.replaceWith(frag)
-$.snackbar({content: '<%= @notification %>'})
+Snackbar.show({showAction: false, text: '<%= @notification %>'})

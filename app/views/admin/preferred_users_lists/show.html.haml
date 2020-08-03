@@ -4,7 +4,7 @@
     .d-flex.align-items-center
       .h4.text-primary.d-md-flex.align-items-center.mr-auto
         = t('.preferred_users_html', count: @preferred_users.count, list_name: @preferred_users_list.name)
-      = link_to [:edit, :admin, :preferred_users_list], class: 'btn btn-primary btn-raised', data: {toggle: 'modal', target: '#remoteContentModal'} do
+      = link_to [:edit, :admin, :preferred_users_list], class: 'btn btn-primary btn-raised' do
         = t('buttons.edit')
     = render partial: 'search'
     .d-flex.align-items-end

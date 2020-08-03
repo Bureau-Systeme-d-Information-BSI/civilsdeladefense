@@ -379,6 +379,18 @@ SimpleForm.setup do |config|
     b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
   end
 
+  # custom multi select
+  config.wrappers :custom_multi_select_full_wide, tag: 'div', class: 'form-group w-100', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+    b.use :html5
+    b.optional :readonly
+    b.use :label, class: 'form-control-label'
+    b.wrapper tag: 'div', class: 'd-flex flex-row justify-content-between align-items-center w-100' do |ba|
+      ba.use :input, class: 'custom-select w-100', error_class: 'is-invalid', valid_class: 'is-valid'
+    end
+    b.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
+    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+  end  
+
   # custom range input
   config.wrappers :custom_range, tag: 'div', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
     b.use :html5

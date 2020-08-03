@@ -50,7 +50,7 @@ RSpec.describe Admin::PreferredUsersListsController, type: :controller do
 
         it 'redirects to the created preferred_users_list' do
           post :create, params: { preferred_users_list: valid_attributes }
-          expect(response.status).to eq(201)
+          expect(response.status).to eq(302)
         end
       end
 
@@ -79,7 +79,6 @@ RSpec.describe Admin::PreferredUsersListsController, type: :controller do
           expect do
             post :create, params: { preferred_users_list: valid_attributes }
           end.to change(PreferredUsersList, :count).by(1)
-          expect(response).to be_successful
         end
       end
     end

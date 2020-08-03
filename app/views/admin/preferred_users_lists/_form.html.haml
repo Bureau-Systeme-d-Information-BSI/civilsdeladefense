@@ -4,7 +4,7 @@
     - action_text = 'new' if %w[new create].include?(controller.action_name)
     - action_text = 'edit' if %w[edit update].include?(controller.action_name)
     %h4.mb-3= t(".title_#{action_text}")
-    = simple_form_for([:admin, resource], remote: true) do |f|
+    = simple_form_for([:admin, resource]) do |f|
       = f.error_notification
       = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
       .form-inputs

@@ -20,5 +20,5 @@ if (cardNode !== null) {
   cardNode.replaceWith(frag)
 }
 
-$.snackbar({content: '<%= @notification %>'})
+Snackbar.show({showAction: false, text: '<%= @notification %>'})
 

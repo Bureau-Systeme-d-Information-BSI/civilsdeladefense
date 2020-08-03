@@ -1,4 +1,4 @@
-import Rails from 'rails-ujs'
+import Rails from '@rails/ujs'
 
 function preventDefaults (e) {
   e.preventDefault()
@@ -23,7 +23,7 @@ function handleDrop(e) {
   Rails.fire(form, 'submit')
 }
 
-function manageDropArea (dropArea) {
+export function manageDropArea (dropArea) {
   ;['dragenter', 'dragover', 'dragleave', 'drop'].forEach((eventName) => {
     dropArea.addEventListener(eventName, preventDefaults, false)
   })
@@ -39,13 +39,9 @@ function manageDropArea (dropArea) {
   dropArea.addEventListener('drop', handleDrop, false)
 }
 
-window.manageDropArea = manageDropArea
-
-function manageDropAreas () {
+export function manageDropAreas () {
   var elements = document.querySelectorAll('.drop-area')
   ;[].forEach.call(elements, function(dropArea) {
     manageDropArea(dropArea)
   })
 }
-
-window.manageDropAreas = manageDropAreas

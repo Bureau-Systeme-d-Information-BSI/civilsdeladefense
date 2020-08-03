@@ -19,14 +19,11 @@ importAll(require.context('icons/', true, /\.svg$/))
 
 import BSN from 'bootstrap.native/dist/bootstrap-native.esm.js'
 import offCanvas from 'js/off-canvas'
-import customFileInput from 'js/custom-file-input'
-import manageSendApplicationForm from 'js/manage-send-application-form'
-import formAutoSubmit from 'js/form-auto-submit'
-window.formAutoSubmit = formAutoSubmit
+import { manageDropArea, manageDropAreas } from 'js/file-drop'
+window.manageDropArea = manageDropArea
+window.manageDropAreas = manageDropAreas
 
 document.addEventListener('DOMContentLoaded', function() {
-  formAutoSubmit()
-  manageSendApplicationForm()
-  customFileInput()
   offCanvas()
+  manageDropAreas()
 })

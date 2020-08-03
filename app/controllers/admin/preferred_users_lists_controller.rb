@@ -15,6 +15,9 @@ class Admin::PreferredUsersListsController < Admin::InheritedResourcesController
     resource.administrator ||= current_administrator
     create! do |success, failure|
       success.html do
+        redirect_to [:admin, resource]
+      end
+      success.js do
         render json: {}.to_json, status: :created, location: [:admin, resource]
       end
       failure.html do
@@ -27,6 +30,9 @@ class Admin::PreferredUsersListsController < Admin::InheritedResourcesController
   def update
     update! do |success, failure|
       success.html do
+        redirect_to [:admin, resource]
+      end
+      success.js do
         render json: {}.to_json, status: :created, location: [:admin, resource]
       end
       failure.html do

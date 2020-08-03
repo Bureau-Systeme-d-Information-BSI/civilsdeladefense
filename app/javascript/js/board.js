@@ -1,18 +1,48 @@
 import Sortable from 'sortablejs'
-import Rails from 'rails-ujs'
+import Rails from '@rails/ujs'
+import BSN from 'bootstrap.native/dist/bootstrap-native.js'
+import formAutoSubmit from 'js/form-auto-submit'
 
-function recomputeColumnTotal(stateName) {
-  var listNode = document.querySelector(`.list[data-state='${stateName}']`)
-  if (listNode !== null) {
-    var total = listNode.querySelector('.cards').childElementCount
-    var totalNode = listNode.querySelector('.total')
-    totalNode.innerHTML = total
-  }
+export function boardRedraw() {
+  var url = window.location.href
+  var nodeBoard = document.querySelector('#board')
+  Rails.ajax({
+    type: 'GET',
+    url: url,
+    dataType: 'html',
+    success: (response) => {
+      nodeBoard.outerHTML = response.body.innerHTML
+      boardManagement()
+    },
+    error: (response) => {
+      console.log('error boardManagement')
+      console.log(response)
+    }
+  }) 
 }
 
-window.recomputeColumnTotal = recomputeColumnTotal
+export function boardShowRejectionModal(url) {
+  Rails.ajax({
+    type: 'GET',
+    url: url,
+    dataType: 'html',
+    success: (response) => {
+      var nodeRemoteContentModal = document.querySelector('#remoteContentModal')
+      var nodeModalContent = nodeRemoteContentModal.querySelector('.modal-content')
+      var html = response.body.innerHTML
+      nodeModalContent.insertAdjacentHTML('afterbegin', html)
+      new BSN.Modal('#remoteContentModal').show()
+      BSN.initCallback()
+      formAutoSubmit()
+    },
+    error: (response) => {
+      console.log('error boardManagement')
+      console.log(response)
+    }
+  })   
+}
 
-document.addEventListener('turbolinks:load', function() {
+export function boardManagement() {
   var board = document.getElementById('board')
   if (board !== null && board.getAttribute('data-draggable') !== null) {
     ;[].forEach.call(board.querySelectorAll('.lists .list'), function(listNode) {
@@ -34,10 +64,9 @@ document.addEventListener('turbolinks:load', function() {
               url: newChangeStateUrl,
               dataType: 'script',
               success: (response) => {
-                recomputeColumnTotal(oldState)
               },
               error: (response) => {
-                console.log("error")
+                console.log('error boardManagement')
                 console.log(response)
               }
             })
@@ -46,4 +75,4 @@ document.addEventListener('turbolinks:load', function() {
       })
     })
   }
-})
+}

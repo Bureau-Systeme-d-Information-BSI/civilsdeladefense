@@ -20,4 +20,4 @@
           - elsif flash[:success]
             .d-none.alert.alert-success= flash[:success]
           = yield
-    = javascript_pack_tag 'bundle'
+    = javascript_pack_tag 'account-bundle', defer: true

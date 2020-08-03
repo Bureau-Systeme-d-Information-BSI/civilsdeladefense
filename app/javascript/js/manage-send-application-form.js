@@ -1,4 +1,8 @@
-const Rails = require('rails-ujs')
+import 'mdn-polyfills/Element.prototype.closest'
+import smoothscroll from 'smoothscroll-polyfill'
+smoothscroll.polyfill()
+
+import Rails from '@rails/ujs'
 
 function cleanupInvalidFields () {
   ;[].forEach.call(document.querySelectorAll('.invalid-feedback'), function(el) {

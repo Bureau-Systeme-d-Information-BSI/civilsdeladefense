@@ -1,4 +1,6 @@
-const Rails = require('rails-ujs')
+import 'mdn-polyfills/Element.prototype.closest'
+
+import Rails from '@rails/ujs'
 
 export default function inPlaceEdit() {
   ;[].forEach.call(document.querySelectorAll('.in-place-edit'), function(el) {

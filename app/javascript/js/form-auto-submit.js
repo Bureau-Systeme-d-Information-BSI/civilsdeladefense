@@ -1,4 +1,4 @@
-const Rails = require('rails-ujs')
+import Rails from '@rails/ujs'
 
 export default function formAutoSubmit() {
   ;[].forEach.call(document.querySelectorAll('form.auto-submit'), function(formElement) {
@@ -14,6 +14,15 @@ export default function formAutoSubmit() {
           spinnerElement.classList.add('invisible')
         })
       }
+    }
+
+    if (formElement.getAttribute('data-flash') !== null) {
+      formElement.addEventListener("ajax:success", function(event) {
+        formElement.classList.add('flash')
+        setTimeout( function() {
+          formElement.classList.remove('flash')
+        }, 1000)
+      })
     }
 
     var selectElements = formElement.querySelectorAll('select')

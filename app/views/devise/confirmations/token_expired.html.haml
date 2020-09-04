@@ -1,0 +1,13 @@
+- errors = resource.errors
+%fieldset
+  %legend
+    = @page_title = t(".title")
+  .alert.alert-danger.mb-0
+    - if errors.full_messages.size == 1
+      = errors.full_messages.first
+    - else
+      %ul.mb-0
+        - errors.full_messages.each do |msg|
+          %li= msg
+  .form-links
+    = render "devise/shared/links"

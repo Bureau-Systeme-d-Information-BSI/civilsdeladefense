@@ -130,6 +130,14 @@ class Administrator < ApplicationRecord
     encrypted_password.blank?
   end
 
+  def confirmation_token_still_valid?
+    return true unless confirmation_period_expired?
+
+    errors.add(:base, :confirmation_period_expired,
+               period: Devise::TimeInflector.time_ago_in_words(self.class.confirm_within.ago))
+    false
+  end
+
   # Devise::Models:unless_confirmed` method doesn't exist in Devise 2.0.0 anymore.
   # Instead you should use `pending_any_confirmation`.
   def only_if_unconfirmed

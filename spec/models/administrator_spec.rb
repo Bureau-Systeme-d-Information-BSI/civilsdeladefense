@@ -28,6 +28,13 @@ RSpec.describe Administrator, type: :model do
     expect(@administrator.locked_at).to_not be_nil
   end
 
+  it 'check correctly the confirmation token validity duration' do
+    expect(@administrator.confirmation_token_still_valid?).to be_truthy
+
+    administrator2 = build(:administrator, confirmed_at: nil, confirmation_sent_at: 4.days.ago)
+    expect(administrator2.confirmation_token_still_valid?).to be_falsy
+  end
+
   it 'creates provided supervisor administrator when non-preexisting' do
     administrator = build(:administrator)
     employer = create(:employer)

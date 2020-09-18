@@ -6,6 +6,7 @@ class PersonalProfile < ApplicationRecord
   belongs_to :study_level, optional: true
   belongs_to :experience_level, optional: true
   belongs_to :availability_range, optional: true
+  belongs_to :age_range, optional: true
 
   #####################################
   # Validations

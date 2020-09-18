@@ -21,6 +21,28 @@
 - if show_stats_debug?
   %code= @per_gender
 
+%strong.text-quaternary.d-block.mt-4= t('.title_per_age_range')
+.pl-3.mt-2
+  - total = @per_age_range.values.sum
+  - if total > 0
+    - @per_age_range.each_with_index do |(k, v), index|
+      .d-flex.align-items-center.mb-2
+        .bar-chart__category_name
+          - if k.present?
+            - range = @age_ranges.detect{|x| x.id == k}
+            = range.name
+          - else
+            = t('unknown')
+        .bar-chart__category_percentage
+          - percentage = (v * 100.0) / total
+          = "#{percentage.to_i }%"
+        .flex-grow-1
+          .bar-chart__bar{style: "width: #{percentage}%;"}
+  - else
+    %em= t('.no_stats')
+- if show_stats_debug?
+  %code= @per_age_range
+
 .statistics-row.mt-5
   .col-12.col-md-3.statistic__block
     .statistic__name

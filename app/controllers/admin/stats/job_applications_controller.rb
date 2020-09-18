@@ -37,6 +37,7 @@ class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
 
   def build_stats_per_profile
     @per_gender = root_rel_profile.group(:gender).count
+    @per_age_range = root_rel_profile.group(:age_range_id).count
     @per_has_corporate_experience = root_rel_profile.group(:has_corporate_experience).count
     @per_is_currently_employed = root_rel_profile.group(:is_currently_employed).count
   end
@@ -74,5 +75,6 @@ class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
     @contract_types = ContractType.all
     @employers = Employer.all
     @rejection_reasons = RejectionReason.all
+    @age_ranges = AgeRange.all
   end
 end

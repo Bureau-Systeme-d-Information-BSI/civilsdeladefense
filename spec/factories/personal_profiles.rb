@@ -7,6 +7,7 @@ FactoryBot.define do
     website_url { 'MyString' }
     gender { 1 }
     is_currently_employed { false }
+    age_range { AgeRange.all.sample }
     availability_range { AvailabilityRange.all.sample }
     study_level { StudyLevel.all.sample }
     experience_level { ExperienceLevel.all.sample }

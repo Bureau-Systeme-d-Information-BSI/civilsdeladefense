@@ -44,7 +44,7 @@ module Admin::JobApplicationsHelper
   end
 
   def personal_profile_fields2
-    %i[is_currently_employed availability_range study_level
+    %i[is_currently_employed age_range availability_range study_level
        experience_level has_corporate_experience]
   end
 

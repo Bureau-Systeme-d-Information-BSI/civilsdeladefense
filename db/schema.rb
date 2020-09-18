@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_10_090501) do
+ActiveRecord::Schema.define(version: 2020_09_18_132335) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -82,6 +82,15 @@ ActiveRecord::Schema.define(version: 2020_09_10_090501) do
     t.index ["reset_password_token"], name: "index_administrators_on_reset_password_token", unique: true
     t.index ["supervisor_administrator_id"], name: "index_administrators_on_supervisor_administrator_id"
     t.index ["unlock_token"], name: "index_administrators_on_unlock_token", unique: true
+  end
+
+  create_table "age_ranges", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.integer "position"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_age_ranges_on_name"
+    t.index ["position"], name: "index_age_ranges_on_position"
   end
 
   create_table "audits", force: :cascade do |t|
@@ -435,6 +444,8 @@ ActiveRecord::Schema.define(version: 2020_09_10_090501) do
     t.datetime "updated_at", null: false
     t.string "current_position"
     t.uuid "availability_range_id"
+    t.uuid "age_range_id"
+    t.index ["age_range_id"], name: "index_personal_profiles_on_age_range_id"
     t.index ["availability_range_id"], name: "index_personal_profiles_on_availability_range_id"
     t.index ["experience_level_id"], name: "index_personal_profiles_on_experience_level_id"
     t.index ["personal_profileable_type", "personal_profileable_id"], name: "index_personal_profileable_type_and_id"
@@ -573,6 +584,7 @@ ActiveRecord::Schema.define(version: 2020_09_10_090501) do
   add_foreign_key "messages", "job_applications"
   add_foreign_key "organization_defaults", "organizations"
   add_foreign_key "pages", "organizations"
+  add_foreign_key "personal_profiles", "age_ranges"
   add_foreign_key "personal_profiles", "availability_ranges"
   add_foreign_key "personal_profiles", "experience_levels"
   add_foreign_key "personal_profiles", "study_levels"

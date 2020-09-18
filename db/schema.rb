@@ -10,11 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_23_072717) do
+ActiveRecord::Schema.define(version: 2020_09_10_090501) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
-  enable_extension "pg_stat_statements"
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
@@ -105,6 +104,15 @@ ActiveRecord::Schema.define(version: 2020_06_23_072717) do
     t.index ["created_at"], name: "index_audits_on_created_at"
     t.index ["request_uuid"], name: "index_audits_on_request_uuid"
     t.index ["user_id", "user_type"], name: "user_index"
+  end
+
+  create_table "availability_ranges", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.integer "position"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_availability_ranges_on_name"
+    t.index ["position"], name: "index_availability_ranges_on_position"
   end
 
   create_table "benefits", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -420,13 +428,14 @@ ActiveRecord::Schema.define(version: 2020_06_23_072717) do
     t.string "website_url"
     t.string "phone"
     t.boolean "is_currently_employed"
-    t.integer "availability_date_in_month"
     t.uuid "study_level_id"
     t.uuid "experience_level_id"
     t.boolean "has_corporate_experience"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "current_position"
+    t.uuid "availability_range_id"
+    t.index ["availability_range_id"], name: "index_personal_profiles_on_availability_range_id"
     t.index ["experience_level_id"], name: "index_personal_profiles_on_experience_level_id"
     t.index ["personal_profileable_type", "personal_profileable_id"], name: "index_personal_profileable_type_and_id"
     t.index ["study_level_id"], name: "index_personal_profiles_on_study_level_id"
@@ -564,6 +573,7 @@ ActiveRecord::Schema.define(version: 2020_06_23_072717) do
   add_foreign_key "messages", "job_applications"
   add_foreign_key "organization_defaults", "organizations"
   add_foreign_key "pages", "organizations"
+  add_foreign_key "personal_profiles", "availability_ranges"
   add_foreign_key "personal_profiles", "experience_levels"
   add_foreign_key "personal_profiles", "study_levels"
   add_foreign_key "preferred_users", "preferred_users_lists"

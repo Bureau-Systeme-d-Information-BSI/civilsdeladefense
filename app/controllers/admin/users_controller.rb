@@ -49,7 +49,7 @@ class Admin::UsersController < Admin::InheritedResourcesController
   # Never trust parameters from the scary internet, only allow the white list through.
   def permitted_params
     profile_fields = %i[id gender is_currently_employed
-                        availability_date_in_month study_level_id
+                        availability_range_id study_level_id
                         experience_level_id corporate_experience website_url
                         has_corporate_experience phone rejection_reason_id]
     fields = [:first_name, :last_name, { personal_profile_attributes: profile_fields }]

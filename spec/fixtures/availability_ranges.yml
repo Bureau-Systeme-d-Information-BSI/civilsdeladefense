@@ -1,0 +1,10 @@
+currently_employed:
+  name: En Poste
+immediately:
+  name: Medium
+one_month:
+  name: Disponible sous 1 mois
+two_months:
+  name: Disponible sous 2 mois
+three_months_plus:
+  name: Disponible sous 3 mois et plus

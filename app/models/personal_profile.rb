@@ -5,6 +5,7 @@ class PersonalProfile < ApplicationRecord
   belongs_to :personal_profileable, polymorphic: true
   belongs_to :study_level, optional: true
   belongs_to :experience_level, optional: true
+  belongs_to :availability_range, optional: true
 
   #####################################
   # Validations

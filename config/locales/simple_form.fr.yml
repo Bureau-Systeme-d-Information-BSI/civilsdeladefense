@@ -32,6 +32,7 @@ fr:
     labels:
       defaults:
         availability_date_in_month: "Disponible sous"
+        availability_range: "Disponibilité"
         body: "Corps du courriel"
         city: "Ville"
         country: "Pays"

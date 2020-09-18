@@ -21,8 +21,7 @@
       - fields = personal_profile_fields2
       - fields.each do |field|
         - hsh = {user: user, personal_profile: personal_profile, disabled: archived}
-        - hsh[:field] = field unless field =~ /_level/
-        - hsh[:association] = field if field =~ /_level/
+        - hsh[:field] = field unless field =~ /_level|availability_range/
+        - hsh[:association] = field if field =~ /_level|availability_range/
         - hsh[:choices] = choices_boolean if field == :is_currently_employed
-        - hsh[:choices] = choices_month if field == :availability_date_in_month
         = render partial: '/admin/personal_profiles/personal_profile_field', locals: hsh

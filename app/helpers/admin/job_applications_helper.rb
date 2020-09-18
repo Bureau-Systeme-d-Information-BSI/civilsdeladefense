@@ -44,7 +44,7 @@ module Admin::JobApplicationsHelper
   end
 
   def personal_profile_fields2
-    %i[is_currently_employed availability_date_in_month study_level
+    %i[is_currently_employed availability_range study_level
        experience_level has_corporate_experience]
   end
 
@@ -57,10 +57,6 @@ module Admin::JobApplicationsHelper
       [PersonalProfile.human_attribute_name('is_currently_employed/true'), true],
       [PersonalProfile.human_attribute_name('is_currently_employed/false'), false]
     ]
-  end
-
-  def choices_month
-    1.upto(12).to_a
   end
 
   def choices_gender

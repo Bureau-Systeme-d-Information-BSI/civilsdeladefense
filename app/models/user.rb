@@ -10,8 +10,8 @@ class User < ApplicationRecord
   has_many :job_applications, dependent: :destroy
   has_many :job_offers, through: :job_applications
   has_many :preferred_users
-  has_one :personal_profile, as: :personal_profileable
-  accepts_nested_attributes_for :personal_profile
+  has_one :user_profile, as: :user_profileable
+  accepts_nested_attributes_for :user_profile
 
   mount_uploader :photo, PhotoUploader, mount_on: :photo_file_name
   validates :photo,

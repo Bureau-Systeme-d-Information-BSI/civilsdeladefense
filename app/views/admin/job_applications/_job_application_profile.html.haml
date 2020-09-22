@@ -7,5 +7,4 @@
     - fields = job_application_profile_fields
     - fields.each do |field|
       - hsh = { job_application: job_application, field: field, disabled: job_offer.archived? }
-      = render partial: '/admin/personal_profiles/personal_profile_field', locals: hsh
-
+      = render partial: '/admin/user_profiles/user_profile_field', locals: hsh

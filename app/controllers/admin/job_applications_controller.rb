@@ -8,7 +8,7 @@ class Admin::JobApplicationsController < Admin::BaseController
     @employers = Employer.all
     @preferred_users_lists = current_administrator.preferred_users_lists
 
-    @job_applications = @job_applications.includes(:job_offer, user: %i[personal_profile])
+    @job_applications = @job_applications.includes(:job_offer, user: %i[user_profile])
     @q = @job_applications.ransack(params[:q])
     @job_applications_filtered = @q.result.yield_self do |relation|
       if params[:s].present?
@@ -37,8 +37,8 @@ class Admin::JobApplicationsController < Admin::BaseController
   def update
     respond_to do |format|
       if @job_application.update(job_application_params)
-        personal_profile = @job_application.user.personal_profile
-        personal_profile&.datalake_to_job_application_profiles!
+        user_profile = @job_application.user.user_profile
+        user_profile&.datalake_to_job_application_profiles!
         format.html { redirect_to [:admin, @job_application], notice: t('.success') }
         format.js do
           @notification = t('.success')

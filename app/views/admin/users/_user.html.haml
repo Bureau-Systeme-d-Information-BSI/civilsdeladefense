@@ -1,4 +1,4 @@
-- profile = user.personal_profile
+- profile = user.user_profile
 - job_application = defined?(job_application) ? job_application : nil
 - preferred_user = defined?(preferred_user) ? preferred_user : nil
 .card.job-application.mt-3{id: dom_id(user)}
@@ -18,7 +18,7 @@
         .col-12.personal-profile-is-currently-employed
           - is_currently_employed = profile&.is_currently_employed
           - if is_currently_employed
-            = PersonalProfile.human_attribute_name('is_currently_employed/'+profile&.is_currently_employed.to_s)
+            = UserProfile.human_attribute_name('is_currently_employed/'+profile&.is_currently_employed.to_s)
           - else
             = t('non_applicable')
         .col-12.user-job-applications-count
@@ -60,4 +60,3 @@
             = link_to [:admin, @preferred_users_list, existing_preferred_user], method: :delete, data: {confirm: t('buttons.confirm')} do
               = fa_icon 'delete'
               = t('.remove_user')
-

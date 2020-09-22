@@ -32,14 +32,14 @@ class JobOffersController < ApplicationController
     if user_signed_in? && (@previous_job_application = current_user.job_applications.first)
       @job_application = @previous_job_application.dup
       @job_application.state = JobApplication.new.state
-      @job_application.personal_profile = current_user.personal_profile.dup
+      @job_application.user_profile = current_user.user_profile.dup
     else
       @job_application = JobApplication.new
       if user_signed_in?
-        @job_application.personal_profile = current_user.personal_profile.dup
+        @job_application.user_profile = current_user.user_profile.dup
       else
         @job_application.user = User.new
-        @job_application.build_personal_profile
+        @job_application.build_user_profile
       end
     end
   end
@@ -57,7 +57,7 @@ class JobOffersController < ApplicationController
       if @job_application.save
         @job_offer.initial! if @job_offer.start?
         @job_application.send_confirmation_email
-        @job_application.personal_profile.datalake_to_user_profile!
+        @job_application.user_profile.datalake_to_user_profile!
 
         format.html { redirect_to %i[account job_applications] }
         format.json do
@@ -109,7 +109,7 @@ class JobOffersController < ApplicationController
     permitted_params = %i[]
 
     profile_fields = %i[id current_position phone website_url]
-    permitted_params << [personal_profile_attributes: profile_fields]
+    permitted_params << [user_profile_attributes: profile_fields]
     user_attributes = %i[first_name last_name]
     base_user_attributes = %i[photo email
                               password password_confirmation

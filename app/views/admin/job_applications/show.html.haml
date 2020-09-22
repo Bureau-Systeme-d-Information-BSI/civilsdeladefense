@@ -6,7 +6,7 @@
       .tab-content
         .tab-pane.fade.show#profile{class: tab_active == :profile && 'active show', role: :tabpanel, aria: {labelledby: :profile}}
 
-          = render partial: '/admin/personal_profiles/personal_profile', locals: {job_application: @job_application, user: @job_application.user}
+          = render partial: '/admin/user_profiles/user_profile', locals: {job_application: @job_application, user: @job_application.user}
 
           = render partial: 'job_application_profile', locals: { job_application: @job_application }
 

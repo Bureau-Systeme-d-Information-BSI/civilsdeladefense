@@ -25,7 +25,7 @@ class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
   end
 
   def root_rel_profile
-    @root_rel_profile ||= root_rel.joins(:personal_profile)
+    @root_rel_profile ||= root_rel.joins(:user_profile)
   end
 
   def build_stats

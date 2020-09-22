@@ -19,7 +19,7 @@ module Admin::JobApplicationsHelper
     when :availability_date_in_month
       "#{content} mois"
     when :gender, :is_currently_employed
-      PersonalProfile.human_attribute_name("#{field}/#{content}")
+      UserProfile.human_attribute_name("#{field}/#{content}")
     else
       content
     end
@@ -39,11 +39,11 @@ module Admin::JobApplicationsHelper
     in_place_edit_value_formatted(res, m)
   end
 
-  def personal_profile_fields1
+  def user_profile_fields1
     %i[gender phone website_url]
   end
 
-  def personal_profile_fields2
+  def user_profile_fields2
     %i[is_currently_employed age_range availability_range study_level
        experience_level has_corporate_experience]
   end
@@ -54,14 +54,14 @@ module Admin::JobApplicationsHelper
 
   def choices_boolean
     [
-      [PersonalProfile.human_attribute_name('is_currently_employed/true'), true],
-      [PersonalProfile.human_attribute_name('is_currently_employed/false'), false]
+      [UserProfile.human_attribute_name('is_currently_employed/true'), true],
+      [UserProfile.human_attribute_name('is_currently_employed/false'), false]
     ]
   end
 
   def choices_gender
-    PersonalProfile.genders.each_with_object([]) do |(k, _), ary|
-      str = PersonalProfile.human_attribute_name("gender/#{k}")
+    UserProfile.genders.each_with_object([]) do |(k, _), ary|
+      str = UserProfile.human_attribute_name("gender/#{k}")
       ary << [str, k]
     end
   end

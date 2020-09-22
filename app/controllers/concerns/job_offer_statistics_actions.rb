@@ -16,7 +16,7 @@ module JobOfferStatisticsActions
 
     root_rel = @job_offer.job_applications
                          .unscope(:order)
-    root_rel_profile = root_rel.joins(:personal_profile)
+    root_rel_profile = root_rel.joins(:user_profile)
 
     @per_gender = root_rel_profile.group(:gender).count
     @per_experiences_fit_job_offer = root_rel.group(:experiences_fit_job_offer).count

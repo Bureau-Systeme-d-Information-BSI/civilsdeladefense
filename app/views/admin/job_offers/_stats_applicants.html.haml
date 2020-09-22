@@ -7,8 +7,8 @@
       .d-flex.align-items-center.mb-2
         .bar-chart__category_name
           - if k.present?
-            - val = PersonalProfile.genders.key(k)
-            = PersonalProfile.human_attribute_name("gender/#{val}")
+            - val = UserProfile.genders.key(k)
+            = UserProfile.human_attribute_name("gender/#{val}")
           - else
             = t('unknown')
         .bar-chart__category_percentage

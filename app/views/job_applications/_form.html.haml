@@ -1,5 +1,5 @@
 -# frozen_string_literal: true
-- personal_profile = @job_application.personal_profile
+- user_profile = @job_application.user_profile
 = simple_form_for(@job_application, url: [:send_application, @job_offer], method: :post, remote: true, html: {data: {type: :json}}) do |f|
   .form-inputs.mt-3
     = f.error_notification
@@ -11,7 +11,7 @@
           = user_form.input :first_name, readonly: user_signed_in?
         .col-12.col-md-6
           = user_form.input :last_name, readonly: user_signed_in?
-    = f.simple_fields_for :personal_profile, personal_profile do |profile_form|
+    = f.simple_fields_for :user_profile, user_profile do |profile_form|
       .row
         .col-12.col-md-6
           = profile_form.input :current_position
@@ -40,7 +40,7 @@
             = file_form.input :content, label: t('buttons.choose_file'), wrapper: :custom_file_without_label
 
     %h2.h5.mt-4.mb-3.text-dark-gray= t('.your_internet_presence')
-    = f.simple_fields_for :personal_profile, personal_profile do |profile_form|
+    = f.simple_fields_for :user_profile, user_profile do |profile_form|
       .row
         .col-12
           = profile_form.input :website_url, required: false

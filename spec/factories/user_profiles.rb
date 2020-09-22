@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :personal_profile do
+  factory :user_profile do
     current_position { 'CEO' }
     phone { '06' }
     website_url { 'MyString' }

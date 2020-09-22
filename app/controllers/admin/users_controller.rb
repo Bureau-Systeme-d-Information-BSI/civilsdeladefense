@@ -52,14 +52,14 @@ class Admin::UsersController < Admin::InheritedResourcesController
                         availability_range_id study_level_id age_range_id
                         experience_level_id corporate_experience website_url
                         has_corporate_experience phone rejection_reason_id]
-    fields = [:first_name, :last_name, { personal_profile_attributes: profile_fields }]
+    fields = [:first_name, :last_name, { user_profile_attributes: profile_fields }]
     params.require(:user).permit(fields)
   end
 
   alias resource_params permitted_params
 
   def datalake_to_job_application_profiles
-    personal_profile = @user.personal_profile
-    personal_profile&.datalake_to_job_application_profiles!
+    user_profile = @user.user_profile
+    user_profile&.datalake_to_job_application_profiles!
   end
 end

@@ -12,5 +12,5 @@ class AgeRange < ApplicationRecord
 
   #####################################
   # Relations
-  has_many :personal_profiles
+  has_many :user_profiles
 end

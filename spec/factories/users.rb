@@ -10,7 +10,7 @@ FactoryBot.define do
     terms_of_service { true }
     certify_majority { true }
     after(:create) do |user|
-      user.personal_profile = create(:personal_profile, personal_profileable: user)
+      user.user_profile = create(:user_profile, user_profileable: user)
     end
   end
 end

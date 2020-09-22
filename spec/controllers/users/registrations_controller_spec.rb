@@ -28,15 +28,15 @@ require 'rails_helper'
 RSpec.describe Users::RegistrationsController, type: :controller do
   describe 'POST /resource' do
     it 'correctly creates a valid account linked to an organization' do
-      profile_attrs = attributes_for(:personal_profile).slice(:current_position,
-                                                              :phone)
+      profile_attrs = attributes_for(:user_profile).slice(:current_position,
+                                                          :phone)
 
       user_attrs = attributes_for(:user).slice(:first_name,
                                                :last_name,
                                                :email,
                                                :password)
       user_attrs[:password_confirmation] = user_attrs[:password]
-      user_attrs[:personal_profile_attributes] = profile_attrs
+      user_attrs[:user_profile_attributes] = profile_attrs
 
       @request.env['devise.mapping'] = Devise.mappings[:user]
 

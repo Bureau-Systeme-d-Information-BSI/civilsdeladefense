@@ -7,8 +7,8 @@
   - locals[:choices] = choices if local_variables.include?(:choices)
   - if obj.is_a?(JobApplication)
     - locals[:f] = f
-    = render partial: '/admin/personal_profiles/personal_profile_field_input', locals: locals
+    = render partial: '/admin/user_profiles/user_profile_field_input', locals: locals
   - else
-    = f.simple_fields_for :personal_profile, personal_profile do |profile_form|
+    = f.simple_fields_for :user_profile, user_profile do |profile_form|
       - locals[:f] = profile_form
-      = render partial: '/admin/personal_profiles/personal_profile_field_input', locals: locals
+      = render partial: '/admin/user_profiles/user_profile_field_input', locals: locals

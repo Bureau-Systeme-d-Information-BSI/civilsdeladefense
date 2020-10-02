@@ -32,22 +32,22 @@
     %ul.nav.nav-tabs.mt-3{role: :tablist}
       %li.nav-item.mr-3
         - klasses = tab_active == :profile ? %w(nav-link active) : %w(nav-link)
-        = link_to t('.nav_profile'), "#profile", class: klasses, data: {toggle: :tab}, role: :tab, aria: {controls: :profile, selected: true}
+        = link_to t('.nav_profile'), admin_job_offer_job_application_url(@job_offer, @job_application), class: klasses, role: :tab, aria: {controls: :profile, selected: true}
       - if defined?(job_application)
         %li.nav-item.mr-3
-          - klasses = tab_active == :overview ? %w(nav-link active) : %w(nav-link)
-          = link_to t('.nav_overview'), "#overview", class: klasses, data: {toggle: :tab}, role: :tab, aria: {controls: :overview, selected: true}
+          - klasses = tab_active == :cvlm ? %w(nav-link active) : %w(nav-link)
+          = link_to t('.nav_overview'), cvlm_admin_job_offer_job_application_url(@job_offer, @job_application), class: klasses, role: :tab, aria: {controls: :cvlm, selected: true}
       - if defined?(job_application) && can?(:read, Email)
         %li.nav-item.mr-3
           - klasses = tab_active == :emails ? %w(nav-link active) : %w(nav-link)
-          = link_to "#emails", class: klasses, data: {toggle: :tab}, role: :tab, aria: {controls: :emails, selected: false} do
+          = link_to emails_admin_job_offer_job_application_url(@job_offer, @job_application), class: klasses, role: :tab, aria: {controls: :emails, selected: true} do
             - if job_application.emails_administrator_unread_count > 0
               .notification= job_application.emails_administrator_unread_count
             = t('.nav_emails')
       - if defined?(job_application)
         %li.nav-item.mr-3
           - klasses = tab_active == :files ? %w(nav-link active) : %w(nav-link)
-          = link_to "#files", class: klasses, data: {toggle: :tab}, role: :tab, aria: {controls: :files, selected: false} do
+          = link_to files_admin_job_offer_job_application_url(@job_offer, @job_application), class: klasses, role: :tab, aria: {controls: :files, selected: true} do
             - if job_application.files_unread_count > 0
               .notification= job_application.files_unread_count
             = t('.nav_files', count: job_application.files_count)

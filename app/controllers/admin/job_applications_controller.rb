@@ -27,10 +27,18 @@ class Admin::JobApplicationsController < Admin::BaseController
   # GET /admin/candidatures/1
   # GET /admin/candidatures/1.json
   def show
-    user = @job_application.user
-    @other_job_applications = user.job_applications.where.not(id: @job_application.id)
-    render layout: request.xhr? ? false : layout_choice
+    if %w[show cvlm].include?(action_name)
+      @other_job_applications = @job_application
+                                .user
+                                .job_applications
+                                .where.not(id: @job_application.id)
+    end
+    render action: :show, layout: request.xhr? ? false : layout_choice
   end
+
+  alias cvlm show
+  alias emails show
+  alias files show
 
   # PATCH/PUT /admin/candidatures/1
   # PATCH/PUT /admin/candidatures/1.json

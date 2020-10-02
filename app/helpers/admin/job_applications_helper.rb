@@ -11,7 +11,19 @@ module Admin::JobApplicationsHelper
   end
 
   def job_applications_tab_active
-    params[:tabopen].present? ? params[:tabopen].to_sym : :profile
+    @job_applications_tab_active ||= begin
+      if controller.controller_name == 'job_applications'
+        if controller.action_name == 'show'
+          :profile
+        elsif controller.action_name == 'cvlm'
+          :cvlm
+        elsif controller.action_name == 'emails'
+          :emails
+        elsif controller.action_name == 'files'
+          :files
+        end
+      end
+    end
   end
 
   def in_place_edit_value_formatted(content, field)

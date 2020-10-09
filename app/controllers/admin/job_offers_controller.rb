@@ -116,7 +116,7 @@ class Admin::JobOffersController < Admin::BaseController
   protected
 
   def choose_layout
-    %w[index archived show board].include?(action_name) ? 'admin/job_offer_single' : 'admin'
+    %w[new edit].include?(action_name) ? 'admin' : 'admin/job_offer_single'
   end
 
   private

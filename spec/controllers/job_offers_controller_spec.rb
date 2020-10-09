@@ -69,7 +69,6 @@ RSpec.describe JobOffersController, type: :controller do
           }
         ]
         attributes_for(:job_application,
-                       user_profile_attributes: attributes_for(:user_profile),
                        job_application_files_attributes: jaf_attrs)
       end
 

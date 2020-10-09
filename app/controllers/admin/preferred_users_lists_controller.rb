@@ -43,7 +43,7 @@ class Admin::PreferredUsersListsController < Admin::InheritedResourcesController
   end
 
   def show
-    @preferred_users = @preferred_users_list.preferred_users.includes(user: [:user_profile])
+    @preferred_users = @preferred_users_list.preferred_users.includes(user: [:profile])
     @q = @preferred_users.ransack(params[:q])
     @preferred_users_filtered = @q.result.yield_self do |relation|
       if params[:s].present?

@@ -1,9 +1,18 @@
-var dom_id = '#<%= dom_id(@job_application, 'profile') %>';
+var dom_id = '#<%= dom_id(@job_application.profile, 'profile') %>';
 var node = document.querySelector(dom_id)
 if (node !== null) {
-  var html = '<%= j render(partial: '/admin/job_applications/job_application_profile', locals: { job_application: @job_application }) %>'
+  var html = '<%= j render(partial: '/admin/profiles/profile', locals: { form_object: @job_application }) %>'
   var frag = document.createRange().createContextualFragment(html)
   node.replaceWith(frag)
 }
+
+dom_id = '#<%= dom_id(@job_application, 'profile') %>';
+node = document.querySelector(dom_id)
+if (node !== null) {
+  var html = '<%= j render(partial: '/admin/job_applications/profile', locals: { job_application: @job_application }) %>'
+  var frag = document.createRange().createContextualFragment(html)
+  node.replaceWith(frag)
+}
+
 Snackbar.show({text: '<%= @notification %>', showAction: false})
 formAutoSubmit()

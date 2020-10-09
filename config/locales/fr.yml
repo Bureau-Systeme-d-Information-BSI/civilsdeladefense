@@ -903,7 +903,7 @@ fr:
         kind: "Type"
         kind/job_offer_description: "Offre d'emploi / Description"
         kind/job_offer_recruitment_process: "Offre d'emploi / Process de recrutement"
-      user_profile:
+      profile:
         is_currently_employed/true: "En poste"
         is_currently_employed/false: "Disponible immédiatement"
         gender/female: "Femme"

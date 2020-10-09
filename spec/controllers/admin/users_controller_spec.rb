@@ -29,15 +29,12 @@ RSpec.describe Admin::UsersController, type: :controller do
         user = create(:user)
 
         new_attributes = {
-          user_profile_attributes: {
-            id: user.user_profile.id,
-            phone: '07'
-          }
+          phone: '07'
         }
 
         put :update, params: { id: user.to_param, user: new_attributes }
         user.reload
-        expect(user.user_profile.phone).to eq('07')
+        expect(user.phone).to eq('07')
       end
     end
 
@@ -46,10 +43,7 @@ RSpec.describe Admin::UsersController, type: :controller do
         user = create(:user)
 
         invalid_attributes = {
-          user_profile_attributes: {
-            id: user.user_profile.id,
-            phone: ''
-          }
+          phone: ''
         }
 
         put :update, params: { id: user.to_param, user: invalid_attributes }

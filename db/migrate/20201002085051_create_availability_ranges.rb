@@ -12,7 +12,7 @@ class CreateAvailabilityRanges < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
-    add_reference :personal_profiles, :availability_range, type: :uuid, foreign_key: true
+    add_reference :profiles, :availability_range, type: :uuid, foreign_key: true
 
     AvailabilityRange.create(name: 'En poste')
     AvailabilityRange.create(name: 'Disponible immédiatement')
@@ -20,11 +20,10 @@ class CreateAvailabilityRanges < ActiveRecord::Migration[6.0]
     ar4 = AvailabilityRange.create(name: 'Disponible sous 2 mois')
     ar5 = AvailabilityRange.create(name: 'Disponible sous 3 mois ou plus')
 
-    PersonalProfile.where(availability_date_in_month: 1).update_all(availability_range_id: ar3.id)
-    PersonalProfile.where(availability_date_in_month: 2).update_all(availability_range_id: ar4.id)
-    PersonalProfile.where('availability_date_in_month >= ?', 3)
-                   .update_all(availability_range_id: ar5.id)
+    Profile.where(availability_date_in_month: 1).update_all(availability_range_id: ar3.id)
+    Profile.where(availability_date_in_month: 2).update_all(availability_range_id: ar4.id)
+    Profile.where('availability_date_in_month >= ?', 3).update_all(availability_range_id: ar5.id)
 
-    remove_column :personal_profiles, :availability_date_in_month
+    remove_column :profiles, :availability_date_in_month
   end
 end

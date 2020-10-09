@@ -1,10 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :user_profile do
-    current_position { 'CEO' }
-    phone { '06' }
-    website_url { 'MyString' }
+  factory :profile do
     gender { 1 }
     is_currently_employed { false }
     age_range { AgeRange.all.sample }

@@ -12,11 +12,9 @@ class Admin::UsersController < Admin::InheritedResourcesController
   def update
     update! do |success, failure|
       success.html do
-        datalake_to_job_application_profiles
         redirect_to [:admin, @user], notice: t('.success')
       end
       success.js do
-        datalake_to_job_application_profiles
         @notification = t('.success')
         render :update
       end
@@ -48,18 +46,9 @@ class Admin::UsersController < Admin::InheritedResourcesController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def permitted_params
-    profile_fields = %i[id gender is_currently_employed
-                        availability_range_id study_level_id age_range_id
-                        experience_level_id corporate_experience website_url
-                        has_corporate_experience phone rejection_reason_id]
-    fields = [:first_name, :last_name, { user_profile_attributes: profile_fields }]
+    fields = %i[first_name last_name current_position phone website_url]
     params.require(:user).permit(fields)
   end
 
   alias resource_params permitted_params
-
-  def datalake_to_job_application_profiles
-    user_profile = @user.user_profile
-    user_profile&.datalake_to_job_application_profiles!
-  end
 end

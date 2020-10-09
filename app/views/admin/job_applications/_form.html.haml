@@ -6,10 +6,6 @@
   .form-inputs
     = f.association :job_offer
     = f.association :user
-    = f.simple_fields_for :user_profile do |profile_form|
-      = profile_form.input :current_position
-      = profile_form.input :phone
-      = profile_form.input :website_url
 
   .form-actions
     = f.button :submit

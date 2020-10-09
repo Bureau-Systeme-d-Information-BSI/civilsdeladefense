@@ -12,11 +12,6 @@ RSpec.describe 'admin/job_applications/edit', type: :view do
 
     url = admin_job_application_path(@job_application)
     assert_select 'form[action=?][method=?]', url, 'post' do
-      prefix = 'job_application[user_profile_attributes]'
-
-      assert_select 'input[name=?]', "#{prefix}[current_position]"
-      assert_select 'input[name=?]', "#{prefix}[phone]"
-      assert_select 'input[name=?]', "#{prefix}[website_url]"
     end
   end
 end

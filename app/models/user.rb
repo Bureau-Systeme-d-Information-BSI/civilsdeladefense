@@ -7,17 +7,15 @@ class User < ApplicationRecord
          :confirmable, :lockable
 
   belongs_to :organization
-  has_many :job_applications, dependent: :destroy
+  has_many :job_applications
   has_many :job_offers, through: :job_applications
   has_many :preferred_users
-  has_one :user_profile, as: :user_profileable
-  accepts_nested_attributes_for :user_profile
 
   mount_uploader :photo, PhotoUploader, mount_on: :photo_file_name
   validates :photo,
             file_size: { less_than: 1.megabytes }
 
-  validates :first_name, :last_name, presence: true
+  validates :first_name, :last_name, :phone, :current_position, presence: true
   validates :terms_of_service, :certify_majority, acceptance: true
   validate :password_complexity
 

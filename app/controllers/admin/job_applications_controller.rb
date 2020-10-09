@@ -8,7 +8,7 @@ class Admin::JobApplicationsController < Admin::BaseController
     @employers = Employer.all
     @preferred_users_lists = current_administrator.preferred_users_lists
 
-    @job_applications = @job_applications.includes(:job_offer, user: %i[user_profile])
+    @job_applications = @job_applications.includes(:job_offer, :user)
     @q = @job_applications.ransack(params[:q])
     @job_applications_filtered = @q.result.yield_self do |relation|
       if params[:s].present?
@@ -45,8 +45,8 @@ class Admin::JobApplicationsController < Admin::BaseController
   def update
     respond_to do |format|
       if @job_application.update(job_application_params)
-        user_profile = @job_application.user.user_profile
-        user_profile&.datalake_to_job_application_profiles!
+        # profile = @job_application.user.profile
+        # profile&.datalake_to_job_application_profiles!
         format.html { redirect_to [:admin, @job_application], notice: t('.success') }
         format.js do
           @notification = t('.success')
@@ -100,7 +100,12 @@ class Admin::JobApplicationsController < Admin::BaseController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def job_application_params
-    fields = %i[skills_fit_job_offer experiences_fit_job_offer rejection_reason_id]
+    fields_core = %i[skills_fit_job_offer experiences_fit_job_offer rejection_reason_id]
+    fields_profile = %i[id gender is_currently_employed
+                        availability_range_id study_level_id age_range_id
+                        experience_level_id corporate_experience website_url
+                        has_corporate_experience]
+    fields = fields_core << { profile_attributes: fields_profile }
     params.require(:job_application).permit(fields)
   end
 

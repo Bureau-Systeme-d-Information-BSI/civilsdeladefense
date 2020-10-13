@@ -1,11 +1,25 @@
 # frozen_string_literal: true
 
 class Admin::UsersController < Admin::InheritedResourcesController
-  skip_load_and_authorize_resource only: %i[show]
+  # skip_load_and_authorize_resource only: %i[show]
+
+  def index
+    @q = @users.ransack(params[:q])
+    @users_filtered = @q.result.yield_self do |relation|
+      if params[:s].present?
+        relation.search_full_text(params[:s])
+      else
+        relation
+      end
+    end.yield_self do |relation|
+      relation.includes(:last_job_application).paginate(page: params[:page], per_page: 25)
+    end
+
+    render action: :index, layout: 'admin/pool'
+  end
 
   def show
     load_preferred_users_list
-    load_job_offer
     render layout: layout_choice
   end
 
@@ -39,9 +53,6 @@ class Admin::UsersController < Admin::InheritedResourcesController
     @preferred_users_list = current_administrator.preferred_users_lists.find(id)
 
     @user = @preferred_users_list.users.find(params[:id])
-  end
-
-  def load_job_offer
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

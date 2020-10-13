@@ -7,7 +7,8 @@ class User < ApplicationRecord
          :confirmable, :lockable
 
   belongs_to :organization
-  has_many :job_applications
+  belongs_to :last_job_application, class_name: 'JobApplication', optional: true
+  has_many :job_applications, -> { order(created_at: :desc) }
   has_many :job_offers, through: :job_applications
   has_many :preferred_users
 
@@ -18,6 +19,8 @@ class User < ApplicationRecord
   validates :first_name, :last_name, :phone, :current_position, presence: true
   validates :terms_of_service, :certify_majority, acceptance: true
   validate :password_complexity
+
+  default_scope { order(created_at: :desc) }
 
   def full_name
     [first_name, last_name].join(' ')

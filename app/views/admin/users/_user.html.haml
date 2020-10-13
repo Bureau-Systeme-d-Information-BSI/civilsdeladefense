@@ -1,10 +1,8 @@
-- job_application = defined?(job_application) ? job_application : nil
-- profile = job_application&.profile
+- job_application = user.last_job_application
 - preferred_user = defined?(preferred_user) ? preferred_user : nil
 .card.job-application.mt-3{id: dom_id(user)}
   .card-body
-    - link_url = user_detailed_info_url(preferred_user, job_application)
-    = link_to link_url do
+    = link_to [:admin, user] do
       .row
         .col-12.user-full-name
           .d-flex
@@ -15,12 +13,6 @@
           - if current_position
             %span{title: current_position}
               = current_position
-        .col-12.personal-profile-is-currently-employed
-          - is_currently_employed = profile&.is_currently_employed
-          - if is_currently_employed
-            = Profile.human_attribute_name('is_currently_employed/'+profile&.is_currently_employed.to_s)
-          - else
-            = t('non_applicable')
         .col-12.user-job-applications-count
           = user.job_applications_count
   .card-footer.d-flex.flex-column.flex-md-row
@@ -35,28 +27,27 @@
         %small
           = t('.subscribed_on', date: I18n.l(user.created_at.to_date))
     %ul.list-inline.mb-0.actions.mt-2.mt-md-0
-      - if job_application
-        - if can?(:manage, PreferredUsersList)
-          %li.list-inline-item
-            .dropdown
-              = link_to '#', role: :button, data: { toggle: "dropdown" }, aria: { haspopup: true, expanded: false } do
-                = fa_icon 'star'
-                = t('.my_preferred_user_lists')
-              .dropdown-menu.py-0{"aria-labelledby" => "dropdownMenuLink"}
-                - new_preferred_user = PreferredUser.new(user_id: user.id)
-                - if defined?(@preferred_users_lists) && @preferred_users_lists.any?
-                  = simple_form_for new_preferred_user, url: [:admin, :preferred_users], remote: true, namespace: user.id do |f|
-                    = f.hidden_field :user_id
-                    = f.association :preferred_users_list, collection: @preferred_users_lists, as: :radio_buttons, wrapper: :custom_collection, item_wrapper_class: 'custom-control custom-control-inline custom-radio allow-focus', label: false, item_label_class: 'custom-control-label'
-                    = f.submit t('buttons.add'), class: "btn btn-primary btn-raised btn-block mb-0"
-                - else
-                  .px-3.py-2
-                    %em
-                      Aucune liste de candidats définie pour le moment
-      - else
+      - if can?(:manage, PreferredUsersList)
         %li.list-inline-item
           .dropdown
-            - existing_preferred_user = user.preferred_users.detect{|x| x.preferred_users_list_id == @preferred_users_list.id}
-            = link_to [:admin, @preferred_users_list, existing_preferred_user], method: :delete, data: {confirm: t('buttons.confirm')} do
-              = fa_icon 'delete'
-              = t('.remove_user')
+            = link_to '#', role: :button, data: { toggle: "dropdown" }, aria: { haspopup: true, expanded: false } do
+              = fa_icon 'star'
+              = t('.my_preferred_user_lists')
+            .dropdown-menu.py-0{"aria-labelledby" => "dropdownMenuLink"}
+              - new_preferred_user = PreferredUser.new(user_id: user.id)
+              - if defined?(@preferred_users_lists) && @preferred_users_lists.any?
+                = simple_form_for new_preferred_user, url: [:admin, :preferred_users], remote: true, namespace: user.id do |f|
+                  = f.hidden_field :user_id
+                  = f.association :preferred_users_list, collection: @preferred_users_lists, as: :radio_buttons, wrapper: :custom_collection, item_wrapper_class: 'custom-control custom-control-inline custom-radio allow-focus', label: false, item_label_class: 'custom-control-label'
+                  = f.submit t('buttons.add'), class: "btn btn-primary btn-raised btn-block mb-0"
+              - else
+                .px-3.py-2
+                  %em
+                    Aucune liste de candidats définie pour le moment
+        - existing_preferred_user = user.preferred_users.detect{|x| x.preferred_users_list_id == @preferred_users_list.id}
+        - if existing_preferred_user
+          %li.list-inline-item
+            .dropdown
+              = link_to [:admin, @preferred_users_list, existing_preferred_user], method: :delete, data: {confirm: t('buttons.confirm')} do
+                = fa_icon 'delete'
+                = t('.remove_user')

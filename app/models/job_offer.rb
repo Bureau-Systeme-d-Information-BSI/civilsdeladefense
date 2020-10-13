@@ -39,8 +39,8 @@ class JobOffer < ApplicationRecord
   belongs_to :benefit, optional: true
   belongs_to :bop, optional: true
 
-  has_many :job_applications
-  has_many :job_offer_actors, inverse_of: :job_offer
+  has_many :job_applications, dependent: :destroy
+  has_many :job_offer_actors, inverse_of: :job_offer, dependent: :destroy
   has_many :administrators, through: :job_offer_actors
   accepts_nested_attributes_for :job_offer_actors
 

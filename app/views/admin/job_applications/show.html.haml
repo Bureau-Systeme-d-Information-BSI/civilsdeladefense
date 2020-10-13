@@ -1,6 +1,6 @@
 - tab_active = job_applications_tab_active
 .container-fluid
-  = render partial: 'job_application_head', locals: {job_application: @job_application}
+  = render partial: '/admin/users/user_head', locals: {job_application: @job_application, user: @job_application.user}
   .row.bg-card-bg
     .col-12.col-md-8.border-right{class: job_application_modal_section_classes}
       .tab-content

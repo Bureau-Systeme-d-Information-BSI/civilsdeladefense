@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_18_132335) do
+ActiveRecord::Schema.define(version: 2020_10_12_180747) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -430,28 +430,6 @@ ActiveRecord::Schema.define(version: 2020_09_18_132335) do
     t.index ["rgt"], name: "index_pages_on_rgt"
   end
 
-  create_table "personal_profiles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "personal_profileable_type"
-    t.uuid "personal_profileable_id"
-    t.integer "gender"
-    t.string "website_url"
-    t.string "phone"
-    t.boolean "is_currently_employed"
-    t.uuid "study_level_id"
-    t.uuid "experience_level_id"
-    t.boolean "has_corporate_experience"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "current_position"
-    t.uuid "availability_range_id"
-    t.uuid "age_range_id"
-    t.index ["age_range_id"], name: "index_personal_profiles_on_age_range_id"
-    t.index ["availability_range_id"], name: "index_personal_profiles_on_availability_range_id"
-    t.index ["experience_level_id"], name: "index_personal_profiles_on_experience_level_id"
-    t.index ["personal_profileable_type", "personal_profileable_id"], name: "index_personal_profileable_type_and_id"
-    t.index ["study_level_id"], name: "index_personal_profiles_on_study_level_id"
-  end
-
   create_table "preferred_users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id"
     t.uuid "preferred_users_list_id"
@@ -479,6 +457,25 @@ ActiveRecord::Schema.define(version: 2020_09_18_132335) do
     t.integer "position"
     t.index ["name"], name: "index_professional_categories_on_name", unique: true
     t.index ["position"], name: "index_professional_categories_on_position"
+  end
+
+  create_table "profiles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "profileable_type"
+    t.uuid "profileable_id"
+    t.integer "gender"
+    t.boolean "is_currently_employed"
+    t.uuid "study_level_id"
+    t.uuid "experience_level_id"
+    t.boolean "has_corporate_experience"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.uuid "availability_range_id"
+    t.uuid "age_range_id"
+    t.index ["age_range_id"], name: "index_profiles_on_age_range_id"
+    t.index ["availability_range_id"], name: "index_profiles_on_availability_range_id"
+    t.index ["experience_level_id"], name: "index_profiles_on_experience_level_id"
+    t.index ["profileable_type", "profileable_id"], name: "index_personal_profileable_type_and_id"
+    t.index ["study_level_id"], name: "index_profiles_on_study_level_id"
   end
 
   create_table "rejection_reasons", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -551,8 +548,13 @@ ActiveRecord::Schema.define(version: 2020_09_18_132335) do
     t.integer "job_applications_count", default: 0, null: false
     t.uuid "organization_id"
     t.boolean "encrypted_file_transfer_in_error", default: false
+    t.string "website_url"
+    t.string "phone"
+    t.string "current_position"
+    t.uuid "last_job_application_id"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["last_job_application_id"], name: "index_users_on_last_job_application_id"
     t.index ["organization_id"], name: "index_users_on_organization_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
@@ -584,14 +586,15 @@ ActiveRecord::Schema.define(version: 2020_09_18_132335) do
   add_foreign_key "messages", "job_applications"
   add_foreign_key "organization_defaults", "organizations"
   add_foreign_key "pages", "organizations"
-  add_foreign_key "personal_profiles", "age_ranges"
-  add_foreign_key "personal_profiles", "availability_ranges"
-  add_foreign_key "personal_profiles", "experience_levels"
-  add_foreign_key "personal_profiles", "study_levels"
   add_foreign_key "preferred_users", "preferred_users_lists"
   add_foreign_key "preferred_users", "users"
   add_foreign_key "preferred_users_lists", "administrators"
+  add_foreign_key "profiles", "age_ranges"
+  add_foreign_key "profiles", "availability_ranges"
+  add_foreign_key "profiles", "experience_levels"
+  add_foreign_key "profiles", "study_levels"
   add_foreign_key "salary_ranges", "experience_levels"
   add_foreign_key "salary_ranges", "professional_categories"
   add_foreign_key "salary_ranges", "sectors"
+  add_foreign_key "users", "job_applications", column: "last_job_application_id"
 end

@@ -1,0 +1,13 @@
+- input_html = disabled ? { disabled: true, readonly: true } : {}
+= simple_form_for [:admin, form_object], wrapper: :horizontal_form, remote: true, html: {class: 'form-horizontal auto-submit'}, defaults: { input_html: input_html } do |f|
+  - locals = {}
+  - locals[:field] = field if local_variables.include?(:field)
+  - locals[:association] = association if local_variables.include?(:association)
+  - locals[:choices] = choices if local_variables.include?(:choices)
+  - if form_object.is_a?(User) || !defined?(profile)
+    - locals[:f] = f
+    = render partial: '/admin/profiles/profile_field_input', locals: locals
+  - else
+    = f.simple_fields_for :profile, profile do |profile_form|
+      - locals[:f] = profile_form
+      = render partial: '/admin/profiles/profile_field_input', locals: locals

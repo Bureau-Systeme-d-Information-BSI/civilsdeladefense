@@ -14,5 +14,3 @@
         - pdf_url = url_for([:admin, job_application, job_application_file, {format: :pdf}])
         %object{data: pdf_url, type: "application/pdf", width: "100%", height: "500px"}
           = link_to t("buttons.download") + file_type.name, pdf_url
-- if @other_job_applications.any?
-  = render partial: 'user_job_applications', locals: {job_applications: @other_job_applications}

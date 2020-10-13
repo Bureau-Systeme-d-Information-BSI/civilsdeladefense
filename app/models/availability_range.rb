@@ -12,5 +12,5 @@ class AvailabilityRange < ApplicationRecord
 
   #####################################
   # Relations
-  has_many :personal_profiles
+  has_many :profiles
 end

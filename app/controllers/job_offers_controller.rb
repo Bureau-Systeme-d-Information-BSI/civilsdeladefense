@@ -32,14 +32,14 @@ class JobOffersController < ApplicationController
     if user_signed_in? && (@previous_job_application = current_user.job_applications.first)
       @job_application = @previous_job_application.dup
       @job_application.state = JobApplication.new.state
-      @job_application.personal_profile = current_user.personal_profile.dup
+      @job_application.profile = current_user.profile.dup
     else
       @job_application = JobApplication.new
       if user_signed_in?
-        @job_application.personal_profile = current_user.personal_profile.dup
+        @job_application.profile = current_user.profile.dup
       else
         @job_application.user = User.new
-        @job_application.build_personal_profile
+        @job_application.build_profile
       end
     end
   end
@@ -52,12 +52,14 @@ class JobOffersController < ApplicationController
     @job_application.organization = @job_offer.organization
     @job_application.user = current_user if user_signed_in?
     @job_application.user.organization_id = current_organization.id if @job_application.user
+    @job_application.build_profile
 
     respond_to do |format|
       if @job_application.save
         @job_offer.initial! if @job_offer.start?
         @job_application.send_confirmation_email
-        @job_application.personal_profile.datalake_to_user_profile!
+        user = @job_application.user
+        user.update_column :last_job_application_id, @job_application.id
 
         format.html { redirect_to %i[account job_applications] }
         format.json do
@@ -107,10 +109,7 @@ class JobOffersController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def job_application_params
     permitted_params = %i[]
-
-    profile_fields = %i[id current_position phone website_url]
-    permitted_params << [personal_profile_attributes: profile_fields]
-    user_attributes = %i[first_name last_name]
+    user_attributes = %i[first_name last_name current_position phone website_url]
     base_user_attributes = %i[photo email
                               password password_confirmation
                               terms_of_service certify_majority]

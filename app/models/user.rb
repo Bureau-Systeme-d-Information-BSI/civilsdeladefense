@@ -7,22 +7,29 @@ class User < ApplicationRecord
          :confirmable, :lockable
 
   belongs_to :organization
-  has_many :job_applications, dependent: :destroy
+  belongs_to :last_job_application, class_name: 'JobApplication', optional: true
+  has_many :job_applications, -> { order(created_at: :desc) }, dependent: :nullify
   has_many :job_offers, through: :job_applications
-  has_many :preferred_users
-  has_one :personal_profile, as: :personal_profileable
-  accepts_nested_attributes_for :personal_profile
+  has_many :preferred_users, dependent: :destroy
 
   mount_uploader :photo, PhotoUploader, mount_on: :photo_file_name
   validates :photo,
             file_size: { less_than: 1.megabytes }
 
-  validates :first_name, :last_name, presence: true
+  validates :first_name, :last_name, :phone, :current_position, presence: true
   validates :terms_of_service, :certify_majority, acceptance: true
   validate :password_complexity
 
+  default_scope { order(created_at: :desc) }
+
+  attr_accessor :is_deleted
+
   def full_name
-    [first_name, last_name].join(' ')
+    if is_deleted
+      'Compte candidat supprimé'
+    else
+      [first_name, last_name].join(' ')
+    end
   end
 
   def password_complexity

@@ -7,7 +7,9 @@ class Ability
   def initialize(administrator)
     return unless administrator
 
-    alias_action :archived, :stats, :board, to: :read
+    alias_action :archived, :stats, :board, :cvlm, to: :read
+    # alias_action :cvlm, to: :read
+    # alias_action :cvlm, :emails, :files, to: :read
 
     can :read, SalaryRange
     case administrator.role

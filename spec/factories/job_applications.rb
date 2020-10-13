@@ -7,8 +7,8 @@ FactoryBot.define do
     user
 
     before(:create) do |job_application|
-      job_application.personal_profile = create(:personal_profile,
-                                                personal_profileable: job_application)
+      job_application.profile = create(:profile,
+                                       profileable: job_application)
     end
   end
 end

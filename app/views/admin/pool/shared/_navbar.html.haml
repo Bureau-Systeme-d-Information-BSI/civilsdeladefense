@@ -2,7 +2,7 @@
   .list-group-item.menu
     = t(".job_applications_title")
   .list-group.stepper
-  - entries = [:job_applications]
+  - entries = [:users]
   - if entries.any?{ |entry| can?(:manage, entry.to_s.singularize.classify.constantize) }
     .list-group.stepper
       - entries.each do |entry|

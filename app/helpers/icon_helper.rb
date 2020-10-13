@@ -24,7 +24,7 @@ module IconHelper
     case key
     when :job_offers
       :briefcase
-    when :job_applications
+    when :users
       :'account-multiple'
     when :settings
       :settings

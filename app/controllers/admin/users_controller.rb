@@ -1,22 +1,34 @@
 # frozen_string_literal: true
 
 class Admin::UsersController < Admin::InheritedResourcesController
-  skip_load_and_authorize_resource only: %i[show]
+  # skip_load_and_authorize_resource only: %i[show]
+
+  def index
+    @q = @users.ransack(params[:q])
+    @users_filtered = @q.result.yield_self do |relation|
+      if params[:s].present?
+        relation.search_full_text(params[:s])
+      else
+        relation
+      end
+    end.yield_self do |relation|
+      relation.includes(:last_job_application).paginate(page: params[:page], per_page: 25)
+    end
+
+    render action: :index, layout: 'admin/pool'
+  end
 
   def show
     load_preferred_users_list
-    load_job_offer
     render layout: layout_choice
   end
 
   def update
     update! do |success, failure|
       success.html do
-        datalake_to_job_application_profiles
         redirect_to [:admin, @user], notice: t('.success')
       end
       success.js do
-        datalake_to_job_application_profiles
         @notification = t('.success')
         render :update
       end
@@ -43,23 +55,11 @@ class Admin::UsersController < Admin::InheritedResourcesController
     @user = @preferred_users_list.users.find(params[:id])
   end
 
-  def load_job_offer
-  end
-
   # Never trust parameters from the scary internet, only allow the white list through.
   def permitted_params
-    profile_fields = %i[id gender is_currently_employed
-                        availability_range_id study_level_id age_range_id
-                        experience_level_id corporate_experience website_url
-                        has_corporate_experience phone rejection_reason_id]
-    fields = [:first_name, :last_name, { personal_profile_attributes: profile_fields }]
+    fields = %i[first_name last_name current_position phone website_url]
     params.require(:user).permit(fields)
   end
 
   alias resource_params permitted_params
-
-  def datalake_to_job_application_profiles
-    personal_profile = @user.personal_profile
-    personal_profile&.datalake_to_job_application_profiles!
-  end
 end

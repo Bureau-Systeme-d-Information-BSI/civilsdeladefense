@@ -12,7 +12,7 @@ class CreateAgeRanges < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
-    add_reference :personal_profiles, :age_range, type: :uuid, foreign_key: true
+    add_reference :profiles, :age_range, type: :uuid, foreign_key: true
 
     AgeRange.create(name: '18 - 20 ans')
     AgeRange.create(name: '20 - 30 ans')

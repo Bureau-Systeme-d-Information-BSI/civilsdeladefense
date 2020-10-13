@@ -1,0 +1,35 @@
+- @page_title = t('.title')
+.card
+  .card-header
+    .h4.text-primary.d-md-flex.align-items-center
+      #{@users.count} candidats
+    = render partial: 'search'
+    .d-flex.align-items-end
+      .h5.text-primary.mr-auto= t('.users_filtered', count: @users_filtered.count)
+      - klasses = %w[btn btn-link mb-0]
+      = sort_link(@q, :created_at, {}, {class: klasses}) do
+        Date de création
+        - unless @q.sorts.detect{|x| x.name == 'created_at'}
+          &nbsp;▼
+    .row
+      .col-12
+        - if @users_filtered.any?
+          .card.bg-transparent
+            .card-body
+              .row
+                .col-12.user-full-name
+                  = User.human_attribute_name(:name)
+                .col-12.personal-profile-current-position
+                  = User.human_attribute_name(:current_position)
+                .col-12.user-job-applications-count
+                  Candidatures
+          = render partial: 'user', collection: @users_filtered
+          .mt-5
+            = will_paginate @users_filtered, params: { controller: 'users', action: controller.action_name }
+        - else
+          %em Aucun résultat
+
+.modal.fade#remoteContentModal{tabindex: -1, role: :dialog, aria: {labelledby: :remoteContentModal, hidden: true}}
+  .modal-dialog.modal-lg{role: :document}
+    .modal-content
+      .modal-body.p-0

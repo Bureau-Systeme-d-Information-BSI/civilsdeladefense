@@ -45,6 +45,7 @@ RSpec.describe Admin::JobOffersController, type: :controller do
 
     describe 'GET #index' do
       it 'returns a success response' do
+        JobOffer.destroy_all
         create_list :job_offer, 5
         get :index, params: {}
         expect(response).to be_successful

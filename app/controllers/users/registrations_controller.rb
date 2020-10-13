@@ -12,7 +12,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   # def create
   #   super do |resource|
-  #     resource.build_personal_profile(skip_validations_this_time: true)
+  #     resource.build_profile(skip_validations_this_time: true)
   #     resource.save
   #   end
   # end
@@ -46,9 +46,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
     permitted_params = %i[first_name last_name
-                          terms_of_service certify_majority]
-    profile_fields = %i[id current_position phone website_url]
-    permitted_params << [personal_profile_attributes: profile_fields]
+                          terms_of_service certify_majority
+                          current_position phone website_url]
     devise_parameter_sanitizer.permit(:sign_up, keys: permitted_params)
   end
 

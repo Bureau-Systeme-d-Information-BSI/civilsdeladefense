@@ -225,12 +225,7 @@ fr:
           other: "%{count} candidatures trouvées"
       job_application:
         applied_on: "Candidaté le %{date}"
-      job_application_head:
-        nav_emails: "Courriels"
-        nav_files: "Documents"
-        nav_overview: "Candidature"
-        nav_profile: "Profil"
-      job_application_files:
+      files:
         title: "Documents du candidat"
         subtitle_1: "Documents à fournir par le candidat"
         subtitle_2: "Documents complémentaires"
@@ -409,16 +404,27 @@ fr:
     shared:
       navbar:
         job_offers: "Offres"
-        job_applications: "Vivier"
+        users: "Vivier"
         stats: "Statistiques"
         settings: "Paramètres"
         account: "Mon compte"
         logout: "Déconnexion"
     users:
+      index:
+        title: "Vivier de candidats"
+        users_filtered:
+          zero: "Aucun résultat de recherche"
+          one: "1 résultat de recherche"
+          other: "%{count} résultats de recherche"
       user:
         my_preferred_user_lists: "Mon vivier"
         remove_user: "Supprimer de cette liste"
         subscribed_on: "Inscrit le %{date}"
+      user_head:
+        nav_emails: "Courriels"
+        nav_files: "Documents"
+        nav_overview: "Candidature"
+        nav_profile: "Profil"
       update:
         success: "Profil mis à jour !"
         failure: "Erreur dans la mise à jour du profil"
@@ -788,10 +794,11 @@ fr:
     pool:
       shared:
         navbar:
+          create_preferred_users_list_title: "+ Créer une nouvelle liste"
           job_applications_title: "Vivier"
           job_applications: "Toutes les candidatures"
           preferred_users_lists_title: "Mes listes de candidats"
-          create_preferred_users_list_title: "+ Créer une nouvelle liste"
+          users: "Tous les candidats"
     stats:
       job_applications:
         index:
@@ -815,6 +822,7 @@ fr:
           recruitments: "Recrutements"
   attributes:
     name: "Nom"
+    current_position: "Poste actuel"
   activerecord:
     errors:
       messages:
@@ -839,6 +847,7 @@ fr:
               file_size_is_less_than: "Fichier trop volumineux, doit être max. 2Mo"
         user:
           attributes:
+            current_position: "Poste actuel"
             photo:
               file_size_is_less_than: "Fichier trop volumineux, doit être max. 2Mo"
     models:
@@ -903,7 +912,7 @@ fr:
         kind: "Type"
         kind/job_offer_description: "Offre d'emploi / Description"
         kind/job_offer_recruitment_process: "Offre d'emploi / Process de recrutement"
-      personal_profile:
+      profile:
         is_currently_employed/true: "En poste"
         is_currently_employed/false: "Disponible immédiatement"
         gender/female: "Femme"

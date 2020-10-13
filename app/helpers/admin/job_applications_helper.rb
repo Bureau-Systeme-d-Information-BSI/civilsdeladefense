@@ -11,7 +11,19 @@ module Admin::JobApplicationsHelper
   end
 
   def job_applications_tab_active
-    params[:tabopen].present? ? params[:tabopen].to_sym : :profile
+    @job_applications_tab_active ||= begin
+      if controller.controller_name == 'job_applications'
+        if controller.action_name == 'show'
+          :profile
+        elsif controller.action_name == 'cvlm'
+          :cvlm
+        elsif controller.action_name == 'emails'
+          :emails
+        elsif controller.action_name == 'files'
+          :files
+        end
+      end
+    end
   end
 
   def in_place_edit_value_formatted(content, field)
@@ -19,7 +31,7 @@ module Admin::JobApplicationsHelper
     when :availability_date_in_month
       "#{content} mois"
     when :gender, :is_currently_employed
-      PersonalProfile.human_attribute_name("#{field}/#{content}")
+      Profile.human_attribute_name("#{field}/#{content}")
     else
       content
     end
@@ -39,29 +51,32 @@ module Admin::JobApplicationsHelper
     in_place_edit_value_formatted(res, m)
   end
 
-  def personal_profile_fields1
-    %i[gender phone website_url]
+  def personal_fields
+    %i[current_position phone website_url]
   end
 
-  def personal_profile_fields2
-    %i[is_currently_employed age_range availability_range study_level
-       experience_level has_corporate_experience]
+  def profile_fields
+    %i[gender
+       is_currently_employed
+       age_range availability_range
+       study_level experience_level
+       has_corporate_experience]
   end
 
-  def job_application_profile_fields
+  def job_application_profile_fields2
     %i[skills_fit_job_offer experiences_fit_job_offer]
   end
 
   def choices_boolean
     [
-      [PersonalProfile.human_attribute_name('is_currently_employed/true'), true],
-      [PersonalProfile.human_attribute_name('is_currently_employed/false'), false]
+      [Profile.human_attribute_name('is_currently_employed/true'), true],
+      [Profile.human_attribute_name('is_currently_employed/false'), false]
     ]
   end
 
   def choices_gender
-    PersonalProfile.genders.each_with_object([]) do |(k, _), ary|
-      str = PersonalProfile.human_attribute_name("gender/#{k}")
+    Profile.genders.each_with_object([]) do |(k, _), ary|
+      str = Profile.human_attribute_name("gender/#{k}")
       ary << [str, k]
     end
   end

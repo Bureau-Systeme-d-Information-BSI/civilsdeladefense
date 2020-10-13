@@ -1,27 +1,31 @@
+- user = @job_application.user || User.new(is_deleted: true)
 - tab_active = job_applications_tab_active
 .container-fluid
-  = render partial: '/admin/users/user_head', locals: {job_application: @job_application, user: @job_application.user}
+  = render partial: '/admin/users/user_head', locals: {job_application: @job_application, user: user}
   .row.bg-card-bg
     .col-12.col-md-8.border-right{class: job_application_modal_section_classes}
       .tab-content
         - if tab_active == :profile
           .tab-pane.active.show{role: :tabpanel, aria: {labelledby: :profile}}
             - is_archived = @job_application.job_offer.archived?
+            - is_archived_or_is_deleted = is_archived || user.is_deleted
             - if is_archived
-              %em Profile archivé
-            = render partial: '/admin/profiles/personal_profile', locals: { user: @job_application.user, is_archived: is_archived }
-            = render partial: '/admin/profiles/profile', locals: { form_object: @job_application, is_archived: is_archived }
-            = render partial: '/admin/job_applications/profile', locals: { job_application: @job_application, is_archived: is_archived }
-            - if @other_job_applications.any?
+              %em Profil archivé
+            - if user.is_deleted
+              %em Profil supprimé
+            = render partial: '/admin/profiles/personal_profile', locals: { user: user, is_archived: is_archived_or_is_deleted }
+            = render partial: '/admin/profiles/profile', locals: { form_object: @job_application, is_archived: is_archived_or_is_deleted }
+            = render partial: '/admin/job_applications/profile', locals: { job_application: @job_application, is_archived: is_archived_or_is_deleted }
+            - if @other_job_applications && @other_job_applications.any?
               = render partial: 'user_job_applications', locals: {job_applications: @other_job_applications}
         - if tab_active == :cvlm
           .tab-pane.active.show{role: :tabpanel, aria: {labelledby: :cvlm}}
-            = render partial: 'job_application_overview', locals: {job_application: @job_application}
+            = render template: '/admin/job_applications/cvlm', locals: {job_application: @job_application}
         - if can?(:read, Email) && tab_active == :emails
           .tab-pane.active.show{role: :tabpanel, aria: {labelledby: :emails}}
-            = render partial: 'job_application_emails', locals: {job_application: @job_application}
+            = render template: '/admin/job_applications/emails', locals: {job_application: @job_application}
         - if tab_active == :files
           .tab-pane.active.show{role: :tabpanel, aria: {labelledby: :files}}
-            = render partial: 'job_application_files', locals: {job_application: @job_application}
+            = render template: '/admin/job_applications/files', locals: {job_application: @job_application}
     .col-12.col-md-4{class: job_application_modal_section_classes}
       = render partial: "job_application_activity"

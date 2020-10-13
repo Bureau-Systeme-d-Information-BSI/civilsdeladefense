@@ -8,9 +8,9 @@ class User < ApplicationRecord
 
   belongs_to :organization
   belongs_to :last_job_application, class_name: 'JobApplication', optional: true
-  has_many :job_applications, -> { order(created_at: :desc) }
+  has_many :job_applications, -> { order(created_at: :desc) }, dependent: :nullify
   has_many :job_offers, through: :job_applications
-  has_many :preferred_users
+  has_many :preferred_users, dependent: :destroy
 
   mount_uploader :photo, PhotoUploader, mount_on: :photo_file_name
   validates :photo,
@@ -22,8 +22,14 @@ class User < ApplicationRecord
 
   default_scope { order(created_at: :desc) }
 
+  attr_accessor :is_deleted
+
   def full_name
-    [first_name, last_name].join(' ')
+    if is_deleted
+      'Compte candidat supprimé'
+    else
+      [first_name, last_name].join(' ')
+    end
   end
 
   def password_complexity

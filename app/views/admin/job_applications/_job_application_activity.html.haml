@@ -1,76 +1,78 @@
-- full_name = @job_application.user.full_name
 .activity{id: dom_id(@job_application, 'activity')}
-  .font-weight-bold.text-secondary.mb-3
-    = fa_icon('forum', class: 'text-secondary')
-    = t('.title_state')
+  - user = @job_application.user
+  - if user
+    - full_name = user.full_name
+    .font-weight-bold.text-secondary.mb-3
+      = fa_icon('forum', class: 'text-secondary')
+      = t('.title_state')
 
-  - if can? :manage, @job_application
-    - url = [:change_state, :admin, @job_application]
-    = simple_form_for url, method: :patch, remote: true, wrapper: :inline_form, html: { class: 'form-inline auto-submit w-100 px-1 py-1', data: {flash: true}} do |f|
-      - opts = @job_application.aasm.states.map{ |state| [JobApplication.human_attribute_name("state/#{ state }"), state] }
-      = f.input :state, collection: opts, label: false, prompt: :translate, wrapper: :custom_multi_select_full_wide
-  - else
-    = link_to @job_application.aasm.human_state, "#", class: "btn btn-raised w-100 text-left"
-  
-  - if @job_application.rejected_state?
-    .my-3
-    - url = [:admin, @job_application]
-    = simple_form_for url, remote: true, wrapper: :inline_form, html: { class: 'form-inline auto-submit w-100 px-1 py-1', data: {flash: true}} do |f|
-      = f.input :rejection_reason_id, collection: RejectionReason.all, label: false, prompt: :translate, wrapper: :custom_multi_select_full_wide
+    - if can? :manage, @job_application
+      - url = [:change_state, :admin, @job_application]
+      = simple_form_for url, method: :patch, remote: true, wrapper: :inline_form, html: { class: 'form-inline auto-submit w-100 px-1 py-1', data: {flash: true}} do |f|
+        - opts = @job_application.aasm.states.map{ |state| [JobApplication.human_attribute_name("state/#{ state }"), state] }
+        = f.input :state, collection: opts, label: false, prompt: :translate, wrapper: :custom_multi_select_full_wide
+    - else
+      = link_to @job_application.aasm.human_state, "#", class: "btn btn-raised w-100 text-left"
 
-  .font-weight-bold.text-secondary.mb-3.mt-4
-    = fa_icon('forum', class: 'text-secondary')
-    = t('.title')
+    - if @job_application.rejected_state?
+      .my-3
+      - url = [:admin, @job_application]
+      = simple_form_for url, remote: true, wrapper: :inline_form, html: { class: 'form-inline auto-submit w-100 px-1 py-1', data: {flash: true}} do |f|
+        = f.input :rejection_reason_id, collection: RejectionReason.all, label: false, prompt: :translate, wrapper: :custom_multi_select_full_wide
 
-  - if can? :manage, Message
-    = render partial: '/admin/messages/form'
+    .font-weight-bold.text-secondary.mb-3.mt-4
+      = fa_icon('forum', class: 'text-secondary')
+      = t('.title')
 
-  %ul.list-unstyled.activities
-    - ary = @job_application.audits + @job_application.associated_audits
-    - audits = ary.sort_by(&:created_at).reverse!
-    - audits.each do |audit|
-      - audited_changes = audit.audited_changes
-      - whodunnit = audit.try(:user).try(:full_name) || 'N/A'
-      %li
-        .d-flex
-          - model = audit.auditable_type == 'JobApplication' && audit.version == 1 ? @job_application : audit.user
-          - photo_obj = model == "unknown" ? nil : (model.is_a?(JobApplication) ? model.user.photo : model&.photo)
-          = image_user_tag photo_obj, width: 32, class: 'photo'
-          .d-flex.flex-column
-            .mb-1
-              - if audit.version == 1 && audit.auditable_type == 'JobApplication'
-                = t('.activities.creation_html', name: full_name)
-              - elsif audited_changes.key?('state')
-                - state_name = audited_changes['state'].last
-                - state_name_i18n = JobApplication.human_attribute_name("state/#{state_name}")
-                = t('.activities.change_state_html', admin_name: whodunnit, name: full_name, state_name: state_name_i18n)
-              - elsif audit.auditable_type == "Message"
-                = t('.activities.message_html', admin_name: whodunnit, name: full_name)
-                .card.my-2
-                  .card-body= audited_changes['body']
-              - elsif audit.auditable_type == "Email" && audit.auditable.automatic_email?
-                = t('.activities.email_automatic_html', name: full_name)
-              - elsif audit.auditable_type == "Email" && (klass = audit.user.class.to_s) && %w(Administrator User NilClass).include?(klass)
-                - if klass == "Administrator"
-                  = t('.activities.email_html', admin_name: whodunnit, name: full_name)
-                - elsif klass == "User"
-                  = t('.activities.email_simple_html', from_name: whodunnit)
-              - elsif audited_changes.key?('photo_updated_at')
-                = t('.activities.updated_photo_html', admin_name: whodunnit, name: full_name)
-              - elsif audited_changes.key?('rejection_reason_id')
-                - ids = audited_changes['rejection_reason_id']
-                - if ids.first.nil?
-                  - rejection_reason = RejectionReason.find ids.last
-                  = t('.activities.rejection_reason_creation_html', name: whodunnit, current_name: rejection_reason.name)
-                - elsif ids.last.nil?
-                  - rejection_reason = RejectionReason.find ids.first
-                  = t('.activities.rejection_reason_deletion_html', name: whodunnit, current_name: rejection_reason.name)
+    - if can? :manage, Message
+      = render partial: '/admin/messages/form'
+
+    %ul.list-unstyled.activities
+      - ary = @job_application.audits + @job_application.associated_audits
+      - audits = ary.sort_by(&:created_at).reverse!
+      - audits.each do |audit|
+        - audited_changes = audit.audited_changes
+        - whodunnit = audit.try(:user).try(:full_name) || 'N/A'
+        %li
+          .d-flex
+            - model = audit.auditable_type == 'JobApplication' && audit.version == 1 ? @job_application : audit.user
+            - photo_obj = model == "unknown" ? nil : (model.is_a?(JobApplication) ? model.user.photo : model&.photo)
+            = image_user_tag photo_obj, width: 32, class: 'photo'
+            .d-flex.flex-column
+              .mb-1
+                - if audit.version == 1 && audit.auditable_type == 'JobApplication'
+                  = t('.activities.creation_html', name: full_name)
+                - elsif audited_changes.key?('state')
+                  - state_name = audited_changes['state'].last
+                  - state_name_i18n = JobApplication.human_attribute_name("state/#{state_name}")
+                  = t('.activities.change_state_html', admin_name: whodunnit, name: full_name, state_name: state_name_i18n)
+                - elsif audit.auditable_type == "Message"
+                  = t('.activities.message_html', admin_name: whodunnit, name: full_name)
+                  .card.my-2
+                    .card-body= audited_changes['body']
+                - elsif audit.auditable_type == "Email" && audit.auditable.automatic_email?
+                  = t('.activities.email_automatic_html', name: full_name)
+                - elsif audit.auditable_type == "Email" && (klass = audit.user.class.to_s) && %w(Administrator User NilClass).include?(klass)
+                  - if klass == "Administrator"
+                    = t('.activities.email_html', admin_name: whodunnit, name: full_name)
+                  - elsif klass == "User"
+                    = t('.activities.email_simple_html', from_name: whodunnit)
+                - elsif audited_changes.key?('photo_updated_at')
+                  = t('.activities.updated_photo_html', admin_name: whodunnit, name: full_name)
+                - elsif audited_changes.key?('rejection_reason_id')
+                  - ids = audited_changes['rejection_reason_id']
+                  - if ids.first.nil?
+                    - rejection_reason = RejectionReason.find ids.last
+                    = t('.activities.rejection_reason_creation_html', name: whodunnit, current_name: rejection_reason.name)
+                  - elsif ids.last.nil?
+                    - rejection_reason = RejectionReason.find ids.first
+                    = t('.activities.rejection_reason_deletion_html', name: whodunnit, current_name: rejection_reason.name)
+                  - else
+                    - rejection_reasons = RejectionReason.find(ids).index_by(&:id).values_at(*ids)
+                    - previous_name = rejection_reasons.first.name
+                    - current_name = rejection_reasons.last.name
+                    = t('.activities.rejection_reason_update_html', name: whodunnit, previous_name: previous_name, current_name: current_name)
                 - else
-                  - rejection_reasons = RejectionReason.find(ids).index_by(&:id).values_at(*ids)
-                  - previous_name = rejection_reasons.first.name
-                  - current_name = rejection_reasons.last.name
-                  = t('.activities.rejection_reason_update_html', name: whodunnit, previous_name: previous_name, current_name: current_name)
-              - else
-                %code= audited_changes
-            %small.text-muted.time-ago
-              il y a #{time_ago_in_words audit.created_at}
+                  %code= audited_changes
+              %small.text-muted.time-ago
+                il y a #{time_ago_in_words audit.created_at}

@@ -34,9 +34,6 @@ RSpec.describe Admin::JobApplicationsController, type: :controller do
 
   describe 'PUT #update' do
     context 'with valid params' do
-      let(:new_attributes) do
-      end
-
       it 'updates the requested admin_job_application' do
         job_application = create(:job_application)
 

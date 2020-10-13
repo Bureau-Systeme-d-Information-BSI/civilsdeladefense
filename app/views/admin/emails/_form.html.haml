@@ -1,4 +1,5 @@
 -# frozen_string_literal: true
+- is_archived_or_is_deleted = @job_application.job_offer.archived? || @job_application.user.nil?
 - @templates = EmailTemplate.all
 - @email ||= Email.new(job_application: @job_application)
 .card
@@ -6,7 +7,7 @@
     = fa_icon('file-document', class: 'text-secondary')
     = t('.title')
   .card-body.bg-white
-    = simple_form_for([:admin, @email.job_application, @email], remote: true) do |f|
+    = simple_form_for([:admin, @email.job_application, @email], remote: true, defaults: { disabled: is_archived_or_is_deleted }) do |f|
       = f.error_notification
       = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
 

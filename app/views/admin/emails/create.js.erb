@@ -1,5 +1,5 @@
 var node = document.getElementById('<%= dom_id(@job_application, 'emails') %>')
-var html = '<%= j render(partial: '/admin/job_applications/job_application_emails') %>'
+var html = '<%= j render(template: '/admin/job_applications/emails') %>'
 var frag = document.createRange().createContextualFragment(html)
 node.replaceWith(frag)
 var activityNode = document.getElementById('<%= dom_id(@job_application, 'activity') %>')
@@ -9,4 +9,3 @@ activityNode.replaceWith(frag)
 <%- if @notification.present? %>
 Snackbar.show({showAction: false, text: '<%= @notification %>'})
 <% end %>
-

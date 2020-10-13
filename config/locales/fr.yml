@@ -225,7 +225,7 @@ fr:
           other: "%{count} candidatures trouvées"
       job_application:
         applied_on: "Candidaté le %{date}"
-      job_application_files:
+      files:
         title: "Documents du candidat"
         subtitle_1: "Documents à fournir par le candidat"
         subtitle_2: "Documents complémentaires"

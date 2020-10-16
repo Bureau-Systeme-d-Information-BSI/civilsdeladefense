@@ -121,10 +121,14 @@ git checkout master && \
 
 ### Premier déploiement
 
-Charger le schéma de données :
+Avant de déployer le code, il faut définir la variable d'environnement `DO_NOT_POSTDEPLOY` avec la valeur `1`. Ceci a pour effet de ne pas lancer automatiquement la tâche `db:migrate` dans la phase `postdeploy`. Il faudra supprimer la variable d'environnement après un premier déploiement en `success`.
+
+Lancer le déploiement puis charger le schéma de données :
 ```
 rails db:schema:load
 ```
+
+Supprimer la variable d'environnement `DO_NOT_POSTDEPLOY`.
 
 Créer la première organisation :
 ```
@@ -171,6 +175,6 @@ Configuration par la variable d'environnement MAIL_URL :
 `MAIL_URL=imaps://username_url_encoded:password@host:port`
 Le protocole spécifié dans la chaîne de connexion sera ignoré et remplacé par imap (avec TLS), de même pour le port qui sera remplacé par 993.
 
-Transfert des emails dans la corbeille après traitement 
+Transfert des emails dans la corbeille après traitement
 Configuration par la variable d'environnement MAIL_FOLDER_TRASH :
 `MAIL_FOLDER_TRASH=Trash`

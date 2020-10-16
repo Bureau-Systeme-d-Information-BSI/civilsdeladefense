@@ -6,8 +6,11 @@ class AddLastJobApplicationToUsers < ActiveRecord::Migration[6.0]
       type: :uuid, foreign_key: { to_table: :job_applications }
     }
     User.all.each do |user|
-      id = user.job_applications.first.id
-      user.update_column(:last_job_application_id, id) if last_job_application
+      last_job_application = user.job_applications.first
+      if last_job_application
+        id = last_job_application.id
+        user.update_column(:last_job_application_id, id)
+      end
     end
   end
 end

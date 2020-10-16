@@ -377,10 +377,8 @@ user = User.new email: 'coin@pan.fr',
                 terms_of_service: true,
                 certify_majority: true,
                 photo: photo,
-                profile_attributes: {
-                  current_position: 'Développeur',
-                  phone: '0606060606'
-                }
+                current_position: 'Développeur',
+                phone: '0606060606'
 user.skip_confirmation_notification!
 user.save!
 user.confirm
@@ -391,9 +389,7 @@ job_application = JobApplication.new do |ja|
   ja.user = user
 end
 job_application.build_profile({
-  gender: 'male',
-  current_position: 'Dev',
-  phone: '0606060606'
+  gender: 'male'
 })
 job_application.job_application_files.build content: file,
                                             job_application_file_type: resume
@@ -416,9 +412,7 @@ job_application2 = JobApplication.new do |ja|
   ja.user = user
 end
 job_application2.build_profile({
-  gender: 'male',
-  current_position: 'Dev',
-  phone: '0606060606'
+  gender: 'male'
 })
 job_application2.job_application_files.build content: file,
                                             job_application_file_type: resume
@@ -434,10 +428,8 @@ user_candidate_of_all = User.new email: Faker::Internet.email,
                                  password_confirmation: ENV['SEED_PASSWORD'],
                                  terms_of_service: true,
                                  certify_majority: true,
-                                 profile_attributes: {
-                                   current_position: 'Développeur',
-                                   phone: '0606060606'
-                                 }
+                                 current_position: 'Développeur',
+                                 phone: '0606060606'
 user_candidate_of_all.skip_confirmation_notification!
 user_candidate_of_all.save!
 user_candidate_of_all.confirm
@@ -454,10 +446,8 @@ JobOffer.where.not(duration_contract: nil).where.not(id: [job_offer4.id, job_off
                     password_confirmation: ENV['SEED_PASSWORD'],
                     terms_of_service: true,
                     certify_majority: true,
-                    profile_attributes: {
-                      current_position: 'Développeur',
-                      phone: '0606060606'
-                    }
+                    current_position: 'Développeur',
+                    phone: '0606060606'
     user.skip_confirmation_notification!
     user.save!
     user.confirm
@@ -471,8 +461,6 @@ JobOffer.where.not(duration_contract: nil).where.not(id: [job_offer4.id, job_off
     end
     job_application.build_profile({
       gender: Profile.genders.keys.sample,
-      current_position: 'Dev',
-      phone: '0606060606',
       is_currently_employed: boolean_choices.sample,
       has_corporate_experience: boolean_choices.sample
     })
@@ -505,9 +493,7 @@ JobOffer.where.not(duration_contract: nil).where.not(id: [job_offer4.id, job_off
     ja.user = user_candidate_of_all
   end
   job_application.build_profile({
-    gender: Profile.genders.keys.sample,
-    current_position: 'Dev',
-    phone: '0606060606'
+    gender: Profile.genders.keys.sample
   })
   job_application.job_application_files.build content: file,
                                               job_application_file_type: resume

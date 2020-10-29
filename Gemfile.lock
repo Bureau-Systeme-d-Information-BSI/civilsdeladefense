@@ -62,9 +62,6 @@ GEM
       activerecord (>= 4.2)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
-    after_commit_action (1.1.0)
-      activerecord (>= 3.0.0)
-      activesupport (>= 3.0.0)
     ast (2.4.0)
     audited (4.9.0)
       activerecord (>= 4.2, < 6.1)
@@ -99,10 +96,9 @@ GEM
       tzinfo
     coderay (1.1.2)
     concurrent-ruby (1.1.7)
-    counter_culture (2.3.0)
+    counter_culture (2.6.2)
       activerecord (>= 4.2)
       activesupport (>= 4.2)
-      after_commit_action (~> 1.0)
     countries (3.0.1)
       i18n_data (~> 0.10.0)
       sixarm_ruby_unaccent (~> 1.1)
@@ -416,7 +412,7 @@ GEM
     will_paginate (3.3.0)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.4.0)
+    zeitwerk (2.4.1)
 
 PLATFORMS
   ruby

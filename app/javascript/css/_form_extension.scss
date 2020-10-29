@@ -11,6 +11,7 @@
   }
 }
 
+
 .trix-editor-wrapper {
   @extend .form-control;
   height: auto;
@@ -243,6 +244,17 @@ label {
         @extend .mr-1;
         display: unset;
       }
+    }
+  }
+}
+
+.form-group {
+  &.check_boxes {
+    legend {
+      @extend .mb-2;
+    }
+    .form-check {
+      @extend .pl-2;
     }
   }
 }

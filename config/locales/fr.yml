@@ -416,6 +416,8 @@ fr:
           zero: "Aucun résultat de recherche"
           one: "1 résultat de recherche"
           other: "%{count} résultats de recherche"
+      listing:
+        title: "Ajouter ce candidat à mon vivier"
       user:
         my_preferred_user_lists: "Mon vivier"
         remove_user: "Supprimer de cette liste"

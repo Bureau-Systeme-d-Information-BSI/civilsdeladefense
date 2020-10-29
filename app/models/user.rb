@@ -6,11 +6,16 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable, :lockable
 
+  include PgSearch::Model
+  pg_search_scope :search_full_text,
+                  against: %i[first_name last_name]
+
   belongs_to :organization
   belongs_to :last_job_application, class_name: 'JobApplication', optional: true
   has_many :job_applications, -> { order(created_at: :desc) }, dependent: :nullify
   has_many :job_offers, through: :job_applications
   has_many :preferred_users, dependent: :destroy
+  has_many :preferred_users_lists, through: :preferred_users
 
   mount_uploader :photo, PhotoUploader, mount_on: :photo_file_name
   validates :photo,

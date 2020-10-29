@@ -2,8 +2,8 @@
 
 class Admin::InheritedResourcesController < Admin::BaseController
   respond_to :html, :json
-  inherit_resources
-  actions :all, except: %i[show]
+
+  helper_method :resource_class, :collection, :resource, :collection_url
 
   def create
     key = "admin.#{resource_class.to_s.tableize}.create.success"
@@ -32,4 +32,20 @@ class Admin::InheritedResourcesController < Admin::BaseController
   end
 
   alias resource_params permitted_params
+
+  def resource_class
+    controller_name.classify.constantize
+  end
+
+  def resource
+    instance_variable_get("@#{controller_name.singularize}")
+  end
+
+  def collection
+    instance_variable_get("@#{controller_name}")
+  end
+
+  def collection_url
+    [:admin, :"#{controller_name}"]
+  end
 end

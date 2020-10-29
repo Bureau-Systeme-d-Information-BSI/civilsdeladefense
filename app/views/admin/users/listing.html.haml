@@ -1,0 +1,14 @@
+.card
+  .card-body
+    %h4.mb-3= t('.title')
+    = simple_form_for([:update_listing, :admin, @user], method: :put) do |f|
+      = f.error_notification
+      = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+      .form-inputs
+        = f.input :preferred_users_list_ids, as: :check_boxes, collection: current_administrator.preferred_users_lists, input_html: { include_hidden: false }
+      .form-actions.text-right.mt-4
+        %ul.list-inline.mb-0
+          %li.list-inline-item
+            = button_tag(type: 'submit', class: 'btn btn-primary btn-raised mb-0') do
+              = t('buttons.save')
+              = fa_icon('send', class: 'ml-1')

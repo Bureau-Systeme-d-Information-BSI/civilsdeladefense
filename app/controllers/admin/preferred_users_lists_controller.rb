@@ -3,6 +3,9 @@
 class Admin::PreferredUsersListsController < Admin::InheritedResourcesController
   layout 'admin/pool'
 
+  def index
+  end
+
   def new
     render layout: request.xhr? ? false : 'admin/pool'
   end
@@ -12,38 +15,35 @@ class Admin::PreferredUsersListsController < Admin::InheritedResourcesController
   end
 
   def create
-    resource.administrator ||= current_administrator
-    create! do |success, failure|
-      success.html do
-        redirect_to [:admin, resource]
+    if resource.save
+      respond_to do |format|
+        format.html { redirect_to [:admin, resource] }
+        format.js { render json: {}.to_json, status: :created, location: [:admin, resource] }
       end
-      success.js do
-        render json: {}.to_json, status: :created, location: [:admin, resource]
-      end
-      failure.html do
-        layout_choice = request.xhr? ? false : 'admin/pool'
-        render action: 'new', status: :unprocessable_entity, layout: layout_choice
-      end
+    else
+      layout_choice = request.xhr? ? false : 'admin/pool'
+      render action: 'new', status: :unprocessable_entity, layout: layout_choice
     end
   end
 
   def update
-    update! do |success, failure|
-      success.html do
-        redirect_to [:admin, resource]
+    if resource.update(permitted_params)
+      respond_to do |format|
+        format.html { redirect_to [:admin, resource] }
+        format.js { render json: {}.to_json, status: :created, location: [:admin, resource] }
       end
-      success.js do
-        render json: {}.to_json, status: :created, location: [:admin, resource]
-      end
-      failure.html do
-        layout_choice = request.xhr? ? false : 'admin/pool'
-        render action: 'edit', status: :unprocessable_entity, layout: layout_choice
+    else
+      respond_to do |format|
+        format.html do
+          layout_choice = request.xhr? ? false : 'admin/pool'
+          render action: 'edit', status: :unprocessable_entity, layout: layout_choice
+        end
       end
     end
   end
 
   def show
-    @preferred_users = @preferred_users_list.preferred_users.includes(user: [:profile])
+    @preferred_users = @preferred_users_list.preferred_users.includes(user: [:last_job_application])
     @q = @preferred_users.ransack(params[:q])
     @preferred_users_filtered = @q.result.yield_self do |relation|
       if params[:s].present?
@@ -59,10 +59,6 @@ class Admin::PreferredUsersListsController < Admin::InheritedResourcesController
   end
 
   protected
-
-  def begin_of_association_chain
-    current_administrator
-  end
 
   def permitted_fields
     %i[name note]

@@ -135,6 +135,7 @@ fr:
         password: 'Mot de passe'
         password_confirmation: 'Confirmation du mot de passe'
         terms_of_service: "En soumettant ce formulaire, j'accepte que les informations saisies sur le site %{site_name} soient exploitées pour l'instruction de ma candidature par %{business_owner_name}. Les informations personnelles portées sur ce formulaire et celles communiquées aux étapes ultérieures du processus de recrutement sont enregistrées dans un fichier informatisé administré par %{business_owner_name} conformément à la <a href='%{link}' target='_blank'>déclaration de confidentialité</a> du portail %{site_name}, dont j'ai pris connaissance"
+        preferred_users_list_ids: "Mes listes de candidats"
     placeholders:
       defaults:
         first_name: "Prénom"

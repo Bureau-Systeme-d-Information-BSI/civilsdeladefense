@@ -8,24 +8,14 @@ class Ability
     return unless administrator
 
     alias_action :archived, :stats, :board, :cvlm, to: :read
-    # alias_action :cvlm, to: :read
-    # alias_action :cvlm, :emails, :files, to: :read
 
     can :read, SalaryRange
+    cannot :manage, PreferredUsersList
     case administrator.role
     when 'bant'
-      can :manage, :all
+      ability_bant(administrator)
     when 'employer'
-      can :create, JobOffer
-      can :manage, JobOffer, job_offer_actors: { administrator_id: administrator.id }
-      can :manage, JobOffer, owner_id: administrator.id
-      can :manage, JobApplication, employer_job_application_query(administrator)
-      can :manage, JobApplicationFile
-      can :manage, Message
-      can :manage, Email
-      can :manage, User, employer_users_query(administrator)
-      can :manage, PreferredUsersList, administrator_id: administrator.id
-      can :manage, PreferredUser, preferred_users_list: { administrator_id: administrator.id }
+      ability_employer(administrator)
     else
       can :read, JobOffer, job_offer_actors: { administrator_id: administrator.id }
       can :read, JobApplication, job_application_read_query(administrator)
@@ -33,30 +23,26 @@ class Ability
       can :manage, JobApplicationFile
       can :read, Message
       can :read, Email
-      # can :read, User, job_application_read_query(administrator)
     end
   end
 
   private
 
-  def employer_job_application_query(administrator)
-    {
-      job_offer: {
-        job_offer_actors: {
-          administrator_id: administrator.id
-        }
-      }
-    }
+  def ability_bant(administrator)
+    can :manage, :all
+    can :manage, PreferredUsersList, administrator_id: administrator.id
   end
 
-  def employer_users_query(administrator)
-    {
-      job_offers: {
-        job_offer_actors: {
-          administrator_id: administrator.id
-        }
-      }
-    }
+  def ability_employer(administrator)
+    can :create, JobOffer
+    can :manage, JobOffer, job_offer_actors: { administrator_id: administrator.id }
+    can :manage, JobOffer, owner_id: administrator.id
+    can :manage, JobApplication, job_application_read_query(administrator)
+    can :manage, JobApplicationFile
+    can :manage, Message
+    can :manage, Email
+    can :manage, User, job_application_read_query(administrator)
+    can :manage, PreferredUsersList, administrator_id: administrator.id
   end
 
   def job_application_read_query(administrator)

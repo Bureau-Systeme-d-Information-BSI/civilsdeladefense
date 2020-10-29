@@ -29,7 +29,4 @@
         - else
           %em Aucun résultat
 
-.modal.fade#remoteContentModal{tabindex: -1, role: :dialog, aria: {labelledby: :remoteContentModal, hidden: true}}
-  .modal-dialog.modal-lg{role: :document}
-    .modal-content
-      .modal-body.p-0
+= render partial: 'modal_generic'

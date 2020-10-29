@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class Admin::UsersController < Admin::InheritedResourcesController
-  # skip_load_and_authorize_resource only: %i[show]
-
   def index
     @q = @users.ransack(params[:q])
     @users_filtered = @q.result.yield_self do |relation|
@@ -19,46 +17,59 @@ class Admin::UsersController < Admin::InheritedResourcesController
   end
 
   def show
-    load_preferred_users_list
-    render layout: layout_choice
+    render layout: 'admin/pool'
   end
 
   def update
-    update! do |success, failure|
-      success.html do
-        redirect_to [:admin, @user], notice: t('.success')
+    if @user.update(permitted_params)
+      respond_to do |format|
+        format.html { redirect_to [:admin, @user], notice: t('.success') }
+        format.js do
+          @notification = t('.success')
+          render :update
+        end
       end
-      success.js do
-        @notification = t('.success')
-        render :update
+    else
+      respond_to do |format|
+        format.html { render :edit }
+        format.js do
+          @notification = t('.failure')
+          render :update, status: :unprocessable_entity
+        end
       end
-      failure.html { render :edit }
-      failure.js do
-        @notification = t('.failure')
-        render :update, status: :unprocessable_entity
+    end
+  end
+
+  def listing
+    render layout: 'admin/pool'
+  end
+
+  def update_listing
+    if @user.update(permitted_params_listing)
+      respond_to do |format|
+        format.html do
+          redirect_to %i[admin users], notice: t('.success')
+        end
+      end
+    else
+      respond_to do |format|
+        format.html do
+          render action: :listing
+        end
       end
     end
   end
 
   protected
 
-  def layout_choice
-    'admin/pool'
-  end
-
-  def load_preferred_users_list
-    return unless params[:preferred_users_list_id].present?
-
-    id = params[:preferred_users_list_id]
-    @preferred_users_list = current_administrator.preferred_users_lists.find(id)
-
-    @user = @preferred_users_list.users.find(params[:id])
-  end
-
   # Never trust parameters from the scary internet, only allow the white list through.
   def permitted_params
     fields = %i[first_name last_name current_position phone website_url]
     params.require(:user).permit(fields)
+  end
+
+  def permitted_params_listing
+    params.require(:user).permit(preferred_users_list_ids: [])
   end
 
   alias resource_params permitted_params

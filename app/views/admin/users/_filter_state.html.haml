@@ -1,0 +1,19 @@
+- search_key = :last_job_application_state_in
+- ary = params.dig(:q, search_key)  || []
+- states = JobApplication.states.to_a.map {|k| [ JobApplication.human_attribute_name("state/#{k.first}"), k.last] }
+.dropdown.dropdown-checks.form-group
+  %button.form-control.dropdown-toggle.text-left.d-flex.align-items-center#dropdownContractType{type: 'button', data: {toggle: 'dropdown'}, aria: {haspopup: true, expanded: false}}
+    État
+    - if ary.any?
+      = "(#{ary.size})"
+  .dropdown-menu.dropdown-menu-right.allow-focus{aria: {labelledby: 'dropdownContractType'}}
+    %ul
+      - for state_ary in states
+        - state_name = state_ary[0]
+        - state_id = state_ary[1]
+        - input_id = "state_#{state_id}"
+        %li
+          .form-check.form-check-inline.w-100
+            - checked = ary.include?(state_id.to_s)
+            = check_box_tag "q[#{search_key}][]", state_id, checked, class: 'form-check-input', id: input_id
+            %label.form-check-label.text-truncate.d-block{for: input_id}= state_name

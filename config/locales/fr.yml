@@ -797,6 +797,7 @@ fr:
       shared:
         navbar:
           create_preferred_users_list_title: "+ Créer une nouvelle liste"
+          manage_preferred_users_lists_title: "Gérer"
           job_applications_title: "Vivier"
           job_applications: "Toutes les candidatures"
           preferred_users_lists_title: "Mes listes de candidats"

@@ -58,6 +58,12 @@ class Admin::PreferredUsersListsController < Admin::InheritedResourcesController
     render action: :show, layout: 'admin/pool'
   end
 
+  def destroy
+    @preferred_users_list.destroy
+
+    redirect_to %i[admin users]
+  end
+
   protected
 
   def permitted_fields

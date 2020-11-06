@@ -28,10 +28,6 @@
     - if can?(:manage, PreferredUsersList)
       %ul.list-inline.mb-0.actions.mt-2.mt-md-0
         %li.list-inline-item
-          = link_to listing_admin_user_path(user), role: :button, data: { toggle: "modal" } do
+          = link_to listing_admin_user_path(user), role: :button do
             = fa_icon 'star'
             = t('.my_preferred_user_lists')
-
-          -# = link_to '#modal', role: :button, data: { toggle: "modal" } do
-          -#   = fa_icon 'star'
-          -#   = t('.my_preferred_user_lists')

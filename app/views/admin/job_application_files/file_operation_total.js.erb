@@ -1,6 +1,6 @@
 var node = document.querySelector('.job-application-files')
 if (node !== null) {
-  var html = '<%= j render(partial: '/admin/job_applications/files') %>'
+  var html = '<%= j render(template: '/admin/job_applications/files') %>'
   var frag = document.createRange().createContextualFragment(html)
   node.replaceWith(frag)
 }

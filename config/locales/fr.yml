@@ -417,7 +417,7 @@ fr:
           one: "1 résultat de recherche"
           other: "%{count} résultats de recherche"
       listing:
-        title: "Ajouter ce candidat à mon vivier"
+        title: "Ajouter/supprimer ce candidat de mes listes"
       user:
         my_preferred_user_lists: "Mon vivier"
         remove_user: "Supprimer de cette liste"

@@ -6,7 +6,7 @@
     "@rails/webpacker": "^4.0.7",
     "bootstrap": "^4.3.1",
     "bootstrap-material-design": "^4.1.2",
-    "bootstrap.native": "^3.0.10",
+    "bootstrap.native": "^3.0.13",
     "domurl": "^2.1.9",
     "flatpickr": "^4.6.2",
     "highcharts": "^7.2.2",

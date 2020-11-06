@@ -14,6 +14,8 @@
   - if can?(:manage, PreferredUsersList)
     .list-group-item.menu
       = t(".preferred_users_lists_title")
+      = link_to [:admin, :preferred_users_lists], class: "ml-2" do
+        %small= t('.manage_preferred_users_lists_title')
     - current_administrator.preferred_users_lists.each do |list|
       - klasses = %w(list-group-item d-flex justify-content-between align-items-center)
       - klasses << 'active' if @preferred_users_list == list
@@ -26,3 +28,4 @@
       - klasses = %w(list-group-item d-flex justify-content-between align-items-center)
       = link_to [:new, :admin, :preferred_users_list], class: klasses do
         = t('.create_preferred_users_list_title')
+      - klasses = %w(list-group-item d-flex justify-content-between align-items-center)

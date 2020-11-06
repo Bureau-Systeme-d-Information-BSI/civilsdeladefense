@@ -8,6 +8,8 @@
             = fa_icon('magnify')
         = text_field_tag :s, params[:s], placeholder: 'Mot-clés'
       .row.mt-2
+        .col-12.col-sm-3
+          = render partial: 'filter_state'
       .d-flex.flex-row-reverse.align-items-center
         = submit_tag t('buttons.search'), name: nil, class: 'btn btn-primary btn-raised btn-small'
         = link_to 'Réinitialiser', url_for, class: 'mr-3 text-grey text-underline'

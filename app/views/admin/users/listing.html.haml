@@ -5,7 +5,7 @@
       = f.error_notification
       = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
       .form-inputs
-        = f.input :preferred_users_list_ids, as: :check_boxes, collection: current_administrator.preferred_users_lists, input_html: { include_hidden: false }
+        = f.input :preferred_users_list_ids, as: :check_boxes, collection: current_administrator.preferred_users_lists, input_html: { include_hidden: false }, hint: "Décocher une case permet de sortir le candidat d'une liste."
       .form-actions.text-right.mt-4
         %ul.list-inline.mb-0
           %li.list-inline-item

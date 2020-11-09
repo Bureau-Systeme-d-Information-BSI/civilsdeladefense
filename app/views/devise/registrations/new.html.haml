@@ -11,12 +11,10 @@
     .col-12.col-md-6.pl-md-5
       .form-inputs
         - if resource.is_a?(User)
-          - profile = resource.profile || resource.build_profile
           = f.input :first_name
           = f.input :last_name
-          = f.simple_fields_for :profile, profile do |profile_form|
-            = profile_form.input :current_position
-            = profile_form.input :phone
+          = f.input :current_position
+          = f.input :phone
   .row
     .col-12
       .mt-4.mb-3

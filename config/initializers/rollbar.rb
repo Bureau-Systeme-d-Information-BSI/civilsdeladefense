@@ -40,7 +40,8 @@ Rollbar.configure do |config|
     'ActionController::UnknownFormat' => 'ignore',
     'ActionController::InvalidAuthenticityToken' => 'ignore',
     'Excon::Error::Timeout' => 'ignore',
-    'OpenSSL::SSL::SSLErrorWaitReadable' => 'ignore'
+    'OpenSSL::SSL::SSLErrorWaitReadable' => 'ignore',
+    'ActiveRecord::ConnectionTimeoutError' => 'ignore'
   )
 
   # Enable asynchronous reporting (uses girl_friday or Threading if girl_friday

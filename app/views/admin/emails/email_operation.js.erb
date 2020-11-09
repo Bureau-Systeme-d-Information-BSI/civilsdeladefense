@@ -9,7 +9,7 @@ var jobApplicationModal = document.getElementById('remoteContentModal')
 if (jobApplicationModal !== null) {
   var headNode = jobApplicationModal.querySelector('.head')
   if (headNode !== null) {
-    var headHtml = '<%= j render(partial: '/admin/job_applications/job_application_head', locals: { job_application: @job_application, tab_active: :emails }) %>'
+    var headHtml = '<%= j render(partial: '/admin/users/user_head', locals: { job_application: @job_application, user: @job_application.user }) %>'
     var frag = document.createRange().createContextualFragment(headHtml)
     headNode.replaceWith(frag)
   }
@@ -23,4 +23,3 @@ if (cardNode !== null) {
 }
 
 Snackbar.show({showAction: false, text: '<%= @notification %>'})
-

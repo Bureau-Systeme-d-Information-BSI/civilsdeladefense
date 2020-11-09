@@ -9,7 +9,7 @@ if (node !== null) {
 dom_id = '#<%= dom_id(@job_application, 'profile') %>';
 node = document.querySelector(dom_id)
 if (node !== null) {
-  var html = '<%= j render(partial: '/admin/job_applications/profile', locals: { job_application: @job_application }) %>'
+  var html = '<%= j render(partial: '/admin/job_applications/profile', locals: { job_application: @job_application, is_archived: @job_application.job_offer.archived? || @job_application.user.is_deleted }) %>'
   var frag = document.createRange().createContextualFragment(html)
   node.replaceWith(frag)
 }

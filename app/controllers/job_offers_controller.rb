@@ -32,15 +32,11 @@ class JobOffersController < ApplicationController
     if user_signed_in? && (@previous_job_application = current_user.job_applications.first)
       @job_application = @previous_job_application.dup
       @job_application.state = JobApplication.new.state
-      @job_application.profile = current_user.profile.dup
+      @job_application.profile = @previous_job_application.profile.dup
     else
       @job_application = JobApplication.new
-      if user_signed_in?
-        @job_application.profile = current_user.profile.dup
-      else
-        @job_application.user = User.new
-        @job_application.build_profile
-      end
+      @job_application.user = user_signed_in? ? current_user : User.new
+      @job_application.build_profile
     end
   end
 

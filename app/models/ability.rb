@@ -41,13 +41,23 @@ class Ability
     can :manage, JobApplicationFile
     can :manage, Message
     can :manage, Email
-    can :manage, User, job_application_read_query(administrator)
+    can :manage, User, employer_users_query(administrator)
     can :manage, PreferredUsersList, administrator_id: administrator.id
   end
 
   def job_application_read_query(administrator)
     {
       job_offer: {
+        job_offer_actors: {
+          administrator_id: administrator.id
+        }
+      }
+    }
+  end
+
+  def employer_users_query(administrator)
+    {
+      job_offers: {
         job_offer_actors: {
           administrator_id: administrator.id
         }

@@ -50,20 +50,26 @@ class ApplicantNotificationsMailer < ApplicationMailer
 
     return false if original_email.blank?
 
-    body = (message.text_part || message.html_part || message).body.decoded
-    body = ActionView::Base.full_sanitizer.sanitize(body)
+    safe_body = Rails::Html::WhiteListSanitizer.new.sanitize(mail_body(message))
 
-    return false if body.blank?
+    return false if safe_body.blank?
 
     job_application = original_email.job_application
     sender_email = message.from.first
     user = User.find_by_email sender_email
-    create_email(user, job_application, body, message.subject)
+    create_email(user, job_application, safe_body, message.subject)
 
     true
   end
 
   protected
+
+  def mail_body(message)
+    @mail_body ||= begin
+      body = message.multipart? ? message.parts[0].body.decoded : message.decoded
+      body
+    end
+  end
 
   def fetch_original_email_id(message)
     current_organization = Organization.first

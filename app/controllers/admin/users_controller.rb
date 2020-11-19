@@ -60,6 +60,16 @@ class Admin::UsersController < Admin::InheritedResourcesController
     end
   end
 
+  def suspend
+    @user.suspend!(params[:reason])
+    redirect_to [:admin, @user], notice: t('.success')
+  end
+
+  def unsuspend
+    @user.unsuspend!
+    redirect_to [:admin, @user], notice: t('.success')
+  end
+
   protected
 
   # Never trust parameters from the scary internet, only allow the white list through.

@@ -13,3 +13,19 @@
         .tab-pane.fade.active.show
           - if (job_applications = @user.job_applications).any?
             = render partial: "/admin/job_applications/user_job_applications", locals: {job_applications: job_applications, narrow: true}
+
+    .col-12.col-md-4{class: job_application_modal_section_classes}
+      - if @user.suspended?
+        %em.d-block.mb-3
+          Utilisateur suspendu.
+        %em.d-block.mb-3
+          Raison : #{@user.suspension_reason}
+        = simple_form_for(@user, url: [:unsuspend, :admin, @user], method: :post) do |f|
+          = button_tag(type: 'submit', class: 'btn btn-primary') do
+            = t('buttons.user_unsuspend')
+            = fa_icon('send', class: 'ml-1')
+      - else
+        = simple_form_for(@user, url: [:suspend, :admin, @user], method: :post) do |f|
+          = button_tag(type: 'submit', class: 'btn btn-primary') do
+            = t('buttons.user_suspend')
+            = fa_icon('send', class: 'ml-1')

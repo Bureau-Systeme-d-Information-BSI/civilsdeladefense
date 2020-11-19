@@ -64,6 +64,7 @@ Rails.application.routes.draw do
       member do
         get :listing
         put :update_listing
+        post :suspend, :unsuspend
       end
     end
     resources :job_applications, path: 'candidatures', only: %i[index show update] do

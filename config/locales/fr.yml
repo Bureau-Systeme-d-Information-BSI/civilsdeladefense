@@ -89,6 +89,8 @@ fr:
     unarchive: "Désarchiver"
     update: "Mettre à jour"
     unsuspend: "Republier"
+    user_suspend: "Suspendre"
+    user_unsuspend: "Réactiver"
   job_applications:
     form:
       general_informations: "Informations générales"
@@ -418,6 +420,10 @@ fr:
           other: "%{count} résultats de recherche"
       listing:
         title: "Ajouter/supprimer ce candidat de mes listes"
+      suspend:
+        success: "Utilisateur suspendu"
+      unsuspend:
+        success: "Utilisateur réactivé"
       user:
         my_preferred_user_lists: "Mon vivier"
         remove_user: "Supprimer de cette liste"

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'charlock_holmes'
+
 # Mail sent to candidate
 class ApplicantNotificationsMailer < ApplicationMailer
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -50,7 +52,13 @@ class ApplicantNotificationsMailer < ApplicationMailer
 
     return false if original_email.blank?
 
-    safe_body = Rails::Html::WhiteListSanitizer.new.sanitize(mail_body(message))
+    body = mail_body(message)
+    safe_body = Rails::Html::WhiteListSanitizer.new.sanitize(body)
+    unless safe_body.valid_encoding?
+      detection = CharlockHolmes::EncodingDetector.detect(safe_body)
+      corrected_encoding = detection[:ruby_encoding]
+      safe_body = safe_body.encode('UTF-8', corrected_encoding)
+    end
 
     return false if safe_body.blank?
 

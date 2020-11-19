@@ -33,6 +33,7 @@ gem 'audited'
 gem 'awesome_nested_set'
 gem 'cancancan'
 gem 'carrierwave'
+gem 'charlock_holmes', require: false
 gem 'counter_culture'
 gem 'country_select'
 gem 'devise'

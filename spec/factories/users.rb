@@ -13,4 +13,8 @@ FactoryBot.define do
     terms_of_service { true }
     certify_majority { true }
   end
+
+  factory :confirmed_user, parent: :user do
+    after(:create) { |user| user.confirm }
+  end
 end

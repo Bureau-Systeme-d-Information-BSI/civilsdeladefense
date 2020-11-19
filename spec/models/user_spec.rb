@@ -4,11 +4,22 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   before(:all) do
-    @user = create(:user)
+    @user = create(:confirmed_user)
   end
 
   it 'is valid with valid attributes' do
     expect(@user).to be_valid
+  end
+
+  it 'can be suspended' do
+    text = 'Bad guy'
+    expect(@user.suspended_at).to be_nil
+    expect(@user.active_for_authentication?).to be_truthy
+    @user.suspend!(text)
+    expect(@user.suspended?).to be_truthy
+    expect(@user.suspended_at).to_not be_nil
+    expect(@user.suspension_reason).to eq(text)
+    expect(@user.active_for_authentication?).to be_falsey
   end
 
   it 'should correctly answer if already applied or not' do

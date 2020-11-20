@@ -4,6 +4,10 @@
 module Suspendable
   extend ActiveSupport::Concern
 
+  included do
+    before_destroy :prevent_deletion_when_suspended
+  end
+
   def suspended?
     self.suspended_at?
   end
@@ -25,5 +29,13 @@ module Suspendable
 
   def active_for_authentication?
     super && !suspended?
+  end
+
+  private
+
+  def prevent_deletion_when_suspended
+    if suspended?
+      throw :abort
+    end
   end
 end

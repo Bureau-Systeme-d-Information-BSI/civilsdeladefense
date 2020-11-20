@@ -22,6 +22,21 @@ RSpec.describe User, type: :model do
     expect(@user.active_for_authentication?).to be_falsey
   end
 
+  it 'cannot be destroyed when suspended' do
+    @user.unsuspend!
+    expect {
+      @user.destroy
+    }.to change(User, :count).by(-1)
+
+    @another_user = create(:confirmed_user)
+    @another_user.unsuspend!
+    @another_user.suspend!('Bad guy')
+    expect(@another_user.suspended?).to be_truthy
+    expect {
+      @another_user.destroy
+    }.to change(User, :count).by(0)
+  end
+
   it 'should correctly answer if already applied or not' do
     job_application_file_type = create(:job_application_file_type)
     file = fixture_file_upload('files/document.pdf', 'application/pdf')

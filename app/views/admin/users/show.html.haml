@@ -15,4 +15,5 @@
             = render partial: "/admin/job_applications/user_job_applications", locals: {job_applications: job_applications, narrow: true}
 
     .col-12.col-md-4{class: job_application_modal_section_classes}
-      = render partial: 'actions', locals: { user: @user }
+      - unless @user.new_record?
+        = render partial: 'actions', locals: { user: @user }

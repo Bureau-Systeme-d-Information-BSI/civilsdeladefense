@@ -72,6 +72,16 @@ class Admin::UsersController < Admin::InheritedResourcesController
     redirect_back(fallback_location: [:admin, @user], notice: t('.success'))
   end
 
+  def destroy
+    if @user.destroy
+      redirect_back(fallback_location: [:admin, :users], notice: t('.success'))
+    else
+      reason = @user.errors.full_messages.join(', ')
+      msg = t('.failure', reason: reason)
+      redirect_back(fallback_location: [:admin, :users], notice: msg)
+    end
+  end
+
   protected
 
   # Never trust parameters from the scary internet, only allow the white list through.

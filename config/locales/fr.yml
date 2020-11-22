@@ -69,6 +69,7 @@ fr:
     copy: "Dupliquer"
     deactivate: "Désactiver"
     delete: "Supprimer"
+    delete_user: "Supprimer le compte candidat"
     download: "Télécharger"
     draftize: "Passer en brouillon"
     edit: "Modifier"
@@ -86,11 +87,11 @@ fr:
     send_unlock_instructions: "Envoyer les instructions de déblocage"
     show: "Voir"
     suspend: "Mettre en pause"
+    suspend_user: "Suspendre ce compte candidat"
     unarchive: "Désarchiver"
     update: "Mettre à jour"
     unsuspend: "Republier"
-    user_suspend: "Suspendre ce compte candidat"
-    user_unsuspend: "Réactiver"
+    unsuspend_user: "Réactiver"
   job_applications:
     form:
       general_informations: "Informations générales"
@@ -414,6 +415,9 @@ fr:
     users:
       actions:
         title: "Actions"
+      destroy:
+        failure: "Problème : %{reason}"
+        success: "Utilisateur supprimé"
       index:
         title: "Vivier de candidats"
         users_filtered:
@@ -858,6 +862,8 @@ fr:
               file_size_is_less_than: "Fichier trop volumineux, doit être max. 2Mo"
         user:
           attributes:
+            base:
+              not_allowed_because_suspended: "impossible de supprimer un compte tant qu'il est suspendu"
             current_position: "Poste actuel"
             photo:
               file_size_is_less_than: "Fichier trop volumineux, doit être max. 2Mo"

@@ -7,10 +7,6 @@
       = image_user_tag user.photo, width: 80, class: 'mr-4'
       .d-flex.flex-column
         .h5.secondary.mb-0= user.full_name
-        - if job_offer
-          %small
-            = [job_offer.identifier, job_offer.title].join(' ')
-            = link_to(fa_icon('open-in-new'), [:admin, job_offer], target: '_blank', class: 'ml-1')
         .my-1= user.current_position
         - if (phone = user.phone).present?
           .d-flex.flex-row.align-items-center
@@ -25,7 +21,7 @@
             - icon_name = website_url =~ /linkedin/ ? 'linkedin' : 'web'
             = fa_icon(icon_name, class: 'fa-w-15 mr-1')
             = link_to website_url, website_url, target: :_blank, class: 'text-body-color'
-    - if defined?(job_application)
+    - if defined?(job_application) && !user.new_record?
       %ul.nav.nav-tabs{role: :tablist}
         %li.nav-item.mr-3
           - klasses = tab_active == :profile ? %w(nav-link active) : %w(nav-link)

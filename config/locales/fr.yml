@@ -430,7 +430,7 @@ fr:
         my_preferred_user_lists: "Mon vivier"
         remove_user: "Supprimer de cette liste"
         subscribed_on: "Inscrit le %{date}"
-      user_head:
+      head:
         nav_emails: "Courriels"
         nav_files: "Documents"
         nav_overview: "Candidature"

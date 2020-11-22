@@ -6,7 +6,7 @@
   = link_to url_opts, class: 'mb-3 d-block' do
     ← Retour à la liste de candidats '#{@preferred_users_list.name}'
 .container-fluid
-  = render partial: 'user_head', locals: {user: @user}
+  = render partial: 'head', locals: {user: @user}
   .row.bg-card-bg
     .col-12.col-md-8.border-right{class: job_application_modal_section_classes}
       .tab-content

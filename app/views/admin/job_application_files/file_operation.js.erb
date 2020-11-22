@@ -7,7 +7,7 @@ var jobApplicationModal = document.getElementById('remoteContentModal')
 if (jobApplicationModal !== null) {
   var headNode = jobApplicationModal.querySelector('.head')
   if (headNode !== null) {
-    var headHtml = '<%= j render(partial: '/admin/users/user_head', locals: { job_application: @job_application, user: @job_application.user }) %>'
+    var headHtml = '<%= j render(partial: '/admin/users/head', locals: { job_application: @job_application, user: @job_application.user }) %>'
     var frag = document.createRange().createContextualFragment(headHtml)
     headNode.replaceWith(frag)
   }

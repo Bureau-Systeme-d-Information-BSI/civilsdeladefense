@@ -61,7 +61,9 @@ class Admin::UsersController < Admin::InheritedResourcesController
   end
 
   def suspend
-    @user.suspend!(params[:reason])
+    reason = params.require(:user).permit(:suspension_reason).fetch(:suspension_reason)
+    reason = nil if reason.blank?
+    @user.suspend!(reason)
     redirect_back(fallback_location: [:admin, @user], notice: t('.success'))
   end
 

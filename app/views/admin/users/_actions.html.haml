@@ -7,14 +7,29 @@
     %span
       Utilisateur suspendu.
       %br
-      Raison : <em>#{user.suspension_reason.present? ? user.suspension_reason : 'Aucune raison donnée'}</em>
+      %span
+        Raison :
+        %em= user.suspension_reason.present? ? user.suspension_reason : 'Aucune raison donnée'
     .ml-auto
       = link_to [:unsuspend, :admin, user], method: :post, data: {confirm: t('buttons.confirm')}, class: 'btn btn-primary mb-0' do
         = t('buttons.user_unsuspend')
         = fa_icon('send', class: 'ml-1')
 - else
-  = simple_form_for(user, url: [:suspend, :admin, user], method: :post) do |f|
-    = button_tag(type: 'submit', class: 'btn btn-primary mb-0') do
-      = t('buttons.user_suspend')
-      = fa_icon('send', class: 'ml-1')
+  = link_to "#", class: 'btn btn-primary mb-0', data: { toggle: :modal, target: '#suspendContentModal' } do
+    = t('buttons.user_suspend')
+    = fa_icon('send', class: 'ml-1')
 .mb-4
+
+.modal.fade#suspendContentModal{tabindex: -1, role: :dialog, aria: {labelledby: :suspendContentModal, hidden: true}}
+  .modal-dialog{role: :document}
+    .modal-content
+      .modal-body
+        = simple_form_for(user, url: [:suspend, :admin, user], method: :post) do |f|
+          = f.input :suspension_reason, as: :text
+          .form-actions.d-flex.mt-4
+            %button{type: :button, class: 'btn btn-link mb-0', data: {dismiss: :modal}, aria: {label: t('buttons.close')}}
+              = t('buttons.cancel')
+            .ml-auto
+              = button_tag(type: 'submit', class: 'btn btn-primary btn-raised mb-0') do
+                = t('buttons.user_suspend')
+                = fa_icon('send', class: 'ml-1')

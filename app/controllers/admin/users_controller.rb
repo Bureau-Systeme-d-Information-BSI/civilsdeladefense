@@ -74,11 +74,11 @@ class Admin::UsersController < Admin::InheritedResourcesController
 
   def destroy
     if @user.destroy
-      redirect_back(fallback_location: [:admin, :users], notice: t('.success'))
+      redirect_back(fallback_location: %i[admin users], notice: t('.success'))
     else
       reason = @user.errors.full_messages.join(', ')
       msg = t('.failure', reason: reason)
-      redirect_back(fallback_location: [:admin, :users], notice: msg)
+      redirect_back(fallback_location: %i[admin users], notice: msg)
     end
   end
 

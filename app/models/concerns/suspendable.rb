@@ -10,23 +10,24 @@ module Suspendable
   end
 
   def suspended?
-    self.suspended_at?
+    suspended_at?
   end
 
   def suspend!(reason = nil)
     return if suspended?
+
     self.suspended_at = Time.zone.now
     self.suspension_reason = reason
-    self.save(validate: false)
+    save(validate: false)
   end
 
   def unsuspend!
-    return if !suspended?
+    return unless suspended?
+
     self.suspended_at = nil
     self.suspension_reason = nil
-    self.save(validate: false) if self.changed?
+    save(validate: false) if changed?
   end
-
 
   def active_for_authentication?
     super && !suspended?
@@ -35,10 +36,10 @@ module Suspendable
   private
 
   def prevent_deletion_when_suspended
-    if suspended?
-      errors.add(:base, :not_allowed_because_suspended)
-      throw :abort
-    end
+    return unless suspended?
+
+    errors.add(:base, :not_allowed_because_suspended)
+    throw :abort
   end
 
   def purge_associated_objects

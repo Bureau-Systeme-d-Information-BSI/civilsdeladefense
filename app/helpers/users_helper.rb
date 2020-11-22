@@ -32,7 +32,7 @@ module UsersHelper
         if e.to_s == 'undefined method `body\' for nil:NilClass'
           asset_pack_path('images/default_user_avatar.svg')
         end
-      rescue URI::InvalidURIError => e
+      rescue URI::InvalidURIError
         # nothing we can do
         asset_pack_path('images/default_user_avatar.svg')
       end

@@ -15,6 +15,6 @@ FactoryBot.define do
   end
 
   factory :confirmed_user, parent: :user do
-    after(:create) { |user| user.confirm }
+    after(:create, &:confirm)
   end
 end

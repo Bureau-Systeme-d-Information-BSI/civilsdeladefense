@@ -33,6 +33,23 @@ RSpec.describe User, type: :model do
     expect { @another_user.destroy }.to change(User, :count).by(0)
   end
 
+  it 'should purge associated objects when destroy' do
+    job_application_file_type = create(:job_application_file_type)
+    file = fixture_file_upload('files/document.pdf', 'application/pdf')
+    jaf_attrs = [
+      {
+        content: file,
+        job_application_file_type_id: job_application_file_type.id
+      }
+    ]
+    create(:job_application,
+           user: @user,
+           job_application_files_attributes: jaf_attrs)
+
+    @user.unsuspend!
+    expect { @user.destroy }.to change(JobApplicationFile, :count).by(-1)
+  end
+
   it 'should correctly answer if already applied or not' do
     job_application_file_type = create(:job_application_file_type)
     file = fixture_file_upload('files/document.pdf', 'application/pdf')

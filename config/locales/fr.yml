@@ -83,13 +83,13 @@ fr:
     search: "Rechercher"
     send: "Envoyer"
     send_to_candidate: "Envoyer au candidat"
-    send_unlock_instructions: "Envoyer les instructions de débloquage"
+    send_unlock_instructions: "Envoyer les instructions de déblocage"
     show: "Voir"
     suspend: "Mettre en pause"
     unarchive: "Désarchiver"
     update: "Mettre à jour"
     unsuspend: "Republier"
-    user_suspend: "Suspendre"
+    user_suspend: "Suspendre ce compte candidat"
     user_unsuspend: "Réactiver"
   job_applications:
     form:
@@ -412,6 +412,8 @@ fr:
         account: "Mon compte"
         logout: "Déconnexion"
     users:
+      actions:
+        title: "Actions"
       index:
         title: "Vivier de candidats"
         users_filtered:

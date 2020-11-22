@@ -28,4 +28,5 @@
           .tab-pane.active.show{role: :tabpanel, aria: {labelledby: :files}}
             = render template: '/admin/job_applications/files', locals: {job_application: @job_application}
     .col-12.col-md-4{class: job_application_modal_section_classes}
-      = render partial: "job_application_activity"
+      = render partial: '/admin/users/actions', locals: { user: user }
+      = render partial: 'job_application_activity'

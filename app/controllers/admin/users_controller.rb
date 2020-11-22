@@ -62,12 +62,12 @@ class Admin::UsersController < Admin::InheritedResourcesController
 
   def suspend
     @user.suspend!(params[:reason])
-    redirect_to [:admin, @user], notice: t('.success')
+    redirect_back(fallback_location: [:admin, @user], notice: t('.success'))
   end
 
   def unsuspend
     @user.unsuspend!
-    redirect_to [:admin, @user], notice: t('.success')
+    redirect_back(fallback_location: [:admin, @user], notice: t('.success'))
   end
 
   protected

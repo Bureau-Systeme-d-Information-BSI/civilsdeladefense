@@ -1,0 +1,20 @@
+.font-weight-bold.text-secondary.mb-3
+  = fa_icon('settings', class: 'text-secondary')
+  = t('.title')
+
+- if user.suspended?
+  .d-flex.mb-2
+    %span
+      Utilisateur suspendu.
+      %br
+      Raison : <em>#{user.suspension_reason.present? ? user.suspension_reason : 'Aucune raison donnée'}</em>
+    .ml-auto
+      = link_to [:unsuspend, :admin, user], method: :post, data: {confirm: t('buttons.confirm')}, class: 'btn btn-primary mb-0' do
+        = t('buttons.user_unsuspend')
+        = fa_icon('send', class: 'ml-1')
+- else
+  = simple_form_for(user, url: [:suspend, :admin, user], method: :post) do |f|
+    = button_tag(type: 'submit', class: 'btn btn-primary mb-0') do
+      = t('buttons.user_suspend')
+      = fa_icon('send', class: 'ml-1')
+.mb-4

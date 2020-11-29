@@ -8,6 +8,8 @@ class Ability
     return unless administrator
 
     alias_action :archived, :stats, :board, :cvlm, to: :read
+    alias_action :listing, :update_listing, to: :read
+    alias_action :suspend, to: :destroy
 
     can :read, SalaryRange
     cannot :manage, PreferredUsersList
@@ -41,7 +43,8 @@ class Ability
     can :manage, JobApplicationFile
     can :manage, Message
     can :manage, Email
-    can :manage, User, employer_users_query(administrator)
+    can :update, User, employer_users_query(administrator)
+    can :read, User
     can :manage, PreferredUsersList, administrator_id: administrator.id
   end
 

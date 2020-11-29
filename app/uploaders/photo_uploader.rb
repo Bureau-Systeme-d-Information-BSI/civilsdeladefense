@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class PhotoUploader < CommonUploader
-  encrypt
+  encrypt unless Rails.env.test? || Rails.env.cucumber?
 
   include CarrierWave::MiniMagick
 

@@ -37,9 +37,9 @@ RSpec.describe User, type: :model do
     job_application_file_type = create(:job_application_file_type)
 
     job_application = create(:job_application, user: @user)
-    job_application.job_application_files << build(:job_application_file,
-      job_application_file_type: job_application_file_type
-    )
+    job_application_file = build(:job_application_file,
+                                 job_application_file_type: job_application_file_type)
+    job_application.job_application_files << job_application_file
 
     count = job_application.job_application_files.count
     expect(count).to eq(1)

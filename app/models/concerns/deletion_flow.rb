@@ -8,6 +8,7 @@ module DeletionFlow
     before_destroy :purge_associated_objects
   end
 
+  # Deletion management class method
   module ClassMethods
     def destroy_when_too_old
       where('posts.last_sign_in_at < ?', notice_period_target_date).all.each do |user|

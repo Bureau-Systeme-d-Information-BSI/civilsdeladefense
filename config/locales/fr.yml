@@ -10,7 +10,7 @@ fr:
   time:
     formats:
       default: "%-d %b %Y %H:%M"
-      short: "%d/%m/%Y %H:%M"
+      short: "%d/%m/%Y à %H:%M"
   datetime:
     distance_in_words:
       short:

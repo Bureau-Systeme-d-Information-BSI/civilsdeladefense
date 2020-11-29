@@ -7,7 +7,7 @@ CarrierWave.configure do |config|
 
   config.enable_processing = false if Rails.env.test? || Rails.env.cucumber?
 
-  if ENV['OSC_AK']
+  if ENV['OSC_AK'] && !(Rails.env.test? || Rails.env.cucumber?)
     config.fog_provider = 'fog/aws'
     config.fog_credentials = {
       provider: 'AWS',

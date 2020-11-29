@@ -33,37 +33,40 @@ RSpec.describe User, type: :model do
     expect { @another_user.destroy }.to change(User, :count).by(0)
   end
 
-  it 'should purge associated objects when destroy' do
+  it 'should purge associated objects when destroyed' do
     job_application_file_type = create(:job_application_file_type)
-    file = fixture_file_upload('files/document.pdf', 'application/pdf')
-    jaf_attrs = [
-      {
-        content: file,
-        job_application_file_type_id: job_application_file_type.id
-      }
-    ]
-    create(:job_application,
-           user: @user,
-           job_application_files_attributes: jaf_attrs)
+
+    job_application = create(:job_application, user: @user)
+    job_application.job_application_files << build(:job_application_file,
+      job_application_file_type: job_application_file_type
+    )
+
+    count = job_application.job_application_files.count
+    expect(count).to eq(1)
 
     @user.unsuspend!
-    expect { @user.destroy }.to change(JobApplicationFile, :count).by(-1)
+    count_before = JobApplicationFile.count
+    expect(count_before).to eq(1)
+
+    @user.destroy
+    count_after = JobApplicationFile.count
+    expect(count_after).to eq(count_before - 1)
+  end
+
+  it 'should compute notice period difference in days' do
+    ENV['NBR_DAYS_INACTIVITY_PERIOD_BEFORE_DELETION'] = '100'
+    ENV['NBR_DAYS_NOTICE_PERIOD_BEFORE_DELETION'] = '20'
+    expect(User.notice_period_target_date.to_date).to eq(80.days.ago.to_date)
   end
 
   it 'should correctly answer if already applied or not' do
     job_application_file_type = create(:job_application_file_type)
-    file = fixture_file_upload('files/document.pdf', 'application/pdf')
-    jaf_attrs = [
-      {
-        content: file,
-        job_application_file_type_id: job_application_file_type.id
-      }
-    ]
-    job_application = create(:job_application,
-                             user: @user,
-                             job_application_files_attributes: jaf_attrs)
-
+    job_application = create(:job_application, user: @user)
     expect(job_application).to be_valid
+
+    create(:job_application_file,
+           job_application: job_application,
+           job_application_file_type: job_application_file_type)
 
     already_applied = @user.already_applied?(job_application.job_offer)
 

@@ -1,0 +1,21 @@
+<p>
+  <%-if @user_full_name.present? %>
+  Bonjour <%= @user_full_name %>,
+  <%- else %>
+  Bonjour,
+  <%- end %>
+</p>
+
+<p>
+  Nous vous confirmons la suppression de votre compte candidat de notre base de données.
+  <br/>
+  Pour toute nouvelle candidature, nous vous invitons à créer un nouveau compte candidat sur notre site.
+</p>
+
+<p>
+  Cordialement,
+</p>
+
+<p>
+  L'équipe <%= @site_name %>
+</p>

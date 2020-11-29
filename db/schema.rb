@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_19_225253) do
+ActiveRecord::Schema.define(version: 2020_11_22_153211) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -554,6 +554,7 @@ ActiveRecord::Schema.define(version: 2020_11_19_225253) do
     t.uuid "last_job_application_id"
     t.string "suspension_reason"
     t.datetime "suspended_at"
+    t.date "marked_for_deletion_on"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["last_job_application_id"], name: "index_users_on_last_job_application_id"

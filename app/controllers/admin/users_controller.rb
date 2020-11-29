@@ -10,7 +10,7 @@ class Admin::UsersController < Admin::InheritedResourcesController
         relation
       end
     end.yield_self do |relation|
-      relation.includes(:last_job_application).paginate(page: params[:page], per_page: 25)
+      relation.includes(job_applications: %i[profile]).paginate(page: params[:page], per_page: 25)
     end
 
     render action: :index, layout: 'admin/pool'

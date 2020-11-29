@@ -91,8 +91,28 @@ La bonne manière de créer une Pull Request est de :
 
 ## Lancer les tests
 
+Pour lancer les test RSpec :
+
 ```
 docker-compose run specs rspec
+```
+
+Pour lancer l'outil d'analyse statique de formatage Rubocop :
+
+```
+docker-compose run web bundle exec rubocop
+```
+
+Pour lancer l'outil d'analyse statique de vulnérabilités Brakeman :
+
+```
+docker-compose run web bundle exec brakeman -z
+```
+
+One-liner :
+
+```
+ docker-compose run specs rspec && docker-compose run web bundle exec rubocop && docker-compose run web bundle exec brakeman -z
 ```
 
 ## Déploiement en préproduction

@@ -35,6 +35,7 @@ class JobOfferActor < ApplicationRecord
     employer: 0,
     grand_employer: 10,
     supervisor_employer: 20,
-    brh: 30
+    brh: 30,
+    cmg: 40
   }
 end

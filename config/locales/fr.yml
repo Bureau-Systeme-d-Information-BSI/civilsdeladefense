@@ -450,6 +450,7 @@ fr:
           benefits: "Bénéfices en nature"
           bops: "BOPs"
           categories: "Domaines professionnels"
+          cmgs: "Liste des CMG"
           company : "Entreprise"
           configuration: "Configuration"
           contract_types: "Types de contrat"
@@ -516,6 +517,24 @@ fr:
           success: "Compte réactivé"
         resend_confirmation_instructions:
           success: "Invitation renvoyée !"
+      cmgs:
+        index:
+          title: "Liste des CMG"
+          add: "Ajouter"
+          card_title:
+            zero: 'Aucun CMG'
+            one: '1 CMG'
+            other: '%{count} CMGs'
+        new:
+          title: "Ajouter un nouveau CMG"
+        create:
+          success: "CMG ajouté !"
+        update:
+          success: "CMG mis à jour !"
+        destroy:
+          success: "CMG supprimé !"
+        edit:
+          title: "Modifier le CMG"
       employers:
         index:
           title: "Employeurs"
@@ -925,6 +944,7 @@ fr:
         grand_employer: "Grand Employeur"
         supervisor_employer: "Employeur Superviseur"
         brh: "RH"
+        cmg: "CMG"
       organization_default:
         kind: "Type"
         kind/job_offer_description: "Offre d'emploi / Description"

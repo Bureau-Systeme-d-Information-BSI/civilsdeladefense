@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_30_084247) do
+ActiveRecord::Schema.define(version: 2020_11_30_154404) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -151,6 +151,14 @@ ActiveRecord::Schema.define(version: 2020_11_30_084247) do
     t.integer "children_count", default: 0, null: false
     t.integer "published_job_offers_count", default: 0, null: false
     t.index ["name"], name: "index_categories_on_name", unique: true
+  end
+
+  create_table "cmgs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "email"
+    t.uuid "organization_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["organization_id"], name: "index_cmgs_on_organization_id"
   end
 
   create_table "contract_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -568,6 +576,7 @@ ActiveRecord::Schema.define(version: 2020_11_30_084247) do
   add_foreign_key "administrators", "administrators", column: "inviter_id"
   add_foreign_key "administrators", "administrators", column: "supervisor_administrator_id"
   add_foreign_key "administrators", "employers"
+  add_foreign_key "cmgs", "organizations"
   add_foreign_key "emails", "job_applications"
   add_foreign_key "job_application_files", "job_application_file_types"
   add_foreign_key "job_application_files", "job_applications"

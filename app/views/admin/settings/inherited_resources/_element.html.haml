@@ -11,6 +11,9 @@
         - elsif level > 0
           %span.text-light-grey{style: "opacity: 0.6;"}= "└#{'──' * (level-1)}"
         = element.try(:name) || element.try(:title)
+  - elsif resource_class == Cmg
+    %td
+      = element.email
   - elsif resource_class == Employer
     %td
       = element.code

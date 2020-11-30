@@ -25,6 +25,8 @@
           = f.input :logo_vertical_negative
           = f.input :logo_horizontal_negative
           = f.input :image_background
+        - elsif resource.is_a?(Cmg)
+          = f.input :email
         - elsif resource.is_a?(EmailTemplate)
           = f.input :title
           = f.input :subject

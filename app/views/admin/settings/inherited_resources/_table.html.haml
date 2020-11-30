@@ -3,6 +3,8 @@
     %tr
       - if resource_class == EmailTemplate
         %th= resource_class.human_attribute_name(:title)
+      - elsif resource_class == Cmg
+        %th= resource_class.human_attribute_name(:email)
       - elsif resource_class == OrganizationDefault
         %th= resource_class.human_attribute_name(:kind)
       - else

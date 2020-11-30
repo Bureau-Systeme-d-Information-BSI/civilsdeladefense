@@ -59,6 +59,7 @@ class Admin::JobOffersController < Admin::BaseController
     @job_offer = JobOffer.new_from_source(params[:job_offer_id])
     @job_offer ||= JobOffer.new_from_scratch(current_administrator)
     @job_offer.employer = current_administrator.employer unless current_administrator.bant?
+    @job_offer.organization = current_organization
   end
 
   # GET /admin/job_offers/1/edit

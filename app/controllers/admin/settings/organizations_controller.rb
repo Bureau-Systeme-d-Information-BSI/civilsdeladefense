@@ -56,7 +56,7 @@ class Admin::Settings::OrganizationsController < Admin::Settings::BaseController
 
   def general_permitted_params
     permitted_fields = %i[name name_business_owner subdomain domain privacy_policy_url
-                          matomo_site_id inbound_email_config]
+                          matomo_site_id inbound_email_config hours_delay_before_publishing]
     params.require(:organization).permit(permitted_fields)
   end
 

@@ -46,6 +46,7 @@ RSpec.describe JobOffer, type: :model do
     expect(job_offer.state).to eq('published')
     expect(job_offer.published_at).not_to be_nil
   end
+
   it 'should set archived_at date when state is archived' do
     job_offer = create(:job_offer)
     expect(job_offer.state).to eq('draft')
@@ -66,6 +67,41 @@ RSpec.describe JobOffer, type: :model do
     job_offer.reload
     expect(job_offer.state).to eq('suspended')
     expect(job_offer.suspended_at).not_to be_nil
+  end
+
+  it 'should prevent publishing according to organization config' do
+    job_offer = create(:job_offer)
+    organization = job_offer.organization
+    organization.hours_delay_before_publishing = 1
+    organization.save
+
+    expect { job_offer.publish! }.to raise_error(AASM::InvalidTransition)
+  end
+
+  it 'should allow publishing according to organization config' do
+    job_offer = create(:job_offer)
+    organization = job_offer.organization
+    organization.hours_delay_before_publishing = nil
+    organization.save
+
+    expect { job_offer.publish! }.to_not raise_error
+
+    job_offer = create(:job_offer)
+    organization = job_offer.organization
+    organization.hours_delay_before_publishing = 0
+    organization.save
+
+    expect { job_offer.publish! }.to_not raise_error
+  end
+
+  it 'should compute publishing_possible_at' do
+    duration = 2
+    job_offer = create(:job_offer)
+    organization = job_offer.organization
+    organization.hours_delay_before_publishing = duration
+    organization.save
+
+    expect(job_offer.publishing_possible_at).to eq(job_offer.created_at + duration.hours)
   end
 
   it 'should correctly rebuild timestamp from audit log' do

@@ -10,7 +10,7 @@ class Admin::UsersController < Admin::InheritedResourcesController
         relation
       end
     end.yield_self do |relation|
-      relation.includes(:last_job_application).paginate(page: params[:page], per_page: 25)
+      relation.includes(job_applications: %i[profile]).paginate(page: params[:page], per_page: 25)
     end
 
     render action: :index, layout: 'admin/pool'
@@ -57,6 +57,28 @@ class Admin::UsersController < Admin::InheritedResourcesController
           render action: :listing
         end
       end
+    end
+  end
+
+  def suspend
+    reason = params.require(:user).permit(:suspension_reason).fetch(:suspension_reason)
+    reason = nil if reason.blank?
+    @user.suspend!(reason)
+    redirect_back(fallback_location: [:admin, @user], notice: t('.success'))
+  end
+
+  def unsuspend
+    @user.unsuspend!
+    redirect_back(fallback_location: [:admin, @user], notice: t('.success'))
+  end
+
+  def destroy
+    if @user.destroy
+      redirect_back(fallback_location: %i[admin users], notice: t('.success'))
+    else
+      reason = @user.errors.full_messages.join(', ')
+      msg = t('.failure', reason: reason)
+      redirect_back(fallback_location: %i[admin users], notice: msg)
     end
   end
 

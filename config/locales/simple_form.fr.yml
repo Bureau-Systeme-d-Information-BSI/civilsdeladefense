@@ -105,6 +105,7 @@ fr:
       organization:
         administrator_email_suffix: "Suffixe d'email obligatoire pour les comptes admin"
         domain: "Nom de domaine officiel"
+        hours_delay_before_publishing: "Délai incompressible avant de pouvoir publier une annonce"
         image_background: "Image d'arrière plan"
         inbound_email_config: "Configuration passerelle mail/plateforme"
         logo_vertical: "Logo au format vertical (affichage fond blanc)"
@@ -134,8 +135,9 @@ fr:
         certify_majority: "Je certifie être majeur(e) et disposer de mes droits civiques"
         password: 'Mot de passe'
         password_confirmation: 'Confirmation du mot de passe'
-        terms_of_service: "En soumettant ce formulaire, j'accepte que les informations saisies sur le site %{site_name} soient exploitées pour l'instruction de ma candidature par %{business_owner_name}. Les informations personnelles portées sur ce formulaire et celles communiquées aux étapes ultérieures du processus de recrutement sont enregistrées dans un fichier informatisé administré par %{business_owner_name} conformément à la <a href='%{link}' target='_blank'>déclaration de confidentialité</a> du portail %{site_name}, dont j'ai pris connaissance"
         preferred_users_list_ids: "Mes listes de candidats"
+        suspension_reason: "Raison"
+        terms_of_service: "En soumettant ce formulaire, j'accepte que les informations saisies sur le site %{site_name} soient exploitées pour l'instruction de ma candidature par %{business_owner_name}. Les informations personnelles portées sur ce formulaire et celles communiquées aux étapes ultérieures du processus de recrutement sont enregistrées dans un fichier informatisé administré par %{business_owner_name} conformément à la <a href='%{link}' target='_blank'>déclaration de confidentialité</a> du portail %{site_name}, dont j'ai pris connaissance"
     placeholders:
       defaults:
         first_name: "Prénom"
@@ -183,5 +185,6 @@ autres membres de votre équipe.'
         website_url: "LinkedIn, Viadeo, portfolio, etc."
       organization:
         privacy_policy_url: "Ce lien est utilisé dans le formulaire de soumission d'une candidature"
+        hours_delay_before_publishing: "Indiquez un nombre d'heures. Laissez à 0 ou vide pour supprimer complètement le délai avant publication"
       user:
         password: "8 caractères minimum, dont au moins 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial parmi #?!@$%^&*-'"

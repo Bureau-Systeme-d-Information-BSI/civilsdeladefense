@@ -1,4 +1,4 @@
-- search_key = :last_job_application_state_in
+- search_key = :job_applications_state_in
 - ary = params.dig(:q, search_key)  || []
 - states = JobApplication.states.to_a.map {|k| [ JobApplication.human_attribute_name("state/#{k.first}"), k.last] }
 .dropdown.dropdown-checks.form-group

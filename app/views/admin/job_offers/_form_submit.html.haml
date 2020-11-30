@@ -1,3 +1,4 @@
+- events = @job_offer.aasm.events(permitted: true).map(&:name)
 .container
   .row
     .col-12.col-md-10.mx-md-auto
@@ -9,8 +10,6 @@
             = button_tag(type: 'submit', class: 'btn btn-primary btn-raised mb-0') do
               = t('helpers.submit.job_offer.save')
               = fa_icon('save', class: 'ml-1')
-          - events = @job_offer.aasm.events.map(&:name)
-          - events.delete(:archive) if @job_offer.new_record?
           - events.each do |event_name|
             %li.list-inline-item
               - action_prefix = @job_offer.new_record? ? "create" : "update"
@@ -18,3 +17,5 @@
               = button_tag(type: 'submit', class: 'btn btn-primary btn-raised mb-0', name: :commit, value: action_name) do
                 = t("buttons.#{ event_name }")
                 = fa_icon('send', class: 'ml-1')
+        - if !@job_offer.new_record? && !events.include?(:publish) && @job_offer.published_at.blank?
+          %em Publication possible à partir du #{ I18n.l(@job_offer.publishing_possible_at, format: :short) }

@@ -1,4 +1,4 @@
-- job_application = user.last_job_application
+- last_job_application = user.job_applications.sort_by(&:created_at).last
 .card.job-application.mt-3{id: dom_id(user)}
   .card-body
     = link_to [:admin, user] do
@@ -16,12 +16,12 @@
           = user.job_applications_count
   .card-footer.d-flex.flex-column.flex-md-row
     .mr-auto
-      - if job_application
-        - klass = badge_class(job_application.state.to_sym)
+      - if last_job_application
+        - klass = badge_class(last_job_application.state.to_sym)
         %small.badge.text-white.text-uppercase.text-nowrap.mr-1{class: klass}
-          = job_application.aasm.human_state
+          = last_job_application.aasm.human_state
         %small
-          = t('admin.job_applications.job_application.applied_on', date: I18n.l(job_application.created_at.to_date))
+          = t('admin.job_applications.job_application.applied_on', date: I18n.l(last_job_application.created_at.to_date))
       - else
         %small
           = t('.subscribed_on', date: I18n.l(user.created_at.to_date))

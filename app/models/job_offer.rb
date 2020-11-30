@@ -96,7 +96,7 @@ class JobOffer < ApplicationRecord
     state :archived, before_enter: :set_timestamp
 
     event :publish do
-      transitions from: [:draft], to: :published
+      transitions from: [:draft], to: :published, guard: :delay_before_publishing_over?
     end
 
     event :draftize do
@@ -118,6 +118,23 @@ class JobOffer < ApplicationRecord
     event :unarchive do
       transitions from: %i[archived], to: :draft
     end
+  end
+
+  def delay_before_publishing_over?
+    delay = organization&.hours_delay_before_publishing
+    if published_at.present?
+      true
+    elsif delay.blank? || delay.zero?
+      true
+    elsif created_at.nil?
+      false
+    else
+      Time.zone.now > (created_at + delay.hours)
+    end
+  end
+
+  def publishing_possible_at
+    created_at + organization.hours_delay_before_publishing.hours
   end
 
   def self.new_from_scratch(reference_administrator)

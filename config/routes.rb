@@ -102,6 +102,11 @@ Rails.application.routes.draw do
           post :move_higher, :move_lower
         end
       end
+      resources :cmgs do
+        member do
+          post :move_higher, :move_lower
+        end
+      end
       resources :administrators, path: 'administrateurs', except: %i[destroy] do
         collection do
           get :inactive

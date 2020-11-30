@@ -28,6 +28,9 @@ export default function jobOfferManagement() {
         var url, emailField, email, button
         button = node
         emailField = button.previousElementSibling.querySelector('input[type=email]')
+        if (emailField == null) {
+          emailField = button.previousElementSibling.querySelector('select')
+        }
         email = emailField.value
         url = node.getAttribute('data-url')
         var u = new Url(url)

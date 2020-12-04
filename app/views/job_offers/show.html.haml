@@ -9,6 +9,6 @@
           = render partial: 'job_offer_head', locals: {job_offer: @job_offer, inside_card: true}
           - if display_apply_button
             .text-center
-              = link_to t('.apply'), [:apply, @job_offer], class: 'btn btn-primary btn-raised btn-lg'
+              = link_to t('.apply'), [:apply, @job_offer], class: 'btn btn-primary btn-raised btn-lg', rel: 'noindex nofollow'
     .col-12.col-md-7
       = render partial: 'job_offer_content', locals: {job_offer: @job_offer}

@@ -4,6 +4,8 @@
     %title= [@page_title, current_organization.name].delete_if(&:blank?).join(' - ')
     %meta{charset: "utf-8"}
     %meta{name: "viewport", content: "width=device-width, initial-scale=1, shrink-to-fit=no"}
+    - if controller.action_name == 'apply'
+      %meta{name: :robots, content: 'noindex nofollow'}
     = stylesheet_link_tag 'https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700|Roboto+Mono:400,500'
     = stylesheet_pack_tag 'style'
     = csrf_meta_tags

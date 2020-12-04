@@ -2,6 +2,9 @@ import Sortable from 'sortablejs'
 import Rails from '@rails/ujs'
 import BSN from 'bootstrap.native/dist/bootstrap-native.js'
 import formAutoSubmit from 'js/form-auto-submit'
+import dependentFields from 'js/dependent-fields'
+import displaySnackbars from 'js/display-snackbars'
+import emailTemplateSelectHandling from 'js/email-template-select-handling'
 
 export function boardRedraw() {
   var url = window.location.href
@@ -18,7 +21,7 @@ export function boardRedraw() {
       console.log('error boardManagement')
       console.log(response)
     }
-  }) 
+  })
 }
 
 export function boardShowRejectionModal(url) {
@@ -34,12 +37,15 @@ export function boardShowRejectionModal(url) {
       new BSN.Modal('#remoteContentModal').show()
       BSN.initCallback()
       formAutoSubmit()
+      dependentFields()
+      displaySnackbars()
+      emailTemplateSelectHandling()
     },
     error: (response) => {
       console.log('error boardManagement')
       console.log(response)
     }
-  })   
+  })
 }
 
 export function boardManagement() {

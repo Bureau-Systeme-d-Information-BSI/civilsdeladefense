@@ -12,6 +12,7 @@ class Ability
     alias_action :suspend, to: :destroy
 
     can :read, SalaryRange
+    can :read, EmailTemplate
     cannot :manage, PreferredUsersList
     case administrator.role
     when 'bant'

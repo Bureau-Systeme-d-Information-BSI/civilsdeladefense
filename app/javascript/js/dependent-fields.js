@@ -88,32 +88,6 @@ function triggerKindChange() {
   }
 }
 
-function initEmailTemplates() {
-  let email_template = document.getElementById('email_template')
-  if (email_template !== null) {
-    email_template.addEventListener('change', triggerEmailTemplateChoice, false)
-  }
-}
-
-window.initEmailTemplates = initEmailTemplates
-
-function triggerEmailTemplateChoice() {
-  let value = this.options[this.selectedIndex].value
-  if (value !== '') {
-    let template = window.templates.find(function(element) {
-      return element.id == value
-    })
-    let subjectNode = document.getElementById('email_subject')
-    if (subjectNode !== null) {
-      subjectNode.value = template.subject
-    }
-    let bodyNode = document.getElementById('email_body')
-    if (bodyNode !== null) {
-      bodyNode.value = template.body
-    }
-  }
-}
-
 function initJobContractTypes() {
   let type_contract = document.getElementById('job_offer_contract_type_id')
   if (type_contract !== null) {
@@ -145,10 +119,8 @@ function triggerTypeContractChange(event_change = true) {
 }
 
 export default function dependentFields() {
-  initEmailTemplates()
   initRoleChange()
   initJobApplicationFileTypeKindChange()
   initPageChange()
   initJobContractTypes()
 }
-

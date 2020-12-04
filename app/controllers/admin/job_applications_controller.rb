@@ -111,9 +111,9 @@ class Admin::JobApplicationsController < Admin::BaseController
     if params[:job_offer_id].present?
       @job_offer = JobOffer.find(params[:job_offer_id])
       @layout_full_width = true
-      'admin/job_offer_single'
+      request.xhr? ? false : 'admin/job_offer_single'
     else
-      'admin/pool'
+      request.xhr? ? false : 'admin/pool'
     end
   end
 

@@ -31,6 +31,11 @@ Rails.application.routes.draw do
       end
     end
     resources :salary_ranges, only: %i[index]
+    resources :email_templates, only: %i[index] do
+      collection do
+        get :pick
+      end
+    end
     resources :job_offers, path: 'offresdemploi' do
       collection do
         get :add_actor

@@ -1,18 +1,20 @@
 -# frozen_string_literal: true
 - is_archived_or_is_deleted = @job_application.job_offer.archived? || @job_application.user.nil?
-- @templates = EmailTemplate.all
 - @email ||= Email.new(job_application: @job_application)
 .card
   .card-header.bg-white.font-weight-bold.text-secondary
     = fa_icon('file-document', class: 'text-secondary')
     = t('.title')
   .card-body.bg-white
+    = simple_form_for(:email, url: [:admin, :email_templates], method: :get, remote: true, html: {id: :email_template_selector, class: 'auto-submit'}, defaults: { disabled: is_archived_or_is_deleted }) do |f|
+      .form-inputs
+        = f.input :template, collection: EmailTemplate.all
+
     = simple_form_for([:admin, @email.job_application, @email], remote: true, defaults: { disabled: is_archived_or_is_deleted }) do |f|
       = f.error_notification
       = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
 
       .form-inputs
-        = f.input :template, collection: @templates
         = f.input :subject
         = f.input :body
         = f.file_field :attachments, multiple: true
@@ -21,5 +23,3 @@
         = button_tag(type: 'submit', class: 'btn btn-primary') do
           = t('buttons.send_to_candidate')
           = fa_icon('send', class: 'ml-1')
-
-= javascript_tag "var templates = #{ @templates.to_json };"

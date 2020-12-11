@@ -24,8 +24,8 @@ class Ability
       can :read, JobApplication, job_application_read_query(administrator)
       can :manage, JobApplication, brh_job_application_manage_query(administrator)
       can :manage, JobApplicationFile
-      can :read, Message
-      can :read, Email
+      can :manage, Message
+      can :manage, Email
     end
   end
 

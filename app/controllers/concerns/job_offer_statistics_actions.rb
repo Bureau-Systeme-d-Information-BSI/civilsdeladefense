@@ -24,7 +24,8 @@ module JobOfferStatisticsActions
     @per_has_corporate_experience = root_rel_profile.group(:has_corporate_experience).count
     @per_is_currently_employed = root_rel_profile.group(:is_currently_employed).count
     @per_state = root_rel.group(:state).count
-    @per_rejection_reason = root_rel.group(:rejection_reason_id).count
+    @per_rejection_reason = root_rel.where.not(rejection_reason_id: nil)
+                                    .group(:rejection_reason_id).count
     @rejection_reasons = RejectionReason.all
   end
 

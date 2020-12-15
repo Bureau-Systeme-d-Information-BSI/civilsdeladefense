@@ -143,25 +143,11 @@ class JobApplication < ApplicationRecord
   end
 
   def compute_files_count
-    # ary = JobOffer::FILES.inject([0, 0]) { |memo,obj|
-    #   if self.send("#{obj}?".to_sym)
-    #     memo[0] += 1
-    #     if self.send("#{obj}_is_validated".to_sym) == 0
-    #       memo[1] += 1
-    #     end
-    #   end
-    #   memo
-    # }
-    # ary = (User::FILES_JUST_AFTER_SUBMISSION + User::FILES_FOR_PAYROLL).inject(ary) { |memo,obj|
-    #   if self.user.send("#{obj}?".to_sym)
-    #     memo[0] += 1
-    #     if self.user.send("#{obj}_is_validated".to_sym) == 0
-    #       memo[1] += 1
-    #     end
-    #   end
-    #   memo
-    # }
-    ary = [0, 0]
+    ary_start = [0, 0]
+    ary = job_application_files.each_with_object(ary_start) do |job_application_file, memo|
+      memo[0] += 1
+      memo[1] += 1 if job_application_file.is_validated.zero?
+    end
     self.files_count, self.files_unread_count = ary
   end
 

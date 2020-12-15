@@ -144,12 +144,9 @@ class JobApplication < ApplicationRecord
 
   def compute_files_count
     ary_start = [0, 0]
-    ary = job_application_files.inject(ary_start) do |memo, job_application_file|
+    ary = job_application_files.each_with_object(ary_start) do |job_application_file, memo|
       memo[0] += 1
-      if job_application_file.is_validated == 0
-        memo[1] += 1
-      end
-      memo
+      memo[1] += 1 if job_application_file.is_validated.zero?
     end
     self.files_count, self.files_unread_count = ary
   end

@@ -16,7 +16,8 @@ module DeletionFlow
         ApplicantNotificationsMailer.notice_period_before_deletion(@user.id).deliver_now
       end
       target_date = nbr_days_notice_period_before_deletion.days.ago.to_date
-      where('marked_for_deletion_on < ?', target_date).all.each do |user|
+      where('marked_for_deletion_on < ?', target_date)
+        .where('last_sign_in_at < ?', notice_period_target_date).all.each do |user|
         email = user.email
         name = user.full_name
         org_id = user.organization_id
@@ -42,6 +43,10 @@ module DeletionFlow
     end
   end
 
+  def mark_for_deletion!
+    update_column(:marked_for_deletion_on, Time.zone.now.to_date)
+  end
+
   private
 
   def purge_associated_objects
@@ -50,9 +55,5 @@ module DeletionFlow
       job_application.messages.destroy_all
       job_application.job_application_files.destroy_all
     end
-  end
-
-  def mark_for_deletion!
-    update_column(:marked_for_deletion_on, Time.zone.now.to_date)
   end
 end

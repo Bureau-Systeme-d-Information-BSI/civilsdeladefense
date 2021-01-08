@@ -47,6 +47,8 @@ import { boardManagement, boardRedraw, boardShowRejectionModal } from 'js/board'
 window.boardRedraw = boardRedraw
 window.boardShowRejectionModal = boardShowRejectionModal
 import jobOfferManagement from 'js/job-offer-management'
+import reloadWithTurbolinks from 'js/reload-with-turbolinks'
+window.reloadWithTurbolinks = reloadWithTurbolinks
 
 document.addEventListener('turbolinks:load', function() {
   BSN.initCallback()

@@ -16,13 +16,13 @@ class CreateAvailabilityRanges < ActiveRecord::Migration[6.0]
 
     AvailabilityRange.create(name: 'En poste')
     AvailabilityRange.create(name: 'Disponible immédiatement')
-    ar3 = AvailabilityRange.create(name: 'Disponible sous 1 mois')
-    ar4 = AvailabilityRange.create(name: 'Disponible sous 2 mois')
-    ar5 = AvailabilityRange.create(name: 'Disponible sous 3 mois ou plus')
+    ar_3 = AvailabilityRange.create(name: 'Disponible sous 1 mois')
+    ar_4 = AvailabilityRange.create(name: 'Disponible sous 2 mois')
+    ar_5 = AvailabilityRange.create(name: 'Disponible sous 3 mois ou plus')
 
-    Profile.where(availability_date_in_month: 1).update_all(availability_range_id: ar3.id)
-    Profile.where(availability_date_in_month: 2).update_all(availability_range_id: ar4.id)
-    Profile.where('availability_date_in_month >= ?', 3).update_all(availability_range_id: ar5.id)
+    Profile.where(availability_date_in_month: 1).update_all(availability_range_id: ar_3.id)
+    Profile.where(availability_date_in_month: 2).update_all(availability_range_id: ar_4.id)
+    Profile.where('availability_date_in_month >= ?', 3).update_all(availability_range_id: ar_5.id)
 
     remove_column :profiles, :availability_date_in_month
   end

@@ -32,7 +32,7 @@ RSpec.describe Account::UsersController, type: :controller do
         @request.env['devise.mapping'] = Devise.mappings[:user]
         user = FactoryBot.create(:user)
         current_password = user.password
-        new_password = current_password + '**'
+        new_password = "#{current_password}**"
         user.confirm
         sign_in user
 
@@ -53,7 +53,7 @@ RSpec.describe Account::UsersController, type: :controller do
         @request.env['devise.mapping'] = Devise.mappings[:user]
         user = FactoryBot.create(:user)
         current_password = user.password
-        new_password = current_password + '**'
+        new_password = "#{current_password}**"
         user.confirm
         sign_in user
 

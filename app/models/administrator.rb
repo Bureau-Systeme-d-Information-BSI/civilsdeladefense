@@ -140,8 +140,8 @@ class Administrator < ApplicationRecord
 
   # Devise::Models:unless_confirmed` method doesn't exist in Devise 2.0.0 anymore.
   # Instead you should use `pending_any_confirmation`.
-  def only_if_unconfirmed
-    pending_any_confirmation { yield }
+  def only_if_unconfirmed(&block)
+    pending_any_confirmation(&block)
   end
 
   # If global suffix is provided, we should not let admin be invited when their email is not suffixed correctly.

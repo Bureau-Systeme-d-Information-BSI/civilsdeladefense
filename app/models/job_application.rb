@@ -172,7 +172,7 @@ class JobApplication < ApplicationRecord
   def to_be_provided_files
     @to_be_provided_files ||= begin
       file_type_ids = job_application_files.map(&:job_application_file_type_id)
-      available_file_types = all_available_file_types.select  do |x|
+      available_file_types = all_available_file_types.select do |x|
         (x.from_state >= state && x.by_default) || file_type_ids.include?(x.id)
       end
       available_file_types.map do |x|

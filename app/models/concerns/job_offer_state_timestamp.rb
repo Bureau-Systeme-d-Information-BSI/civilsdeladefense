@@ -27,9 +27,10 @@ module JobOfferStateTimestamp
       state_val = audit.audited_changes['state']
       return false if state_val.nil?
 
-      if state_val.is_a?(Array)
+      case state_val
+      when Array
         state_val.last == enum_val
-      elsif state_val.is_a?(String)
+      when String
         state_val == enum_val
       end
     end

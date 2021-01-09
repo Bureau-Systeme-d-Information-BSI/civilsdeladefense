@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-class FriendlyIdSlug < ApplicationRecord
-end
-class ActiveStorageAttachment < ApplicationRecord
-end
+class FriendlyIdSlug < ApplicationRecord; end
+
+class ActiveStorageAttachment < ApplicationRecord; end
 
 class ChangeForeignkeysToUuid < ActiveRecord::Migration[5.2]
   def up

@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 module JobApplicationsHelper
-  # rubocop:disable Metrics/CyclomaticComplexity:
   def badge_color_for_state(state)
     case state
     when :start
@@ -18,7 +17,6 @@ module JobApplicationsHelper
       'info'
     end
   end
-  # rubocop:enable Metrics/CyclomaticComplexity:
 
   def badge_class(state)
     "badge-#{badge_color_for_state(state)}"

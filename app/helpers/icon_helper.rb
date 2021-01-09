@@ -4,7 +4,7 @@ module IconHelper
   def fa_icon(name, options = {})
     klasses = "svg-inline--fa fa-#{name}"
     klasses += ' fa-w-16' unless options[:class] && options[:class] =~ /fa-w-/
-    klasses += ' ' + options[:class] if options[:class].present?
+    klasses += " #{options[:class]}" if options[:class].present?
     options[:viewbox] ||= '0 0 512 512'
     title = options[:title].present? ? content_tag('title', options[:title]) : ''
     content = title.html_safe + content_tag('use', '', 'xlink:href' => "##{name}")

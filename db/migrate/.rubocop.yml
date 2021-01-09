@@ -1,5 +1,7 @@
 inherit_from: ../../.rubocop.yml
 Metrics/MethodLength:
   Enabled: false
+Naming/VariableNumber:
+  EnforcedStyle: snake_case
 Style/Documentation:
   Enabled: false

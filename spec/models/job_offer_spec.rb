@@ -206,5 +206,23 @@ RSpec.describe JobOffer, type: :model do
         end
       end
     end
+
+    describe 'description' do
+      context 'with description more than 1000 chars' do
+        let(:job_offer) { build(:job_offer, description: 'desc' * 1000) }
+
+        it 'is not valid' do
+          expect(job_offer).to_not be_valid
+        end
+      end
+
+      context 'with description less than 1000 chars' do
+        let(:job_offer) { build(:job_offer, description: 'desc') }
+
+        it 'is valid' do
+          expect(job_offer).to be_valid
+        end
+      end
+    end
   end
 end

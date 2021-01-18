@@ -59,6 +59,7 @@ class JobOffer < ApplicationRecord
   validates :duration_contract, absence: true, unless: :contract_type_is_cdd?
   validates :title, format: { without: /\(|\)/, message: :no_bracket }
   validates :title, format: { with: %r{\A.*F/H\z}, message: :f_h }
+  validates :description, length: { maximum: 1_000 }
 
   ## Scopes
   default_scope { order(created_at: :desc) }

@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 # Faker initialization
+I18n.config.available_locales += %w[en]
 require 'faker'
-I18n.config.available_locales = %w[fr en]
-I18n.reload!
 Faker::Config.locale = :fr
 
 organization = Organization.create! name: 'Civils de la Défense',

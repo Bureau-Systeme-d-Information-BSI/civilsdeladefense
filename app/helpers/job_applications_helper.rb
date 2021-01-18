@@ -2,7 +2,7 @@
 
 module JobApplicationsHelper
   def badge_color_for_state(state)
-    case state
+    case state.to_sym
     when :start
       'light invisible'
     when :initial

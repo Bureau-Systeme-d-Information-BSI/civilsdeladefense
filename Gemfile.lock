@@ -116,6 +116,10 @@ GEM
       warden (~> 1.2.3)
     diff-lcs (1.4.4)
     docile (1.3.2)
+    dotenv (2.7.6)
+    dotenv-rails (2.7.6)
+      dotenv (= 2.7.6)
+      railties (>= 3.2)
     erubi (1.10.0)
     erubis (2.7.0)
     excon (0.73.0)
@@ -431,6 +435,7 @@ DEPENDENCIES
   counter_culture
   country_select
   devise
+  dotenv-rails
   factory_bot_rails
   faker
   file_validators

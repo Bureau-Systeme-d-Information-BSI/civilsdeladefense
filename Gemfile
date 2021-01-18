@@ -71,6 +71,8 @@ group :development, :test do
   gem 'brakeman', require: false
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
 
+  gem 'dotenv-rails'
+
   gem 'factory_bot_rails'
   gem 'rails-controller-testing'
   gem 'rspec-rails', '~> 4.0.1'

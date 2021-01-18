@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :job_offer do
     owner
     organization { Organization.first }
-    title { Faker::Job.title }
+    title { "#{Faker::Job.title} F/H" }
     description { 'Un super poste' }
     category
     professional_category { ProfessionalCategory.all.sample }

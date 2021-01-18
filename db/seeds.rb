@@ -251,7 +251,7 @@ job_offer = JobOffer.new do |j|
   j.organization = organization
   j.owner = bant_admin
   j.title = 'Ingénieur expert en systemes d’information, réseau et active directory - ' +
-            'Chef de section'
+            'Chef de section F/H'
   j.category = sub_sub_informatique
   j.professional_category = ProfessionalCategory.first
   j.location = 'Rennes, FR'
@@ -315,7 +315,7 @@ end
 job_offer.save!
 
 job_offer2 = job_offer.dup
-job_offer2.title = 'Conducteur d’Opérations (H/F)'
+job_offer2.title = 'Conducteur d’Opérations F/H'
 job_offer2.owner = employer_admin_1
 job_offer2.contract_type = ContractType.where(name: 'CDI').first
 job_offer2.duration_contract = nil
@@ -328,7 +328,7 @@ job_offer2.save!
 
 job_offer3 = job_offer.dup
 job_offer3.owner = employer_admin_2
-job_offer3.title = 'Responsable Achat d’Infrastructures (H/F)'
+job_offer3.title = 'Responsable Achat d’Infrastructures F/H'
 job_offer3.category = sub_sub_infrastructure
 job_offer3.location = 'Brest, FR'
 job_offer3.identifier = nil
@@ -339,7 +339,7 @@ job_offer3.save!
 
 job_offer4 = job_offer.dup
 job_offer4.owner = employer_admin_2
-job_offer4.title = 'Responsable Achat d’Infrastructures (H/F)'
+job_offer4.title = 'Responsable Achat d’Infrastructures F/H'
 job_offer4.category = sub_sub_infrastructure
 job_offer4.location = 'Brest, FR'
 job_offer4.identifier = nil
@@ -350,7 +350,7 @@ job_offer4.save!
 
 job_offer5 = job_offer.dup
 job_offer5.owner = employer_admin_2
-job_offer5.title = 'Responsable Achat d’Infrastructures (H/F)'
+job_offer5.title = 'Responsable Achat d’Infrastructures F/H'
 job_offer5.category = sub_sub_infrastructure
 job_offer5.location = 'Brest, FR'
 job_offer5.identifier = nil

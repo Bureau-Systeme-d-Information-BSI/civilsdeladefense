@@ -179,4 +179,32 @@ RSpec.describe JobOffer, type: :model do
     job_offer3.save
     expect(job_offer3.identifier).to eq "#{job_offer1.employer.code}3"
   end
+
+  describe 'validate' do
+    describe 'title' do
+      context 'with ( in title and no F/H at the end' do
+        let(:job_offer) { build(:job_offer, title: '(') }
+
+        it 'is not valid' do
+          expect(job_offer).to_not be_valid
+        end
+      end
+
+      context 'with ( in title and F/H at the end' do
+        let(:job_offer) { build(:job_offer, title: '( F/H') }
+
+        it 'is not valid' do
+          expect(job_offer).to_not be_valid
+        end
+      end
+
+      context 'without ( in title and with F/H at the end' do
+        let(:job_offer) { build(:job_offer, title: 'no parenthesis F/H') }
+
+        it 'is not valid' do
+          expect(job_offer).to be_valid
+        end
+      end
+    end
+  end
 end

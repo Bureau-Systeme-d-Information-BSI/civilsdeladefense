@@ -1,4 +1,5 @@
 - file_type = job_application_file.job_application_file_type
+- job_application = job_application_file.job_application
 .d-flex.align-items-center.border.py-1.px-2.file{id: dom_id(job_application_file)}
   - if job_application_file.content.present?
     .text-truncate= file_type.name

@@ -44,4 +44,32 @@ RSpec.describe JobApplication, type: :model do
     ary = %w[rejected phone_meeting_rejected after_meeting_rejected]
     expect(JobApplication.rejected_states).to match_array(ary)
   end
+
+  it 'should compute files to be provided' do
+    job_offer = create(:job_offer)
+    job_application = create(:job_application, job_offer: job_offer)
+    expect(job_application.state).to eq(:initial)
+
+    JobApplicationFileType.create name: 'CV',
+                                  from_state: :initial,
+                                  kind: :applicant_provided,
+                                  by_default: true
+    JobApplicationFileType.create name: 'LM',
+                                  from_state: :initial,
+                                  kind: :applicant_provided,
+                                  by_default: true
+    JobApplicationFileType.create name: 'FILE',
+                                  from_state: :to_be_met,
+                                  kind: :applicant_provided,
+                                  by_default: true
+    ary1, ary2 = job_application.files_to_be_provided
+    expect(ary1.size).to eq(2)
+    expect(ary2.size).to eq(1)
+
+    job_application.to_be_met!
+
+    ary1, ary2 = job_application.files_to_be_provided
+    expect(ary1.size).to eq(3)
+    expect(ary2.size).to eq(0)
+  end
 end

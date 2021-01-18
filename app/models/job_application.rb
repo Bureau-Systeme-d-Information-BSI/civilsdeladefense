@@ -169,23 +169,22 @@ class JobApplication < ApplicationRecord
     @all_available_file_types ||= JobApplicationFileType.all.to_a
   end
 
-  def to_be_provided_files
-    @to_be_provided_files ||= begin
-      file_type_ids = job_application_files.map(&:job_application_file_type_id)
-      available_file_types = all_available_file_types.select do |x|
-        (x.from_state >= state && x.by_default) || file_type_ids.include?(x.id)
+  def files_to_be_provided
+    JobApplicationFileType.all.each_with_object([[], []]) do |file_type, memo|
+      existing = job_application_files.detect do |x|
+        x.job_application_file_type_id == file_type.id
       end
-      available_file_types.map do |x|
-        file = job_application_files.detect { |y| y.job_application_file_type_id == x.id }
-        file || JobApplicationFile.new(job_application_file_type: x,
-                                       job_application_file_type_id: x.id)
+      from_state_as_val = JobApplication.states[file_type.from_state]
+      current_state_as_val = JobApplication.states[state]
+      if existing
+        memo.first << existing
+      elsif (current_state_as_val >= from_state_as_val) && file_type.by_default
+        virgin = job_application_files.build(job_application_file_type_id: file_type.id)
+        memo.first << virgin
+      else
+        memo.last << file_type
       end
     end
-  end
-
-  def other_available_file_types
-    ary = to_be_provided_files.dup.map(&:job_application_file_type_id)
-    all_available_file_types.dup.delete_if { |x| ary.include?(x.id) }
   end
 
   def send_confirmation_email

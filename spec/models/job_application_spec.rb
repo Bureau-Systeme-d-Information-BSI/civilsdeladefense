@@ -48,7 +48,6 @@ RSpec.describe JobApplication, type: :model do
   it 'should compute files to be provided' do
     job_offer = create(:job_offer)
     job_application = create(:job_application, job_offer: job_offer)
-    expect(job_application.state).to eq(:initial)
 
     JobApplicationFileType.create name: 'CV',
                                   from_state: :initial,

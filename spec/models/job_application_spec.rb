@@ -65,6 +65,9 @@ RSpec.describe JobApplication, type: :model do
     expect(ary1.size).to eq(2)
     expect(ary2.size).to eq(1)
 
+    job_application.job_application_files.each do |file|
+      file.content = fixture_file_upload('document.pdf', 'application/pdf')
+    end
     job_application.to_be_met!
 
     ary1, ary2 = job_application.files_to_be_provided

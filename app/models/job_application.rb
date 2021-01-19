@@ -169,17 +169,20 @@ class JobApplication < ApplicationRecord
     @all_available_file_types ||= JobApplicationFileType.all.to_a
   end
 
+  # Return two arrays
+  # First with JobApplicationFile already existing
+  # Second with JobApplicationFileType
   def files_to_be_provided
     JobApplicationFileType.all.each_with_object([[], []]) do |file_type, memo|
-      existing = job_application_files.detect do |x|
-        x.job_application_file_type_id == file_type.id
-      end
+      existing_file = job_application_files.find_by(job_application_file_type: file_type)
+
       from_state_as_val = JobApplication.states[file_type.from_state]
       current_state_as_val = JobApplication.states[state]
-      if existing
-        memo.first << existing
+
+      if existing_file
+        memo.first << existing_file
       elsif (current_state_as_val >= from_state_as_val) && file_type.by_default
-        virgin = job_application_files.build(job_application_file_type_id: file_type.id)
+        virgin = job_application_files.build(job_application_file_type: file_type)
         memo.first << virgin
       else
         memo.last << file_type

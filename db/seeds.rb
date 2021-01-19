@@ -272,12 +272,6 @@ job_offer = JobOffer.new do |j|
   analyses contextuelles et anticiper les modalités de confinement, de remédiation et de
   reconstruction des technologies
   les plus impactantes pour le ministère de la Défense.
-
-  Dans un contexte contraint, la dématérialisation, la capitalisation et la compréhension
-  des données d’architecture sont
-  les enjeux du poste. En conséquence, ce poste requiert des connaissances techniques
-  réseaux et en architecture de
-  systèmes, des capacités d’analyse et d’innovation.
   HEREDOC
   j.required_profile = <<~HEREDOC
   - Connaissance des architectures réseau et techniques des

@@ -152,10 +152,8 @@ RSpec.describe JobOffer, type: :model do
     brh = create(:administrator, role: nil, employer: employer)
     other_admin = create(:administrator, role: nil, employer: employer)
 
-    job_offer = create(:job_offer) do |obj|
-      actor_attrs = attributes_for(:job_offer_actor, role: 'brh', administrator: brh)
-      obj.job_offer_actors.create(actor_attrs)
-    end
+    job_offer = create(:job_offer)
+    create(:job_offer_actor, role: 'brh', administrator: brh, job_offer: job_offer)
 
     ability = Ability.new(brh)
     expect(ability.can?(:read, job_offer)).to be true

@@ -52,10 +52,10 @@ class Administrators::ConfirmationsController < Devise::ConfirmationsController
 
   protected
 
-  def with_unconfirmed_confirmable
+  def with_unconfirmed_confirmable(&block)
     token = params[:confirmation_token]
     @confirmable = Administrator.find_or_initialize_with_error_by(:confirmation_token, token)
-    @confirmable.only_if_unconfirmed { yield } unless @confirmable.new_record?
+    @confirmable.only_if_unconfirmed(&block) unless @confirmable.new_record?
   end
 
   def do_show

@@ -92,8 +92,7 @@ class Account::UsersController < Account::BaseController
   end
 
   def permitted_fields
-    ary = User::FILES
-    ary
+    User::FILES
   end
 
   def user_password_params

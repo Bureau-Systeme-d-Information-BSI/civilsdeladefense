@@ -81,7 +81,7 @@ RSpec.describe User, type: :model do
 
   it 'should correctly count active job applications' do
     job_application_file_type = create(:job_application_file_type)
-    file = fixture_file_upload('files/document.pdf', 'application/pdf')
+    file = fixture_file_upload('document.pdf', 'application/pdf')
     jaf_attrs = [
       {
         content: file,
@@ -95,7 +95,7 @@ RSpec.describe User, type: :model do
     expect(job_application).to be_valid
 
     job_application_file_type = create(:job_application_file_type)
-    file = fixture_file_upload('files/document.pdf', 'application/pdf')
+    file = fixture_file_upload('document.pdf', 'application/pdf')
     jaf_attrs = [
       {
         content: file,

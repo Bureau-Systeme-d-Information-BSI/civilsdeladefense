@@ -21,6 +21,8 @@ Style/ClassAndModuleChildren:
   EnforcedStyle: compact
   Exclude:
     - 'config/application.rb'
+Style/HashLikeCase:
+  Enabled: false
 Metrics/AbcSize:
   Max: 40
 Metrics/MethodLength:

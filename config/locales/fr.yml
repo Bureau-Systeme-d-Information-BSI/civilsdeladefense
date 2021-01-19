@@ -262,7 +262,7 @@ fr:
       change_state:
         success: "Candidature passée en statut %{state} !"
     job_application_files:
-      available_job_application_file_type:
+      optional_job_application_file_type:
         action_name: "Demander"
       check:
         success: "Fichier validé !"

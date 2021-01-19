@@ -32,9 +32,10 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource)
-    if resource.is_a?(Administrator)
+    case resource
+    when Administrator
       stored_location_for(resource) || admin_root_path
-    elsif resource.is_a?(User)
+    when User
       stored_location_for(resource) || account_job_applications_path
     else
       stored_location_for(resource)

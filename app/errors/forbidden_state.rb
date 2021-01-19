@@ -4,7 +4,9 @@
 # and was later archived or unpublished
 class ForbiddenState < StandardError
   attr_accessor :data
+
   def initialize(data)
+    super(data)
     @data = data
   end
 

@@ -4,6 +4,7 @@
 # They will be the recipient of the daily summary email.
 class DailySummaryConcernedAdministrator
   attr_accessor :uuid, :summary_infos
+
   def initialize(uuid: nil)
     @uuid = uuid
     @summary_infos = []

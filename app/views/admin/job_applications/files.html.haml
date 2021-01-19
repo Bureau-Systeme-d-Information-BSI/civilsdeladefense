@@ -1,5 +1,4 @@
-- to_be_provided_files = @job_application.to_be_provided_files
-- other_available_file_types = @job_application.other_available_file_types
+- must_be_provided_files, optional_file_types = @job_application.files_to_be_provided
 .card.job-application-files
   .card-header.with-subheader.bg-white.font-weight-bold.text-secondary
     = fa_icon('file-document', class: 'text-secondary')
@@ -7,16 +6,15 @@
   .card-subheader.bg-card-bg.font-weight-bold.text-muted
     = t('.subtitle_1')
   .card-body.bg-white.files-list
-    - if to_be_provided_files.any?
-      = render partial: "/admin/job_application_files/job_application_file", locals: {job_application: @job_application}, collection: to_be_provided_files
+    - if must_be_provided_files.any?
+      = render partial: "/admin/job_application_files/job_application_file", collection: must_be_provided_files
     - else
       %em= t('.none_atm')
   .card-subheader.bg-card-bg.font-weight-bold.text-muted
     = t('.subtitle_2')
   .card-body.bg-white.files-list
     %small.text-italic.d-block.mb-3= t('.note')
-    - if other_available_file_types.any?
-      = render partial: "/admin/job_application_files/available_job_application_file_type", locals: {job_application: @job_application}, collection: other_available_file_types, as: :job_application_file_type
+    - if optional_file_types.any?
+      = render partial: "/admin/job_application_files/optional_job_application_file_type", collection: optional_file_types, as: :job_application_file_type, locals: {job_application: @job_application}
     - else
       %em= t('.none')
-

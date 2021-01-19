@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :employer do
-    name { Faker::Company.name }
+    name { Faker::Company.unique.name }
     code { Faker::Code.unique.asin }
   end
 end

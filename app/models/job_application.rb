@@ -174,7 +174,9 @@ class JobApplication < ApplicationRecord
   # Second with JobApplicationFileType
   def files_to_be_provided
     JobApplicationFileType.all.each_with_object([[], []]) do |file_type, memo|
-      existing_file = job_application_files.find_by(job_application_file_type: file_type)
+      existing_file = job_application_files.detect do |file|
+        file.job_application_file_type == file_type
+      end
 
       from_state_as_val = JobApplication.states[file_type.from_state]
       current_state_as_val = JobApplication.states[state]

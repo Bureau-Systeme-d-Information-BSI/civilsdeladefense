@@ -36,6 +36,7 @@ class JobOffer < ApplicationRecord
   SETTINGS.each do |setting|
     belongs_to setting
   end
+  belongs_to :contract_duration, optional: true
   belongs_to :benefit, optional: true
   belongs_to :bop, optional: true
 
@@ -57,6 +58,7 @@ class JobOffer < ApplicationRecord
   validates :title, :description, :required_profile, :contract_start_on, presence: true
   validates :duration_contract, presence: true, if: :contract_type_is_cdd?
   validates :duration_contract, absence: true, unless: :contract_type_is_cdd?
+  validates :job_duration, presence: true, if: -> { contract_type.duration }
   validates :title, format: { without: /\(|\)/, message: :no_bracket }
   validates :title, format: { with: %r{\A.*F/H\z}, message: :f_h }
   validates :description, length: { maximum: 1_000 }

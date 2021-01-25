@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_09_120354) do
+ActiveRecord::Schema.define(version: 2021_01_21_104208) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -168,11 +168,21 @@ ActiveRecord::Schema.define(version: 2021_01_09_120354) do
     t.index ["organization_id"], name: "index_cmgs_on_organization_id"
   end
 
+  create_table "contract_durations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.integer "position"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_contract_durations_on_name", unique: true
+    t.index ["position"], name: "index_contract_durations_on_position"
+  end
+
   create_table "contract_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "position"
+    t.boolean "duration", default: false
     t.index ["name"], name: "index_contract_types_on_name", unique: true
     t.index ["position"], name: "index_contract_types_on_position"
   end
@@ -347,9 +357,11 @@ ActiveRecord::Schema.define(version: 2021_01_09_120354) do
     t.uuid "bop_id"
     t.uuid "organization_id"
     t.uuid "benefit_id"
+    t.bigint "contract_duration_id"
     t.index ["benefit_id"], name: "index_job_offers_on_benefit_id"
     t.index ["bop_id"], name: "index_job_offers_on_bop_id"
     t.index ["category_id"], name: "index_job_offers_on_category_id"
+    t.index ["contract_duration_id"], name: "index_job_offers_on_contract_duration_id"
     t.index ["contract_type_id"], name: "index_job_offers_on_contract_type_id"
     t.index ["employer_id"], name: "index_job_offers_on_employer_id"
     t.index ["experience_level_id"], name: "index_job_offers_on_experience_level_id"

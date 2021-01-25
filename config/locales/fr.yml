@@ -469,6 +469,7 @@ fr:
           study_levels: "Niveaux d'études"
           templates : "Modèles"
           writing_job_offers: "Rédaction offres d'emploi"
+          contract_durations: "Durées de contrat"
       base:
         index:
           title: "Paramètres"
@@ -791,6 +792,22 @@ fr:
           success: "Valeur par défaut mise à jour !"
         destroy:
           success: "Valeur par défaut supprimée !"
+      contract_durations:
+        index:
+          card_title:
+            zero: "Aucune durée de contrat"
+            one: "1 durée de contrat"
+            other: "%{count} durées de contrats"
+        new:
+          title: "Ajouter une nouvelle durée de contrat"
+        edit:
+          title: "Modifier la durée de contrat '%{name}'"
+        create:
+          success: "Durée de contrat créée !"
+        update:
+          success: "Durée de contrat mis à jour !"
+        destroy:
+          success: "Durée de contrat supprimée !"
     preferred_users:
       form:
         title: "Note personnelle"

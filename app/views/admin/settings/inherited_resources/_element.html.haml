@@ -34,6 +34,11 @@
       = element.name
     %td.text-center
       = element.official_level
+  - elsif resource_class == ContractType
+    %td
+      = element.name
+    %td.text-center
+      = element.duration ? 'Oui' : ''
   - else
     %td
       = element.try(:title) || element.try(:name)

@@ -117,6 +117,8 @@ class Admin::JobOffersController < Admin::BaseController
   protected
 
   def choose_layout
+    return 'admin' if @job_offer&.new_record?
+
     %w[new edit].include?(action_name) ? 'admin' : 'admin/job_offer_single'
   end
 

@@ -156,9 +156,9 @@ sub_sub_informatique = Category.create! name: 'Sous sous-informatique',
 ProfessionalCategory.create! name: 'Cadre'
 ProfessionalCategory.create! name: 'Non Cadre'
 
-ContractType.create! name: 'CDD'
+ContractType.create! name: 'CDD', duration: true
 ContractType.create! name: 'CDI'
-ContractType.create! name: 'Interim'
+ContractType.create! name: 'Interim', duration: true
 
 Sector.create! name: 'Technique'
 Sector.create! name: 'Lettre'
@@ -175,6 +175,10 @@ ExperienceLevel.create! name: '1 à 2 ans'
 ExperienceLevel.create! name: '3 à 4 ans'
 ExperienceLevel.create! name: '5 à 6 ans'
 ExperienceLevel.create! name: '> 7 ans'
+
+ContractDuration.create! name: '6 mois'
+ContractDuration.create! name: '2 ans'
+ContractDuration.create! name: '4 ans'
 
 resume = JobApplicationFileType.create! name: 'CV',
                                         kind: :applicant_provided,
@@ -294,7 +298,7 @@ job_offer = JobOffer.new do |j|
   Vous serez à l’issue de cet entretien informé(e) par l’employeur des suites données.
   HEREDOC
   j.contract_type = ContractType.where(name: 'CDD').first
-  j.duration_contract = '4 mois'
+  j.contract_duration = ContractDuration.first
   j.contract_start_on = Date.new(2019, 1, 1)
   j.is_remote_possible = false
   j.study_level = StudyLevel.last
@@ -311,7 +315,7 @@ job_offer2 = job_offer.dup
 job_offer2.title = 'Conducteur d’Opérations F/H'
 job_offer2.owner = employer_admin_1
 job_offer2.contract_type = ContractType.where(name: 'CDI').first
-job_offer2.duration_contract = nil
+job_offer2.contract_duration = nil
 job_offer2.category = sub_sub_infrastructure
 job_offer2.identifier = nil
 job_offer2.sequential_id = nil
@@ -429,7 +433,7 @@ user_candidate_of_all.confirm
 
 boolean_choices = [true, false, nil]
 
-JobOffer.where.not(duration_contract: nil).where.not(id: [job_offer4.id, job_offer5.id]).each do |job_offer|
+JobOffer.where.not(contract_duration_id: nil).where.not(id: [job_offer4.id, job_offer5.id]).each do |job_offer|
   15.times do |_i|
     user = User.new email: Faker::Internet.email,
                     organization: organization,

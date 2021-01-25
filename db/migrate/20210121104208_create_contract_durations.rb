@@ -14,6 +14,8 @@ class CreateContractDurations < ActiveRecord::Migration[6.1]
 
     add_column :contract_types, :duration, :boolean, default: false
 
-    add_reference :job_offers, :contract_duration
+    add_reference :job_offers, :contract_duration, type: :uuid
+
+    remove_column :job_offers, :duration_contract, :string
   end
 end

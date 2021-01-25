@@ -985,6 +985,8 @@ fr:
         estimate_annual_salary_gross_html: "<div class='d-block'>Estimation annuel brut</div> (secteur privé)"
       study_level:
         official_level: "Niveau officiel"
+      contract_type:
+        duration: Durée
   helpers:
     submit:
       job_application:

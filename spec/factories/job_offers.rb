@@ -12,8 +12,7 @@ FactoryBot.define do
     employer
     required_profile { 'Un profil pointu' }
     recruitment_process { 'Des interviews' }
-    contract_type { ContractType.find_by_name('CDD') }
-    duration_contract { '12 mois' }
+    contract_type { ContractType.find_by_name('CDI') }
     contract_start_on { 1.year.from_now }
     is_remote_possible { false }
     study_level { StudyLevel.all.sample }

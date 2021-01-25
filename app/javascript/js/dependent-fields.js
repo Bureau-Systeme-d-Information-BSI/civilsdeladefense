@@ -97,23 +97,26 @@ function initJobContractTypes() {
 }
 
 function triggerTypeContractChange(event_change = true) {
-  let duration_contract = document.getElementById('job_offer_duration_contract')
+  let contract_duration = document.getElementById('job_offer_contract_duration_id')
   let type_contract = document.getElementById('job_offer_contract_type_id')
-  let duration_contract_goup = document.getElementsByClassName('job_offer_duration_contract').item(0)
-  if (duration_contract !== null) {
+  let contract_duration_group = document.getElementsByClassName('job_offer_contract_duration').item(0)
+
+  if (contract_duration !== null) {
     let value = type_contract.options[type_contract.selectedIndex].text
-    duration_contract_goup.hidden = value !== 'CDD'
+
+    // TODO: user duration field from type contract
+    contract_duration_group.hidden = value !== 'CDD'
     if (event_change){
       if(value === 'CDD'){
-        duration_contract.value = duration_contract.getAttribute("data-cdd-value")
-        duration_contract.setAttribute("data-cdd-value", "")
+        contract_duration.value = contract_duration.getAttribute("data-cdd-value")
+        contract_duration.setAttribute("data-cdd-value", "")
       }
-      else if(duration_contract.getAttribute("data-cdd-value") === "") {
-        duration_contract.setAttribute("data-cdd-value", duration_contract.value)
-        duration_contract.value = ""
+      else if(contract_duration.getAttribute("data-cdd-value") === "") {
+        contract_duration.setAttribute("data-cdd-value", contract_duration.value)
+        contract_duration.value = ""
       }
     } else {
-      duration_contract.setAttribute("data-cdd-value", "")
+      contract_duration.setAttribute("data-cdd-value", "")
     }
   }
 }

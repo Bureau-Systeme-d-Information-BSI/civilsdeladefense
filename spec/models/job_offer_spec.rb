@@ -3,39 +3,50 @@
 require 'rails_helper'
 
 RSpec.describe JobOffer, type: :model do
-  it 'should be invalid if duration <> nil when type = CDI' do
-    le_type = contract_types(:cdi)
-    job_offer = build(:job_offer, contract_type: le_type, duration_contract: '2 mois')
+  describe 'contract_duration' do
+    let(:job_offer) do
+      build(:job_offer, contract_type: contract_type, contract_duration: contract_duration)
+    end
 
-    expect(job_offer.valid?).to be_falsey
-  end
+    context 'when contrat_type duration = true' do
+      let(:contract_type) { create(:contract_type, duration: true) }
 
-  it 'should be invalid if duration <> nil when type = Interim' do
-    le_type = contract_types(:interim)
-    job_offer = build(:job_offer, contract_type: le_type, duration_contract: '2 mois')
+      context 'with contract_duration' do
+        let(:contract_duration) { create(:contract_duration) }
 
-    expect(job_offer.valid?).to be_falsey
-  end
+        it 'should be valid' do
+          expect(job_offer.valid?).to be_truthy
+        end
+      end
 
-  it 'should be valid if duration = nil when type = Interim' do
-    le_type = contract_types(:interim)
-    job_offer = build(:job_offer, contract_type: le_type, duration_contract: nil)
+      context 'without contract_duration' do
+        let(:contract_duration) { nil }
 
-    expect(job_offer.valid?).to be_truthy
-  end
+        it 'should be invalid' do
+          expect(job_offer.valid?).to be_falsey
+        end
+      end
+    end
 
-  it 'should be invalid if duration = nil when type = CDD' do
-    le_type = contract_types(:cdd)
-    job_offer = build(:job_offer, contract_type: le_type, duration_contract: nil)
+    context 'when contrat_type duration = false' do
+      let(:contract_type) { create(:contract_type, duration: false) }
 
-    expect(job_offer.valid?).to be_falsey
-  end
+      context 'with contract_duration' do
+        let(:contract_duration) { create(:contract_duration) }
 
-  it 'should be valid cdd if duration is edit when type = CDD' do
-    le_type = contract_types(:cdd)
-    job_offer = build(:job_offer, contract_type: le_type, duration_contract: '2 mois')
+        it 'should be invalid' do
+          expect(job_offer.valid?).to be_falsey
+        end
+      end
 
-    expect(job_offer.valid?).to be_truthy
+      context 'without contract_duration' do
+        let(:contract_duration) { nil }
+
+        it 'should be valid' do
+          expect(job_offer.valid?).to be_truthy
+        end
+      end
+    end
   end
 
   it 'should set published_at date when state is published' do

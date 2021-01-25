@@ -13,7 +13,7 @@
       .basic-infos.my-4{class: klasses}
         .info.mt-0.mt-md-1
           = fa_icon 'briefcase', class: 'mr-1'
-          = [job_offer.contract_type.name, job_offer.duration_contract].join(' ')
+          = [job_offer.contract_type.name, job_offer.contract_duration&.name].join(' ')
         .info.mt-1
           = fa_icon 'calendar', class: 'mr-1'
           - if job_offer.available_immediately?

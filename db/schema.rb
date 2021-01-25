@@ -341,7 +341,6 @@ ActiveRecord::Schema.define(version: 2021_01_21_104208) do
     t.integer "most_advanced_job_applications_state", default: -1
     t.integer "sequential_id"
     t.string "identifier"
-    t.string "duration_contract"
     t.integer "option_photo"
     t.integer "notifications_count", default: 0
     t.boolean "available_immediately", default: false
@@ -357,7 +356,7 @@ ActiveRecord::Schema.define(version: 2021_01_21_104208) do
     t.uuid "bop_id"
     t.uuid "organization_id"
     t.uuid "benefit_id"
-    t.bigint "contract_duration_id"
+    t.uuid "contract_duration_id"
     t.index ["benefit_id"], name: "index_job_offers_on_benefit_id"
     t.index ["bop_id"], name: "index_job_offers_on_bop_id"
     t.index ["category_id"], name: "index_job_offers_on_category_id"

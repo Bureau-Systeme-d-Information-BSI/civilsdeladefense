@@ -38,7 +38,7 @@
     %td
       = element.name
     %td.text-center
-      = element.duration ? 'Oui' : ''
+      = element.duration ? t('.affirmative') : t('.negative')
   - else
     %td
       = element.try(:title) || element.try(:name)

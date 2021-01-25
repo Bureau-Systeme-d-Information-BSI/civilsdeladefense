@@ -2,5 +2,6 @@ cdi:
   name: CDI
 cdd:
   name: CDD
+  duration: true
 interim:
   name: Interim

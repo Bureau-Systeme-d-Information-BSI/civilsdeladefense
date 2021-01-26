@@ -805,7 +805,7 @@ fr:
         create:
           success: "Durée de contrat créée !"
         update:
-          success: "Durée de contrat mis à jour !"
+          success: "Durée de contrat mise à jour !"
         destroy:
           success: "Durée de contrat supprimée !"
     preferred_users:

@@ -225,6 +225,26 @@ namespace :maintenance do
     end
   end
 
+  # TODO: https://github.com/betagouv/civilsdeladefense/issues/303#issuecomment-767460878
+  CONTRACT_DURATION = [].freeze
+
+  task migration_contract_duration: :environment do
+    CONTRACT_DURATION.each do |duration_contract|
+      ContractDuration.find_or_create_by!(name: duration_contract)
+    end
+
+    JobOffer.where.not(duration_contract: nil).find_each do |job_offer|
+      if job_offer.contract_type.duration
+        contract_duration = ContractDuration.find_by(name: job_offer.duration_contract.downcase.squish)
+        if contract_duration
+          job_offer.update(duration_contract: nil, contract_duration: contract_duration)
+        end
+      else
+        job_offer.update(duration_contract: nil, contract_duration: nil)
+      end
+    end
+  end
+
   def destroy_file(file)
     begin
       file.destroy
@@ -233,5 +253,3 @@ namespace :maintenance do
     end
   end
 end
-
-

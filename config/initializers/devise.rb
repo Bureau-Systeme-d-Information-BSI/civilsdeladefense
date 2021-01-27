@@ -263,6 +263,25 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
+  config.omniauth :openid_connect, {
+    name: :france_connect,
+    scope: %i[openid email family_name given_name],
+    response_type: :code,
+    uid_field: 'sub',
+    issuer: "https://#{ENV['FRANCE_CONNECT_HOST']}",
+    client_options: {
+      port: 443,
+      scheme: 'https',
+      host: ENV['FRANCE_CONNECT_HOST'],
+      authorization_endpoint: '/api/v1/authorize?acr_values=eidas1',
+      token_endpoint: '/api/v1/token',
+      userinfo_endpoint: '/api/v1/userinfo',
+      end_session_endpoint: '/api/v1/logout',
+      identifier: ENV['FRANCE_CONNECT_APP_ID'],
+      secret: ENV['FRANCE_CONNECT_APP_SECRET'],
+      redirect_uri: "#{ENV['DEFAULT_HOST']}/omniauth/france_connect/callback"
+    }
+  }
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

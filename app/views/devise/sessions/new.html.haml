@@ -1,5 +1,7 @@
 - @page_title = t(".sign_in.#{ resource.class.to_s.downcase }")
 - if resource.is_a?(User)
+  = render "devise/shared/france_connect"
+  %h2.text-center ou
   %p.text-center
     Vous avez déjà un espace candidat, identifiez-vous.
 = simple_form_for(resource, as: resource_name, url: session_path(resource_name), wrapper: :input_group) do |f|
@@ -11,4 +13,3 @@
     = f.button :submit, t(".sign_in.#{ resource.class.to_s.downcase }"), class: 'btn btn-primary btn-raised'
   .form-links
     = render "devise/shared/links"
-

@@ -29,6 +29,9 @@ class JobOffersController < ApplicationController
   # GET /job_offers/1/apply
   # GET /job_offers/1/apply.json
   def apply
+    # Store location if user signup after
+    store_location_for(:user, request.fullpath)
+
     if user_signed_in? && (@previous_job_application = current_user.job_applications.first)
       @job_application = @previous_job_application.dup
       @job_application.state = JobApplication.new.state

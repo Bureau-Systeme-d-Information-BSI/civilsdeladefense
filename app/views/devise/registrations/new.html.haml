@@ -1,5 +1,9 @@
 %h2.mb-3= @page_title = t(".sign_up")
 
+- if resource.is_a?(User)
+  = render "devise/shared/france_connect"
+  %h2.text-center ou
+
 = simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
   = f.error_notification
   .row

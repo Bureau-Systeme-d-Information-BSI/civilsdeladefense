@@ -49,4 +49,10 @@ class ApplicationController < ActionController::Base
   def current_organization
     @current_organization ||= Organization.first
   end
+
+  def after_sign_out_path_for(resource)
+    return FranceConnectClient.end_session_endpoint if @connected_with == 'france_connect'
+
+    super
+  end
 end

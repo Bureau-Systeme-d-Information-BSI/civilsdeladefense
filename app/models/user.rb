@@ -4,7 +4,7 @@
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :confirmable, :lockable
+         :confirmable, :lockable, :omniauthable, omniauth_providers: %i[france_connect]
   include Suspendable
   include DeletionFlow
   include PgSearch::Model
@@ -13,6 +13,8 @@ class User < ApplicationRecord
 
   belongs_to :organization
   belongs_to :last_job_application, class_name: 'JobApplication', optional: true
+  has_many :france_connect_informations
+
   has_many :job_applications, -> { order(created_at: :desc) }, dependent: :nullify
   has_many :job_offers, through: :job_applications
   has_many :preferred_users, dependent: :destroy
@@ -56,5 +58,9 @@ class User < ApplicationRecord
 
   def job_applications_active
     job_applications.joins(:job_offer).where.not(job_offers: { state: :archived })
+  end
+
+  def password_required?
+    france_connect_informations.none?
   end
 end

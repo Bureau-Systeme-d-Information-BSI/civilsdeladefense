@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_21_104208) do
+ActiveRecord::Schema.define(version: 2021_01_27_111513) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -230,6 +230,17 @@ ActiveRecord::Schema.define(version: 2021_01_21_104208) do
     t.integer "position"
     t.index ["name"], name: "index_experience_levels_on_name", unique: true
     t.index ["position"], name: "index_experience_levels_on_position"
+  end
+
+  create_table "france_connect_informations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "sub", null: false
+    t.string "email", null: false
+    t.string "family_name"
+    t.string "given_name"
+    t.uuid "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_france_connect_informations_on_user_id"
   end
 
   create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|

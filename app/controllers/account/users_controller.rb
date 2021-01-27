@@ -9,6 +9,7 @@ class Account::UsersController < Account::BaseController
     @user_for_password_change = User.new
     @user_for_email_change = User.new
     @user_for_deletion = User.new
+    @connected_to_france_connect = current_user.france_connect_informations.none?
   end
 
   def update
@@ -79,6 +80,12 @@ class Account::UsersController < Account::BaseController
 
       render :want_destroy
     end
+  end
+
+  def unlink_france_connect
+    current_user.france_connect_informations.destroy_all
+
+    redirect_to %i[account user], notice: t('.success')
   end
 
   private

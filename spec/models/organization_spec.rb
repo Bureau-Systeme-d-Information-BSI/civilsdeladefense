@@ -9,6 +9,6 @@ RSpec.describe Organization, type: :model do
   end
 
   it { should validate_presence_of(:name) }
-  it { should validate_presence_of(:name_business_owner) }
+  it { should validate_presence_of(:business_owner_name) }
   it { should validate_presence_of(:subdomain) }
 end

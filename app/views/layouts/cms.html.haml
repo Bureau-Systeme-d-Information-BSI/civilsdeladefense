@@ -1,6 +1,7 @@
 - content_for :content do
-  .card.pushed-top
-    .card-body
-      %h1= @page_title
-      = yield
+  .rf-container.rf-pb-6w.rf-pt-5w
+    .rf-grid-row.rf-grid-row--gutters
+      .rf-col-12
+        %h1= @page_title
+        = yield
 = render template: "layouts/application"

@@ -1,0 +1,35 @@
+%header.rf-header
+  .rf-container
+    .rf-header__body
+      .rf-header__brand
+        = link_to root_path, title: strip_tags(current_organization.business_owner_name), class: 'rf-logo' do
+          %span.rf-logo__title
+            = simple_format(current_organization.business_owner_name, nil, wrapper_tag: 'span')
+      .rf-header__navbar
+        .rf-service
+          =  link_to root_path, title: current_organization.name, class: 'rf-service__title' do
+            = current_organization.name
+          - if (desc = current_organization.description_short).present?
+            %p.rf-service__tagline
+              = desc
+      .rf-header__tools
+        .rf-shortcuts
+          %ul.rf-shortcuts__list
+            %li.rf-shortcuts__item
+              - if user_signed_in?
+                = link_to [:account, :job_applications] do
+                  .d-flex.flex-column
+                    = image_user_tag current_user.photo, width: 40
+                    %small= current_user.full_name
+              - else
+                = link_to t(".account_root"), [:account, :job_applications], class: %w[rf-link rf-fi-account-line]
+  - unless user_signed_in?
+    .rf-container
+      %nav.rf-nav{"aria-label" => "Menu principal", role: "navigation"}
+        %ul.rf-nav__list
+          - klass = current_page?(root_path) ? 'rf-nav__item--active' : nil
+          %li.rf-nav__item{class: klass}
+            = link_to "Accueil", root_path, class: 'rf-link'
+          - klass = controller.controller_name == 'job_offers' && controller.action_name == 'index' ? 'rf-nav__item--active' : nil
+          %li.rf-nav__item{class: klass}
+            = link_to "Nos offres", job_offers_path, class: 'rf-link'

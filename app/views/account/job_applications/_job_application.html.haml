@@ -1,30 +1,15 @@
 - job_offer = job_application.job_offer
-- extra_klasses = []
-- extra_klasses << "card-state-#{job_offer.state}"
-.card.job-offer.mt-3{class: extra_klasses, id: dom_id(job_offer)}
-  .card-body
-    .row
-      .col-12.col-md-8
-        .card-title.font-weight-bold.d-flex.align-items-center.mb-0
-          = link_to [:account, job_application] do
-            = job_offer.title
-        .d-flex
-          .font-weight-bold.mr-3
-            = [job_offer.contract_type.name, job_offer.contract_duration&.name].join(' ')
-          .font-weight-bold= job_offer.location
-      .col-12.col-md-4
-        .row
-          .col-6
-            .d-flex.flex-column.justify-content-center.align-items-center.text-center.mt-2
-              = fa_icon "step", class: "fa-w-20"
-              %span= "Étape #{job_application.end_user_state_number}/#{JobApplication.end_user_states_regrouping.size}"
-          .col-6.border-left
-            .d-flex.flex-column.justify-content-center.align-items-center.text-center.mt-2
-              %span.font-weight-bold= JobApplication.human_attribute_name("state/#{job_application.end_user_state}")
-  .card-footer.d-flex.flex-column.flex-md-row
-    .mr-auto= t('.published_date', time_ago_in_words: time_ago_in_words(job_application.created_at))
-    %ul.list-inline.mb-0.actions.mt-2.mt-md-0
-      %li.list-inline-item
-        = link_to [job_offer], target: '_blank' do
-          = fa_icon 'eye'
-          = t('buttons.preview')
+.rf-card.rf-card--horizontal.h-auto
+  = link_to [:account, job_application], class: 'rf-card__body' do
+    .rf-card__detail
+      = t('.created_at', time_ago_in_words: time_ago_in_words(job_application.created_at))
+    .rf-card__title
+      = job_offer.title
+    .rf-card__desc
+      .d-flex.flex-row
+        .d-flex.flex-column
+          %span= [job_offer.contract_type.name, job_offer.duration_contract].join(' ')
+          %em= job_offer.location
+        .d-flex.flex-column.justify-content-center.align-items-center.text-center.ml-auto
+          %span= "Étape #{job_application.end_user_state_number}/#{JobApplication.end_user_states_regrouping.size}"
+          %em= JobApplication.human_attribute_name("state/#{job_application.end_user_state}")

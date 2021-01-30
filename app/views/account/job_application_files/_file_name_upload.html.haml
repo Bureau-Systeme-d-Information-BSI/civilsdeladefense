@@ -2,14 +2,16 @@
 - is_validated_value = job_application_file.is_validated
 - hint_text = hint_text_for_file(job_application, job_application_file)
 - options = {remote: true}
-- klasses = %w(mb-4 auto-submit)
+- klasses = %w(auto-submit)
 - klasses << "is-validated-#{ is_validated_value }"
 - options[:html] = {id: "job_application_file_#{file_type.name.parameterize}", class: klasses}
 - options[:namespace] = file_type.name.parameterize
-= simple_form_for([:account, job_application, job_application_file], options) do |f|
-  - if job_application_file.new_record?
-    = f.hidden_field :job_application_file_type_id
-  .form-inputs
-    %label= file_type.name
-    - label = is_validated_value == 1 ? t('buttons.choose_file_validated_html') : t('buttons.choose_file_drop_zone_html')
-    = f.input :content, label: label, wrapper: :custom_file_with_dropzone, hint: hint_text
+.rf-card.rf-card--no-arrow.rf-card--no-full-height.rounded-lg.zoomable.h-auto.rf-mb-3w
+  .rf-card__body
+    = simple_form_for([:account, job_application, job_application_file], options) do |f|
+      - if job_application_file.new_record?
+        = f.hidden_field :job_application_file_type_id
+      .form-inputs
+        %label.rf-label= file_type.name
+        - label = is_validated_value == 1 ? t('buttons.choose_file_validated_html') : t('buttons.choose_file_drop_zone_html')
+        = f.input :content, label: label, wrapper: :custom_file_with_dropzone, hint: hint_text

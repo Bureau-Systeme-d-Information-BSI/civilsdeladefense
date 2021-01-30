@@ -1,10 +1,7 @@
 - @page_title = t(".forgot_your_password")
 = simple_form_for(resource, as: resource_name, url: password_path(resource_name), wrapper: :input_group, html: { method: :post }) do |f|
   = f.error_notification
-  .form-inputs
-    = f.input :email, required: true, autofocus: true, label: false, placeholder: true
-  .form-actions
-    = f.button :submit, t(".send_me_reset_password_instructions"), class: 'btn btn-primary btn-raised'
-  .form-links
-    = render "devise/shared/links"
-
+  = f.input :email, required: true, autofocus: true, label: false, placeholder: true
+  .rf-input-group.rf-grid-row.rf-grid-row--center
+    = f.button :submit, t(".send_me_reset_password_instructions"), class: 'rf-btn'
+  = render "devise/shared/links"

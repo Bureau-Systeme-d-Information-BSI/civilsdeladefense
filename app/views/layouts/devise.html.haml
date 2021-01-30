@@ -4,48 +4,24 @@
     %title= [@page_title, current_organization.name].delete_if(&:blank?).join(' - ')
     %meta{charset: "utf-8"}
     %meta{name: "viewport", content: "width=device-width, initial-scale=1, shrink-to-fit=no"}
-    = stylesheet_link_tag 'https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500|Roboto+Mono:400,500'
-    = stylesheet_pack_tag 'devise-style'
+    = stylesheet_pack_tag 'style'
     = csrf_meta_tags
     = csp_meta_tag
-  %body.mt-0.pb-0
+  %body.rf-mt-0.pb-0
     - if resource.is_a?(User)
-      = render partial: '/shared/navbar'
-    - if controller.controller_name == 'registrations'
-      .container.devise
-        .row
-          .col-12.col-md-9.bg-white.mx-md-auto.my-5.py-4.px-4
-            - if flash[:notice]
-              .alert.alert-info= flash[:notice]
-            - if flash[:alert]
-              .alert.alert-danger= flash[:alert]
-            - elsif flash[:error]
-              .alert.alert-danger= flash[:error]
-            - elsif flash[:success]
-              .alert.alert-success= flash[:success]
-            = yield
-    - else
-      .container-fluid.devise
-        .row
-          .col-12.col-md-7.col-xl-6.d-md-flex.flex-md-column.justify-content-center.bg-white.px-md-5.sidebar.pt-5.pt-md-0
-            .row
-              - klasses = %w(col-12)
-              - klasses += %w(mx-auto col-12 col-md-8 col-xl-7) unless controller_name == "confirmations"
-              %div{class: klasses}
-                .logos
-                  - if current_organization.logo_vertical.present?
-                    = image_tag(current_organization.logo_vertical.url, class: 'logo')
-                - if flash[:notice]
-                  .alert.alert-info= flash[:notice]
-                - if flash[:alert]
-                  .alert.alert-danger= flash[:alert]
-                - elsif flash[:error]
-                  .alert.alert-danger= flash[:error]
-                - elsif flash[:success]
-                  .alert.alert-success= flash[:success]
-                = yield
-          - style_value = "background-size: cover;background-image: url(#{ current_organization.image_background.url })"
-          .col-12.col-md-5.col-xl-6{style: style_value}
+      = render partial: '/shared/header'
+    .rf-container.rf-pb-6w.rf-pt-4w
+      .rf-grid-row.rf-grid-row--center
+        .rf-col-xs-12{class: controller.controller_name == 'registrations' ? 'rf-col-md-6' : 'rf-col-md-4'}
+          - if flash[:notice]
+            .alert.alert-info= flash[:notice]
+          - if flash[:alert]
+            .alert.alert-danger= flash[:alert]
+          - elsif flash[:error]
+            .alert.alert-danger= flash[:error]
+          - elsif flash[:success]
+            .alert.alert-success= flash[:success]
+          = yield
     - if resource.is_a?(User)
       = render partial: '/shared/footer'
-    = javascript_pack_tag 'devise-bundle', defer: true
+    = javascript_pack_tag 'bundle', defer: true

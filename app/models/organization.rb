@@ -10,7 +10,7 @@ class Organization < ApplicationRecord
   has_many :pages
   has_many :users
 
-  validates :name, :name_business_owner, :subdomain, presence: true
+  validates :name, :business_owner_name, :subdomain, presence: true
 
   %i[logo_vertical logo_horizontal logo_vertical_negative logo_horizontal_negative].each do |field|
     mount_uploader field, LogoUploader, mount_on: :"#{field}_file_name"

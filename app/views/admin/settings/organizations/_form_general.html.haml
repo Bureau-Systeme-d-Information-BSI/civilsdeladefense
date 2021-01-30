@@ -6,7 +6,10 @@
       = f.error_notification
       = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
       = f.input :name
-      = f.input :name_business_owner
+      = f.input :business_owner_name, as: :text, input_html: { rows: 2 }
+      = f.input :business_owner_prefix_article
+      = f.input :description
+      = f.input :description_short
       = f.input :privacy_policy_url
       = f.input :matomo_site_id
       = f.input :inbound_email_config, collection: Organization.inbound_email_configs.keys.map(&:to_sym), include_blank: false

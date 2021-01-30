@@ -1,4 +1,7 @@
-- @with_background_image = true
 - @page_title = @page&.title || t('.title')
-= render partial: 'filters'
-= render partial: 'job_offers_list'
+.rf-container.rf-pb-6w.rf-pt-5w
+  .rf-grid-row.rf-grid-row--gutters
+    .rf-col-xs-12.rf-col-md-3
+      = render partial: 'filters'
+    .rf-col-xs-12.rf-col-md-9
+      = render partial: 'job_offers_list'

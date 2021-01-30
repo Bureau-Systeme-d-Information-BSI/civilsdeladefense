@@ -63,10 +63,10 @@ Créer la base de données avec les données de seed :
 ```
 docker-compose run web rails db:drop db:create db:schema:load db:seed
 ```
+
 Lancement d'une migration de base :
 
 docker-compose run web rails db:migrate
-
 
 Démarrage des images :
 
@@ -78,16 +78,16 @@ docker-compose down && docker-compose up
 
 Le workflow de développement est basé sur le [GitHub flow](https://guides.github.com/introduction/flow/) :
 
-* chaque changement de code (nouvelle fonctionnialité, bug fix, etc) devrait résulter d'un ticket (une *issue* GitHub)
-* chaque changement de code devrait passer une *review* de code via une Pull Request
+- chaque changement de code (nouvelle fonctionnialité, bug fix, etc) devrait résulter d'un ticket (une _issue_ GitHub)
+- chaque changement de code devrait passer une _review_ de code via une Pull Request
 
 La bonne manière de créer une Pull Request est de :
 
-* créer localement une nouvelle branche correspondant au ticket/issue qu'on veut traiter via ```git checkout master && git pull && git checkout -b fix/13```
-* modifier le code et accumuler les commits dans cette nouvelle branch. Les commits devraient mentionner le ticket correspondant (utiliser les mot-clés *fix* or *see*)
-* pousser le code vers GitHub ```git push origin fix/13```
-* ouvrir une PUll Request
-* attendre la review de code et éventuellement modifier son code en fonction des commentaires
+- créer localement une nouvelle branche correspondant au ticket/issue qu'on veut traiter via `git checkout master && git pull && git checkout -b fix/13`
+- modifier le code et accumuler les commits dans cette nouvelle branch. Les commits devraient mentionner le ticket correspondant (utiliser les mot-clés _fix_ or _see_)
+- pousser le code vers GitHub `git push origin fix/13`
+- ouvrir une PUll Request
+- attendre la review de code et éventuellement modifier son code en fonction des commentaires
 
 ## Lancer les tests
 
@@ -124,6 +124,7 @@ Actuellement, la branche master est autodéployée sur Scalingo.
 Actuellement, la branche production est autodéployée sur Scalingo.
 
 Branchement sur "production" :
+
 ```
 # One-liner
 git checkout master && git fetch origin && git reset --hard origin/master && git checkout production && git reset --hard origin/production && git merge master && git push origin production && git checkout master
@@ -144,6 +145,7 @@ git checkout master && \
 Avant de déployer le code, il faut définir la variable d'environnement `DO_NOT_POSTDEPLOY` avec la valeur `1`. Ceci a pour effet de ne pas lancer automatiquement la tâche `db:migrate` dans la phase `postdeploy`. Il faudra supprimer la variable d'environnement après un premier déploiement en `success`.
 
 Lancer le déploiement puis charger le schéma de données :
+
 ```
 rails db:schema:load
 ```
@@ -151,10 +153,11 @@ rails db:schema:load
 Supprimer la variable d'environnement `DO_NOT_POSTDEPLOY`.
 
 Créer la première organisation :
+
 ```
 hsh = {
   name: 'Civils de la Défense',
-  name_business_owner: 'le Ministère des Armées',
+  business_owner_name: 'le Ministère des Armées',
   subdomain: 'XXX',
   domain: 'XXX.YYY.ZZZ'
 }
@@ -162,6 +165,7 @@ organization = Organization.create!(hsh)
 ```
 
 Créer le premier compte admin :
+
 ```
 bant_admin = Administrator.new email: 'prenom.nom@domaine.com',
                                first_name: 'Prénom',
@@ -177,6 +181,7 @@ bant_admin.confirm
 ```
 
 Créer la première page :
+
 ```
 root_page = organization.pages.create!({
   title: 'Plateforme de recrutement de personnel civils contractuels pour le Ministère des Armées',

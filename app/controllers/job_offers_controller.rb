@@ -63,7 +63,7 @@ class JobOffersController < ApplicationController
           render json: json, status: :created, location: [:successful, @job_offer]
         end
       else
-        format.html { render :apply }
+        format.html { render :show }
         format.json { render json: @job_application.errors, status: :unprocessable_entity }
       end
     end

@@ -2,6 +2,7 @@
   "name": "civilsdeladefense",
   "private": true,
   "dependencies": {
+    "@gouvfr/all": "^0.4.0",
     "@rails/ujs": "^6.0.3-2",
     "@rails/webpacker": "^5.2.1",
     "bootstrap": "^4.3.1",

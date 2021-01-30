@@ -1,54 +1,16 @@
 - inside_card ||= false
 - title_uncentered ||= false
 - cache [job_offer, inside_card] do
-  .row
-    - klasses = inside_card ? %w() : %w(col-md-9 mx-md-auto)
-    .col-12{class: klasses}
-      - klasses = inside_card ? %w(h5) : %w(mt-3 h4)
-      - klasses << 'text-center' unless title_uncentered
-      %h1.text-quinary.mb-0{class: klasses}= job_offer.title
-    - klasses = inside_card ? %w() : %w(col-md-10 mx-md-auto)
-    .col-12{class: klasses}
-      - klasses = inside_card ? %w(vertical) : %w(horizontal)
-      .basic-infos.my-4{class: klasses}
-        .info.mt-0.mt-md-1
-          = fa_icon 'briefcase', class: 'mr-1'
-          = [job_offer.contract_type.name, job_offer.duration_contract].join(' ')
-        .info.mt-1
-          = fa_icon 'calendar', class: 'mr-1'
-          - if job_offer.available_immediately?
-            = t('.available_immediately')
-          - else
-            = l job_offer.contract_start_on
-        - if job_offer.location.present?
-          .info.mt-1
-            = fa_icon 'map-marker', class: 'mr-1'
-            = job_offer.location
-        .info.mt-1
-          = fa_icon 'study', class: 'mr-1'
-          = job_offer.study_level.name
-        .info.mt-1
-          = fa_icon 'entity', class: 'mr-1'
-          = job_offer.category.name
-        .info.mt-1
-          = fa_icon 'target', class: 'mr-1'
-          Expérience pro :
-          = job_offer.experience_level.name
-        - if job_offer.estimate_annual_salary_gross.present?
-          .info.mt-1
-            .d-flex.flex-row.align-items-center
-              = fa_icon 'coin', class: 'mr-1'
-              .d-flex.flex-column.align-items-center
-                %div{style: 'line-height:1.1;'}
-                  = succeed ' mensuel net' do
-                    = job_offer.estimate_monthly_salary_net
-                %div{style: 'line-height:1.1;'}
-                  = succeed ' annuel brut' do
-                    = job_offer.estimate_annual_salary_gross
-                %div{style: 'line-height:1.1;'}
-                  = surround '(', ')' do
-                    selon expérience
-                - if job_offer.benefit.present?
-                  %div{style: 'line-height:1.1;'}
-                    = t('.benefit')
-                    = job_offer.benefit.name
+  - klasses = inside_card ? %w(h5 rf-card__title rf-my-0) : %w(mt-3 h4)
+  - klasses << 'text-center' unless title_uncentered
+  %h1{class: klasses}= job_offer.title
+  .rf-mt-4w
+    - attributes = %i[contract_type contract_start_on location study_level category experience_level salary]
+    - attributes.each do |attribute|
+      .d-flex.rf-mb-1w
+        = fa_icon job_offer_icon_for_attribute(attribute)
+        .d-flex.flex-column.rf-ml-1w
+          %strong
+            = JobOffer.human_attribute_name(attribute)
+          %span
+            = job_offer_value_for_attribute(job_offer, attribute)

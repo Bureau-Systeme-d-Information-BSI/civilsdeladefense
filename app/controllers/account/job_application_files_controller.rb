@@ -9,6 +9,7 @@ class Account::JobApplicationFilesController < Account::BaseController
   # GET /account/job_application_files
   # GET /account/job_application_files.json
   def index
+    render template: '/account/job_applications/show'
   end
 
   # POST /account/job_application_files

@@ -1,0 +1,6 @@
+- if user_signed_in? && current_user.already_applied?(@job_offer)
+  .text-center
+    %strong.h3.d-block.mt-5.mb-3 Vous avez déjà proposé votre candidature à cette annonce.
+    = link_to "Retour", :back, class: "btn btn-primary btn-raised btn-lg mb-5"
+- else
+  = render partial: '/job_applications/form'

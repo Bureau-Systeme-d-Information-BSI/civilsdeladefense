@@ -1,0 +1,9 @@
+.rf-stepper.color-scheme-public
+  - 1.upto(6) do |i|
+    .rf-stepper-step
+      .rf-stepper-circle
+        %span= i
+      .rf-stepper-title
+        = t(".step_#{i}")
+      .rf-stepper-bar-left
+      .rf-stepper-bar-right

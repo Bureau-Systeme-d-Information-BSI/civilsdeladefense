@@ -114,7 +114,10 @@ fr:
         logo_horizontal_negative: "Logo au format horizontal (affichage fond coloré)"
         matomo_site_id: "Matomo siteId"
         name: "Nom de la plateforme"
-        name_business_owner: "Nom de l'entité légale"
+        business_owner_name: "Nom de l'entité légale"
+        business_owner_prefix_article: "Article défini"
+        description: "Description"
+        description_short: "Description courte"
         privacy_policy_url: "Lien vers la politique de confidentialité"
         subdomain: "Sous-domaine"
       organization_default:
@@ -137,7 +140,7 @@ fr:
         password_confirmation: 'Confirmation du mot de passe'
         preferred_users_list_ids: "Mes listes de candidats"
         suspension_reason: "Raison"
-        terms_of_service: "En soumettant ce formulaire, j'accepte que les informations saisies sur le site %{site_name} soient exploitées pour l'instruction de ma candidature par %{business_owner_name}. Les informations personnelles portées sur ce formulaire et celles communiquées aux étapes ultérieures du processus de recrutement sont enregistrées dans un fichier informatisé administré par %{business_owner_name} conformément à la <a href='%{link}' target='_blank'>déclaration de confidentialité</a> du portail %{site_name}, dont j'ai pris connaissance"
+        terms_of_service: "En soumettant ce formulaire, j'accepte que les informations saisies sur le site %{site_name} soient exploitées pour l'instruction de ma candidature par %{business_owner_name}. Les informations personnelles portées sur ce formulaire et celles communiquées aux étapes ultérieures du processus de recrutement sont enregistrées dans un fichier informatisé administré par %{business_owner_prefix_article} %{business_owner_name} conformément à la <a href='%{link}' target='_blank'>déclaration de confidentialité</a> du portail %{site_name}, dont j'ai pris connaissance"
     placeholders:
       defaults:
         first_name: "Prénom"

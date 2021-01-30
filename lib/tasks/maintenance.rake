@@ -2,7 +2,7 @@ namespace :maintenance do
   task create_cvd_org: :environment do
     hsh = {
       name: 'Civils de la Défense',
-      name_business_owner: 'le Ministère des Armées',
+      business_owner_name: 'le Ministère des Armées',
       administrator_email_suffix: '@intradef.gouv.fr',
       subdomain: 'cvd',
       domain: 'civilsdeladefense.fabnum.fr'
@@ -233,5 +233,3 @@ namespace :maintenance do
     end
   end
 end
-
-

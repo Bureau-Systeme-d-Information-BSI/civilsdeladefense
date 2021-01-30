@@ -1,8 +1,24 @@
 - cache current_organization do
-  %footer
-    .container-fluid
-      .row
-        .col-12.col-md-2
-          - if current_organization.logo_vertical_negative.present?
-            = image_tag(current_organization.logo_vertical_negative.url, class: 'logo-business-owner')
-        = render partial: '/shared/footer_pages_tree'
+  - ary = current_organization.pages.root&.descendants || []
+  - links, pages = ary.partition(&:only_link?)
+  %footer#footer.rf-footer{:role => "contentinfo"}
+    .rf-container
+      .rf-footer__body
+        .rf-footer__brand
+          = link_to root_path, title: strip_tags(current_organization.business_owner_name), class: 'rf-logo' do
+            %span.rf-logo__title
+              = simple_format(current_organization.business_owner_name, nil, wrapper_tag: 'span')
+        .rf-footer__content
+          - if (desc = current_organization.description).present?
+            %p.rf-footer__content-desc= current_organization.description
+          %ul.rf-footer__content-list
+            - links.each do |page|
+              %li
+                = link_to page.title, page.url, class: 'rf-footer__content-link'
+      .rf-footer__bottom
+        %ul.rf-footer__bottom-list
+          - pages.each do |page|
+            %li.rf-footer__bottom-item
+              = link_to page.title, page_path(page), class: 'rf-footer__bottom-link'
+        .rf-footer__bottom-copy
+          © #{strip_tags(current_organization.business_owner_name)} #{Time.now.year}

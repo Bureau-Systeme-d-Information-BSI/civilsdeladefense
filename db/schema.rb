@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_09_120354) do
+ActiveRecord::Schema.define(version: 2021_01_22_080709) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -392,7 +392,7 @@ ActiveRecord::Schema.define(version: 2021_01_09_120354) do
 
   create_table "organizations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
-    t.string "name_business_owner"
+    t.string "business_owner_name"
     t.string "administrator_email_suffix"
     t.string "subdomain"
     t.string "domain"
@@ -422,6 +422,9 @@ ActiveRecord::Schema.define(version: 2021_01_09_120354) do
     t.integer "inbound_email_config", default: 0
     t.string "matomo_site_id"
     t.integer "hours_delay_before_publishing"
+    t.string "description"
+    t.string "description_short"
+    t.string "business_owner_prefix_article"
   end
 
   create_table "pages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

@@ -1,142 +1,200 @@
-$card-spacer-x: 2.5rem;
-$card-bg: #fff;
-@import 'common';
-@import 'footer';
-@import 'stepper';
+@import "@gouvfr/all/dist/css/all.css";
+@import "flex-utilities";
+@import "stepper";
+@import "alert";
 
-body > .navbar.bg-white .nav-item .nav-link {
-  line-height: 34px;
+[data-rf-reset] body {
+  margin: 0;
 }
 
-nav.navbar {
-  & + div {
-    height: 50px;
-    background-color: $secondary;
-    & + div {
-      height: 85px;
-      background-color: $quaternary;
-    }
-  }
-  &.fixed-top {
-    & + div {
-      margin-top: 50px;
-    }
+input {
+  &.rf-btn {
+    border: 0;
   }
 }
 
-.basic-infos {
-  @extend .d-flex, .my-4;
-  &.vertical {
-    @extend .flex-column, .align-items-center;
-    > .info {
-      @extend .mt-2;
-      &:first-child {
-        @extend .mt-0;
-      }
-    }
+.rf-centered {
+  text-align: center;
+}
+
+.rf-bg--alt {
+  h1 {
+    color: var(--g100);
   }
-  &.horizontal {
-    @extend .flex-column, .align-items-center;
-    @extend .flex-md-row, .flex-wrap, .justify-content-center;
-    > .info {
-      @extend .ml-0, .ml-md-4, .mt-1;
-      &:first-child {
-        @extend .ml-0;
-      }
+}
+
+:root:not([data-theme="dark"]) {
+  .rf-bg--alt-3 {
+    background-color: #004494;
+    h2 {
+      color: var(--g100);
     }
   }
 }
 
-.intro-bg {
-  height: 200px;
-  background: no-repeat center center;
+.block--overlap {
+  margin-top: -80px;
+}
+
+.block--underlap {
+  padding-top: 80px;
+  margin-top: -80px;
+}
+
+:root:not([data-theme="dark"]) {
+  .rf-bg--alt-2 {
+    background-color: #0682ff;
+    --g800: white;
+    --bf500: white;
+    --w-bf500: #0682ff;
+    .rf-btn {
+      --color-hover: rgba(0, 0, 0, 0.05);
+      --color-active: rgba(91, 91, 255, 0.5);
+    }
+  }
+}
+
+.rf-b--g100 {
+  border-color: var(--g100);
+}
+
+.rf-bg--hero-image {
+  height: 652px;
+  background-repeat: no-repeat;
   background-size: cover;
-  @include media-breakpoint-up(md) {
-    height: 410px;
+  background-position: 50%;
+}
+
+.h-auto {
+  height: auto !important;
+}
+
+.ml-auto {
+  margin-left: auto;
+}
+
+.mr-auto {
+  margin-right: auto;
+}
+
+svg {
+  height: 1rem;
+  width: auto;
+  display: inline-block;
+  font-size: inherit;
+  line-height: 1;
+  overflow: visible;
+  fill: currentColor;
+  vertical-align: -0.1em;
+}
+
+.position-sticky {
+  position: sticky !important;
+  top: 1.5rem;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+label {
+  a {
+    display: inline;
   }
 }
 
-.pushed-top {
-  margin-top: -6rem;
-}
-
-.job-offer-head-sticky {
-  @extend .position-sticky;
-  @extend .mb-4, .mb-md-0;
-  @extend .pushed-top;
-  top: 100px;
-}
-
-.job-application-summary {
-  color: inherit;
-  &:hover, &:focus {
-    text-decoration: none;
-    color: inherit;
+.rf-card {
+  &.rounded-lg {
+    overflow: hidden;
+  }
+  a {
+    box-shadow: 0 0 0 0 currentColor;
   }
 }
 
-.job-offer-category {
-  h2 {
-    @extend .mb-0;
-  }
-  h3 {
-    font-weight: 400;
-    @extend .mt-5, .mb-0;
-    + hr {
-      @extend .d-inline-block, .mt-3, .mb-2;
-      width: 50px;
-    }
-  }
-  .job-offers {
-    > .job-offer {
-      @extend .mt-3;
-      &:first-child {
-        @extend .mt-0;
-      }
-      &:last-child {
-        hr {
-          display: none;
-        }
-      }
-      .job-offer-title {
-        @extend .text-quinary;
-        font-weight: 700;
-      }
-    }
-    + h3 {
-      @extend .mt-5;
-    }
+.zoomable {
+  transition: transform 0.2s ease-in-out;
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.d-none {
+  display: none;
+}
+
+.d-block {
+  display: block;
+}
+
+.d-inline-block {
+  display: inline-block;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.w-40 {
+  width: auto;
+}
+
+.h-40 {
+  height: 2rem;
+}
+
+h1,
+h2 {
+  small {
+    color: var(--g600);
   }
 }
 
-.invalid-feedback {
-  margin-top: 0.90rem;
+.rf-box {
+  box-shadow: 0 1px 0 0 currentColor;
 }
 
-.custom-file-label {
-  line-height: 1.5;
-  &.selected {
-    padding-left: 2.5rem;
+.message {
+  p {
+    margin-bottom: 0;
   }
 }
 
-.custom-file {
-  .delete {
-    height: 2.25rem;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    z-index: 3;
-    display: block;
-    padding: 0.375rem 0.5rem;
-    line-height: 1.5;
-    color: white;
-    background-color: lighten($danger, 20%);
-    transition: background-color 0.2s $bmd-animation-curve-default;
-    cursor: pointer;
-    &:hover {
-      background-color: lighten($danger, 10%);
-    }
+.bg-danger {
+  background-color: var(--error);
+}
+
+.text-white {
+  color: var(--w-g750);
+}
+
+.rf-grid-row .rf-card {
+  height: unset;
+}
+
+.form-inline {
+  display: flex;
+  flex-direction: row;
+  > * {
+    flex-grow: 1;
+    flex-basis: 0;
+  }
+  .rf-input-group {
+    margin-bottom: 0;
   }
 }

@@ -1,10 +1,16 @@
-- @page_title = 'Postuler au poste ' + @job_offer.title + ' ' + @job_offer.location
-.card.pushed-top
-  .card-body
-    = render partial: 'job_offer_head', locals: {job_offer: @job_offer}
-    - if user_signed_in? && current_user.already_applied?(@job_offer)
-      .text-center
-        %strong.h3.d-block.mt-5.mb-3 Vous avez déjà proposé votre candidature à cette annonce.
-        = link_to "Retour", :back, class: "btn btn-primary btn-raised btn-lg mb-5"
-    - else
-      = render partial: '/job_applications/form'
+- @page_title = "Postuler à l'offre #{@job_offer.identifier} #{@job_offer.title} #{@job_offer.location}"
+.rf-container.rf-pb-6w.rf-pt-5w
+  .rf-grid-row.rf-grid-row--gutters
+    = render partial: 'breadcrumb'
+  .rf-grid-row.rf-grid-row--gutters
+    .rf-col-xs-12.rf-col-md-5
+      .rf-card.rf-card--no-arrow.rf-card--no-full-height.position-sticky
+        .rf-card__body
+          = render partial: 'job_offer_head', locals: {job_offer: @job_offer, inside_card: true}
+    .rf-col-xs-12.rf-col-md-7
+      - if user_signed_in? && current_user.already_applied?(@job_offer)
+        .text-center
+          %strong.h3.d-block.mt-5.mb-3 Vous avez déjà proposé votre candidature à cette annonce.
+          = link_to "Retour", :back, class: "btn btn-primary btn-raised btn-lg mb-5"
+      - else
+        = render partial: '/job_applications/form'

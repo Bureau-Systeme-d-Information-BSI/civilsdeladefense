@@ -92,6 +92,14 @@ fr:
     update: "Mettre à jour"
     unsuspend: "Republier"
     unsuspend_user: "Réactiver"
+  homepages:
+    stepper:
+      step_1: "Dépôt de la candidature"
+      step_2: "Préqualification téléphonique"
+      step_3: "Entretien physique"
+      step_4: "Sélection du candidat"
+      step_5: "Rédaction du contrat de travail"
+      step_6: "Prise de fonctions"
   job_applications:
     form:
       general_informations: "Informations générales"
@@ -113,10 +121,10 @@ fr:
         one: "1 offre d'emploi trouvée"
         other: "%{count} offres d'emploi trouvées"
     job_offer:
-      show: "Postuler"
-      published_date: 'Il y a %{time_ago_in_words}'
+      show: "Voir le détail de l'offre"
+      published_date: 'Publiée il y a %{time_ago_in_words}'
     show:
-      apply: "Postuler"
+      apply: "Je postule"
     job_offer_content:
       description: "Descriptif de l’offre"
       required_profile: "Profil recherché"
@@ -126,7 +134,7 @@ fr:
       benefit: "Bénéfice en nature: "
     successful:
       subject: "Votre candidature à l'offre %{job_offer_identifier} sur %{site_name}"
-      body: "Nous avons bien reçu votre candidature à l'offre %{job_offer_identifier} au poste de '%{job_offer_title}'.\n\nNous y répondrons dans les meilleurs délais.\n\nL'équipe %{site_name}."
+      body: "Nous avons bien reçu votre candidature à l'offre %{job_offer_identifier} '%{job_offer_title}'.\n\nNous y répondrons dans les meilleurs délais.\n\nL'équipe %{site_name}."
       title: "Merci d'avoir soumis votre candidature !"
       subtitle_html: "Votre demande est prise en compte.<br/>Veuillez confirmer votre accès à l'aide du lien sur votre boîte courriel."
       link: "Retour à l'accueil"
@@ -146,7 +154,7 @@ fr:
       tos: "Conditions générales d’utilisation"
       privacy: "Politique de confidentialité"
       tracking: "Suivi d'audience et vie privée"
-    navbar:
+    header:
       account: "Mon compte"
       account_root: "Mon espace candidat"
       home_link: "Accueil"
@@ -156,12 +164,13 @@ fr:
   account:
     job_applications:
       index:
-        active: "Candidatures en cours<span class='d-none d-md-inline'> (%{count})</span>"
-        finished: "Candidatures terminées<span class='d-none d-md-inline'> (%{count})</span>"
-        none_active: "Aucune candidature active"
-        none_finished: "Aucune candidature terminée"
+        title: "Mes candidatures"
+        subtitle_finished: "Candidatures terminées (%{count})"
+        subtitle_ongoing: "Candidatures en cours (%{count})"
+        finished_none: "Aucune candidature terminée"
+        ongoing_none: "Aucune candidature en cours"
       job_application:
-        published_date: "Candidaté il y a %{time_ago_in_words}"
+        created_at: "Candidaté il y a %{time_ago_in_words}"
       show:
         nav_emails: "Mes échanges"
         nav_files: "Mes documents"
@@ -944,6 +953,13 @@ fr:
         state/published: "Publiée"
         state/suspended: "En pause"
         state/archived: "Archivée"
+        contract_type: "Type de contrat"
+        contract_start_on: "Début du contrat"
+        location: "Localisation"
+        study_level: "Niveau d'études"
+        category: "Domaine professionnel"
+        experience_level: "Niveau d'expérience"
+        salary: "Rémunération"
       job_offer_actor/role:
         employer: "Employeur"
         grand_employer: "Grand Employeur"

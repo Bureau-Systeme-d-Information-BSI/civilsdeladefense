@@ -240,6 +240,7 @@ ActiveRecord::Schema.define(version: 2021_01_27_111513) do
     t.uuid "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["sub"], name: "index_france_connect_informations_on_sub", unique: true
     t.index ["user_id"], name: "index_france_connect_informations_on_user_id"
   end
 

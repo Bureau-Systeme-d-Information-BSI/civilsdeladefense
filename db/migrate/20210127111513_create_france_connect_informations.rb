@@ -11,5 +11,7 @@ class CreateFranceConnectInformations < ActiveRecord::Migration[6.1]
 
       t.timestamps
     end
+
+    add_index :france_connect_informations, :sub, unique: true
   end
 end

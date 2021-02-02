@@ -60,7 +60,13 @@ class User < ApplicationRecord
     job_applications.joins(:job_offer).where.not(job_offers: { state: :archived })
   end
 
+  def link_to_france_connect?
+    france_connect_informations.any?
+  end
+
+  private
+
   def password_required?
-    france_connect_informations.none?
+    !link_to_france_connect? && super
   end
 end

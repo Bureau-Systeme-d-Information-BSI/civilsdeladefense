@@ -2,10 +2,10 @@
 
 FactoryBot.define do
   factory :france_connect_information do
-    openid { 'MyString' }
-    email { 'MyString' }
-    family_name { 'MyString' }
-    given_name { 'MyString' }
-    user
+    sub { SecureRandom.uuid }
+    email { Faker::Internet.safe_email }
+    family_name { Faker::Name.last_name }
+    given_name { Faker::Name.first_name }
+    user factory: :confirmed_user
   end
 end

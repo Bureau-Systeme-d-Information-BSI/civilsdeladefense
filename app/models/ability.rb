@@ -20,6 +20,7 @@ class Ability
     when 'employer'
       ability_employer(administrator)
     else
+      # if neither BANT or Employer, it's BRH or CMG which have the same rights
       can :read, JobOffer, job_offer_actors: { administrator_id: administrator.id }
       can :read, JobApplication, job_application_read_query(administrator)
       can :manage, JobApplication, brh_job_application_manage_query(administrator)

@@ -1,11 +1,9 @@
 - @page_title = @page&.title || t('.title')
 
 - style = current_organization.image_background.present? ? "background-image: url(#{ current_organization.image_background.url });" : nil
-.rf-container-fluid.rf-bg--alt.rf-bg--hero-image.d-flex.flex-column.justify-content-center.rf-centered.align-items-center{style: style}
+.rf-container-fluid.rf-bg--alt.rf-bg--hero-image.d-flex.justify-content-center.rf-centered.align-items-center{style: style}
   .rf-col-6
-    - if current_organization.logo_vertical_negative.present?
-      = image_tag(current_organization.logo_vertical_negative.url, style: 'height:180px;width:auto;')
-    %h1.rf-my-0= @page_title
+    %h1.rf-text--lead.rf-mb-0.block--overlap= @page_title
 
 .rf-container.rf-bg--alt-3.block--overlap.rf-py-4w.rounded-lg
   .rf-grid-row.rf-grid-row--center

@@ -1,10 +1,13 @@
-- @page_title = @job_offer.title + ' ' + @job_offer.location
-.card.pushed-top
-  .card-body
-    = render partial: 'job_offer_head', locals: {job_offer: @job_offer}
-    .text-center.mt-5
-      .h2
+- @page_title = "Candidature reçue pour l'offre #{@job_offer.identifier} #{@job_offer.title} #{@job_offer.location}"
+.rf-container.rf-pb-6w.rf-pt-5w
+  .rf-grid-row.rf-grid-row--gutters
+    = render partial: 'breadcrumb'
+  .rf-grid-row.rf-grid-row--gutters
+    .rf-col-xs-12.rf-col-md-5
+      .rf-card.rf-card--no-arrow.rf-card--no-full-height.position-sticky
+        .rf-card__body
+          = render partial: 'job_offer_head', locals: {job_offer: @job_offer, inside_card: true}
+    .rf-col-xs-12.rf-col-md-7
+      %h2
         = t('.title')
-      .h5.text-dark-gray
-        = t('.subtitle_html')
-      = link_to t('.link'), root_path, class: 'btn btn-primary btn-raised mt-5 btn-lg'
+      = simple_format(t('.subtitle_html'))

@@ -9,6 +9,7 @@
     = stylesheet_pack_tag 'style'
     = csrf_meta_tags
     = csp_meta_tag
+    = javascript_pack_tag 'bundle'
   %body
     = render partial: '/shared/header'
     = content_for?(:content) ? yield(:content) : yield
@@ -23,5 +24,4 @@
           - elsif flash[:success]
             .d-none.alert.alert-success= flash[:success]
     = render partial: '/shared/footer'
-    = javascript_pack_tag 'bundle', defer: true
     = render partial: '/shared/trackers'

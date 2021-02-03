@@ -54,15 +54,17 @@ class JobOffersController < ApplicationController
       if @job_application.save
         @job_offer.initial! if @job_offer.start?
         @job_application.send_confirmation_email
-        user = @job_application.user
-        user.update_column :last_job_application_id, @job_application.id
-
-        format.html { redirect_to %i[account job_applications] }
+        @job_application.user.update_column :last_job_application_id, @job_application.id
+        format.html { redirect_to [:successful, @job_offer] }
         format.json do
           json = @job_application.to_json(only: %i[id])
           render json: json, status: :created, location: [:successful, @job_offer]
         end
       else
+        format.turbo_stream do
+          instruction = turbo_stream.replace(@job_application, partial: '/job_applications/form')
+          render turbo_stream: instruction
+        end
         format.html { render :show }
         format.json { render json: @job_application.errors, status: :unprocessable_entity }
       end

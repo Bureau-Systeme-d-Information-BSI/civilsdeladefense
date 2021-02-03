@@ -136,7 +136,7 @@ fr:
       subject: "Votre candidature à l'offre %{job_offer_identifier} sur %{site_name}"
       body: "Nous avons bien reçu votre candidature à l'offre %{job_offer_identifier} '%{job_offer_title}'.\n\nNous y répondrons dans les meilleurs délais.\n\nL'équipe %{site_name}."
       title: "Merci d'avoir soumis votre candidature !"
-      subtitle_html: "Votre demande est prise en compte.<br/>Veuillez confirmer votre accès à l'aide du lien sur votre boîte courriel."
+      subtitle_html: "Votre demande est prise en compte.\n\nVeuillez confirmer votre accès à l'aide du lien sur votre boîte courriel."
       link: "Retour à l'accueil"
   notifications_mailer:
     daily_summary:

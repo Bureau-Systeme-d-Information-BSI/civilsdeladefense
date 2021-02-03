@@ -7,12 +7,12 @@
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
 
-import Rails from '@rails/ujs'
-Rails.start()
-
 function importAll(r) {
   return r.keys().map(r)
 }
 
 importAll(require.context('images/', true, /\.(ico|png|jpe?g|svg|gif)$/))
 importAll(require.context('icons/', true, /\.svg$/))
+
+import { Turbo } from "@hotwired/turbo-rails"
+window.Turbo = Turbo

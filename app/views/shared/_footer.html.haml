@@ -8,6 +8,9 @@
           = link_to root_path, title: strip_tags(current_organization.business_owner_name), class: 'rf-logo' do
             %span.rf-logo__title
               = simple_format(current_organization.business_owner_name, nil, wrapper_tag: 'span')
+          - if current_organization.logo_vertical.present?
+            .rf-footer__operator.rf-ml-3w
+              = image_tag(current_organization.logo_vertical.url, alt: current_organization.name, style: 'width:auto; height:3rem;')
         .rf-footer__content
           - if (desc = current_organization.description).present?
             %p.rf-footer__content-desc= current_organization.description

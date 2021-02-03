@@ -1,10 +1,13 @@
 %header.rf-header
   .rf-container
     .rf-header__body
-      .rf-header__brand
+      .rf-header__brand.d-flex
         = link_to root_path, title: strip_tags(current_organization.business_owner_name), class: 'rf-logo' do
           %span.rf-logo__title
             = simple_format(current_organization.business_owner_name, nil, wrapper_tag: 'span')
+      - if current_organization.logo_vertical.present?
+        .rf-header__operator
+          = image_tag(current_organization.logo_vertical.url, alt: current_organization.name, style: 'width:auto; height:2.5rem;')
       .rf-header__navbar
         .rf-service
           =  link_to root_path, title: current_organization.name, class: 'rf-service__title' do
@@ -21,6 +24,7 @@
                   .d-flex.flex-column
                     = image_user_tag current_user.photo, width: 40
                     %small= current_user.full_name
+                = button_to t('.logout'), destroy_user_session_path, method: :delete
               - else
                 = link_to t(".account_root"), [:account, :job_applications], class: %w[rf-link rf-fi-account-line]
   - unless user_signed_in?

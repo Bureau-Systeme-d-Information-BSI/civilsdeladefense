@@ -1,6 +1,6 @@
 -# frozen_string_literal: true
 - profile = @job_application.profile
-= simple_form_for(@job_application, url: [:send_application, @job_offer], method: :post, remote: true, html: {data: {type: :json}}) do |f|
+= simple_form_for(@job_application, url: [:send_application, @job_offer], method: :post) do |f|
   .form-inputs.mt-3
     = f.error_notification
     = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?

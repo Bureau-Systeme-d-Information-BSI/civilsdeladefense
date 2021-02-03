@@ -398,6 +398,8 @@ GEM
     tilt (2.0.10)
     trix-rails (2.3.0)
       rails (> 4.1, < 7.0)
+    turbo-rails (0.5.9)
+      rails (>= 6.0.0)
     turbolinks (5.2.1)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
@@ -487,6 +489,7 @@ DEPENDENCIES
   spring
   spring-watcher-listen (~> 2.0.0)
   trix-rails
+  turbo-rails
   turbolinks
   tzinfo-data
   web-console (>= 3.3.0)

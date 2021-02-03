@@ -269,6 +269,9 @@ Devise.setup do |config|
     response_type: :code,
     uid_field: 'sub',
     issuer: "https://#{ENV['FRANCE_CONNECT_HOST']}",
+    client_auth_method: :secret,
+    client_signing_alg: :HS256,
+    nonce: proc { SecureRandom.hex(32) },
     client_options: {
       port: 443,
       scheme: 'https',
@@ -279,7 +282,8 @@ Devise.setup do |config|
       end_session_endpoint: '/api/v1/logout',
       identifier: ENV['FRANCE_CONNECT_APP_ID'],
       secret: ENV['FRANCE_CONNECT_APP_SECRET'],
-      redirect_uri: "#{ENV['DEFAULT_HOST']}/omniauth/france_connect/callback"
+      redirect_uri: "#{ENV['DEFAULT_HOST']}/users/auth/france_connect/callback",
+      post_logout_redirect_uri: '/'
     }
   }
 

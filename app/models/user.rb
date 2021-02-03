@@ -13,7 +13,7 @@ class User < ApplicationRecord
 
   belongs_to :organization
   belongs_to :last_job_application, class_name: 'JobApplication', optional: true
-  has_many :france_connect_informations
+  has_many :omniauth_informations
 
   has_many :job_applications, -> { order(created_at: :desc) }, dependent: :nullify
   has_many :job_offers, through: :job_applications
@@ -61,12 +61,20 @@ class User < ApplicationRecord
   end
 
   def link_to_france_connect?
-    france_connect_informations.any?
+    omniauth_informations.where(provider: :france_connect).any?
+  end
+
+  def link_to_omniauth?(provider: nil)
+    if provider.present?
+      omniauth_informations.where(provider: provider).any?
+    else
+      omniauth_informations.any?
+    end
   end
 
   private
 
   def password_required?
-    !link_to_france_connect? && super
+    !link_to_omniauth? && super
   end
 end

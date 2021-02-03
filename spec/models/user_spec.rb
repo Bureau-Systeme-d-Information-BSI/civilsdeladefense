@@ -120,9 +120,9 @@ RSpec.describe User, type: :model do
   describe 'required password' do
     let(:user) { FactoryBot.build(:user) }
 
-    context 'with france_connect_informations' do
+    context 'with omniauth_informations' do
       before do
-        FactoryBot.create_list(:france_connect_information, 10, user: user)
+        FactoryBot.create_list(:omniauth_information, 10, user: user)
         user.password = ''
       end
 
@@ -131,7 +131,7 @@ RSpec.describe User, type: :model do
       end
     end
 
-    context 'without france_connect_informations' do
+    context 'without omniauth_informations' do
       before do
         user.password = ''
       end

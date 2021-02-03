@@ -2,7 +2,7 @@
   .card-header
     .card-title= t('.title')
   .card-body
-    - if current_user.link_to_france_connect?
+    - if current_user.link_to_omniauth?(provider: :france_connect)
       = render "devise/shared/france_connect"
     - else
       = link_to t('.unlink_france_connect'), unlink_france_connect_account_user_path, method: :patch

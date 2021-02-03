@@ -1,20 +1,24 @@
 # frozen_string_literal: true
 
-class OmniauthCallbacksController < ApplicationController
+class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   skip_before_action :verify_authenticity_token, only: :france_connect
   rescue_from Rack::OAuth2::Client::Error, with: :oauth_error
 
   def france_connect
-    user_info = FranceConnectClient.new(params[:code]).user_info
+    auth = request.env['omniauth.auth']
 
-    @fc_info = FranceConnectInformation.find_or_initialize_by(sub: user_info[:sub])
-    @fc_info.assign_attributes(
-      user_info.slice(:email, :family_name, :given_name)
+    @omniauth_info = OmniauthInformation.find_or_initialize_by(
+      uid: auth.uid, provider: :france_connect
+    )
+    @omniauth_info.assign_attributes(
+      email: auth.info.email,
+      first_name: auth.info.first_name,
+      last_name: auth.info.last_name
     )
 
     retrieve_user
 
-    @fc_info.save
+    @omniauth_info.save!
     sign_in_user
   end
 
@@ -30,15 +34,16 @@ class OmniauthCallbacksController < ApplicationController
   end
 
   def retrieve_user
-    @user = @fc_info.user || current_user || User.find_or_initialize_by(email: @fc_info.email)
-    @user.france_connect_informations << @fc_info
+    user_by_email = User.find_or_initialize_by(email: @omniauth_info.email)
+    @user = @omniauth_info.user || current_user || user_by_email
+    @user.omniauth_informations << @omniauth_info
 
     return unless @user.new_record?
 
-    @user.update(
+    @user.update!(
       confirmed_at: Time.zone.now,
-      last_name: @fc_info.family_name,
-      first_name: @fc_info.given_name,
+      last_name: @omniauth_info.last_name,
+      first_name: @omniauth_info.first_name,
       organization: current_organization,
       current_position: 'N/C',
       phone: 'N/C'

@@ -82,7 +82,7 @@ class Account::UsersController < Account::BaseController
   end
 
   def unlink_france_connect
-    current_user.france_connect_informations.destroy_all
+    current_user.omniauth_informations.where(provider: :france_connect).destroy_all
 
     redirect_to %i[account user], notice: t('.success')
   end

@@ -29,7 +29,8 @@ class User < ApplicationRecord
   validates :photo,
             file_size: { less_than: 1.megabytes }
 
-  validates :first_name, :last_name, :phone, :current_position, presence: true
+  validates :first_name, :last_name, presence: true
+  validates :phone, :current_position, presence: true, allow_nil: true
   validates :terms_of_service, :certify_majority, acceptance: true
   validate :password_complexity
 

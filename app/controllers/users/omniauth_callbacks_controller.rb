@@ -44,9 +44,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
       confirmed_at: Time.zone.now,
       last_name: @omniauth_info.last_name,
       first_name: @omniauth_info.first_name,
-      organization: current_organization,
-      current_position: 'N/C',
-      phone: 'N/C'
+      organization: current_organization
     )
   end
 

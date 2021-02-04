@@ -111,7 +111,7 @@ def france_connect_mock(uid, email, first_name, last_name)
         family_name: last_name,
         email: email,
         sub: uid,
-        iss: 'https://fcp.integ01.dev-franceconnect.fr',
+        iss: ENV['FRANCE_CONNECT_HOST'],
         aud: 'a25e0c97d56108f36bd74c9ac0ce2e8e1c26b18df76b99ff3e820cb738bc4c81',
         exp: 1_612_354_202,
         iat: 1_612_354_142,

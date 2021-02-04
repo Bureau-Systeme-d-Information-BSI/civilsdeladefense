@@ -2,7 +2,6 @@
 - profile = @job_application.profile
 - unless user_signed_in?
   = render "devise/shared/france_connect"
-  %h2.text-center ou
 = simple_form_for(@job_application, url: [:send_application, @job_offer], method: :post, remote: true, html: {data: {type: :json}}) do |f|
   .form-inputs.mt-3
     = f.error_notification

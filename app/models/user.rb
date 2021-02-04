@@ -2,9 +2,14 @@
 
 # Candidate to job offer
 class User < ApplicationRecord
+  def self.omniauth_providers
+    ENV['FRANCE_CONNECT_HOST'] ? [:france_connect] : []
+  end
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :confirmable, :lockable, :omniauthable, omniauth_providers: %i[france_connect]
+         :confirmable, :lockable,
+         :omniauthable, omniauth_providers: User.omniauth_providers
   include Suspendable
   include DeletionFlow
   include PgSearch::Model
@@ -58,10 +63,6 @@ class User < ApplicationRecord
 
   def job_applications_active
     job_applications.joins(:job_offer).where.not(job_offers: { state: :archived })
-  end
-
-  def link_to_france_connect?
-    omniauth_informations.where(provider: :france_connect).any?
   end
 
   def link_to_omniauth?(provider: nil)

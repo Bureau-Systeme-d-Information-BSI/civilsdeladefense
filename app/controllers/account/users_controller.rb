@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class Account::UsersController < Account::BaseController
-  before_action :set_user, only: %i[show change_password change_email
-                                    update update_password update_email
-                                    destroy]
+  before_action :set_user, only: %i[
+    show change_password change_email update update_password set_password update_email destroy
+  ]
 
   def show
     @user_for_password_change = User.new
@@ -32,6 +32,26 @@ class Account::UsersController < Account::BaseController
   def update_password
     respond_to do |format|
       if @user.update_with_password(user_password_params)
+        # Sign in the user by passing validation in case their password changed
+        bypass_sign_in(@user, scope: :user)
+
+        format.html { redirect_to %i[account user], notice: t('.success') }
+        format.json { render :show, status: :ok, location: @user }
+      else
+        format.html do
+          @user_for_password_change = @user
+          @user_for_email_change = User.new
+          @user_for_deletion = User.new
+          render :show
+        end
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def set_password
+    respond_to do |format|
+      if @user.update(user_password_params)
         # Sign in the user by passing validation in case their password changed
         bypass_sign_in(@user, scope: :user)
 

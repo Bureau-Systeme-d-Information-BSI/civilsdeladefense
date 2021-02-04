@@ -182,6 +182,8 @@ fr:
         title: "Changement de courriel"
       change_password:
         title: "Changement de mot de passe"
+      set_password:
+        title: "Choisir un mot de passe"
       destroy:
         success: "Votre compte a bien été supprimé"
       update_email:

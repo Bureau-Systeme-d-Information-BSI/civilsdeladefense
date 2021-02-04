@@ -159,7 +159,7 @@ Rails.application.routes.draw do
       resource :user, path: 'mon-compte', only: %i[show update destroy] do
         member do
           get :change_email, :change_password
-          patch :update_email, :update_password, :unlink_france_connect
+          patch :update_email, :update_password, :unlink_france_connect, :set_password
         end
       end
     end

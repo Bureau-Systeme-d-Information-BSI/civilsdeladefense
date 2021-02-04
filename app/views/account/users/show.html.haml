@@ -1,7 +1,10 @@
 .container
   .row
     .col-12.col-md-6.mt-4
-      = render template: '/account/users/change_password'
+      - if current_user.link_to_omniauth?
+        = render template: '/account/users/set_password'
+      - else
+        = render template: '/account/users/change_password'
     .col-12.col-md-6.mt-4
       = render template: '/account/users/change_email'
     .col-12.col-md-6.mt-4

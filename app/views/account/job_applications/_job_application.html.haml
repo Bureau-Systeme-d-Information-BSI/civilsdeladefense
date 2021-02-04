@@ -1,5 +1,6 @@
 - job_offer = job_application.job_offer
-.rf-card.rf-card--horizontal.h-auto
+- klass = 'rf-mt-3w' unless job_application_counter == 0
+.rf-card.rf-card--horizontal.h-auto{class: klass}
   = link_to [:account, job_application], class: 'rf-card__body' do
     .rf-card__detail
       = t('.created_at', time_ago_in_words: time_ago_in_words(job_application.created_at))

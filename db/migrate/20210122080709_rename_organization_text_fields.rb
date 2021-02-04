@@ -14,7 +14,7 @@ class RenameOrganizationTextFields < ActiveRecord::Migration[6.1]
 
       ary = business_owner_name.split(regex)
       business_owner_prefix_article = ary[1]
-      business_owner_name = ary[2].strip.split(' ', 2).join("\n")
+      business_owner_name = ary[2].strip.split(' ', 2).join("\n\n")
       hsh = {
         business_owner_name: business_owner_name,
         business_owner_prefix_article: business_owner_prefix_article

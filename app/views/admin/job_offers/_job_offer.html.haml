@@ -12,13 +12,13 @@
       .col-12.job-offer-bop
         = job_offer.bop&.name
       .col-12.job-offer-employer-name
-        = job_offer.employer.name
+        = job_offer.employer&.name
       .col-12.job-offer-localization
         %span{title: job_offer.location}= job_offer.location.split(',').first
       .col-12.job-offer-contract-type
         = job_offer.contract_type.name
       .col-12.job-offer-contract-duration
-        = job_offer.duration_contract
+        = job_offer.contract_duration&.name
       .col-12.job-offer-job-applications-number
         - count = job_offer.job_applications_count
         - title = JobOffer.human_attribute_name('job_applications_count', count: count)

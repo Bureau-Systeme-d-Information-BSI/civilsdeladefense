@@ -51,6 +51,8 @@
             = f.input :parent_id, collection: Employer.roots
           - if resource.is_a?(StudyLevel)
             = f.input :official_level
+          - if resource.is_a?(ContractType)
+            = f.input :duration
       .form-actions.text-right.mt-4
         %ul.list-inline.mb-0
           - unless resource_class == Organization

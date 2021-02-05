@@ -89,31 +89,27 @@ function triggerKindChange() {
 }
 
 function initJobContractTypes() {
-  let type_contract = document.getElementById('job_offer_contract_type_id')
-  if (type_contract !== null) {
-    type_contract.addEventListener('change', triggerTypeContractChange, false)
-    triggerTypeContractChange(false)
+  let contract_type = document.getElementById('job_offer_contract_type_id')
+  if (contract_type !== null) {
+    contract_type.addEventListener('change', triggerContractTypeChange, false)
+    triggerContractTypeChange()
   }
 }
 
-function triggerTypeContractChange(event_change = true) {
-  let duration_contract = document.getElementById('job_offer_duration_contract')
-  let type_contract = document.getElementById('job_offer_contract_type_id')
-  let duration_contract_goup = document.getElementsByClassName('job_offer_duration_contract').item(0)
-  if (duration_contract !== null) {
-    let value = type_contract.options[type_contract.selectedIndex].text
-    duration_contract_goup.hidden = value !== 'CDD'
-    if (event_change){
-      if(value === 'CDD'){
-        duration_contract.value = duration_contract.getAttribute("data-cdd-value")
-        duration_contract.setAttribute("data-cdd-value", "")
-      }
-      else if(duration_contract.getAttribute("data-cdd-value") === "") {
-        duration_contract.setAttribute("data-cdd-value", duration_contract.value)
-        duration_contract.value = ""
-      }
-    } else {
-      duration_contract.setAttribute("data-cdd-value", "")
+function triggerContractTypeChange() {
+  let contract_duration = document.getElementById('job_offer_contract_duration_id')
+  let contract_type = document.getElementById('job_offer_contract_type_id')
+  let contract_duration_group = document.getElementsByClassName('job_offer_contract_duration').item(0)
+
+  if (contract_duration !== null) {
+    let option = contract_type.options[contract_type.selectedIndex]
+    let value = option.getAttribute("data-duration")
+    let with_duration = value === 'true'
+
+    contract_duration_group.hidden = !with_duration
+    contract_duration_group.required = with_duration
+    if(!with_duration){
+      contract_duration.value = ""
     }
   }
 }

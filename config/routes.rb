@@ -131,7 +131,7 @@ Rails.application.routes.draw do
       resources :salary_ranges
       resources :job_application_file_types
       other_settings = %i[benefit bops email_template job_application_file_types
-                          rejection_reasons]
+                          rejection_reasons contract_duration]
       (JobOffer::SETTINGS + other_settings).each do |setting|
         resources setting.to_s.pluralize.to_sym, except: %i[show] do
           member do

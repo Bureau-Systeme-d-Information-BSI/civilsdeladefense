@@ -27,8 +27,12 @@ input {
   }
 }
 
+.rf-b--g100 {
+  border-color: var(--g100);
+}
+
 .block--overlap {
-  margin-top: -80px;
+  margin-top: 3rem;
 }
 
 .block--underlap {
@@ -36,15 +40,9 @@ input {
   margin-top: -80px;
 }
 
-.rf-b--g100 {
-  border-color: var(--g100);
-}
-
 .rf-bg--hero-image {
-  height: 652px;
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: 50%;
 }
 
 .h-auto {
@@ -236,5 +234,14 @@ h2 {
   }
   .rf-bg--alt-3 {
     --bg-alt-3: rgb(33, 33, 33);
+  }
+}
+
+@media (min-width: 768px) {
+  .block--overlap {
+    margin-top: -80px;
+  }
+  .rf-bg--hero-image {
+    height: 50vh;
   }
 }

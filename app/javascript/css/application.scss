@@ -165,8 +165,17 @@ h2 {
   color: var(--w-g750);
 }
 
-.rf-grid-row .rf-card {
-  height: unset;
+.rf-grid-row {
+  &:not(.rf-card-deck) {
+    .rf-card {
+      height: unset;
+    }
+  }
+  &.rf-card-deck {
+    .rf-card {
+      height: 100%;
+    }
+  }
 }
 
 .form-inline {

@@ -176,13 +176,14 @@ fr:
         nav_files: "Mes documents"
         nav_offer: "L'offre"
     emails:
-      index:
-        time_ago: "il y a %{time_ago_in_words}"
       create:
         success: "Courriel envoyé !"
         unsuccess: "Impossible d'envoyer le courriel, veuillez vérifier tous les champs"
+      email:
+        time_ago: "il y a %{time_ago_in_words}"
       form:
         title: "Envoyer un courriel"
+      index:
     users:
       change_email:
         title: "Changement de courriel"

@@ -20,19 +20,17 @@ class Account::EmailsController < Account::BaseController
 
     respond_to do |format|
       if @email.save
-        format.html { redirect_to @email, notice: @notification }
-        format.js do
-          @email = Email.new
-          @email.job_application = @job_application
-          render :create
+        format.turbo_stream do
+          instruction = turbo_stream.prepend('emails', partial: 'email', locals: { email: @email })
+          render turbo_stream: instruction
         end
-        format.json do
-          location = [:account, @job_application, @email]
-          render :show, status: :created, location: location
-        end
+        format.html { redirect_to [:account, @job_application], notice: @notification }
       else
+        format.turbo_stream do
+          instruction = turbo_stream.replace(@email, partial: 'form', locals: { email: @email})
+          render turbo_stream: instruction
+        end
         format.html { render :new }
-        format.json { render json: @email.errors, status: :unprocessable_entity }
       end
     end
   end

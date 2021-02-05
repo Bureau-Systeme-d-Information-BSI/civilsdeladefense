@@ -1,5 +1,5 @@
 !!!
-%html{lang: I18n.locale}
+%html{lang: I18n.locale, "data-rf-reset" => true}
   %head
     %title= [@page_title, current_organization.name].delete_if(&:blank?).join(' - ')
     %meta{charset: "utf-8"}
@@ -7,6 +7,7 @@
     = stylesheet_pack_tag 'style'
     = csrf_meta_tags
     = csp_meta_tag
+    = javascript_pack_tag 'bundle'
   %body
     = render partial: '/shared/header'
     .rf-container.rf-py-5w
@@ -22,4 +23,3 @@
           = render partial: '/account/navbar'
         .rf-col-12.rf-col-md-9
           = yield
-    = javascript_pack_tag 'account-bundle', defer: true

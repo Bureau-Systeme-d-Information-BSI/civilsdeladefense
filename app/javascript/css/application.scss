@@ -27,15 +27,6 @@ input {
   }
 }
 
-:root:not([data-theme="dark"]) {
-  .rf-bg--alt-3 {
-    background-color: #004494;
-    h2 {
-      color: var(--g100);
-    }
-  }
-}
-
 .block--overlap {
   margin-top: -80px;
 }
@@ -43,19 +34,6 @@ input {
 .block--underlap {
   padding-top: 80px;
   margin-top: -80px;
-}
-
-:root:not([data-theme="dark"]) {
-  .rf-bg--alt-2 {
-    background-color: #0682ff;
-    --g800: white;
-    --bf500: white;
-    --w-bf500: #0682ff;
-    .rf-btn {
-      --color-hover: rgba(0, 0, 0, 0.05);
-      --color-active: rgba(91, 91, 255, 0.5);
-    }
-  }
 }
 
 .rf-b--g100 {
@@ -200,5 +178,54 @@ h2 {
   }
   .rf-input-group {
     margin-bottom: 0;
+  }
+}
+
+.rf-bg--alt-2 {
+  background-color: var(--bg-alt-2);
+}
+
+.rf-bg--alt-3 {
+  background-color: var(--bg-alt-3);
+  h2 {
+    color: var(--g100);
+  }
+}
+
+:root:not([data-theme="dark"]) {
+  .rf-bg--alt-2 {
+    --bg-alt-2: #0682ff;
+    --g800: white;
+    --bf500: white;
+    --w-bf500: #0682ff;
+    .rf-btn {
+      --color-hover: rgba(0, 0, 0, 0.05);
+      --color-active: rgba(91, 91, 255, 0.5);
+    }
+  }
+  .rf-bg--hero-image {
+    --bg-image: rgba(0, 68, 148, 0.5);
+  }
+  .rf-bg--alt-3 {
+    --bg-alt-3: #004494;
+  }
+}
+
+:root {
+  .rf-bg--alt-2 {
+    --bg-alt-2: rgb(0, 68, 148);
+    --g800: white;
+    --bf500: white;
+    --w-bf500: #0682ff;
+    .rf-btn {
+      --color-hover: rgba(0, 0, 0, 0.05);
+      --color-active: rgba(91, 91, 255, 0.5);
+    }
+  }
+  .rf-bg--hero-image {
+    --bg-image: rgba(33, 33, 33, 0.5);
+  }
+  .rf-bg--alt-3 {
+    --bg-alt-3: rgb(33, 33, 33);
   }
 }

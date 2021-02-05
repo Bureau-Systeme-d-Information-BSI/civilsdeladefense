@@ -14,10 +14,6 @@ class Account::EmailsController < Account::BaseController
   # POST /account/emails.json
   def create
     @email = @job_application.emails.build(email_params)
-    @email.sender = current_user
-    @email.job_application = @job_application
-    @notification = t('.success')
-    locals =
 
     respond_to do |format|
       if @email.save
@@ -31,13 +27,12 @@ class Account::EmailsController < Account::BaseController
           end
           render turbo_stream: s
         end
-        format.html { redirect_to [:account, @job_application], notice: @notification }
+        format.html { redirect_to [:account, @job_application], notice: t('.success') }
       else
         format.turbo_stream do
-          s = turbo_stream.replace(@email) do
-            view_context.render partial: 'form', locals: { email: @email }
-          end
-          render turbo_stream: s
+          render turbo_stream: turbo_stream.replace(@email,
+                                                    partial: 'form',
+                                                    locals: { email: @email })
         end
         format.html { render template: '/account/job_applications/show' }
       end
@@ -48,7 +43,10 @@ class Account::EmailsController < Account::BaseController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def email_params
-    params.require(:email).permit(:subject, :body)
+    params.require(:email).permit(:subject, :body).tap do |whitelisted|
+      whitelisted[:sender] = current_user
+      whitelisted[:job_application] = @job_application
+    end
   end
 
   def set_job_application

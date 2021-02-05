@@ -1,5 +1,5 @@
 .d-flex.flex-column
-  = render partial: '/account/emails/form'
+  = render partial: '/account/emails/form', locals: { email: @email }
   - @emails = @job_application.emails.order(created_at: :desc).includes(:sender)
   = turbo_frame_tag 'emails' do
-    = render @emails
+    = render partial: '/account/emails/email', collection: @emails

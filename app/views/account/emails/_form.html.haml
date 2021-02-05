@@ -1,4 +1,4 @@
-= simple_form_for([:account, @job_application, @email], data: { controller: 'reset-form', action: 'turbo:submit-end->reset-form#reset' }, html: { class: 'rf-box rf-mb-5w rf-pb-5w' }) do |f|
+= simple_form_for([:account, @job_application, email], data: { controller: 'reset-form', action: 'turbo:submit-end->reset-form#reset' }, html: { class: 'rf-box rf-mb-5w rf-pb-5w' }) do |f|
   %strong.d-block.rf-mb-2w= t('.title')
   = f.error_notification
   = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?

@@ -17,20 +17,29 @@ class Account::EmailsController < Account::BaseController
     @email.sender = current_user
     @email.job_application = @job_application
     @notification = t('.success')
+    locals =
 
     respond_to do |format|
       if @email.save
         format.turbo_stream do
-          instruction = turbo_stream.prepend('emails', partial: 'email', locals: { email: @email })
-          render turbo_stream: instruction
+          s = turbo_stream.prepend('emails') do
+            view_context.render partial: 'email', locals: { email: @email }
+          end
+          new_email = @job_application.emails.new
+          s += turbo_stream.replace(new_email) do
+            view_context.render partial: 'form', locals: { email: new_email }
+          end
+          render turbo_stream: s
         end
         format.html { redirect_to [:account, @job_application], notice: @notification }
       else
         format.turbo_stream do
-          instruction = turbo_stream.replace(@email, partial: 'form', locals: { email: @email})
-          render turbo_stream: instruction
+          s = turbo_stream.replace(@email) do
+            view_context.render partial: 'form', locals: { email: @email }
+          end
+          render turbo_stream: s
         end
-        format.html { render :new }
+        format.html { render template: '/account/job_applications/show' }
       end
     end
   end

@@ -17,6 +17,10 @@ input {
   text-align: center;
 }
 
+[data-rf-reset] h1 {
+  font-weight: 300;
+}
+
 .rf-bg--alt {
   h1 {
     color: var(--g100);

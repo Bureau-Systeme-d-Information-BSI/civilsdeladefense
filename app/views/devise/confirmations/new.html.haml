@@ -1,8 +1,9 @@
-%h1= @page_title = t(".title")
+.rf-text--lead.rf-mb-3w
+  = @page_title = t(".title")
 = simple_form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f|
   = f.error_notification
   = f.full_error :confirmation_token
   = f.input :email, required: true, autofocus: true
-  .rf-input-group.rf-grid-row.rf-grid-row--center
+  .rf-input-group.rf-grid-row
     = f.button :submit, t(".resend"), class: 'rf-btn'
   = render "devise/shared/links"

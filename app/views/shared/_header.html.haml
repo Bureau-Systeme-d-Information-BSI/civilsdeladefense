@@ -27,7 +27,7 @@
                 = button_to t('.logout'), destroy_user_session_path, method: :delete
               - else
                 = link_to t(".account_root"), [:account, :job_applications], class: %w[rf-link rf-fi-account-line]
-  - unless user_signed_in?
+  - unless controller.class.module_parent == Account
     .rf-container
       %nav.rf-nav{"aria-label" => "Menu principal", role: "navigation"}
         %ul.rf-nav__list

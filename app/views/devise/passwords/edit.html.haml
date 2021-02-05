@@ -1,14 +1,11 @@
+.rf-text--lead.rf-mb-3w
+  = @page_title = t('.change_your_password')
 = simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
-  %fieldset.my-3
-    %legend
-      = @page_title = t('.change_your_password')
   = f.error_notification
   = f.input :reset_password_token, as: :hidden
   = f.full_error :reset_password_token
-  .form-inputs
-    = f.input :password, label: t(".new_password"), required: true, autofocus: true
-    = f.input :password_confirmation, label: t(".confirm_new_password"), required: true
-  .form-actions
+  = f.input :password, label: t(".new_password"), required: true, autofocus: true
+  = f.input :password_confirmation, label: t(".confirm_new_password"), required: true
+  .rf-input-group
     = f.button :submit, t(".change_my_password"), class: 'btn btn-primary btn-raised'
-  .form-links
-    = render "devise/shared/links"
+  = render "devise/shared/links"

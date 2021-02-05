@@ -1,16 +1,15 @@
 - @page_title = t(".sign_in.#{ resource.class.to_s.downcase }")
-- if resource.is_a?(User)
-  %h1
+.rf-text--lead.rf-mb-3w
+  - if resource.is_a?(User)
     Vous avez déjà un espace candidat ?
     %br
     Identifiez-vous !
-- elsif resource.is_a?(Administrator)
-  %h1
+  - elsif resource.is_a?(Administrator)
     Espace recruteur
 = simple_form_for(resource, as: resource_name, url: session_path(resource_name), wrapper: :input_group) do |f|
-  = f.input :email, required: false, autofocus: true, label: false, placeholder: true
-  = f.input :password, required: false, label: false, placeholder: true, hint: false
+  = f.input :email, required: false, autofocus: true
+  = f.input :password, required: false, hint: false
   = f.input :remember_me, as: :boolean if devise_mapping.rememberable?
-  .rf-input-group.rf-grid-row.rf-grid-row--center
+  .rf-input-group
     = f.button :submit, t(".sign_in.#{ resource.class.to_s.downcase }"), class: 'rf-btn'
   = render "devise/shared/links"

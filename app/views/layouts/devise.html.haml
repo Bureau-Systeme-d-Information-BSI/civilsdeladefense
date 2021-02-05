@@ -1,27 +1,6 @@
-!!!
-%html{lang: I18n.locale}
-  %head
-    %title= [@page_title, current_organization.name].delete_if(&:blank?).join(' - ')
-    %meta{charset: "utf-8"}
-    %meta{name: "viewport", content: "width=device-width, initial-scale=1, shrink-to-fit=no"}
-    = stylesheet_pack_tag 'style'
-    = csrf_meta_tags
-    = csp_meta_tag
-  %body.rf-mt-0.pb-0
-    - if resource.is_a?(User)
-      = render partial: '/shared/header'
-    .rf-container.rf-pb-6w.rf-pt-4w
-      .rf-grid-row.rf-grid-row--center
-        .rf-col-xs-12{class: controller.controller_name == 'registrations' ? 'rf-col-md-6' : 'rf-col-md-4'}
-          - if flash[:notice]
-            .alert.alert-info= flash[:notice]
-          - if flash[:alert]
-            .alert.alert-danger= flash[:alert]
-          - elsif flash[:error]
-            .alert.alert-danger= flash[:error]
-          - elsif flash[:success]
-            .alert.alert-success= flash[:success]
-          = yield
-    - if resource.is_a?(User)
-      = render partial: '/shared/footer'
-    = javascript_pack_tag 'bundle', defer: true
+- content_for :content do
+  .rf-container.rf-pb-6w.rf-pt-5w
+    .rf-grid-row.rf-grid-row--gutters.rf-grid-row--center
+      .rf-col-xs-12.rf-col-md-7.rf-col-xl-5
+        = yield
+= render template: "layouts/application"

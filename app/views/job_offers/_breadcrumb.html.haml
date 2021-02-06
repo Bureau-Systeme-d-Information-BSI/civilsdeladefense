@@ -10,6 +10,12 @@
           = @job_offer.title
       %li.rf-breadcrumb__item.rf-breadcrumb__item--current{"aria-current" => "page"}
         Postuler
+    - elsif controller.action_name == 'successful'
+      %li.rf-breadcrumb__item
+        = link_to @job_offer do
+          = @job_offer.title
+      %li.rf-breadcrumb__item.rf-breadcrumb__item--current{"aria-current" => "page"}
+        Candidature envoyée
     - else
       %li.rf-breadcrumb__item.rf-breadcrumb__item--current{"aria-current" => "page"}
         = @job_offer.title

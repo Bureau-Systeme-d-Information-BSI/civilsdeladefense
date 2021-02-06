@@ -123,9 +123,8 @@ fr:
     job_offer:
       show: "Voir le détail de l'offre"
       published_date: 'Publiée il y a %{time_ago_in_words}'
-    show:
-      apply: "Je postule"
     job_offer_content:
+      apply: "Je postule"
       description: "Descriptif de l’offre"
       required_profile: "Profil recherché"
       recruitment_process: "Process de recrutement"

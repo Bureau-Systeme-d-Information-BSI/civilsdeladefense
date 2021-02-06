@@ -1,16 +1,11 @@
-- display_apply_button = @job_offer.published?
-- cache [@job_offer, display_apply_button] do
+- cache @job_offer do
   - @page_title = @job_offer.title + ' ' + @job_offer.location
   .rf-container.rf-pb-6w.rf-pt-5w
     .rf-grid-row.rf-grid-row--gutters
       = render partial: 'breadcrumb'
     .rf-grid-row.rf-grid-row--gutters
       .rf-col-xs-12.rf-col-md-5
-        .rf-card.rf-card--no-arrow.rf-card--no-full-height.position-sticky
-          .rf-card__body
-            = render partial: 'job_offer_head', locals: {job_offer: @job_offer, inside_card: true}
-            - if display_apply_button && !(controller.action_name == 'apply')
-              .rf-grid-row.rf-grid-row--center.rf-mt-4w
-                = link_to t('.apply'), [:apply, @job_offer], class: 'rf-btn rf-btn--lg', rel: 'noindex nofollow'
+        = render partial: 'job_offer_head', locals: {job_offer: @job_offer, inside_card: true}
       .rf-col-xs-12.rf-col-md-7
+        %h1.rf-mt-0= @job_offer.title
         = render partial: 'job_offer_content', locals: {job_offer: @job_offer}

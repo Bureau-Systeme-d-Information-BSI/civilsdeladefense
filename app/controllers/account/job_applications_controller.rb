@@ -12,7 +12,7 @@ class Account::JobApplicationsController < Account::BaseController
   end
 
   def job_offer
-    render template: '/account/job_applications/show'
+    render layout: 'account/job_application_display'
   end
 
   # GET /account/job_applications/1
@@ -21,7 +21,7 @@ class Account::JobApplicationsController < Account::BaseController
     @emails = @job_application.emails.order(created_at: :desc)
     @email = @job_application.emails.new
 
-    render layout: request.xhr? ? false : true
+    render layout: 'account/job_application_display'
   end
 
   private

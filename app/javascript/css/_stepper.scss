@@ -29,9 +29,6 @@
       .rf-stepper-circle {
         background-color: var(--success);
       }
-      .rf-stepper-circle * {
-        display: none;
-      }
     }
     &.step-done {
       .rf-stepper-circle:before {

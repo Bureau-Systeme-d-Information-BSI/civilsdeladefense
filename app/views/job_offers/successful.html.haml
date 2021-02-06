@@ -4,10 +4,8 @@
     = render partial: 'breadcrumb'
   .rf-grid-row.rf-grid-row--gutters
     .rf-col-xs-12.rf-col-md-5
-      .rf-card.rf-card--no-arrow.rf-card--no-full-height.position-sticky
-        .rf-card__body
-          = render partial: 'job_offer_head', locals: {job_offer: @job_offer, inside_card: true}
+      = render partial: 'job_offer_head', locals: {job_offer: @job_offer, inside_card: true}
     .rf-col-xs-12.rf-col-md-7
-      %h2
+      %h2.rf-mt-0
         = t('.title')
       = simple_format(t('.subtitle_html'))

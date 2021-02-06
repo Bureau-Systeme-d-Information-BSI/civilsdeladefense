@@ -2,6 +2,9 @@
   // @extend .rf-py-2x, .rf-px-3w; why doesn't this work?
   padding: 1rem 1.5rem;
   color: var(--g100);
+  h2 {
+    color: inherit;
+  }
   &.alert-danger {
     background-color: var(--error);
   }

@@ -2,7 +2,8 @@
   - @page_title = @job_offer.title + ' ' + @job_offer.location
   .rf-container.rf-pb-6w.rf-pt-5w
     .rf-grid-row.rf-grid-row--gutters
-      = render partial: 'breadcrumb'
+      .rf-col-12.rf-py-0
+        = render partial: 'breadcrumb'
     .rf-grid-row.rf-grid-row--gutters
       .rf-col-xs-12.rf-col-md-5
         = render partial: 'job_offer_head', locals: {job_offer: @job_offer, inside_card: true}

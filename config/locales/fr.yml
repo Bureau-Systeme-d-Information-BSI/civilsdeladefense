@@ -137,6 +137,12 @@ fr:
       title: "Merci d'avoir soumis votre candidature !"
       subtitle_html: "Votre demande est prise en compte.\n\nVeuillez confirmer votre accès à l'aide du lien sur votre boîte courriel."
       link: "Retour à l'accueil"
+  layouts:
+    account:
+      job_application_display:
+        nav_emails: "Mes échanges"
+        nav_files: "Mes documents"
+        nav_offer: "L'offre"
   notifications_mailer:
     daily_summary:
       subject: "[%{site_name}] Rapport journalier"
@@ -171,9 +177,6 @@ fr:
       job_application:
         created_at: "Candidaté il y a %{time_ago_in_words}"
       show:
-        nav_emails: "Mes échanges"
-        nav_files: "Mes documents"
-        nav_offer: "L'offre"
     emails:
       create:
         success: "Courriel envoyé !"

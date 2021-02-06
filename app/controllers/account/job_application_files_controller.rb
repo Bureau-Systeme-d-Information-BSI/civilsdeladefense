@@ -6,10 +6,11 @@ class Account::JobApplicationFilesController < Account::BaseController
   before_action :set_job_application
   before_action :set_job_application_file, only: %i[show]
 
+  layout 'account/job_application_display'
+
   # GET /account/job_application_files
   # GET /account/job_application_files.json
   def index
-    render template: '/account/job_applications/show'
   end
 
   # POST /account/job_application_files

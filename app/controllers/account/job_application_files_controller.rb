@@ -48,13 +48,13 @@ class Account::JobApplicationFilesController < Account::BaseController
     respond_to do |format|
       if @job_application_file.update(job_application_file_params)
         @job_application.compute_notifications_counter!
-        format.html { redirect_to @job_application_file, notice: @notification }
+        url = [:account, @job_application, :job_application_files]
+        format.html { redirect_to url, notice: @notification }
         format.js do
           render :file_operation
         end
         format.json do
-          location = [:account, @job_application, @job_application_file]
-          render :show, status: :created, location: location
+          render :show, status: :created, location: url
         end
       else
         format.html { render :new }

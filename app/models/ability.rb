@@ -71,12 +71,13 @@ class Ability
   end
 
   def brh_job_application_manage_query(administrator)
-    role_brh_enum = JobOfferActor.roles[:brh]
+    role_brh = JobOfferActor.roles[:brh]
+    role_cmg = JobOfferActor.roles[:cmg]
     {
       job_offer: {
         job_offer_actors: {
           administrator_id: administrator.id,
-          role: role_brh_enum
+          role: [role_brh, role_cmg]
         }
       }
     }

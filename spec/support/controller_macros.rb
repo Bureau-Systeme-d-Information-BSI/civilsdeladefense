@@ -29,6 +29,7 @@ module ControllerMacros
       sign_in admin
     end
   end
+  alias login_cmg login_grand_employer
 
   def login_user
     before(:each) do

@@ -3,7 +3,7 @@
   "private": true,
   "dependencies": {
     "@rails/ujs": "^6.0.3-2",
-    "@rails/webpacker": "^4.0.7",
+    "@rails/webpacker": "^5.2.1",
     "bootstrap": "^4.3.1",
     "bootstrap-material-design": "^4.1.2",
     "bootstrap.native": "^3.0.13",
@@ -22,9 +22,10 @@
     "svgo-loader": "^2.1.0",
     "trix": "^1.2.3",
     "turbolinks": "^5.2.0",
-    "webpack": "^4.41.2"
+    "webpack": "^4.46.0"
   },
   "devDependencies": {
-    "webpack-dev-server": "^3.8.2"
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.2"
   }
 }

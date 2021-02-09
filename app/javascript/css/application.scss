@@ -57,7 +57,7 @@ input {
   margin-right: auto;
 }
 
-svg {
+.rf-icon {
   height: 1rem;
   width: auto;
   display: inline-block;
@@ -66,6 +66,8 @@ svg {
   overflow: visible;
   fill: currentColor;
   vertical-align: -0.1em;
+  top: 0.175em;
+  position: relative;
 }
 
 .position-sticky {

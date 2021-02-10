@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'will_paginate/view_helpers/action_view'
+
 # Custom will_paginate renderer to conform with Bootstrap
 class BootstrapRenderer < WillPaginate::ActionView::LinkRenderer
   def to_html

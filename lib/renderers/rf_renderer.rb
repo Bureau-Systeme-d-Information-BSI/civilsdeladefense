@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'will_paginate/view_helpers/action_view'
+
 # Custom will_paginate renderer to conform with the French state Design System
 class RfRenderer < WillPaginate::ActionView::LinkRenderer
   def to_html

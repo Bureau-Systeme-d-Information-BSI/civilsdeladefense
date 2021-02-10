@@ -152,7 +152,7 @@ class Admin::JobOffersController < Admin::BaseController
   end
 
   def find_attach_or_build_administrator
-    existing_administrator = Administrator.find_by(email: params[:email])
+    existing_administrator = Administrator.find_by(email: params[:email].downcase)
     root_object = @job_offer.job_offer_actors.build(role: params[:role])
     admin = root_object.administrator = existing_administrator if existing_administrator
     admin ||= root_object.build_administrator(email: params[:email])

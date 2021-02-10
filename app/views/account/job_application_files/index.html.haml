@@ -6,6 +6,6 @@
   - job_application_file ||= @job_application.job_application_files.build job_application_file_type: job_application_file_type
   - if job_application_file_type.kind == "template"
     - if !job_application_file.new_record?
-      = render partial: '/account/job_application_files/file_name_template', locals: {job_application_file: job_application_file, job_application: @job_application}
+      = render partial: 'file_name_template', locals: {job_application_file: job_application_file, job_application: @job_application}
   - else
-    = render partial: '/account/job_application_files/file_name_upload', locals: {job_application_file: job_application_file, job_application: @job_application}
+    = render partial: 'file_name_upload', locals: {job_application_file: job_application_file, job_application: @job_application}

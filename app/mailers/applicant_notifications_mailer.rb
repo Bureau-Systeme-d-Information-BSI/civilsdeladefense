@@ -104,13 +104,20 @@ class ApplicantNotificationsMailer < ApplicationMailer
   def fetch_original_email_id(message)
     current_organization = Organization.first
     if current_organization.inbound_email_config_catch_all?
-      recipient = message[:to].to_s
-      recipient.split(/\+(.*)@/)[1]
+      fetch_id_in_to(message)
     elsif current_organization.inbound_email_config_hidden_headers?
-      references = message.header['References']
-      message_id_parent = references&.value
-      message_id_parent&.scan(/<(.*)@/)&.flatten&.first
+      fetch_id_in_headers(message)
     end
+  end
+
+  def fetch_id_in_to(message)
+    message.to.map { |to| to.split(/\+(.*)@/)[1] }.compact.first
+  end
+
+  def fetch_id_in_headers(message)
+    references = message.header['References']
+    message_id_parent = references&.value
+    message_id_parent&.scan(/<(.*)@/)&.flatten&.first
   end
 
   def create_email(user, job_application, body, subject)

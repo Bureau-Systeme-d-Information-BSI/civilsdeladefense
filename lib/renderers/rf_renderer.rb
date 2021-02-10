@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Custom will_paginate renderer to conform with the French state Design System
 class RfRenderer < WillPaginate::ActionView::LinkRenderer
   def to_html
     html = pagination.map do |item|
@@ -9,7 +10,8 @@ class RfRenderer < WillPaginate::ActionView::LinkRenderer
     @options[:class] ||= ''
     @options[:class] +=  ' rf-pagination__list'
 
-    tag('nav', tag('ul', html, class: @options[:class]), class: 'rf-pagination', 'aria-label': "Pagination navigation")
+    ul = tag('ul', html, class: @options[:class])
+    tag('nav', ul, class: 'rf-pagination', 'aria-label': 'Pagination navigation')
   end
 
   protected

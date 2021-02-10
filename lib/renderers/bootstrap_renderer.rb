@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Custom will_paginate renderer to conform with Bootstrap
 class BootstrapRenderer < WillPaginate::ActionView::LinkRenderer
   def to_html
     html = pagination.map do |item|

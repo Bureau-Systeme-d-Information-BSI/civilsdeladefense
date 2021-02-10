@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'faker'
 require 'active_support/core_ext/integer/time'
 
 Rails.application.configure do
@@ -72,6 +73,9 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+
+  config.i18n.available_locales += %w[en]
+  Faker::Config.locale = :fr
 end
 
 Rails.application.default_url_options = Rails.application.config.action_mailer.default_url_options

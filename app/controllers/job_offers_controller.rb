@@ -9,7 +9,7 @@ class JobOffersController < ApplicationController
   # GET /job_offers.json
   def index
     @page = current_organization.pages.where(parent_id: nil).first
-    @categories = Category.order('lft ASC').where('published_job_offers_count > ?', 0)
+    @categories = Category.order(lft: :asc).where('published_job_offers_count > ?', 0)
     @max_depth_limit = 1
     @categories_for_select = @categories.select { |x| x.depth <= @max_depth_limit }
     @contract_types = ContractType.all
@@ -79,7 +79,7 @@ class JobOffersController < ApplicationController
   private
 
   def set_job_offers
-    @job_offers = JobOffer.publicly_visible.includes(:contract_type)
+    @job_offers = JobOffer.paginate(page: params[:page]).publicly_visible.includes(:contract_type)
     @job_offers = @job_offers.includes(:study_level) if request.format.json?
     if params[:category_id].present?
       @category = Category.find(params[:category_id])
@@ -92,7 +92,6 @@ class JobOffersController < ApplicationController
       end
     end
     @job_offers = @job_offers.search_full_text(params[:q]) if params[:q].present?
-    @job_offers = @job_offers.to_a
   end
 
   # Use callbacks to share common setup or constraints between actions.

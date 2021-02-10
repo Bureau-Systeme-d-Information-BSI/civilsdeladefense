@@ -194,13 +194,13 @@ class JobApplication < ApplicationRecord
 
   def send_confirmation_email
     job_offer_identifier = job_offer.identifier
-    site_name = job_offer.organization.name
+    service_name = job_offer.organization.service_name
     subject = I18n.t('job_offers.successful.subject', job_offer_identifier: job_offer_identifier,
-                                                      site_name: site_name)
+                                                      service_name: service_name)
     body = I18n.t('job_offers.successful.body', first_name: user.first_name,
                                                 job_offer_title: job_offer.title,
                                                 job_offer_identifier: job_offer_identifier,
-                                                site_name: site_name)
+                                                service_name: service_name)
     email = emails.create(subject: subject, body: body)
     ApplicantNotificationsMailer.new_email(email.id).deliver_now
   end

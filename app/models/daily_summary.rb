@@ -32,13 +32,13 @@ class DailySummary
   end
 
   def send_mail(organization)
-    site_name = organization.name
+    service_name = organization.service_name
     administrators = Administrator.find @concerned_administrators.map(&:uuid)
 
     @concerned_administrators.each do |concerned_administrator|
       administrator = administrators.detect { |x| x.id == concerned_administrator.uuid }
       data = concerned_administrator.summary_infos
-      NotificationsMailer.daily_summary(administrator, data, site_name).deliver
+      NotificationsMailer.daily_summary(administrator, data, service_name).deliver
     end
   end
 

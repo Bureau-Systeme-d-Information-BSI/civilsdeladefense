@@ -403,8 +403,8 @@ ActiveRecord::Schema.define(version: 2021_01_22_080709) do
   end
 
   create_table "organizations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "name"
-    t.string "business_owner_name"
+    t.string "service_name"
+    t.string "brand_name"
     t.string "administrator_email_suffix"
     t.string "subdomain"
     t.string "domain"
@@ -434,9 +434,14 @@ ActiveRecord::Schema.define(version: 2021_01_22_080709) do
     t.integer "inbound_email_config", default: 0
     t.string "matomo_site_id"
     t.integer "hours_delay_before_publishing"
-    t.string "description"
-    t.string "description_short"
-    t.string "business_owner_prefix_article"
+    t.string "service_description"
+    t.string "service_description_short"
+    t.string "brand_prefix_article"
+    t.string "operator_name"
+    t.string "operator_logo_file_name"
+    t.string "operator_logo_content_type"
+    t.bigint "operator_logo_file_size"
+    t.datetime "operator_logo_updated_at"
   end
 
   create_table "pages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

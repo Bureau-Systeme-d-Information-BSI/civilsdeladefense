@@ -23,13 +23,13 @@ RSpec.describe NotificationsMailer, type: :mailer do
           kind: 'PublishedJobOffer'
         }
       ]
-      site_name = organization.name
-      NotificationsMailer.daily_summary(administrator, data, site_name)
+      service_name = organization.service_name
+      NotificationsMailer.daily_summary(administrator, data, service_name)
     end
 
     it 'renders the headers' do
       expect(mail.subject).to match('Rapport')
-      expect(mail.subject).to match(organization.name)
+      expect(mail.subject).to match(organization.service_name)
       expect(mail.to).to eq(['to@example.org'])
     end
 

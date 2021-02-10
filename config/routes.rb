@@ -98,6 +98,7 @@ Rails.application.routes.draw do
     namespace :settings, path: 'parametres' do
       resource :organization do
         member do
+          get :edit_security
           patch :update_general, :update_display, :update_security
         end
       end

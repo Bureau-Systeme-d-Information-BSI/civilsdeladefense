@@ -1,7 +1,7 @@
 !!!
 %html{lang: I18n.locale}
   %head
-    %title= [@page_title, current_organization.name].delete_if(&:blank?).join(' - ')
+    %title= [@page_title, current_organization.service_name].delete_if(&:blank?).join(' - ')
     %meta{charset: "utf-8"}
     %meta{name: "viewport", content: "width=device-width, initial-scale=1, shrink-to-fit=no"}
     %meta{name: 'turbolinks-cache-control', content: 'no-preview'}

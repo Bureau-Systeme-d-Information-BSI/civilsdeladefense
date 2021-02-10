@@ -5,15 +5,15 @@
     .rf-container
       .rf-footer__body
         .rf-footer__brand
-          = link_to root_path, title: strip_tags(current_organization.business_owner_name), class: 'rf-logo' do
+          = link_to root_path, title: strip_tags(current_organization.brand_name), class: 'rf-logo' do
             %span.rf-logo__title
-              = simple_format(current_organization.business_owner_name, nil, wrapper_tag: 'span')
-          - if current_organization.logo_vertical.present?
+              = simple_format(current_organization.brand_name, nil, wrapper_tag: 'span')
+          - if current_organization.operator_logo.present?
             .rf-footer__operator.rf-ml-3w
-              = image_tag(current_organization.logo_vertical.url, alt: current_organization.name, style: 'width:auto; height:3rem;')
+              = image_tag(current_organization.operator_logo.url, alt: current_organization.service_name, style: 'width:auto; height:3rem;')
         .rf-footer__content
-          - if (desc = current_organization.description).present?
-            %p.rf-footer__content-desc= current_organization.description
+          - if (desc = current_organization.service_description).present?
+            %p.rf-footer__content-desc= current_organization.service_description
           %ul.rf-footer__content-list
             - links.each do |page|
               %li
@@ -24,4 +24,4 @@
             %li.rf-footer__bottom-item
               = link_to page.title, page_path(page), class: 'rf-footer__bottom-link'
         .rf-footer__bottom-copy
-          © #{strip_tags(current_organization.business_owner_name)} #{Time.now.year}
+          © #{strip_tags(current_organization.brand_name)} #{Time.now.year}

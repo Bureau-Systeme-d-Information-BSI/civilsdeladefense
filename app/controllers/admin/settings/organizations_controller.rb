@@ -4,29 +4,17 @@ class Admin::Settings::OrganizationsController < Admin::Settings::BaseController
   before_action :set_organization
 
   def edit
-    @organization_form_general = @organization
-    @organization_form_display = @organization
-    @organization_form_security = @organization
   end
 
-  def update_general
+  def edit_security
+  end
+
+  def update
     if @organization.update(general_permitted_params)
       redirect_to({ action: :edit }, notice: t('.success'))
     else
       @organization_form_general = @organization
       @organization_form_display = @organization_cloned
-      @organization_form_security = @organization_cloned
-
-      render action: :edit
-    end
-  end
-
-  def update_display
-    if @organization.update(display_permitted_params)
-      redirect_to({ action: :edit }, notice: t('.success'))
-    else
-      @organization_form_general = @organization_cloned
-      @organization_form_display = @organization
       @organization_form_security = @organization_cloned
 
       render action: :edit
@@ -55,18 +43,12 @@ class Admin::Settings::OrganizationsController < Admin::Settings::BaseController
   protected
 
   def general_permitted_params
-    permitted_fields = %i[name
-                          business_owner_name business_owner_prefix_article
-                          description description_short
+    permitted_fields = %i[brand_name brand_prefix_article
+                          service_name service_description_short service_description
                           subdomain domain privacy_policy_url
+                          operator_name operator_logo
+                          image_background
                           matomo_site_id inbound_email_config hours_delay_before_publishing]
-    params.require(:organization).permit(permitted_fields)
-  end
-
-  def display_permitted_params
-    permitted_fields = %i[logo_vertical logo_horizontal
-                          logo_vertical_negative logo_horizontal_negative
-                          image_background]
     params.require(:organization).permit(permitted_fields)
   end
 

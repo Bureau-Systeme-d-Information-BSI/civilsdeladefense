@@ -7,11 +7,11 @@ Faker::Config.locale = :fr
 
 desc = 'Plateforme de recrutement de personnel civils contractuels pour le Ministère des Armées'
 desc_short = 'Plateforme de recrutement de personnel civils contractuels'
-organization = Organization.create! name: 'Civils de la Défense',
-                                    business_owner_name: 'Ministère\ndes Armées',
-                                    business_owner_prefix_article: 'le',
-                                    description: desc,
-                                    description_short: desc_short,
+organization = Organization.create! service_name: 'Civils de la Défense',
+                                    brand_name: 'Ministère\n\ndes Armées',
+                                    brand_prefix_article: 'le',
+                                    service_description: desc,
+                                    service_description_short: desc_short,
                                     subdomain: 'cvd',
                                     domain: 'civilsdeladefense.fabnum.fr'
 

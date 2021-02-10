@@ -2,17 +2,17 @@
   .rf-container
     .rf-header__body
       .rf-header__brand.d-flex
-        = link_to root_path, title: strip_tags(current_organization.business_owner_name), class: 'rf-logo' do
+        = link_to root_path, title: strip_tags(current_organization.brand_name), class: 'rf-logo' do
           %span.rf-logo__title
-            = simple_format(current_organization.business_owner_name, nil, wrapper_tag: 'span')
-      - if current_organization.logo_vertical.present?
+            = simple_format(current_organization.brand_name, nil, wrapper_tag: 'span')
+      - if current_organization.operator_logo.present?
         .rf-header__operator
-          = image_tag(current_organization.logo_vertical.url, alt: current_organization.name, style: 'width:auto; height:2.5rem;')
+          = image_tag(current_organization.operator_logo.url, alt: current_organization.operator_name, style: 'width:auto; height:2.5rem;')
       .rf-header__navbar
         .rf-service
-          =  link_to root_path, title: current_organization.name, class: 'rf-service__title' do
-            = current_organization.name
-          - if (desc = current_organization.description_short).present?
+          =  link_to root_path, title: current_organization.service_name, class: 'rf-service__title' do
+            = current_organization.service_name
+          - if (desc = current_organization.service_description_short).present?
             %p.rf-service__tagline
               = desc
       .rf-header__tools

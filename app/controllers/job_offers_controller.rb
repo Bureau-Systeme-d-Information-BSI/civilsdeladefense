@@ -4,6 +4,7 @@ class JobOffersController < ApplicationController
   before_action :set_job_offers, only: %i[index]
   before_action :set_job_offer, only: %i[show apply send_application successful]
   invisible_captcha only: [:send_application], honeypot: :subtitle
+  layout 'job_offer_display', only: %i[show apply successful send_application]
 
   # GET /job_offers
   # GET /job_offers.json

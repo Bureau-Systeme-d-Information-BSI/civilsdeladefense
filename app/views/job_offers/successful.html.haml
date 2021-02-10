@@ -1,13 +1,4 @@
 - @page_title = "Candidature reçue pour l'offre #{@job_offer.identifier} #{@job_offer.title} #{@job_offer.location}"
-.rf-container.rf-pb-6w.rf-pt-5w
-  .rf-grid-row.rf-grid-row--gutters
-    = render partial: 'breadcrumb'
-  .rf-grid-row.rf-grid-row--gutters
-    .rf-col-xs-12.rf-col-md-5
-      .rf-callout.rf-sidemenu--sticky.h-auto.rf-top-3w
-        .rf-callout__text
-          = render partial: 'job_offer_head', locals: {job_offer: @job_offer, inside_card: true}
-    .rf-col-xs-12.rf-col-md-7
-      %h2.rf-mt-0
-        = t('.title')
-      = simple_format(t('.subtitle_html'))
+%h1.rf-mt-0
+  = t('.title')
+= simple_format(t('.subtitle_html'))

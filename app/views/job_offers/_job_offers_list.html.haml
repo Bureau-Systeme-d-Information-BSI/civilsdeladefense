@@ -1,5 +1,0 @@
-- cache @job_offers do
-  #job-offers
-    = t('.job_offers_count', count: @job_offers.size)
-    - roots = @categories.select{|x| x.parent_id.nil?}
-    = render partial: 'category', collection: roots

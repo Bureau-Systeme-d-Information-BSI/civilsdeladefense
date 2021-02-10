@@ -61,5 +61,8 @@ module Civilsdeladefense
     config.to_prepare do
       Devise::Mailer.layout 'mailer'
     end
+
+    config.eager_load_paths << Rails.root.join('lib/services')
+    config.autoload_paths << Rails.root.join('lib/services')
   end
 end

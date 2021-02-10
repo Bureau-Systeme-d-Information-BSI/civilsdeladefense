@@ -4,7 +4,7 @@ class Account::JobApplicationFilesController < Account::BaseController
   include SendFileContent
 
   before_action :set_job_application
-  before_action :set_job_application_file, only: %i[show]
+  before_action :set_job_application_file, only: %i[show update]
 
   layout 'account/job_application_display'
 
@@ -33,48 +33,27 @@ class Account::JobApplicationFilesController < Account::BaseController
           render turbo_stream: str
         end
         format.html { redirect_to url, notice: t('.success') }
-        format.json do
-          render :show, status: :created, location: redirect_back_location
-        end
       else
         format.html { render :new }
-        format.json { render json: @job_application_file.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def update
-    @job_application_file = @job_application.job_application_files.find params[:id]
     file_type = @job_application_file.job_application_file_type
 
     respond_to do |format|
       if @job_application_file.update(job_application_file_params)
         @job_application.compute_notifications_counter!
         format.turbo_stream do
-          str = turbo_stream.replace(file_type,
-                                     partial: 'file_name_upload',
-                                     locals: {
-                                       job_application: @job_application,
-                                       job_application_file: @job_application_file
-                                     })
-          render turbo_stream: str
+          render turbo_stream: turbo_stream_update_response(file_type)
         end
         format.html { redirect_to redirect_back_location, notice: t('.success') }
-        format.json do
-          render :show, status: :created, location: redirect_back_location
-        end
       else
         format.turbo_stream do
-          str = turbo_stream.replace(file_type,
-                                     partial: 'file_name_upload',
-                                     locals: {
-                                       job_application: @job_application,
-                                       job_application_file: @job_application_file
-                                     })
-          render turbo_stream: str
+          render turbo_stream: turbo_stream_update_response(file_type)
         end
-        format.html { render :new }
-        format.json { render json: @job_application_file.errors, status: :unprocessable_entity }
+        format.html { render :edit }
       end
     end
   end
@@ -107,5 +86,14 @@ class Account::JobApplicationFilesController < Account::BaseController
 
   def redirect_back_location
     [:account, @job_application, :job_application_files]
+  end
+
+  def turbo_stream_update_response(file_type)
+    turbo_stream.replace(file_type,
+                         partial: 'file_name_upload',
+                         locals: {
+                           job_application: @job_application,
+                           job_application_file: @job_application_file
+                         })
   end
 end

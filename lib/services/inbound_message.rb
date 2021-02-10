@@ -9,7 +9,7 @@ class InboundMessage
     end
 
     Mail.find(count: 100) do |message, imap, uid|
-      to_be_trashed = ApplicantNotificationsMailer.receive(message)
+      to_be_trashed = ProcessInboundMessage.new(message).call
 
       next unless to_be_trashed
 

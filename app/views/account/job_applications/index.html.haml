@@ -1,13 +1,13 @@
 
 
-%h2= t('.subtitle_ongoing', count: @job_applications_ongoing.count).html_safe
+%h2.rf-h3= t('.subtitle_ongoing', count: @job_applications_ongoing.count).html_safe
 - if @job_applications_ongoing.any?
   = render partial: 'job_application', collection: @job_applications_ongoing
 - else
   %em.d-block.mt-5
     = t('.ongoing_none')
 
-%h2= t('.subtitle_finished', count: @job_applications_finished.count).html_safe
+%h2.rf-h3.rf-mt-3w= t('.subtitle_finished', count: @job_applications_finished.count).html_safe
 - if @job_applications_finished.any?
   = render partial: 'job_application', collection: @job_applications_finished
 - else

@@ -1,5 +1,5 @@
 .alert.alert-danger
-  %h2.rf-mt-0.rf-mb-0= t('.title')
+  %h2.rf-h3.rf-mt-0.rf-mb-0= t('.title')
 %p
   La suppression de votre compte est <strong>irréversible</strong> : toutes vos candidatures et données personnelles seront supprimées.
 = simple_form_for(@user_for_deletion, url: [:account, :user], method: :delete, html: { class: 'rf-box rf-mb-5w rf-pb-5w' }) do |f|

@@ -65,8 +65,7 @@ input {
   line-height: 1;
   overflow: visible;
   fill: currentColor;
-  vertical-align: -0.1em;
-  top: 0.175em;
+  top: 0.375em;
   position: relative;
 }
 
@@ -191,6 +190,7 @@ h2 {
 
 .rf-bg--alt-2 {
   background-color: var(--bg-alt-2);
+  color: var(--g700);
 }
 
 .rf-bg--alt-3 {
@@ -203,7 +203,7 @@ h2 {
 :root:not([data-theme="dark"]) {
   .rf-bg--alt-2 {
     --bg-alt-2: #0682ff;
-    --g800: white;
+    --g700: white;
     --bf500: white;
     --w-bf500: #0682ff;
     .rf-btn {
@@ -238,11 +238,20 @@ h2 {
   }
 }
 
+.rf-bg--hero-image {
+  h1 {
+    padding: 2rem 0;
+  }
+}
+
 @media (min-width: 768px) {
   .block--overlap {
-    margin-top: -80px;
+    margin-top: -80px !important;
   }
   .rf-bg--hero-image {
-    height: 50vh;
+    min-height: 200px;
+    h1 {
+      padding: 10rem 0;
+    }
   }
 }

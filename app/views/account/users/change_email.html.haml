@@ -1,4 +1,4 @@
-%h2= t('.title')
+%h2.rf-h3= t('.title')
 = simple_form_for(@user_for_email_change, url: [:update_email, :account, :user], method: :patch, html: { class: 'rf-box rf-mb-5w rf-pb-5w' }) do |f|
   = f.error_notification
   = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?

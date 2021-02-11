@@ -2,7 +2,7 @@
   "name": "civilsdeladefense",
   "private": true,
   "dependencies": {
-    "@gouvfr/all": "^0.4.0",
+    "@gouvfr/all": "^0.5.3",
     "@hotwired/turbo-rails": "^7.0.0-beta.5",
     "@rails/ujs": "^6.0.3-2",
     "@rails/webpacker": "^5.2.1",

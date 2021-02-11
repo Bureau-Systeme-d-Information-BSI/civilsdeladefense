@@ -8,9 +8,13 @@ FactoryBot.define do
     current_position { 'CEO' }
     phone { '06' }
     website_url { 'MyString' }
-    email { Faker::Internet.safe_email }
+    email { Faker::Internet.unique.safe_email }
     password { 'f4k3p455w0rD!' }
     terms_of_service { true }
     certify_majority { true }
+  end
+
+  factory :confirmed_user, parent: :user do
+    after(:create, &:confirm)
   end
 end

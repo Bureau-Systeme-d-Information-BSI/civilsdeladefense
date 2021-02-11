@@ -2,44 +2,55 @@ import Sortable from 'sortablejs'
 import Rails from '@rails/ujs'
 import BSN from 'bootstrap.native/dist/bootstrap-native.js'
 import formAutoSubmit from 'js/form-auto-submit'
+import dependentFields from 'js/dependent-fields'
+import displaySnackbars from 'js/display-snackbars'
+import emailTemplateSelectHandling from 'js/email-template-select-handling'
 
 export function boardRedraw() {
   var url = window.location.href
   var nodeBoard = document.querySelector('#board')
-  Rails.ajax({
-    type: 'GET',
-    url: url,
-    dataType: 'html',
-    success: (response) => {
-      nodeBoard.outerHTML = response.body.innerHTML
-      boardManagement()
-    },
-    error: (response) => {
-      console.log('error boardManagement')
-      console.log(response)
-    }
-  }) 
+  if (nodeBoard !== null) {
+    Rails.ajax({
+      type: 'GET',
+      url: url,
+      dataType: 'html',
+      success: (response) => {
+        nodeBoard.outerHTML = response.body.innerHTML
+        boardManagement()
+      },
+      error: (response) => {
+        console.log('error boardManagement')
+        console.log(response)
+      }
+    })
+  }
 }
 
 export function boardShowRejectionModal(url) {
-  Rails.ajax({
-    type: 'GET',
-    url: url,
-    dataType: 'html',
-    success: (response) => {
-      var nodeRemoteContentModal = document.querySelector('#remoteContentModal')
-      var nodeModalContent = nodeRemoteContentModal.querySelector('.modal-content')
-      var html = response.body.innerHTML
-      nodeModalContent.insertAdjacentHTML('afterbegin', html)
-      new BSN.Modal('#remoteContentModal').show()
-      BSN.initCallback()
-      formAutoSubmit()
-    },
-    error: (response) => {
-      console.log('error boardManagement')
-      console.log(response)
-    }
-  })   
+  var nodeBoard = document.querySelector('#board')
+  if (nodeBoard !== null) {
+    Rails.ajax({
+      type: 'GET',
+      url: url,
+      dataType: 'html',
+      success: (response) => {
+        var html = response.body.innerHTML
+        var nodeRemoteContentModal = document.querySelector('#remoteContentModal')
+        var nodeModalContent = nodeRemoteContentModal.querySelector('.modal-content')
+        nodeModalContent.insertAdjacentHTML('afterbegin', html)
+        new BSN.Modal('#remoteContentModal').show()
+        BSN.initCallback()
+        formAutoSubmit()
+        dependentFields()
+        displaySnackbars()
+        emailTemplateSelectHandling()
+      },
+      error: (response) => {
+        console.log('error boardManagement')
+        console.log(response)
+      }
+    })
+  }
 }
 
 export function boardManagement() {

@@ -32,6 +32,9 @@ module UsersHelper
         if e.to_s == 'undefined method `body\' for nil:NilClass'
           asset_pack_path('images/default_user_avatar.svg')
         end
+      rescue URI::InvalidURIError
+        # nothing we can do
+        asset_pack_path('images/default_user_avatar.svg')
       end
     else
       asset_pack_path('images/default_user_avatar.svg')
@@ -53,10 +56,11 @@ module UsersHelper
     is_validated_value = job_application_file.is_validated
     file = job_application_file.content
     txt = []
-    if is_validated_value == 1
+    case is_validated_value
+    when 1
       link = link_for_file(job_application, job_application_file)
       txt << "Vous pouvez #{link_to 'consulter', link, target: '_blank', class: 'text-dark-gray'} ce fichier.".html_safe
-    elsif is_validated_value == 2
+    when 2
       link = link_for_file(job_application, job_application_file)
       link_text = link_to 'fichier', link, target: '_blank', class: 'text-dark-gray'
       txt << "Votre #{link_text} n'est pas valide, veuillez en téléverser un nouveau.".html_safe

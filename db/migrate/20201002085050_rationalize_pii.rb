@@ -16,10 +16,11 @@ class RationalizePii < ActiveRecord::Migration[6.0]
         phone: profile.phone,
         current_position: profile.current_position
       }
-      if obj.is_a?(User)
+      case obj
+      when User
         obj.update_columns(hsh)
         putc '.'
-      elsif obj.is_a?(JobApplication)
+      when JobApplication
         obj.user.update_columns(hsh)
         putc '.'
       end

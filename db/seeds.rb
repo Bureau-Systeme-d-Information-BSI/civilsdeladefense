@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 # Faker initialization
+I18n.config.available_locales += %w[en]
 require 'faker'
-I18n.config.available_locales = %w[fr en]
-I18n.reload!
 Faker::Config.locale = :fr
 
 organization = Organization.create! name: 'Civils de la Défense',
@@ -157,9 +156,9 @@ sub_sub_informatique = Category.create! name: 'Sous sous-informatique',
 ProfessionalCategory.create! name: 'Cadre'
 ProfessionalCategory.create! name: 'Non Cadre'
 
-ContractType.create! name: 'CDD'
+ContractType.create! name: 'CDD', duration: true
 ContractType.create! name: 'CDI'
-ContractType.create! name: 'Interim'
+ContractType.create! name: 'Interim', duration: true
 
 Sector.create! name: 'Technique'
 Sector.create! name: 'Lettre'
@@ -176,6 +175,10 @@ ExperienceLevel.create! name: '1 à 2 ans'
 ExperienceLevel.create! name: '3 à 4 ans'
 ExperienceLevel.create! name: '5 à 6 ans'
 ExperienceLevel.create! name: '> 7 ans'
+
+ContractDuration.create! name: '6 mois'
+ContractDuration.create! name: '2 ans'
+ContractDuration.create! name: '4 ans'
 
 resume = JobApplicationFileType.create! name: 'CV',
                                         kind: :applicant_provided,
@@ -251,7 +254,7 @@ job_offer = JobOffer.new do |j|
   j.organization = organization
   j.owner = bant_admin
   j.title = 'Ingénieur expert en systemes d’information, réseau et active directory - ' +
-            'Chef de section'
+            'Chef de section F/H'
   j.category = sub_sub_informatique
   j.professional_category = ProfessionalCategory.first
   j.location = 'Rennes, FR'
@@ -273,12 +276,6 @@ job_offer = JobOffer.new do |j|
   analyses contextuelles et anticiper les modalités de confinement, de remédiation et de
   reconstruction des technologies
   les plus impactantes pour le ministère de la Défense.
-
-  Dans un contexte contraint, la dématérialisation, la capitalisation et la compréhension
-  des données d’architecture sont
-  les enjeux du poste. En conséquence, ce poste requiert des connaissances techniques
-  réseaux et en architecture de
-  systèmes, des capacités d’analyse et d’innovation.
   HEREDOC
   j.required_profile = <<~HEREDOC
   - Connaissance des architectures réseau et techniques des
@@ -301,7 +298,7 @@ job_offer = JobOffer.new do |j|
   Vous serez à l’issue de cet entretien informé(e) par l’employeur des suites données.
   HEREDOC
   j.contract_type = ContractType.where(name: 'CDD').first
-  j.duration_contract = '4 mois'
+  j.contract_duration = ContractDuration.first
   j.contract_start_on = Date.new(2019, 1, 1)
   j.is_remote_possible = false
   j.study_level = StudyLevel.last
@@ -315,10 +312,10 @@ end
 job_offer.save!
 
 job_offer2 = job_offer.dup
-job_offer2.title = 'Conducteur d’Opérations (H/F)'
+job_offer2.title = 'Conducteur d’Opérations F/H'
 job_offer2.owner = employer_admin_1
 job_offer2.contract_type = ContractType.where(name: 'CDI').first
-job_offer2.duration_contract = nil
+job_offer2.contract_duration = nil
 job_offer2.category = sub_sub_infrastructure
 job_offer2.identifier = nil
 job_offer2.sequential_id = nil
@@ -328,7 +325,7 @@ job_offer2.save!
 
 job_offer3 = job_offer.dup
 job_offer3.owner = employer_admin_2
-job_offer3.title = 'Responsable Achat d’Infrastructures (H/F)'
+job_offer3.title = 'Responsable Achat d’Infrastructures F/H'
 job_offer3.category = sub_sub_infrastructure
 job_offer3.location = 'Brest, FR'
 job_offer3.identifier = nil
@@ -339,7 +336,7 @@ job_offer3.save!
 
 job_offer4 = job_offer.dup
 job_offer4.owner = employer_admin_2
-job_offer4.title = 'Responsable Achat d’Infrastructures (H/F)'
+job_offer4.title = 'Responsable Achat d’Infrastructures F/H'
 job_offer4.category = sub_sub_infrastructure
 job_offer4.location = 'Brest, FR'
 job_offer4.identifier = nil
@@ -350,7 +347,7 @@ job_offer4.save!
 
 job_offer5 = job_offer.dup
 job_offer5.owner = employer_admin_2
-job_offer5.title = 'Responsable Achat d’Infrastructures (H/F)'
+job_offer5.title = 'Responsable Achat d’Infrastructures F/H'
 job_offer5.category = sub_sub_infrastructure
 job_offer5.location = 'Brest, FR'
 job_offer5.identifier = nil
@@ -436,7 +433,7 @@ user_candidate_of_all.confirm
 
 boolean_choices = [true, false, nil]
 
-JobOffer.where.not(duration_contract: nil).where.not(id: [job_offer4.id, job_offer5.id]).each do |job_offer|
+JobOffer.where.not(contract_duration_id: nil).where.not(id: [job_offer4.id, job_offer5.id]).each do |job_offer|
   15.times do |_i|
     user = User.new email: Faker::Internet.email,
                     organization: organization,

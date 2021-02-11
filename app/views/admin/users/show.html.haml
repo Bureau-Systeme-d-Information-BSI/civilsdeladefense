@@ -6,10 +6,14 @@
   = link_to url_opts, class: 'mb-3 d-block' do
     ← Retour à la liste de candidats '#{@preferred_users_list.name}'
 .container-fluid
-  = render partial: 'user_head', locals: {user: @user}
+  = render partial: 'head', locals: {user: @user}
   .row.bg-card-bg
     .col-12.col-md-8.border-right{class: job_application_modal_section_classes}
       .tab-content
         .tab-pane.fade.active.show
           - if (job_applications = @user.job_applications).any?
             = render partial: "/admin/job_applications/user_job_applications", locals: {job_applications: job_applications, narrow: true}
+
+    .col-12.col-md-4{class: job_application_modal_section_classes}
+      - unless @user.new_record?
+        = render partial: 'actions', locals: { user: @user }

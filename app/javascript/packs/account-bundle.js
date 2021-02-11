@@ -7,6 +7,10 @@
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
 
+// import Turbolinks from 'turbolinks'
+// Turbolinks.start()
+
+// Import Rails UJS
 import Rails from '@rails/ujs'
 Rails.start()
 
@@ -17,13 +21,21 @@ function importAll(r) {
 importAll(require.context('images/', true, /\.(ico|png|jpe?g|svg|gif)$/))
 importAll(require.context('icons/', true, /\.svg$/))
 
-import BSN from 'bootstrap.native/dist/bootstrap-native.esm.js'
+import BSN from 'bootstrap.native/dist/bootstrap-native.js'
+import Snackbar from 'node-snackbar'
+window.Snackbar = Snackbar
 import offCanvas from 'js/off-canvas'
 import { manageDropArea, manageDropAreas } from 'js/file-drop'
 window.manageDropArea = manageDropArea
 window.manageDropAreas = manageDropAreas
+import formAutoSubmit from 'js/form-auto-submit'
+window.formAutoSubmit = formAutoSubmit
+import displaySnackbars from 'js/display-snackbars'
+window.displaySnackbars = displaySnackbars
 
 document.addEventListener('DOMContentLoaded', function() {
   offCanvas()
   manageDropAreas()
+  formAutoSubmit()
+  displaySnackbars()
 })

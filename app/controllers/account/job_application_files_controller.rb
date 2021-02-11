@@ -20,6 +20,7 @@ class Account::JobApplicationFilesController < Account::BaseController
 
     respond_to do |format|
       if @job_application_file.save
+        @job_application.compute_notifications_counter!
         format.html { redirect_to @job_application_file, notice: @notification }
         format.js do
           render :file_operation
@@ -44,6 +45,7 @@ class Account::JobApplicationFilesController < Account::BaseController
 
     respond_to do |format|
       if @job_application_file.update(job_application_file_params)
+        @job_application.compute_notifications_counter!
         format.html { redirect_to @job_application_file, notice: @notification }
         format.js do
           render :file_operation

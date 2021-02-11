@@ -13,13 +13,14 @@ module Admin::JobApplicationsHelper
   def job_applications_tab_active
     @job_applications_tab_active ||= begin
       if controller.controller_name == 'job_applications'
-        if controller.action_name == 'show'
+        case controller.action_name
+        when 'show'
           :profile
-        elsif controller.action_name == 'cvlm'
+        when 'cvlm'
           :cvlm
-        elsif controller.action_name == 'emails'
+        when 'emails'
           :emails
-        elsif controller.action_name == 'files'
+        when 'files'
           :files
         end
       end

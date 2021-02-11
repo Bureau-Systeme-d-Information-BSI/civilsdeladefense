@@ -26,7 +26,7 @@ module SendFileContent
   def proxy_job_application_file_content
     url = @job_application_file.content.url
     uri = URI(url)
-    uri = URI('https:' + uri.to_s) if uri.scheme.blank?
+    uri = URI("https:#{uri}") if uri.scheme.blank?
     response.headers['Content-Type'] = 'application/pdf'
     response.headers['Content-Disposition'] = "inline; filename=\"#{action_name}.pdf\""
     # Download the backup file chunk by chunk and forward each chunk to the client.

@@ -36,6 +36,7 @@ import offCanvas from 'js/off-canvas'
 import dependentFields from 'js/dependent-fields'
 import cityAutocomplete from 'js/city-autocomplete'
 import salaryRangeInputsHandling from 'js/salary-range-inputs-handling'
+import emailTemplateSelectHandling from 'js/email-template-select-handling'
 import formAutoSubmit from 'js/form-auto-submit'
 window.formAutoSubmit = formAutoSubmit
 import inPlaceEdit from 'js/in-place-edit'
@@ -46,6 +47,8 @@ import { boardManagement, boardRedraw, boardShowRejectionModal } from 'js/board'
 window.boardRedraw = boardRedraw
 window.boardShowRejectionModal = boardShowRejectionModal
 import jobOfferManagement from 'js/job-offer-management'
+import reloadWithTurbolinks from 'js/reload-with-turbolinks'
+window.reloadWithTurbolinks = reloadWithTurbolinks
 
 document.addEventListener('turbolinks:load', function() {
   BSN.initCallback()
@@ -67,6 +70,7 @@ document.addEventListener('turbolinks:load', function() {
   formAutoSubmit()
   inPlaceEdit()
   salaryRangeInputsHandling()
+  emailTemplateSelectHandling()
   dependentFields()
   cityAutocomplete()
   displayCharts()

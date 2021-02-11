@@ -225,6 +225,40 @@ namespace :maintenance do
     end
   end
 
+  task migration_contract_duration: :environment do
+    puts "Did you set duration boolean on all contract_type ? (y/N)"
+    response = STDIN.gets.chomp.downcase
+    next unless %w[yes y].include?(response)
+    puts "Migrating..."
+
+    # Create missing contract duration
+    (1..11).each do |i|
+      ContractDuration.find_or_create_by!(name: "#{i} mois")
+      ContractDuration.find_or_create_by!(name: "#{i} mois renouvelable")
+    end
+    (1..5).each do |i|
+      an = "an".pluralize(i)
+      ContractDuration.find_or_create_by!(name: "#{i} #{an}")
+      ContractDuration.find_or_create_by!(name: "#{i} #{an} renouvelable")
+    end
+
+    # Assign contract duration to job offer when transition from duration_contract has not been done
+    JobOffer.where.not(duration_contract: nil).map do |job_offer|
+      if job_offer.contract_type.duration
+        duration_contract = job_offer.duration_contract.downcase.squish.gsub('années', 'ans').gsub('année', 'an')
+        contract_duration = ContractDuration.find_by(name: duration_contract)
+        if contract_duration
+          job_offer.update(duration_contract: nil, contract_duration: contract_duration)
+        end
+      else
+        job_offer.update(duration_contract: nil, contract_duration: nil)
+      end
+    end
+    slugs = JobOffer.where.not(duration_contract: nil).pluck(:slug)
+    puts "Still #{slugs.count} job offers that you have to migrate manually :"
+    slugs.each { |slug| puts slug }
+  end
+
   def destroy_file(file)
     begin
       file.destroy
@@ -233,5 +267,3 @@ namespace :maintenance do
     end
   end
 end
-
-

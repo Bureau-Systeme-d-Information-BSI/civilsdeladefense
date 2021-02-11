@@ -31,7 +31,8 @@ class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
   def build_stats
     @per_day = root_rel.group_by_day(:created_at, range: date_range).count
     @per_experiences_fit_job_offer = root_rel.group(:experiences_fit_job_offer).count
-    @per_rejection_reason = root_rel.group(:rejection_reason_id).count
+    @per_rejection_reason = root_rel.where.not(rejection_reason_id: nil)
+                                    .group(:rejection_reason_id).count
     @per_state = root_rel.group(:state).count
   end
 

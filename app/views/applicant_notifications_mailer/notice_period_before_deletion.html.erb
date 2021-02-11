@@ -1,0 +1,21 @@
+<p>
+  <%-if @user.full_name.present? %>
+  Bonjour <%= @user.full_name %>,
+  <%- else %>
+  Bonjour,
+  <%- end %>
+</p>
+
+<p>
+  Nous vous invitons à mettre à jour votre compte candidat sur le site <%= @site_name %>.
+  <br/>
+  Sans mise à jour de celui-ci sous <%= @nbr_days_notice_period_before_deletion %> jours, nous vous informons qu'il sera supprimé automatiquement de notre base de données.
+</p>
+
+<p>
+  Cordialement,
+</p>
+
+<p>
+  L'équipe <%= @site_name %>
+</p>

@@ -36,6 +36,7 @@ class JobOffer < ApplicationRecord
   SETTINGS.each do |setting|
     belongs_to setting
   end
+  belongs_to :contract_duration, optional: true
   belongs_to :benefit, optional: true
   belongs_to :bop, optional: true
 
@@ -55,8 +56,11 @@ class JobOffer < ApplicationRecord
 
   ## Validations
   validates :title, :description, :required_profile, :contract_start_on, presence: true
-  validates :duration_contract, presence: true, if: :contract_type_is_cdd?
-  validates :duration_contract, absence: true, unless: :contract_type_is_cdd?
+  validates :contract_duration_id, presence: true, if: -> { contract_type&.duration }
+  validates :contract_duration_id, absence: true, unless: -> { contract_type&.duration }
+  validates :title, format: { without: /\(|\)/, message: :no_bracket }
+  validates :title, format: { with: %r{\A.*F/H\z}, message: :f_h }
+  validates :description, length: { maximum: 1_000 }
 
   ## Scopes
   default_scope { order(created_at: :desc) }
@@ -96,7 +100,7 @@ class JobOffer < ApplicationRecord
     state :archived, before_enter: :set_timestamp
 
     event :publish do
-      transitions from: [:draft], to: :published
+      transitions from: [:draft], to: :published, guard: :delay_before_publishing_over?
     end
 
     event :draftize do
@@ -118,6 +122,23 @@ class JobOffer < ApplicationRecord
     event :unarchive do
       transitions from: %i[archived], to: :draft
     end
+  end
+
+  def delay_before_publishing_over?
+    delay = organization&.hours_delay_before_publishing
+    if published_at.present?
+      true
+    elsif delay.blank? || delay.zero?
+      true
+    elsif created_at.nil?
+      false
+    else
+      Time.zone.now > (created_at + delay.hours)
+    end
+  end
+
+  def publishing_possible_at
+    created_at + organization.hours_delay_before_publishing.hours
   end
 
   def self.new_from_scratch(reference_administrator)

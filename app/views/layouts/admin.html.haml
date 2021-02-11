@@ -4,6 +4,7 @@
     %title= [@page_title, current_organization.name].delete_if(&:blank?).join(' - ')
     %meta{charset: "utf-8"}
     %meta{name: "viewport", content: "width=device-width, initial-scale=1, shrink-to-fit=no"}
+    %meta{name: 'turbolinks-cache-control', content: 'no-preview'}
     = stylesheet_link_tag 'https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500|Roboto+Mono:400,500', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'admin-bundle', 'data-turbolinks-track': 'reload', defer: true
     = stylesheet_pack_tag 'admin-style', 'data-turbolinks-track': 'reload'

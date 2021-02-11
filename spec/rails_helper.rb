@@ -104,6 +104,7 @@ RSpec.configure do |config|
   config.include Devise::Test::IntegrationHelpers, type: :request
 
   config.include DeviseRoutingHelpers, type: :routing
+  config.include ActionDispatch::TestProcess::FixtureFile
 
   config.before(:each, type: :routing) do
     mock_warden_for_route_tests!

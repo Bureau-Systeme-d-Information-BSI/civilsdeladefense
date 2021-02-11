@@ -10,7 +10,7 @@ fr:
   time:
     formats:
       default: "%-d %b %Y %H:%M"
-      short: "%d/%m/%Y %H:%M"
+      short: "%d/%m/%Y à %H:%M"
   datetime:
     distance_in_words:
       short:
@@ -69,6 +69,7 @@ fr:
     copy: "Dupliquer"
     deactivate: "Désactiver"
     delete: "Supprimer"
+    delete_user: "Supprimer le compte candidat"
     download: "Télécharger"
     draftize: "Passer en brouillon"
     edit: "Modifier"
@@ -83,12 +84,14 @@ fr:
     search: "Rechercher"
     send: "Envoyer"
     send_to_candidate: "Envoyer au candidat"
-    send_unlock_instructions: "Envoyer les instructions de débloquage"
+    send_unlock_instructions: "Envoyer les instructions de déblocage"
     show: "Voir"
     suspend: "Mettre en pause"
+    suspend_user: "Suspendre ce compte candidat"
     unarchive: "Désarchiver"
     update: "Mettre à jour"
     unsuspend: "Republier"
+    unsuspend_user: "Réactiver"
   job_applications:
     form:
       general_informations: "Informations générales"
@@ -259,7 +262,7 @@ fr:
       change_state:
         success: "Candidature passée en statut %{state} !"
     job_application_files:
-      available_job_application_file_type:
+      optional_job_application_file_type:
         action_name: "Demander"
       check:
         success: "Fichier validé !"
@@ -410,6 +413,11 @@ fr:
         account: "Mon compte"
         logout: "Déconnexion"
     users:
+      actions:
+        title: "Actions"
+      destroy:
+        failure: "Problème : %{reason}"
+        success: "Utilisateur supprimé"
       index:
         title: "Vivier de candidats"
         users_filtered:
@@ -418,11 +426,15 @@ fr:
           other: "%{count} résultats de recherche"
       listing:
         title: "Ajouter/supprimer ce candidat de mes listes"
+      suspend:
+        success: "Utilisateur suspendu"
+      unsuspend:
+        success: "Utilisateur réactivé"
       user:
         my_preferred_user_lists: "Mon vivier"
         remove_user: "Supprimer de cette liste"
         subscribed_on: "Inscrit le %{date}"
-      user_head:
+      head:
         nav_emails: "Courriels"
         nav_files: "Documents"
         nav_overview: "Candidature"
@@ -438,6 +450,7 @@ fr:
           benefits: "Bénéfices en nature"
           bops: "BOPs"
           categories: "Domaines professionnels"
+          cmgs: "Liste des CMG"
           company : "Entreprise"
           configuration: "Configuration"
           contract_types: "Types de contrat"
@@ -456,6 +469,7 @@ fr:
           study_levels: "Niveaux d'études"
           templates : "Modèles"
           writing_job_offers: "Rédaction offres d'emploi"
+          contract_durations: "Durées de contrat"
       base:
         index:
           title: "Paramètres"
@@ -504,6 +518,24 @@ fr:
           success: "Compte réactivé"
         resend_confirmation_instructions:
           success: "Invitation renvoyée !"
+      cmgs:
+        index:
+          title: "Liste des CMG"
+          add: "Ajouter"
+          card_title:
+            zero: 'Aucun CMG'
+            one: '1 CMG'
+            other: '%{count} CMGs'
+        new:
+          title: "Ajouter un nouveau CMG"
+        create:
+          success: "CMG ajouté !"
+        update:
+          success: "CMG mis à jour !"
+        destroy:
+          success: "CMG supprimé !"
+        edit:
+          title: "Modifier le CMG"
       employers:
         index:
           title: "Employeurs"
@@ -760,6 +792,22 @@ fr:
           success: "Valeur par défaut mise à jour !"
         destroy:
           success: "Valeur par défaut supprimée !"
+      contract_durations:
+        index:
+          card_title:
+            zero: "Aucune durée de contrat"
+            one: "1 durée de contrat"
+            other: "%{count} durées de contrats"
+        new:
+          title: "Ajouter une nouvelle durée de contrat"
+        edit:
+          title: "Modifier la durée de contrat '%{name}'"
+        create:
+          success: "Durée de contrat créée !"
+        update:
+          success: "Durée de contrat mise à jour !"
+        destroy:
+          success: "Durée de contrat supprimée !"
     preferred_users:
       form:
         title: "Note personnelle"
@@ -848,8 +896,15 @@ fr:
           attributes:
             content:
               file_size_is_less_than: "Fichier trop volumineux, doit être max. 2Mo"
+        job_offer:
+          attributes:
+            title:
+              no_bracket: "ne doit pas contenir de parenthèse"
+              f_h: "doit finir par F/H"
         user:
           attributes:
+            base:
+              not_allowed_because_suspended: "impossible de supprimer un compte tant qu'il est suspendu"
             current_position: "Poste actuel"
             photo:
               file_size_is_less_than: "Fichier trop volumineux, doit être max. 2Mo"
@@ -911,6 +966,7 @@ fr:
         grand_employer: "Grand Employeur"
         supervisor_employer: "Employeur Superviseur"
         brh: "RH"
+        cmg: "CMG"
       organization_default:
         kind: "Type"
         kind/job_offer_description: "Offre d'emploi / Description"
@@ -929,6 +985,8 @@ fr:
         estimate_annual_salary_gross_html: "<div class='d-block'>Estimation annuel brut</div> (secteur privé)"
       study_level:
         official_level: "Niveau officiel"
+      contract_type:
+        duration: Durée
   helpers:
     submit:
       job_application:

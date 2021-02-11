@@ -31,6 +31,11 @@ Rails.application.routes.draw do
       end
     end
     resources :salary_ranges, only: %i[index]
+    resources :email_templates, only: %i[index] do
+      collection do
+        get :pick
+      end
+    end
     resources :job_offers, path: 'offresdemploi' do
       collection do
         get :add_actor
@@ -64,6 +69,7 @@ Rails.application.routes.draw do
       member do
         get :listing
         put :update_listing
+        post :suspend, :unsuspend
       end
     end
     resources :job_applications, path: 'candidatures', only: %i[index show update] do
@@ -101,6 +107,11 @@ Rails.application.routes.draw do
           post :move_higher, :move_lower
         end
       end
+      resources :cmgs do
+        member do
+          post :move_higher, :move_lower
+        end
+      end
       resources :administrators, path: 'administrateurs', except: %i[destroy] do
         collection do
           get :inactive
@@ -120,7 +131,7 @@ Rails.application.routes.draw do
       resources :salary_ranges
       resources :job_application_file_types
       other_settings = %i[benefit bops email_template job_application_file_types
-                          rejection_reasons]
+                          rejection_reasons contract_duration]
       (JobOffer::SETTINGS + other_settings).each do |setting|
         resources setting.to_s.pluralize.to_sym, except: %i[show] do
           member do

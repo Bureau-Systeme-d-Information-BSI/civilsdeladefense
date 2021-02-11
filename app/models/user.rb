@@ -5,7 +5,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable, :lockable
-
+  include Suspendable
+  include DeletionFlow
   include PgSearch::Model
   pg_search_scope :search_full_text,
                   against: %i[first_name last_name]

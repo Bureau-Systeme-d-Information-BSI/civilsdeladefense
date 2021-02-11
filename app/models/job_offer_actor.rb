@@ -8,22 +8,16 @@ class JobOfferActor < ApplicationRecord
   accepts_nested_attributes_for :administrator
 
   def administrator_attributes=(attributes)
-    existing = nil
-    existing = Administrator.find(attributes[:id]) if attributes[:id].present?
-    existing ||= Administrator.where(email: attributes[:email]).first
-    if existing
-      if has_destroy_flag?(attributes)
-        mark_for_destruction
-      else
-        self.administrator = existing
-      end
-    elsif has_destroy_flag?(attributes)
-      mark_for_destruction
+    mark_for_destruction if has_destroy_flag?(attributes)
+
+    administrator = search_administrator_in_attributes(attributes)
+
+    if administrator
+      self.administrator = administrator
     else
-      attributes.delete(:_destroy)
-      a = build_administrator(attributes)
-      a.inviter = job_offer&.owner
-      a
+      build_administrator(
+        attributes.except('_destroy').merge(inviter: job_offer&.owner)
+      )
     end
   end
 
@@ -35,6 +29,17 @@ class JobOfferActor < ApplicationRecord
     employer: 0,
     grand_employer: 10,
     supervisor_employer: 20,
-    brh: 30
+    brh: 30,
+    cmg: 40
   }
+
+  private
+
+  def search_administrator_in_attributes(attributes)
+    if attributes[:id].present?
+      Administrator.find(attributes[:id])
+    else
+      Administrator.find_by(email: attributes[:email])
+    end
+  end
 end

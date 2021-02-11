@@ -8,8 +8,11 @@ class Ability
     return unless administrator
 
     alias_action :archived, :stats, :board, :cvlm, to: :read
+    alias_action :listing, :update_listing, to: :read
+    alias_action :suspend, to: :destroy
 
     can :read, SalaryRange
+    can :read, EmailTemplate
     cannot :manage, PreferredUsersList
     case administrator.role
     when 'bant'
@@ -17,12 +20,13 @@ class Ability
     when 'employer'
       ability_employer(administrator)
     else
+      # if neither BANT or Employer, it's BRH or CMG which have the same rights
       can :read, JobOffer, job_offer_actors: { administrator_id: administrator.id }
       can :read, JobApplication, job_application_read_query(administrator)
       can :manage, JobApplication, brh_job_application_manage_query(administrator)
       can :manage, JobApplicationFile
-      can :read, Message
-      can :read, Email
+      can :manage, Message
+      can :manage, Email
     end
   end
 
@@ -41,7 +45,8 @@ class Ability
     can :manage, JobApplicationFile
     can :manage, Message
     can :manage, Email
-    can :manage, User, employer_users_query(administrator)
+    can :update, User, employer_users_query(administrator)
+    can :read, User
     can :manage, PreferredUsersList, administrator_id: administrator.id
   end
 
@@ -66,12 +71,13 @@ class Ability
   end
 
   def brh_job_application_manage_query(administrator)
-    role_brh_enum = JobOfferActor.roles[:brh]
+    role_brh = JobOfferActor.roles[:brh]
+    role_cmg = JobOfferActor.roles[:cmg]
     {
       job_offer: {
         job_offer_actors: {
           administrator_id: administrator.id,
-          role: role_brh_enum
+          role: [role_brh, role_cmg]
         }
       }
     }

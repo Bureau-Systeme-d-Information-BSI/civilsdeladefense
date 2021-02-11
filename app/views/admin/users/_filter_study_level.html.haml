@@ -1,0 +1,19 @@
+- search_key = :job_applications_profile_study_level_id_in
+- ary = params.dig(:q, search_key)  || []
+- study_levels = StudyLevel.all
+.dropdown.dropdown-checks.form-group
+  %button.form-control.dropdown-toggle.text-left.d-flex.align-items-center#dropdownContractType{type: 'button', data: {toggle: 'dropdown'}, aria: {haspopup: true, expanded: false}}
+    = t('simple_form.labels.defaults.study_level')
+    - if ary.any?
+      = "(#{ary.size})"
+  .dropdown-menu.dropdown-menu-right.allow-focus{aria: {labelledby: 'dropdownContractType'}}
+    %ul
+      - study_levels.each do |study_level|
+        - study_level_name = study_level.name
+        - study_level_id = study_level.id
+        - input_id = "study_level_#{study_level_id}"
+        %li
+          .form-check.form-check-inline.w-100
+            - checked = ary.include?(study_level_id.to_s)
+            = check_box_tag "q[#{search_key}][]", study_level_id, checked, class: 'form-check-input', id: input_id
+            %label.form-check-label.text-truncate.d-block{for: input_id, title: study_level_name}= study_level_name

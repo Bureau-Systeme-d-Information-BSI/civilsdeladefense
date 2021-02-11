@@ -3,27 +3,30 @@
 - job_offer = defined?(job_application) ? job_application.job_offer : nil
 .row.bg-white.border-bottom.head
   .col-12{class: job_application_modal_section_classes('pb-0')}
-    .d-flex.justify-content-start.head.mb-3
+    .d-flex.head.mb-3
       = image_user_tag user.photo, width: 80, class: 'mr-4'
       .d-flex.flex-column
         .h5.secondary.mb-0= user.full_name
-        - if job_offer
-          %small
-            = [job_offer.identifier, job_offer.title].join(' ')
-            = link_to(fa_icon('open-in-new'), [:admin, job_offer], target: '_blank', class: 'ml-1')
         .my-1= user.current_position
-        .d-flex.justify-content.justify-content-start
-          - if (phone = user.phone).present?
-            %span.mr-2
-              = fa_icon "phone"
-              = phone
+        - if (phone = user.phone).present?
+          .d-flex.flex-row.align-items-center
+            = fa_icon('phone', class: 'fa-w-15 mr-1')
+            = phone
+        - if (email = user.email).present?
+          .d-flex.flex-row.align-items-center
+            = fa_icon('email', class: 'fa-w-15 mr-1')
+            = email
         - if website_url.present?
-          .d-flex.justify-content.justify-content-start
-            - if website_url =~ /linkedin/
-              = link_to fa_icon('linkedin', class: 'fa-w-20'), website_url, target: :_blank, class: 'mt-1 mr-2'
-            - else
-              = link_to fa_icon('web', class: 'fa-w-20'), website_url, target: :_blank, class: 'mt-1 text-body-color'
-    - if defined?(job_application)
+          .d-flex.flex-row.align-items-center
+            - icon_name = website_url =~ /linkedin/ ? 'linkedin' : 'web'
+            = fa_icon(icon_name, class: 'fa-w-15 mr-1')
+            = link_to website_url, website_url, target: :_blank, class: 'text-body-color'
+      .ml-auto
+        %button{type: :button, class: :close, data: {dismiss: :modal}, aria: {label: t('buttons.close')}}
+          %span{aria: {hidden: true}}
+            = fa_icon('close')
+
+    - if defined?(job_application) && !user.new_record?
       %ul.nav.nav-tabs{role: :tablist}
         %li.nav-item.mr-3
           - klasses = tab_active == :profile ? %w(nav-link active) : %w(nav-link)

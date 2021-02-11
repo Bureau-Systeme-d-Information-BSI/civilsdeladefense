@@ -141,6 +141,21 @@ RSpec.describe Admin::JobOffersController, type: :controller do
           expect(response).to be_successful
         end
 
+        it 'returns a successful response even with upcase char' do
+          job_offer = create :job_offer
+          administrator = create :administrator
+
+          valid_attributes = {
+            id: job_offer.to_param,
+            email: administrator.email.upcase,
+            role: 'employer'
+          }
+
+          post :add_actor, params: valid_attributes
+
+          expect(response).to be_successful
+        end
+
         it 'renders the actor widget with an existing user' do
           job_offer = create :job_offer
           administrator = create :administrator
@@ -219,14 +234,14 @@ RSpec.describe Admin::JobOffersController, type: :controller do
     describe 'PUT #update' do
       context 'with valid params' do
         let(:new_attributes) do
-          { title: 'PIPO' }
+          { title: 'PIPO F/H' }
         end
 
         it 'updates the requested job_offer' do
           job_offer = create :job_offer
           put :update, params: { id: job_offer.to_param, job_offer: new_attributes }
           job_offer.reload
-          expect(job_offer.title).to eq('PIPO')
+          expect(job_offer.title).to eq('PIPO F/H')
         end
 
         it 'redirects to job offers listing' do

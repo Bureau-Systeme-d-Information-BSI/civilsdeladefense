@@ -59,6 +59,7 @@ class Admin::JobOffersController < Admin::BaseController
     @job_offer = JobOffer.new_from_source(params[:job_offer_id])
     @job_offer ||= JobOffer.new_from_scratch(current_administrator)
     @job_offer.employer = current_administrator.employer unless current_administrator.bant?
+    @job_offer.organization = current_organization
   end
 
   # GET /admin/job_offers/1/edit
@@ -116,6 +117,8 @@ class Admin::JobOffersController < Admin::BaseController
   protected
 
   def choose_layout
+    return 'admin' if @job_offer&.new_record?
+
     %w[new edit].include?(action_name) ? 'admin' : 'admin/job_offer_single'
   end
 
@@ -139,7 +142,7 @@ class Admin::JobOffersController < Admin::BaseController
 
   def permitted_fields
     fields = %i[title description category_id professional_category_id employer_id required_profile
-                recruitment_process contract_type_id duration_contract contract_start_on
+                recruitment_process contract_type_id contract_duration_id contract_start_on
                 is_remote_possible available_immediately study_level_id experience_level_id bop_id
                 sector_id estimate_monthly_salary_net estimate_annual_salary_gross benefit_id
                 location city county county_code country_code postcode region]
@@ -149,7 +152,7 @@ class Admin::JobOffersController < Admin::BaseController
   end
 
   def find_attach_or_build_administrator
-    existing_administrator = Administrator.find_by(email: params[:email])
+    existing_administrator = Administrator.find_by(email: params[:email].downcase)
     root_object = @job_offer.job_offer_actors.build(role: params[:role])
     admin = root_object.administrator = existing_administrator if existing_administrator
     admin ||= root_object.build_administrator(email: params[:email])

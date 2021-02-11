@@ -7,7 +7,7 @@ json.array! @job_offers do |job_offer|
     json.departement job_offer.county_code
     json.ville job_offer.city
     json.type job_offer.contract_type.name
-    json.duree job_offer.duration_contract
+    json.duree job_offer.contract_duration&.name
     json.niveauEtude job_offer.study_level.official_level
     json.famille job_offer.category.name
     json.lien polymorphic_url(job_offer, routing_type: :url)

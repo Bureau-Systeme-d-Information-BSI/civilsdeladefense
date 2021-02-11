@@ -11,6 +11,9 @@
         - elsif level > 0
           %span.text-light-grey{style: "opacity: 0.6;"}= "└#{'──' * (level-1)}"
         = element.try(:name) || element.try(:title)
+  - elsif resource_class == Cmg
+    %td
+      = element.email
   - elsif resource_class == Employer
     %td
       = element.code
@@ -31,6 +34,11 @@
       = element.name
     %td.text-center
       = element.official_level
+  - elsif resource_class == ContractType
+    %td
+      = element.name
+    %td.text-center
+      = element.duration ? t('.affirmative') : t('.negative')
   - else
     %td
       = element.try(:title) || element.try(:name)

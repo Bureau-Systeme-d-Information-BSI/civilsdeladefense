@@ -1,9 +1,9 @@
 - @page_title = @page&.title || t('.title')
 .rf-container.rf-pb-6w.rf-pt-5w
   .rf-grid-row.rf-grid-row--gutters
-    .rf-col-xs-12.rf-col-md-3
+    .rf-col-12.rf-col-md-3
       = render partial: 'filters'
-    .rf-col-xs-12.rf-col-md-9
+    .rf-col-12.rf-col-md-9
       = t('.job_offers_count', count: @job_offers.size)
       = render partial: 'job_offer', collection: @job_offers
       = will_paginate @job_offers, class: 'justify-content-center rf-mt-3w', renderer: RfRenderer

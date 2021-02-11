@@ -13,8 +13,8 @@ input {
   }
 }
 
-.rf-centered {
-  text-align: center;
+.rf-border-0 {
+  border: 0;
 }
 
 [data-rf-reset] h1 {
@@ -130,12 +130,9 @@ label {
   width: 100%;
 }
 
-.w-40 {
+.avatar {
+  height: 1.5rem;
   width: auto;
-}
-
-.h-40 {
-  height: 2rem;
 }
 
 h1,

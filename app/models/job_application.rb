@@ -19,7 +19,7 @@ class JobApplication < ApplicationRecord
 
   belongs_to :job_offer
   belongs_to :organization
-  belongs_to :user
+  belongs_to :user, optional: true
   belongs_to :rejection_reason, optional: true
   accepts_nested_attributes_for :user
   belongs_to :employer

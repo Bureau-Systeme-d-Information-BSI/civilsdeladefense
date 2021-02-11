@@ -23,6 +23,5 @@
             .fixed-bottom.alert.alert-danger= flash[:error]
           - elsif flash[:success]
             .fixed-bottom.alert.alert-success= flash[:success]
-          = content_for?(:content) ? yield(:content) : yield
     = render partial: '/shared/footer'
     = render partial: '/shared/trackers'

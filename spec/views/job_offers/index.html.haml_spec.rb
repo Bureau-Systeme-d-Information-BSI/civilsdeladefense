@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'will_paginate/array'
 
 RSpec.describe 'job_offers/index', type: :view do
   before(:each) do
@@ -20,12 +21,10 @@ RSpec.describe 'job_offers/index', type: :view do
     assign(:categories, categories)
     assign(:categories_for_select, categories)
     assign(:contract_types, contract_types)
-    assign(:job_offers, job_offers)
+    assign(:job_offers, job_offers.paginate(page: nil))
   end
 
   it 'renders a list of job_offers' do
-    allow(view).to receive_messages(will_paginate: nil)
-
     render
   end
 end

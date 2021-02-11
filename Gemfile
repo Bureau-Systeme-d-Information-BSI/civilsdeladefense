@@ -54,7 +54,7 @@ gem 'rollbar'
 gem 'sequenced'
 gem 'simple_form'
 gem 'trix-rails', require: 'trix'
-gem 'turbolinks'
+gem 'turbolinks', require: false
 gem 'turbo-rails'
 gem 'will_paginate'
 

@@ -117,6 +117,8 @@ fr:
         logo_vertical_negative: "Logo au format vertical (affichage fond coloré)"
         logo_horizontal_negative: "Logo au format horizontal (affichage fond coloré)"
         matomo_site_id: "Matomo siteId"
+        operator_logo: "Logo opérateur"
+        operator_name: "Nom de l'opérateur"
         privacy_policy_url: "Lien vers la politique de confidentialité"
         service_description: "Description du service"
         service_description_short: "Description courte du service"

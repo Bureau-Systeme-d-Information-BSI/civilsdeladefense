@@ -92,12 +92,12 @@ label {
   }
 }
 
-.zoomable {
-  transition: transform 0.2s ease-in-out;
-}
-
 .rounded-lg {
   border-radius: 0.5rem;
+}
+
+.text-center {
+  text-align: center;
 }
 
 .text-right {
@@ -248,7 +248,7 @@ h2 {
   .rf-bg--hero-image {
     min-height: 200px;
     h1 {
-      padding: 10rem 0;
+      padding: 13rem 0;
     }
   }
 }

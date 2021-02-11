@@ -1,0 +1,13 @@
+.rf-col-12.rf-col-md-6.rf-col-lg-4
+  .rf-card.rounded-lg
+    .rf-card__body
+      = link_to job_offer.title, job_offer, class: "rf-card__link"
+      .rf-card__detail.d-flex.align-items-center
+        .d-flex.flex-column.w-100
+          .rf-mt-1w.rf-mb-2w.d-inline-block.text-truncate{title: job_offer.category.name}
+            = job_offer.category.name
+          .rf-mt-1w
+            = [job_offer.contract_type.name, job_offer.duration_contract].join(' ')
+          %small.rf-text--sm.rf-mb-0= job_offer.location
+          - if job_offer.published_at.present?
+            %small.rf-mt-2w.rf-text--xs.rf-mb-0= t('job_offers.job_offer.published_date', time_ago_in_words: time_ago_in_words(job_offer.published_at))

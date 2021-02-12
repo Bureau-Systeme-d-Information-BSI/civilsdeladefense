@@ -1,6 +1,8 @@
 - @page_title = t(".sign_in.#{ resource.class.to_s.downcase }")
+
 .rf-text--lead.rf-mb-3w
   - if resource.is_a?(User)
+    = render "devise/shared/france_connect"
     Vous avez déjà un espace candidat ?
     %br
     Identifiez-vous !

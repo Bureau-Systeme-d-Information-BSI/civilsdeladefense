@@ -31,6 +31,8 @@ module Civilsdeladefense
     config.i18n.available_locales = [:fr]
     config.i18n.default_locale = :fr
 
+    config.autoload_paths << "#{Rails.root}/lib"
+
     if Rails.env.production?
       # Cache assets for 1 year
       config.public_file_server.headers = {

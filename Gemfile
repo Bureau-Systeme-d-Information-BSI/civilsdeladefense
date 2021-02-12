@@ -62,6 +62,8 @@ gem 'clockwork' # simulate cron on Scalingo
 
 gem 'faker', require: false
 
+gem 'omniauth_openid_connect', '~> 0.3.5'
+
 group :development do
   gem 'letter_opener'
 end
@@ -79,6 +81,8 @@ group :development, :test do
   gem 'rubocop', require: false
   gem 'shoulda-matchers'
   gem 'simplecov', require: false
+
+  gem 'pry', '~> 0.13.1'
 end
 
 group :development do

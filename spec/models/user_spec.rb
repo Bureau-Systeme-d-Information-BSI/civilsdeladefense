@@ -116,4 +116,29 @@ RSpec.describe User, type: :model do
 
     expect(@user.job_applications_active.count).to eq(1)
   end
+
+  describe 'required password' do
+    let(:user) { FactoryBot.build(:user) }
+
+    context 'with omniauth_informations' do
+      before do
+        FactoryBot.create_list(:omniauth_information, 10, user: user)
+        user.password = ''
+      end
+
+      it 'is not required' do
+        expect(user).to be_valid
+      end
+    end
+
+    context 'without omniauth_informations' do
+      before do
+        user.password = ''
+      end
+
+      it 'is required' do
+        expect(user).to be_invalid
+      end
+    end
+  end
 end

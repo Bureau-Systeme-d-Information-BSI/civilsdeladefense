@@ -132,4 +132,34 @@ RSpec.describe Account::UsersController, type: :controller do
       end
     end
   end
+
+  describe 'PATCH #unlink_france_connect' do
+    login_user
+
+    context 'with omniauth_informations' do
+      before do
+        FactoryBot.create(:omniauth_information, user: subject.current_user)
+      end
+
+      it 'destroy omniauth_informations' do
+        patch :unlink_france_connect
+
+        expect(subject.current_user.omniauth_informations.count).to eq(0)
+      end
+
+      it 'redirects to the account page' do
+        patch :unlink_france_connect
+
+        expect(response).to redirect_to(account_user_url)
+      end
+    end
+
+    context 'without omniauth_informations' do
+      it "returns a success response (i.e. to display the 'show' template)" do
+        patch :unlink_france_connect
+
+        expect(response).to redirect_to(account_user_url)
+      end
+    end
+  end
 end

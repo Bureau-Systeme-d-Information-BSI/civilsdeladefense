@@ -2,9 +2,14 @@
 
 # Candidate to job offer
 class User < ApplicationRecord
+  def self.omniauth_providers
+    ENV['FRANCE_CONNECT_HOST'] ? [:france_connect] : []
+  end
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :confirmable, :lockable
+         :confirmable, :lockable,
+         :omniauthable, omniauth_providers: User.omniauth_providers
   include Suspendable
   include DeletionFlow
   include PgSearch::Model
@@ -13,6 +18,8 @@ class User < ApplicationRecord
 
   belongs_to :organization
   belongs_to :last_job_application, class_name: 'JobApplication', optional: true
+  has_many :omniauth_informations
+
   has_many :job_applications, -> { order(created_at: :desc) }, dependent: :nullify
   has_many :job_offers, through: :job_applications
   has_many :preferred_users, dependent: :destroy
@@ -22,7 +29,8 @@ class User < ApplicationRecord
   validates :photo,
             file_size: { less_than: 1.megabytes }
 
-  validates :first_name, :last_name, :phone, :current_position, presence: true
+  validates :first_name, :last_name, presence: true
+  validates :phone, :current_position, presence: true, allow_nil: true
   validates :terms_of_service, :certify_majority, acceptance: true
   validate :password_complexity
 
@@ -56,5 +64,19 @@ class User < ApplicationRecord
 
   def job_applications_active
     job_applications.joins(:job_offer).where.not(job_offers: { state: :archived })
+  end
+
+  def link_to_omniauth?(provider: nil)
+    if provider.present?
+      omniauth_informations.where(provider: provider).any?
+    else
+      omniauth_informations.any?
+    end
+  end
+
+  private
+
+  def password_required?
+    !link_to_omniauth? && super
   end
 end

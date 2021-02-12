@@ -21,7 +21,10 @@ Rails.application.routes.draw do
     patch '/admin/confirmation' => 'administrators/confirmations#update', as: :update_administrator_confirmation
   end
   devise_for :administrators, path: 'admin', controllers: { confirmations: 'administrators/confirmations' }, timeout_in: 1.hour
-  devise_for :users, controllers: { registrations: 'users/registrations' }
+  devise_for :users, controllers: {
+    registrations: 'users/registrations',
+    omniauth_callbacks: 'users/omniauth_callbacks'
+  }
 
   namespace :admin do
     resource :account do
@@ -157,7 +160,7 @@ Rails.application.routes.draw do
       resource :user, path: 'mon-compte', only: %i[show update destroy] do
         member do
           get :change_email, :change_password
-          patch :update_email, :update_password
+          patch :update_email, :update_password, :unlink_france_connect, :set_password
         end
       end
     end

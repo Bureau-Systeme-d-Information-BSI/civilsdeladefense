@@ -186,10 +186,15 @@ fr:
         title: "Envoyer un courriel"
       index:
     users:
+      link_france_connect:
+        title: Certifier mon compte FranceConnect
+        unlink_france_connect: Dissocier mon compte de FranceConnect
       change_email:
         title: "Changement de courriel"
       change_password:
         title: "Changement de mot de passe"
+      set_password:
+        title: "Choisir un mot de passe"
       destroy:
         success: "Votre compte a bien été supprimé"
       update_email:
@@ -1024,3 +1029,4 @@ fr:
     messages:
       content_type_whitelist_error: "Mauvais format. Seuls sont acceptés les formats PDF pour les documents et PNG/JPG pour les photos."
       carrierwave_integrity_error: is not an allowed file type
+      france_connect: Une erreur est survenue, veuillez réessayer.

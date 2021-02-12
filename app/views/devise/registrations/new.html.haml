@@ -1,5 +1,9 @@
 .rf-text--lead.rf-mb-3w
   = @page_title = t(".sign_up")
+
+- if resource.is_a?(User)
+  = render "devise/shared/france_connect"
+
 = simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
   = f.error_notification
   = f.input :email, required: true, autofocus: true

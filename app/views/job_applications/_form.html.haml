@@ -1,5 +1,7 @@
 -# frozen_string_literal: true
 - profile = @job_application.profile
+- unless user_signed_in?
+  = render "devise/shared/france_connect"
 = simple_form_for(@job_application, url: [:send_application, @job_offer], method: :post) do |f|
   .form-inputs.mt-3
     = f.error_notification
@@ -8,8 +10,8 @@
     = f.simple_fields_for :user do |user_form|
       = user_form.input :first_name, readonly: user_signed_in?
       = user_form.input :last_name, readonly: user_signed_in?
-      = user_form.input :current_position
-      = user_form.input :phone
+      = user_form.input :current_position, required: true
+      = user_form.input :phone, required: true
     - unless user_signed_in?
       = f.simple_fields_for :user do |user_form|
         = user_form.label :photo, required: false

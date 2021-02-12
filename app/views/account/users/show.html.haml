@@ -1,8 +1,13 @@
 .rf-container
   .rf-grid-row
     .rf-col-12
-      = render template: '/account/users/change_password'
+      - if current_user.link_to_omniauth?
+        = render template: '/account/users/set_password'
+      - else
+        = render template: '/account/users/change_password'
     .rf-col-12
       = render template: '/account/users/change_email'
     .rf-col-12
       = render template: '/account/users/want_destroy'
+    .rf-col-12
+      = render template: '/account/users/link_france_connect'

@@ -45,12 +45,13 @@ class Organization < ApplicationRecord
   end
 
   def possessive_article
-    if brand_prefix_article == "le"
-      "du"
-    elsif brand_prefix_article == "la"
-      "de la"
-    elsif brand_prefix_article == "l'"
-      "de l'"
+    case brand_prefix_article
+    when 'le'
+      'du'
+    when 'la'
+      'de la'
+    when 'l\''
+      'de l\''
     end
   end
 end

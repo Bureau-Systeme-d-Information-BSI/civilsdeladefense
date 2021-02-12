@@ -8,7 +8,7 @@ Faker::Config.locale = :fr
 desc = 'Plateforme de recrutement de personnel civils contractuels pour le Ministère des Armées'
 desc_short = 'Plateforme de recrutement de personnel civils contractuels'
 organization = Organization.create! service_name: 'Civils de la Défense',
-                                    brand_name: 'Ministère\n\ndes Armées',
+                                    brand_name: "Ministère\n\ndes Armées",
                                     brand_prefix_article: 'le',
                                     service_description: desc,
                                     service_description_short: desc_short,

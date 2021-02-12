@@ -2,6 +2,7 @@
 @import "flex-utilities";
 @import "stepper";
 @import "alert";
+@import "france-connect";
 
 // Design System overflow fix
 @media (min-width: 48em) {
@@ -257,22 +258,4 @@ h2 {
       padding: 13rem 0;
     }
   }
-}
-
-.france-connect-link {
-  .hover {
-    display: none;
-  }
-  &:hover {
-    .normal {
-      display: none;
-    }
-    .hover {
-      display: block;
-    }
-  }
-}
-.france-connect-details {
-  margin-top: 8px;
-  font-size: 13px;
 }

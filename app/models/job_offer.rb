@@ -58,9 +58,7 @@ class JobOffer < ApplicationRecord
   validates :title, :description, :required_profile, :contract_start_on, presence: true
   validates :contract_duration_id, presence: true, if: -> { contract_type&.duration }
   validates :contract_duration_id, absence: true, unless: -> { contract_type&.duration }
-  validates :title, format: { without: /\(|\)/, message: :no_bracket }
   validates :title, format: { with: %r{\A.*F/H\z}, message: :f_h }
-  validates :description, length: { maximum: 1_000 }
 
   ## Scopes
   default_scope { order(created_at: :desc) }
@@ -138,7 +136,7 @@ class JobOffer < ApplicationRecord
   end
 
   def publishing_possible_at
-    created_at + organization.hours_delay_before_publishing.hours
+    created_at + (organization.hours_delay_before_publishing || 0).hours
   end
 
   def self.new_from_scratch(reference_administrator)

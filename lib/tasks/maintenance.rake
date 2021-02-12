@@ -259,6 +259,19 @@ namespace :maintenance do
     slugs.each { |slug| puts slug }
   end
 
+  task fix_job_offer_title: :environment do
+    description 'Add missing F/H at this end (and remove F/H, H/F, ... in the other part of the title). Also remove all brackets.'
+    JobOffer.where.not('title like ?', '%F/H').map do |job_offer|
+      split_title = job_offer.title.split
+
+      title_without_fh = split_title.reject do |str|
+        ['F/H', 'H/F', 'f/h', '(F/H)', '(H/F)', 'h/f'].include?(str)
+      end
+
+      job_offer.update_column(:title, "#{title_without_fh.join(' ')} F/H")
+    end
+  end
+
   def destroy_file(file)
     begin
       file.destroy

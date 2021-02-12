@@ -27,6 +27,7 @@ module JobOfferStatisticsActions
     @per_rejection_reason = root_rel.where.not(rejection_reason_id: nil)
                                     .group(:rejection_reason_id).count
     @rejection_reasons = RejectionReason.all
+    @age_ranges = AgeRange.all
   end
 
   protected

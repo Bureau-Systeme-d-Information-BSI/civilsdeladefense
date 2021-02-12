@@ -1,0 +1,13 @@
+.france-connect-link {
+  .hover {
+    display: none;
+  }
+  &:hover {
+    .normal {
+      display: none;
+    }
+    .hover {
+      display: block;
+    }
+  }
+}

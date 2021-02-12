@@ -13,6 +13,7 @@
     = favicon_pack_tag 'favicon-32x32.png', rel: 'icon', type: 'image/png'
     = javascript_pack_tag 'bundle'
   %body
+    #__SVG_SPRITE_NODE__{'data-turbo-permanent': true}
     = render partial: '/shared/header'
     .rf-container
       .rf-grid-row

@@ -9,6 +9,8 @@
     = stylesheet_pack_tag 'style'
     = csrf_meta_tags
     = csp_meta_tag
+    = favicon_pack_tag 'favicon-16x16.png', rel: 'icon', type: 'image/png'
+    = favicon_pack_tag 'favicon-32x32.png', rel: 'icon', type: 'image/png'
     = javascript_pack_tag 'bundle'
   %body
     = render partial: '/shared/header'

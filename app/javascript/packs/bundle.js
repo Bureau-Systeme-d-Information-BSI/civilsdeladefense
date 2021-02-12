@@ -14,7 +14,7 @@ function importAll(r) {
 importAll(require.context('images/', true, /\.(ico|png|jpe?g|svg|gif)$/))
 importAll(require.context('icons/', true, /\.svg$/))
 
-import "@gouvfr/all/dist/js/all.js"
+// import "@gouvfr/all/dist/js/all.js"
 
 import { Turbo } from "@hotwired/turbo-rails"
 window.Turbo = Turbo

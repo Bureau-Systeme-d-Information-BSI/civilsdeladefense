@@ -1,8 +1,42 @@
 .container
   .row
-    .col-12.col-md-6.mt-4.mt-md-0
-      = render partial: 'form_general'
-    .col-12.col-md-6.mt-4.mt-md-0
-      = render partial: 'form_security'
-    .col-12.mt-4
-      = render partial: 'form_display'
+    .col-12.col-md-8.mt-4.mt-md-0
+      = simple_form_for(@organization, url: [:admin, :settings, :organization], method: :patch) do |f|
+        = f.error_notification
+        = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+        .card
+          .card-header
+            .card-title= t('.title')
+          .card-body
+            = f.input :brand_name, as: :text, input_html: { rows: 2 }
+            = f.input :brand_prefix_article
+            = f.input :service_name
+            = f.input :service_description_short, as: :text, input_html: { rows: 2 }
+            = f.input :service_description, as: :text, input_html: { rows: 5 }
+            - %w[operator].each do |field|
+              = f.input "#{field}_name"
+              = f.input "#{field}_url"
+              = f.input "#{field}_logo"
+            = f.input :privacy_policy_url
+            = f.input :matomo_site_id
+            = f.input :inbound_email_config, collection: Organization.inbound_email_configs.keys.map(&:to_sym), include_blank: false
+            = f.input :hours_delay_before_publishing
+            = f.input :image_background
+            =# f.input :subdomain not used ATM
+            =# f.input :domain not used ATM
+          .card-header
+            .card-title= t('.title_social')
+          .card-body
+            - %w[linkedin_url twitter_url youtube_url instagram_url facebook_url].each do |social_url|
+              = f.input social_url
+          .card-header
+            .card-title= t('.title_partners')
+          .card-body
+            - %w[partner_1 partner_2 partner_3].each do |field|
+              = f.input "#{field}_name"
+              = f.input "#{field}_url"
+              = f.input "#{field}_logo"
+          .card-body
+            .d-flex
+              = button_tag(type: 'submit', class: 'btn btn-primary btn-raised mb-0 ml-auto') do
+                = t('buttons.save')

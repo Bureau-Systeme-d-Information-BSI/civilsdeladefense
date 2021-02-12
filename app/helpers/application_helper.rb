@@ -34,4 +34,9 @@ module ApplicationHelper
       </svg>
     HEREDOC
   end
+
+  def will_paginate(collection = nil, options = {})
+    options[:renderer] ||= BootstrapRenderer
+    super(collection, options)
+  end
 end

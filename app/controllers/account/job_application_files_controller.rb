@@ -4,7 +4,9 @@ class Account::JobApplicationFilesController < Account::BaseController
   include SendFileContent
 
   before_action :set_job_application
-  before_action :set_job_application_file, only: %i[show]
+  before_action :set_job_application_file, only: %i[show update]
+
+  layout 'account/job_application_display'
 
   # GET /account/job_application_files
   # GET /account/job_application_files.json
@@ -16,50 +18,42 @@ class Account::JobApplicationFilesController < Account::BaseController
   def create
     attrs = job_application_file_params
     @job_application_file = @job_application.job_application_files.build(attrs)
-    @notification = t('.success')
+    file_type = @job_application_file.job_application_file_type
 
     respond_to do |format|
       if @job_application_file.save
         @job_application.compute_notifications_counter!
-        format.html { redirect_to @job_application_file, notice: @notification }
-        format.js do
-          render :file_operation
+        format.turbo_stream do
+          str = turbo_stream.replace(file_type,
+                                     partial: 'file_name_upload',
+                                     locals: {
+                                       job_application: @job_application,
+                                       job_application_file: @job_application_file
+                                     })
+          render turbo_stream: str
         end
-        format.json do
-          location = [:account, @job_application, @job_application_file]
-          render :show, status: :created, location: location
-        end
+        format.html { redirect_to url, notice: t('.success') }
       else
         format.html { render :new }
-        format.js do
-          render :file_operation
-        end
-        format.json { render json: @job_application_file.errors, status: :unprocessable_entity }
       end
     end
   end
 
   def update
-    @job_application_file = @job_application.job_application_files.find params[:id]
-    @notification = t('.success')
+    file_type = @job_application_file.job_application_file_type
 
     respond_to do |format|
       if @job_application_file.update(job_application_file_params)
         @job_application.compute_notifications_counter!
-        format.html { redirect_to @job_application_file, notice: @notification }
-        format.js do
-          render :file_operation
+        format.turbo_stream do
+          render turbo_stream: turbo_stream_update_response(file_type)
         end
-        format.json do
-          location = [:account, @job_application, @job_application_file]
-          render :show, status: :created, location: location
-        end
+        format.html { redirect_to redirect_back_location, notice: t('.success') }
       else
-        format.html { render :new }
-        format.js do
-          render :file_operation
+        format.turbo_stream do
+          render turbo_stream: turbo_stream_update_response(file_type)
         end
-        format.json { render json: @job_application_file.errors, status: :unprocessable_entity }
+        format.html { render :edit }
       end
     end
   end
@@ -88,5 +82,18 @@ class Account::JobApplicationFilesController < Account::BaseController
 
   def set_job_application_file
     @job_application_file = @job_application.job_application_files.find params[:id]
+  end
+
+  def redirect_back_location
+    [:account, @job_application, :job_application_files]
+  end
+
+  def turbo_stream_update_response(file_type)
+    turbo_stream.replace(file_type,
+                         partial: 'file_name_upload',
+                         locals: {
+                           job_application: @job_application,
+                           job_application_file: @job_application_file
+                         })
   end
 end

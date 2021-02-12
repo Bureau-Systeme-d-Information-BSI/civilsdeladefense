@@ -1,10 +1,11 @@
-- @page_title = 'Postuler au poste ' + @job_offer.title + ' ' + @job_offer.location
-.card.pushed-top
-  .card-body
-    = render partial: 'job_offer_head', locals: {job_offer: @job_offer}
-    - if user_signed_in? && current_user.already_applied?(@job_offer)
-      .text-center
-        %strong.h3.d-block.mt-5.mb-3 Vous avez déjà proposé votre candidature à cette annonce.
-        = link_to "Retour", :back, class: "btn btn-primary btn-raised btn-lg mb-5"
-    - else
-      = render partial: '/job_applications/form'
+- @page_title = "Postuler à l'offre #{@job_offer.identifier} #{@job_offer.title} #{@job_offer.location}"
+- if user_signed_in? && current_user.already_applied?(@job_offer)
+  .text-center
+    %strong.h3.d-block.mt-5.mb-3 Vous avez déjà proposé votre candidature à cette annonce.
+    = link_to "Retour", :back, class: "btn btn-primary btn-raised btn-lg mb-5"
+- else
+  %h1.rf-h2.rf-mt-0
+    Postuler à l'offre
+    %br
+    %small= @job_offer.title
+  = render partial: '/job_applications/form'

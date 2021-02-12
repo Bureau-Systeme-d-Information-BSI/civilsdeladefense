@@ -1,0 +1,5 @@
+.rf-container.rf-mt-6w
+  .rf-grid-row.rf-grid-row--center
+    %h2 Nos offres à la une
+  .rf-grid-row.rf-grid-row--gutters.rf-card-deck
+    = render partial: 'job_offer_headline_card', collection: @job_offers_selected, as: :job_offer

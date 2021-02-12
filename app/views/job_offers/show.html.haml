@@ -1,14 +1,3 @@
-- display_apply_button = @job_offer.published?
-- cache [@job_offer, display_apply_button] do
-  - @with_background_image = true
-  - @page_title = @job_offer.title + ' ' + @job_offer.location
-  .row
-    .col-12.col-md-5
-      .card.job-offer-head-sticky
-        .card-body
-          = render partial: 'job_offer_head', locals: {job_offer: @job_offer, inside_card: true}
-          - if display_apply_button
-            .text-center
-              = link_to t('.apply'), [:apply, @job_offer], class: 'btn btn-primary btn-raised btn-lg', rel: 'noindex nofollow'
-    .col-12.col-md-7
-      = render partial: 'job_offer_content', locals: {job_offer: @job_offer}
+- @page_title = 'Offre d\'emploi ' + @job_offer.title + ' ' + @job_offer.location
+%h1.rf-mt-0.rf-h2= @job_offer.title
+= render partial: 'job_offer_content', locals: {job_offer: @job_offer}

@@ -4,7 +4,7 @@ class CreateOrganizations < ActiveRecord::Migration[6.0]
   def change
     create_table :organizations, id: :uuid do |t|
       t.string :name
-      t.string :name_business_owner
+      t.string :business_owner_name
       t.string :administrator_email_suffix
       t.string :subdomain
       t.string :domain

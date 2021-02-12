@@ -14,25 +14,27 @@ class Account::EmailsController < Account::BaseController
   # POST /account/emails.json
   def create
     @email = @job_application.emails.build(email_params)
-    @email.sender = current_user
-    @email.job_application = @job_application
-    @notification = t('.success')
 
     respond_to do |format|
       if @email.save
-        format.html { redirect_to @email, notice: @notification }
-        format.js do
-          @email = Email.new
-          @email.job_application = @job_application
-          render :create
+        format.turbo_stream do
+          s = turbo_stream.prepend('emails') do
+            view_context.render partial: 'email', locals: { email: @email }
+          end
+          new_email = @job_application.emails.new
+          s += turbo_stream.replace(new_email) do
+            view_context.render partial: 'form', locals: { email: new_email }
+          end
+          render turbo_stream: s
         end
-        format.json do
-          location = [:account, @job_application, @email]
-          render :show, status: :created, location: location
-        end
+        format.html { redirect_to [:account, @job_application], notice: t('.success') }
       else
-        format.html { render :new }
-        format.json { render json: @email.errors, status: :unprocessable_entity }
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace(@email,
+                                                    partial: 'form',
+                                                    locals: { email: @email })
+        end
+        format.html { render template: '/account/job_applications/show' }
       end
     end
   end
@@ -41,7 +43,10 @@ class Account::EmailsController < Account::BaseController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def email_params
-    params.require(:email).permit(:subject, :body)
+    params.require(:email).permit(:subject, :body).tap do |whitelisted|
+      whitelisted[:sender] = current_user
+      whitelisted[:job_application] = @job_application
+    end
   end
 
   def set_job_application

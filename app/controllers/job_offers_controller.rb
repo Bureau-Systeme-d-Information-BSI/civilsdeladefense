@@ -4,6 +4,7 @@ class JobOffersController < ApplicationController
   before_action :set_job_offers, only: %i[index]
   before_action :set_job_offer, only: %i[show apply send_application successful]
   invisible_captcha only: [:send_application], honeypot: :subtitle
+  layout 'job_offer_display', only: %i[show apply successful send_application]
 
   # GET /job_offers
   # GET /job_offers.json
@@ -57,16 +58,18 @@ class JobOffersController < ApplicationController
       if @job_application.save
         @job_offer.initial! if @job_offer.start?
         @job_application.send_confirmation_email
-        user = @job_application.user
-        user.update_column :last_job_application_id, @job_application.id
-
-        format.html { redirect_to %i[account job_applications] }
+        @job_application.user.update_column :last_job_application_id, @job_application.id
+        format.html { redirect_to [:successful, @job_offer] }
         format.json do
           json = @job_application.to_json(only: %i[id])
           render json: json, status: :created, location: [:successful, @job_offer]
         end
       else
-        format.html { render :apply }
+        format.turbo_stream do
+          instruction = turbo_stream.replace(@job_application, partial: '/job_applications/form')
+          render turbo_stream: instruction
+        end
+        format.html { render :show }
         format.json { render json: @job_application.errors, status: :unprocessable_entity }
       end
     end
@@ -80,7 +83,7 @@ class JobOffersController < ApplicationController
   private
 
   def set_job_offers
-    @job_offers = JobOffer.publicly_visible.includes(:contract_type)
+    @job_offers = JobOffer.publicly_visible.includes(:contract_type).order(published_at: :desc)
     @job_offers = @job_offers.includes(:study_level) if request.format.json?
     if params[:category_id].present?
       @category = Category.find(params[:category_id])
@@ -93,7 +96,7 @@ class JobOffersController < ApplicationController
       end
     end
     @job_offers = @job_offers.search_full_text(params[:q]) if params[:q].present?
-    @job_offers = @job_offers.to_a
+    @job_offers = @job_offers.paginate(page: params[:page])
   end
 
   # Use callbacks to share common setup or constraints between actions.

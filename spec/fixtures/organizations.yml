@@ -1,5 +1,6 @@
 cvd:
-  name: 'Civils de la Défense'
-  name_business_owner: "Ministère des Armées"
-  domain: 'civilsdeladefense.fabnum.fr'
-  subdomain: 'cvd'
+  service_name: "Civils de la Défense"
+  brand_name: "Ministère des Armées"
+  brand_prefix_article: "le"
+  domain: "civilsdeladefense.fabnum.fr"
+  subdomain: "cvd"

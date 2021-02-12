@@ -1,4 +1,4 @@
-version: '2'
+version: "2"
 services:
   postgresql:
     image: scalingo/postgresql:12.2.0-6
@@ -38,6 +38,8 @@ services:
     ports:
       - 3000:3000
     command: rails server -b 0.0.0.0 -p 3000
+    stdin_open: true
+    tty: true
   webpack:
     build: .
     ports:

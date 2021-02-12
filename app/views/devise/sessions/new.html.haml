@@ -1,14 +1,17 @@
 - @page_title = t(".sign_in.#{ resource.class.to_s.downcase }")
-- if resource.is_a?(User)
-  = render "devise/shared/france_connect"
-  %p.text-center
-    Vous avez déjà un espace candidat, identifiez-vous.
-= simple_form_for(resource, as: resource_name, url: session_path(resource_name), wrapper: :input_group) do |f|
-  .form-inputs
-    = f.input :email, required: false, autofocus: true, label: false, placeholder: true
-    = f.input :password, required: false, label: false, placeholder: true, hint: false
-    = f.input :remember_me, as: :boolean if devise_mapping.rememberable?
-  .form-actions
-    = f.button :submit, t(".sign_in.#{ resource.class.to_s.downcase }"), class: 'btn btn-primary btn-raised'
-  .form-links
-    = render "devise/shared/links"
+
+.rf-text--lead.rf-mb-3w
+  - if resource.is_a?(User)
+    = render "devise/shared/france_connect"
+    Vous avez déjà un espace candidat ?
+    %br
+    Identifiez-vous !
+  - elsif resource.is_a?(Administrator)
+    %h1.h4 Connexion espace recruteur
+= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+  = f.input :email, required: false, autofocus: true
+  = f.input :password, required: false, hint: false
+  = f.input :remember_me, as: :boolean if devise_mapping.rememberable?
+  .rf-input-group
+    = f.button :submit, t(".sign_in.#{ resource.class.to_s.downcase }"), class: 'rf-btn btn btn-primary btn-raised'
+  = render "devise/shared/links"

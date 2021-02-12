@@ -2,77 +2,54 @@
 - profile = @job_application.profile
 - unless user_signed_in?
   = render "devise/shared/france_connect"
-= simple_form_for(@job_application, url: [:send_application, @job_offer], method: :post, remote: true, html: {data: {type: :json}}) do |f|
+= simple_form_for(@job_application, url: [:send_application, @job_offer], method: :post) do |f|
   .form-inputs.mt-3
     = f.error_notification
     = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
-    %h2.h5.mb-3.text-dark-gray= t('.general_informations')
+    %h2.rf-h3= t('.general_informations')
     = f.simple_fields_for :user do |user_form|
-      .row
-        .col-12.col-md-6
-          = user_form.input :first_name, readonly: user_signed_in?
-        .col-12.col-md-6
-          = user_form.input :last_name, readonly: user_signed_in?
-      .row
-        .col-12.col-md-6
-          = user_form.input :current_position, required: true
-      .row
-        .col-12.col-md-6
-          = user_form.input :phone, required: true
+      = user_form.input :first_name, readonly: user_signed_in?
+      = user_form.input :last_name, readonly: user_signed_in?
+      = user_form.input :current_position, required: true
+      = user_form.input :phone, required: true
     - unless user_signed_in?
-      .row
-        .col-12.col-md-6
-          = f.simple_fields_for :user do |user_form|
-            = user_form.label :photo, required: false
-            = user_form.input :photo, label: t('buttons.choose_file'), wrapper: :custom_file_without_label
+      = f.simple_fields_for :user do |user_form|
+        = user_form.label :photo, required: false
+        = user_form.input :photo, label: t('buttons.choose_file'), wrapper: :custom_file_without_label
 
-    %h2.h5.mt-4.mb-3.text-dark-gray= t('.your_profile')
+    %h2.rf-h3= t('.your_profile')
     - job_application_files = @job_application.job_application_files.to_a
     - current_state = JobApplication.states[@job_application.state]
     - job_application_file_types = JobApplicationFileType.where(by_default: true).where("from_state <= ?", current_state).where(kind: %i(applicant_provided template)).all
     - job_application_file_types.each do |job_application_file_type, index|
       - job_application_file = job_application_files.detect{|x| x.job_application_file_type == job_application_file_type}
       - job_application_file ||= @job_application.job_application_files.build job_application_file_type: job_application_file_type
-      .row
-        .col-12.col-md-6
-          = f.simple_fields_for :job_application_files, job_application_file, input_html: {placeholder: false, required: true} do |file_form|
-            = file_form.hidden_field :job_application_file_type_id
-            = file_form.label job_application_file_type.name, required: true
-            = file_form.input :content, label: t('buttons.choose_file'), wrapper: :custom_file_without_label
+      = f.simple_fields_for :job_application_files, job_application_file, input_html: {placeholder: false, required: true} do |file_form|
+        = file_form.hidden_field :job_application_file_type_id
+        = file_form.label job_application_file_type.name, required: true, class: 'rf-label'
+        = file_form.input :content, label: t('buttons.choose_file'), wrapper: :custom_file_without_label
 
-    %h2.h5.mt-4.mb-3.text-dark-gray= t('.your_internet_presence')
+    %h2.rf-h3= t('.your_internet_presence')
     = f.simple_fields_for :user do |user_form|
-      .row
-        .col-12
-          = user_form.input :website_url, required: false
+      = user_form.input :website_url, required: false
 
     - unless user_signed_in?
-      %h2.h5.mt-4.mb-3.text-dark-gray= t('.your_account_creation')
+      %h2.rf-h3= t('.your_account_creation')
       = f.simple_fields_for :user, input_html: {placeholder: false, required: true} do |user_form|
-        .row
-          .col-12.col-md-6
-            = user_form.input :email, required: true
-        .row
-          .col-12.col-md-6
-            = user_form.input :password, required: true
-          .col-12.col-md-6
-            = user_form.input :password_confirmation, required: true
-
-        .mt-4.mb-3
+        = user_form.input :email, required: true
+        = user_form.input :password, required: true
+        = user_form.input :password_confirmation, required: true
         - privacy_policy_url = current_organization.privacy_policy_url
-        - site_name = current_organization.name
-        - business_owner_name = current_organization.name_business_owner
-        - label = t('simple_form.labels.user.terms_of_service', link: privacy_policy_url, site_name: site_name, business_owner_name: business_owner_name).html_safe
-        = user_form.input :terms_of_service, as: :boolean, label: label, label_html: { class: 'ml-2' }
-        = user_form.input :certify_majority, as: :boolean, label_html: { class: 'ml-2' }
+        - service_name = current_organization.service_name
+        - brand_name = current_organization.brand_name
+        - brand_prefix_article = current_organization.brand_prefix_article
+        - label = t('simple_form.labels.user.terms_of_service', link: privacy_policy_url, service_name: service_name, brand_name: brand_name, brand_prefix_article: brand_prefix_article).html_safe
+        = user_form.input :terms_of_service, as: :boolean, label: content_tag('span', label, style: 'display: inline;')
+        = user_form.input :certify_majority, as: :boolean
     = f.invisible_captcha :subtitle
 
-  .form-actions.text-center.mt-md-4
-    = button_tag(type: 'submit', class: 'btn btn-primary btn-raised btn-lg d-none d-md-inline mb-0') do
+  .rf-input-group.rf-grid-row.rf-grid-row--center.rf-mt-6w
+    = button_tag(type: 'submit', class: 'rf-btn rf-btn--lg') do
       = t('helpers.submit.job_application.save')
-      = fa_icon('send', class: 'ml-1')
-    = button_tag(type: 'submit', class: 'btn btn-primary btn-raised d-md-none mb-0') do
-      = t('helpers.submit.job_application.save')
-      = fa_icon('send', class: 'ml-1')
     .d-flex.justify-content-end.pt-1.invisible.spinner
       = spinner

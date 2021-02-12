@@ -1,24 +1,5 @@
-.d-flex.flex-column{id: dom_id(@job_application, 'emails')}
-
-  = render partial: '/account/emails/form'
-
-  - @job_application.emails.order(created_at: :desc).includes(:sender).each do |email|
-    = cache email do
-      .card.mt-4
-        .card-header.with-subheader.bg-white.font-weight-bold.text-secondary.d-flex.align-items-center
-          .mr-auto
-            = fa_icon('forum', class: 'text-secondary')
-            - if email.automatic_email?
-              %em Courriel automatique
-            - else
-              = precede 'de ' do
-                = email.sender&.full_name
-            %br
-            %small.datetime
-              = surround 'le ', ' - ' do
-                = I18n.l email.created_at, format: :short
-              = t('.time_ago', time_ago_in_words: time_ago_in_words(email.created_at))
-        .card-subheader.bg-card-bg.font-weight-bold.text-muted
-          = sanitize(email.subject, tags: %w())
-        .card-body.bg-white
-          = simple_format(sanitize(email.body, tags: %w()))
+.d-flex.flex-column
+  = render partial: '/account/emails/form', locals: { email: @email }
+  - @emails = @job_application.emails.order(created_at: :desc).includes(:sender)
+  = turbo_frame_tag 'emails' do
+    = render partial: '/account/emails/email', collection: @emails

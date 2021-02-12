@@ -101,6 +101,7 @@ Rails.application.routes.draw do
     namespace :settings, path: 'parametres' do
       resource :organization do
         member do
+          get :edit_security
           patch :update_general, :update_display, :update_security
         end
       end
@@ -147,13 +148,13 @@ Rails.application.routes.draw do
     root to: 'job_offers#index'
   end
 
-  scope as: 'account', module: 'account' do
-    authenticate :user do
+  authenticate :user do
+    namespace 'account', path: 'espace-candidat' do
       resources :job_applications, path: 'mes-candidatures' do
-        collection do
-          get :finished
+        member do
+          get :job_offer, path: 'offre'
         end
-        resources :job_application_files
+        resources :job_application_files, path: 'documents'
         resources :emails, only: %i[index create]
       end
       resource :user, path: 'mon-compte', only: %i[show update destroy] do
@@ -177,5 +178,5 @@ Rails.application.routes.draw do
   resource :robots, only: %w[show]
   resource :sitemap
 
-  root to: 'job_offers#index'
+  root to: 'homepages#show'
 end

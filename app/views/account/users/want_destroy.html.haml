@@ -1,9 +1,9 @@
-.card
-  .card-header.bg-danger
-    .card-title.text-white= t('.title')
-  .card-body
-    %p
-      La suppression de votre compte est <span class='font-weight-bold'>irréversible</span> : toutes vos candidatures et données personnelles seront supprimées.
-    = simple_form_for(@user_for_deletion, url: [:account, :user], method: :delete) do |f|
-      = f.input :current_password, placeholder: false, label: "Pour supprimer votre compte, veuillez entrer votre mot de passe :"
-      = f.submit t('.destroy'), class: "btn btn-danger btn-raised btn-block"
+.alert.alert-danger
+  %h2.rf-h3.rf-mt-0.rf-mb-0= t('.title')
+%p
+  La suppression de votre compte est <strong>irréversible</strong> : toutes vos candidatures et données personnelles seront supprimées.
+= simple_form_for(@user_for_deletion, url: [:account, :user], method: :delete, html: { class: 'rf-box rf-mb-5w rf-pb-5w' }) do |f|
+  = f.input :current_password, placeholder: false, label: "Pour supprimer votre compte, veuillez entrer votre mot de passe :"
+  .rf-input-group.rf-grid-row.justify-content-end.rf-mt-3w
+    = button_tag(type: 'submit', class: 'rf-btn') do
+      = t('.destroy')

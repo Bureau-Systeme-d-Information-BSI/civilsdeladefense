@@ -1,28 +1,29 @@
 !!!
-%html{lang: I18n.locale}
+%html{lang: I18n.locale, "data-rf-reset" => true}
   %head
-    %title= [@page_title, current_organization.name].delete_if(&:blank?).join(' - ')
+    %title= [@page_title, current_organization.service_name].delete_if(&:blank?).join(' - ')
     %meta{charset: "utf-8"}
     %meta{name: "viewport", content: "width=device-width, initial-scale=1, shrink-to-fit=no"}
     - if controller.action_name == 'apply'
       %meta{name: :robots, content: 'noindex nofollow'}
-    = stylesheet_link_tag 'https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500,700|Roboto+Mono:400,500'
     = stylesheet_pack_tag 'style'
     = csrf_meta_tags
     = csp_meta_tag
+    = favicon_pack_tag 'favicon-16x16.png', rel: 'icon', type: 'image/png'
+    = favicon_pack_tag 'favicon-32x32.png', rel: 'icon', type: 'image/png'
+    = javascript_pack_tag 'bundle'
   %body
-    = render partial: '/shared/navbar'
-    .container.py-5
-      .row
+    = render partial: '/shared/header'
+    .rf-container
+      .rf-grid-row
         - klasses = devise_controller? ? %w(col-md-6 devise) : (controller.action_name == "show" && controller.controller_name != 'pages' ? %w() : %w(col-md-9))
-        .col-12.mx-md-auto{class: klasses}
+        .rf-col-12.mx-md-auto{class: klasses}
           - if flash[:notice]
             .fixed-bottom.alert.alert-info= flash[:notice]
           - elsif flash[:error]
             .fixed-bottom.alert.alert-danger= flash[:error]
           - elsif flash[:success]
             .fixed-bottom.alert.alert-success= flash[:success]
-          = content_for?(:content) ? yield(:content) : yield
+    = content_for?(:content) ? yield(:content) : yield
     = render partial: '/shared/footer'
-    = javascript_pack_tag 'bundle', defer: true
-    = render partial: "/shared/trackers"
+    = render partial: '/shared/trackers'

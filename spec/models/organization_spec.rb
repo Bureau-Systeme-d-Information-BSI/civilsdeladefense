@@ -8,7 +8,8 @@ RSpec.describe Organization, type: :model do
     expect(@organization).to be_valid
   end
 
-  it { should validate_presence_of(:name) }
-  it { should validate_presence_of(:name_business_owner) }
+  it { should validate_presence_of(:service_name) }
+  it { should validate_presence_of(:brand_name) }
+  it { should validate_presence_of(:brand_prefix_article) }
   it { should validate_presence_of(:subdomain) }
 end

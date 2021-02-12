@@ -3,8 +3,11 @@
 @import "stepper";
 @import "alert";
 
-[data-rf-reset] body {
-  margin: 0;
+// Design System overflow fix
+@media (min-width: 48em) {
+  .rf-header .rf-nav {
+    margin: 0 calc(50% - 49vw) !important;
+  }
 }
 
 input {

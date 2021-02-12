@@ -5,5 +5,5 @@
   = f.full_error :confirmation_token
   = f.input :email, required: true, autofocus: true
   .rf-input-group.rf-grid-row
-    = f.button :submit, t(".resend"), class: 'rf-btn'
+    = f.button :submit, t(".resend"), class: 'rf-btn btn btn-primary btn-raised'
   = render "devise/shared/links"

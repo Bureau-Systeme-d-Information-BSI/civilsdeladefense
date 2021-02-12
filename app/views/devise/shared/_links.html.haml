@@ -1,4 +1,4 @@
-.d-flex.flex-column.align-items-start
+.form-links.d-flex.flex-column.align-items-start
   - if controller_name != 'sessions'
     = link_to t(".sign_in"), new_session_path(resource_name), class: 'rf-mt-1w rf-link'
   - if devise_mapping.registerable? && controller_name != 'registrations'

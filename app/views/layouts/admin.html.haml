@@ -12,6 +12,7 @@
     = csp_meta_tag
   - style = 'overflow: hidden;' if controller.controller_name == 'job_offers' && controller.action_name == 'board'
   - klasses = %w(mt-0 pb-0) if !administrator_signed_in?
+  - klasses << 'devise' if devise_controller?
   %body{class: klasses, style: style}
     #__SVG_SPRITE_NODE__{'data-turbolinks-permanent': true}
     - if administrator_signed_in?
@@ -24,9 +25,9 @@
         .d-none.alert.alert-success= flash[:success]
       = content_for?(:content) ? yield(:content) : yield
     - else
-      .container-fluid.devise
-        .row
-          .col-12.col-md-4.d-md-flex.flex-md-column.justify-content-center.bg-white.px-md-5.sidebar.pt-5.pt-md-0
+      .container
+        .row.justify-content-center
+          .col-12.col-md-6.d-md-flex.flex-md-column.justify-content-center.bg-white.p-5.mt-5
             .logos.mb-5
               - if current_organization.logo_horizontal.present?
                 = image_tag(current_organization.logo_horizontal.url, class: 'logo')
@@ -41,5 +42,4 @@
             - elsif flash[:success]
               .alert.alert-success= flash[:success]
             = yield
-          .col-12.col-md-8{style: "background-size: cover;background-image: url(#{ asset_pack_path('images/background.png') })"}
       = javascript_pack_tag 'devise-bundle'

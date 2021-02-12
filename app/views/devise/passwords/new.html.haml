@@ -4,5 +4,5 @@
   = f.error_notification
   = f.input :email, required: true, autofocus: true, label: false, placeholder: true
   .rf-input-group.rf-grid-row
-    = f.button :submit, t(".send_me_reset_password_instructions"), class: 'rf-btn'
+    = f.button :submit, t(".send_me_reset_password_instructions"), class: 'rf-btn btn btn-primary btn-raised'
   = render "devise/shared/links"

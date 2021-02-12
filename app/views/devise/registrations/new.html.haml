@@ -18,5 +18,5 @@
     = f.input :terms_of_service, as: :boolean, label: content_tag('span', label, style: 'display: inline;')
     = f.input :certify_majority, as: :boolean
   .rf-input-group.rf-grid-row
-    = f.button :submit, t(".sign_up"), class: 'rf-btn'
+    = f.button :submit, t(".sign_up"), class: 'rf-btn btn btn-primary btn-raised'
   = render "devise/shared/links"

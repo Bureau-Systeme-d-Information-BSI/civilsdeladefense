@@ -599,6 +599,8 @@ fr:
           title: "Édition des paramètres de sécurité"
         form:
           title: "Paramètres généraux"
+          title_social: "Réseaux sociaux"
+          title_partners: "Partenaires"
         form_security:
           title: "Paramètres de sécurité"
         update:

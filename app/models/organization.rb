@@ -14,6 +14,9 @@ class Organization < ApplicationRecord
 
   %i[
     operator_logo
+    partner_1_logo
+    partner_2_logo
+    partner_3_logo
     logo_vertical
     logo_horizontal
     logo_vertical_negative
@@ -39,5 +42,15 @@ class Organization < ApplicationRecord
 
   def name
     service_name
+  end
+
+  def possessive_article
+    if brand_prefix_article == "le"
+      "du"
+    elsif brand_prefix_article == "la"
+      "de la"
+    elsif brand_prefix_article == "l'"
+      "de l'"
+    end
   end
 end

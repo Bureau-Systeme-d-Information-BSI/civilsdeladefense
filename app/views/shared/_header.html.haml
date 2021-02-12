@@ -7,7 +7,7 @@
             = simple_format(current_organization.brand_name, nil, wrapper_tag: 'span')
       - if current_organization.operator_logo.present?
         .rf-header__operator
-          = image_tag(current_organization.operator_logo.url, alt: current_organization.operator_name, style: 'width:auto; height:2.5rem;')
+          = image_tag(current_organization.operator_logo.url, alt: current_organization.operator_name, style: 'width:auto; height:3.5rem;')
       .rf-header__navbar
         .rf-service
           =  link_to root_path, title: current_organization.service_name, class: 'rf-service__title' do

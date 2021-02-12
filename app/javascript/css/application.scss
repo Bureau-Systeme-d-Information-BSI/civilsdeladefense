@@ -67,6 +67,9 @@ input {
   fill: currentColor;
   top: 0.375em;
   position: relative;
+  &.rf-icon-xl {
+    height: 1.5rem;
+  }
 }
 
 .rf-top-3w {

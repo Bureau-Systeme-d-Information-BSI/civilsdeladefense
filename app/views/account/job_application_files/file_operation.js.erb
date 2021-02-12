@@ -1,9 +1,0 @@
-var nodeId = 'job_application_file_<%= @job_application_file.job_application_file_type.name.parameterize %>'
-var node = document.getElementById(nodeId)
-var html = '<%= j render partial: 'file_name_upload', locals: {job_application: @job_application, job_application_file: @job_application_file} %>'
-var frag = document.createRange().createContextualFragment(html)
-node.replaceWith(frag)
-var newNode = document.getElementById(nodeId)
-manageDropArea(newNode.querySelector('.drop-area'))
-formAutoSubmit()
-displaySnackbars()

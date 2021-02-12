@@ -18,7 +18,7 @@ SimpleForm.setup do |config|
   config.button_class = 'btn'
 
   # Define the default class of the input wrapper of the boolean input.
-  config.boolean_label_class = 'form-check-label'
+  config.boolean_label_class = 'form-check-label rf-check'
 
   # How the label text should be generated altogether with the required text.
   config.label_text = lambda { |label, required, explicit_label| "#{label} #{required}" }
@@ -34,7 +34,7 @@ SimpleForm.setup do |config|
   config.include_default_input_wrapper_class = false
 
   # CSS class to add for error notification helper.
-  config.error_notification_class = 'alert alert-danger'
+  config.error_notification_class = 'alert alert-danger rf-mb-2w'
 
   # Method used to tidy up errors. Specify any Rails Array method.
   # :first lists the first message for each field.
@@ -42,14 +42,14 @@ SimpleForm.setup do |config|
   config.error_method = :to_sentence
 
   # add validation classes to `input_field`
-  config.input_field_error_class = 'is-invalid'
-  config.input_field_valid_class = 'is-valid'
+  config.input_field_error_class = 'is-invalid rf-input--error'
+  config.input_field_valid_class = 'is-valid rf-input--valid'
 
 
   # vertical forms
   #
   # vertical default_wrapper
-  config.wrappers :vertical_form, tag: 'div', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+  config.wrappers :vertical_form, tag: 'div', class: 'form-group rf-input-group', error_class: 'form-group-invalid rf-input-group--error', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.use :placeholder
     b.optional :maxlength
@@ -57,93 +57,93 @@ SimpleForm.setup do |config|
     b.optional :pattern
     b.optional :min_max
     b.optional :readonly
-    b.use :label, class: 'form-control-label'
-    b.use :input, class: 'form-control', error_class: 'is-invalid', valid_class: 'is-valid'
-    b.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
-    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+    b.use :label, class: 'form-control-label rf-label'
+    b.use :input, class: 'form-control rf-input', error_class: 'is-invalid rf-input--error', valid_class: 'is-valid rf-input--valid'
+    b.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback rf-error-text' }
+    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted rf-hint-text' }
   end
 
   # vertical input for boolean
-  config.wrappers :vertical_boolean, tag: 'fieldset', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+  config.wrappers :vertical_boolean, tag: 'fieldset', class: 'form-group rf-input-group rf-fieldset', error_class: 'form-group-invalid rf-input-group--error', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.optional :readonly
-    b.wrapper :form_check_wrapper, tag: 'div', class: 'form-check' do |bb|
-      bb.use :input, class: 'form-check-input', error_class: 'is-invalid', valid_class: 'is-valid'
-      bb.use :label, class: 'form-check-label'
-      bb.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
-      bb.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+    b.wrapper :form_check_wrapper, tag: 'div', class: 'form-check rf-checkbox-group' do |bb|
+      bb.use :input, class: 'form-check-input', error_class: 'is-invalid rf-input--error', valid_class: 'is-valid rf-input--valid'
+      bb.use :label, class: 'form-check-label rf-check'
+      bb.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback rf-error-text' }
+      bb.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted rf-hint-text' }
     end
   end
 
   # vertical input for radio buttons and check boxes
-  config.wrappers :vertical_collection, item_wrapper_class: 'form-check custom-control custom-radio', tag: 'fieldset', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+  config.wrappers :vertical_collection, item_wrapper_class: 'form-check custom-control custom-radio', tag: 'fieldset', class: 'form-group rf-input-group rf-fieldset', error_class: 'form-group-invalid rf-input-group--error', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.optional :readonly
     b.wrapper :legend_tag, tag: 'legend', class: 'col-form-label pt-0' do |ba|
       ba.use :label_text
     end
-    b.wrapper :form_check_wrapper, tag: 'div', class: 'form-check' do |bb|
-      bb.use :input, class: 'form-check-input', error_class: 'is-invalid', valid_class: 'is-valid'
-      bb.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
-      bb.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+    b.wrapper :form_check_wrapper, tag: 'div', class: 'form-check rf-checkbox-group' do |bb|
+      bb.use :input, class: 'form-check-input', error_class: 'is-invalid rf-input--error', valid_class: 'is-valid rf-input--valid'
+      bb.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback rf-error-text' }
+      bb.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted rf-hint-text' }
     end
 
   end
 
   # vertical input for inline radio buttons and check boxes
-  config.wrappers :vertical_collection_inline, item_wrapper_class: 'form-check form-check-inline', tag: 'fieldset', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+  config.wrappers :vertical_collection_inline, item_wrapper_class: 'form-check form-check-inline', tag: 'fieldset', class: 'form-group rf-input-group rf-fieldset', error_class: 'form-group-invalid rf-input-group--error', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.optional :readonly
     b.wrapper :legend_tag, tag: 'legend', class: 'col-form-label pt-0' do |ba|
       ba.use :label_text
     end
-    b.use :input, class: 'form-check-input', error_class: 'is-invalid', valid_class: 'is-valid'
-    b.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
-    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+    b.use :input, class: 'form-check-input', error_class: 'is-invalid rf-input--error', valid_class: 'is-valid rf-input--valid'
+    b.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback rf-error-text d-block' }
+    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted rf-hint-text' }
   end
 
   # vertical file input
-  config.wrappers :vertical_file, tag: 'div', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+  config.wrappers :vertical_file, tag: 'div', class: 'form-group rf-input-group', error_class: 'form-group-invalid rf-input-group--error', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.use :placeholder
     b.optional :maxlength
     b.optional :minlength
     b.optional :readonly
     b.use :label
-    b.use :input, class: 'form-control-file', error_class: 'is-invalid', valid_class: 'is-valid'
-    b.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
-    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+    b.use :input, class: 'form-control-file', error_class: 'is-invalid rf-input--error', valid_class: 'is-valid rf-input--valid'
+    b.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback rf-error-text d-block' }
+    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted rf-hint-text' }
   end
 
   # vertical multi select
-  config.wrappers :vertical_multi_select, tag: 'div', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+  config.wrappers :vertical_multi_select, tag: 'div', class: 'form-group rf-input-group', error_class: 'form-group-invalid rf-input-group--error', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.optional :readonly
-    b.use :label, class: 'form-control-label'
+    b.use :label, class: 'form-control-label rf-label'
     b.wrapper tag: 'div', class: 'd-flex flex-row justify-content-between align-items-center' do |ba|
-      ba.use :input, class: 'form-control', error_class: 'is-invalid', valid_class: 'is-valid'
+      ba.use :input, class: 'form-control rf-input', error_class: 'is-invalid rf-input--error', valid_class: 'is-valid rf-input--valid'
     end
-    b.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
-    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+    b.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback rf-error-text d-block' }
+    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted rf-hint-text' }
   end
 
   # vertical range input
-  config.wrappers :vertical_range, tag: 'div', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+  config.wrappers :vertical_range, tag: 'div', class: 'form-group rf-input-group', error_class: 'form-group-invalid rf-input-group--error', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.use :placeholder
     b.optional :readonly
     b.optional :step
     b.use :label
-    b.use :input, class: 'form-control-range', error_class: 'is-invalid', valid_class: 'is-valid'
-    b.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
-    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+    b.use :input, class: 'form-control-range', error_class: 'is-invalid rf-input--error', valid_class: 'is-valid rf-input--valid'
+    b.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback rf-error-text d-block' }
+    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted rf-hint-text' }
   end
 
 
   # horizontal forms
   #
   # horizontal default_wrapper
-  config.wrappers :horizontal_form, tag: 'div', class: 'form-group row', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+  config.wrappers :horizontal_form, tag: 'div', class: 'form-group row', error_class: 'form-group-invalid rf-input-group--error', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.use :placeholder
     b.optional :maxlength
@@ -154,55 +154,55 @@ SimpleForm.setup do |config|
     b.use :label, class: 'col-sm-4 col-form-label'
     b.wrapper :grid_wrapper, tag: 'div', class: 'col-sm-8' do |ba|
       ba.use :in_place_edit
-      ba.use :input, class: 'form-control', error_class: 'is-invalid', valid_class: 'is-valid'
-      ba.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
-      ba.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+      ba.use :input, class: 'form-control rf-input', error_class: 'is-invalid rf-input--error', valid_class: 'is-valid rf-input--valid'
+      ba.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback rf-error-text' }
+      ba.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted rf-hint-text' }
     end
   end
 
   # horizontal input for boolean
-  config.wrappers :horizontal_boolean, tag: 'div', class: 'form-group row', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+  config.wrappers :horizontal_boolean, tag: 'div', class: 'form-group row', error_class: 'form-group-invalid rf-input-group--error', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.optional :readonly
     b.wrapper tag: 'label', class: 'col-sm-3' do |ba|
       ba.use :label_text
     end
     b.wrapper :grid_wrapper, tag: 'div', class: 'col-sm-9' do |wr|
-      wr.wrapper :form_check_wrapper, tag: 'div', class: 'form-check' do |bb|
-        bb.use :input, class: 'form-check-input', error_class: 'is-invalid', valid_class: 'is-valid'
-        bb.use :label, class: 'form-check-label'
-        bb.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
-        bb.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+      wr.wrapper :form_check_wrapper, tag: 'div', class: 'form-check rf-checkbox-group' do |bb|
+        bb.use :input, class: 'form-check-input', error_class: 'is-invalid rf-input--error', valid_class: 'is-valid rf-input--valid'
+        bb.use :label, class: 'form-check-label rf-check'
+        bb.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback rf-error-text d-block' }
+        bb.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted rf-hint-text' }
       end
     end
   end
 
   # horizontal input for radio buttons and check boxes
-  config.wrappers :horizontal_collection, item_wrapper_class: 'form-check', tag: 'div', class: 'form-group row', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+  config.wrappers :horizontal_collection, item_wrapper_class: 'form-check rf-checkbox-group', tag: 'div', class: 'form-group row', error_class: 'form-group-invalid rf-input-group--error', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.optional :readonly
     b.use :label, class: 'col-sm-3 form-control-label'
     b.wrapper :grid_wrapper, tag: 'div', class: 'col-sm-9' do |ba|
-      ba.use :input, class: 'form-check-input', error_class: 'is-invalid', valid_class: 'is-valid'
-      ba.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
-      ba.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+      ba.use :input, class: 'form-check-input', error_class: 'is-invalid rf-input--error', valid_class: 'is-valid rf-input--valid'
+      ba.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback rf-error-text d-block' }
+      ba.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted rf-hint-text' }
     end
   end
 
   # horizontal input for inline radio buttons and check boxes
-  config.wrappers :horizontal_collection_inline, item_wrapper_class: 'form-check form-check-inline', tag: 'div', class: 'form-group row', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+  config.wrappers :horizontal_collection_inline, item_wrapper_class: 'form-check form-check-inline', tag: 'div', class: 'form-group row', error_class: 'form-group-invalid rf-input-group--error', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.optional :readonly
     b.use :label, class: 'col-sm-4 form-control-label'
     b.wrapper :grid_wrapper, tag: 'div', class: 'col-sm-8' do |ba|
-      ba.use :input, class: 'form-check-input', error_class: 'is-invalid', valid_class: 'is-valid'
-      ba.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
-      ba.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+      ba.use :input, class: 'form-check-input', error_class: 'is-invalid rf-input--error', valid_class: 'is-valid rf-input--valid'
+      ba.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback rf-error-text d-block' }
+      ba.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted rf-hint-text' }
     end
   end
 
   # horizontal file input
-  config.wrappers :horizontal_file, tag: 'div', class: 'form-group row', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+  config.wrappers :horizontal_file, tag: 'div', class: 'form-group row', error_class: 'form-group-invalid rf-input-group--error', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.use :placeholder
     b.optional :maxlength
@@ -210,38 +210,38 @@ SimpleForm.setup do |config|
     b.optional :readonly
     b.use :label, class: 'col-sm-3 form-control-label'
     b.wrapper :grid_wrapper, tag: 'div', class: 'col-sm-9' do |ba|
-      ba.use :input, error_class: 'is-invalid', valid_class: 'is-valid'
-      ba.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
-      ba.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+      ba.use :input, error_class: 'is-invalid rf-input--error', valid_class: 'is-valid rf-input--valid'
+      ba.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback rf-error-text d-block' }
+      ba.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted rf-hint-text' }
     end
   end
 
   # horizontal multi select
-  config.wrappers :horizontal_multi_select, tag: 'div', class: 'form-group row align-items-center', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+  config.wrappers :horizontal_multi_select, tag: 'div', class: 'form-group row align-items-center', error_class: 'form-group-invalid rf-input-group--error', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.optional :readonly
     b.use :label, class: 'col-sm-4 control-label'
     b.wrapper :grid_wrapper, tag: 'div', class: 'col-sm-8' do |ba|
       ba.wrapper tag: 'div', class: 'd-flex flex-row justify-content-between align-items-center' do |bb|
         bb.use :in_place_edit
-        bb.use :input, class: 'form-control custom-select', error_class: 'is-invalid', valid_class: 'is-valid'
+        bb.use :input, class: 'form-control custom-select', error_class: 'is-invalid rf-input--error', valid_class: 'is-valid rf-input--valid'
       end
-      ba.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
-      ba.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+      ba.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback rf-error-text d-block' }
+      ba.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted rf-hint-text' }
     end
   end
 
   # horizontal range input
-  config.wrappers :horizontal_range, tag: 'div', class: 'form-group row', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+  config.wrappers :horizontal_range, tag: 'div', class: 'form-group row', error_class: 'form-group-invalid rf-input-group--error', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.use :placeholder
     b.optional :readonly
     b.optional :step
     b.use :label, class: 'col-sm-3 form-control-label'
     b.wrapper :grid_wrapper, tag: 'div', class: 'col-sm-9' do |ba|
-      ba.use :input, class: 'form-control-range', error_class: 'is-invalid', valid_class: 'is-valid'
-      ba.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
-      ba.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+      ba.use :input, class: 'form-control-range', error_class: 'is-invalid rf-input--error', valid_class: 'is-valid rf-input--valid'
+      ba.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback rf-error-text d-block' }
+      ba.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted rf-hint-text' }
     end
   end
 
@@ -249,7 +249,7 @@ SimpleForm.setup do |config|
   # inline forms
   #
   # inline default_wrapper
-  config.wrappers :inline_form, tag: 'span', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+  config.wrappers :inline_form, tag: 'span', error_class: 'form-group-invalid rf-input-group--error', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.use :placeholder
     b.optional :maxlength
@@ -259,157 +259,157 @@ SimpleForm.setup do |config|
     b.optional :readonly
     b.use :label, class: 'sr-only'
 
-    b.use :input, class: 'form-control', error_class: 'is-invalid', valid_class: 'is-valid'
-    b.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
-    b.optional :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+    b.use :input, class: 'form-control rf-input', error_class: 'is-invalid rf-input--error', valid_class: 'is-valid rf-input--valid'
+    b.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback rf-error-text' }
+    b.optional :hint, wrap_with: { tag: 'small', class: 'form-text text-muted rf-hint-text' }
   end
 
   # inline input for boolean
-  config.wrappers :inline_boolean, tag: 'span', class: 'form-check flex-wrap justify-content-start mr-sm-2', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+  config.wrappers :inline_boolean, tag: 'span', class: 'form-check flex-wrap justify-content-start mr-sm-2', error_class: 'form-group-invalid rf-input-group--error', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.optional :readonly
-    b.use :input, class: 'form-check-input', error_class: 'is-invalid', valid_class: 'is-valid'
-    b.use :label, class: 'form-check-label'
-    b.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
-    b.optional :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+    b.use :input, class: 'form-check-input', error_class: 'is-invalid rf-input--error', valid_class: 'is-valid rf-input--valid'
+    b.use :label, class: 'form-check-label rf-check'
+    b.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback rf-error-text' }
+    b.optional :hint, wrap_with: { tag: 'small', class: 'form-text text-muted rf-hint-text' }
   end
 
 
   # bootstrap custom forms
   #
   # custom input for boolean
-  config.wrappers :custom_boolean, tag: 'fieldset', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+  config.wrappers :custom_boolean, tag: 'fieldset', class: 'form-group rf-input-group rf-fieldset', error_class: 'form-group-invalid rf-input-group--error', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.optional :readonly
     b.wrapper :form_check_wrapper, tag: 'div', class: 'custom-control custom-checkbox' do |bb|
-      bb.use :input, class: 'custom-control-input', error_class: 'is-invalid', valid_class: 'is-valid'
+      bb.use :input, class: 'custom-control-input', error_class: 'is-invalid rf-input--error', valid_class: 'is-valid rf-input--valid'
       bb.use :label, class: 'custom-control-label'
-      bb.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
-      bb.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+      bb.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback rf-error-text' }
+      bb.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted rf-hint-text' }
     end
   end
 
-  config.wrappers :custom_boolean_switch, tag: 'fieldset', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+  config.wrappers :custom_boolean_switch, tag: 'fieldset', class: 'form-group rf-input-group rf-fieldset', error_class: 'form-group-invalid rf-input-group--error', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.optional :readonly
     b.wrapper :form_check_wrapper, tag: 'div', class: 'custom-control custom-checkbox-switch' do |bb|
-      bb.use :input, class: 'custom-control-input', error_class: 'is-invalid', valid_class: 'is-valid'
+      bb.use :input, class: 'custom-control-input', error_class: 'is-invalid rf-input--error', valid_class: 'is-valid rf-input--valid'
       bb.use :label, class: 'custom-control-label'
-      bb.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
-      bb.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+      bb.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback rf-error-text' }
+      bb.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted rf-hint-text' }
     end
   end
 
   # custom input for radio buttons and check boxes
-  config.wrappers :custom_collection, item_wrapper_class: 'custom-control', tag: 'fieldset', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+  config.wrappers :custom_collection, item_wrapper_class: 'custom-control', tag: 'fieldset', class: 'form-group rf-input-group rf-fieldset', error_class: 'form-group-invalid rf-input-group--error', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.optional :readonly
     b.wrapper :legend_tag, tag: 'legend', class: 'col-form-label pt-0' do |ba|
       ba.use :label_text
     end
-    b.use :input, class: 'custom-control-input', error_class: 'is-invalid', valid_class: 'is-valid'
-    b.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
-    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+    b.use :input, class: 'custom-control-input', error_class: 'is-invalid rf-input--error', valid_class: 'is-valid rf-input--valid'
+    b.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback rf-error-text d-block' }
+    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted rf-hint-text' }
   end
 
   # custom input for inline radio buttons and check boxes
-  config.wrappers :custom_collection_inline, item_wrapper_class: 'custom-control custom-control-inline', tag: 'fieldset', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+  config.wrappers :custom_collection_inline, item_wrapper_class: 'custom-control custom-control-inline', tag: 'fieldset', class: 'form-group rf-input-group rf-fieldset', error_class: 'form-group-invalid rf-input-group--error', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.optional :readonly
     b.wrapper :legend_tag, tag: 'legend', class: 'col-form-label pt-0' do |ba|
       ba.use :label_text
     end
-    b.use :input, class: 'custom-control-input', error_class: 'is-invalid', valid_class: 'is-valid'
-    b.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
-    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+    b.use :input, class: 'custom-control-input', error_class: 'is-invalid rf-input--error', valid_class: 'is-valid rf-input--valid'
+    b.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback rf-error-text d-block' }
+    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted rf-hint-text' }
   end
 
   # custom file input
-  config.wrappers :custom_file, tag: 'div', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+  config.wrappers :custom_file, tag: 'div', class: 'form-group rf-input-group', error_class: 'form-group-invalid rf-input-group--error', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.use :placeholder
     b.optional :maxlength
     b.optional :minlength
     b.optional :readonly
-    b.use :label, class: 'form-control-label'
-    b.wrapper :custom_file_wrapper, tag: 'div', class: 'custom-file' do |ba|
-      ba.use :input, class: 'custom-file-input', error_class: 'is-invalid', valid_class: 'is-valid'
+    b.use :label, class: 'form-control-label rf-label'
+    b.wrapper :custom_file_wrapper, tag: 'div', class: 'custom-file rf-mt-1w' do |ba|
+      ba.use :input, class: 'custom-file-input', error_class: 'is-invalid rf-input--error', valid_class: 'is-valid rf-input--valid'
       ba.use :label, class: 'custom-file-label'
-      ba.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
+      ba.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback rf-error-text' }
     end
-    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted rf-hint-text' }
   end
 
   # custom file input
-  config.wrappers :custom_file_without_label, tag: 'div', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+  config.wrappers :custom_file_without_label, tag: 'div', class: 'form-group rf-input-group', error_class: 'form-group-invalid rf-input-group--error', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.use :placeholder
     b.optional :maxlength
     b.optional :minlength
     b.optional :readonly
     b.wrapper :custom_file_wrapper, tag: 'div', class: 'custom-file' do |ba|
-      ba.use :input, class: 'custom-file-input', error_class: 'is-invalid', valid_class: 'is-valid'
+      ba.use :input, class: 'custom-file-input', error_class: 'is-invalid rf-input--error', valid_class: 'is-valid rf-input--valid'
       ba.use :label, class: 'custom-file-label text-truncate'
-      ba.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
+      ba.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback rf-error-text' }
     end
-    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted rf-hint-text' }
   end
 
   # custom file input
-  config.wrappers :custom_file_with_dropzone, tag: 'div', class: 'form-group drop-area', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+  config.wrappers :custom_file_with_dropzone, tag: 'div', class: 'form-group drop-area', error_class: 'form-group-invalid rf-input-group--error', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.use :placeholder
     b.optional :maxlength
     b.optional :minlength
     b.optional :readonly
     b.wrapper :custom_file_wrapper, tag: 'div', class: 'custom-file-drop-area' do |ba|
-      ba.use :input, error_class: 'is-invalid', valid_class: 'is-valid'
-      ba.use :label, class: 'text-truncate'
-      ba.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
+      ba.use :input, error_class: 'is-invalid rf-input--error', valid_class: 'is-valid rf-input--valid'
+      ba.use :label, class: 'rf-label rf-card__link rf-mt-1w d-inline-block text-truncate'
+      ba.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback rf-error-text' }
     end
-    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted rf-hint-text' }
   end
 
   # custom multi select
-  config.wrappers :custom_multi_select, tag: 'div', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+  config.wrappers :custom_multi_select, tag: 'div', class: 'form-group rf-input-group', error_class: 'form-group-invalid rf-input-group--error', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.optional :readonly
-    b.use :label, class: 'form-control-label'
+    b.use :label, class: 'form-control-label rf-label'
     b.wrapper tag: 'div', class: 'd-flex flex-row justify-content-between align-items-center' do |ba|
-      ba.use :input, class: 'custom-select', error_class: 'is-invalid', valid_class: 'is-valid'
+      ba.use :input, class: 'custom-select', error_class: 'is-invalid rf-input--error', valid_class: 'is-valid rf-input--valid'
     end
-    b.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
-    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+    b.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback rf-error-text d-block' }
+    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted rf-hint-text' }
   end
 
   # custom multi select
-  config.wrappers :custom_multi_select_full_wide, tag: 'div', class: 'form-group w-100', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+  config.wrappers :custom_multi_select_full_wide, tag: 'div', class: 'form-group w-100', error_class: 'form-group-invalid rf-input-group--error', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.optional :readonly
-    b.use :label, class: 'form-control-label'
+    b.use :label, class: 'form-control-label rf-label'
     b.wrapper tag: 'div', class: 'd-flex flex-row justify-content-between align-items-center w-100' do |ba|
-      ba.use :input, class: 'custom-select w-100', error_class: 'is-invalid', valid_class: 'is-valid'
+      ba.use :input, class: 'custom-select w-100', error_class: 'is-invalid rf-input--error', valid_class: 'is-valid rf-input--valid'
     end
-    b.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
-    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+    b.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback rf-error-text d-block' }
+    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted rf-hint-text' }
   end
 
   # custom range input
-  config.wrappers :custom_range, tag: 'div', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+  config.wrappers :custom_range, tag: 'div', class: 'form-group rf-input-group', error_class: 'form-group-invalid rf-input-group--error', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.use :placeholder
     b.optional :readonly
     b.optional :step
-    b.use :label, class: 'form-control-label'
-    b.use :input, class: 'custom-range', error_class: 'is-invalid', valid_class: 'is-valid'
-    b.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
-    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+    b.use :label, class: 'form-control-label rf-label'
+    b.use :input, class: 'custom-range', error_class: 'is-invalid rf-input--error', valid_class: 'is-valid rf-input--valid'
+    b.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback rf-error-text d-block' }
+    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted rf-hint-text' }
   end
 
 
   # Input Group - custom component
   # see example app and config at https://github.com/rafaelfranca/simple_form-bootstrap
-  config.wrappers :input_group, tag: 'div', class: 'form-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+  config.wrappers :input_group, tag: 'div', class: 'form-group rf-input-group', error_class: 'form-group-invalid rf-input-group--error', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.use :placeholder
     b.optional :maxlength
@@ -417,21 +417,21 @@ SimpleForm.setup do |config|
     b.optional :pattern
     b.optional :min_max
     b.optional :readonly
-    b.use :label, class: 'form-control-label'
+    b.use :label, class: 'form-control-label rf-label'
     b.wrapper :input_group_tag, tag: 'div', class: 'input-group' do |ba|
       ba.optional :prepend
-      ba.use :input, class: 'form-control', error_class: 'is-invalid', valid_class: 'is-valid'
+      ba.use :input, class: 'form-control rf-input', error_class: 'is-invalid rf-input--error', valid_class: 'is-valid rf-input--valid'
       ba.optional :append
     end
-    b.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback d-block' }
-    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+    b.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback rf-error-text d-block' }
+    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted rf-hint-text' }
   end
 
 
   # Floating Labels form
   #
   # floating labels default_wrapper
-  config.wrappers :floating_labels_form, tag: 'div', class: 'form-label-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+  config.wrappers :floating_labels_form, tag: 'div', class: 'form-label-group', error_class: 'form-group-invalid rf-input-group--error', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.use :placeholder
     b.optional :maxlength
@@ -439,20 +439,20 @@ SimpleForm.setup do |config|
     b.optional :pattern
     b.optional :min_max
     b.optional :readonly
-    b.use :input, class: 'form-control', error_class: 'is-invalid', valid_class: 'is-valid'
-    b.use :label, class: 'form-control-label'
-    b.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
-    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+    b.use :input, class: 'form-control rf-input', error_class: 'is-invalid rf-input--error', valid_class: 'is-valid rf-input--valid'
+    b.use :label, class: 'form-control-label rf-label'
+    b.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback rf-error-text' }
+    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted rf-hint-text' }
   end
 
   # custom multi select
-  config.wrappers :floating_labels_select, tag: 'div', class: 'form-label-group', error_class: 'form-group-invalid', valid_class: 'form-group-valid' do |b|
+  config.wrappers :floating_labels_select, tag: 'div', class: 'form-label-group', error_class: 'form-group-invalid rf-input-group--error', valid_class: 'form-group-valid' do |b|
     b.use :html5
     b.optional :readonly
-    b.use :input, class: 'custom-select custom-select-lg', error_class: 'is-invalid', valid_class: 'is-valid'
-    b.use :label, class: 'form-control-label'
-    b.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback' }
-    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted' }
+    b.use :input, class: 'custom-select custom-select-lg', error_class: 'is-invalid rf-input--error', valid_class: 'is-valid rf-input--valid'
+    b.use :label, class: 'form-control-label rf-label'
+    b.use :error, wrap_with: { tag: 'div', class: 'invalid-feedback rf-error-text' }
+    b.use :hint, wrap_with: { tag: 'small', class: 'form-text text-muted rf-hint-text' }
   end
 
 

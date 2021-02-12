@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_21_104208) do
+ActiveRecord::Schema.define(version: 2021_01_22_080709) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -403,8 +403,8 @@ ActiveRecord::Schema.define(version: 2021_01_21_104208) do
   end
 
   create_table "organizations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "name"
-    t.string "name_business_owner"
+    t.string "service_name"
+    t.string "brand_name"
     t.string "administrator_email_suffix"
     t.string "subdomain"
     t.string "domain"
@@ -434,6 +434,38 @@ ActiveRecord::Schema.define(version: 2021_01_21_104208) do
     t.integer "inbound_email_config", default: 0
     t.string "matomo_site_id"
     t.integer "hours_delay_before_publishing"
+    t.string "service_description"
+    t.string "service_description_short"
+    t.string "brand_prefix_article"
+    t.string "linkedin_url"
+    t.string "twitter_url"
+    t.string "youtube_url"
+    t.string "instagram_url"
+    t.string "facebook_url"
+    t.string "operator_name"
+    t.string "operator_url"
+    t.string "operator_logo_file_name"
+    t.string "operator_logo_content_type"
+    t.bigint "operator_logo_file_size"
+    t.datetime "operator_logo_updated_at"
+    t.string "partner_1_name"
+    t.string "partner_1_url"
+    t.string "partner_1_logo_file_name"
+    t.string "partner_1_logo_content_type"
+    t.bigint "partner_1_logo_file_size"
+    t.datetime "partner_1_logo_updated_at"
+    t.string "partner_2_name"
+    t.string "partner_2_url"
+    t.string "partner_2_logo_file_name"
+    t.string "partner_2_logo_content_type"
+    t.bigint "partner_2_logo_file_size"
+    t.datetime "partner_2_logo_updated_at"
+    t.string "partner_3_name"
+    t.string "partner_3_url"
+    t.string "partner_3_logo_file_name"
+    t.string "partner_3_logo_content_type"
+    t.bigint "partner_3_logo_file_size"
+    t.datetime "partner_3_logo_updated_at"
   end
 
   create_table "pages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

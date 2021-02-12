@@ -13,7 +13,7 @@ require 'action_mailer/railtie'
 require 'action_mailbox/engine'
 require 'action_text/engine'
 require 'action_view/railtie'
-# require 'action_cable/engine'
+require 'action_cable/engine'
 # require 'sprockets/railtie'
 require 'rails/test_unit/railtie'
 
@@ -63,6 +63,8 @@ module Civilsdeladefense
     end
 
     config.eager_load_paths << Rails.root.join('lib/services')
+    config.eager_load_paths << Rails.root.join('lib/renderers')
     config.autoload_paths << Rails.root.join('lib/services')
+    config.autoload_paths << Rails.root.join('lib/renderers')
   end
 end

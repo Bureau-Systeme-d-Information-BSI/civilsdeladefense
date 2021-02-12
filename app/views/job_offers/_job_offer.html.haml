@@ -1,24 +1,21 @@
-- cache [category, job_offer] do
-  .row.job-offer
-    .col-12
-      = link_to job_offer, class: 'job-application-summary' do
-        .d-flex.align-items-center
-          .d-flex.flex-column
-            - if category.depth == 2
-              %small
-                %small= category.name
-            .job-offer-title= job_offer.title
-            %small
-              .d-flex
-                .mr-1
-                  = [job_offer.contract_type.name, job_offer.contract_duration&.name].join(' ')
-                .mr-1
-                  \-
-                = job_offer.location
-            - if job_offer.published_at.present?
-              %small
-                %small.mt-1= t('.published_date', time_ago_in_words: time_ago_in_words(job_offer.published_at))
-          %button.btn.btn-primary.btn-raised.btn-l.mb-0.ml-auto{title: t('.show')}
-            = fa_icon('chevron-right')
-      %hr.mb-0
-
+- cache [job_offer] do
+  - category = job_offer.category
+  .rf-pb-2w.rf-pt-2w
+    = link_to job_offer do
+      .d-flex.align-items-center
+        .d-flex.flex-column
+          - if category.depth == 2
+            %small= category.name
+          %strong= job_offer.title
+          .d-flex
+            .rf-mr-1w
+              = [job_offer.contract_type.name, job_offer.duration_contract].join(' ')
+            .rf-mr-1w
+              \-
+            = job_offer.location
+          - if job_offer.published_at.present?
+            %small.rf-mt-1w= t('.published_date', time_ago_in_words: time_ago_in_words(job_offer.published_at))
+        %button.rf-btn.rf-fi-arrow-right-line.ml-auto{title: t('.show')}
+          %sr-only=t('.show')
+  - unless job_offer_iteration.last?
+    %hr.rf-b--g100

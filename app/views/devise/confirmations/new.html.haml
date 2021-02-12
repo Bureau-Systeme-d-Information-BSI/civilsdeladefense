@@ -1,12 +1,9 @@
+.rf-text--lead.rf-mb-3w
+  = @page_title = t(".title")
 = simple_form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f|
-  %fieldset.mb-3
-    %legend
-      = @page_title = t(".title")
-    = f.error_notification
-    = f.full_error :confirmation_token
-  .form-inputs
-    = f.input :email, required: true, autofocus: true
-  .form-actions
-    = f.button :submit, t(".resend"), class: 'btn btn-primary btn-raised'
-  .form-links
-    = render "devise/shared/links"
+  = f.error_notification
+  = f.full_error :confirmation_token
+  = f.input :email, required: true, autofocus: true
+  .rf-input-group.rf-grid-row
+    = f.button :submit, t(".resend"), class: 'rf-btn btn btn-primary btn-raised'
+  = render "devise/shared/links"

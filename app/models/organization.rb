@@ -10,9 +10,18 @@ class Organization < ApplicationRecord
   has_many :pages
   has_many :users
 
-  validates :name, :name_business_owner, :subdomain, presence: true
+  validates :service_name, :brand_name, :brand_prefix_article, :subdomain, presence: true
 
-  %i[logo_vertical logo_horizontal logo_vertical_negative logo_horizontal_negative].each do |field|
+  %i[
+    operator_logo
+    partner_1_logo
+    partner_2_logo
+    partner_3_logo
+    logo_vertical
+    logo_horizontal
+    logo_vertical_negative
+    logo_horizontal_negative
+  ].each do |field|
     mount_uploader field, LogoUploader, mount_on: :"#{field}_file_name"
     validates field,
               file_size: { less_than: 1.megabytes }
@@ -30,4 +39,19 @@ class Organization < ApplicationRecord
     catch_all: 20
   }.freeze
   enum inbound_email_config: INBOUND_EMAIL_CONFIGS, _prefix: true
+
+  def name
+    service_name
+  end
+
+  def possessive_article
+    case brand_prefix_article
+    when 'le'
+      'du'
+    when 'la'
+      'de la'
+    when 'l\''
+      'de l\''
+    end
+  end
 end

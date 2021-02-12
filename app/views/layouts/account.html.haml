@@ -1,23 +1,15 @@
-!!!
-%html{lang: I18n.locale}
-  %head
-    %title= [@page_title, current_organization.name].delete_if(&:blank?).join(' - ')
-    %meta{charset: "utf-8"}
-    %meta{name: "viewport", content: "width=device-width, initial-scale=1, shrink-to-fit=no"}
-    = stylesheet_link_tag 'https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500|Roboto+Mono:400,500'
-    = stylesheet_pack_tag 'style'
-    = csrf_meta_tags
-    = csp_meta_tag
-  %body
-    = render partial: '/shared/navbar'
-    .container.py-5
-      .row
-        .col-12.col-md-9.mx-md-auto
-          - if flash[:notice]
-            .d-none.alert.alert-info= flash[:notice]
-          - elsif flash[:error]
-            .d-none.alert.alert-danger= flash[:error]
-          - elsif flash[:success]
-            .d-none.alert.alert-success= flash[:success]
-          = yield
-    = javascript_pack_tag 'account-bundle', defer: true
+- content_for :content do
+  .rf-container.rf-py-5w
+    .rf-grid-row
+      .rf-col-12
+        - if flash[:notice]
+          .d-none.alert.alert-info= flash[:notice]
+        - elsif flash[:error]
+          .d-none.alert.alert-danger= flash[:error]
+        - elsif flash[:success]
+          .d-none.alert.alert-success= flash[:success]
+      .rf-col-12.rf-col-md-3
+        = render partial: '/account/navbar'
+      .rf-col-12.rf-col-md-9
+        = content_for?(:insider_content) ? yield(:insider_content) : yield
+= render template: "layouts/application"

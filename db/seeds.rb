@@ -5,8 +5,13 @@ I18n.config.available_locales += %w[en]
 require 'faker'
 Faker::Config.locale = :fr
 
-organization = Organization.create! name: 'Civils de la Défense',
-                                    name_business_owner: 'le Ministère des Armées',
+desc = 'Plateforme de recrutement de personnel civils contractuels pour le Ministère des Armées'
+desc_short = 'Plateforme de recrutement de personnel civils contractuels'
+organization = Organization.create! service_name: 'Civils de la Défense',
+                                    brand_name: "Ministère\n\ndes Armées",
+                                    brand_prefix_article: 'le',
+                                    service_description: desc,
+                                    service_description_short: desc_short,
                                     subdomain: 'cvd',
                                     domain: 'civilsdeladefense.fabnum.fr'
 

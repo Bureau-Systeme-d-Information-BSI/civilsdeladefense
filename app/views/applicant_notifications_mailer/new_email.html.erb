@@ -12,7 +12,7 @@
 <br/>
 Vous recevez ce message parce que vous avez candidaté à l'offre <%= @job_offer.identifier %> “<%= @job_offer.title %>”.
 <%- if @organization.inbound_email_config_hidden_headers? || @organization.inbound_email_config_catch_all? %>
-Pour répondre à ce message, vous pouvez répondre à cet email directement ou visiter votre candidature sur la plateforme de recrutement <%= @site_name %> <%= @answer_url %>.
+Pour répondre à ce message, vous pouvez répondre à cet email directement ou visiter votre candidature sur la plateforme de recrutement <%= @service_name %> <%= @answer_url %>.
 <%- else %>
-Pour répondre à ce message, visiter votre candidature sur la plateforme de recrutement <%= @site_name %> <%= @answer_url %>.
+Pour répondre à ce message, visiter votre candidature sur la plateforme de recrutement <%= @service_name %> <%= @answer_url %>.
 <%- end %>

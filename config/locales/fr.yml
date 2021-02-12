@@ -92,6 +92,14 @@ fr:
     update: "Mettre à jour"
     unsuspend: "Republier"
     unsuspend_user: "Réactiver"
+  homepages:
+    stepper:
+      step_1: "Dépôt de la candidature"
+      step_2: "Préqualification téléphonique"
+      step_3: "Entretien physique"
+      step_4: "Sélection du candidat"
+      step_5: "Rédaction du contrat de travail"
+      step_6: "Prise de fonctions"
   job_applications:
     form:
       general_informations: "Informations générales"
@@ -101,23 +109,21 @@ fr:
   job_offers:
     index:
       title: "Nos offres"
+      job_offers_count:
+        zero: "Aucune offre ne correspond à votre recherche"
+        one: "1 offre d'emploi trouvée"
+        other: "%{count} offres d'emploi trouvées"
     filters:
       select_category: "Secteur"
       blank_category: "Tous les secteurs"
       select_contract: "Contrat"
       blank_contract: "Tous les contrats"
       search: "Rechercher"
-    job_offers_list:
-      job_offers_count:
-        zero: "Aucune offre ne correspond à votre recherche"
-        one: "1 offre d'emploi trouvée"
-        other: "%{count} offres d'emploi trouvées"
     job_offer:
-      show: "Postuler"
-      published_date: 'Il y a %{time_ago_in_words}'
-    show:
-      apply: "Postuler"
+      show: "Voir le détail de l'offre"
+      published_date: 'Publiée il y a %{time_ago_in_words}'
     job_offer_content:
+      apply: "Je postule"
       description: "Descriptif de l’offre"
       required_profile: "Profil recherché"
       recruitment_process: "Process de recrutement"
@@ -125,14 +131,20 @@ fr:
       available_immediately: "Poste à pourvoir immédiatement"
       benefit: "Bénéfice en nature: "
     successful:
-      subject: "Votre candidature à l'offre %{job_offer_identifier} sur %{site_name}"
-      body: "Nous avons bien reçu votre candidature à l'offre %{job_offer_identifier} au poste de '%{job_offer_title}'.\n\nNous y répondrons dans les meilleurs délais.\n\nL'équipe %{site_name}."
+      subject: "Votre candidature à l'offre %{job_offer_identifier} sur %{service_name}"
+      body: "Nous avons bien reçu votre candidature à l'offre %{job_offer_identifier} '%{job_offer_title}'.\n\nNous y répondrons dans les meilleurs délais.\n\nL'équipe %{service_name}."
       title: "Merci d'avoir soumis votre candidature !"
-      subtitle_html: "Votre demande est prise en compte.<br/>Veuillez confirmer votre accès à l'aide du lien sur votre boîte courriel."
+      subtitle_html: "Votre demande est prise en compte.\n\nVeuillez confirmer votre accès à l'aide du lien sur votre boîte courriel."
       link: "Retour à l'accueil"
+  layouts:
+    account:
+      job_application_display:
+        nav_emails: "Mes échanges"
+        nav_files: "Mes documents"
+        nav_offer: "L'offre"
   notifications_mailer:
     daily_summary:
-      subject: "[%{site_name}] Rapport journalier"
+      subject: "[%{service_name}] Rapport journalier"
       generic_title: "Candidatures %{state}"
       new_job_offers:
         title: "Nouvelles offres"
@@ -146,7 +158,7 @@ fr:
       tos: "Conditions générales d’utilisation"
       privacy: "Politique de confidentialité"
       tracking: "Suivi d'audience et vie privée"
-    navbar:
+    header:
       account: "Mon compte"
       account_root: "Mon espace candidat"
       home_link: "Accueil"
@@ -156,24 +168,23 @@ fr:
   account:
     job_applications:
       index:
-        active: "Candidatures en cours<span class='d-none d-md-inline'> (%{count})</span>"
-        finished: "Candidatures terminées<span class='d-none d-md-inline'> (%{count})</span>"
-        none_active: "Aucune candidature active"
-        none_finished: "Aucune candidature terminée"
+        title: "Mes candidatures"
+        subtitle_finished: "Candidatures terminées (%{count})"
+        subtitle_ongoing: "Candidatures en cours (%{count})"
+        finished_none: "Aucune candidature terminée"
+        ongoing_none: "Aucune candidature en cours"
       job_application:
-        published_date: "Candidaté il y a %{time_ago_in_words}"
+        created_at: "Candidaté il y a %{time_ago_in_words}"
       show:
-        nav_emails: "Mes échanges"
-        nav_files: "Mes documents"
-        nav_offer: "L'offre"
     emails:
-      index:
-        time_ago: "il y a %{time_ago_in_words}"
       create:
         success: "Courriel envoyé !"
         unsuccess: "Impossible d'envoyer le courriel, veuillez vérifier tous les champs"
+      email:
+        time_ago: "il y a %{time_ago_in_words}"
       form:
         title: "Envoyer un courriel"
+      index:
     users:
       change_email:
         title: "Changement de courriel"
@@ -459,7 +470,8 @@ fr:
           experience_levels: "Éxpériences"
           job_application_file_types: "Types de fichier"
           job_applications: "Candidatures"
-          organization: "Paramètres du site"
+          organization: "Paramètres généraux"
+          organization_security: "Paramètres de sécurité"
           organization_defaults: "Valeurs par défaut"
           pages: "Gestion des pages"
           professional_categories: "Catégories professionnelles"
@@ -583,10 +595,12 @@ fr:
       organizations:
         edit:
           title: "Édition des paramètres du site"
-        form_display:
-          title: "Paramètres d'affichage"
-        form_general:
+        edit_security:
+          title: "Édition des paramètres de sécurité"
+        form:
           title: "Paramètres généraux"
+          title_social: "Réseaux sociaux"
+          title_partners: "Partenaires"
         form_security:
           title: "Paramètres de sécurité"
         update:
@@ -961,6 +975,13 @@ fr:
         state/published: "Publiée"
         state/suspended: "En pause"
         state/archived: "Archivée"
+        contract_type: "Type de contrat"
+        contract_start_on: "Début du contrat"
+        location: "Localisation"
+        study_level: "Niveau d'études"
+        category: "Domaine professionnel"
+        experience_level: "Niveau d'expérience"
+        salary: "Rémunération"
       job_offer_actor/role:
         employer: "Employeur"
         grand_employer: "Grand Employeur"

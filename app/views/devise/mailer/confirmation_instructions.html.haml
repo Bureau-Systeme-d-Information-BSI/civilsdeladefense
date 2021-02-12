@@ -1,5 +1,5 @@
 %p
-  = t('.greeting', recipient: (@resource.full_name.present? ? @resource.full_name : nil), site_name: @resource.organization.name)
+  = t('.greeting', recipient: (@resource.full_name.present? ? @resource.full_name : nil), service_name: @resource.organization.service_name)
 %p
   = t('.instruction')
 - text = t('.action')

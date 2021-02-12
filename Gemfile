@@ -16,8 +16,6 @@ gem 'puma'
 gem 'webpacker', '~> 5.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
-# Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -57,6 +55,7 @@ gem 'sequenced'
 gem 'simple_form'
 gem 'trix-rails', require: 'trix'
 gem 'turbolinks', require: false
+gem 'turbo-rails'
 gem 'will_paginate'
 
 gem 'clockwork' # simulate cron on Scalingo

@@ -1,0 +1,14 @@
+= turbo_frame_tag dom_id(email) do
+  .rf-box.rf-mb-5w.rf-pb-5w
+    .d-flex.rf-mb-1w
+      - if email.automatic_email?
+        %em Courriel automatique
+      - else
+        = email.sender&.full_name
+      .ml-auto
+        %small.datetime
+          = surround 'le ', ' - ' do
+            = I18n.l email.created_at, format: :short
+          = t('.time_ago', time_ago_in_words: time_ago_in_words(email.created_at))
+    %strong= sanitize(email.subject, tags: %w())
+    %span= simple_format(sanitize(email.body, tags: %w()))

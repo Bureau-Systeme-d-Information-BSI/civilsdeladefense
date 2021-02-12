@@ -1,29 +1,15 @@
-- real_action_name = controller.action_name == 'index' ? 'active' : 'finished'
-- title = t('.' + real_action_name, count: @job_applications.count).split('(').first
-- @page_title = strip_tags(title)
-.card
-  .card-body
-    .d-flex.flex-column.flex-md-row.align-items-start.align-items-md-center
-      %ul.nav.nav-tabs.mr-auto{role: :tablist}
-        %li.nav-item.mr-3
-          - klasses = %i(nav-link text-uppercase my-0)
-          - klasses << :active if real_action_name == "active"
-          - url = [:account, :job_applications]
-          = link_to t('.active', count: @job_applications_active.count).html_safe, url, class: klasses
-        %li.nav-item
-          - klasses = %i(nav-link text-uppercase my-0)
-          - klasses << :active if real_action_name == "finished"
-          - url = [:finished, :account, :job_applications]
-          = link_to t('.finished', count: @job_applications_finished.count).html_safe, url, class: klasses
-    .row
-      .col-12.mt-3
-        - if @job_applications.any?
-          = render partial: 'job_application', collection: @job_applications
-        - else
-          %em.d-block.mt-5
-            = t('.none_'+real_action_name)
 
-.modal.fade#remoteContentModal{tabindex: -1, role: :dialog, aria: {labelledby: :remoteContentModal, hidden: true}}
-  .modal-dialog.modal-l{role: :document}
-    .modal-content
-      .modal-body.p-0
+
+%h2.rf-h3= t('.subtitle_ongoing', count: @job_applications_ongoing.count).html_safe
+- if @job_applications_ongoing.any?
+  = render partial: 'job_application', collection: @job_applications_ongoing
+- else
+  %em.d-block.mt-5
+    = t('.ongoing_none')
+
+%h2.rf-h3.rf-mt-3w= t('.subtitle_finished', count: @job_applications_finished.count).html_safe
+- if @job_applications_finished.any?
+  = render partial: 'job_application', collection: @job_applications_finished
+- else
+  %em.d-block.mt-5
+    = t('.finished_none')

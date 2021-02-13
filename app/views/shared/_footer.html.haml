@@ -2,7 +2,7 @@
   - ary = current_organization.pages.root&.descendants || []
   - links, pages = ary.partition(&:only_link?)
   %footer#footer.rf-footer{:role => "contentinfo"}
-    - social_urls = %w[linkedin_url twitter_url youtube_url instagram_url facebook_url]
+    - social_urls = %i[linkedin_url twitter_url youtube_url instagram_url facebook_url]
     - if social_urls.any?{|x| current_organization.send(x).present? }
       .rf-footer__top
         .rf-container
@@ -14,9 +14,9 @@
                 %li
                   .d-flex.flex-row
                     - social_urls.each do |social_url|
-                      - if current_organization.send(social_url.to_sym).present?
-                        = link_to current_organization.send(social_url.to_sym), class: 'rf-footer__top-link rf-mr-2w' do
-                          - icon_name = social_url.gsub('_url', '')
+                      - if current_organization.send(social_url).present?
+                        = link_to current_organization.send(social_url), class: 'rf-footer__top-link rf-mr-2w' do
+                          - icon_name = social_url.to_s.gsub('_url', '')
                           - icon_name += {'facebook' => '-circle', 'linkedin' => '-box'}[icon_name] || ''
                           - icon_name += '-fill'
                           = fa_icon icon_name, class: 'rf-icon-xl'

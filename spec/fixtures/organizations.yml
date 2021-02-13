@@ -1,6 +1,6 @@
 cvd:
   service_name: "Civils de la Défense"
   brand_name: "Ministère des Armées"
-  brand_prefix_article: "le"
+  prefix_article: "le"
   domain: "civilsdeladefense.fabnum.fr"
   subdomain: "cvd"

@@ -10,7 +10,7 @@ class Organization < ApplicationRecord
   has_many :pages
   has_many :users
 
-  validates :service_name, :brand_name, :brand_prefix_article, :subdomain, presence: true
+  validates :service_name, :brand_name, :prefix_article, :subdomain, presence: true
 
   %i[
     operator_logo
@@ -44,12 +44,17 @@ class Organization < ApplicationRecord
     service_name
   end
 
+  def legal_name
+    name = operator_name.present? ? operator_name : brand_name
+    "#{prefix_article}#{name}"
+  end
+
   def possessive_article
-    case brand_prefix_article
+    case prefix_article
     when 'le'
-      'du'
+      'du '
     when 'la'
-      'de la'
+      'de la '
     when 'l\''
       'de l\''
     end

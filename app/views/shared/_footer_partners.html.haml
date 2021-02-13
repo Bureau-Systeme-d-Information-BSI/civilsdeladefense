@@ -1,0 +1,15 @@
+- if current_organization.partner_1_logo.present? || current_organization.partner_2_logo.present? || current_organization.partner_3_logo.present?
+  .rf-footer__partners
+    -# %h4.rf-footer__partners-title Nos partenaires
+    .rf-footer__partners-logos
+      .rf-footer__partners-main.rf-mt-0
+        - if current_organization.partner_1_logo.present?
+          = link_to current_organization.partner_1_url, class: 'footer__partners-link' do
+            = image_tag(current_organization.partner_1_logo.url, alt: current_organization.partner_1_name, class: 'rf-footer__logo', style: 'width:auto; height:5rem;')
+      .rf-footer__partners-sub.rf-mt-0
+        - if current_organization.partner_2_logo.present?
+          = link_to current_organization.partner_2_url, class: 'footer__partners-link' do
+            = image_tag(current_organization.partner_2_logo.url, alt: current_organization.partner_2_name, class: 'rf-footer__logo', style: 'width:auto; height:5rem;')
+        - if current_organization.partner_3_logo.present?
+          = link_to current_organization.partner_3_url, class: 'footer__partners-link' do
+            = image_tag(current_organization.partner_3_logo.url, alt: current_organization.partner_3_name, class: 'rf-footer__logo', style: 'width:auto; height:5rem;')

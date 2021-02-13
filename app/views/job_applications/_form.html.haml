@@ -39,12 +39,7 @@
         = user_form.input :email, required: true
         = user_form.input :password, required: true
         = user_form.input :password_confirmation, required: true
-        - privacy_policy_url = current_organization.privacy_policy_url
-        - service_name = current_organization.service_name
-        - brand_name = current_organization.brand_name
-        - brand_prefix_article = current_organization.brand_prefix_article
-        - label = t('simple_form.labels.user.terms_of_service', link: privacy_policy_url, service_name: service_name, brand_name: brand_name, brand_prefix_article: brand_prefix_article).html_safe
-        = user_form.input :terms_of_service, as: :boolean, label: content_tag('span', label, style: 'display: inline;')
+        = user_form.input :terms_of_service, as: :boolean, label: tos_acceptance_text
         = user_form.input :certify_majority, as: :boolean
     = f.invisible_captcha :subtitle
 

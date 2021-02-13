@@ -5,7 +5,7 @@
     = link_to "Retour", :back, class: "btn btn-primary btn-raised btn-lg mb-5"
 - else
   %h1.rf-h2.rf-mt-0
-    Postuler à l'offre
+    %small Postuler à l'offre
     %br
-    %small= @job_offer.title
+    = @job_offer.title
   = render partial: '/job_applications/form'

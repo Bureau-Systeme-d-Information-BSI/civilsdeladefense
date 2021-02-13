@@ -21,8 +21,8 @@
         .rf-col-12.mx-md-auto{class: klasses}
           - if flash[:notice]
             .fixed-bottom.alert.alert-info= flash[:notice]
-          - elsif flash[:error]
-            .fixed-bottom.alert.alert-danger= flash[:error]
+          - elsif flash[:error] || flash[:alert]
+            .fixed-bottom.alert.alert-danger= flash[:error] || flash[:alert]
           - elsif flash[:success]
             .fixed-bottom.alert.alert-success= flash[:success]
     = content_for?(:content) ? yield(:content) : yield

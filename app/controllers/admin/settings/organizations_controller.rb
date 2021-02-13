@@ -43,7 +43,7 @@ class Admin::Settings::OrganizationsController < Admin::Settings::BaseController
   protected
 
   def general_permitted_params
-    permitted_fields = %i[brand_name brand_prefix_article
+    permitted_fields = %i[brand_name prefix_article
                           service_name service_description_short service_description
                           subdomain domain privacy_policy_url
                           operator_name operator_url operator_logo

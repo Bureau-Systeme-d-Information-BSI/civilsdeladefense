@@ -106,7 +106,7 @@ fr:
       organization:
         administrator_email_suffix: "Suffixe d'email obligatoire pour les comptes admin"
         brand_name: "Entité bloc marque"
-        brand_prefix_article: "Article défini pour l'entité bloc marque"
+        prefix_article: "Article défini de l'entité légale (opérateur ou bloc marque)"
         domain: "Nom de domaine officiel"
         hours_delay_before_publishing: "Délai incompressible avant de pouvoir publier une annonce"
         image_background: "Image d'arrière plan"
@@ -159,7 +159,7 @@ fr:
         password_confirmation: 'Confirmation du mot de passe'
         preferred_users_list_ids: "Mes listes de candidats"
         suspension_reason: "Raison"
-        terms_of_service: "En soumettant ce formulaire, j'accepte que les informations saisies sur le site %{service_name} soient exploitées pour l'instruction de ma candidature par %{brand_prefix_article} %{brand_name}. Les informations personnelles portées sur ce formulaire et celles communiquées aux étapes ultérieures du processus de recrutement sont enregistrées dans un fichier informatisé administré par %{brand_prefix_article} %{brand_name} conformément à la <a href='%{link}' target='_blank'>déclaration de confidentialité</a> du portail %{service_name}, dont j'ai pris connaissance"
+        terms_of_service: "En soumettant ce formulaire, j'accepte que les informations saisies sur le site %{service_name} soient exploitées pour l'instruction de ma candidature par %{legal_name}. Les informations personnelles portées sur ce formulaire et celles communiquées aux étapes ultérieures du processus de recrutement sont enregistrées dans un fichier informatisé administré par %{legal_name} conformément à la <a href='%{link}' target='_blank'>déclaration de confidentialité</a> du portail %{service_name}, dont j'ai pris connaissance"
     placeholders:
       defaults:
         first_name: "Prénom"
@@ -209,6 +209,6 @@ autres membres de votre équipe.'
         privacy_policy_url: "Ce lien est utilisé dans le formulaire de soumission d'une candidature"
         hours_delay_before_publishing: "Indiquez un nombre d'heures. Laissez à 0 ou vide pour supprimer complètement le délai avant publication"
         brand_name: "À mettre sur plusieurs lignes pour être conforme au bloc marque avec la Marianne. Ex: République Française, Ministère des Armées, etc."
-        brand_prefix_article: "Utilisé dans les phrases incluant le nom de l'entité bloc marque. Ex: le, la, l'."
+        prefix_article: "Utilisé dans les phrases incluant le nom de l'entité. Ex: le, la, l'."
       user:
         password: "8 caractères minimum, dont au moins 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial parmi #?!@$%^&*-'"

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_27_111513) do
+ActiveRecord::Schema.define(version: 2021_02_13_195636) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -449,7 +449,7 @@ ActiveRecord::Schema.define(version: 2021_01_27_111513) do
     t.integer "hours_delay_before_publishing"
     t.string "service_description"
     t.string "service_description_short"
-    t.string "brand_prefix_article"
+    t.string "prefix_article"
     t.string "linkedin_url"
     t.string "twitter_url"
     t.string "youtube_url"

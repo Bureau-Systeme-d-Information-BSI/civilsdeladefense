@@ -3,7 +3,7 @@
   - links, pages = ary.partition(&:only_link?)
   %footer#footer.rf-footer{:role => "contentinfo"}
     - social_urls = %w[linkedin_url twitter_url youtube_url instagram_url facebook_url]
-    - if social_urls.any?(&:present?)
+    - if social_urls.any?{|x| current_organization.send(x).present? }
       .rf-footer__top
         .rf-container
           .rf-grid-row.rf-grid-row--start.rf-grid-row--gutters

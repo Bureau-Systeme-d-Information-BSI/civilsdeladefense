@@ -63,6 +63,7 @@ gem 'clockwork' # simulate cron on Scalingo
 gem 'faker', require: false
 
 gem 'omniauth_openid_connect', '~> 0.3.5'
+gem 'omniauth-rails_csrf_protection'
 
 group :development do
   gem 'letter_opener'

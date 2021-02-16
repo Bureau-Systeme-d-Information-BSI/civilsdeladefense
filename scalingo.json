@@ -3,6 +3,9 @@
     "DEFAULT_HOST": {
       "description": "URL of the application",
       "generator": "url"
+    },
+    "IS_REVIEW_APP": {
+      "value": "true"
     }
   },
   "scripts": {

@@ -23,7 +23,7 @@
         .rf-shortcuts
           %ul.rf-shortcuts__list
             %li.rf-shortcuts__item
-              = link_to t(".account_root"), [:account, :job_applications], class: %w[rf-link rf-fi-account-line]
+              = link_to t(".account_root"), new_session_path(User), class: %w[rf-link rf-fi-account-line]
             - if user_signed_in?
               %li.rf-shortcuts__item
                 = button_to t('.logout'), destroy_user_session_path, method: :delete, class: 'rf-link rf-border-0'

@@ -113,12 +113,16 @@ fr:
         zero: "Aucune offre ne correspond à votre recherche"
         one: "1 offre d'emploi trouvée"
         other: "%{count} offres d'emploi trouvées"
-    filters:
+    filter:
       select_category: "Secteur"
-      blank_category: "Tous les secteurs"
-      select_contract: "Contrat"
-      blank_contract: "Tous les contrats"
+      select_contract_type: "Contrat"
+      select_study_level: "Niveau d'étude"
+      select_experience_level: "Niveau d'expérience"
+    filters:
       search: "Rechercher"
+      contract_start_on_filter: Début du contrat
+      published_at_filter: Publication
+      select_region: Région
     job_offer:
       show: "Voir le détail de l'offre"
       published_date: 'Publiée il y a %{time_ago_in_words}'

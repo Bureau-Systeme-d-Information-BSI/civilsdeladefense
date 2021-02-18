@@ -13,7 +13,7 @@ module DeletionFlow
     def destroy_when_too_old
       where('last_sign_in_at < ?', notice_period_target_date).all.each do |user|
         user.mark_for_deletion!
-        ApplicantNotificationsMailer.notice_period_before_deletion(@user.id).deliver_now
+        ApplicantNotificationsMailer.notice_period_before_deletion(user.id).deliver_now
       end
       target_date = nbr_days_notice_period_before_deletion.days.ago.to_date
       where('marked_for_deletion_on < ?', target_date)

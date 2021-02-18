@@ -44,7 +44,7 @@ environment.loaders.append('svg-sprite', {
   ]
 })
 
-if(process.env.WEBPACK_HOST) {
+if (process.env.WEBPACK_HOST) {
   environment.config.devServer.public = process.env.WEBPACK_HOST;
 }
 

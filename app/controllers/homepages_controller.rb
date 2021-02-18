@@ -11,9 +11,11 @@ class HomepagesController < ApplicationController
     @job_offers_selected = root_rel.last(3)
     @job_offers_last = root_rel.last(9)
 
-    @categories = Category.order("lft ASC").where("published_job_offers_count > ?", 0)
-    @max_depth_limit = 1
-    @categories_for_select = @categories.select { |x| x.depth <= @max_depth_limit }
+    @page = current_organization.pages.where(parent_id: nil).first
+    @categories = Category.order("lft ASC").where(
+      "published_job_offers_count > ? AND depth <= ?", 0, 1
+    )
+
     @contract_types = ContractType.all
   end
 end

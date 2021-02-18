@@ -1,0 +1,9 @@
+- filter_name = "#{kind}_id"
+- id = params[filter_name]
+- cache [collection, id] do
+  .rf-input-group
+    - name_tag = local_assigns[:name] || "name"
+    - options = options_from_collection_for_select(collection, "id", name_tag, id)
+    - prompt = t(".select_#{kind}")
+    - data = {placeholder: prompt, 'allow-clear': true}
+    = select_tag filter_name, options, include_blank: false, prompt: prompt, data: data, class: 'rf-select'

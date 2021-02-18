@@ -10,10 +10,11 @@ class JobOffersController < ApplicationController
   # GET /job_offers.json
   def index
     @page = current_organization.pages.where(parent_id: nil).first
-    @categories = Category.order("lft ASC").where("published_job_offers_count > ?", 0)
-    @max_depth_limit = 1
-    @categories_for_select = @categories.select { |x| x.depth <= @max_depth_limit }
-    @contract_types = ContractType.all
+    @categories = Category.order("lft ASC").where(
+      "published_job_offers_count > ? AND depth <= ?", 0, 1
+    )
+    @regions = JobOffer.pluck(:region).uniq.reject(&:blank?)
+    @region = params[:region]
 
     respond_to do |format|
       format.html {}
@@ -89,14 +90,35 @@ class JobOffersController < ApplicationController
       @category = Category.find(params[:category_id])
       @job_offers = @job_offers.where(category_id: @category.self_and_descendants)
     end
-    if params[:contract_type_id].present?
-      @contract_type = ContractType.find(params[:contract_type_id])
-      if @contract_type.present?
-        @job_offers = @job_offers.where(contract_type_id: @contract_type.id)
-      end
-    end
+    filter_by(ContractType)
+    filter_by(StudyLevel)
+    filter_by(ExperienceLevel)
+    filter_by_date(:contract_start_on)
+    filter_by_date(:published_at)
+
     @job_offers = @job_offers.search_full_text(params[:q]) if params[:q].present?
     @job_offers = @job_offers.paginate(page: params[:page])
+  end
+
+  def filter_by_date(kind)
+    return if params[kind].blank?
+
+    instance_variable_set("@#{kind}", params[kind])
+    @job_offers = @job_offers.where("contract_start_on <= ?", params[kind])
+  end
+
+  def filter_by(klass)
+    kind = klass.name.underscore.to_sym
+    instance_variable_set("@#{kind.to_s.pluralize}", klass.all)
+
+    kind_id = "#{kind}_id".to_sym
+    return unless params[kind_id].present?
+
+    object = klass.find(params[kind_id])
+    return unless object.present?
+
+    instance_variable_set("@#{kind}", object)
+    @job_offers = @job_offers.where(kind_id => object.id)
   end
 
   # Use callbacks to share common setup or constraints between actions.

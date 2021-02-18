@@ -1,13 +1,13 @@
 = form_tag job_offers_url, method: :get, class: 'w-100 form-inline' do
   .rf-input-group
     = text_field_tag :q, params[:q], placeholder: 'Mot-clé', class: 'rf-input'
-  - cache [@categories_for_select, params[:category_id]] do
+  - cache [@categories, params[:category_id]] do
     .rf-input-group
-      - options = options_from_collection_for_select(@categories_for_select, "id", "name_with_depth", params[:category_id])
-      - prompt = t('job_offers.filters.select_category')
-      = select_tag "category_id", options, include_blank: false, prompt: prompt, data: {placeholder: t('.select_category'), 'allow-clear': true}, class: 'rf-select'
+      - options = options_from_collection_for_select(@categories, "id", "name_with_depth", params[:category_id])
+      - prompt = t('job_offers.filter.select_category')
+      = select_tag "category_id", options, include_blank: false, prompt: prompt, data: {placeholder: prompt, 'allow-clear': true}, class: 'rf-select'
   - cache [@contract_types, params[:contract_type_id]] do
     .rf-input-group
-      - prompt = t('job_offers.filters.select_contract')
-      = select_tag "contract_type_id", options_from_collection_for_select(@contract_types, "id", "name", params[:contract_type_id]), include_blank: false, prompt: prompt, data: {placeholder: t('.contract'), 'allow-clear': true}, class: 'rf-select'
+      - prompt = t('job_offers.filter.select_contract_type')
+      = select_tag "contract_type_id", options_from_collection_for_select(@contract_types, "id", "name", params[:contract_type_id]), include_blank: false, prompt: prompt, data: {placeholder: prompt, 'allow-clear': true}, class: 'rf-select'
   = submit_tag t('job_offers.filters.search'), name: nil, class: 'rf-btn'

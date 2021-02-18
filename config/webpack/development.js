@@ -6,7 +6,7 @@ const environment = require('./environment')
 // From: https://github.com/rails/webpacker/issues/1879#issuecomment-558397652
 const chokidar = require('chokidar')
 
-if(environment.config.devServer) {
+if (environment.config.devServer) {
   environment.config.devServer.before = (app, server) => {
     chokidar.watch([
       'config/locales/*.yml',

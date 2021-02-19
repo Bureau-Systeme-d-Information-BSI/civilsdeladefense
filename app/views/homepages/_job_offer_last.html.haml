@@ -1,9 +1,8 @@
 %section.rf-py-9w.rf-bg-beige
   .rf-container
-    .rf-grid-row.rf-grid-row--center
-      %h2.rf-h3.rf-mb-4w Nos dernières offres
     .rf-grid-row.rf-grid-row--gutters
       .rf-col-12.rf-col-md-6
+        %h2.rf-h3.rf-mb-4w Nos dernières offres
         = render @job_offers_last
     .rf-grid-row.rf-grid-row--center.rf-mt-4w
       = link_to "Voir toutes nos offres", :job_offers, class: "rf-btn"

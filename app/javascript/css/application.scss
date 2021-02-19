@@ -11,6 +11,14 @@
   }
 }
 
+.font-weight-bold {
+  font-weight: bold;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
 input {
   &.rf-btn {
     border: 0;
@@ -40,7 +48,7 @@ input {
   margin-top: -80px;
 }
 
-.rf-bg--hero-image, .rf-bg--testimony-image {
+.rf-bg--hero-image {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -212,7 +220,7 @@ h2 {
       --color-active: rgba(91, 91, 255, 0.5);
     }
   }
-  .rf-bg--hero-image, .rf-bg--testimony-image {
+  .rf-bg--hero-image {
     --bg-image: rgba(0, 68, 148, 0.5);
   }
   .rf-bg--alt-3 {
@@ -231,7 +239,7 @@ h2 {
       --color-active: rgba(91, 91, 255, 0.5);
     }
   }
-  .rf-bg--hero-image, .rf-bg--testimony-image {
+  .rf-bg--hero-image {
     --bg-image: rgba(33, 33, 33, 0.5);
   }
   .rf-bg--alt-3 {
@@ -249,7 +257,7 @@ h2 {
   .block--overlap {
     margin-top: -80px !important;
   }
-  .rf-bg--hero-image, .rf-bg--testimony-image {
+  .rf-bg--hero-image {
     min-height: 200px;
   }
 
@@ -262,11 +270,4 @@ h2 {
 
 .rf-bg--testimony-image {
   min-height: 350px;
-
-  h2 {
-    font-size: 4rem;
-  }
-  h2, h3 {
-    text-transform: uppercase;
-  }
 }

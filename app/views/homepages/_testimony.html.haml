@@ -1,9 +1,9 @@
 - style = current_organization.image_background.present? ? "background-image: linear-gradient(var(--bg-image), var(--bg-image)), url(#{ current_organization.image_background.url });" : nil
-%section.rf-bg--alt-2.rf-bg--testimony-image.d-flex.align-items-center{style: style}
+%section.rf-bg--alt-2.rf-bg--hero-image.d-flex.align-items-center.rf-py-9w{style: style}
   .rf-container
     .rf-grid-row.rf-grid-row--center
-      %h2 Marc
+      .rf-h2.font-weight-bold.text-uppercase.rf-mb-0 Marc
     .rf-grid-row.rf-grid-row--center
-      %h3 Soldat et photographe
+      .rf-text--lead.text-uppercase.rf-mb-3w Soldat et photographe
     .rf-grid-row.rf-grid-row--center
-      = link_to 'Découvrir son histoire', 'https://www.civils.defense.gouv.fr/metier/13', class: 'rf-link rf-fi-arrow-right-line rf-link--icon-right'
+      = link_to 'Découvrir son histoire', 'https://www.civils.defense.gouv.fr/metier/13', class: 'rf-btn'

@@ -2,9 +2,8 @@
   .rf-container
     .rf-grid-row.rf-grid-row--center
       %h2.rf-h3.rf-mb-4w Nos dernières offres
-    .rf-grid-row.rf-grid-row--center.rf-grid-row--gutters.rf-mb-0
-      - for job_offer in @job_offers_last
-        .rf-col-12.rf-col-md-6.rf-col-lg-4
-          = link_to job_offer.title, job_offer, title: job_offer.title, class: "rf-btn rf-btn--secondary d-inline-block text-truncate w-100"
+    .rf-grid-row.rf-grid-row--gutters
+      .rf-col-12.rf-col-md-6
+        = render @job_offers_last
     .rf-grid-row.rf-grid-row--center.rf-mt-4w
       = link_to "Voir toutes nos offres", :job_offers, class: "rf-btn"

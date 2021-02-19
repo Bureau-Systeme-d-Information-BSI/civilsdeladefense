@@ -1,14 +1,13 @@
-.rf-container
+.rf-container.rf-my-9w
   .rf-grid-row.rf-grid-row--center
-    .rf-col-12
-      .rf-bg--alt-3.block--overlap.rf-py-4w.rounded-lg
-        %h2.text-center.rf-mt-0 Parcours du candidat
-        .rf-stepper.color-scheme-public
-          - 1.upto(6) do |i|
-            .rf-stepper-step
-              .rf-stepper-circle
-                %span= i
-              .rf-stepper-title
-                = t(".step_#{i}")
-              .rf-stepper-bar-left
-              .rf-stepper-bar-right
+    .rf-col-12.rf-col-md-8
+      %h2.rf-h3.text-center.rf-mt-0.rf-mb-4w Parcours du candidat
+      .rf-stepper
+        - 1.upto(6) do |i|
+          .rf-stepper-step
+            .rf-stepper-circle
+              %span= i
+            .rf-stepper-title
+              = t(".step_#{i}")
+            .rf-stepper-bar-left
+            .rf-stepper-bar-right

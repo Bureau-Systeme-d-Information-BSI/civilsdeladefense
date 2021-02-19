@@ -15,16 +15,17 @@
   %body
     #__SVG_SPRITE_NODE__{'data-turbo-permanent': true}
     = render partial: '/shared/header'
-    .rf-container
-      .rf-grid-row
-        - klasses = devise_controller? ? %w(col-md-6 devise) : (controller.action_name == "show" && controller.controller_name != 'pages' ? %w() : %w(col-md-9))
-        .rf-col-12.mx-md-auto{class: klasses}
-          - if flash[:notice]
-            .fixed-bottom.alert.alert-info= flash[:notice]
-          - elsif flash[:error] || flash[:alert]
-            .fixed-bottom.alert.alert-danger= flash[:error] || flash[:alert]
-          - elsif flash[:success]
-            .fixed-bottom.alert.alert-success= flash[:success]
+    - if flash[:notice] || flash[:alert] || flash[:error] || flash[:success]
+      .rf-container
+        .rf-grid-row
+          - klasses = devise_controller? ? %w(col-md-6 devise) : (controller.action_name == "show" && controller.controller_name != 'pages' ? %w() : %w(col-md-9))
+          .rf-col-12.mx-md-auto{class: klasses}
+            - if flash[:notice]
+              .fixed-bottom.alert.alert-info= flash[:notice]
+            - elsif flash[:error] || flash[:alert]
+              .fixed-bottom.alert.alert-danger= flash[:error] || flash[:alert]
+            - elsif flash[:success]
+              .fixed-bottom.alert.alert-success= flash[:success]
     = content_for?(:content) ? yield(:content) : yield
     = render partial: '/shared/footer'
     = render partial: '/shared/trackers'

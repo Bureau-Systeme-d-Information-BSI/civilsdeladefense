@@ -11,18 +11,14 @@
   }
 }
 
-.font-weight-bold {
-  font-weight: bold;
-}
-
-.text-uppercase {
-  text-transform: uppercase;
-}
-
 input {
   &.rf-btn {
     border: 0;
   }
+}
+
+.rf-bg-beige {
+  background-color: var(--beige);
 }
 
 .rf-border-0 {
@@ -93,6 +89,11 @@ label {
   a {
     display: inline;
   }
+}
+
+.shadow-lg {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+    5px 4px 6px -2px rgba(0, 0, 0, 0.05), -5px -4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 .rf-card {
@@ -257,8 +258,10 @@ h2 {
   .block--overlap {
     margin-top: -80px !important;
   }
-
   .rf-bg--hero-image {
-    height: 27rem;
+    min-height: 200px;
+    h1 {
+      padding: 13rem 0;
+    }
   }
 }

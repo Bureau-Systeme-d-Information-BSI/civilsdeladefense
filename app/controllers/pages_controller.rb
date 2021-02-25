@@ -4,7 +4,7 @@ class PagesController < ApplicationController
   before_action :find_page
 
   def show
-    render layout: 'cms'
+    render layout: "cms"
   end
 
   protected

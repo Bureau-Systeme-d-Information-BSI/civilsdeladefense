@@ -12,9 +12,9 @@ class Admin::JobApplicationFilesController < Admin::BaseController
 
     respond_to do |format|
       if @job_application_file.save
-        format.html { redirect_to([:admin, @job_application], notice: t('.success')) }
+        format.html { redirect_to([:admin, @job_application], notice: t(".success")) }
         format.js do
-          @notification = t('.success')
+          @notification = t(".success")
           render :file_operation_total
         end
         format.json do
@@ -24,8 +24,8 @@ class Admin::JobApplicationFilesController < Admin::BaseController
       else
         format.html { render :new }
         format.js do
-          message = @job_application_file.errors.full_messages.join(', ')
-          @notification = t('.failure', message: message)
+          message = @job_application_file.errors.full_messages.join(", ")
+          @notification = t(".failure", message: message)
           render :file_operation_total
         end
         format.json { render json: @job_application_file.errors, status: :unprocessable_entity }
@@ -36,9 +36,9 @@ class Admin::JobApplicationFilesController < Admin::BaseController
   def update
     if @job_application_file.update(job_application_file_params)
       respond_to do |format|
-        format.html { redirect_to([:admin, @job_application], notice: t('.success')) }
+        format.html { redirect_to([:admin, @job_application], notice: t(".success")) }
         format.js do
-          @notification = t('.success')
+          @notification = t(".success")
           render :file_operation_total
         end
         format.json do
@@ -50,8 +50,8 @@ class Admin::JobApplicationFilesController < Admin::BaseController
       respond_to do |format|
         format.html { render :new }
         format.js do
-          message = @job_application_file.errors.full_messages.join(', ')
-          @notification = t('.failure', message: message)
+          message = @job_application_file.errors.full_messages.join(", ")
+          @notification = t(".failure", message: message)
           render :file_operation_total
         end
         format.json { render json: @job_application_file.errors, status: :unprocessable_entity }
@@ -63,9 +63,9 @@ class Admin::JobApplicationFilesController < Admin::BaseController
     @job_application_file.destroy
 
     respond_to do |format|
-      format.html { redirect_to([:admin, @job_application], notice: t('.success')) }
+      format.html { redirect_to([:admin, @job_application], notice: t(".success")) }
       format.js do
-        @notification = t('.success')
+        @notification = t(".success")
         render :file_operation_total
       end
       format.json { head :no_content, location: [:admin, @job_application] }
@@ -75,7 +75,7 @@ class Admin::JobApplicationFilesController < Admin::BaseController
   def show
     unless @job_application_file.content.present?
       return render json: {
-        error: 'not found'
+        error: "not found"
       }, status: :not_found
     end
 
@@ -96,7 +96,7 @@ class Admin::JobApplicationFilesController < Admin::BaseController
     @job_application_file.send("#{action_name}!") if %w[check uncheck].include?(action_name)
     @job_application.compute_notifications_counter!
     location = [:admin, @job_application, @job_application_file]
-    @notification = t('.success')
+    @notification = t(".success")
 
     respond_to do |format|
       format.html do
@@ -116,7 +116,7 @@ class Admin::JobApplicationFilesController < Admin::BaseController
   # Never trust parameters from the scary internet, only allow the white list through.
   def job_application_file_params
     params.require(:job_application_file).permit(:content,
-                                                 :job_application_file_type_id,
-                                                 :is_validated)
+      :job_application_file_type_id,
+      :is_validated)
   end
 end

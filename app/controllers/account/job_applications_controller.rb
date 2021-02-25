@@ -6,13 +6,13 @@ class Account::JobApplicationsController < Account::BaseController
   # GET /account/job_applications
   # GET /account/job_applications.json
   def index
-    @job_applications_ongoing, @job_applications_finished = job_applications.partition do |x|
+    @job_applications_ongoing, @job_applications_finished = job_applications.partition { |x|
       JobApplication::FINISHED_STATES.include?(x.state)
-    end
+    }
   end
 
   def job_offer
-    render layout: 'account/job_application_display'
+    render layout: "account/job_application_display"
   end
 
   # GET /account/job_applications/1
@@ -21,7 +21,7 @@ class Account::JobApplicationsController < Account::BaseController
     @emails = @job_application.emails.order(created_at: :desc)
     @email = @job_application.emails.new
 
-    render layout: 'account/job_application_display'
+    render layout: "account/job_application_display"
   end
 
   private

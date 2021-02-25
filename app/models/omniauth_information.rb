@@ -7,6 +7,6 @@ class OmniauthInformation < ApplicationRecord
   belongs_to :user
 
   validates :uid, :email, :provider, presence: true
-  validates :uid, uniqueness: { scope: :provider }
-  validates :provider, inclusion: { in: AVAILABLE_PROVIDERS }
+  validates :uid, uniqueness: {scope: :provider}
+  validates :provider, inclusion: {in: AVAILABLE_PROVIDERS}
 end

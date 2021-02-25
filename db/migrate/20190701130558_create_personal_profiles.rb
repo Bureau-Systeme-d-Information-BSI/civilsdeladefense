@@ -18,7 +18,7 @@ class CreatePersonalProfiles < ActiveRecord::Migration[5.2]
       t.references :personal_profileable, polymorphic: true,
                                           type: :uuid,
                                           index: {
-                                            name: 'index_personal_profileable_type_and_id'
+                                            name: "index_personal_profileable_type_and_id"
                                           }
       t.integer :gender
       t.date :birth_date

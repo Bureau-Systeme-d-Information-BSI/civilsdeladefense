@@ -2,7 +2,7 @@
 
 # Generate data structures to be sent through daily summary emails
 class DailySummary
-  delegate :url_helpers, to: 'Rails.application.routes'
+  delegate :url_helpers, to: "Rails.application.routes"
 
   def initialize(day: Date.yesterday)
     @day = day
@@ -44,21 +44,21 @@ class DailySummary
 
   def prepare_new_job_offers(organization)
     @job_offers = organization.job_offers
-                              .where(created_at: @day_begin..@day_end)
-                              .order(created_at: :asc)
-                              .to_a
+      .where(created_at: @day_begin..@day_end)
+      .order(created_at: :asc)
+      .to_a
     @job_offers.each do |job_offer|
-      add_summary_infos_for_job_offer(job_offer, 'NewJobOffer')
+      add_summary_infos_for_job_offer(job_offer, "NewJobOffer")
     end
   end
 
   def prepare_published_job_offers(organization)
     @job_offers = organization.job_offers
-                              .where(published_at: @day_begin..@day_end)
-                              .order(published_at: :asc)
-                              .to_a
+      .where(published_at: @day_begin..@day_end)
+      .order(published_at: :asc)
+      .to_a
     @job_offers.each do |job_offer|
-      add_summary_infos_for_job_offer(job_offer, 'PublishedJobOffer')
+      add_summary_infos_for_job_offer(job_offer, "PublishedJobOffer")
     end
   end
 
@@ -125,7 +125,7 @@ class DailySummary
   private
 
   def find_job_applications_by_state(state)
-    r = Audited::Audit.where(auditable_type: 'JobApplication')
+    r = Audited::Audit.where(auditable_type: "JobApplication")
     r = r.where(created_at: @day_begin..@day_end)
     r = r.where("audited_changes->'state'->1 = ?", state.to_json)
     r = r.order(created_at: :desc)
@@ -135,8 +135,8 @@ class DailySummary
   protected
 
   def build_title_kind(state, job_application, job_offer)
-    ary = ["#{job_application.user&.full_name || 'Compte supprimé'} ##{job_offer.identifier}"]
-    ary.push(state.present? ? "#{state.capitalize}JobApplication" : 'NewJobApplication')
+    ary = ["#{job_application.user&.full_name || "Compte supprimé"} ##{job_offer.identifier}"]
+    ary.push(state.present? ? "#{state.capitalize}JobApplication" : "NewJobApplication")
   end
 
   def build_administrators(state, job_offer)

@@ -3,7 +3,7 @@
 # Represents a job proposed on the platform
 class JobOffer < ApplicationRecord
   SETTINGS = %i[category contract_type experience_level professional_category
-                sector study_level].freeze
+    sector study_level].freeze
 
   include JobOfferStateTimestamp
   include AASM
@@ -21,16 +21,16 @@ class JobOffer < ApplicationRecord
 
   include PgSearch::Model
   pg_search_scope :search_full_text, against: [
-    [:identifier, 'A'],
-    [:title, 'A'],
-    [:description, 'B'],
-    [:location, 'C']
+    [:identifier, "A"],
+    [:title, "A"],
+    [:description, "B"],
+    [:location, "C"]
   ], associated_against: SETTINGS.each_with_object({}) { |obj, memo|
     memo[obj] = %i[name]
   }
 
   ## Relationships
-  belongs_to :owner, class_name: 'Administrator'
+  belongs_to :owner, class_name: "Administrator"
   belongs_to :organization
   belongs_to :employer
   SETTINGS.each do |setting|
@@ -49,16 +49,16 @@ class JobOffer < ApplicationRecord
     relationship1 = "job_offer_#{actor_role}_actors".to_sym
     relationship2 = "#{actor_role}_actors".to_sym
     has_many relationship1,
-             -> { where(role: JobOfferActor.roles[actor_role]) },
-             class_name: 'JobOfferActor'
-    has_many relationship2, through: relationship1, source: 'administrator'
+      -> { where(role: JobOfferActor.roles[actor_role]) },
+      class_name: "JobOfferActor"
+    has_many relationship2, through: relationship1, source: "administrator"
   end
 
   ## Validations
   validates :title, :description, :required_profile, :contract_start_on, presence: true
   validates :contract_duration_id, presence: true, if: -> { contract_type&.duration }
   validates :contract_duration_id, absence: true, unless: -> { contract_type&.duration }
-  validates :title, format: { with: %r{\A.*F/H\z}, message: :f_h }
+  validates :title, format: {with: %r{\A.*F/H\z}, message: :f_h}
 
   ## Scopes
   default_scope { order(created_at: :desc) }
@@ -144,7 +144,7 @@ class JobOffer < ApplicationRecord
     j.contract_start_on = 6.months.from_now
     organization = reference_administrator.organization
     organization.organization_defaults.each do |organization_default|
-      field = organization_default.kind.gsub('job_offer_', '')
+      field = organization_default.kind.gsub("job_offer_", "")
       value = organization_default.value
       j.send("#{field}=", value)
     end
@@ -175,7 +175,7 @@ class JobOffer < ApplicationRecord
   end
 
   def set_identifier
-    update_column :identifier, [employer.code, sequential_id].join('')
+    update_column :identifier, [employer.code, sequential_id].join("")
   end
 
   def update_category_counter
@@ -183,7 +183,7 @@ class JobOffer < ApplicationRecord
   end
 
   def contract_type_is_cdd?
-    contract_type&.name == 'CDD'
+    contract_type&.name == "CDD"
   end
 
   def compute_notifications_count!
@@ -193,7 +193,7 @@ class JobOffer < ApplicationRecord
 
   def compute_notifications_count
     self.notifications_count = job_applications.sum(:emails_administrator_unread_count) +
-                               job_applications.sum(:files_unread_count)
+      job_applications.sum(:files_unread_count)
   end
 
   def cleanup_actor_administrator_dep(inviter, inviter_org)

@@ -3,13 +3,13 @@
 module JobOffersHelper
   def job_offer_icon_for_attribute(attribute)
     {
-      contract_type: 'briefcase-4-line',
-      contract_start_on: 'calendar-line',
-      location: 'map-pin-line',
-      study_level: 'focus-line',
-      category: 'building-line',
-      experience_level: 'focus-3-line',
-      salary: 'money-euro-box-line'
+      contract_type: "briefcase-4-line",
+      contract_start_on: "calendar-line",
+      location: "map-pin-line",
+      study_level: "focus-line",
+      category: "building-line",
+      experience_level: "focus-3-line",
+      salary: "money-euro-box-line"
     }[attribute]
   end
 
@@ -29,12 +29,12 @@ module JobOffersHelper
   end
 
   def job_offer_contract_type_display(job_offer)
-    [job_offer.contract_type.name, job_offer.duration_contract].join(' ')
+    [job_offer.contract_type.name, job_offer.duration_contract].join(" ")
   end
 
   def job_offer_start_display(job_offer)
     if job_offer.available_immediately?
-      t('.available_immediately')
+      t(".available_immediately")
     else
       I18n.l(job_offer.contract_start_on)
     end
@@ -44,7 +44,7 @@ module JobOffersHelper
     res = []
     res << "#{job_offer.estimate_monthly_salary_net} mensuel net"
     res << "#{job_offer.estimate_annual_salary_gross} annuel brut (selon expérience)"
-    res << "#{t('.benefit')} : #{job_offer.benefit.name}" if job_offer.benefit.present?
-    res.join('<br/>').html_safe
+    res << "#{t(".benefit")} : #{job_offer.benefit.name}" if job_offer.benefit.present?
+    res.join("<br/>").html_safe
   end
 end

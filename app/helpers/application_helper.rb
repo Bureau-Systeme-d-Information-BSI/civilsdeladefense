@@ -7,22 +7,22 @@ module ApplicationHelper
 
   def time_ago_in_words_minimal(time)
     res = time_ago_in_words(time)
-    res.split(' ').map do |x|
+    res.split(" ").map { |x|
       case x
       when /min/
-        'min'
+        "min"
       when /mois/
-        'm'
+        "m"
       when /heure/
-        'h'
+        "h"
       else
         x
       end
-    end.join(' ')
+    }.join(" ")
   end
 
   def spinner
-    content_tag 'div', class: 'indeterminate-circle mini text-primary' do
+    content_tag "div", class: "indeterminate-circle mini text-primary" do
       concat spinner_svg.html_safe
     end
   end

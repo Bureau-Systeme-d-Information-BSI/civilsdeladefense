@@ -4,18 +4,18 @@
 class JobApplication < ApplicationRecord
   include AASM
   audited except: %i[files_count files_unread_count emails_count
-                     emails_administrator_unread_count emails_user_unread_count
-                     administrator_notifications_count
-                     skills_fit_job_offer experiences_fit_job_offer]
+    emails_administrator_unread_count emails_user_unread_count
+    administrator_notifications_count
+    skills_fit_job_offer experiences_fit_job_offer]
   has_associated_audits
 
   include PgSearch::Model
   pg_search_scope :search_full_text,
-                  against: [],
-                  associated_against: {
-                    user: %i[first_name last_name],
-                    job_offer: %i[identifier title]
-                  }
+    against: [],
+    associated_against: {
+      user: %i[first_name last_name],
+      job_offer: %i[identifier title]
+    }
 
   belongs_to :job_offer
   belongs_to :organization
@@ -32,10 +32,10 @@ class JobApplication < ApplicationRecord
 
   has_many :job_application_actors
   has_many :actors,
-           through: :job_applications_actors,
-           class_name: 'Administrator'
+    through: :job_applications_actors,
+    class_name: "Administrator"
 
-  validates :user_id, uniqueness: { scope: :job_offer_id }, on: :create
+  validates :user_id, uniqueness: {scope: :job_offer_id}, on: :create
 
   before_validation :set_employer
   before_save :compute_notifications_counter
@@ -98,24 +98,24 @@ class JobApplication < ApplicationRecord
   end
 
   counter_culture :job_offer,
-                  column_name: proc { |model| "#{model.state}_job_applications_count" },
-                  column_names: aasm.states.each_with_object({}) { |obj, memo|
-                                  state = obj.name
-                                  enum_value = states[state]
-                                  col_name = "#{state}_job_applications_count"
-                                  memo[['job_applications.state = ?', enum_value]] = col_name
-                                },
-                  touch: true
+    column_name: proc { |model| "#{model.state}_job_applications_count" },
+    column_names: aasm.states.each_with_object({}) { |obj, memo|
+                    state = obj.name
+                    enum_value = states[state]
+                    col_name = "#{state}_job_applications_count"
+                    memo[["job_applications.state = ?", enum_value]] = col_name
+                  },
+    touch: true
   counter_culture :job_offer,
-                  column_name: 'job_applications_count',
-                  touch: true
+    column_name: "job_applications_count",
+    touch: true
   counter_culture :job_offer,
-                  column_name: :notifications_count,
-                  delta_column: 'administrator_notifications_count',
-                  touch: true
+    column_name: :notifications_count,
+    delta_column: "administrator_notifications_count",
+    touch: true
   counter_culture :user,
-                  column_name: 'job_applications_count',
-                  touch: true
+    column_name: "job_applications_count",
+    touch: true
 
   default_scope { order(created_at: :desc) }
   scope :finished, -> { where(state: FINISHED_STATES) }
@@ -144,20 +144,20 @@ class JobApplication < ApplicationRecord
 
   def compute_files_count
     ary_start = [0, 0]
-    ary = job_application_files.each_with_object(ary_start) do |job_application_file, memo|
+    ary = job_application_files.each_with_object(ary_start) { |job_application_file, memo|
       memo[0] += 1
       memo[1] += 1 if job_application_file.is_validated.zero?
-    end
+    }
     self.files_count, self.files_unread_count = ary
   end
 
   def compute_emails_count
-    ary = emails.reload.each_with_object([0, 0]) do |obj, memo|
+    ary = emails.reload.each_with_object([0, 0]) { |obj, memo|
       if obj.is_unread?
         memo[0] += 1 if obj.sender.is_a?(User)
         memo[1] += 1 if obj.sender.is_a?(Administrator)
       end
-    end
+    }
     self.emails_administrator_unread_count, self.emails_user_unread_count = ary
   end
 
@@ -174,9 +174,9 @@ class JobApplication < ApplicationRecord
   # Second with JobApplicationFileType
   def files_to_be_provided
     JobApplicationFileType.all.each_with_object([[], []]) do |file_type, memo|
-      existing_file = job_application_files.detect do |file|
+      existing_file = job_application_files.detect { |file|
         file.job_application_file_type == file_type
-      end
+      }
 
       from_state_as_val = JobApplication.states[file_type.from_state]
       current_state_as_val = JobApplication.states[state]
@@ -195,9 +195,9 @@ class JobApplication < ApplicationRecord
   def send_confirmation_email
     job_offer_identifier = job_offer.identifier
     service_name = job_offer.organization.service_name
-    subject = I18n.t('job_offers.successful.subject', job_offer_identifier: job_offer_identifier,
+    subject = I18n.t("job_offers.successful.subject", job_offer_identifier: job_offer_identifier,
                                                       service_name: service_name)
-    body = I18n.t('job_offers.successful.body', first_name: user.first_name,
+    body = I18n.t("job_offers.successful.body", first_name: user.first_name,
                                                 job_offer_title: job_offer.title,
                                                 job_offer_identifier: job_offer_identifier,
                                                 service_name: service_name)
@@ -223,7 +223,7 @@ class JobApplication < ApplicationRecord
     end
 
     def phone_meeting_gt_states
-      all_states_greater_than('phone_meeting')
+      all_states_greater_than("phone_meeting")
     end
 
     def all_states_greater_than(state_name)

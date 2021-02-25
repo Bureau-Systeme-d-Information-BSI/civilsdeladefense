@@ -14,18 +14,18 @@ class Admin::EmailsController < Admin::BaseController
       if @email.save
         ApplicantNotificationsMailer.new_email(@email.id).deliver_now
 
-        format.html { redirect_to [:admin, @email.job_application], notice: t('.success') }
+        format.html { redirect_to [:admin, @email.job_application], notice: t(".success") }
         format.js do
           @email = Email.new
           @email.job_application = @job_application
-          @notification = t('.success')
+          @notification = t(".success")
           render :create
         end
         format.json { render :show, status: :created, location: @email }
       else
         format.html { render :new }
         format.js do
-          @notification = t('.unsuccess')
+          @notification = t(".unsuccess")
           render :create
         end
         format.json { render json: @email.errors, status: :unprocessable_entity }
@@ -41,10 +41,10 @@ class Admin::EmailsController < Admin::BaseController
     respond_to do |format|
       format.html do
         location = [:admin, @job_application, @email]
-        redirect_back(fallback_location: location, notice: t('.success'))
+        redirect_back(fallback_location: location, notice: t(".success"))
       end
       format.js do
-        @notification = t('.success')
+        @notification = t(".success")
         render :email_operation
       end
       format.json do
@@ -62,10 +62,10 @@ class Admin::EmailsController < Admin::BaseController
     respond_to do |format|
       format.html do
         location = [:admin, @job_application, @email]
-        redirect_back(fallback_location: location, notice: t('.success'))
+        redirect_back(fallback_location: location, notice: t(".success"))
       end
       format.js do
-        @notification = t('.success')
+        @notification = t(".success")
         render :email_operation
       end
       format.json do

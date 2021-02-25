@@ -1,86 +1,86 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe JobOffer, type: :model do
-  describe 'contract_duration' do
+  describe "contract_duration" do
     let(:job_offer) do
       build(:job_offer, contract_type: contract_type, contract_duration: contract_duration)
     end
 
-    context 'when contrat_type duration = true' do
+    context "when contrat_type duration = true" do
       let(:contract_type) { create(:contract_type, duration: true) }
 
-      context 'with contract_duration' do
+      context "with contract_duration" do
         let(:contract_duration) { create(:contract_duration) }
 
-        it 'should be valid' do
+        it "should be valid" do
           expect(job_offer.valid?).to be_truthy
         end
       end
 
-      context 'without contract_duration' do
+      context "without contract_duration" do
         let(:contract_duration) { nil }
 
-        it 'should be invalid' do
+        it "should be invalid" do
           expect(job_offer.valid?).to be_falsey
         end
       end
     end
 
-    context 'when contrat_type duration = false' do
+    context "when contrat_type duration = false" do
       let(:contract_type) { create(:contract_type, duration: false) }
 
-      context 'with contract_duration' do
+      context "with contract_duration" do
         let(:contract_duration) { create(:contract_duration) }
 
-        it 'should be invalid' do
+        it "should be invalid" do
           expect(job_offer.valid?).to be_falsey
         end
       end
 
-      context 'without contract_duration' do
+      context "without contract_duration" do
         let(:contract_duration) { nil }
 
-        it 'should be valid' do
+        it "should be valid" do
           expect(job_offer.valid?).to be_truthy
         end
       end
     end
   end
 
-  it 'should set published_at date when state is published' do
+  it "should set published_at date when state is published" do
     job_offer = create(:job_offer)
-    expect(job_offer.state).to eq('draft')
+    expect(job_offer.state).to eq("draft")
     expect(job_offer.published_at).to be_nil
     job_offer.publish!
-    expect(job_offer.state).to eq('published')
+    expect(job_offer.state).to eq("published")
     expect(job_offer.published_at).not_to be_nil
   end
 
-  it 'should set archived_at date when state is archived' do
+  it "should set archived_at date when state is archived" do
     job_offer = create(:job_offer)
-    expect(job_offer.state).to eq('draft')
+    expect(job_offer.state).to eq("draft")
     expect(job_offer.archived_at).to be_nil
     job_offer.publish!
     job_offer.archive!
     job_offer.reload
-    expect(job_offer.state).to eq('archived')
+    expect(job_offer.state).to eq("archived")
     expect(job_offer.archived_at).not_to be_nil
   end
 
-  it 'should set suspended_at date when state is suspended' do
+  it "should set suspended_at date when state is suspended" do
     job_offer = create(:job_offer)
-    expect(job_offer.state).to eq('draft')
+    expect(job_offer.state).to eq("draft")
     expect(job_offer.suspended_at).to be_nil
     job_offer.publish!
     job_offer.suspend!
     job_offer.reload
-    expect(job_offer.state).to eq('suspended')
+    expect(job_offer.state).to eq("suspended")
     expect(job_offer.suspended_at).not_to be_nil
   end
 
-  it 'should prevent publishing according to organization config' do
+  it "should prevent publishing according to organization config" do
     job_offer = create(:job_offer)
     organization = job_offer.organization
     organization.hours_delay_before_publishing = 1
@@ -89,7 +89,7 @@ RSpec.describe JobOffer, type: :model do
     expect { job_offer.publish! }.to raise_error(AASM::InvalidTransition)
   end
 
-  it 'should allow publishing according to organization config' do
+  it "should allow publishing according to organization config" do
     job_offer = create(:job_offer)
     organization = job_offer.organization
     organization.hours_delay_before_publishing = nil
@@ -105,7 +105,7 @@ RSpec.describe JobOffer, type: :model do
     expect { job_offer.publish! }.to_not raise_error
   end
 
-  it 'should compute publishing_possible_at' do
+  it "should compute publishing_possible_at" do
     duration = 2
     job_offer = create(:job_offer)
     organization = job_offer.organization
@@ -115,7 +115,7 @@ RSpec.describe JobOffer, type: :model do
     expect(job_offer.publishing_possible_at).to eq(job_offer.created_at + duration.hours)
   end
 
-  it 'should correctly rebuild timestamp from audit log' do
+  it "should correctly rebuild timestamp from audit log" do
     job_offer = create(:job_offer)
     job_offer.publish!
     published_at = job_offer.published_at
@@ -141,7 +141,7 @@ RSpec.describe JobOffer, type: :model do
     expect(time_diff).to be_within(1.0).of(1.0)
   end
 
-  it 'should correctly find current most advanced job application state' do
+  it "should correctly find current most advanced job application state" do
     job_offer = create(:job_offer)
     job_applications = create_list(:job_application, 10, job_offer: job_offer)
     expect(job_offer.current_most_advanced_job_applications_state).to eq(0)
@@ -150,21 +150,21 @@ RSpec.describe JobOffer, type: :model do
     expect(job_offer.current_most_advanced_job_applications_state).to eq(last_state_enum)
   end
 
-  it 'should be visible by owner' do
+  it "should be visible by owner" do
     employer = create(:employer)
-    owner = create(:administrator, role: 'employer', employer: employer)
+    owner = create(:administrator, role: "employer", employer: employer)
     job_offer = create(:job_offer, owner: owner)
     ability = Ability.new(owner)
     expect(ability.can?(:manage, job_offer)).to be true
   end
 
-  it 'should be visible by actors' do
+  it "should be visible by actors" do
     employer = create(:employer)
     brh = create(:administrator, role: nil, employer: employer)
     other_admin = create(:administrator, role: nil, employer: employer)
 
     job_offer = create(:job_offer)
-    create(:job_offer_actor, role: 'brh', administrator: brh, job_offer: job_offer)
+    create(:job_offer_actor, role: "brh", administrator: brh, job_offer: job_offer)
 
     ability = Ability.new(brh)
     expect(ability.can?(:read, job_offer)).to be true
@@ -174,7 +174,7 @@ RSpec.describe JobOffer, type: :model do
     expect(ability.can?(:read, job_offer)).to be false
   end
 
-  it 'should set identifier correctly even when employer has been changed' do
+  it "should set identifier correctly even when employer has been changed" do
     job_offer1 = create(:job_offer)
     expect(job_offer1.identifier).to eq "#{job_offer1.employer.code}1"
 
@@ -189,8 +189,8 @@ RSpec.describe JobOffer, type: :model do
     expect(job_offer3.identifier).to eq "#{job_offer1.employer.code}3"
   end
 
-  describe 'validate' do
-    describe 'title' do
+  describe "validate" do
+    describe "title" do
       # context 'with ( in title and no F/H at the end' do
       #   let(:job_offer) { build(:job_offer, title: '(') }
 
@@ -207,10 +207,10 @@ RSpec.describe JobOffer, type: :model do
       #   end
       # end
 
-      context 'without ( in title and with F/H at the end' do
-        let(:job_offer) { build(:job_offer, title: 'no parenthesis F/H') }
+      context "without ( in title and with F/H at the end" do
+        let(:job_offer) { build(:job_offer, title: "no parenthesis F/H") }
 
-        it 'is valid' do
+        it "is valid" do
           expect(job_offer).to be_valid
         end
       end

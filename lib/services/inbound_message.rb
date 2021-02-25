@@ -16,19 +16,19 @@ class InboundMessage
       from = message[:from]
       to = message[:to]
       Rails.logger.debug "Message from #{from} to #{to} will be trashed"
-      imap.uid_move(uid, ENV['MAIL_FOLDER_TRASH']) if ENV['MAIL_FOLDER_TRASH'].present?
+      imap.uid_move(uid, ENV["MAIL_FOLDER_TRASH"]) if ENV["MAIL_FOLDER_TRASH"].present?
     end
   end
 
   def self.retriever_method_configuration
-    outgoing_mail_uri = URI(ENV['MAIL_URL'])
+    outgoing_mail_uri = URI(ENV["MAIL_URL"])
     user_name = CGI.unescape(outgoing_mail_uri.user)
     password = CGI.unescape(outgoing_mail_uri.password)
     host = outgoing_mail_uri.host
     port = outgoing_mail_uri.port
     scheme = outgoing_mail_uri.scheme
-    protocol = :imap if scheme =~ /imap/
-    protocol = :pop if scheme =~ /pop/
+    protocol = :imap if /imap/.match?(scheme)
+    protocol = :pop if /pop/.match?(scheme)
 
     config = {
       address: host,

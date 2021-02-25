@@ -4,8 +4,8 @@ FactoryBot.define do
   factory :job_application_file do
     content do
       Rack::Test::UploadedFile.new(
-        Rails.root.join('spec/fixtures/files/document.pdf'),
-        'application/pdf'
+        Rails.root.join("spec/fixtures/files/document.pdf"),
+        "application/pdf"
       )
     end
     job_application_file_type

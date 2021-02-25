@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require 'turbolinks/redirection'
+require "turbolinks/redirection"
 
 class Admin::BaseController < ApplicationController
   include Turbolinks::Redirection
 
   before_action :authenticate_administrator!
   load_and_authorize_resource
-  layout 'admin'
+  layout "admin"
 
   protected
 
@@ -16,6 +16,6 @@ class Admin::BaseController < ApplicationController
   end
 
   def authenticated_user_or_administrator
-    current_administrator || 'unknown'
+    current_administrator || "unknown"
   end
 end

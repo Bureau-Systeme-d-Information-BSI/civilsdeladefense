@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
-require 'will_paginate/array'
+require "rails_helper"
+require "will_paginate/array"
 
-RSpec.describe 'job_offers/index', type: :view do
+RSpec.describe "job_offers/index", type: :view do
   before(:each) do
     categories = create_list(:category, 5)
 
@@ -12,11 +12,11 @@ RSpec.describe 'job_offers/index', type: :view do
     employer = create(:employer)
 
     job_offers = create_list(:job_offer,
-                             2,
-                             state: :published,
-                             owner: owner,
-                             category: category,
-                             employer: employer)
+      2,
+      state: :published,
+      owner: owner,
+      category: category,
+      employer: employer)
 
     assign(:categories, categories)
     assign(:categories_for_select, categories)
@@ -24,7 +24,7 @@ RSpec.describe 'job_offers/index', type: :view do
     assign(:job_offers, job_offers.paginate(page: nil))
   end
 
-  it 'renders a list of job_offers' do
+  it "renders a list of job_offers" do
     render
   end
 end

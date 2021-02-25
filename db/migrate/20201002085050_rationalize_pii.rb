@@ -7,8 +7,8 @@ class RationalizePii < ActiveRecord::Migration[6.0]
     add_column :users, :current_position, :string
 
     profiles = Profile.where.not(website_url: nil)
-                      .where.not(phone: nil)
-                      .where.not(current_position: nil)
+      .where.not(phone: nil)
+      .where.not(current_position: nil)
     profiles.each do |profile|
       obj = profile.profileable
       hsh = {
@@ -19,10 +19,10 @@ class RationalizePii < ActiveRecord::Migration[6.0]
       case obj
       when User
         obj.update_columns(hsh)
-        putc '.'
+        putc "."
       when JobApplication
         obj.user.update_columns(hsh)
-        putc '.'
+        putc "."
       end
     end
 

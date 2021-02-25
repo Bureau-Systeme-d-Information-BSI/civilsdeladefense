@@ -10,7 +10,7 @@ class AddUuids < ActiveRecord::Migration[5.2]
     tables.delete(:friendly_id_slugs)
 
     tables.each do |table|
-      add_column table, :uuid_temp, :uuid, default: 'gen_random_uuid()', null: false
+      add_column table, :uuid_temp, :uuid, default: "gen_random_uuid()", null: false
     end
   end
 end

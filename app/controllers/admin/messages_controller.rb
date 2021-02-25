@@ -12,18 +12,18 @@ class Admin::MessagesController < Admin::BaseController
 
     respond_to do |format|
       if @message.save
-        format.html { redirect_to [:admin, @message.job_application], notice: t('.success') }
+        format.html { redirect_to [:admin, @message.job_application], notice: t(".success") }
         format.js do
           @message = Message.new
           @message.job_application = @job_application
-          @notification = t('.success')
+          @notification = t(".success")
           render :create
         end
         format.json { render :show, status: :created, location: @message }
       else
         format.html { render :new }
         format.js do
-          @notification = t('.failure')
+          @notification = t(".failure")
           render :new
         end
       end

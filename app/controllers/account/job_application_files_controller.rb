@@ -6,7 +6,7 @@ class Account::JobApplicationFilesController < Account::BaseController
   before_action :set_job_application
   before_action :set_job_application_file, only: %i[show update]
 
-  layout 'account/job_application_display'
+  layout "account/job_application_display"
 
   # GET /account/job_application_files
   # GET /account/job_application_files.json
@@ -25,14 +25,14 @@ class Account::JobApplicationFilesController < Account::BaseController
         @job_application.compute_notifications_counter!
         format.turbo_stream do
           str = turbo_stream.replace(file_type,
-                                     partial: 'file_name_upload',
-                                     locals: {
-                                       job_application: @job_application,
-                                       job_application_file: @job_application_file
-                                     })
+            partial: "file_name_upload",
+            locals: {
+              job_application: @job_application,
+              job_application_file: @job_application_file
+            })
           render turbo_stream: str
         end
-        format.html { redirect_to url, notice: t('.success') }
+        format.html { redirect_to url, notice: t(".success") }
       else
         format.html { render :new }
       end
@@ -48,7 +48,7 @@ class Account::JobApplicationFilesController < Account::BaseController
         format.turbo_stream do
           render turbo_stream: turbo_stream_update_response(file_type)
         end
-        format.html { redirect_to redirect_back_location, notice: t('.success') }
+        format.html { redirect_to redirect_back_location, notice: t(".success") }
       else
         format.turbo_stream do
           render turbo_stream: turbo_stream_update_response(file_type)
@@ -61,7 +61,7 @@ class Account::JobApplicationFilesController < Account::BaseController
   def show
     unless @job_application_file.content.file.present?
       return render json: {
-        error: 'not found'
+        error: "not found"
       }, status: :not_found
     end
 
@@ -90,10 +90,10 @@ class Account::JobApplicationFilesController < Account::BaseController
 
   def turbo_stream_update_response(file_type)
     turbo_stream.replace(file_type,
-                         partial: 'file_name_upload',
-                         locals: {
-                           job_application: @job_application,
-                           job_application_file: @job_application_file
-                         })
+      partial: "file_name_upload",
+      locals: {
+        job_application: @job_application,
+        job_application_file: @job_application_file
+      })
   end
 end

@@ -56,8 +56,8 @@ class Page < ApplicationRecord
 
   def reinsert_previous_child
     previous_child = Page.where(parent_id: parent_id)
-                         .where('depth >= ?', 2)
-                         .where.not(id: id).first
+      .where("depth >= ?", 2)
+      .where.not(id: id).first
     previous_child&.move_to_child_of(self)
   end
 end

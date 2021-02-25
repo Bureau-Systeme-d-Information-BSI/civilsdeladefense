@@ -16,7 +16,7 @@ class JobOfferActor < ApplicationRecord
       self.administrator = administrator
     else
       build_administrator(
-        attributes.except('_destroy').merge(inviter: job_offer&.owner)
+        attributes.except("_destroy").merge(inviter: job_offer&.owner)
       )
     end
   end

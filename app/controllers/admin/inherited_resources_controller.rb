@@ -31,7 +31,7 @@ class Admin::InheritedResourcesController < Admin::BaseController
     params.require(resource_class.to_s.tableize.singularize.to_sym).permit(permitted_fields)
   end
 
-  alias resource_params permitted_params
+  alias_method :resource_params, :permitted_params
 
   def resource_class
     controller_name.classify.constantize

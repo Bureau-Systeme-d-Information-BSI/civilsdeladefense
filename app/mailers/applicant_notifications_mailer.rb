@@ -21,12 +21,12 @@ class ApplicantNotificationsMailer < ApplicationMailer
 
     reply_to = nil
     if @organization.inbound_email_config_catch_all?
-      default_from = ENV['DEFAULT_FROM']
-      reply_to = default_from.gsub('@', "+#{@email.id}@")
+      default_from = ENV["DEFAULT_FROM"]
+      reply_to = default_from.gsub("@", "+#{@email.id}@")
     elsif @organization.inbound_email_config_hidden_headers?
-      mail_uri = URI(ENV['SMTP_URL'])
+      mail_uri = URI(ENV["SMTP_URL"])
       host = mail_uri.host
-      headers['Message-ID'] = "<#{@email.id}@#{host}>"
+      headers["Message-ID"] = "<#{@email.id}@#{host}>"
     end
 
     mail to: to, subject: subject, reply_to: reply_to
@@ -36,7 +36,7 @@ class ApplicantNotificationsMailer < ApplicationMailer
     @user = User.find(user_id)
     organization = @user.organization
     @service_name = organization.service_name
-    @nbr_days_notice_period_before_deletion = ENV['NBR_DAYS_NOTICE_PERIOD_BEFORE_DELETION'].to_i
+    @nbr_days_notice_period_before_deletion = ENV["NBR_DAYS_NOTICE_PERIOD_BEFORE_DELETION"].to_i
 
     to = @user.email
     subject = "[#{@service_name}] Votre compte candidat : mise à jour nécessaire"

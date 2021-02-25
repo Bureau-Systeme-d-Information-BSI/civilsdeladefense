@@ -14,8 +14,8 @@ class Email < ApplicationRecord
   attr_accessor :template
 
   counter_culture :job_application,
-                  column_name: :emails_count,
-                  touch: true
+    column_name: :emails_count,
+    touch: true
 
   after_save :compute_job_application_notifications_counter
 

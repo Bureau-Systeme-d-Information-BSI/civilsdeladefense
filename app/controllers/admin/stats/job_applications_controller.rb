@@ -10,8 +10,8 @@ class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
     @job_applications = @job_applications.where(created_at: date_range)
     @q = @job_applications.ransack(params[:q])
     @job_applications_filtered = @q.result(distinct: true)
-                                   .page(params[:page])
-                                   .per_page(20)
+      .page(params[:page])
+      .per_page(20)
     @job_applications_count = @job_applications_filtered.count
     build_stats
     build_stats_per_profile
@@ -32,7 +32,7 @@ class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
     @per_day = root_rel.group_by_day(:created_at, range: date_range).count
     @per_experiences_fit_job_offer = root_rel.group(:experiences_fit_job_offer).count
     @per_rejection_reason = root_rel.where.not(rejection_reason_id: nil)
-                                    .group(:rejection_reason_id).count
+      .group(:rejection_reason_id).count
     @per_state = root_rel.group(:state).count
   end
 

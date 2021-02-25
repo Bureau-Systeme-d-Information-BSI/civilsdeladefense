@@ -5,7 +5,7 @@ class Admin::Settings::EmployersController < Admin::Settings::InheritedResources
     super do |format|
       @grand_employers = Employer.roots
       format.html do
-        render template: '/admin/settings/employers/index'
+        render template: "/admin/settings/employers/index"
       end
     end
   end

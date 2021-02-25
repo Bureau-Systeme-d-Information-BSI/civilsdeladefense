@@ -2,7 +2,7 @@
 
 module Admin::BaseHelper
   def datepicker_display(datetime)
-    datetime&.to_date&.strftime('%d/%m/%Y')
+    datetime&.to_date&.strftime("%d/%m/%Y")
   end
 
   def user_detailed_info_url(user, job_application)
@@ -11,7 +11,7 @@ module Admin::BaseHelper
     elsif can?(:manage, user)
       [:admin, @preferred_users_list, user]
     else
-      '#'
+      "#"
     end
   end
 end

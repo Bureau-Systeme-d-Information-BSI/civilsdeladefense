@@ -1,9 +1,9 @@
 # frozen_string_literal: false
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe JobApplication, type: :model do
-  it 'should correcty tell rejected state' do
+  it "should correcty tell rejected state" do
     job_offer = create(:job_offer)
     job_application = create(:job_application, job_offer: job_offer)
 
@@ -40,24 +40,24 @@ RSpec.describe JobApplication, type: :model do
     expect(job_application.rejected_state?).to be false
   end
 
-  it 'should correcty tell rejected states from JobOffer class' do
+  it "should correcty tell rejected states from JobOffer class" do
     ary = %w[rejected phone_meeting_rejected after_meeting_rejected]
     expect(JobApplication.rejected_states).to match_array(ary)
   end
 
-  it 'should compute files to be provided' do
+  it "should compute files to be provided" do
     job_offer = create(:job_offer)
     job_application = create(:job_application, job_offer: job_offer)
 
-    JobApplicationFileType.create name: 'CV',
+    JobApplicationFileType.create name: "CV",
                                   from_state: :initial,
                                   kind: :applicant_provided,
                                   by_default: true
-    JobApplicationFileType.create name: 'LM',
+    JobApplicationFileType.create name: "LM",
                                   from_state: :initial,
                                   kind: :applicant_provided,
                                   by_default: true
-    JobApplicationFileType.create name: 'FILE',
+    JobApplicationFileType.create name: "FILE",
                                   from_state: :to_be_met,
                                   kind: :applicant_provided,
                                   by_default: true
@@ -66,7 +66,7 @@ RSpec.describe JobApplication, type: :model do
     expect(ary2.size).to eq(1)
 
     job_application.job_application_files.each do |file|
-      file.content = fixture_file_upload('document.pdf', 'application/pdf')
+      file.content = fixture_file_upload("document.pdf", "application/pdf")
     end
     job_application.to_be_met!
 

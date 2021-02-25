@@ -12,7 +12,7 @@ class SalaryRange < ApplicationRecord
     includes(:professional_category, :sector, :experience_level)
   }
   scope :admin_settings_index_order, lambda {
-    order('professional_categories.name asc, sectors.name asc, experience_levels.name asc')
+    order("professional_categories.name asc, sectors.name asc, experience_levels.name asc")
   }
   scope :admin_settings_index, -> { admin_settings_index_includes.admin_settings_index_order }
   scope :by_main_factors, lambda { |professional_category_id, experience_level_id, sector_id|

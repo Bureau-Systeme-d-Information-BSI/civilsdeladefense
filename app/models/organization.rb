@@ -24,12 +24,12 @@ class Organization < ApplicationRecord
   ].each do |field|
     mount_uploader field, LogoUploader, mount_on: :"#{field}_file_name"
     validates field,
-              file_size: { less_than: 1.megabytes }
+      file_size: {less_than: 1.megabytes}
   end
 
   mount_uploader :image_background, LogoUploader, mount_on: :image_background_file_name
   validates :image_background,
-            file_size: { less_than: 1.megabytes }
+    file_size: {less_than: 1.megabytes}
 
   #####################################
   # Enums
@@ -50,12 +50,12 @@ class Organization < ApplicationRecord
 
   def possessive_article
     case prefix_article
-    when 'le'
-      'du '
-    when 'la'
-      'de la '
-    when 'l\''
-      'de l\''
+    when "le"
+      "du "
+    when "la"
+      "de la "
+    when "l'"
+      "de l'"
     end
   end
 end

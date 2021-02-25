@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Account::BaseController < ApplicationController
-  layout 'account'
+  layout "account"
 
   def show
   end

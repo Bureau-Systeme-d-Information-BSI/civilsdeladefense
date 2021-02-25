@@ -17,7 +17,7 @@ module JobOfferStateActions
     @job_offer.publish
     respond_to do |format|
       if @job_offer.save
-        format.html { redirect_to %i[admin job_offers], notice: t('.success') }
+        format.html { redirect_to %i[admin job_offers], notice: t(".success") }
         format.json { render :show, status: :created, location: @job_offer }
       else
         format.html { render :new }
@@ -41,9 +41,9 @@ module JobOfferStateActions
   def state_action(event_name)
     @job_offer.send("#{event_name}!")
     respond_to do |format|
-      format.html { redirect_back(fallback_location: job_offers_url, notice: t('.success')) }
+      format.html { redirect_back(fallback_location: job_offers_url, notice: t(".success")) }
       format.js do
-        @notification = t('.success')
+        @notification = t(".success")
         render :state_change
       end
       format.json { render :show, status: :ok, location: @job_offer }
@@ -56,7 +56,7 @@ module JobOfferStateActions
 
     respond_to do |format|
       if @job_offer.save && @job_offer.send("#{event_name}!")
-        format.html { redirect_to %i[admin job_offers], notice: t('.success') }
+        format.html { redirect_to %i[admin job_offers], notice: t(".success") }
         format.json { render :show, status: :ok, location: @job_offer }
       else
         format.html { render :edit }

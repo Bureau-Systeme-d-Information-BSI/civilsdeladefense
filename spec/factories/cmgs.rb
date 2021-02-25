@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :cmg do
-    email { 'cmg@molo.org' }
+    email { "cmg@molo.org" }
     organization { Organization.first }
   end
 end

@@ -4,12 +4,12 @@
 class PlatformMailer < Devise::Mailer
   helper :application # gives access to all helpers defined within `application_helper`.
   include Devise::Controllers::UrlHelpers # Optional. eg. `confirmation_url`
-  default template_path: 'devise/mailer' # to make sure that your mailer uses the devise views
+  default template_path: "devise/mailer" # to make sure that your mailer uses the devise views
 
   def confirmation_instructions(record, token, opts = {})
     organization = record.organization
     service_name = organization.service_name
-    i18n_key = 'devise.mailer.confirmation_instructions.subject'
+    i18n_key = "devise.mailer.confirmation_instructions.subject"
     opts[:subject] = I18n.t(i18n_key, service_name: service_name)
     super
   end
@@ -17,7 +17,7 @@ class PlatformMailer < Devise::Mailer
   def reset_password_instructions(record, token, opts = {})
     organization = record.organization
     service_name = organization.service_name
-    i18n_key = 'devise.mailer.reset_password_instructions.subject'
+    i18n_key = "devise.mailer.reset_password_instructions.subject"
     opts[:subject] = I18n.t(i18n_key, service_name: service_name)
     super
   end
@@ -25,7 +25,7 @@ class PlatformMailer < Devise::Mailer
   def unlock_instructions(record, token, opts = {})
     organization = record.organization
     service_name = organization.service_name
-    i18n_key = 'devise.mailer.unlock_instructions.subject'
+    i18n_key = "devise.mailer.unlock_instructions.subject"
     opts[:subject] = I18n.t(i18n_key, service_name: service_name)
     super
   end
@@ -33,7 +33,7 @@ class PlatformMailer < Devise::Mailer
   def email_changed(record, opts = {})
     organization = record.organization
     service_name = organization.service_name
-    i18n_key = 'devise.mailer.email_changed.subject'
+    i18n_key = "devise.mailer.email_changed.subject"
     opts[:subject] = I18n.t(i18n_key, service_name: service_name)
     super
   end
@@ -41,7 +41,7 @@ class PlatformMailer < Devise::Mailer
   def password_change(record, opts = {})
     organization = record.organization
     service_name = organization.service_name
-    i18n_key = 'devise.mailer.password_change.subject'
+    i18n_key = "devise.mailer.password_change.subject"
     opts[:subject] = I18n.t(i18n_key, service_name: service_name)
     super
   end

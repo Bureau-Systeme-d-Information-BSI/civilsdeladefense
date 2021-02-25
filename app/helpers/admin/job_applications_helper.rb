@@ -3,7 +3,7 @@
 module Admin::JobApplicationsHelper
   def job_application_modal_section_classes(additional_class = nil)
     case additional_class
-    when 'pb-0'
+    when "pb-0"
       %w[px-4 pt-4].push(additional_class)
     else
       %w[px-4 py-4]
@@ -12,15 +12,15 @@ module Admin::JobApplicationsHelper
 
   def job_applications_tab_active
     @job_applications_tab_active ||= begin
-      if controller.controller_name == 'job_applications'
+      if controller.controller_name == "job_applications"
         case controller.action_name
-        when 'show'
+        when "show"
           :profile
-        when 'cvlm'
+        when "cvlm"
           :cvlm
-        when 'emails'
+        when "emails"
           :emails
-        when 'files'
+        when "files"
           :files
         end
       end
@@ -47,7 +47,7 @@ module Admin::JobApplicationsHelper
       res = obj.send(association)&.name
     end
 
-    return content_tag('em', 'Non défini(e)') if res.to_s.blank?
+    return content_tag("em", "Non défini(e)") if res.to_s.blank?
 
     in_place_edit_value_formatted(res, m)
   end
@@ -58,10 +58,10 @@ module Admin::JobApplicationsHelper
 
   def profile_fields
     %i[gender
-       is_currently_employed
-       age_range availability_range
-       study_level experience_level
-       has_corporate_experience]
+      is_currently_employed
+      age_range availability_range
+      study_level experience_level
+      has_corporate_experience]
   end
 
   def job_application_profile_fields2
@@ -70,8 +70,8 @@ module Admin::JobApplicationsHelper
 
   def choices_boolean
     [
-      [Profile.human_attribute_name('is_currently_employed/true'), true],
-      [Profile.human_attribute_name('is_currently_employed/false'), false]
+      [Profile.human_attribute_name("is_currently_employed/true"), true],
+      [Profile.human_attribute_name("is_currently_employed/false"), false]
     ]
   end
 

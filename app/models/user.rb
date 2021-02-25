@@ -3,21 +3,21 @@
 # Candidate to job offer
 class User < ApplicationRecord
   def self.omniauth_providers
-    ENV['FRANCE_CONNECT_HOST'] ? [:france_connect] : []
+    ENV["FRANCE_CONNECT_HOST"] ? [:france_connect] : []
   end
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable,
-         :confirmable, :lockable,
-         :omniauthable, omniauth_providers: User.omniauth_providers
+    :recoverable, :rememberable, :trackable, :validatable,
+    :confirmable, :lockable,
+    :omniauthable, omniauth_providers: User.omniauth_providers
   include Suspendable
   include DeletionFlow
   include PgSearch::Model
   pg_search_scope :search_full_text,
-                  against: %i[first_name last_name]
+    against: %i[first_name last_name]
 
   belongs_to :organization
-  belongs_to :last_job_application, class_name: 'JobApplication', optional: true
+  belongs_to :last_job_application, class_name: "JobApplication", optional: true
   has_many :omniauth_informations
 
   has_many :job_applications, -> { order(created_at: :desc) }, dependent: :nullify
@@ -27,7 +27,7 @@ class User < ApplicationRecord
 
   mount_uploader :photo, PhotoUploader, mount_on: :photo_file_name
   validates :photo,
-            file_size: { less_than: 1.megabytes }
+    file_size: {less_than: 1.megabytes}
 
   validates :first_name, :last_name, presence: true
   validates :phone, :current_position, presence: true, allow_nil: true
@@ -40,9 +40,9 @@ class User < ApplicationRecord
 
   def full_name
     if is_deleted
-      'Compte candidat supprimé'
+      "Compte candidat supprimé"
     else
-      [first_name, last_name].join(' ')
+      [first_name, last_name].join(" ")
     end
   end
 
@@ -63,7 +63,7 @@ class User < ApplicationRecord
   end
 
   def job_applications_active
-    job_applications.joins(:job_offer).where.not(job_offers: { state: :archived })
+    job_applications.joins(:job_offer).where.not(job_offers: {state: :archived})
   end
 
   def link_to_omniauth?(provider: nil)

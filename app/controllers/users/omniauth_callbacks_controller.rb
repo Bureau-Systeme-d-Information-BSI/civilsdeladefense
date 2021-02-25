@@ -5,7 +5,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   rescue_from Rack::OAuth2::Client::Error, with: :oauth_error
 
   def france_connect
-    auth = request.env['omniauth.auth']
+    auth = request.env["omniauth.auth"]
 
     @omniauth_info = OmniauthInformation.find_or_initialize_by(
       uid: auth.uid, provider: :france_connect
@@ -27,7 +27,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def sign_in_user
     sign_in @user
 
-    session[:connected_with] = 'france_connect'
+    session[:connected_with] = "france_connect"
 
     path = after_sign_in_path_for(current_user) || root_path(current_user)
     redirect_to(path)
@@ -51,7 +51,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def oauth_error(error)
     Rails.logger.error error.message
 
-    flash.alert = t('errors.messages.france_connect.connexion')
+    flash.alert = t("errors.messages.france_connect.connexion")
     redirect_to(new_user_session_path)
   end
 end

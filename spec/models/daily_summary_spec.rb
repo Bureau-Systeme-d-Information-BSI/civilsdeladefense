@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe DailySummary do
-  it 'sends valid summary with valid attributes' do
+  it "sends valid summary with valid attributes" do
     ary = create_list :job_offer, 5
     ary[0].publish!
 

@@ -1,49 +1,17 @@
+inherit_from: []
+
+inherit_gem:
+  standard: config/base.yml
+
+require:
+  - standard
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-performance
+
 AllCops:
   Exclude:
+    - 'bin/{bundle,rails,rake,setup,spring,update,webpack,webpack-dev-server}'
     - 'db/schema.rb'
-    - 'db/seeds.rb'
-    - 'bin/*'
+    - 'spec/spec_helper.rb'
     - 'node_modules/**/*'
-    - 'vendor/**/*'
-    - 'config/initializers/simple_form.rb'
-    - 'config/initializers/simple_form_bootstrap.rb'
-    - 'lib/tasks/maintenance.rake'
-    - 'app/helpers/awesome_nested_helper.rb'
-Style/Documentation:
-  Exclude:
-    - 'config/application.rb'
-    - 'app/controllers/**/*'
-    - 'app/helpers/**/*'
-    - 'app/uploaders/**/*'
-    - 'test/application_system_test_case.rb'
-    - 'test/test_helper.rb'
-Style/ClassAndModuleChildren:
-  EnforcedStyle: compact
-  Exclude:
-    - 'config/application.rb'
-Style/HashLikeCase:
-  Enabled: false
-Metrics/AbcSize:
-  Max: 40
-Metrics/MethodLength:
-  Max: 25
-Layout/LineLength:
-  Max: 100
-  IgnoredPatterns: ['(\A|\s)#']
-  Exclude:
-    - 'config/routes.rb'
-    - 'spec/routing/**/*'
-Style/EmptyMethod:
-  EnforcedStyle: expanded
-Style/MultilineBlockChain:
-  Enabled: false
-Metrics/BlockLength:
-  Exclude:
-    - 'config/routes.rb'
-    - 'config/environments/*'
-    - 'config/initializers/*'
-    - 'lib/tasks/*.rake'
-Metrics/ClassLength:
-  Max: 120
-  Exclude:
-    - 'app/models/**/*'

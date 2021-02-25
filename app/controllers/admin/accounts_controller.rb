@@ -4,9 +4,9 @@ class Admin::AccountsController < Admin::BaseController
   skip_load_and_authorize_resource
 
   before_action :set_administrator, only: %i[show change_password change_email
-                                             update update_password update_email]
+    update update_password update_email]
 
-  layout 'admin/account'
+  layout "admin/account"
 
   # POST /admin/account
   # POST /admin/account.json
@@ -18,7 +18,7 @@ class Admin::AccountsController < Admin::BaseController
   def update
     respond_to do |format|
       if @administrator.update(administrator_params)
-        format.html { redirect_to %i[admin account], notice: t('.success') }
+        format.html { redirect_to %i[admin account], notice: t(".success") }
         format.json { render :show, status: :ok, location: @administrator }
       else
         format.html { render :show }
@@ -33,7 +33,7 @@ class Admin::AccountsController < Admin::BaseController
         # Sign in the user by passing validation in case their password changed
         bypass_sign_in(@administrator, scope: :administrator)
 
-        format.html { redirect_to %i[change_password admin account], notice: t('.success') }
+        format.html { redirect_to %i[change_password admin account], notice: t(".success") }
         format.json { render :show, status: :ok, location: @administrator }
       else
         format.html { render :change_password }
@@ -48,7 +48,7 @@ class Admin::AccountsController < Admin::BaseController
   def update_email
     respond_to do |format|
       if @administrator.update(administrator_email_params)
-        format.html { redirect_to %i[change_email admin account], notice: t('.success') }
+        format.html { redirect_to %i[change_email admin account], notice: t(".success") }
         format.json { render :show, status: :ok, location: @administrator }
       else
         format.html { render :change_email }

@@ -7,7 +7,7 @@ class Category < ApplicationRecord
   acts_as_nested_set counter_cache: :children_count
 
   has_many :job_offers
-  has_many :publicly_visible_job_offers, -> { publicly_visible }, class_name: 'JobOffer'
+  has_many :publicly_visible_job_offers, -> { publicly_visible }, class_name: "JobOffer"
 
   def compute_published_job_offers_count!
     if leaf?
@@ -18,6 +18,6 @@ class Category < ApplicationRecord
   end
 
   def name_with_depth
-    "#{'-' * depth} #{name}"
+    "#{"-" * depth} #{name}"
   end
 end

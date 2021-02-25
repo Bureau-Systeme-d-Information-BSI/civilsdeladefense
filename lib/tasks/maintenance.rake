@@ -1,11 +1,11 @@
 namespace :maintenance do
   task create_cvd_org: :environment do
     hsh = {
-      name: 'Civils de la Défense',
-      business_owner_name: 'le Ministère des Armées',
-      administrator_email_suffix: '@intradef.gouv.fr',
-      subdomain: 'cvd',
-      domain: 'civilsdeladefense.fabnum.fr'
+      name: "Civils de la Défense",
+      business_owner_name: "le Ministère des Armées",
+      administrator_email_suffix: "@intradef.gouv.fr",
+      subdomain: "cvd",
+      domain: "civilsdeladefense.fabnum.fr"
     }
     organization = Organization.create!(hsh)
     Administrator.update_all(organization_id: organization.id)
@@ -14,57 +14,57 @@ namespace :maintenance do
     JobOffer.update_all(organization_id: organization.id)
 
     root_page = organization.pages.create!({
-      title: 'Plateforme de recrutement de personnel civils contractuels pour le Ministère des Armées',
+      title: "Plateforme de recrutement de personnel civils contractuels pour le Ministère des Armées",
       only_link: false
     })
     branch_1_page_1 = organization.pages.create!({
       parent: root_page,
-      title: 'Mentions légales',
+      title: "Mentions légales",
       only_link: false,
-      body: 'Ici afficher mentions légales'
+      body: "Ici afficher mentions légales"
     })
     branch_1_page_2 = organization.pages.create!({
       parent: branch_1_page_1,
-      title: 'Conditions générales d’utilisation',
+      title: "Conditions générales d’utilisation",
       only_link: false,
-      body: 'Ici afficher conditions générales d’utilisation'
+      body: "Ici afficher conditions générales d’utilisation"
     })
     branch_1_page_3 = organization.pages.create!({
       parent: branch_1_page_2,
-      title: 'Politique de confidentialité',
+      title: "Politique de confidentialité",
       only_link: false,
-      body: 'Ici afficher politique de confidentialité'
+      body: "Ici afficher politique de confidentialité"
     })
-    branch_1_page_4 = organization.pages.create!({
+    organization.pages.create!({
       parent: branch_1_page_3,
-      title: 'Suivi d\'audience et vie privée',
+      title: "Suivi d'audience et vie privée",
       only_link: false,
-      body: 'Ici afficher suivi d\'audience et vie privée'
+      body: "Ici afficher suivi d'audience et vie privée"
     })
 
     branch_2_page_1 = organization.pages.create!({
       parent: root_page,
-      title: 'Service-public.fr',
+      title: "Service-public.fr",
       only_link: true,
-      url: 'https://www.service-public.fr'
+      url: "https://www.service-public.fr"
     })
     branch_2_page_2 = organization.pages.create!({
       parent: branch_2_page_1,
-      title: 'Legifrance.gouv.fr',
+      title: "Legifrance.gouv.fr",
       only_link: true,
-      url: 'https://www.legifrance.gouv.fr'
+      url: "https://www.legifrance.gouv.fr"
     })
     branch_2_page_3 = organization.pages.create!({
       parent: branch_2_page_2,
-      title: 'Data.gouv.fr',
+      title: "Data.gouv.fr",
       only_link: true,
-      url: 'https://www.data.gouv.fr'
+      url: "https://www.data.gouv.fr"
     })
-    branch_2_page_4 = organization.pages.create!({
+    organization.pages.create!({
       parent: branch_2_page_3,
-      title: 'France.fr',
+      title: "France.fr",
       only_link: true,
-      url: 'https://www.france.fr'
+      url: "https://www.france.fr"
     })
   end
 
@@ -116,7 +116,7 @@ namespace :maintenance do
       klass.update_all encrypted_file_transfer_in_error: false
       klass.where.not("#{attachment}_file_name" => nil).find_in_batches do |group|
         group.each do |item|
-          legacy = "LegacyUploader::#{klass.to_s}".constantize.find(item.id)
+          legacy = "LegacyUploader::#{klass}".constantize.find(item.id)
           if !item.send(attachment).file.exists? && legacy.send(attachment).file.exists?
             item.send("#{attachment}=", legacy.send(attachment))
             if !item.save
@@ -131,7 +131,7 @@ namespace :maintenance do
   # needed when migrating from audited 4.8 to 4.9
   # see https://github.com/collectiveidea/audited/issues/517
   task migrate_audits_enum_to_new_format: :environment do
-    class Audit < ActiveRecord::Base; end
+    class Audit < ActiveRecord::Base; end # rubocop:disable Lint/ConstantDefinitionInBlock
     cases = {
       JobApplication => %w[state],
       JobOffer => %w[state most_advanced_job_applications_state]
@@ -140,7 +140,7 @@ namespace :maintenance do
     cases.each do |klass, fields|
       fields.each do |field|
         Audit.where(auditable_type: klass.to_s)
-             .where("audited_changes->'#{field}' IS NOT NULL").each do |audit|
+          .where("audited_changes->'#{field}' IS NOT NULL").each do |audit|
           audited_change = audit.audited_changes[field]
           enum_list = klass.send(field.pluralize.to_sym)
           if audited_change.is_a?(Integer)
@@ -161,10 +161,10 @@ namespace :maintenance do
               audited_changes[field] = enum_ids
               audit.update_column :audited_changes, audited_changes
             else
-              debugger
+              puts "debugger"
             end
           else
-            debugger
+            puts "debugger"
           end
         end
       end
@@ -182,8 +182,8 @@ namespace :maintenance do
 
   task fixup_duplicate_files: :environment do
     rel = JobApplicationFile.select(:job_application_file_type_id, :job_application_id)
-                            .group(:job_application_file_type_id, :job_application_id)
-                            .having('count(*) > 1')
+      .group(:job_application_file_type_id, :job_application_id)
+      .having("count(*) > 1")
     rel.each do |zombie|
       hsh = {
         job_application_file_type_id: zombie.job_application_file_type_id,
@@ -198,7 +198,7 @@ namespace :maintenance do
         # no file has been validated yet
         # we can destroy the oldest ones
         sorted_by_created_at = files.sort_by(&:created_at)
-        the_last_one_to_keep = sorted_by_created_at.pop
+        sorted_by_created_at.pop
         sorted_by_created_at.each do |file|
           destroy_file(file)
         end
@@ -217,7 +217,7 @@ namespace :maintenance do
       else
         # we cannot do anything except destroying the oldest files
         sorted_by_created_at = files.sort_by(&:created_at)
-        the_last_one_to_keep = sorted_by_created_at.pop
+        sorted_by_created_at.pop
         sorted_by_created_at.each do |file|
           destroy_file(file)
         end
@@ -227,7 +227,7 @@ namespace :maintenance do
 
   task migration_contract_duration: :environment do
     puts "Did you set duration boolean on all contract_type ? (y/N)"
-    response = STDIN.gets.chomp.downcase
+    response = $stdin.gets.chomp.downcase
     next unless %w[yes y].include?(response)
     puts "Migrating..."
 
@@ -245,7 +245,7 @@ namespace :maintenance do
     # Assign contract duration to job offer when transition from duration_contract has not been done
     JobOffer.where.not(duration_contract: nil).map do |job_offer|
       if job_offer.contract_type.duration
-        duration_contract = job_offer.duration_contract.downcase.squish.gsub('années', 'ans').gsub('année', 'an')
+        duration_contract = job_offer.duration_contract.downcase.squish.gsub("années", "ans").gsub("année", "an")
         contract_duration = ContractDuration.find_by(name: duration_contract)
         if contract_duration
           job_offer.update(duration_contract: nil, contract_duration: contract_duration)
@@ -260,23 +260,21 @@ namespace :maintenance do
   end
 
   task fix_job_offer_title: :environment do
-    description 'Add missing F/H at this end (and remove F/H, H/F, ... in the other part of the title). Also remove all brackets.'
-    JobOffer.where.not('title like ?', '%F/H').map do |job_offer|
+    description "Add missing F/H at this end (and remove F/H, H/F, ... in the other part of the title). Also remove all brackets."
+    JobOffer.where.not("title like ?", "%F/H").map do |job_offer|
       split_title = job_offer.title.split
 
-      title_without_fh = split_title.reject do |str|
-        ['F/H', 'H/F', 'f/h', '(F/H)', '(H/F)', 'h/f'].include?(str)
-      end
+      title_without_fh = split_title.reject { |str|
+        ["F/H", "H/F", "f/h", "(F/H)", "(H/F)", "h/f"].include?(str)
+      }
 
-      job_offer.update_column(:title, "#{title_without_fh.join(' ')} F/H")
+      job_offer.update_column(:title, "#{title_without_fh.join(" ")} F/H")
     end
   end
 
   def destroy_file(file)
-    begin
-      file.destroy
-    rescue Fog::OpenStack::Storage::NotFound => e
-      Rails.logger.debug "Deletion failed for file #{file.inspect}"
-    end
+    file.destroy
+  rescue Fog::OpenStack::Storage::NotFound
+    Rails.logger.debug "Deletion failed for file #{file.inspect}"
   end
 end

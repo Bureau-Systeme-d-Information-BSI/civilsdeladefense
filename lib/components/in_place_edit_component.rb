@@ -8,15 +8,15 @@ module InPlaceEdit
       klasses = nil
       options[:in_place_icon] = nil
     else
-      title = t('buttons.click_to_edit')
+      title = t("buttons.click_to_edit")
       klasses = %w[in-place-edit]
-      klasses << 'text-truncate' unless options[:do_not_truncate]
+      klasses << "text-truncate" unless options[:do_not_truncate]
     end
 
     in_place_value = options[:in_place_value]
     return if in_place_value.blank?
 
-    template.content_tag 'div', class: klasses, title: title do
+    template.content_tag "div", class: klasses, title: title do
       template.concat in_place_value
       template.concat options[:in_place_icon] if options[:in_place_icon]
     end

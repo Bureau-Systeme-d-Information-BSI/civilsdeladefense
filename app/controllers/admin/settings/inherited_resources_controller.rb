@@ -21,7 +21,7 @@ class Admin::Settings::InheritedResourcesController < Admin::Settings::BaseContr
     destroy!(notice: t(key))
   rescue ActiveRecord::InvalidForeignKey
     key = "admin.settings.#{resource_class.to_s.tableize}.destroy.failure.foreign_key_violation"
-    redirect_to({ action: :index }, flash: { notice: t(key) })
+    redirect_to({action: :index}, flash: {notice: t(key)})
   end
 
   def move_higher
@@ -58,5 +58,5 @@ class Admin::Settings::InheritedResourcesController < Admin::Settings::BaseContr
     params.require(resource_class.to_s.tableize.singularize.to_sym).permit(permitted_fields)
   end
 
-  alias resource_params permitted_params
+  alias_method :resource_params, :permitted_params
 end

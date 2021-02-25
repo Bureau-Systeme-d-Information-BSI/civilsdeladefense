@@ -18,23 +18,23 @@ class Account::EmailsController < Account::BaseController
     respond_to do |format|
       if @email.save
         format.turbo_stream do
-          s = turbo_stream.prepend('emails') do
-            view_context.render partial: 'email', locals: { email: @email }
-          end
+          s = turbo_stream.prepend("emails") {
+            view_context.render partial: "email", locals: {email: @email}
+          }
           new_email = @job_application.emails.new
-          s += turbo_stream.replace(new_email) do
-            view_context.render partial: 'form', locals: { email: new_email }
-          end
+          s += turbo_stream.replace(new_email) {
+            view_context.render partial: "form", locals: {email: new_email}
+          }
           render turbo_stream: s
         end
-        format.html { redirect_to [:account, @job_application], notice: t('.success') }
+        format.html { redirect_to [:account, @job_application], notice: t(".success") }
       else
         format.turbo_stream do
           render turbo_stream: turbo_stream.replace(@email,
-                                                    partial: 'form',
-                                                    locals: { email: @email })
+            partial: "form",
+            locals: {email: @email})
         end
-        format.html { render template: '/account/job_applications/show' }
+        format.html { render template: "/account/job_applications/show" }
       end
     end
   end

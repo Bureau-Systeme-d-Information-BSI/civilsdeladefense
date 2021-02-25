@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'Admin::JobApplications', type: :request do
-  describe 'GET /admin/job_applications' do
-    it 'works! (now write some real specs)' do
+RSpec.describe "Admin::JobApplications", type: :request do
+  describe "GET /admin/job_applications" do
+    it "works! (now write some real specs)" do
       admin = create(:administrator)
       admin.confirm
       sign_in admin

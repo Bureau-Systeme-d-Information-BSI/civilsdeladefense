@@ -11,7 +11,7 @@ module AwesomeNestedHelper
     result = []
     group = []
     items.each do |root|
-      root.class.associate_parents(root.self_and_descendants).map do |i|
+      root.class.associate_parents(root.self_and_descendants).map { |i|
         if i.level == 0
           result.push [yield(i), []]
         elsif i.level == 1
@@ -19,12 +19,10 @@ module AwesomeNestedHelper
           group.push yield(i)
           group.push []
           result.push group
-        else
-          if mover.nil? || mover.new_record? || mover.move_possible?(i)
-            group[1].push [yield(i), i.primary_id]
-          end
+        elsif mover.nil? || mover.new_record? || mover.move_possible?(i)
+          group[1].push [yield(i), i.primary_id]
         end
-      end.compact
+      }.compact
     end
     result
   end
@@ -32,9 +30,9 @@ module AwesomeNestedHelper
   def nested_li(objects, &block)
     objects = objects.order(:lft) if objects.is_a? Class
 
-    return '' if objects.empty?
+    return "" if objects.empty?
 
-    output = '<ul><li>'
+    output = "<ul><li>"
     path = [nil]
 
     objects.each_with_index do |o, i|
@@ -44,20 +42,20 @@ module AwesomeNestedHelper
           # Remove the wrong trailing path elements
           while path.last != o.parent_id
             path.pop
-            output << '</li></ul>'
+            output << "</li></ul>"
           end
-          output << '</li><li>'
+          output << "</li><li>"
         else
           path << o.parent_id
-          output << '<ul><li>'
+          output << "<ul><li>"
         end
       elsif i != 0
-        output << '</li><li>'
+        output << "</li><li>"
       end
       output << capture(o, path.size - 1, &block)
     end
 
-    output << '</li></ul>' * path.length
+    output << "</li></ul>" * path.length
     output.html_safe
   end
 
@@ -79,7 +77,7 @@ module AwesomeNestedHelper
 
     # Sort each sub-list individually
     children_of.each_value do |children|
-      children.sort_by! &order
+      children.sort_by!(&order)
     end
 
     # Re-join them into a single list

@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :preferred_users_list do
-    name { 'Ma liste' }
+    name { "Ma liste" }
     administrator { nil }
   end
 end

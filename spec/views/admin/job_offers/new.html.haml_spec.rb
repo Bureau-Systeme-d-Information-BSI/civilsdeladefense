@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'admin/job_offers/new', type: :view do
+RSpec.describe "admin/job_offers/new", type: :view do
   login_admin
 
   before(:each) do
     assign(:job_offer, build(:job_offer))
   end
 
-  it 'renders new job_offer form' do
+  it "renders new job_offer form" do
     render
 
     # assert_select "form[action=?][method=?]", job_offers_path, "post" do

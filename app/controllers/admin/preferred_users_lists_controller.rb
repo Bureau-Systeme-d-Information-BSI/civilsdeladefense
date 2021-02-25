@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
 class Admin::PreferredUsersListsController < Admin::InheritedResourcesController
-  layout 'admin/pool'
+  layout "admin/pool"
 
   def index
   end
 
   def new
-    render layout: request.xhr? ? false : 'admin/pool'
+    render layout: request.xhr? ? false : "admin/pool"
   end
 
   def edit
-    render layout: request.xhr? ? false : 'admin/pool'
+    render layout: request.xhr? ? false : "admin/pool"
   end
 
   def create
@@ -21,8 +21,8 @@ class Admin::PreferredUsersListsController < Admin::InheritedResourcesController
         format.js { render json: {}.to_json, status: :created, location: [:admin, resource] }
       end
     else
-      layout_choice = request.xhr? ? false : 'admin/pool'
-      render action: 'new', status: :unprocessable_entity, layout: layout_choice
+      layout_choice = request.xhr? ? false : "admin/pool"
+      render action: "new", status: :unprocessable_entity, layout: layout_choice
     end
   end
 
@@ -35,8 +35,8 @@ class Admin::PreferredUsersListsController < Admin::InheritedResourcesController
     else
       respond_to do |format|
         format.html do
-          layout_choice = request.xhr? ? false : 'admin/pool'
-          render action: 'edit', status: :unprocessable_entity, layout: layout_choice
+          layout_choice = request.xhr? ? false : "admin/pool"
+          render action: "edit", status: :unprocessable_entity, layout: layout_choice
         end
       end
     end
@@ -45,17 +45,17 @@ class Admin::PreferredUsersListsController < Admin::InheritedResourcesController
   def show
     @preferred_users = @preferred_users_list.users.includes(:last_job_application)
     @q = @preferred_users.ransack(params[:q])
-    @preferred_users_filtered = @q.result.yield_self do |relation|
+    @preferred_users_filtered = @q.result.yield_self { |relation|
       if params[:s].present?
         relation.search_full_text(params[:s])
       else
         relation
       end
-    end.yield_self do |relation|
+    }.yield_self { |relation|
       relation.paginate(page: params[:page])
-    end
+    }
 
-    render action: :show, layout: 'admin/pool'
+    render action: :show, layout: "admin/pool"
   end
 
   def destroy

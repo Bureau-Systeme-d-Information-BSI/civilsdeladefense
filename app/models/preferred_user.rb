@@ -5,5 +5,5 @@ class PreferredUser < ApplicationRecord
   belongs_to :user
   belongs_to :preferred_users_list, counter_cache: true
 
-  validates :user_id, uniqueness: { scope: :preferred_users_list_id }
+  validates :user_id, uniqueness: {scope: :preferred_users_list_id}
 end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
-  before_action :basic_auth, if: -> { ENV['BASIC_AUTH'].present? }
+  before_action :basic_auth, if: -> { ENV["BASIC_AUTH"].present? }
 
   layout :layout_by_resource
 
@@ -18,7 +18,7 @@ class ApplicationController < ActionController::Base
 
   def basic_auth
     authenticate_or_request_with_http_basic do |u1, p1|
-      u2, p2 = ENV['BASIC_AUTH'].split(':')
+      u2, p2 = ENV["BASIC_AUTH"].split(":")
       u1 == u2 && p1 == p2
     end
   end
@@ -27,12 +27,12 @@ class ApplicationController < ActionController::Base
     if devise_controller?
       case resource_name
       when :administrator
-        'admin'
+        "admin"
       else
-        'devise'
+        "devise"
       end
     else
-      'application'
+      "application"
     end
   end
 
@@ -48,7 +48,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticated_user_or_administrator
-    current_user || 'unknown'
+    current_user || "unknown"
   end
 
   def current_organization

@@ -10,12 +10,12 @@ module JobOfferStatisticsActions
     @job_applications_count = @job_offer.job_applications.count
     range = date_start..date_end if date_start.present? && date_end.present?
     @per_day = @job_offer.job_applications.unscope(:order)
-                         .group_by_day(:created_at, range: range).count
+      .group_by_day(:created_at, range: range).count
 
     @per_day.transform_keys! { |key| key.to_time.iso8601 }
 
     root_rel = @job_offer.job_applications
-                         .unscope(:order)
+      .unscope(:order)
     root_rel_profile = root_rel.joins(:profile)
 
     @per_gender = root_rel_profile.group(:gender).count
@@ -25,7 +25,7 @@ module JobOfferStatisticsActions
     @per_is_currently_employed = root_rel_profile.group(:is_currently_employed).count
     @per_state = root_rel.group(:state).count
     @per_rejection_reason = root_rel.where.not(rejection_reason_id: nil)
-                                    .group(:rejection_reason_id).count
+      .group(:rejection_reason_id).count
     @rejection_reasons = RejectionReason.all
     @age_ranges = AgeRange.all
   end

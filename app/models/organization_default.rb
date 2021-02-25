@@ -11,7 +11,7 @@ class OrganizationDefault < ApplicationRecord
   # Validations
 
   validates :value, :kind, presence: true
-  validates :kind, uniqueness: { scope: :organization_id }
+  validates :kind, uniqueness: {scope: :organization_id}
 
   #####################################
   # Enums

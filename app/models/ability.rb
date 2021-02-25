@@ -15,13 +15,13 @@ class Ability
     can :read, EmailTemplate
     cannot :manage, PreferredUsersList
     case administrator.role
-    when 'bant'
+    when "bant"
       ability_bant(administrator)
-    when 'employer'
+    when "employer"
       ability_employer(administrator)
     else
       # if neither BANT or Employer, it's BRH or CMG which have the same rights
-      can :read, JobOffer, job_offer_actors: { administrator_id: administrator.id }
+      can :read, JobOffer, job_offer_actors: {administrator_id: administrator.id}
       can :read, JobApplication, job_application_read_query(administrator)
       can :manage, JobApplication, brh_job_application_manage_query(administrator)
       can :manage, JobApplicationFile
@@ -39,7 +39,7 @@ class Ability
 
   def ability_employer(administrator)
     can :create, JobOffer
-    can :manage, JobOffer, job_offer_actors: { administrator_id: administrator.id }
+    can :manage, JobOffer, job_offer_actors: {administrator_id: administrator.id}
     can :manage, JobOffer, owner_id: administrator.id
     can :manage, JobApplication, job_application_read_query(administrator)
     can :manage, JobApplicationFile

@@ -10,33 +10,33 @@ class Admin::JobApplicationsController < Admin::BaseController
 
     @job_applications = @job_applications.includes(:job_offer, :user)
     @q = @job_applications.ransack(params[:q])
-    @job_applications_filtered = @q.result.yield_self do |relation|
+    @job_applications_filtered = @q.result.yield_self { |relation|
       if params[:s].present?
         relation.search_full_text(params[:s])
       else
         relation
       end
-    end.yield_self do |relation|
+    }.yield_self { |relation|
       relation.paginate(page: params[:page], per_page: 25)
-    end
+    }
     build_employer_ids
 
-    render action: :index, layout: 'admin/pool'
+    render action: :index, layout: "admin/pool"
   end
 
   # GET /admin/candidatures/1
   # GET /admin/candidatures/1.json
   def show
-    if action_name == 'show'
+    if action_name == "show"
       user = @job_application.user
       @other_job_applications = user && user.job_applications.where.not(id: @job_application.id)
     end
     render action: :show, layout: layout_choice
   end
 
-  alias cvlm show
-  alias emails show
-  alias files show
+  alias_method :cvlm, :show
+  alias_method :emails, :show
+  alias_method :files, :show
 
   # PATCH/PUT /admin/candidatures/1
   # PATCH/PUT /admin/candidatures/1.json
@@ -45,15 +45,15 @@ class Admin::JobApplicationsController < Admin::BaseController
       if @job_application.update(job_application_params)
         # profile = @job_application.user.profile
         # profile&.datalake_to_job_application_profiles!
-        format.html { redirect_to [:admin, @job_application], notice: t('.success') }
+        format.html { redirect_to [:admin, @job_application], notice: t(".success") }
         format.js do
-          @notification = t('.success')
+          @notification = t(".success")
           render :update
         end
       else
         format.html { render :edit }
         format.js do
-          @notification = t('.failure')
+          @notification = t(".failure")
           render :update, status: :unprocessable_entity
         end
       end
@@ -76,11 +76,11 @@ class Admin::JobApplicationsController < Admin::BaseController
 
     respond_to do |format|
       format.html do
-        notice = t('.success', state: state_i18n)
+        notice = t(".success", state: state_i18n)
         redirect_back(fallback_location: [:admin, @job_application], notice: notice)
       end
       format.js do
-        @notification = t('.success', state: state_i18n)
+        @notification = t(".success", state: state_i18n)
         render :change_state
       end
       format.json { render :show, status: :ok, location: @job_application }
@@ -100,10 +100,10 @@ class Admin::JobApplicationsController < Admin::BaseController
   def job_application_params
     fields_core = %i[skills_fit_job_offer experiences_fit_job_offer rejection_reason_id]
     fields_profile = %i[id gender is_currently_employed
-                        availability_range_id study_level_id age_range_id
-                        experience_level_id corporate_experience website_url
-                        has_corporate_experience]
-    fields = fields_core << { profile_attributes: fields_profile }
+      availability_range_id study_level_id age_range_id
+      experience_level_id corporate_experience website_url
+      has_corporate_experience]
+    fields = fields_core << {profile_attributes: fields_profile}
     params.require(:job_application).permit(fields)
   end
 
@@ -111,9 +111,9 @@ class Admin::JobApplicationsController < Admin::BaseController
     if params[:job_offer_id].present?
       @job_offer = JobOffer.find(params[:job_offer_id])
       @layout_full_width = true
-      request.xhr? ? false : 'admin/job_offer_single'
+      request.xhr? ? false : "admin/job_offer_single"
     else
-      request.xhr? ? false : 'admin/pool'
+      request.xhr? ? false : "admin/pool"
     end
   end
 

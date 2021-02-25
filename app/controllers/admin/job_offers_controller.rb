@@ -12,11 +12,11 @@ class Admin::JobOffersController < Admin::BaseController
   def index
     respond_to do |format|
       format.html do
-        @job_offers_unfiltered = action_name == 'index' ? @job_offers_active : @job_offers_archived
+        @job_offers_unfiltered = action_name == "index" ? @job_offers_active : @job_offers_archived
         job_offers_nearly_filtered = @job_offers_unfiltered
         if params[:s].present?
           job_offers_nearly_filtered = job_offers_nearly_filtered.search_full_text(params[:s])
-                                                                 .unscope(:order)
+            .unscope(:order)
         end
         @q = job_offers_nearly_filtered.ransack(params[:q])
         @job_offers_filtered = @q.result(distinct: true).page(params[:page]).per_page(20)
@@ -28,7 +28,7 @@ class Admin::JobOffersController < Admin::BaseController
     end
   end
 
-  alias archived index
+  alias_method :archived, :index
 
   # GET /admin/job_offers/1
   # GET /admin/job_offers/1.json
@@ -48,7 +48,7 @@ class Admin::JobOffersController < Admin::BaseController
     @administrator = find_attach_or_build_administrator
     @administrator.organization = current_organization
     if @administrator.valid?
-      render action: 'add_actor', layout: false
+      render action: "add_actor", layout: false
     else
       render json: @administrator.errors, status: :unprocessable_entity
     end
@@ -76,7 +76,7 @@ class Admin::JobOffersController < Admin::BaseController
 
     respond_to do |format|
       if @job_offer.save
-        format.html { redirect_to %i[admin job_offers], notice: t('.success') }
+        format.html { redirect_to %i[admin job_offers], notice: t(".success") }
         format.json { render :show, status: :created, location: @job_offer }
       else
         format.html { render :new }
@@ -85,7 +85,7 @@ class Admin::JobOffersController < Admin::BaseController
     end
   end
 
-  alias create_and_draftize create
+  alias_method :create_and_draftize, :create
 
   # PATCH/PUT /admin/job_offers/1
   # PATCH/PUT /admin/job_offers/1.json
@@ -95,7 +95,7 @@ class Admin::JobOffersController < Admin::BaseController
 
     respond_to do |format|
       if @job_offer.save
-        format.html { redirect_to %i[admin job_offers], notice: t('.success') }
+        format.html { redirect_to %i[admin job_offers], notice: t(".success") }
         format.json { render :show, status: :ok, location: @job_offer }
       else
         format.html { render :edit }
@@ -109,7 +109,7 @@ class Admin::JobOffersController < Admin::BaseController
   def destroy
     @job_offer.destroy
     respond_to do |format|
-      format.html { redirect_to job_offers_url, notice: t('.success') }
+      format.html { redirect_to job_offers_url, notice: t(".success") }
       format.json { head :no_content }
     end
   end
@@ -117,9 +117,9 @@ class Admin::JobOffersController < Admin::BaseController
   protected
 
   def choose_layout
-    return 'admin' if @job_offer&.new_record?
+    return "admin" if @job_offer&.new_record?
 
-    %w[new edit].include?(action_name) ? 'admin' : 'admin/job_offer_single'
+    %w[new edit].include?(action_name) ? "admin" : "admin/job_offer_single"
   end
 
   private
@@ -142,13 +142,13 @@ class Admin::JobOffersController < Admin::BaseController
 
   def permitted_fields
     fields = %i[title description category_id professional_category_id employer_id required_profile
-                recruitment_process contract_type_id contract_duration_id contract_start_on
-                is_remote_possible available_immediately study_level_id experience_level_id bop_id
-                sector_id estimate_monthly_salary_net estimate_annual_salary_gross benefit_id
-                location city county county_code country_code postcode region]
+      recruitment_process contract_type_id contract_duration_id contract_start_on
+      is_remote_possible available_immediately study_level_id experience_level_id bop_id
+      sector_id estimate_monthly_salary_net estimate_annual_salary_gross benefit_id
+      location city county county_code country_code postcode region]
     job_offer_actors_attributes = %i[id role _destroy]
-    job_offer_actors_attributes << { administrator_attributes: %i[id email _destroy] }
-    fields << { job_offer_actors_attributes: job_offer_actors_attributes }
+    job_offer_actors_attributes << {administrator_attributes: %i[id email _destroy]}
+    fields << {job_offer_actors_attributes: job_offer_actors_attributes}
   end
 
   def find_attach_or_build_administrator

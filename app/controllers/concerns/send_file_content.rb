@@ -5,7 +5,7 @@ module SendFileContent
   include ActionController::Live
 
   def send_job_application_file_content
-    if ENV['OSC_AK'].present?
+    if ENV["OSC_AK"].present?
       proxy_encrypted_job_application_file_content
     else
       send_content_directly
@@ -18,19 +18,19 @@ module SendFileContent
 
   def send_content_directly
     send_file(@job_application_file.content.path,
-              disposition: 'inline',
-              filename: "#{action_name}.pdf",
-              type: 'application/pdf')
+      disposition: "inline",
+      filename: "#{action_name}.pdf",
+      type: "application/pdf")
   end
 
   def proxy_job_application_file_content
     url = @job_application_file.content.url
     uri = URI(url)
     uri = URI("https:#{uri}") if uri.scheme.blank?
-    response.headers['Content-Type'] = 'application/pdf'
-    response.headers['Content-Disposition'] = "inline; filename=\"#{action_name}.pdf\""
+    response.headers["Content-Type"] = "application/pdf"
+    response.headers["Content-Disposition"] = "inline; filename=\"#{action_name}.pdf\""
     # Download the backup file chunk by chunk and forward each chunk to the client.
-    Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == 'https') do |http|
+    Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == "https") do |http|
       req = Net::HTTP::Get.new(uri.request_uri)
       # req.basic_auth uri.user, uri.password
       http.request req do |res|
@@ -47,7 +47,7 @@ module SendFileContent
   # use Lockbox read method to send file back to the browser
   def proxy_encrypted_job_application_file_content
     send_data @job_application_file.content.read, filename: "#{action_name}.pdf",
-                                                  type: 'application/pdf',
-                                                  disposition: 'inline'
+                                                  type: "application/pdf",
+                                                  disposition: "inline"
   end
 end

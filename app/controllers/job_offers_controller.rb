@@ -4,13 +4,13 @@ class JobOffersController < ApplicationController
   before_action :set_job_offers, only: %i[index]
   before_action :set_job_offer, only: %i[show apply send_application successful]
   invisible_captcha only: [:send_application], honeypot: :subtitle
-  layout 'job_offer_display', only: %i[show apply successful send_application]
+  layout "job_offer_display", only: %i[show apply successful send_application]
 
   # GET /job_offers
   # GET /job_offers.json
   def index
     @page = current_organization.pages.where(parent_id: nil).first
-    @categories = Category.order('lft ASC').where('published_job_offers_count > ?', 0)
+    @categories = Category.order("lft ASC").where("published_job_offers_count > ?", 0)
     @max_depth_limit = 1
     @categories_for_select = @categories.select { |x| x.depth <= @max_depth_limit }
     @contract_types = ContractType.all
@@ -66,7 +66,7 @@ class JobOffersController < ApplicationController
         end
       else
         format.turbo_stream do
-          instruction = turbo_stream.replace(@job_application, partial: '/job_applications/form')
+          instruction = turbo_stream.replace(@job_application, partial: "/job_applications/form")
           render turbo_stream: instruction
         end
         format.html { render :show }
@@ -113,12 +113,12 @@ class JobOffersController < ApplicationController
     permitted_params = %i[]
     user_attributes = %i[first_name last_name current_position phone website_url]
     base_user_attributes = %i[photo email
-                              password password_confirmation
-                              terms_of_service certify_majority]
+      password password_confirmation
+      terms_of_service certify_majority]
     user_attributes += base_user_attributes unless user_signed_in?
-    permitted_params << { user_attributes: user_attributes }
+    permitted_params << {user_attributes: user_attributes}
     job_application_files_attributes = %i[content job_application_file_type_id]
-    permitted_params << { job_application_files_attributes: job_application_files_attributes }
+    permitted_params << {job_application_files_attributes: job_application_files_attributes}
     params.require(:job_application).permit(permitted_params)
   end
 

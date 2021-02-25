@@ -7,8 +7,8 @@ module NamingHelper
       service_name: current_organization.service_name,
       legal_name: "#{current_organization.prefix_article}#{current_organization.legal_name}"
     }
-    label = t('simple_form.labels.user.terms_of_service', opts).html_safe
-    content_tag('span', label, style: 'display: inline;')
+    label = t("simple_form.labels.user.terms_of_service", opts).html_safe
+    content_tag("span", label, style: "display: inline;")
   end
 
   def footer_social_intro

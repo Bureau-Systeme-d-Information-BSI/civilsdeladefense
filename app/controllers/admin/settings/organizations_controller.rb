@@ -11,7 +11,7 @@ class Admin::Settings::OrganizationsController < Admin::Settings::BaseController
 
   def update
     if @organization.update(general_permitted_params)
-      redirect_to({ action: :edit }, notice: t('.success'))
+      redirect_to({action: :edit}, notice: t(".success"))
     else
       @organization_form_general = @organization
       @organization_form_display = @organization_cloned
@@ -23,7 +23,7 @@ class Admin::Settings::OrganizationsController < Admin::Settings::BaseController
 
   def update_security
     if @organization.update(security_permitted_params)
-      redirect_to({ action: :edit }, notice: t('.success'))
+      redirect_to({action: :edit}, notice: t(".success"))
     else
       @organization_form_general = @organization_cloned
       @organization_form_display = @organization_cloned
@@ -44,15 +44,15 @@ class Admin::Settings::OrganizationsController < Admin::Settings::BaseController
 
   def general_permitted_params
     permitted_fields = %i[brand_name prefix_article
-                          service_name service_description_short service_description
-                          subdomain domain privacy_policy_url
-                          operator_name operator_url operator_logo
-                          partner_1_name partner_1_url partner_1_logo
-                          partner_2_name partner_2_url partner_2_logo
-                          partner_3_name partner_3_url partner_3_logo
-                          linkedin_url twitter_url youtube_url instagram_url facebook_url
-                          image_background
-                          matomo_site_id inbound_email_config hours_delay_before_publishing]
+      service_name service_description_short service_description
+      subdomain domain privacy_policy_url
+      operator_name operator_url operator_logo
+      partner_1_name partner_1_url partner_1_logo
+      partner_2_name partner_2_url partner_2_logo
+      partner_3_name partner_3_url partner_3_logo
+      linkedin_url twitter_url youtube_url instagram_url facebook_url
+      image_background
+      matomo_site_id inbound_email_config hours_delay_before_publishing]
     params.require(:organization).permit(permitted_fields)
   end
 

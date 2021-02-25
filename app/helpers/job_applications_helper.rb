@@ -4,17 +4,17 @@ module JobApplicationsHelper
   def badge_color_for_state(state)
     case state.to_sym
     when :start
-      'light invisible'
+      "light invisible"
     when :initial
-      'purple'
+      "purple"
     when :rejected, :phone_meeting_rejected, :after_meeting_rejected, :draft, :archived, :suspended
-      'light-gray'
+      "light-gray"
     when :accepted, :published
-      'success'
+      "success"
     when :contract_drafting, :contract_feedback_waiting, :contract_received, :affected
-      'primary'
+      "primary"
     when :phone_meeting, :to_be_met
-      'info'
+      "info"
     end
   end
 

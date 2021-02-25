@@ -3,23 +3,23 @@
 # Recruiter on the platform
 class Administrator < ApplicationRecord
   devise :database_authenticatable,
-         :recoverable, :trackable, :validatable,
-         :confirmable, :lockable, :timeoutable
+    :recoverable, :trackable, :validatable,
+    :confirmable, :lockable, :timeoutable
 
   #####################################
   # Relationships
   belongs_to :organization
   belongs_to :employer, optional: true
   validates :employer, presence: true, if: proc { |a| a.employer? || a.ensure_employer_is_set }
-  belongs_to :inviter, optional: true, class_name: 'Administrator'
-  has_many :invitees, class_name: 'Administrator', foreign_key: 'inviter_id'
+  belongs_to :inviter, optional: true, class_name: "Administrator"
+  has_many :invitees, class_name: "Administrator", foreign_key: "inviter_id"
 
-  has_many :owned_job_offers, class_name: 'JobOffer', foreign_key: 'owner_id'
+  has_many :owned_job_offers, class_name: "JobOffer", foreign_key: "owner_id"
   has_many :job_offer_actors
   has_many :job_offers, through: :job_offer_actors
 
-  belongs_to :supervisor_administrator, optional: true, class_name: 'Administrator'
-  belongs_to :grand_employer_administrator, optional: true, class_name: 'Administrator'
+  belongs_to :supervisor_administrator, optional: true, class_name: "Administrator"
+  belongs_to :grand_employer_administrator, optional: true, class_name: "Administrator"
 
   accepts_nested_attributes_for :supervisor_administrator
   accepts_nested_attributes_for :grand_employer_administrator
@@ -64,22 +64,22 @@ class Administrator < ApplicationRecord
   # Validations
 
   validates :photo,
-            file_size: { less_than: 1.megabytes }
+    file_size: {less_than: 1.megabytes}
   validate :password_complexity
   validate :email_conformance
   validates :employer, presence: true, if: proc { |a| %w[employer grand_employer].include?(a.role) }
   validates :inviter, presence: true, unless: proc { |a| a.very_first_account }, on: :create
   validates_inclusion_of :role,
-                         in: lambda { |a|
-                           if a.very_first_account
-                             a.class.roles.keys
-                           else
-                             (a.inviter&.authorized_roles_to_confer || a.class.roles.keys.last)
-                           end
-                         },
-                         allow_blank: true,
-                         message: :non_compliant_role,
-                         on: :create
+    in: lambda { |a|
+      if a.very_first_account
+        a.class.roles.keys
+      else
+        (a.inviter&.authorized_roles_to_confer || a.class.roles.keys.last)
+      end
+    },
+    allow_blank: true,
+    message: :non_compliant_role,
+    on: :create
 
   ####################################
   # Scope
@@ -111,15 +111,15 @@ class Administrator < ApplicationRecord
 
   def password_match?
     if password.blank?
-      msg = I18n.t('errors.messages.blank')
+      msg = I18n.t("errors.messages.blank")
       errors[:password] << msg
     end
     if password_confirmation.blank?
-      msg = I18n.t('errors.messages.blank')
+      msg = I18n.t("errors.messages.blank")
       errors[:password_confirmation] << msg
     end
     if password != password_confirmation
-      msg = I18n.translate('errors.messages.confirmation', attribute: 'password')
+      msg = I18n.translate("errors.messages.confirmation", attribute: "password")
       errors[:password_confirmation] << msg
     end
     password == password_confirmation && !password.blank?
@@ -134,7 +134,7 @@ class Administrator < ApplicationRecord
     return true unless confirmation_period_expired?
 
     errors.add(:base, :confirmation_period_expired,
-               period: Devise::TimeInflector.time_ago_in_words(self.class.confirm_within.ago))
+      period: Devise::TimeInflector.time_ago_in_words(self.class.confirm_within.ago))
     false
   end
 
@@ -148,18 +148,18 @@ class Administrator < ApplicationRecord
   # Adds a thin layer of security to force admin to invite only other admin with their official email address.
   def email_conformance
     suffix = organization.try(:administrator_email_suffix)
-    suffix ||= ENV['ADMINISTRATOR_EMAIL_SUFFIX']
+    suffix ||= ENV["ADMINISTRATOR_EMAIL_SUFFIX"]
 
     return if suffix.blank? || email.ends_with?(suffix)
 
-    msg = I18n.t('activerecord.errors.messages.invalid_suffix', suffix: suffix)
+    msg = I18n.t("activerecord.errors.messages.invalid_suffix", suffix: suffix)
     errors.add(:email, msg)
   end
 
   def full_name
     @full_name ||= begin
       if first_name.present? || last_name.present?
-        [first_name, last_name].join(' ')
+        [first_name, last_name].join(" ")
       else
         email
       end
@@ -169,7 +169,7 @@ class Administrator < ApplicationRecord
   def full_name_with_title
     @full_name_with_title ||= begin
       if title.present? || first_name.present? || last_name.present?
-        [title, first_name, last_name].join(' ')
+        [title, first_name, last_name].join(" ")
       else
         email
       end

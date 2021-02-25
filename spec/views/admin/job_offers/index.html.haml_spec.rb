@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'rails_helper'
+require "rails_helper"
 
-RSpec.describe 'admin/job_offers/index', type: :view do
+RSpec.describe "admin/job_offers/index", type: :view do
   login_admin
 
   before(:each) do
@@ -13,17 +13,17 @@ RSpec.describe 'admin/job_offers/index', type: :view do
     employer = employers.first
 
     ary1 = assign(:job_offers_active, create_list(:job_offer,
-                                                  2,
-                                                  state: :published,
-                                                  owner: owner,
-                                                  category: category,
-                                                  employer: employer))
+      2,
+      state: :published,
+      owner: owner,
+      category: category,
+      employer: employer))
     assign(:job_offers_archived, create_list(:job_offer,
-                                             3,
-                                             state: :archived,
-                                             owner: owner,
-                                             category: category,
-                                             employer: employer))
+      3,
+      state: :archived,
+      owner: owner,
+      category: category,
+      employer: employer))
     assign(:job_offers_unfiltered, JobOffer.all)
     assign(:q, JobOffer.ransack)
     collection = WillPaginate::Collection.new(4, 10, 0)
@@ -34,7 +34,7 @@ RSpec.describe 'admin/job_offers/index', type: :view do
     assign(:employers, employers)
   end
 
-  it 'renders a list of job_offers' do
+  it "renders a list of job_offers" do
     render
   end
 end

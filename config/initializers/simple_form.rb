@@ -55,8 +55,8 @@ SimpleForm.setup do |config|
     ## Inputs
     # b.use :input, class: 'input', error_class: 'is-invalid', valid_class: 'is-valid'
     b.use :label_input
-    b.use :hint,  wrap_with: { tag: :span, class: :hint }
-    b.use :error, wrap_with: { tag: :span, class: :error }
+    b.use :hint, wrap_with: {tag: :span, class: :hint}
+    b.use :error, wrap_with: {tag: :span, class: :error}
 
     ## full_messages_for
     # If you want to display the full error message for the attribute, you can
@@ -75,7 +75,7 @@ SimpleForm.setup do |config|
   config.boolean_style = :nested
 
   # Default class for buttons
-  config.button_class = 'btn'
+  config.button_class = "btn"
 
   # Method used to tidy up errors. Specify any Rails Array method.
   # :first lists the first message for each field.
@@ -86,7 +86,7 @@ SimpleForm.setup do |config|
   config.error_notification_tag = :div
 
   # CSS class to add for error notification helper.
-  config.error_notification_class = 'error_notification'
+  config.error_notification_class = "error_notification"
 
   # ID to add for error notification helper.
   # config.error_notification_id = nil
@@ -168,7 +168,7 @@ SimpleForm.setup do |config|
   # config.input_class = nil
 
   # Define the default class of the input wrapper of the boolean input.
-  config.boolean_label_class = 'checkbox'
+  config.boolean_label_class = "checkbox"
 
   # Defines if the default input wrapper class should be included in radio
   # collection wrappers.

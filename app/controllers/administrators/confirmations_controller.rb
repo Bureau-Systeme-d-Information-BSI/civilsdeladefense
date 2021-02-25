@@ -26,7 +26,7 @@ class Administrators::ConfirmationsController < Devise::ConfirmationsController
     return if @confirmable.errors.empty?
 
     self.resource = @confirmable
-    render 'devise/confirmations/new' # Change this if you don't have the views on default path
+    render "devise/confirmations/new" # Change this if you don't have the views on default path
   end
 
   # GET /resource/confirmation?confirmation_token=abcdef
@@ -34,7 +34,7 @@ class Administrators::ConfirmationsController < Devise::ConfirmationsController
     with_unconfirmed_confirmable do
       unless @confirmable.confirmation_token_still_valid?
         self.resource = @confirmable
-        render 'devise/confirmations/token_expired'
+        render "devise/confirmations/token_expired"
         return
       end
 
@@ -62,7 +62,7 @@ class Administrators::ConfirmationsController < Devise::ConfirmationsController
     @confirmation_token = params[:confirmation_token]
     @requires_password = true
     self.resource = @confirmable
-    render 'devise/confirmations/show' # Change this if you don't have the views on default path
+    render "devise/confirmations/show" # Change this if you don't have the views on default path
   end
 
   def do_confirm

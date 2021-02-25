@@ -18,11 +18,11 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = ENV['DEFAULT_FROM']
+  config.mailer_sender = ENV["DEFAULT_FROM"]
 
   # Configure the class responsible to send e-mails.
   # config.mailer = 'Devise::Mailer'
-  config.mailer = 'PlatformMailer'
+  config.mailer = "PlatformMailer"
 
   # Configure the parent class responsible to send e-mails.
   # config.parent_mailer = 'ActionMailer::Base'
@@ -31,7 +31,7 @@ Devise.setup do |config|
   # Load and configure the ORM. Supports :active_record (default) and
   # :mongoid (bson_ext recommended) by default. Other ORMs may be
   # available as additional gems.
-  require 'devise/orm/active_record'
+  require "devise/orm/active_record"
 
   # ==> Configuration for any authentication mechanism
   # Configure which keys are used when authenticating a user. The default is
@@ -267,23 +267,23 @@ Devise.setup do |config|
     name: :france_connect,
     scope: %i[openid email family_name given_name],
     response_type: :code,
-    uid_field: 'sub',
-    issuer: "https://#{ENV['FRANCE_CONNECT_HOST']}",
+    uid_field: "sub",
+    issuer: "https://#{ENV["FRANCE_CONNECT_HOST"]}",
     client_auth_method: :secret,
     client_signing_alg: :HS256,
     nonce: proc { SecureRandom.hex(32) },
     client_options: {
       port: 443,
-      scheme: 'https',
-      host: ENV['FRANCE_CONNECT_HOST'],
-      authorization_endpoint: '/api/v1/authorize?acr_values=eidas1',
-      token_endpoint: '/api/v1/token',
-      userinfo_endpoint: '/api/v1/userinfo',
-      end_session_endpoint: '/api/v1/logout',
-      identifier: ENV['FRANCE_CONNECT_APP_ID'],
-      secret: ENV['FRANCE_CONNECT_APP_SECRET'],
-      redirect_uri: "#{ENV['DEFAULT_HOST']}/users/auth/france_connect/callback",
-      post_logout_redirect_uri: '/'
+      scheme: "https",
+      host: ENV["FRANCE_CONNECT_HOST"],
+      authorization_endpoint: "/api/v1/authorize?acr_values=eidas1",
+      token_endpoint: "/api/v1/token",
+      userinfo_endpoint: "/api/v1/userinfo",
+      end_session_endpoint: "/api/v1/logout",
+      identifier: ENV["FRANCE_CONNECT_APP_ID"],
+      secret: ENV["FRANCE_CONNECT_APP_SECRET"],
+      redirect_uri: "#{ENV["DEFAULT_HOST"]}/users/auth/france_connect/callback",
+      post_logout_redirect_uri: "/"
     }
   }
 

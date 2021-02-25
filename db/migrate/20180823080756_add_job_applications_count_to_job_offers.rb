@@ -6,10 +6,10 @@ class AddJobApplicationsCountToJobOffers < ActiveRecord::Migration[5.2]
     JobApplication.aasm.states.each do |state|
       state_name = state.name.to_s
       add_column :job_offers,
-                 "#{state_name}_job_applications_count",
-                 :integer,
-                 null: false,
-                 default: 0
+        "#{state_name}_job_applications_count",
+        :integer,
+        null: false,
+        default: 0
     end
     JobApplication.counter_culture_fix_counts
   end

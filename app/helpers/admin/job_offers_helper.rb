@@ -3,7 +3,7 @@
 module Admin::JobOffersHelper
   def charts_per_day_options
     {
-      height: '200px',
+      height: "200px",
       library: {
         tooltip: {
           crosshairs: true
@@ -12,7 +12,7 @@ module Admin::JobOffersHelper
           enabled: false
         },
         xAxis: {
-          type: 'datetime'
+          type: "datetime"
         },
         yAxis: {
           allowDecimals: false

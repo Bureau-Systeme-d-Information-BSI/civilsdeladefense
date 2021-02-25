@@ -12,18 +12,18 @@ class CommitParamConstraint
 end
 
 Rails.application.routes.draw do
-  get '/mentions-legales', to: redirect('/pages/mentions-legales')
-  get '/cgu', to: redirect('/pages/conditions-generales-d-utilisation')
-  get '/politique-confidentialite', to: redirect('/pages/politique-de-confidentialite')
-  get '/suivi', to: redirect('/pages/suivi-d-audience-et-vie-privee')
+  get "/mentions-legales", to: redirect("/pages/mentions-legales")
+  get "/cgu", to: redirect("/pages/conditions-generales-d-utilisation")
+  get "/politique-confidentialite", to: redirect("/pages/politique-de-confidentialite")
+  get "/suivi", to: redirect("/pages/suivi-d-audience-et-vie-privee")
 
   as :administrator do
-    patch '/admin/confirmation' => 'administrators/confirmations#update', as: :update_administrator_confirmation
+    patch "/admin/confirmation" => "administrators/confirmations#update", :as => :update_administrator_confirmation
   end
-  devise_for :administrators, path: 'admin', controllers: { confirmations: 'administrators/confirmations' }, timeout_in: 1.hour
+  devise_for :administrators, path: "admin", controllers: {confirmations: "administrators/confirmations"}, timeout_in: 1.hour
   devise_for :users, controllers: {
-    registrations: 'users/registrations',
-    omniauth_callbacks: 'users/omniauth_callbacks'
+    registrations: "users/registrations",
+    omniauth_callbacks: "users/omniauth_callbacks"
   }
 
   namespace :admin do
@@ -39,7 +39,7 @@ Rails.application.routes.draw do
         get :pick
       end
     end
-    resources :job_offers, path: 'offresdemploi' do
+    resources :job_offers, path: "offresdemploi" do
       collection do
         get :add_actor
         get :archived
@@ -56,7 +56,7 @@ Rails.application.routes.draw do
           patch :update, constraints: CommitParamConstraint.new(action_name), action: action_name
         end
       end
-      resources :job_applications, path: 'candidatures' do
+      resources :job_applications, path: "candidatures" do
         member do
           get :cvlm
           get :files
@@ -65,17 +65,17 @@ Rails.application.routes.draw do
       end
     end
     resources :preferred_users
-    resources :preferred_users_lists, path: 'liste-candidats' do
+    resources :preferred_users_lists, path: "liste-candidats" do
       resources :preferred_users
     end
-    resources :users, path: 'candidats', except: %i[create] do
+    resources :users, path: "candidats", except: %i[create] do
       member do
         get :listing
         put :update_listing
         post :suspend, :unsuspend
       end
     end
-    resources :job_applications, path: 'candidatures', only: %i[index show update] do
+    resources :job_applications, path: "candidatures", only: %i[index show update] do
       member do
         patch :change_state
       end
@@ -94,11 +94,11 @@ Rails.application.routes.draw do
       end
     end
     namespace :stats do
-      root to: 'job_applications#index'
-      resources :job_applications, path: 'candidatures', only: %i[index]
-      resources :recruitments, path: 'recrutements'
+      root to: "job_applications#index"
+      resources :job_applications, path: "candidatures", only: %i[index]
+      resources :recruitments, path: "recrutements"
     end
-    namespace :settings, path: 'parametres' do
+    namespace :settings, path: "parametres" do
       resource :organization do
         member do
           get :edit_security
@@ -116,7 +116,7 @@ Rails.application.routes.draw do
           post :move_higher, :move_lower
         end
       end
-      resources :administrators, path: 'administrateurs', except: %i[destroy] do
+      resources :administrators, path: "administrateurs", except: %i[destroy] do
         collection do
           get :inactive
         end
@@ -135,7 +135,7 @@ Rails.application.routes.draw do
       resources :salary_ranges
       resources :job_application_file_types
       other_settings = %i[benefit bops email_template job_application_file_types
-                          rejection_reasons contract_duration]
+        rejection_reasons contract_duration]
       (JobOffer::SETTINGS + other_settings).each do |setting|
         resources setting.to_s.pluralize.to_sym, except: %i[show] do
           member do
@@ -143,21 +143,21 @@ Rails.application.routes.draw do
           end
         end
       end
-      root to: 'administrators#index'
+      root to: "administrators#index"
     end
-    root to: 'job_offers#index'
+    root to: "job_offers#index"
   end
 
   authenticate :user do
-    namespace 'account', path: 'espace-candidat' do
-      resources :job_applications, path: 'mes-candidatures' do
+    namespace "account", path: "espace-candidat" do
+      resources :job_applications, path: "mes-candidatures" do
         member do
-          get :job_offer, path: 'offre'
+          get :job_offer, path: "offre"
         end
-        resources :job_application_files, path: 'documents'
+        resources :job_application_files, path: "documents"
         resources :emails, only: %i[index create]
       end
-      resource :user, path: 'mon-compte', only: %i[show update destroy] do
+      resource :user, path: "mon-compte", only: %i[show update destroy] do
         member do
           get :change_email, :change_password
           patch :update_email, :update_password, :unlink_france_connect, :set_password
@@ -166,7 +166,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :job_offers, path: 'offresdemploi', only: %i[index show] do
+  resources :job_offers, path: "offresdemploi", only: %i[index show] do
     member do
       get :apply
       post :send_application
@@ -178,5 +178,5 @@ Rails.application.routes.draw do
   resource :robots, only: %w[show]
   resource :sitemap
 
-  root to: 'homepages#show'
+  root to: "homepages#show"
 end

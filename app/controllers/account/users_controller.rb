@@ -18,7 +18,7 @@ class Account::UsersController < Account::BaseController
     respond_to do |format|
       if @user.update(user_params)
         @user.update_column "#{@file_name}_is_validated", 0
-        format.html { redirect_to %i[account user], notice: t('.success') }
+        format.html { redirect_to %i[account user], notice: t(".success") }
         format.js {}
         format.json { render :show, status: :ok, location: @user }
       else
@@ -35,7 +35,7 @@ class Account::UsersController < Account::BaseController
         # Sign in the user by passing validation in case their password changed
         bypass_sign_in(@user, scope: :user)
 
-        format.html { redirect_to %i[account user], notice: t('.success') }
+        format.html { redirect_to %i[account user], notice: t(".success") }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html do
@@ -55,7 +55,7 @@ class Account::UsersController < Account::BaseController
         # Sign in the user by passing validation in case their password changed
         bypass_sign_in(@user, scope: :user)
 
-        format.html { redirect_to %i[account user], notice: t('.success') }
+        format.html { redirect_to %i[account user], notice: t(".success") }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html do
@@ -75,7 +75,7 @@ class Account::UsersController < Account::BaseController
   def update_email
     respond_to do |format|
       if @user.update(user_email_params)
-        format.html { redirect_to %i[account user], notice: t('.success') }
+        format.html { redirect_to %i[account user], notice: t(".success") }
         format.json { render :show, status: :ok, location: @user }
       else
         format.html do
@@ -91,7 +91,7 @@ class Account::UsersController < Account::BaseController
 
   def destroy
     if @user.destroy_with_password(user_destroy_params[:current_password])
-      redirect_to root_url, notice: t('.success')
+      redirect_to root_url, notice: t(".success")
     else
       @user_for_password_change = User.new
       @user_for_email_change = User.new
@@ -104,7 +104,7 @@ class Account::UsersController < Account::BaseController
   def unlink_france_connect
     current_user.omniauth_informations.where(provider: :france_connect).destroy_all
 
-    redirect_to %i[account user], notice: t('.success')
+    redirect_to %i[account user], notice: t(".success")
   end
 
   private

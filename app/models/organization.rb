@@ -21,6 +21,7 @@ class Organization < ApplicationRecord
     logo_horizontal
     logo_vertical_negative
     logo_horizontal_negative
+    testimony_logo
   ].each do |field|
     mount_uploader field, LogoUploader, mount_on: :"#{field}_file_name"
     validates field,

@@ -610,6 +610,7 @@ fr:
           title: "Paramètres généraux"
           title_social: "Réseaux sociaux"
           title_partners: "Partenaires"
+          title_testimony: "Témoignage page d'acceuil"
         form_security:
           title: "Paramètres de sécurité"
         update:

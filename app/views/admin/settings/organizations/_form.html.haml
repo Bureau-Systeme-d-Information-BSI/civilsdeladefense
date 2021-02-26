@@ -30,6 +30,13 @@
             - %w[linkedin_url twitter_url youtube_url instagram_url facebook_url].each do |social_url|
               = f.input social_url
           .card-header
+            .card-title= t('.title_testimony')
+          .card-body
+            = f.input :testimony_title
+            = f.input :testimony_subtitle
+            = f.input :testimony_url
+            = f.input :testimony_logo
+          .card-header
             .card-title= t('.title_partners')
           .card-body
             - %w[partner_1 partner_2 partner_3].each do |field|

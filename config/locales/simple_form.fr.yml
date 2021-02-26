@@ -139,6 +139,10 @@ fr:
         youtube_url: "Lien Youtube"
         instagram_url: "Lien Instagram"
         facebook_url: "Lien Facebook"
+        testimony_title: Titre
+        testimony_subtitle: Sous-titre
+        testimony_url: Lien
+        testimony_logo: Image d'arrière plan
       organization_default:
         kind: "Nom du champ"
         value: "Valeur par défaut"

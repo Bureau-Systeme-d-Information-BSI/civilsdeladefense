@@ -34,6 +34,9 @@ class Account::JobApplicationFilesController < Account::BaseController
         end
         format.html { redirect_to url, notice: t(".success") }
       else
+        format.turbo_stream do
+          render turbo_stream: turbo_stream_update_response(file_type)
+        end
         format.html { render :new }
       end
     end

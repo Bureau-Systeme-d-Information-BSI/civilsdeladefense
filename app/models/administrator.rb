@@ -67,6 +67,7 @@ class Administrator < ApplicationRecord
     file_size: {less_than: 1.megabytes}
   validate :password_complexity
   validate :email_conformance
+  validates :email, presence: true, uniqueness: true
   validates :employer, presence: true, if: proc { |a| %w[employer grand_employer].include?(a.role) }
   validates :inviter, presence: true, unless: proc { |a| a.very_first_account }, on: :create
   validates_inclusion_of :role,

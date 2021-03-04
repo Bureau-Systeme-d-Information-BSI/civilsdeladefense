@@ -97,7 +97,7 @@ class JobOffersController < ApplicationController
     filter_by_date(:published_at)
 
     @job_offers = @job_offers.search_full_text(params[:q]) if params[:q].present?
-    @job_offers = @job_offers.paginate(page: params[:page])
+    @job_offers = @job_offers.paginate(page: params[:page]) unless params[:no_pagination]
   end
 
   def filter_by_date(kind)

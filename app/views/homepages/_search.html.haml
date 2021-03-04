@@ -1,4 +1,9 @@
-.rf-container
+.rf-container.rf-my-9w
   .rf-grid-row.rf-grid-row--gutters
     .rf-col-12
-      = render partial: '/job_offers/search_form'
+      = form_tag job_offers_url, method: :get, class: 'rf-search-bar rf-search-bar--lg' do
+        %label.rf-label{for: "q"}
+          Mots-clés recherchés parmi les offres d'emploi
+        = search_field_tag :q, params[:q], placeholder: 'Recherche parmi les offres d\'emploi', class: 'rf-input'
+        %button.rf-btn.rf-btn--lg{:title => "Rechercher"}
+          Rechercher

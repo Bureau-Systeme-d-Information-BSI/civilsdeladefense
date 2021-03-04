@@ -1,0 +1,24 @@
+.rf-container.rf-my-9w
+  .rf-grid-row.rf-grid-row--center
+    .rf-col-12
+      %h2.rf-h3.text-center.rf-mt-0.rf-mb-4w Foire aux questions
+    .rf-col-12
+      %ul.rf-accordions-group{data: {controller: 'rf-accordions-management'}}
+        %li
+          %section.rf-accordion{'data-rf-accordions-management-target' => 'section'}
+            %h3.rf-accordion__title
+              %button.rf-accordion__btn{"aria-controls" => "rf-accordion-10", "aria-expanded" => "false", 'data-rf-accordions-management-target' => 'button'}
+                Quelles sont les étapes que va suivre ma candidature ?
+            #rf-accordion-10.rf-collapse{'data-rf-accordions-management-target' => 'collapsible'}
+              %p.rf-mb-0
+                1. Dépôt de la candidature
+                %br
+                2. Préqualification téléphonique
+                %br
+                3. Entretien physique
+                %br
+                4. Sélection du candidat
+                %br
+                5. Rédaction du contrat de travail
+                %br
+                6. Prise de fonctions

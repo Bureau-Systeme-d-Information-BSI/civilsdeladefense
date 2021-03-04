@@ -1,8 +1,8 @@
-- logo_url = current_organization.partner_1_logo.present? ? current_organization.partner_1_logo.url : (current_organization.operator_logo.present? ? current_organization.operator_logo.url : nil)
-- style = "background: url(#{logo_url}) center right/auto 90px no-repeat"
-.rf-container
+.rf-container.rf-mt-5w
   .rf-grid-row.rf-grid-row--gutters.rf-grid-row--center.rf-mb-0
     .rf-col-12.rf-col-md-10
-      .rf-grid-row{style: style}
-        .rf-col-12.rf-col-md-6
-          %h1.rf-h2.rf-mb-0.rf-my-9w= @page_title
+      .rf-grid-row
+        .rf-col-12.rf-col-md-6.d-flex.flex-column.align-items-center.justify-content-center
+          %h1.rf-h2.rf-mb-0= @page_title
+        .rf-col-12.rf-col-md-6.rf-pl-9w
+          = image_tag asset_pack_path('images/interview.svg'), style: 'max-width:100%;'

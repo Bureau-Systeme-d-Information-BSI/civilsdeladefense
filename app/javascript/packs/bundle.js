@@ -25,6 +25,7 @@ const application = Application.start()
 const context = require.context('../controllers', true, /\.js$/)
 application.load(definitionsFromContext(context))
 
+// import '@gouvfr/core/dist/js/core.js'
 import { Header } from 'js/rf-header.js'
 
 document.addEventListener('turbo:load', function() {

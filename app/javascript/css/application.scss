@@ -215,14 +215,14 @@ h2 {
     --bg-alt-2: #0682ff;
     --g700: white;
     --bf500: white;
-    --w-bf500: #0682ff;
+    --w-bf500: var(--bf500-plain);
     .rf-btn {
       --color-hover: rgba(0, 0, 0, 0.05);
       --color-active: rgba(91, 91, 255, 0.5);
     }
   }
   .rf-bg--hero-image {
-    --bg-image: rgba(0, 68, 148, 0.5);
+    --bg-image: rgba(0, 0, 145, 0.4);
   }
   .rf-bg--alt-3 {
     --bg-alt-3: #004494;

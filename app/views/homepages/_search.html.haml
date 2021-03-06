@@ -4,6 +4,8 @@
       = form_tag job_offers_url, method: :get, class: 'rf-search-bar rf-search-bar--lg' do
         %label.rf-label{for: "q"}
           Mots-clés recherchés parmi les offres d'emploi
-        = search_field_tag :q, params[:q], placeholder: 'Recherche parmi les offres d\'emploi', class: 'rf-input'
+        = search_field_tag :q, params[:q], placeholder: 'Recherche par mot-clé dans les offres d\'emploi', class: 'rf-input'
         %button.rf-btn.rf-btn--lg{:title => "Rechercher"}
           Rechercher
+    .rf-col-12.text-center
+      = link_to "Recherche avancée", job_offers_path, class: 'rf-link rf-fi-arrow-right-line rf-link--icon-right'

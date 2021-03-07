@@ -7,6 +7,7 @@ export default class extends Controller {
     var button = event.currentTarget
     var state = button.getAttribute('aria-expanded')
     if (state == 'true') {
+      this.collapsibleTarget.style.setProperty('max-height', '')
       button.setAttribute('aria-expanded', false)
       this.collapsibleTarget.classList.remove('rf-collapse--expanded')
     } else {
@@ -16,6 +17,7 @@ export default class extends Controller {
       const height = this.collapsibleTarget.offsetHeight
       this.collapsibleTarget.style.setProperty('--collapse', -height + 'px')
       this.collapsibleTarget.style.setProperty('--collapser', '')
+      this.collapsibleTarget.style.setProperty('max-height', 'none')
     }
   }
 }

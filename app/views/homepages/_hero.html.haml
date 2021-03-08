@@ -1,8 +1,10 @@
-.rf-container.rf-mt-5w
+.rf-container
   .rf-grid-row.rf-grid-row--gutters.rf-grid-row--center.rf-mb-0
-    .rf-col-12.rf-col-md-10
-      .rf-grid-row
-        .rf-col-12.rf-col-md-6.d-flex.flex-column.align-items-center.justify-content-center
+    .rf-col-12.rf-col-md-11.rf-col-lg-10
+      .rf-grid-row.rf-hero
+        - illustration_url = current_organization.image_background.url if current_organization.image_background.present?
+        .rf-col-12.d-flex.flex-column.align-items-center.justify-content-center{class: illustration_url.present? ? 'rf-col-md-6' : nil}
           %h1.rf-h2.rf-mb-0= @page_title
-        .rf-col-12.rf-col-md-6.rf-pl-9w
-          = image_tag asset_pack_path('images/interview.svg'), style: 'max-width:100%;'
+        - if illustration_url.present?
+          .rf-col-12.rf-col-md-6.rf-pl-9w.d-flex.flex-column.align-items-center.justify-content-center
+            = image_tag illustration_url, style: 'max-width:100%;'

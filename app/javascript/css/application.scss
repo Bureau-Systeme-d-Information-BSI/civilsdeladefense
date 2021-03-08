@@ -248,7 +248,7 @@ h2 {
   }
 }
 
-.rf-bg--hero-image {
+.rf-hero {
   h1 {
     padding: 2rem 0;
   }
@@ -258,12 +258,11 @@ h2 {
   .block--overlap {
     margin-top: -80px !important;
   }
-  .rf-bg--hero-image {
-    min-height: 200px;
-    h1 {
-      padding: 13rem 0;
-    }
+
+  .rf-hero {
+    height: 22rem;
   }
+
   .job-offer-grid {
     > *:nth-child(2n) {
       padding-left: 2.5rem;

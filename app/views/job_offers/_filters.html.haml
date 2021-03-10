@@ -19,7 +19,7 @@
   .rf-input-group
     = label_tag :published_at, t(".published_at_filter"), class: 'rf-label'
     = date_field_tag :published_at, @published_at, class: 'rf-input'
-
+  = hidden_field_tag(:page, 1)
   = submit_tag t('.search'), name: nil, class: 'rf-btn'
 .d-flex.justify-content-end.pt-1.invisible.spinner
   = spinner

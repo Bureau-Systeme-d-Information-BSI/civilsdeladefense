@@ -122,6 +122,16 @@ class JobOffer < ApplicationRecord
     end
   end
 
+  # Return an hash where keys are regions and values are counties inside it
+  # All regions and counties got job_offers associated
+  def self.regions
+    job_with_regions_and_county = JobOffer.unscoped.where.not(region: ["", nil]).where.not(county: ["", nil])
+    hash_region_county = job_with_regions_and_county.select(:region, :county).distinct.pluck(:region, :county)
+    hash_region_county.group_by { |a, b| a }.each_with_object({}) { |(key, values), hash|
+      hash[key] = values.flatten - [key]
+    }
+  end
+
   def delay_before_publishing_over?
     delay = organization&.hours_delay_before_publishing
     if published_at.present?

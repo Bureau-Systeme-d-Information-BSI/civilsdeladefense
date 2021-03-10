@@ -19,7 +19,7 @@ class RfRenderer < WillPaginate::ActionView::LinkRenderer
   protected
 
   def page_item(text, url, link_status = nil)
-    link_tag = link(text, url, class: "rf-pagination__link", rel: text, title: "Page #{text}", 'aria-label': "Page #{text}") if link_status.nil?
+    link_tag = generate_link(text, url) if link_status.nil?
     link_tag ||= tag(:span, text, class: "rf-pagination__label", 'aria-current': "page")
 
     tag(:li, link_tag, class: "rf-pagination__item #{link_status}")
@@ -48,5 +48,18 @@ class RfRenderer < WillPaginate::ActionView::LinkRenderer
   def previous_or_next_page(page, text, _aria_label)
     link_status = "rf-pagination__item--disabled" unless page
     page_item(text, page, link_status)
+  end
+
+  def generate_link(text, url)
+    link(
+      text,
+      url,
+      class: "rf-pagination__link",
+      rel: text,
+      title: "Page #{text}",
+      'aria-label': "Page #{text}",
+      'data-controller': "scroll",
+      'data-action': "scroll#top"
+    )
   end
 end

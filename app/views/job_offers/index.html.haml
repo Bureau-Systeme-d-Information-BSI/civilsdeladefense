@@ -1,9 +1,9 @@
 - @page_title = @page&.title || t('.title')
 .rf-container.rf-pb-6w.rf-pt-5w
-  .rf-grid-row.rf-grid-row--gutters
-    .rf-col-12.rf-col-md-3
+  .rf-grid-row.rf-grid-row--gutters.job-offer-index
+    .rf-col-12.rf-col-md-4
       = render partial: 'filters'
-    .rf-col-12.rf-col-md-9
+    %turbo-frame#job-offers.rf-col-12.rf-col-md-8
       = t('.job_offers_count', count: @job_offers.total_entries)
       = render partial: 'job_offer', collection: @job_offers
       = will_paginate @job_offers, class: 'justify-content-center rf-mt-3w', renderer: RfRenderer

@@ -11,7 +11,11 @@ if (environment.config.devServer) {
     chokidar.watch([
       'config/locales/*.yml',
       'app/views/**/*.haml'
-    ]).on('change', () => server.sockWrite(server.sockets, 'content-changed'))
+    ]).on('change', () => {
+      setTimeout(() => {
+        server.sockWrite(server.sockets, 'content-changed');
+      }, 1000);
+    })
   }
 }
 

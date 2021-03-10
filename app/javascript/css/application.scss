@@ -276,3 +276,31 @@ h2 {
 .text-justify {
   text-align: justify;
 }
+
+.rf-nav__item--active > .rf-link {
+  pointer-events: initial;
+}
+
+.job-offer-index {
+  input[type="submit"] {
+    position: sticky;
+  }
+
+  .rf-accordion .rf-collapse--expanded {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+  .side {
+    width: initial;
+    padding: 0;
+  }
+  .rf-sidemenu__list {
+    .rf-sidemenu__list {
+      margin: 0 0.5rem;
+      .rf-sidemenu__list .rf-label {
+        font-size: 0.95rem;
+        padding: 0.5rem 0;
+      }
+    }
+  }
+}

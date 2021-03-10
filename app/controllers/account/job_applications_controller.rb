@@ -6,9 +6,8 @@ class Account::JobApplicationsController < Account::BaseController
   # GET /account/job_applications
   # GET /account/job_applications.json
   def index
-    @job_applications_ongoing, @job_applications_finished = job_applications.partition { |x|
-      JobApplication::FINISHED_STATES.include?(x.state)
-    }
+    @job_applications_ongoing = job_applications.where.not(state: JobApplication::FINISHED_STATES)
+    @job_applications_finished = job_applications.where(state: JobApplication::FINISHED_STATES)
   end
 
   def job_offer

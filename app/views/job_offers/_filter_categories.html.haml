@@ -1,0 +1,27 @@
+%li.rf-sidemenu__item
+  - data = {controller: 'rf-accordions-management', action: 'click->rf-accordions-management#collapse'}
+  - options = {type: "button", aria: {controls: "rf-accordion-category", expanded: false}, data: data}
+  %button.rf-sidemenu__btn{options}= t(".select")
+  .rf-collapse{id: "rf-accordion-category"}
+    %ul.rf-sidemenu__list
+      - collection.each do |element|
+        - children = element.children.where("published_job_offers_count > ?", 0)
+        %div{data: { controller: 'subcheckbox'}}
+          %li.rf-sidemenu__item
+            .rf-container-fluid
+              .rf-grid-row
+                .rf-col-11
+                  .rf-checkbox-group
+                    %input{id: element.id, value: element.id, name: "job_offers[category_id][]", type: "checkbox", data: {action: "change->subcheckbox#propagate_downward change->auto-submit#submit", "subcheckbox-target": "upcheckbox"}}
+                    %label{for: element.id}= element.name
+                  - data = {controller: 'rf-accordions-management', action: 'click->rf-accordions-management#collapse'}
+                  - options = {type: "button", aria: {controls: "rf-accordion-category-#{element.name}", expanded: false}, data: data}
+                - if children.count > 0
+                  .rf-col
+                    %button.rf-sidemenu__btn.side{options}
+          - if children.count > 0
+            .rf-collapse.rf-sidemenu__list{id: "rf-accordion-category-#{element.name}"}
+              = collection_check_boxes(:job_offers, :category_id, children, :id, :name, include_hidden: false) do |b|
+                .rf-checkbox-group.rf-checkbox-group--sm
+                  = b.check_box(checked: false, data: {action: "change->subcheckbox#propagate_upward change->auto-submit#submit", "subcheckbox-target": "downcheckbox"})
+                  = b.label(class: "rf-label")

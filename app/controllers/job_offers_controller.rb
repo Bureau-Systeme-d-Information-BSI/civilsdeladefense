@@ -11,10 +11,12 @@ class JobOffersController < ApplicationController
   def index
     @page = current_organization.pages.where(parent_id: nil).first
     @categories = Category.order("lft ASC").where(
-      "published_job_offers_count > ? AND depth <= ?", 0, 1
-    )
-    @regions = JobOffer.pluck(:region).uniq.reject(&:blank?)
-    @region = params[:region]
+      "published_job_offers_count > ? AND depth = ?", 0, 0
+    ).includes(:children)
+    @contract_types = ContractType.all
+    @study_levels = StudyLevel.all
+    @experience_levels = ExperienceLevel.all
+    @regions = JobOffer.regions
 
     respond_to do |format|
       format.html {}
@@ -86,44 +88,21 @@ class JobOffersController < ApplicationController
   private
 
   def set_job_offers
-    @job_offers = JobOffer.publicly_visible.includes(:contract_type).order(published_at: :desc)
+    @job_offers = JobOffer.publicly_visible.includes(:contract_type, :category).order(published_at: :desc)
+
     @job_offers = @job_offers.includes(:study_level) if request.format.json?
-    if params[:category_id].present?
-      @category = Category.find(params[:category_id])
-      @job_offers = @job_offers.where(category_id: @category.self_and_descendants)
-    end
-    filter_by(ContractType)
-    filter_by(StudyLevel)
-    filter_by(ExperienceLevel)
-    filter_by_date(:contract_start_on)
-    filter_by_date(:published_at)
+
+    @job_offers = @job_offers.where(search_params.to_h) if search_params.present?
+
+    @job_offers = @job_offers.where(category_id: searched_category_ids) if searched_category_ids.present?
+
+    @job_offers = @job_offers.where("contract_start_on <= ?", params[:contract_start_on]) if params[:contract_start_on].present?
+    @job_offers = @job_offers.where("published_at <= ?", params[:published_at]) if params[:published_at].present?
 
     @job_offers = @job_offers.search_full_text(params[:q]) if params[:q].present?
-    @job_offers = @job_offers.paginate(page: params[:page]) unless params[:no_pagination]
+    @job_offers = @job_offers.paginate(page: params[:page], per_page: 15) unless params[:no_pagination]
   end
 
-  def filter_by_date(kind)
-    return if params[kind].blank?
-
-    instance_variable_set("@#{kind}", params[kind])
-    @job_offers = @job_offers.where("contract_start_on <= ?", params[kind])
-  end
-
-  def filter_by(klass)
-    kind = klass.name.underscore.to_sym
-    instance_variable_set("@#{kind.to_s.pluralize}", klass.all)
-
-    kind_id = "#{kind}_id".to_sym
-    return unless params[kind_id].present?
-
-    object = klass.find(params[kind_id])
-    return unless object.present?
-
-    instance_variable_set("@#{kind}", object)
-    @job_offers = @job_offers.where(kind_id => object.id)
-  end
-
-  # Use callbacks to share common setup or constraints between actions.
   def set_job_offer
     @job_offer = JobOffer.find(params[:id])
     if !@job_offer.published? && !always_display_job_offer(@job_offer)
@@ -132,7 +111,6 @@ class JobOffersController < ApplicationController
     return redirect_to @job_offer, status: :moved_permanently if params[:id] != @job_offer.slug
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
   def job_application_params
     permitted_params = %i[]
     user_attributes = %i[first_name last_name current_position phone website_url]
@@ -144,6 +122,34 @@ class JobOffersController < ApplicationController
     job_application_files_attributes = %i[content job_application_file_type_id]
     permitted_params << {job_application_files_attributes: job_application_files_attributes}
     params.require(:job_application).permit(permitted_params)
+  end
+
+  def search_params
+    params.permit(
+      job_offers: {
+        study_level_id: [], contract_type_id: [], experience_level_id: [], county: [], region: []
+      }
+    )[:job_offers]
+  end
+
+  def search_category_params
+    params.permit(
+      job_offers: {category_id: []}
+    ).dig(:job_offers, :category_id)
+  end
+
+  def searched_category_ids
+    return if search_category_params.blank?
+    return @all_searched_category_ids if @all_searched_category_ids.present?
+
+    selected_categories = Category.where(id: search_category_params)
+    # Remove childs to be more efficient
+    parent_categories = selected_categories.reject { |categ|
+      (selected_categories - [categ]).any? { |cat| categ.is_descendant_of?(cat) }
+    }
+
+    # Search all category
+    @all_searched_category_ids = parent_categories.map { |categ| categ.self_and_descendants.pluck(:id) }.flatten
   end
 
   def always_display_job_offer(job_offer)

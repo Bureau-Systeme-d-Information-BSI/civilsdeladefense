@@ -128,8 +128,9 @@ fr:
       published_date: 'Publiée il y a %{time_ago_in_words}'
     job_offer_content:
       apply: "Je postule"
-      description: "Descriptif de l’offre"
+      description: "Descriptif des missions"
       required_profile: "Profil recherché"
+      organization_description: "Descriptif de l'organisation"
       recruitment_process: "Process de recrutement"
     job_offer_head:
       available_immediately: "Poste à pourvoir immédiatement"
@@ -1002,6 +1003,7 @@ fr:
         kind: "Type"
         kind/job_offer_description: "Offre d'emploi / Description"
         kind/job_offer_recruitment_process: "Offre d'emploi / Process de recrutement"
+        kind/job_offer_organization_description: "Offre d'emploi / Descriptif de l'organisation"
       profile:
         is_currently_employed/true: "En poste"
         is_currently_employed/false: "Disponible immédiatement"

@@ -17,7 +17,8 @@ class OrganizationDefault < ApplicationRecord
   # Enums
   enum kind: {
     job_offer_description: 10,
-    job_offer_recruitment_process: 20
+    job_offer_recruitment_process: 20,
+    job_offer_organization_description: 30
   }
 end
 

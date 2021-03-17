@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_17_110348) do
+ActiveRecord::Schema.define(version: 2021_03_17_140820) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -359,6 +359,7 @@ ActiveRecord::Schema.define(version: 2021_03_17_110348) do
     t.uuid "organization_id"
     t.uuid "benefit_id"
     t.uuid "contract_duration_id"
+    t.text "organization_description"
     t.index ["benefit_id"], name: "index_job_offers_on_benefit_id"
     t.index ["bop_id"], name: "index_job_offers_on_bop_id"
     t.index ["category_id"], name: "index_job_offers_on_category_id"
@@ -393,7 +394,7 @@ ActiveRecord::Schema.define(version: 2021_03_17_110348) do
     t.index ["name"], name: "index_official_statuses_on_name", unique: true
   end
 
-  create_table "omniauth_informations", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
+  create_table "omniauth_informations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "provider", null: false
     t.string "uid", null: false
     t.string "email", null: false

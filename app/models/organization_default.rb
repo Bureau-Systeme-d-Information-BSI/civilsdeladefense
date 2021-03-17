@@ -20,3 +20,24 @@ class OrganizationDefault < ApplicationRecord
     job_offer_recruitment_process: 20
   }
 end
+
+# == Schema Information
+#
+# Table name: organization_defaults
+#
+#  id              :uuid             not null, primary key
+#  kind            :integer
+#  value           :text
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  organization_id :uuid             not null
+#
+# Indexes
+#
+#  index_organization_defaults_on_kind             (kind)
+#  index_organization_defaults_on_organization_id  (organization_id)
+#
+# Foreign Keys
+#
+#  fk_rails_0f3d6bc988  (organization_id => organizations.id)
+#

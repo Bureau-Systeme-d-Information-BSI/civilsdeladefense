@@ -10,3 +10,19 @@ class ExperienceLevel < ApplicationRecord
   has_many :job_offers
   has_many :salary_ranges, dependent: :destroy
 end
+
+# == Schema Information
+#
+# Table name: experience_levels
+#
+#  id         :uuid             not null, primary key
+#  name       :string
+#  position   :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+# Indexes
+#
+#  index_experience_levels_on_name      (name) UNIQUE
+#  index_experience_levels_on_position  (position)
+#

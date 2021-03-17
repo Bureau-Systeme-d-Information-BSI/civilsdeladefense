@@ -7,3 +7,18 @@ class RejectionReason < ApplicationRecord
 
   validates :name, presence: true
 end
+
+# == Schema Information
+#
+# Table name: rejection_reasons
+#
+#  id         :uuid             not null, primary key
+#  name       :string
+#  position   :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+# Indexes
+#
+#  index_rejection_reasons_on_position  (position)
+#

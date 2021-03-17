@@ -8,3 +8,19 @@ class ContractDuration < ApplicationRecord
 
   has_many :job_offers
 end
+
+# == Schema Information
+#
+# Table name: contract_durations
+#
+#  id         :uuid             not null, primary key
+#  name       :string
+#  position   :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+# Indexes
+#
+#  index_contract_durations_on_name      (name) UNIQUE
+#  index_contract_durations_on_position  (position)
+#

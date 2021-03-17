@@ -80,3 +80,59 @@ class User < ApplicationRecord
     !link_to_omniauth? && super
   end
 end
+
+# == Schema Information
+#
+# Table name: users
+#
+#  id                               :uuid             not null, primary key
+#  confirmation_sent_at             :datetime
+#  confirmation_token               :string
+#  confirmed_at                     :datetime
+#  current_position                 :string
+#  current_sign_in_at               :datetime
+#  current_sign_in_ip               :inet
+#  email                            :string           default(""), not null
+#  encrypted_file_transfer_in_error :boolean          default(FALSE)
+#  encrypted_password               :string           default(""), not null
+#  failed_attempts                  :integer          default(0), not null
+#  first_name                       :string
+#  job_applications_count           :integer          default(0), not null
+#  last_name                        :string
+#  last_sign_in_at                  :datetime
+#  last_sign_in_ip                  :inet
+#  locked_at                        :datetime
+#  marked_for_deletion_on           :date
+#  phone                            :string
+#  photo_content_type               :string
+#  photo_file_name                  :string
+#  photo_file_size                  :bigint
+#  photo_is_validated               :integer          default(0)
+#  photo_updated_at                 :datetime
+#  remember_created_at              :datetime
+#  reset_password_sent_at           :datetime
+#  reset_password_token             :string
+#  sign_in_count                    :integer          default(0), not null
+#  suspended_at                     :datetime
+#  suspension_reason                :string
+#  unconfirmed_email                :string
+#  unlock_token                     :string
+#  website_url                      :string
+#  created_at                       :datetime         not null
+#  updated_at                       :datetime         not null
+#  last_job_application_id          :uuid
+#  organization_id                  :uuid
+#
+# Indexes
+#
+#  index_users_on_confirmation_token       (confirmation_token) UNIQUE
+#  index_users_on_email                    (email) UNIQUE
+#  index_users_on_last_job_application_id  (last_job_application_id)
+#  index_users_on_organization_id          (organization_id)
+#  index_users_on_reset_password_token     (reset_password_token) UNIQUE
+#  index_users_on_unlock_token             (unlock_token) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_ce23a23041  (last_job_application_id => job_applications.id)
+#

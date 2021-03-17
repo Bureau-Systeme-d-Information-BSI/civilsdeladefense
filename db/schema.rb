@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_26_140234) do
+ActiveRecord::Schema.define(version: 2021_03_17_110348) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 2021_02_26_140234) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "administrators", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "administrators", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "first_name"
     t.string "encrypted_password", default: "", null: false
@@ -91,7 +91,7 @@ ActiveRecord::Schema.define(version: 2021_02_26_140234) do
     t.index ["unlock_token"], name: "index_administrators_on_unlock_token", unique: true
   end
 
-  create_table "age_ranges", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "age_ranges", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.integer "position"
     t.datetime "created_at", precision: 6, null: false
@@ -122,7 +122,7 @@ ActiveRecord::Schema.define(version: 2021_02_26_140234) do
     t.index ["user_id", "user_type"], name: "user_index"
   end
 
-  create_table "availability_ranges", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "availability_ranges", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.integer "position"
     t.datetime "created_at", precision: 6, null: false
@@ -131,7 +131,7 @@ ActiveRecord::Schema.define(version: 2021_02_26_140234) do
     t.index ["position"], name: "index_availability_ranges_on_position"
   end
 
-  create_table "benefits", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "benefits", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.integer "position"
     t.datetime "created_at", precision: 6, null: false
@@ -139,7 +139,7 @@ ActiveRecord::Schema.define(version: 2021_02_26_140234) do
     t.index ["position"], name: "index_benefits_on_position"
   end
 
-  create_table "bops", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "bops", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.integer "position"
     t.datetime "created_at", null: false
@@ -147,7 +147,7 @@ ActiveRecord::Schema.define(version: 2021_02_26_140234) do
     t.index ["position"], name: "index_bops_on_position"
   end
 
-  create_table "categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "categories", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -160,7 +160,7 @@ ActiveRecord::Schema.define(version: 2021_02_26_140234) do
     t.index ["name"], name: "index_categories_on_name", unique: true
   end
 
-  create_table "cmgs", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "cmgs", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "email"
     t.uuid "organization_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -168,7 +168,7 @@ ActiveRecord::Schema.define(version: 2021_02_26_140234) do
     t.index ["organization_id"], name: "index_cmgs_on_organization_id"
   end
 
-  create_table "contract_durations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "contract_durations", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.integer "position"
     t.datetime "created_at", precision: 6, null: false
@@ -177,7 +177,7 @@ ActiveRecord::Schema.define(version: 2021_02_26_140234) do
     t.index ["position"], name: "index_contract_durations_on_position"
   end
 
-  create_table "contract_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "contract_types", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -187,7 +187,7 @@ ActiveRecord::Schema.define(version: 2021_02_26_140234) do
     t.index ["position"], name: "index_contract_types_on_position"
   end
 
-  create_table "email_templates", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "email_templates", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
     t.string "subject"
     t.text "body"
@@ -197,7 +197,7 @@ ActiveRecord::Schema.define(version: 2021_02_26_140234) do
     t.index ["position"], name: "index_email_templates_on_position"
   end
 
-  create_table "emails", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "emails", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "subject"
     t.text "body"
     t.datetime "created_at", null: false
@@ -210,7 +210,7 @@ ActiveRecord::Schema.define(version: 2021_02_26_140234) do
     t.index ["sender_type", "sender_id"], name: "index_emails_on_sender_type_and_sender_id"
   end
 
-  create_table "employers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "employers", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -223,7 +223,7 @@ ActiveRecord::Schema.define(version: 2021_02_26_140234) do
     t.index ["name"], name: "index_employers_on_name", unique: true
   end
 
-  create_table "experience_levels", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "experience_levels", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -244,7 +244,7 @@ ActiveRecord::Schema.define(version: 2021_02_26_140234) do
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
   end
 
-  create_table "job_application_file_types", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "job_application_file_types", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "description"
     t.integer "kind"
@@ -254,9 +254,10 @@ ActiveRecord::Schema.define(version: 2021_02_26_140234) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "from_state"
+    t.boolean "notification", default: true
   end
 
-  create_table "job_application_files", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "job_application_files", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "content_file_name"
     t.integer "is_validated", limit: 2, default: 0
     t.uuid "job_application_id"
@@ -268,7 +269,7 @@ ActiveRecord::Schema.define(version: 2021_02_26_140234) do
     t.index ["job_application_id"], name: "index_job_application_files_on_job_application_id"
   end
 
-  create_table "job_applications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "job_applications", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "state"
@@ -294,7 +295,7 @@ ActiveRecord::Schema.define(version: 2021_02_26_140234) do
     t.index ["user_id"], name: "index_job_applications_on_user_id"
   end
 
-  create_table "job_offer_actors", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "job_offer_actors", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "job_offer_id"
     t.uuid "administrator_id"
     t.integer "role"
@@ -304,7 +305,7 @@ ActiveRecord::Schema.define(version: 2021_02_26_140234) do
     t.index ["job_offer_id"], name: "index_job_offer_actors_on_job_offer_id"
   end
 
-  create_table "job_offers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "job_offers", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
     t.string "slug", null: false
     t.text "description"
@@ -375,7 +376,7 @@ ActiveRecord::Schema.define(version: 2021_02_26_140234) do
     t.index ["study_level_id"], name: "index_job_offers_on_study_level_id"
   end
 
-  create_table "messages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "messages", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -405,7 +406,7 @@ ActiveRecord::Schema.define(version: 2021_02_26_140234) do
     t.index ["user_id"], name: "index_omniauth_informations_on_user_id"
   end
 
-  create_table "organization_defaults", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "organization_defaults", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.text "value"
     t.integer "kind"
     t.uuid "organization_id", null: false
@@ -415,7 +416,7 @@ ActiveRecord::Schema.define(version: 2021_02_26_140234) do
     t.index ["organization_id"], name: "index_organization_defaults_on_organization_id"
   end
 
-  create_table "organizations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "organizations", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "service_name"
     t.string "brand_name"
     t.string "administrator_email_suffix"
@@ -488,7 +489,7 @@ ActiveRecord::Schema.define(version: 2021_02_26_140234) do
     t.datetime "testimony_logo_updated_at"
   end
 
-  create_table "pages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "pages", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
     t.string "slug"
     t.boolean "only_link", default: false, null: false
@@ -510,7 +511,7 @@ ActiveRecord::Schema.define(version: 2021_02_26_140234) do
     t.index ["rgt"], name: "index_pages_on_rgt"
   end
 
-  create_table "preferred_users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "preferred_users", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id"
     t.uuid "preferred_users_list_id"
     t.datetime "created_at", null: false
@@ -520,7 +521,7 @@ ActiveRecord::Schema.define(version: 2021_02_26_140234) do
     t.index ["user_id"], name: "index_preferred_users_on_user_id"
   end
 
-  create_table "preferred_users_lists", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "preferred_users_lists", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.uuid "administrator_id"
     t.integer "preferred_users_count", default: 0, null: false
@@ -530,7 +531,7 @@ ActiveRecord::Schema.define(version: 2021_02_26_140234) do
     t.index ["administrator_id"], name: "index_preferred_users_lists_on_administrator_id"
   end
 
-  create_table "professional_categories", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "professional_categories", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -539,7 +540,7 @@ ActiveRecord::Schema.define(version: 2021_02_26_140234) do
     t.index ["position"], name: "index_professional_categories_on_position"
   end
 
-  create_table "profiles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "profiles", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "profileable_type"
     t.uuid "profileable_id"
     t.integer "gender"
@@ -558,7 +559,7 @@ ActiveRecord::Schema.define(version: 2021_02_26_140234) do
     t.index ["study_level_id"], name: "index_profiles_on_study_level_id"
   end
 
-  create_table "rejection_reasons", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "rejection_reasons", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -566,7 +567,7 @@ ActiveRecord::Schema.define(version: 2021_02_26_140234) do
     t.index ["position"], name: "index_rejection_reasons_on_position"
   end
 
-  create_table "salary_ranges", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "salary_ranges", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "estimate_annual_salary_gross"
     t.uuid "professional_category_id"
     t.uuid "experience_level_id"
@@ -579,7 +580,7 @@ ActiveRecord::Schema.define(version: 2021_02_26_140234) do
     t.index ["sector_id"], name: "index_salary_ranges_on_sector_id"
   end
 
-  create_table "sectors", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "sectors", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -588,7 +589,7 @@ ActiveRecord::Schema.define(version: 2021_02_26_140234) do
     t.index ["position"], name: "index_sectors_on_position"
   end
 
-  create_table "study_levels", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "study_levels", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -598,7 +599,7 @@ ActiveRecord::Schema.define(version: 2021_02_26_140234) do
     t.index ["position"], name: "index_study_levels_on_position"
   end
 
-  create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "users", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"

@@ -42,6 +42,7 @@ end
 #  from_state        :integer
 #  kind              :integer
 #  name              :string
+#  notification      :boolean          default(TRUE)
 #  position          :integer
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null

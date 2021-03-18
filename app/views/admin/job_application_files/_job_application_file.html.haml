@@ -1,45 +1,50 @@
-- file_type = job_application_file.job_application_file_type
-- job_application = job_application_file.job_application
-.d-flex.align-items-center.border.py-1.px-2.file{id: dom_id(job_application_file)}
-  - if job_application_file.content.present?
-    .text-truncate= file_type.name
+- file = job_application_file
+- type = file.job_application_file_type
+- job_application = file.job_application
+- # binding.pry if type.name == "CV"
+- # binding.pry if type.name == "Carte "
+- # binding.pry if type.name == "Pièce facultatif"
+- # binding.pry if type.name == "Bulletins paie "
+.d-flex.align-items-center.border.py-1.px-2.file{id: dom_id(file)}
+  - if file.content.present?
+    .text-truncate= type.name
   - else
-    .text-truncate.text-muted= file_type.name
+    .text-truncate.text-muted= type.name
   .ml-auto.d-flex
-    - if job_application_file.job_application_file_type.check_only_admin_only?
-      - if job_application_file.new_record?
+    - if type.check_only_admin_only?
+      - if file.new_record?
         - klasses = %w(btn btn-success btn-raised btn-sm mb-0 mr-1)
-        - klasses << 'opaque' if job_application_file.is_validated != 1
-        = link_to [:admin, @job_application, :job_application_files, {job_application_file: {job_application_file_type_id: job_application_file.job_application_file_type_id, is_validated: 1}}], class: klasses, title: t('.check'), remote: true, method: :post do
+        - klasses << 'opaque' unless file.validated?
+        = link_to [:admin, @job_application, :job_application_files, {job_application_file: {job_application_file_type_id: type.id, is_validated: 1}}], class: klasses, title: t('.check'), remote: true, method: :post do
           = fa_icon "check"
         - klasses = %w(btn btn-danger btn-raised btn-sm mb-0 mr-1)
-        - klasses << 'opaque' if job_application_file.is_validated != 2
-        = link_to [:admin, @job_application, :job_application_files, {job_application_file: {job_application_file_type_id: job_application_file.job_application_file_type_id, is_validated: 2}}], class: klasses, title: t('.uncheck'), remote: true, method: :post do
+        - klasses << 'opaque' unless file.rejected?
+        = link_to [:admin, @job_application, :job_application_files, {job_application_file: {job_application_file_type_id: type.id, is_validated: 2}}], class: klasses, title: t('.uncheck'), remote: true, method: :post do
           = fa_icon "close"
       - else
         - klasses = %w(btn btn-success btn-raised btn-sm mb-0 mr-1)
-        - klasses << 'opaque' if job_application_file.is_validated != 1
-        = link_to [:check, :admin, @job_application, job_application_file], class: klasses, title: t('.check'), remote: true, method: :post do
+        - klasses << 'opaque' unless file.validated?
+        = link_to [:check, :admin, @job_application, file], class: klasses, title: t('.check'), remote: true, method: :post do
           = fa_icon "check"
         - klasses = %w(btn btn-danger btn-raised btn-sm mb-0 mr-1)
-        - klasses << 'opaque' if job_application_file.is_validated != 2
-        = link_to [:uncheck, :admin, @job_application, job_application_file], class: klasses, title: t('.uncheck'), remote: true, method: :post do
+        - klasses << 'opaque' unless file.rejected?
+        = link_to [:uncheck, :admin, @job_application, file], class: klasses, title: t('.uncheck'), remote: true, method: :post do
           = fa_icon "close"
-    - elsif job_application_file.content.present?
+    - elsif file.content.present?
       - klasses = %w(btn btn-success btn-raised btn-sm mb-0 mr-1)
-      - klasses << 'opaque' if job_application_file.is_validated != 1
-      = link_to [:check, :admin, @job_application, job_application_file], class: klasses, title: t('.check'), remote: true, method: :post do
+      - klasses << 'opaque' unless file.validated?
+      = link_to [:check, :admin, @job_application, file], class: klasses, title: t('.check'), remote: true, method: :post do
         = fa_icon "check"
       - klasses = %w(btn btn-danger btn-raised btn-sm mb-0 mr-1)
-      - klasses << 'opaque' if job_application_file.is_validated != 2
-      = link_to [:uncheck, :admin, @job_application, job_application_file], class: klasses, title: t('.uncheck'), remote: true, method: :post do
+      - klasses << 'opaque' unless file.rejected?
+      = link_to [:uncheck, :admin, @job_application, file], class: klasses, title: t('.uncheck'), remote: true, method: :post do
         = fa_icon "close"
-      = render partial: "/admin/job_application_files/job_application_file_upload", locals: {job_application: job_application, job_application_file: job_application_file, file_type: file_type}
-      - url = [:admin, job_application, job_application_file, {format: :pdf}]
+      = render partial: "/admin/job_application_files/job_application_file_upload", locals: {job_application: job_application, job_application_file: file, file_type: type}
+      - url = [:admin, job_application, file, {format: :pdf}]
       = link_to t('.download'), url, target: "_blank", class: "btn btn-primary btn-raised btn-sm mb-0"
-    - elsif !job_application_file.new_record?
-      = render partial: "/admin/job_application_files/job_application_file_upload", locals: {job_application: job_application, job_application_file: job_application_file, file_type: file_type}
-      - url = [:admin, job_application, job_application_file]
+    - elsif file.persisted?
+      = render partial: "/admin/job_application_files/job_application_file_upload", locals: {job_application: job_application, job_application_file: file, file_type: type}
+      - url = [:admin, job_application, file]
       = link_to t('.do_not_ask'), url, method: :delete, remote: true, data: {confirm: t('buttons.confirm')}, class: "btn btn-primary btn-raised btn-sm mb-0 ml-1"
     - else
-      = render partial: "/admin/job_application_files/job_application_file_upload", locals: {job_application: job_application, job_application_file: job_application_file, file_type: file_type}
+      = render partial: "/admin/job_application_files/job_application_file_upload", locals: {job_application: job_application, job_application_file: file, file_type: type}

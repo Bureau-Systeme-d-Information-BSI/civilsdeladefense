@@ -24,6 +24,18 @@ class JobApplicationFile < ApplicationRecord
   def uncheck!
     update_column :is_validated, 2
   end
+
+  def validated?
+    is_validated == 1
+  end
+
+  def rejected?
+    is_validated == 2
+  end
+
+  def waiting_validation?
+    is_validated == 0
+  end
 end
 
 # == Schema Information

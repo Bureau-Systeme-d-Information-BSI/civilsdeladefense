@@ -35,7 +35,7 @@ class JobApplication < ApplicationRecord
     through: :job_applications_actors,
     class_name: "Administrator"
 
-  validates :user_id, uniqueness: {scope: :job_offer_id}, on: :create
+  validates :user_id, uniqueness: {scope: :job_offer_id}, on: :create, allow_nil: true
 
   before_validation :set_employer
   before_save :compute_notifications_counter

@@ -66,6 +66,8 @@ class JobOffersController < ApplicationController
           render json: json, status: :created, location: [:successful, @job_offer]
         end
       else
+        Rails.logger.error(@job_application.errors.inspect)
+        Rails.logger.error("@job_application.errors")
         format.turbo_stream do
           instruction = turbo_stream.replace(@job_application, partial: "/job_applications/form")
           render turbo_stream: instruction
@@ -134,9 +136,9 @@ class JobOffersController < ApplicationController
   def job_application_params
     permitted_params = %i[]
     user_attributes = %i[first_name last_name current_position phone website_url]
-    base_user_attributes = %i[photo email
-      password password_confirmation
-      terms_of_service certify_majority]
+    base_user_attributes = %i[
+      photo email password password_confirmation terms_of_service certify_majority
+    ]
     user_attributes += base_user_attributes unless user_signed_in?
     permitted_params << {user_attributes: user_attributes}
     job_application_files_attributes = %i[content job_application_file_type_id]

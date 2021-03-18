@@ -49,18 +49,15 @@ RSpec.describe JobApplication, type: :model do
     job_offer = create(:job_offer)
     job_application = create(:job_application, job_offer: job_offer)
 
-    JobApplicationFileType.create name: "CV",
-                                  from_state: :initial,
-                                  kind: :applicant_provided,
-                                  by_default: true
-    JobApplicationFileType.create name: "LM",
-                                  from_state: :initial,
-                                  kind: :applicant_provided,
-                                  by_default: true
-    JobApplicationFileType.create name: "FILE",
-                                  from_state: :to_be_met,
-                                  kind: :applicant_provided,
-                                  by_default: true
+    JobApplicationFileType.create(
+      name: "CV", from_state: :initial, kind: :applicant_provided, by_default: true
+    )
+    JobApplicationFileType.create(
+      name: "LM", from_state: :initial, kind: :applicant_provided, by_default: true
+    )
+    JobApplicationFileType.create(
+      name: "FILE", from_state: :to_be_met, kind: :applicant_provided, by_default: true
+    )
     ary1, ary2 = job_application.files_to_be_provided
     expect(ary1.size).to eq(2)
     expect(ary2.size).to eq(1)

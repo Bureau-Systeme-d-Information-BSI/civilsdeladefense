@@ -29,6 +29,13 @@ class JobApplicationFileType < ApplicationRecord
   #####################################
   # Relations
   has_many :job_applications
+
+  def is_mandatory?(state)
+    from_state_as_val = JobApplication.states[from_state]
+    current_state_as_val = JobApplication.states[state]
+
+    current_state_as_val >= from_state_as_val
+  end
 end
 
 # == Schema Information

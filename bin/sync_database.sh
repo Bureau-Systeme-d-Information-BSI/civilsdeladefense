@@ -1,11 +1,16 @@
 #!/usr/bin/env bash
-set -xe
+set -e
 
-if [ "$#" -eq  "0" ]; then
-    echo -e "\nPlease call '$0 APP_NAME *REGION*' to run this command! REGION is optional, osc-fr1 by default\n"
+if [[ -z ${DATABASE_URL} ]];
+then
+    echo "Environement variable DATABASE_URL need to be set!"
     exit 1
 fi
 
+if [ "$#" -eq  "0" ]; then
+    echo "Please call '$0 APP_NAME *REGION*' to run this command! REGION is optional, osc-fr1 by default"
+    exit 1
+fi
 APP_NAME=$1
 
 if [ "$#" -eq  "2" ]; then
@@ -14,12 +19,14 @@ else
     SCALINGO_REGION=osc-fr1
 fi
 
-if [ -z "$DATABASE_URL" ]; then
-  DATABASE_URL=postgresql://jean_scalingo@localhost:5432/civilsdeladefense_development
+if scalingo apps-info --app $APP_NAME --region $SCALINGO_REGION 2>/dev/null 1>/dev/null; then
+    echo "Congrats $APP_NAME exist"
+else
+    echo "$APP_NAME doesn't exist, maybe try another region ?"
+    exit 1
 fi
 
-echo -e "Killing rails server & console !\n"
-
+echo "Killing rails server & console !"
 # Kill rails server
 SERVER_PID=tmp/pids/server.pid
 if test -f "$SERVER_PID"; then
@@ -29,12 +36,16 @@ fi
 if pgrep rails; then pkill rails; fi
 rails db:drop db:create
 
-ADDON_ID=`scalingo --app $APP_NAME --region $SCALINGO_REGION addons | grep postgre | awk '{ print $4; }'`
+echo "Downloading last postgre backup from Scalingo..."
+ADDON_ID=`scalingo --app $APP_NAME  addons | grep postgre | awk '{ print $4; }'`
 BACKUP_ID=`scalingo --app $APP_NAME --region $SCALINGO_REGION backups --addon $ADDON_ID | awk 'NR==4' | awk '{ print $2; }'`
 ARCHIVE_PATH=`scalingo --app $APP_NAME --region $SCALINGO_REGION --addon $ADDON_ID backups-download --backup $BACKUP_ID --output tmp | awk 'NR==2' | awk '{ print $2; }'`
 
 tar -xzf $ARCHIVE_PATH -C tmp --strip-components 1
+echo "Backup saved $ARCHIVE_PATH"
+
 DUMP_PATH=${ARCHIVE_PATH/.tar.gz/.pgsql}
 pg_restore --clean --if-exists --no-owner --no-privileges --no-comments --dbname $DATABASE_URL $DUMP_PATH
 
+echo "Backup restored! Running missing rails migrations"
 rails db:migrate

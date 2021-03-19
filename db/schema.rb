@@ -393,7 +393,7 @@ ActiveRecord::Schema.define(version: 2021_03_17_110348) do
     t.index ["name"], name: "index_official_statuses_on_name", unique: true
   end
 
-  create_table "omniauth_informations", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "omniauth_informations", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "provider", null: false
     t.string "uid", null: false
     t.string "email", null: false

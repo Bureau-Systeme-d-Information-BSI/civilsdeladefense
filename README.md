@@ -45,17 +45,6 @@ OSC_REGION=eu-west-2
 OSC_ENDPOINT=https://osu.eu-west-2.outscale.com
 ```
 
-Ou contenir les variables suivantes pour configurer un Object Storage basé sur Swift :
-
-```
-OS_AUTH_URL=XXX
-OS_USERNAME=XXX
-OS_PASSWORD=XX-XXXX-XX
-OS_REGION_NAME=XXX
-OS_TENANT_NAME=XXX
-OS_TEMP_URL_KEY=XXX
-```
-
 Créer le fichier config/master.key contenat la clé principale : le contenu du fichier doit être demandée à l'équipe de développement.
 
 Créer la base de données avec les données de seed :
@@ -66,7 +55,9 @@ docker-compose run web rails db:drop db:create db:schema:load db:seed
 
 Lancement d'une migration de base :
 
+```
 docker-compose run web rails db:migrate
+```
 
 Démarrage des images :
 
@@ -123,23 +114,6 @@ Actuellement, la branche master est autodéployée sur Scalingo.
 
 Actuellement, la branche production est autodéployée sur Scalingo.
 
-Branchement sur "production" :
-
-```
-# One-liner
-git checkout master && git fetch origin && git reset --hard origin/master && git checkout production && git reset --hard origin/production && git merge master && git push origin production && git checkout master
-
-# Version lisible
-git checkout master && \
-  git fetch origin && \
-  git reset --hard origin/master && \
-  git checkout production && \
-  git reset --hard origin/production && \
-  git merge master && \
-  git push origin production && \
-  git checkout master
-```
-
 ### Premier déploiement
 
 Avant de déployer le code, il faut définir la variable d'environnement `DO_NOT_POSTDEPLOY` avec la valeur `1`. Ceci a pour effet de ne pas lancer automatiquement la tâche `db:migrate` dans la phase `postdeploy`. Il faudra supprimer la variable d'environnement après un premier déploiement en `success`.
@@ -152,42 +126,34 @@ rails db:schema:load
 
 Supprimer la variable d'environnement `DO_NOT_POSTDEPLOY`.
 
-Créer la première organisation :
-
-```
-hsh = {
-  name: 'Civils de la Défense',
-  business_owner_name: 'le Ministère des Armées',
-  subdomain: 'XXX',
-  domain: 'XXX.YYY.ZZZ'
-}
-organization = Organization.create!(hsh)
+```ruby
+organization = Organization.create!(
+  brand_name: "Ministère des Armées",
+  domain: "domain.tld",
+  prefix_article: "le",
+  service_description: "Plateforme de recrutement de personnel civil contractuel du ministère des Armées",
+  service_description_short: "Plateforme de recrutement de personnel civil contractuel",
+  service_name: "Civils de la Défense ",
+  subdomain: "cvd-staging"
+)
 ```
 
 Créer le premier compte admin :
 
-```
-bant_admin = Administrator.new email: 'prenom.nom@domaine.com',
-                               first_name: 'Prénom',
-                               last_name: 'Nom',
-                               password: 'xxxxxxxxxx',
-                               password_confirmation: 'xxxxxxxxxx',
-                               very_first_account: true,
-                               role: 'bant',
-                               organization: organization
-bant_admin.skip_confirmation_notification!
-bant_admin.save!
-bant_admin.confirm
-```
-
-Créer la première page :
-
-```
-root_page = organization.pages.create!({
-  title: 'Plateforme de recrutement de personnel civils contractuels pour le Ministère des Armées',
-  only_link: false
-})
-```
+```ruby
+admin = Administrator.new(
+  email: 'prenom.nom@domaine.com',
+  first_name: 'Prénom',
+  last_name: 'Nom',
+  password: '???',
+  very_first_account: true,
+  role: 'bant',
+  organization: organization
+)
+admin.skip_confirmation_notification!
+admin.save!
+admin.confirm
+``` 
 
 ## Services externes
 

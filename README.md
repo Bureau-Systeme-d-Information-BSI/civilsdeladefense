@@ -1,4 +1,4 @@
-# Civilsdeladefense
+# E-Recrutement
 
 Application de gestion de recrutements.
 
@@ -125,6 +125,10 @@ rails db:schema:load
 ```
 
 Supprimer la variable d'environnement `DO_NOT_POSTDEPLOY`.
+
+### Création des données initiales
+
+Créer la première organisation :
 
 ```ruby
 organization = Organization.create!(

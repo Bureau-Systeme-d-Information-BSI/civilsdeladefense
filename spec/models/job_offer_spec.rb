@@ -190,49 +190,58 @@ RSpec.describe JobOffer, type: :model do
   end
 
   describe "validate" do
+    let(:job_offer) { build(:job_offer, state: :published, description: description) }
     describe "title" do
-      # context 'with ( in title and no F/H at the end' do
-      #   let(:job_offer) { build(:job_offer, title: '(') }
+      # context "with ( in title and no F/H at the end" do
+      #   let(:job_offer) { build(:job_offer, title: "(") }
 
-      #   it 'is not valid' do
+      #   it "is not valid" do
       #     expect(job_offer).to_not be_valid
       #   end
       # end
 
-      # context 'with ( in title and F/H at the end' do
-      #   let(:job_offer) { build(:job_offer, title: '( F/H') }
+      # context "with ( in title and F/H at the end" do
+      #   let(:job_offer) { build(:job_offer, title: "( F/H") }
 
-      #   it 'is not valid' do
+      #   it "is not valid" do
       #     expect(job_offer).to_not be_valid
       #   end
       # end
 
-      context "without ( in title and with F/H at the end" do
-        let(:job_offer) { build(:job_offer, title: "no parenthesis F/H") }
+      # context "without ( in title and with F/H at the end" do
+      #   let(:job_offer) { build(:job_offer, title: "no parenthesis F/H") }
+
+      #   it "is valid" do
+      #     expect(job_offer).to be_valid
+      #   end
+      # end
+    end
+
+    describe "description" do
+      context "with description more than 2000 chars" do
+        let(:description) { "desc" * 2000 }
+
+        it "is not valid" do
+          expect(job_offer).to_not be_valid
+        end
+      end
+
+      context "with description less than 2000 chars with lot of HTML" do
+        let(:description) { "<p>d</p>" * 1999 }
+
+        it "is valid" do
+          expect(job_offer).to be_valid
+        end
+      end
+
+      context "with description less than 2000 chars" do
+        let(:description) { "desc" }
 
         it "is valid" do
           expect(job_offer).to be_valid
         end
       end
     end
-
-    # describe 'description' do
-    #   context 'with description more than 1000 chars' do
-    #     let(:job_offer) { build(:job_offer, description: 'desc' * 1000) }
-
-    #     it 'is not valid' do
-    #       expect(job_offer).to_not be_valid
-    #     end
-    #   end
-
-    #   context 'with description less than 1000 chars' do
-    #     let(:job_offer) { build(:job_offer, description: 'desc') }
-
-    #     it 'is valid' do
-    #       expect(job_offer).to be_valid
-    #     end
-    #   end
-    # end
   end
 end
 

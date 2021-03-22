@@ -2,8 +2,9 @@
 
 # Represents a job proposed on the platform
 class JobOffer < ApplicationRecord
-  SETTINGS = %i[category contract_type experience_level professional_category
-    sector study_level].freeze
+  SETTINGS = %i[
+    category contract_type experience_level professional_category sector study_level
+  ].freeze
 
   include JobOfferStateTimestamp
   include AASM
@@ -59,6 +60,14 @@ class JobOffer < ApplicationRecord
   validates :contract_duration_id, presence: true, if: -> { contract_type&.duration }
   validates :contract_duration_id, absence: true, unless: -> { contract_type&.duration }
   validates :title, format: {with: %r{\A.*F/H\z}, message: :f_h}
+
+  with_options if: -> { published? } do
+    validates :title, length: {maximum: 70}
+    validates :description, html_length: {maximum: 2000}
+    validates :organization_description, html_length: {maximum: 1000}
+    validates :required_profile, html_length: {maximum: 1000}
+    validates :recruitment_process, html_length: {maximum: 700}
+  end
 
   ## Scopes
   default_scope { order(created_at: :desc) }

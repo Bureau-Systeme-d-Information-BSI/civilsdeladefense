@@ -157,7 +157,7 @@ admin = Administrator.new(
 admin.skip_confirmation_notification!
 admin.save!
 admin.confirm
-``` 
+```
 
 ## Services externes
 

@@ -4,7 +4,11 @@ class HtmlLengthValidator < ActiveModel::EachValidator
     length = without_html&.length || 0
 
     if options[:maximum] && length > options[:maximum]
-      record.errors.add(attribute, (options[:message] || :too_long))
+      record.errors.add(
+        attribute,
+        (options[:message] || :too_long),
+        options.merge(count: options[:maximum])
+      )
     end
   end
 end

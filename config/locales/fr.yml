@@ -980,6 +980,7 @@ fr:
         kind/admin_only: "Seulement admin"
         kind/check_only_admin_only: "Fichier géré hors outil"
       job_offer:
+        title: "Intitulé du poste"
         job_applications_count: "Nombre de candidatures: %{count}"
         state: "État"
         state/draft: "Brouillon"
@@ -993,6 +994,7 @@ fr:
         category: "Domaine professionnel"
         experience_level: "Niveau d'expérience"
         salary: "Rémunération"
+        recruitment_process: Process de recrutement
       job_offer_actor/role:
         employer: "Employeur"
         grand_employer: "Grand Employeur"

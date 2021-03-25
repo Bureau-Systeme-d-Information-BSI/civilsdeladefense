@@ -27,8 +27,7 @@
       - job_application_file ||= @job_application.job_application_files.build job_application_file_type: job_application_file_type
       = f.simple_fields_for :job_application_files, job_application_file, input_html: {placeholder: false, required: true} do |file_form|
         = file_form.hidden_field :job_application_file_type_id
-        = file_form.label job_application_file_type.name, required: true, class: 'rf-label'
-        = file_form.input :content, label: t('buttons.choose_file'), wrapper: :custom_file_without_label
+        = file_form.input :content, label: job_application_file_type.name, required: true, wrapper: :custom_file_without_label
 
     %h2.rf-h3= t('.your_internet_presence')
     = f.simple_fields_for :user do |user_form|

@@ -1,5 +1,5 @@
 .rf-sidemenu.rf-sidemenu--sticky-full-height
-  = form_tag(request.original_url, method: :get, "data-turbo-frame" => 'job-offers', data: { controller: "auto-submit", "auto-submit-target" => "form" }) do
+  = form_tag(request.original_url, method: :get, "data-turbo-frame" => 'job-offers') do
     .rf-input-group
       = text_field_tag :q, params[:q], placeholder: 'Mot-clé', class: 'rf-input'
     %ul.rf-sidemenu__list

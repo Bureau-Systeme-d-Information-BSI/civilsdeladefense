@@ -12,7 +12,7 @@
                 .rf-grid-row
                   .rf-col-11
                     .rf-checkbox-group
-                      %input{id: region, value: region, name: "job_offers[region][]", type: "checkbox", data: {action: "change->subcheckbox#propagate_downward change->auto-submit#submit ", "subcheckbox-target": "upcheckbox"}}
+                      %input{id: region, value: region, name: "job_offers[region][]", type: "checkbox", data: {action: "change->subcheckbox#propagate_downward", "subcheckbox-target": "upcheckbox"}}
                       %label{for: region}= region
                     - data = {controller: 'rf-accordions-management', action: 'click->rf-accordions-management#collapse'}
                     - options = {type: "button", aria: {controls: "rf-accordion-region-#{region}", expanded: false}, data: data}
@@ -21,5 +21,5 @@
             .rf-collapse.rf-sidemenu__list{id: "rf-accordion-region-#{region}"}
               - (counties || []).each do |county|
                 .rf-checkbox-group.rf-checkbox-group--sm
-                  %input{id: county, value: county, name: "job_offers[county][]", type: "checkbox", data: {action: "change->subcheckbox#propagate_upward change->auto-submit#submit", "subcheckbox-target": "downcheckbox"}}
+                  %input{id: county, value: county, name: "job_offers[county][]", type: "checkbox", data: {action: "change->subcheckbox#propagate_upward", "subcheckbox-target": "downcheckbox"}}
                   %label.rf-label{for: county}= county

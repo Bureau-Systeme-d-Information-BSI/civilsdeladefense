@@ -12,7 +12,7 @@
               .rf-grid-row
                 .rf-col-11
                   .rf-checkbox-group
-                    %input{id: element.id, value: element.id, name: "job_offers[category_id][]", type: "checkbox", data: {action: "change->subcheckbox#propagate_downward change->auto-submit#submit", "subcheckbox-target": "upcheckbox"}}
+                    %input{id: element.id, value: element.id, name: "job_offers[category_id][]", type: "checkbox", data: {action: "change->subcheckbox#propagate_downward", "subcheckbox-target": "upcheckbox"}}
                     %label{for: element.id}= element.name
                   - data = {controller: 'rf-accordions-management', action: 'click->rf-accordions-management#collapse'}
                   - options = {type: "button", aria: {controls: "rf-accordion-category-#{element.name}", expanded: false}, data: data}
@@ -23,5 +23,5 @@
             .rf-collapse.rf-sidemenu__list{id: "rf-accordion-category-#{element.name}"}
               = collection_check_boxes(:job_offers, :category_id, children, :id, :name, include_hidden: false) do |b|
                 .rf-checkbox-group.rf-checkbox-group--sm
-                  = b.check_box(checked: false, data: {action: "change->subcheckbox#propagate_upward change->auto-submit#submit", "subcheckbox-target": "downcheckbox"})
+                  = b.check_box(checked: false, data: {action: "change->subcheckbox#propagate_upward", "subcheckbox-target": "downcheckbox"})
                   = b.label(class: "rf-label")

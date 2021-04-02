@@ -9,5 +9,5 @@
       %ul.rf-sidemenu__list.rf-my-1w
         = collection_check_boxes(:job_offers, filter_name, collection, :id, :name, include_hidden: false) do |b|
           .rf-checkbox-group
-            = b.check_box(checked: false, data: {action: "change->auto-submit#submit"})
+            = b.check_box(checked: false)
             = b.label

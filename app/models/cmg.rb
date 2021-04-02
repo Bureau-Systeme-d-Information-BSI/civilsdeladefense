@@ -3,6 +3,8 @@
 # Liste des Centre Ministeriel de Gestion (CMG)
 class Cmg < ApplicationRecord
   belongs_to :organization
+
+  validates :email, format: {with: URI::MailTo::EMAIL_REGEXP}
 end
 
 # == Schema Information

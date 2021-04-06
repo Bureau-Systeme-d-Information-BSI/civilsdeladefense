@@ -8,7 +8,7 @@ class InboundMessage
       retriever_method(*config)
     end
 
-    Mail.find(count: 100) do |message, imap, uid|
+    Mail.all do |message, imap, uid|
       to_be_trashed = ProcessInboundMessage.new(message).call
 
       next unless to_be_trashed

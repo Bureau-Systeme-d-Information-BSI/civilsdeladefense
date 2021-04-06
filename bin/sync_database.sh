@@ -37,9 +37,8 @@ if pgrep rails; then pkill rails; fi
 rails db:drop db:create
 
 echo "Downloading last postgre backup from Scalingo..."
-ADDON_ID=`scalingo --app $APP_NAME  addons | grep postgre | awk '{ print $4; }'`
-BACKUP_ID=`scalingo --app $APP_NAME --region $SCALINGO_REGION backups --addon $ADDON_ID | awk 'NR==4' | awk '{ print $2; }'`
-ARCHIVE_PATH=`scalingo --app $APP_NAME --region $SCALINGO_REGION --addon $ADDON_ID backups-download --backup $BACKUP_ID --output tmp | awk 'NR==2' | awk '{ print $2; }'`
+ADDON_ID=`scalingo --app $APP_NAME --region $SCALINGO_REGION addons | grep postgre | awk '{ print $4; }'`
+ARCHIVE_PATH=`scalingo --app $APP_NAME --region $SCALINGO_REGION --addon $ADDON_ID backups-download --output tmp | awk 'NR==3' | awk '{ print $2; }'`
 
 tar -xzf $ARCHIVE_PATH -C tmp --strip-components 1
 echo "Backup saved $ARCHIVE_PATH"

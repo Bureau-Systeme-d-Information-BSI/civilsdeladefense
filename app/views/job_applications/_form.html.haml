@@ -24,11 +24,13 @@
     - job_application_file_types = JobApplicationFileType.where(by_default: true).where("from_state <= ?", current_state).where(kind: %i(applicant_provided template)).all
     - job_application_file_types.each do |job_application_file_type, index|
       - job_application_file = job_application_files.detect{|x| x.job_application_file_type == job_application_file_type}
-      - job_application_file ||= @job_application.job_application_files.build job_application_file_type: job_application_file_type
+      - job_application_file ||= @job_application.job_application_files.build(job_application_file_type: job_application_file_type)
       = f.simple_fields_for :job_application_files, job_application_file, input_html: {placeholder: false, required: true} do |file_form|
         = file_form.hidden_field :job_application_file_type_id
-        = file_form.label job_application_file_type.name, required: true, class: 'rf-label'
-        = file_form.input :content, label: t('buttons.choose_file'), wrapper: :custom_file_without_label
+        = file_form.input :content, label: job_application_file_type.name, wrapper: :custom_file_without_label
+        - if current_user
+          - collection = current_user.job_application_files.where(job_application_file_type: job_application_file_type).reorder(:content_file_name).select("DISTINCT ON (content_file_name) *")
+          = file_form.input :job_application_file_existing_id, collection: collection, label_method: :content_file_name,value_method: :id, input_html: { class: "rf-select" } if collection.any?
 
     %h2.rf-h3= t('.your_internet_presence')
     = f.simple_fields_for :user do |user_form|

@@ -4,7 +4,7 @@
       .rf-grid-row.rf-hero
         - illustration_url = current_organization.image_background.url if current_organization.image_background.present?
         .rf-col-12.d-flex.flex-column.align-items-center.justify-content-center{class: illustration_url.present? ? 'rf-col-md-6' : nil}
-          %h1.rf-h2.rf-mb-0= @page_title
+          %h1.text-justify.rf-h2.rf-mb-0= @page_title
         - if illustration_url.present?
           .rf-col-12.rf-col-md-6.rf-pl-9w.d-flex.flex-column.align-items-center.justify-content-center
             = image_tag illustration_url, style: 'max-width:100%;'

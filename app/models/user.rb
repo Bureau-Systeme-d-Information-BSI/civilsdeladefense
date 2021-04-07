@@ -17,10 +17,10 @@ class User < ApplicationRecord
     against: %i[first_name last_name]
 
   belongs_to :organization
-  belongs_to :last_job_application, class_name: "JobApplication", optional: true
   has_many :omniauth_informations
 
   has_many :job_applications, -> { order(created_at: :desc) }, dependent: :nullify
+  has_many :job_application_files, through: :job_applications
   has_many :job_offers, through: :job_applications
   has_many :preferred_users, dependent: :destroy
   has_many :preferred_users_lists, through: :preferred_users
@@ -74,6 +74,10 @@ class User < ApplicationRecord
     end
   end
 
+  def last_job_application
+    job_applications.order(created_at: :desc).first
+  end
+
   private
 
   def password_required?
@@ -120,19 +124,13 @@ end
 #  website_url                      :string
 #  created_at                       :datetime         not null
 #  updated_at                       :datetime         not null
-#  last_job_application_id          :uuid
 #  organization_id                  :uuid
 #
 # Indexes
 #
-#  index_users_on_confirmation_token       (confirmation_token) UNIQUE
-#  index_users_on_email                    (email) UNIQUE
-#  index_users_on_last_job_application_id  (last_job_application_id)
-#  index_users_on_organization_id          (organization_id)
-#  index_users_on_reset_password_token     (reset_password_token) UNIQUE
-#  index_users_on_unlock_token             (unlock_token) UNIQUE
-#
-# Foreign Keys
-#
-#  fk_rails_ce23a23041  (last_job_application_id => job_applications.id)
+#  index_users_on_confirmation_token    (confirmation_token) UNIQUE
+#  index_users_on_email                 (email) UNIQUE
+#  index_users_on_organization_id       (organization_id)
+#  index_users_on_reset_password_token  (reset_password_token) UNIQUE
+#  index_users_on_unlock_token          (unlock_token) UNIQUE
 #

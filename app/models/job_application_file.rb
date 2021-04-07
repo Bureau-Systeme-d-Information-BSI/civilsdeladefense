@@ -2,6 +2,8 @@
 
 # Container for real file mandatory to fullfill a job application
 class JobApplicationFile < ApplicationRecord
+  attr_accessor :job_application_file_existing_id
+
   belongs_to :job_application
   belongs_to :job_application_file_type
 
@@ -11,11 +13,15 @@ class JobApplicationFile < ApplicationRecord
 
   attr_accessor :do_not_provide_immediately
 
-  validates :content,
-    presence: true,
-    unless: proc { |file| file.do_not_provide_immediately }
-  validates :job_application_file_type_id,
-    uniqueness: {scope: :job_application_id}
+  validates :content, presence: true, unless: proc { |file| file.do_not_provide_immediately }
+  validates :job_application_file_type_id, uniqueness: {scope: :job_application_id}
+
+  before_validation do
+    if job_application_file_existing_id
+      existing = JobApplicationFile.find_by(id: job_application_file_existing_id)
+      self.content = existing&.content
+    end
+  end
 
   def check!
     update_column :is_validated, 1

@@ -59,15 +59,12 @@ class JobOffersController < ApplicationController
       if @job_application.save
         @job_offer.initial! if @job_offer.start?
         @job_application.send_confirmation_email
-        @job_application.user.update_column :last_job_application_id, @job_application.id
         format.html { redirect_to [:successful, @job_offer] }
         format.json do
           json = @job_application.to_json(only: %i[id])
           render json: json, status: :created, location: [:successful, @job_offer]
         end
       else
-        Rails.logger.error(@job_application.errors.inspect)
-        Rails.logger.error("@job_application.errors")
         format.turbo_stream do
           instruction = turbo_stream.replace(@job_application, partial: "/job_applications/form")
           render turbo_stream: instruction
@@ -141,7 +138,7 @@ class JobOffersController < ApplicationController
     ]
     user_attributes += base_user_attributes unless user_signed_in?
     permitted_params << {user_attributes: user_attributes}
-    job_application_files_attributes = %i[content job_application_file_type_id]
+    job_application_files_attributes = %i[content job_application_file_type_id job_application_file_existing_id]
     permitted_params << {job_application_files_attributes: job_application_files_attributes}
     params.require(:job_application).permit(permitted_params)
   end

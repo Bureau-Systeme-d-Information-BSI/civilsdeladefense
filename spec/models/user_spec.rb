@@ -182,19 +182,13 @@ end
 #  website_url                      :string
 #  created_at                       :datetime         not null
 #  updated_at                       :datetime         not null
-#  last_job_application_id          :uuid
 #  organization_id                  :uuid
 #
 # Indexes
 #
-#  index_users_on_confirmation_token       (confirmation_token) UNIQUE
-#  index_users_on_email                    (email) UNIQUE
-#  index_users_on_last_job_application_id  (last_job_application_id)
-#  index_users_on_organization_id          (organization_id)
-#  index_users_on_reset_password_token     (reset_password_token) UNIQUE
-#  index_users_on_unlock_token             (unlock_token) UNIQUE
-#
-# Foreign Keys
-#
-#  fk_rails_ce23a23041  (last_job_application_id => job_applications.id)
+#  index_users_on_confirmation_token    (confirmation_token) UNIQUE
+#  index_users_on_email                 (email) UNIQUE
+#  index_users_on_organization_id       (organization_id)
+#  index_users_on_reset_password_token  (reset_password_token) UNIQUE
+#  index_users_on_unlock_token          (unlock_token) UNIQUE
 #

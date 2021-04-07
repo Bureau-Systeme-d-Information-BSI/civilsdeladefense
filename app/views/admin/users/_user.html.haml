@@ -1,4 +1,4 @@
-- last_job_application = user.job_applications.sort_by(&:created_at).last
+- last_job_application = user.last_job_application
 .card.job-application.mt-3{id: dom_id(user)}
   .card-body
     = link_to [:admin, user] do

@@ -34,6 +34,15 @@ class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
     @per_rejection_reason = root_rel.where.not(rejection_reason_id: nil)
       .group(:rejection_reason_id).count
     @per_state = root_rel.group(:state).count
+    count_days = root_rel.map { |job_application|
+      published_at = job_application.audits.where("audited_changes @> ?", {state: JobApplication.states[:published]}.to_json).order(:created_at).first&.created_at
+      affected_at = job_application.audits.where("audited_changes @> ?", {state: JobApplication.states[:affected]}.to_json).order(:created_at).first&.created_at
+
+      next if published_at.blank? || affected_at.blank?
+
+      published_at - affected_at
+    }.compact
+    @average_days = count_days.sum / count_days.size.to_f
   end
 
   def build_stats_per_profile
@@ -54,7 +63,7 @@ class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
   def date_start
     @date_start ||= begin
       res = Date.parse(params[:start]) if params[:start].present?
-      res ||= 30.days.ago.beginning_of_day
+      res ||= 600.days.ago.beginning_of_day
       res
     end
   end

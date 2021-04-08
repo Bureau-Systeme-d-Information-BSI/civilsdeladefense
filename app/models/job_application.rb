@@ -3,10 +3,12 @@
 # Candidacy to a job offer
 class JobApplication < ApplicationRecord
   include AASM
-  audited except: %i[files_count files_unread_count emails_count
+  audited except: %i[
+    files_count files_unread_count emails_count
     emails_administrator_unread_count emails_user_unread_count
     administrator_notifications_count
-    skills_fit_job_offer experiences_fit_job_offer]
+    skills_fit_job_offer experiences_fit_job_offer
+  ]
   has_associated_audits
 
   include PgSearch::Model

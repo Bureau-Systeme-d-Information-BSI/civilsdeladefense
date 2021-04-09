@@ -113,8 +113,11 @@ fr:
         zero: "Aucune offre ne correspond à votre recherche"
         one: "1 offre d'emploi trouvée"
         other: "%{count} offres d'emploi trouvées"
+    filter_categories:
+      select: "Secteur"
+    filter_regions:
+      select: "Region"
     filter:
-      select_category: "Secteur"
       select_contract_type: "Contrat"
       select_study_level: "Niveau d'étude"
       select_experience_level: "Niveau d'expérience"

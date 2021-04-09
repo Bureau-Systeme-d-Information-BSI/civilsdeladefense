@@ -6,7 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "2.7.3"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem "rails", "~> 6.1.0"
+gem "rails", "~> 6.1.3"
 gem "rails-i18n"
 
 # Use postgresql as the database for Active Record
@@ -78,7 +78,7 @@ group :development, :test do
   gem "factory_bot_rails"
   gem "rails-controller-testing"
   gem "rspec_junit_formatter"
-  gem "rspec-rails", "~> 4.0.1"
+  gem "rspec-rails", "~> 5.0.1"
   gem "shoulda-matchers"
   gem "simplecov", require: false
 

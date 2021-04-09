@@ -76,6 +76,8 @@ fr:
       job_application:
         experiences_fit_job_offer: "Expérience pour l'offre"
         skills_fit_job_offer: "Adéquate pour l'offre"
+      job_application_files:
+        job_application_file_existing_id: Choisir un fichier existant
       job_application_file_type:
         kind: "Type"
         content: "Fichier"

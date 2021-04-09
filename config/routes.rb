@@ -95,6 +95,7 @@ Rails.application.routes.draw do
     end
     namespace :stats do
       root to: "job_applications#index"
+      get :job_offers, to: "job_offers#index"
       resources :job_applications, path: "candidatures", only: %i[index]
       resources :recruitments, path: "recrutements"
     end

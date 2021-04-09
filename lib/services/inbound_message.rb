@@ -11,12 +11,15 @@ class InboundMessage
     Mail.all do |message, imap, uid|
       to_be_trashed = ProcessInboundMessage.new(message).call
 
-      next unless to_be_trashed
-
       from = message[:from]
       to = message[:to]
-      Rails.logger.debug "Message from #{from} to #{to} will be trashed"
-      imap.uid_move(uid, ENV["MAIL_FOLDER_TRASH"]) if ENV["MAIL_FOLDER_TRASH"].present?
+      if to_be_trashed && ENV["MAIL_FOLDER_TRASH"].present?
+        Rails.logger.info "Message from #{from} to #{to} will be trashed"
+        imap.uid_move(uid, ENV["MAIL_FOLDER_TRASH"])
+      elsif ENV["MAIL_FOLDER_ARCHIVE"].present?
+        Rails.logger.info "Message from #{from} to #{to} will be archived"
+        imap.uid_move(uid, ENV["MAIL_FOLDER_ARCHIVE"])
+      end
     end
   end
 

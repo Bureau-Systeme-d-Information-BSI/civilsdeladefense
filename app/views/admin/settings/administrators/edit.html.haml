@@ -1,2 +1,10 @@
 - @page_title = t('.title')
 = render 'form'
+.card.mt-2
+  .card-header.d-flex.align-items-center.card-title
+    Liste des offres
+  .card-body
+    %ul
+      - @administrator.job_offers.each do |job_offer|
+        %li
+          = link_to job_offer.identifier, [:admin, job_offer]

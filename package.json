@@ -11,7 +11,7 @@
     "bootstrap.native": "^3.0.13",
     "domurl": "^2.1.9",
     "flatpickr": "^4.6.2",
-    "highcharts": "^7.2.2",
+    "highcharts": "^9.0.1",
     "lightpick": "^1.3.4",
     "mdn-polyfills": "^5.12.0",
     "node-snackbar": "^0.1.16",

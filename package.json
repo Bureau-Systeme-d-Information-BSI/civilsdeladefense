@@ -20,7 +20,7 @@
     "snackbarjs": "^1.1.0",
     "sortablejs": "^1.7.0",
     "stimulus": "^2.0.0",
-    "svg-sprite-loader": "^3.8.0",
+    "svg-sprite-loader": "^6.0.5",
     "svgo": "^1.0.5",
     "svgo-loader": "^2.1.0",
     "trix": "^1.2.3",

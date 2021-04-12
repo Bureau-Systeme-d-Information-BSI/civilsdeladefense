@@ -30,11 +30,6 @@ class JobApplication < ApplicationRecord
   has_many :job_application_files, index_errors: true, dependent: :destroy
   accepts_nested_attributes_for :job_application_files
 
-  has_many :job_application_actors
-  has_many :actors,
-    through: :job_applications_actors,
-    class_name: "Administrator"
-
   validates :user_id, uniqueness: {scope: :job_offer_id}, on: :create, allow_nil: true
 
   before_validation :set_employer

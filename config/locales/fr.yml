@@ -498,6 +498,8 @@ fr:
         index:
           title: "Paramètres"
       administrators:
+        transfer:
+          success: "Les offres ont bien été transférées"
         administrator:
           last_connection: "Dernière conn. :"
           invited_by: "Invité par"
@@ -536,6 +538,9 @@ fr:
           success: "Compte supprimé !"
         edit:
           title: "Modifier un compte admin"
+          transfer: "Transférer les offres"
+          submit: "Transférer"
+          list: "Liste des offres"
         deactivate:
           success: "Compte désactivé"
         reactivate:

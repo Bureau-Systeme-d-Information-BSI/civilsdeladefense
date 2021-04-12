@@ -106,6 +106,17 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
     end
   end
 
+  # POST /admin/settings/administrators/1/transfer
+  # POST /admin/settings/administrators/1/transfer.json
+  def transfer
+    @administrator.transfer!(params[:transfer_email])
+
+    respond_to do |format|
+      format.html { redirect_to %i[admin settings root], notice: t(".success") }
+      format.json { render :show, status: :ok, location: @administrator }
+    end
+  end
+
   private
 
   def set_administrators

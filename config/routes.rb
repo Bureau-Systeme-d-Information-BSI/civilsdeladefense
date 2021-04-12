@@ -125,6 +125,7 @@ Rails.application.routes.draw do
           post :send_unlock_instructions
           post :deactivate
           post :reactivate
+          post :transfer
         end
       end
       resources :employers, :categories do

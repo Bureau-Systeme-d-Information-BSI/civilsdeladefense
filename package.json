@@ -22,7 +22,7 @@
     "stimulus": "^2.0.0",
     "svg-sprite-loader": "^3.8.0",
     "svgo": "^1.0.5",
-    "svgo-loader": "^2.1.0",
+    "svgo-loader": "^3.0.0",
     "trix": "^1.2.3",
     "turbolinks": "^5.2.0",
     "webpack": "^4.46.0"

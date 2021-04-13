@@ -2,7 +2,7 @@ fr:
   "yes": "Oui"
   "no": "Non"
   help: "Aide"
-  non_applicable: "N/A"
+  non_applicable: "-"
   non_accessible: "Pas accessible pour le moment"
   nothing_to_see: "Rien à voir pour le moment"
   unknown: "Inconnu"

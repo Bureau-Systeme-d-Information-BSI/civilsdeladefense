@@ -62,3 +62,7 @@
               = link_to [:new, :admin, :job_offer, {job_offer_id: job_offer.to_param}], class: "dropdown-item" do
                 = fa_icon('content-copy', class: 'mr-1')
                 = t("buttons.copy")
+              - if can? :transfer, job_offer
+                = link_to [:new_transfer, :admin, job_offer], class: "dropdown-item" do
+                  = fa_icon('arrow-right', class: 'mr-1')
+                  = t("buttons.transfer")

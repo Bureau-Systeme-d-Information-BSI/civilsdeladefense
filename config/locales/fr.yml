@@ -92,6 +92,7 @@ fr:
     update: "Mettre à jour"
     unsuspend: "Republier"
     unsuspend_user: "Réactiver"
+    transfer: "Transférer"
   homepages:
     stepper:
       step_1: "Dépôt de la candidature"
@@ -307,6 +308,10 @@ fr:
       uncheck:
         success: "Fichier invalidé !"
     job_offers:
+      new_transfer:
+        submit: "Transférer"
+      transfer:
+        success: "Annonce transférée !"
       administrator:
         new_record: "Cliquer sur \"Enregistrer\" pour inviter"
         waiting: "En attente de confirmation"
@@ -348,6 +353,7 @@ fr:
         job_applications_to_be_treated_count:
           "Nouvelles candidatures"
       job_offer_nav:
+        new_transfer: "Transférer"
         show: "Description"
         stats: "Statistiques"
         board: "Candidatures"

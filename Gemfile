@@ -89,7 +89,7 @@ group :development, :test do
   gem "rubocop-performance"
   gem "standard", "> 0.10"
 
-  gem "pry", "~> 0.13.1"
+  gem "pry-rails"
 end
 
 group :development do

@@ -19,7 +19,7 @@ class JobApplicationFile < ApplicationRecord
   before_validation do
     if job_application_file_existing_id
       existing = JobApplicationFile.find_by(id: job_application_file_existing_id)
-      self.content = existing&.content
+      self.content = existing&.content if existing&.content
     end
   end
 

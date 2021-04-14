@@ -71,7 +71,7 @@ class Admin::JobApplicationsController < Admin::BaseController
 
     current_max = @job_offer.current_most_advanced_job_applications_state
     if @job_offer.most_advanced_job_applications_state_before_type_cast != current_max
-      @job_offer.update_column(:most_advanced_job_applications_state, current_max)
+      @job_offer.update(most_advanced_job_applications_state: current_max)
     end
 
     respond_to do |format|

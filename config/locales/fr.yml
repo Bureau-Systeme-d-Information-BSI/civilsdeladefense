@@ -206,6 +206,8 @@ fr:
         success: "Votre compte a bien été supprimé"
       update_email:
         success: "Votre adresse de courriel a bien été modifié"
+      update:
+        success: "Vos informations ont bien été modifié"
       update_password:
         success: "Votre mot de passe a bien été modifié"
       want_destroy:

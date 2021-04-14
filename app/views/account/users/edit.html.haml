@@ -1,0 +1,14 @@
+.rf-container
+  .rf-grid-row
+    .rf-col-12
+      %h2.rf-h3= t('.title')
+      .rf-box.rf-mb-5w.rf-pb-5w
+        = simple_form_for(@user, url: [:account, :user], method: :patch) do |f|
+          = f.error_notification
+          .form-inputs
+            = f.input :first_name, required: true
+            = f.input :last_name, required: true
+            = f.input :phone, required: true
+            = f.input :website_url
+          .rf-input-group.rf-grid-row.justify-content-end.rf-mt-3w
+            = f.button :submit, t('buttons.save'), class: 'rf-btn'

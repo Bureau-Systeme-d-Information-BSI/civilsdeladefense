@@ -157,7 +157,11 @@ Rails.application.routes.draw do
         resources :job_application_files, path: "documents"
         resources :emails, only: %i[index create]
       end
-      resource :user, path: "mon-compte", only: %i[show update destroy] do
+      resource :user, path: "mon-compte", only: %i[show destroy] do
+        collection do
+          get :edit
+          patch :update
+        end
         member do
           get :change_email, :change_password
           patch :update_email, :update_password, :unlink_france_connect, :set_password

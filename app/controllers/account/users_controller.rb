@@ -113,7 +113,9 @@ class Account::UsersController < Account::BaseController
   end
 
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :phone, :website_url)
+    params.require(:user).permit(
+      :first_name, :last_name, :phone, :website_url, :current_position, :photo, :delete_photo
+    )
   end
 
   def user_password_params

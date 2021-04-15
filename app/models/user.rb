@@ -36,7 +36,9 @@ class User < ApplicationRecord
 
   default_scope { order(created_at: :desc) }
 
-  attr_accessor :is_deleted
+  attr_accessor :is_deleted, :delete_photo
+
+  before_update :destroy_photo
 
   def full_name
     if is_deleted
@@ -82,6 +84,10 @@ class User < ApplicationRecord
 
   def password_required?
     !link_to_omniauth? && super
+  end
+
+  def destroy_photo
+    remove_photo! if delete_photo
   end
 end
 

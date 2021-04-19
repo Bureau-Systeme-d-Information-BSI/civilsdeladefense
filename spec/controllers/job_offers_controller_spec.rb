@@ -68,8 +68,11 @@ RSpec.describe JobOffersController, type: :controller do
             job_application_file_type_id: @job_application_file_type.id
           }
         ]
-        attributes_for(:job_application,
-          job_application_files_attributes: jaf_attrs)
+        attributes_for(
+          :job_application,
+          job_application_files_attributes: jaf_attrs,
+          profile_attributes: attributes_for(:profile)
+        )
       end
 
       it "returns a success response when all fields are valid" do
@@ -79,8 +82,9 @@ RSpec.describe JobOffersController, type: :controller do
         hsh[:terms_of_service] = 1
         hsh[:certify_majority] = 1
         expect {
-          post :send_application, format: :json, params: {id: job_offer.to_param,
-                                                          job_application: hsh}
+          post :send_application, format: :json, params: {
+            id: job_offer.to_param, job_application: hsh
+          }
         }.to change(JobApplication, :count).by(1)
         expect(response).to be_successful
       end
@@ -92,8 +96,9 @@ RSpec.describe JobOffersController, type: :controller do
         hsh[:terms_of_service] = 1
         hsh[:certify_majority] = 1
         expect {
-          post :send_application, format: :json, params: {id: job_offer.to_param,
-                                                          job_application: hsh}
+          post :send_application, format: :json, params: {
+            id: job_offer.to_param, job_application: hsh
+          }
         }.to change(JobApplication, :count).by(1)
         expect(response).to be_successful
 
@@ -103,8 +108,9 @@ RSpec.describe JobOffersController, type: :controller do
         hsh[:terms_of_service] = 1
         hsh[:certify_majority] = 1
         expect {
-          post :send_application, format: :json, params: {id: job_offer.to_param,
-                                                          job_application: hsh}
+          post :send_application, format: :json, params: {
+            id: job_offer.to_param, job_application: hsh
+          }
         }.to change(JobApplication, :count).by(0)
         expect(response).not_to be_successful
       end

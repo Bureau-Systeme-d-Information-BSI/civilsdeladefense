@@ -34,4 +34,11 @@
             - if in_use
               #tabpanel-job-offer.rf-tabs__panel{role: :tabpanel, 'data-rf-tab-management-target' => 'panel', tabindex: in_use ? 0 : -1, class: in_use ? 'rf-tabs__panel--selected' : nil}
                 = yield
+          %li
+            - in_use = controller.controller_name == 'job_applications' && controller.action_name  == 'profile'
+            = link_to [:profile, :account, @job_application], class: 'rf-tabs__tab', aria: {controls: 'tabpanel-job-offer', selected: in_use}, role: 'tab', tabindex: in_use ? 0 : -1, title: t('.nav_profile') do
+              = t('.nav_profile')
+            - if in_use
+              #tabpanel-job-offer.rf-tabs__panel{role: :tabpanel, 'data-rf-tab-management-target' => 'panel', tabindex: in_use ? 0 : -1, class: in_use ? 'rf-tabs__panel--selected' : nil}
+                = yield
 = render template: "layouts/account"

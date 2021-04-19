@@ -55,7 +55,6 @@ class JobOffersController < ApplicationController
     @job_application.organization = @job_offer.organization
     @job_application.user = current_user if user_signed_in?
     @job_application.user.organization_id = current_organization.id if @job_application.user
-    @job_application.build_profile
 
     respond_to do |format|
       if @job_application.save
@@ -71,7 +70,7 @@ class JobOffersController < ApplicationController
           instruction = turbo_stream.replace(@job_application, partial: "/job_applications/form")
           render turbo_stream: instruction
         end
-        format.html { render :show }
+        format.html { render :apply }
         format.json { render json: @job_application.errors, status: :unprocessable_entity }
       end
     end
@@ -110,12 +109,15 @@ class JobOffersController < ApplicationController
 
   def job_application_params
     permitted_params = %i[]
+    profile_attributes = %i[
+      gender has_corporate_experience age_range_id availability_range_id experience_level_id study_level_id
+    ]
     user_attributes = %i[first_name last_name current_position phone website_url]
     base_user_attributes = %i[
       photo email password password_confirmation terms_of_service certify_majority
     ]
     user_attributes += base_user_attributes unless user_signed_in?
-    permitted_params << {user_attributes: user_attributes}
+    permitted_params << {user_attributes: user_attributes, profile_attributes: profile_attributes}
     job_application_files_attributes = %i[content job_application_file_type_id job_application_file_existing_id]
     permitted_params << {job_application_files_attributes: job_application_files_attributes}
     params.require(:job_application).permit(permitted_params)

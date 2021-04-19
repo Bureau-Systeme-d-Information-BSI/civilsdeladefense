@@ -1,6 +1,8 @@
 fr:
   "yes": "Oui"
   "no": "Non"
+  "true": "Oui"
+  "false": "Non"
   help: "Aide"
   non_applicable: "N/A"
   non_accessible: "Pas accessible pour le moment"
@@ -149,6 +151,7 @@ fr:
         nav_emails: "Mes échanges"
         nav_files: "Mes documents"
         nav_offer: "L'offre"
+        nav_profile: "Profile"
   notifications_mailer:
     daily_summary:
       subject: "[%{service_name}] Rapport journalier"
@@ -209,7 +212,7 @@ fr:
       update_email:
         success: "Votre adresse de courriel a bien été modifié"
       update:
-        success: "Vos informations ont bien été modifié"
+        success: "Vos informations ont bien été modifiées"
       update_password:
         success: "Votre mot de passe a bien été modifié"
       want_destroy:
@@ -1015,6 +1018,12 @@ fr:
         gender/female: "Femme"
         gender/male: "Homme"
         gender/other: "Autre"
+        gender: Genre
+        has_corporate_experience: Expérience MinArm
+        study_level: Niveau d'études
+        experience_level: Expérience professionnel
+        age_range: Tranche d'âge
+        availability_range: Disponibilité
       salary_range:
         professional_category: "Catégorie"
         experience_level: "Éxpérience"

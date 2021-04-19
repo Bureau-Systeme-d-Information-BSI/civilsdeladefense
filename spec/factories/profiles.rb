@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :profile do
-    gender { 1 }
+    gender { :male }
     is_currently_employed { false }
     age_range { AgeRange.all.sample }
     availability_range { AvailabilityRange.all.sample }

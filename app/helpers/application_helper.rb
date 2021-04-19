@@ -44,7 +44,10 @@ module ApplicationHelper
   def simple_form_for(object, *args, &block)
     options = args.extract_options!
     options[:html] ||= {}
-    options[:html]["data-turbo"] ||= false
+    options[:data] ||= {}
+    if options[:html]["data-turbo"].blank? && options[:data][:turbo].blank?
+      options[:data][:turbo] = false
+    end
     super(object, *(args << options), &block)
   end
 end

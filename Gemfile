@@ -78,7 +78,7 @@ group :development, :test do
   gem "factory_bot_rails"
   gem "rails-controller-testing"
   gem "rspec_junit_formatter"
-  gem "rspec-rails", "~> 4.0.1"
+  gem "rspec-rails", "~> 5.0.1"
   gem "shoulda-matchers"
   gem "simplecov", require: false
 

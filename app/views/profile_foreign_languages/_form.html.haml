@@ -1,0 +1,14 @@
+%div{ data: { controller: "duplicator"}}
+  %div{ data: { duplicator: { target: :root }}}
+    .rf-grid-row.fr-grid-row--center{ data: { duplicator: { target: :duplicated }}}
+      .rf-col-11
+        = profile_form.simple_fields_for :profile_foreign_languages do |foreign_language_form|
+          .rf-grid-row.rf-grid-row--gutters
+            .rf-col-6
+              = foreign_language_form.association :foreign_language, collection: ForeignLanguage.all, input_html: { class: "rf-select" }
+            .rf-col-6
+              = foreign_language_form.association :foreign_language_level, collection: ForeignLanguageLevel.all, input_html: { class: "rf-select" }
+      .rf-col-1.d-none.text-center.rf-mt-4w
+        %button.blank_button.rf-fi-delete-line{data: { action: 'click->duplicator#remove' }}
+
+  = button_tag(:ajouter, type: :button, class: 'rf-btn', data: { action: 'click->duplicator#duplicate' })

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_06_170825) do
+ActiveRecord::Schema.define(version: 2021_04_19_123021) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -230,6 +230,20 @@ ActiveRecord::Schema.define(version: 2021_04_06_170825) do
     t.integer "position"
     t.index ["name"], name: "index_experience_levels_on_name", unique: true
     t.index ["position"], name: "index_experience_levels_on_position"
+  end
+
+  create_table "foreign_language_levels", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.integer "position"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "foreign_languages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.integer "position"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
@@ -540,6 +554,17 @@ ActiveRecord::Schema.define(version: 2021_04_06_170825) do
     t.index ["position"], name: "index_professional_categories_on_position"
   end
 
+  create_table "profile_foreign_languages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "profile_id", null: false
+    t.uuid "foreign_language_id", null: false
+    t.uuid "foreign_language_level_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["foreign_language_id"], name: "index_profile_foreign_languages_on_foreign_language_id"
+    t.index ["foreign_language_level_id"], name: "index_profile_foreign_languages_on_foreign_language_level_id"
+    t.index ["profile_id"], name: "index_profile_foreign_languages_on_profile_id"
+  end
+
   create_table "profiles", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "profileable_type"
     t.uuid "profileable_id"
@@ -673,6 +698,9 @@ ActiveRecord::Schema.define(version: 2021_04_06_170825) do
   add_foreign_key "preferred_users", "preferred_users_lists"
   add_foreign_key "preferred_users", "users"
   add_foreign_key "preferred_users_lists", "administrators"
+  add_foreign_key "profile_foreign_languages", "foreign_language_levels"
+  add_foreign_key "profile_foreign_languages", "foreign_languages"
+  add_foreign_key "profile_foreign_languages", "profiles"
   add_foreign_key "profiles", "age_ranges"
   add_foreign_key "profiles", "availability_ranges"
   add_foreign_key "profiles", "experience_levels"

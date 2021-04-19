@@ -2,8 +2,9 @@
 
 # Represents a job proposed on the platform
 class JobOffer < ApplicationRecord
-  SETTINGS = %i[category contract_type experience_level professional_category
-    sector study_level].freeze
+  SETTINGS = %i[
+    category contract_type experience_level professional_category sector study_level
+  ].freeze
 
   include JobOfferStateTimestamp
   include AASM

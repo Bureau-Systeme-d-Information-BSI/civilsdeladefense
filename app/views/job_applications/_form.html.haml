@@ -49,6 +49,7 @@
       = profile_form.association :availability_range, input_html: { class: "rf-select" }
       = profile_form.association :experience_level, input_html: { class: "rf-select" }
       = profile_form.association :study_level, input_html: { class: "rf-select" }
+      = render partial: '/profile_foreign_languages/form', locals: { profile_form: profile_form }
 
     - unless user_signed_in?
       %h2.rf-h3= t('.your_account_creation')

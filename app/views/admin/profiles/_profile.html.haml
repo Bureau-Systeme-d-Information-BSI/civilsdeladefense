@@ -5,11 +5,15 @@
     = fa_icon('file-document', class: 'text-secondary')
     Données Professionnelles et Statistiques
   .card-body.bg-white
-    - fields = profile_fields
-    - fields.each do |field|
+    - %i[gender is_currently_employed age_range availability_range study_level experience_level has_corporate_experience].each do |field|
       - hsh = {form_object: form_object, profile: profile, disabled: is_archived}
       - hsh[:field] = field unless field =~ /_level|range/
       - hsh[:association] = field if field =~ /_level|range/
       - hsh[:choices] = choices_boolean if field == :is_currently_employed
       - hsh[:choices] = choices_gender if field == :gender
       = render partial: '/admin/profiles/profile_field', locals: hsh
+    .row
+      %p.col-sm-4 Langues étrangères
+      .col-sm-8
+        - profile.profile_foreign_languages.each do |fl|
+          = "#{fl.foreign_language.name} #{fl.foreign_language_level.name} -"

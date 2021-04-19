@@ -52,22 +52,6 @@ module Admin::JobApplicationsHelper
     in_place_edit_value_formatted(res, m)
   end
 
-  def personal_fields
-    %i[current_position phone website_url]
-  end
-
-  def profile_fields
-    %i[gender
-      is_currently_employed
-      age_range availability_range
-      study_level experience_level
-      has_corporate_experience]
-  end
-
-  def job_application_profile_fields2
-    %i[skills_fit_job_offer experiences_fit_job_offer]
-  end
-
   def choices_boolean
     [
       [Profile.human_attribute_name("is_currently_employed/true"), true],

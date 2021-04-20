@@ -12,14 +12,14 @@
                 = resource.employer.name
   - if @requires_password
     .form-inputs
-      .rf-grid-row
-        .rf-col-12.rf-col-md-6
+      .fr-grid-row
+        .fr-col-12.fr-col-md-6
           = f.input :first_name, required: false, label: false, placeholder: true, hint: false
-        .rf-col-12.rf-col-md-6
+        .fr-col-12.fr-col-md-6
           = f.input :last_name, required: false, label: false, placeholder: true, hint: false
       - if resource.is_a?(Administrator)
-        .rf-grid-row
-          .rf-col-12
+        .fr-grid-row
+          .fr-col-12
             = f.input :title, required: false, label: false, placeholder: true, hint: true
       = f.input :password, required: false, label: false, placeholder: true
       = f.input :password_confirmation, required: false, label: false, placeholder: true
@@ -29,10 +29,10 @@
           = f.simple_fields_for(submodel, (resource.send(submodel) || Administrator.new)) do |submodel_form|
             - submodel_form.object.ensure_employer_is_set = true
             = submodel_form.input :ensure_employer_is_set, as: :hidden
-            .rf-grid-row
-              .rf-col-12.rf-col-md-8
+            .fr-grid-row
+              .fr-col-12.fr-col-md-8
                 = submodel_form.input :email, required: true, label: false, placeholder: true
-              .rf-col-12.rf-col-md-4
+              .fr-col-12.fr-col-md-4
                 - if submodel == :grand_employer_administrator
                   = submodel_form.association :employer, collection: [resource.employer.parent], label: false, include_blank: false, input_html: {class: 'custom-select'}
                 - else

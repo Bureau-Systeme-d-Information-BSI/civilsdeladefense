@@ -1,37 +1,37 @@
 - content_for :insider_content do
-  .rf-container
-    .rf-grid-row
+  .fr-container
+    .fr-grid-row
       = render partial: '/account/job_applications/breadcrumb', locals: {job_application: @job_application}
-    .rf-grid-row
-      %h2.rf-h3.d-flex.flex-column.rf-mt-0.rf-mb-0
+    .fr-grid-row
+      %h2.fr-h3.d-flex.flex-column.fr-mt-0.fr-mb-0
         Votre candidature à l'offre :
         %small= @job_offer.title
-    .rf-grid-row.rf-mt-3w
-      .rf-col-12
+    .fr-grid-row.fr-mt-3w
+      .fr-col-12
         .h5.text-quinary.text-center.mb-4 Suivi de candidature
         = render partial: '/account/job_applications/state_stepper', locals: {job_application: @job_application}
-    .rf-grid-row.rf-mt-3w
-      .rf-tabs.w-100{data: {controller: 'rf-tab-management'}}
-        %ul.rf-tabs__list{role: 'tablist', 'data-rf-tab-management-target' => 'tablist'}
+    .fr-grid-row.fr-mt-3w
+      .fr-tabs.w-100{data: {controller: 'fr-tab-management'}}
+        %ul.fr-tabs__list{role: 'tablist', 'data-fr-tab-management-target' => 'tablist'}
           %li
             - in_use = controller.controller_name == 'job_applications' && controller.action_name  == 'show'
-            = link_to [:account, @job_application], class: 'rf-tabs__tab', aria: {controls: 'tabpanel-emails', selected: in_use}, role: 'tab', tabindex: in_use ? 0 : -1, title: t('.nav_emails') do
+            = link_to [:account, @job_application], class: 'fr-tabs__tab', aria: {controls: 'tabpanel-emails', selected: in_use}, role: 'tab', tabindex: in_use ? 0 : -1, title: t('.nav_emails') do
               = t('.nav_emails')
             - if in_use
-              #tabpanel-emails.rf-tabs__panel{role: :tabpanel, 'data-rf-tab-management-target' => 'panel', tabindex: in_use ? 0 : -1, class: in_use ? 'rf-tabs__panel--selected' : nil}
+              #tabpanel-emails.fr-tabs__panel{role: :tabpanel, 'data-fr-tab-management-target' => 'panel', tabindex: in_use ? 0 : -1, class: in_use ? 'fr-tabs__panel--selected' : nil}
                 = yield
           %li
             - in_use = controller.controller_name == 'job_application_files' && controller.action_name  == 'index'
-            = link_to [:account, @job_application, :job_application_files], class: 'rf-tabs__tab', aria: {controls: 'tabpanel-documents', selected: in_use}, role: 'tab', tabindex: in_use ? 0 : -1, title: t('.nav_files', count: 0) do
+            = link_to [:account, @job_application, :job_application_files], class: 'fr-tabs__tab', aria: {controls: 'tabpanel-documents', selected: in_use}, role: 'tab', tabindex: in_use ? 0 : -1, title: t('.nav_files', count: 0) do
               = t('.nav_files', count: 0)
             - if in_use
-              #tabpanel-documents.rf-tabs__panel{role: :tabpanel, 'data-rf-tab-management-target' => 'panel', tabindex: in_use ? 0 : -1, class: in_use ? 'rf-tabs__panel--selected' : nil}
+              #tabpanel-documents.fr-tabs__panel{role: :tabpanel, 'data-fr-tab-management-target' => 'panel', tabindex: in_use ? 0 : -1, class: in_use ? 'fr-tabs__panel--selected' : nil}
                 = yield
           %li
             - in_use = controller.controller_name == 'job_applications' && controller.action_name  == 'job_offer'
-            = link_to [:job_offer, :account, @job_application], class: 'rf-tabs__tab', aria: {controls: 'tabpanel-job-offer', selected: in_use}, role: 'tab', tabindex: in_use ? 0 : -1, title: t('.nav_offer') do
+            = link_to [:job_offer, :account, @job_application], class: 'fr-tabs__tab', aria: {controls: 'tabpanel-job-offer', selected: in_use}, role: 'tab', tabindex: in_use ? 0 : -1, title: t('.nav_offer') do
               = t('.nav_offer')
             - if in_use
-              #tabpanel-job-offer.rf-tabs__panel{role: :tabpanel, 'data-rf-tab-management-target' => 'panel', tabindex: in_use ? 0 : -1, class: in_use ? 'rf-tabs__panel--selected' : nil}
+              #tabpanel-job-offer.fr-tabs__panel{role: :tabpanel, 'data-fr-tab-management-target' => 'panel', tabindex: in_use ? 0 : -1, class: in_use ? 'fr-tabs__panel--selected' : nil}
                 = yield
 = render template: "layouts/account"

@@ -1,42 +1,43 @@
-%header.rf-header{role: "banner"}
-  .rf-container
-    .rf-header__body
-      .rf-header__brand.d-flex
-        = link_to root_path, title: strip_tags(current_organization.brand_name), class: 'rf-logo' do
-          %span.rf-logo__title
-            = simple_format(current_organization.brand_name, nil, wrapper_tag: 'span')
-      - if current_organization.operator_logo.present?
-        .rf-header__operator
-          = image_tag(current_organization.operator_logo.url, alt: current_organization.operator_name, style: 'width:auto; height:3.5rem;')
-      .rf-header__navbar
-        .rf-service
-          =  link_to root_path, title: current_organization.service_name, class: 'rf-service__title' do
-            = current_organization.service_name
-          - if (desc = current_organization.service_description_short).present?
-            %p.rf-service__tagline
-              = desc
-      .rf-header__tools
-        - if user_signed_in?
-          .d-flex.flex-row.align-items-center.rf-mb-1w
-            %small.rf-mr-1w Connecté en tant que #{ current_user.full_name }
-            = image_user_tag current_user.photo, class: "avatar"
-        .rf-shortcuts
-          %ul.rf-shortcuts__list
-            - if user_signed_in?
-              %li.rf-shortcuts__item
-                = link_to t(".account_root"), account_job_applications_path, class: %w[rf-link rf-fi-account-line]
-              %li.rf-shortcuts__item
-                = button_to t('.logout'), destroy_user_session_path, method: :delete, class: 'rf-link rf-border-0'
-            - else
-              %li.rf-shortcuts__item
-                = link_to t(".account_root"), new_session_path(User), class: %w[rf-link rf-fi-account-line]
-  - unless controller.class.module_parent == Account
-    .rf-container
-      %nav.rf-nav{"aria-label" => "Menu principal", role: "navigation"}
-        %ul.rf-nav__list
-          - klass = current_page?(root_path) ? 'rf-nav__item--active' : nil
-          %li.rf-nav__item{class: klass}
-            = link_to "Accueil", root_path, class: 'rf-link'
-          - klass = controller.controller_name == 'job_offers' && controller.action_name == 'index' ? 'rf-nav__item--active' : nil
-          %li.rf-nav__item{class: klass}
-            = link_to "Nos offres", job_offers_path, class: 'rf-link'
+%header.fr-header{role: "banner"}
+  .fr-header__body
+    .fr-container
+      .fr-header__body-row
+        .fr-header__brand.fr-enlarge-link
+          .fr-header__brand-top
+            .fr-header__logo
+              = simple_format(current_organization.brand_name, {}, wrapper_tag: 'p class="fr-logo"')
+            - if current_organization.operator_logo.present?
+              .fr-header__operator
+                = image_tag(current_organization.operator_logo.url, alt: current_organization.operator_name, class: 'fr-responsive-img')
+          .fr-header__service
+            =  link_to root_path, title: current_organization.service_name do
+              %p.fr-header__service-title= current_organization.service_name
+            - if current_organization.service_description_short.present?
+              %p.fr-header__service-tagline
+                = current_organization.service_description_short
+        .fr-header__tools
+          - if user_signed_in?
+            .fr-mb-1w
+              %small.fr-mr-1w Connecté en tant que #{ current_user.full_name }
+              = image_user_tag current_user.photo, class: "avatar"
+          .fr-header__tools-links
+            %ul.fr-links-group
+              - if user_signed_in?
+                %li.fr-shortcuts__item
+                  = link_to t(".account_root"), account_job_applications_path, class: 'fr-link fr-fi-account-line'
+                %li.fr-shortcuts__item
+                  = button_to t('.logout'), destroy_user_session_path, method: :delete, class: 'fr-link'
+              - else
+                %li.fr-shortcuts__item
+                  = link_to t(".account_root"), new_session_path(User), class: %w[fr-link fr-fi-account-line]
+  .fr-header__menu.fr-modal
+    .fr-container
+      .fr-header__menu-links
+      %nav.fr-nav{"aria-label" => "Menu principal", role: "navigation"}
+        %ul.fr-nav__list
+          - aria_current = current_page?(root_path) ? "page" : nil
+          %li.fr-nav__item
+            = link_to "Accueil", root_path, class: 'fr-nav__link', "aria-current" => aria_current
+          - aria_current = controller.controller_name == 'job_offers' && controller.action_name == 'index' ? "page" : nil
+          %li.fr-nav__item
+            = link_to "Nos offres", job_offers_path, class: 'fr-nav__link', "aria-current" => aria_current

@@ -1,4 +1,4 @@
-.rf-text--lead.rf-mb-3w
+.fr-text--lead.fr-mb-3w
   = @page_title = t(".sign_up")
 
 - if resource.is_a?(User)
@@ -16,6 +16,6 @@
     = f.input :phone
     = f.input :terms_of_service, as: :boolean, label: tos_acceptance_text
     = f.input :certify_majority, as: :boolean
-  .rf-input-group.rf-grid-row
-    = f.button :submit, t(".sign_up"), class: 'rf-btn btn btn-primary btn-raised'
+  .fr-input-group.fr-grid-row
+    = f.button :submit, t(".sign_up"), class: 'fr-btn btn btn-primary btn-raised'
   = render "devise/shared/links"

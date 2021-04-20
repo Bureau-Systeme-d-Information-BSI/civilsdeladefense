@@ -7,7 +7,7 @@
   .form-inputs.mt-3
     = f.error_notification
     = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
-    %h2.rf-h3= t('.general_informations')
+    %h2.fr-h3= t('.general_informations')
     = f.simple_fields_for :user do |user_form|
       = user_form.input :first_name, readonly: user_signed_in?
       = user_form.input :last_name, readonly: user_signed_in?
@@ -18,7 +18,7 @@
         = user_form.label :photo, required: false
         = user_form.input :photo, label: t('buttons.choose_file'), wrapper: :custom_file_without_label
 
-    %h2.rf-h3= t('.your_profile')
+    %h2.fr-h3= t('.your_profile')
     - job_application_files = @job_application.job_application_files.to_a
     - current_state = JobApplication.states[@job_application.state]
     - job_application_file_types = JobApplicationFileType.where(by_default: true).where("from_state <= ?", current_state).where(kind: %i(applicant_provided template)).all
@@ -30,14 +30,14 @@
         = file_form.input :content, label: job_application_file_type.name, wrapper: :custom_file_without_label
         - if current_user
           - collection = current_user.job_application_files.where(job_application_file_type: job_application_file_type).uniq { |f| f.content_file_name }
-          = file_form.input :job_application_file_existing_id, collection: collection, label_method: :content_file_name, value_method: :id, input_html: { class: "rf-select" } if collection.any?
+          = file_form.input :job_application_file_existing_id, collection: collection, label_method: :content_file_name, value_method: :id, input_html: { class: "fr-select" } if collection.any?
 
-    %h2.rf-h3= t('.your_internet_presence')
+    %h2.fr-h3= t('.your_internet_presence')
     = f.simple_fields_for :user do |user_form|
       = user_form.input :website_url, required: false
 
     - unless user_signed_in?
-      %h2.rf-h3= t('.your_account_creation')
+      %h2.fr-h3= t('.your_account_creation')
       = f.simple_fields_for :user, input_html: {placeholder: false, required: true} do |user_form|
         = user_form.input :email, required: true
         = user_form.input :password, required: true
@@ -46,8 +46,8 @@
         = user_form.input :certify_majority, as: :boolean
     = f.invisible_captcha :subtitle
 
-  .rf-input-group.rf-grid-row.rf-grid-row--center.rf-mt-6w
-    = button_tag(type: 'submit', class: 'rf-btn rf-btn--lg') do
+  .fr-input-group.fr-grid-row.fr-grid-row--center.fr-mt-6w
+    = button_tag(type: 'submit', class: 'fr-btn fr-btn--lg') do
       = t('helpers.submit.job_application.save')
     .d-flex.justify-content-end.pt-1.invisible.spinner
       = spinner

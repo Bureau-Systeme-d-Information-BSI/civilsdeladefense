@@ -1,9 +1,9 @@
 - cache current_organization do
   - ary = current_organization.pages.root&.descendants || []
   - links, pages = ary.partition(&:only_link?)
-  %footer#footer.rf-footer{:role => "contentinfo"}
+  %footer#footer.fr-footer{:role => "contentinfo"}
     = render partial: "/shared/footer_social"
-    .rf-container
+    .fr-container
       = render partial: "/shared/footer_body", locals: {links: links}
       = render partial: "/shared/footer_partners"
       = render partial: "/shared/footer_bottom", locals: {pages: pages}

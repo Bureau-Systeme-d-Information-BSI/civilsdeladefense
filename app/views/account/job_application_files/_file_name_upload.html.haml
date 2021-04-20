@@ -10,13 +10,13 @@
 - options[:html] = html
 - options[:namespace] = file_type.name.parameterize
 = turbo_frame_tag dom_id(job_application_file.job_application_file_type) do
-  .rf-card.rf-card--no-arrow.rf-card--no-full-height.rounded-lg.zoomable.h-auto.rf-mb-3w
-    .rf-card__body
+  .fr-card.fr-card--no-arrow.fr-card--no-full-height.rounded-lg.zoomable.h-auto.fr-mb-3w
+    .fr-card__body
       = simple_form_for([:account, job_application, job_application_file], options) do |f|
         - if job_application_file.new_record?
           = f.hidden_field :job_application_file_type_id
         .form-inputs
-          %label.rf-label= file_type.name
+          %label.fr-label= file_type.name
           - label = is_validated_value == 1 ? t('buttons.choose_file_validated_html') : t('buttons.choose_file_drop_zone_html')
           - html = {data: {controller: 'auto-submit', action: "change->auto-submit#submit"}}
           = f.input :content, label: label, wrapper: :custom_file_with_dropzone, hint: hint_text, input_html: html

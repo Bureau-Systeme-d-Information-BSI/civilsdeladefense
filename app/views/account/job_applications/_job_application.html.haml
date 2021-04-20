@@ -1,12 +1,12 @@
 - job_offer = job_application.job_offer
-- klass = 'rf-mt-3w' unless job_application_counter == 0
-.rf-card.rf-card--horizontal.h-auto{class: klass}
-  = link_to [:account, job_application], class: 'rf-card__body' do
-    .rf-card__detail
+- klass = 'fr-mt-3w' unless job_application_counter == 0
+.fr-card.fr-card--horizontal.h-auto{class: klass}
+  = link_to [:account, job_application], class: 'fr-card__body' do
+    .fr-card__detail
       = t('.created_at', time_ago_in_words: time_ago_in_words(job_application.created_at))
-    .rf-card__title
+    .fr-card__title
       = job_offer.title
-    .rf-card__desc
+    .fr-card__desc
       .d-flex.flex-row
         .d-flex.flex-column
           %span= [job_offer.contract_type.name, job_offer.duration_contract].join(' ')

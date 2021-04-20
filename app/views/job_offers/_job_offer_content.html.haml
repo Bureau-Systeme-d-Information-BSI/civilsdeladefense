@@ -2,8 +2,8 @@
 - cache job_offer do
   - fields = %i(description required_profile recruitment_process)
   - fields.each_with_index do |field, index|
-    %h2.rf-h3.rf-mt-0= t('.'+field.to_s)
+    %h2.fr-h3.fr-mt-0= t('.'+field.to_s)
     = sanitize(job_offer.send(field))
 - if display_apply_button && !(controller.action_name == 'apply')
-  .rf-grid-row.rf-grid-row--center.rf-mt-4w
-    = link_to t('.apply'), [:apply, @job_offer], class: 'rf-btn rf-btn--lg', rel: 'noindex nofollow'
+  .fr-grid-row.fr-grid-row--center.fr-mt-4w
+    = link_to t('.apply'), [:apply, @job_offer], class: 'fr-btn fr-btn--lg', rel: 'noindex nofollow'

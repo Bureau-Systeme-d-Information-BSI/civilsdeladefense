@@ -1,50 +1,24 @@
-@import "@gouvfr/all/dist/css/all.css";
+@import "@gouvfr/dsfr/dist/css/dsfr.min.css";
 @import "flex-utilities";
 @import "stepper";
 @import "alert";
 @import "france-connect";
 
-// Design System overflow fix
-@media (min-width: 48em) {
-  .rf-header .rf-nav {
-    margin: 0 calc(50% - 49vw) !important;
-  }
-}
+// input {
+//   &.fr-btn {
+//     border: 0;
+//   }
+// }
 
-input {
-  &.rf-btn {
-    border: 0;
-  }
-}
-
-.rf-bg-beige {
+.fr-bg-beige {
   background-color: var(--beige);
 }
 
-.rf-border-0 {
-  border: 0;
-}
-
-.rf-bg--alt {
-  h1 {
-    color: var(--g100);
-  }
-}
-
-.rf-b--g100 {
+.fr-b--g100 {
   border-color: var(--g100);
 }
 
-.block--overlap {
-  margin-top: 3rem;
-}
-
-.block--underlap {
-  padding-top: 80px;
-  margin-top: -80px;
-}
-
-.rf-bg--hero-image {
+.fr-bg--hero-image {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -62,7 +36,7 @@ input {
   margin-right: auto;
 }
 
-.rf-icon {
+.fr-icon {
   height: 1rem;
   width: auto;
   display: inline-block;
@@ -72,12 +46,12 @@ input {
   fill: currentColor;
   top: 0.375em;
   position: relative;
-  &.rf-icon-xl {
+  &.fr-icon-xl {
     height: 1.5rem;
   }
 }
 
-.rf-top-3w {
+.fr-top-3w {
   top: 1.5rem;
 }
 
@@ -96,7 +70,7 @@ label {
     5px 4px 6px -2px rgba(0, 0, 0, 0.05), -5px -4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
-.rf-card {
+.fr-card {
   &.rounded-lg {
     overflow: hidden;
   }
@@ -155,7 +129,7 @@ h2 {
   }
 }
 
-.rf-box {
+.fr-box {
   box-shadow: 0 1px 0 0 currentColor;
 }
 
@@ -173,14 +147,14 @@ h2 {
   color: var(--w-g750);
 }
 
-.rf-grid-row {
-  &:not(.rf-card-deck) {
-    .rf-card {
+.fr-grid-row {
+  &:not(.fr-card-deck) {
+    .fr-card {
       height: unset;
     }
   }
-  &.rf-card-deck {
-    .rf-card {
+  &.fr-card-deck {
+    .fr-card {
       height: 100%;
     }
   }
@@ -193,73 +167,56 @@ h2 {
     flex-grow: 1;
     flex-basis: 0;
   }
-  .rf-input-group {
+  .fr-input-group {
     margin-bottom: 0;
   }
 }
 
-.rf-bg--alt-2 {
+.fr-bg--alt-2 {
   background-color: var(--bg-alt-2);
   color: var(--g700);
 }
 
-.rf-bg--alt-3 {
-  background-color: var(--bg-alt-3);
-  h2 {
-    color: var(--g100);
-  }
-}
-
 :root:not([data-theme="dark"]) {
-  .rf-bg--alt-2 {
+  .fr-bg--alt-2 {
     --bg-alt-2: #0682ff;
     --g700: white;
     --bf500: white;
     --w-bf500: var(--bf500-plain);
-    .rf-btn {
+    .fr-btn {
       --color-hover: rgba(0, 0, 0, 0.05);
       --color-active: rgba(91, 91, 255, 0.5);
     }
   }
-  .rf-bg--hero-image {
+  .fr-bg--hero-image {
     --bg-image: rgba(0, 0, 145, 0.4);
-  }
-  .rf-bg--alt-3 {
-    --bg-alt-3: #004494;
   }
 }
 
 :root {
-  .rf-bg--alt-2 {
+  .fr-bg--alt-2 {
     --bg-alt-2: rgb(0, 68, 148);
     --g800: white;
     --bf500: white;
     --w-bf500: #0682ff;
-    .rf-btn {
+    .fr-btn {
       --color-hover: rgba(0, 0, 0, 0.05);
       --color-active: rgba(91, 91, 255, 0.5);
     }
   }
-  .rf-bg--hero-image {
+  .fr-bg--hero-image {
     --bg-image: rgba(33, 33, 33, 0.5);
-  }
-  .rf-bg--alt-3 {
-    --bg-alt-3: rgb(33, 33, 33);
   }
 }
 
-.rf-hero {
+.fr-hero {
   h1 {
     padding: 2rem 0;
   }
 }
 
 @media (min-width: 768px) {
-  .block--overlap {
-    margin-top: -80px !important;
-  }
-
-  .rf-hero {
+  .fr-hero {
     height: 22rem;
   }
 
@@ -277,16 +234,12 @@ h2 {
   text-align: justify;
 }
 
-.rf-nav__item--active > .rf-link {
-  pointer-events: initial;
-}
-
 .job-offer-index {
   input[type="submit"] {
     position: sticky;
   }
 
-  .rf-accordion .rf-collapse--expanded {
+  .fr-accordion .fr-collapse--expanded {
     padding-top: 1rem;
     padding-bottom: 1rem;
   }
@@ -294,10 +247,10 @@ h2 {
     width: initial;
     padding: 0;
   }
-  .rf-sidemenu__list {
-    .rf-sidemenu__list {
+  .fr-sidemenu__list {
+    .fr-sidemenu__list {
       margin: 0 0.5rem;
-      .rf-sidemenu__list .rf-label {
+      .fr-sidemenu__list .fr-label {
         font-size: 0.95rem;
         padding: 0.5rem 0;
       }

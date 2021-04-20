@@ -1,5 +1,5 @@
-import { CollapsesGroup, KeyListener } from '@gouvfr/core/src/scripts';
-import { ACCORDIONS_GROUP } from './rf-accordion-constants';
+import { CollapsesGroup, KeyListener } from '@gouvfr/dsfr/src/scripts';
+import { ACCORDIONS_GROUP } from './fr-accordion-constants';
 
 class AccordionsGroup extends CollapsesGroup {
   // constructor (id, element) {

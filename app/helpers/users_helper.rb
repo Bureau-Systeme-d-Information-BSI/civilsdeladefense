@@ -19,12 +19,11 @@ module UsersHelper
       klasses << options[:class]
     end
 
-    image_tag image_user_url(photo, options[:width]), class: klasses
+    image_tag(image_user_url(photo), class: klasses)
   end
 
-  def image_user_url(photo, _width)
+  def image_user_url(photo)
     if photo&.present?
-      # style = image_user_style(width) not sure how to use style for the moment
       Rails.cache.fetch(photo.model) do
         encoded = Base64.encode64(photo.read)
         "data:#{photo.content_type};base64,#{encoded}"
@@ -33,22 +32,10 @@ module UsersHelper
           asset_pack_path("images/default_user_avatar.svg")
         end
       rescue URI::InvalidURIError
-        # nothing we can do
         asset_pack_path("images/default_user_avatar.svg")
       end
     else
       asset_pack_path("images/default_user_avatar.svg")
-    end
-  end
-
-  def image_user_style(width)
-    case width
-    when 32
-      :small
-    when 40
-      :medium
-    when 80
-      :big
     end
   end
 

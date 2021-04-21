@@ -39,4 +39,15 @@ module ApplicationHelper
     options[:renderer] ||= BootstrapRenderer
     super(collection, options)
   end
+
+  # Deactivate Turbo on form by default
+  def simple_form_for(object, *args, &block)
+    options = args.extract_options!
+    options[:html] ||= {}
+    options[:data] ||= {}
+    if options[:html]["data-turbo"].blank? && options[:data][:turbo].blank?
+      options[:data][:turbo] = false
+    end
+    super(object, *(args << options), &block)
+  end
 end

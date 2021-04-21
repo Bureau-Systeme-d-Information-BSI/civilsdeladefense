@@ -3,7 +3,7 @@
 -# Hide button until solution for CORS error is found
 -# - unless user_signed_in?
 -#   = render "devise/shared/france_connect"
-= simple_form_for(@job_application, url: [:send_application, @job_offer], method: :post) do |f|
+= simple_form_for(@job_application, url: [:send_application, @job_offer], method: :post, data: { turbo: true }) do |f|
   .form-inputs.mt-3
     = f.error_notification
     = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
@@ -35,6 +35,15 @@
     %h2.rf-h3= t('.your_internet_presence')
     = f.simple_fields_for :user do |user_form|
       = user_form.input :website_url, required: false
+
+    %h2.rf-h3= t('.your_profile')
+    = f.simple_fields_for :profile do |profile_form|
+      = profile_form.input :gender, collection: enum_options_for_select(Profile, :gender), input_html: { class: "rf-select" }
+      = profile_form.input :has_corporate_experience
+      = profile_form.association :age_range, input_html: { class: "rf-select" }
+      = profile_form.association :availability_range, input_html: { class: "rf-select" }
+      = profile_form.association :experience_level, input_html: { class: "rf-select" }
+      = profile_form.association :study_level, input_html: { class: "rf-select" }
 
     - unless user_signed_in?
       %h2.rf-h3= t('.your_account_creation')

@@ -2,7 +2,7 @@
 
 # Container for real file mandatory to fullfill a job application
 class JobApplicationFile < ApplicationRecord
-  attr_accessor :job_application_file_existing_id
+  attr_accessor :job_application_file_existing_id, :do_not_provide_immediately
 
   belongs_to :job_application
   belongs_to :job_application_file_type
@@ -10,8 +10,6 @@ class JobApplicationFile < ApplicationRecord
   mount_uploader :content, DocumentUploader, mount_on: :content_file_name
   validates :content,
     file_size: {less_than: 2.megabytes}
-
-  attr_accessor :do_not_provide_immediately
 
   validates :content, presence: true, unless: proc { |file| file.do_not_provide_immediately }
   validates :job_application_file_type_id, uniqueness: {scope: :job_application_id}

@@ -49,6 +49,7 @@ fr:
         name: "Nom"
         note: "Note"
         phone: "Téléphone"
+        delete_photo: "Supprimer la photo"
         postal_code: "Code postal"
         postcode: "Code postal"
         study_level: "Niveau d'études"

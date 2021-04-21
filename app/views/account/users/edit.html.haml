@@ -1,0 +1,19 @@
+.rf-container
+  .rf-grid-row
+    .rf-col-12
+      %h2.rf-h3= t('.title')
+      .rf-box.rf-mb-5w.rf-pb-5w
+        = simple_form_for(@user, url: [:account, :user], method: :patch) do |f|
+          = f.error_notification
+          .form-inputs
+            = f.input :first_name
+            = f.input :last_name
+            = f.input :current_position
+            = f.input :phone
+            = f.input :website_url
+            = f.input :photo
+            - if @user.photo.present?
+              = f.input :delete_photo, as: :boolean
+              = image_user_tag(@user.photo, class: 'avatar-xl')
+          .rf-input-group.rf-grid-row.justify-content-end.rf-mt-3w
+            = f.button :submit, t('buttons.save'), class: 'rf-btn'

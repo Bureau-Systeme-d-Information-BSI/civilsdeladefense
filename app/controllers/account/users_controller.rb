@@ -2,7 +2,7 @@
 
 class Account::UsersController < Account::BaseController
   before_action :set_user, only: %i[
-    show change_password change_email update update_password set_password update_email destroy
+    show change_password change_email update update_password set_password update_email destroy edit
   ]
 
   def show
@@ -11,16 +11,15 @@ class Account::UsersController < Account::BaseController
     @user_for_deletion = User.new
   end
 
+  def edit
+  end
+
   def update
-    @user = current_user
-    @job_application = current_user.job_applications.find params[:job_application_id]
-    @file_name = user_params.keys.first
     respond_to do |format|
       if @user.update(user_params)
-        @user.update_column "#{@file_name}_is_validated", 0
-        format.html { redirect_to %i[account user], notice: t(".success") }
+        format.html { redirect_to %i[edit account user], notice: t(".success") }
         format.js {}
-        format.json { render :show, status: :ok, location: @user }
+        format.json { render :edit, status: :ok, location: @user }
       else
         format.html { render :edit }
         format.js {}
@@ -114,11 +113,9 @@ class Account::UsersController < Account::BaseController
   end
 
   def user_params
-    params.require(:user).permit(permitted_fields)
-  end
-
-  def permitted_fields
-    User::FILES
+    params.require(:user).permit(
+      :first_name, :last_name, :phone, :website_url, :current_position, :photo, :delete_photo
+    )
   end
 
   def user_password_params

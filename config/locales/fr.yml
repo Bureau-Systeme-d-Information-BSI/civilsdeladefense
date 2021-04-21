@@ -94,6 +94,7 @@ fr:
     update: "Mettre à jour"
     unsuspend: "Republier"
     unsuspend_user: "Réactiver"
+    transfer: "Transférer"
   homepages:
     stepper:
       step_1: "Dépôt de la candidature"
@@ -314,6 +315,10 @@ fr:
       uncheck:
         success: "Fichier invalidé !"
     job_offers:
+      new_transfer:
+        submit: "Transférer"
+      transfer:
+        success: "Annonce transférée !"
       administrator:
         new_record: "Cliquer sur \"Enregistrer\" pour inviter"
         waiting: "En attente de confirmation"
@@ -355,6 +360,7 @@ fr:
         job_applications_to_be_treated_count:
           "Nouvelles candidatures"
       job_offer_nav:
+        new_transfer: "Transférer"
         show: "Description"
         stats: "Statistiques"
         board: "Candidatures"
@@ -505,6 +511,8 @@ fr:
         index:
           title: "Paramètres"
       administrators:
+        transfer:
+          success: "Les offres ont bien été transférées"
         administrator:
           last_connection: "Dernière conn. :"
           invited_by: "Invité par"
@@ -543,6 +551,9 @@ fr:
           success: "Compte supprimé !"
         edit:
           title: "Modifier un compte admin"
+          transfer: "Transférer les offres"
+          submit: "Transférer"
+          list: "Liste des offres"
         deactivate:
           success: "Compte désactivé"
         reactivate:

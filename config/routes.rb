@@ -49,7 +49,8 @@ Rails.application.routes.draw do
         end
       end
       member do
-        get :board, :stats
+        get :board, :stats, :new_transfer
+        post :transfer
         JobOffer.aasm.events.map(&:name).each do |event_name|
           patch(event_name.to_sym)
           action_name = "update_and_#{event_name}".to_sym
@@ -126,6 +127,7 @@ Rails.application.routes.draw do
           post :send_unlock_instructions
           post :deactivate
           post :reactivate
+          post :transfer
         end
       end
       resources :employers, :categories do

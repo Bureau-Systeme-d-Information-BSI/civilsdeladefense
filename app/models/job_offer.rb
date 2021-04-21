@@ -233,6 +233,15 @@ class JobOffer < ApplicationRecord
       end
     end
   end
+
+  def transfer(email, current_administrator)
+    administrator = Administrator.find_by(email: email.downcase) || Administrator.new(email: email)
+    administrator.inviter ||= current_administrator
+    administrator.organization = current_administrator.organization
+    administrator.save!
+    job_offer_actors.where(administrator: owner).update_all(administrator_id: administrator.id)
+    update!(owner: administrator)
+  end
 end
 
 # == Schema Information

@@ -104,6 +104,20 @@ class Admin::JobOffersController < Admin::BaseController
     end
   end
 
+  # GET /admin/job_offers/1/new_transfer
+  # GET /admin/job_offers/1/new_transfer.json
+  def new_transfer
+  end
+
+  # POST /admin/job_offers/1/transfer
+  # POST /admin/job_offers/1/transfer.json
+  def transfer
+    @job_offer.transfer(params[:transfer_email], current_administrator)
+    respond_to do |format|
+      format.html { redirect_to %i[admin job_offers], notice: t(".success") }
+    end
+  end
+
   # DELETE /admin/job_offers/1
   # DELETE /admin/job_offers/1.json
   def destroy

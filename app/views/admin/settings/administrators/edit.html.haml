@@ -2,7 +2,20 @@
 = render 'form'
 .card.mt-2
   .card-header.d-flex.align-items-center.card-title
-    Liste des offres
+    = t('.transfer')
+  .card-body
+    = form_with url: [:transfer, :admin, :settings, :administrator] do |f|
+      .form-inputs
+        .row
+          .col-12.col-md-6
+            .form-group.rf-input-group
+              = f.label :transfer_email, "Email du nouveau propriétaire de l'offre", class: "form-control-label rf-label"
+              = f.email_field :transfer_email, placeholder: 'Email', class: "form-control rf-input string optional"
+        .form-actions.text-right.mt-4
+          = f.submit t('.submit'), class: 'btn btn-primary btn-raised'
+.card.mt-2
+  .card-header.d-flex.align-items-center.card-title
+    = t('.list')
   .card-body
     %ul
       - @administrator.job_offers.each do |job_offer|

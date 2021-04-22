@@ -105,7 +105,7 @@ fr:
       step_6: "Prise de fonctions"
   job_applications:
     form:
-      general_informations: "Informations générales"
+      general_informations: "Vos informations"
       your_profile: "Votre profil"
       your_internet_presence: "Votre présence sur internet"
       your_account_creation: "Votre création de compte"
@@ -1035,7 +1035,7 @@ fr:
         gender/female: "Femme"
         gender/male: "Homme"
         gender/other: "Autre"
-        gender: Genre
+        gender: Civilité
         has_corporate_experience: Expérience MinArm
         study_level: Niveau d'études
         experience_level: Expérience professionnel

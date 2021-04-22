@@ -1,5 +1,3 @@
--# frozen_string_literal: true
-- profile = @job_application.profile
 -# Hide button until solution for CORS error is found
 -# - unless user_signed_in?
 -#   = render "devise/shared/france_connect"
@@ -8,6 +6,8 @@
     = f.error_notification
     = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
     %h2.rf-h3= t('.general_informations')
+    = f.simple_fields_for :profile do |profile_form|
+      = profile_form.input :gender, collection: enum_options_for_select(Profile, :gender), input_html: { class: "rf-select" }, required: true
     = f.simple_fields_for :user do |user_form|
       = user_form.input :first_name, readonly: user_signed_in?
       = user_form.input :last_name, readonly: user_signed_in?
@@ -15,10 +15,15 @@
       = user_form.input :phone, required: true
     - unless user_signed_in?
       = f.simple_fields_for :user do |user_form|
-        = user_form.label :photo, required: false
-        = user_form.input :photo, label: t('buttons.choose_file'), wrapper: :custom_file_without_label
+        = user_form.input :photo, wrapper: :custom_file
 
     %h2.rf-h3= t('.your_profile')
+    = f.simple_fields_for :profile do |profile_form|
+      = profile_form.association :availability_range, input_html: { class: "rf-select" }
+      = profile_form.association :study_level, input_html: { class: "rf-select" }
+      = profile_form.association :experience_level, required: true, input_html: { class: "rf-select" }
+      = profile_form.input :has_corporate_experience
+
     - job_application_files = @job_application.job_application_files.to_a
     - current_state = JobApplication.states[@job_application.state]
     - job_application_file_types = JobApplicationFileType.where(by_default: true).where("from_state <= ?", current_state).where(kind: %i(applicant_provided template)).all
@@ -27,7 +32,7 @@
       - job_application_file ||= @job_application.job_application_files.build(job_application_file_type: job_application_file_type)
       = f.simple_fields_for :job_application_files, job_application_file, input_html: {placeholder: false, required: true} do |file_form|
         = file_form.hidden_field :job_application_file_type_id
-        = file_form.input :content, label: job_application_file_type.name, wrapper: :custom_file_without_label
+        = file_form.input :content, label: job_application_file_type.name, wrapper: :custom_file, required: true
         - if current_user
           - collection = current_user.job_application_files.where(job_application_file_type: job_application_file_type).uniq { |f| f.content_file_name }
           = file_form.input :job_application_file_existing_id, collection: collection, label_method: :content_file_name, value_method: :id, input_html: { class: "rf-select" } if collection.any?
@@ -35,15 +40,6 @@
     %h2.rf-h3= t('.your_internet_presence')
     = f.simple_fields_for :user do |user_form|
       = user_form.input :website_url, required: false
-
-    %h2.rf-h3= t('.your_profile')
-    = f.simple_fields_for :profile do |profile_form|
-      = profile_form.input :gender, collection: enum_options_for_select(Profile, :gender), input_html: { class: "rf-select" }
-      = profile_form.input :has_corporate_experience
-      = profile_form.association :age_range, input_html: { class: "rf-select" }
-      = profile_form.association :availability_range, input_html: { class: "rf-select" }
-      = profile_form.association :experience_level, input_html: { class: "rf-select" }
-      = profile_form.association :study_level, input_html: { class: "rf-select" }
 
     - unless user_signed_in?
       %h2.rf-h3= t('.your_account_creation')

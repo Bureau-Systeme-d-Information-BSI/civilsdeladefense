@@ -228,7 +228,7 @@ GEM
     listen (3.5.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
-    lockbox (0.2.5)
+    lockbox (0.6.4)
     loofah (2.9.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -527,7 +527,7 @@ DEPENDENCIES
   jbuilder (~> 2.11)
   letter_opener
   listen (>= 3.0.5, < 3.6)
-  lockbox (~> 0.2.0)
+  lockbox (~> 0.6.4)
   mail
   mini_magick
   omniauth-rails_csrf_protection

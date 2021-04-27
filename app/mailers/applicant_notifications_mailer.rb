@@ -23,10 +23,6 @@ class ApplicantNotificationsMailer < ApplicationMailer
     if @organization.inbound_email_config_catch_all?
       default_from = ENV["DEFAULT_FROM"]
       reply_to = default_from.gsub("@", "+#{@email.id}@")
-    elsif @organization.inbound_email_config_hidden_headers?
-      mail_uri = URI(ENV["SMTP_URL"])
-      host = mail_uri.host
-      headers["Message-ID"] = "<#{@email.id}@#{host}>"
     end
 
     mail to: to, subject: subject, reply_to: reply_to

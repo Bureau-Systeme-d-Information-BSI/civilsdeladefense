@@ -34,7 +34,6 @@ import Snackbar from 'node-snackbar'
 window.Snackbar = Snackbar
 import offCanvas from 'js/off-canvas'
 import dependentFields from 'js/dependent-fields'
-import cityAutocomplete from 'js/city-autocomplete'
 import salaryRangeInputsHandling from 'js/salary-range-inputs-handling'
 import emailTemplateSelectHandling from 'js/email-template-select-handling'
 import formAutoSubmit from 'js/form-auto-submit'
@@ -72,7 +71,6 @@ document.addEventListener('turbolinks:load', function() {
   salaryRangeInputsHandling()
   emailTemplateSelectHandling()
   dependentFields()
-  cityAutocomplete()
   displayCharts()
   displaySnackbars()
   boardManagement()
@@ -85,3 +83,10 @@ document.addEventListener('turbolinks:load', function() {
     dateFormat: 'Y-m-d'
   })
 })
+
+import { Application } from 'stimulus'
+import { definitionsFromContext } from 'stimulus/webpack-helpers'
+
+const application = Application.start()
+const context = require.context('../controllers', true, /\.js$/)
+application.load(definitionsFromContext(context))

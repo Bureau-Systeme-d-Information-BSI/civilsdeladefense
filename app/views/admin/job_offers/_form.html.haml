@@ -43,14 +43,14 @@
                       .col-12.col-md-3
                         = f.association :bop
                     .row
-                      .col-12.col-md-6
-                        = f.input :location
-                        = f.input :city, as: :hidden
-                        = f.input :county, as: :hidden
-                        = f.input :county_code, as: :hidden
-                        = f.input :country_code, as: :hidden
-                        = f.input :postcode, as: :hidden
-                        = f.input :region, as: :hidden
+                      .col-12.col-md-6{data: { controller: 'autocomplete-city' }}
+                        = f.input :location, input_html: { 'data-autocomplete-city-target' => :query }
+                        = f.input :city, as: :hidden, input_html: { 'data-autocomplete-city-target' => :city }
+                        = f.input :county, as: :hidden, input_html: { 'data-autocomplete-city-target' => :county }
+                        = f.input :county_code, as: :hidden, input_html: { 'data-autocomplete-city-target' => :countyCode }
+                        = f.input :country_code, as: :hidden, input_html: { 'data-autocomplete-city-target' => :countryCode }
+                        = f.input :postcode, as: :hidden, input_html: { 'data-autocomplete-city-target' => :postcode }
+                        = f.input :region, as: :hidden, input_html: { 'data-autocomplete-city-target' => :region }
                     = f.input :description, as: :trix_editor
                     = f.input :required_profile, as: :trix_editor
                     = f.input :recruitment_process, as: :trix_editor

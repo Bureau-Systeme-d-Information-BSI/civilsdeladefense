@@ -51,16 +51,14 @@ module UsersHelper
       link = link_for_file(job_application, job_application_file)
       link_text = link_to "fichier", link, target: "_blank", class: "text-dark-gray"
       txt << "Votre #{link_text} n'est pas valide, veuillez en téléverser un nouveau.".html_safe
-      txt << "Seuls les fichiers PDF de taille inférieure à 2Mo sont acceptés."
     else
       if file.present?
         link = link_for_file(job_application, job_application_file)
         link_text = link_to "fichier", link, target: "_blank", class: "text-dark-gray"
         txt << "Vous avez déjà téléversé ce #{link_text}, il est en attente de validation.".html_safe
         txt << 'Pour téléverser une nouvelle version,
-                vous pouvez utiliser la zone ci-dessus.'.html_safe
+                vous pouvez utiliser la zone ci-dessous.'.html_safe
       end
-      txt << "Seuls les fichiers PDF de taille inférieure à 2Mo sont acceptés."
     end
     txt.join("<br/>").html_safe
   end

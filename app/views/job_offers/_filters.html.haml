@@ -15,6 +15,6 @@
       = date_field_tag :contract_start_on, @contract_start_on, class: 'rf-input', placeholder: 'JJ/MM/AAAA', pattern: pattern
     .rf-input-group
       = label_tag :published_at, t(".published_at_filter"), class: 'rf-label'
-      = date_field_tag :published_at, @published_at, class: 'rf-input', placeholder: 'JJ/MM/AAAA', pattern: pattern
+      = date_field_tag :published_at, @published_at, class: 'rf-input', placeholder: 'JJ/MM/AAAA', pattern: pattern, max: Date.today.strftime('%F')
     .text-center.rf-my-1w
       = submit_tag t('.search'), class: 'rf-btn'

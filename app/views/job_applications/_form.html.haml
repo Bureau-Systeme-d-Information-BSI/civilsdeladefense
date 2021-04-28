@@ -23,7 +23,9 @@
       = profile_form.association :study_level, required: true, input_html: { class: "rf-select" }
       = profile_form.association :experience_level, input_html: { class: "rf-select" }
       = profile_form.input :has_corporate_experience
+      = render partial: '/profile_foreign_languages/form', locals: { profile_form: profile_form }
 
+    %h2.rf-h3= t('.documents')
     - job_application_files = @job_application.job_application_files.to_a
     - current_state = JobApplication.states[@job_application.state]
     - job_application_file_types = JobApplicationFileType.where(by_default: true).where("from_state <= ?", current_state).where(kind: %i(applicant_provided template)).all
@@ -40,16 +42,6 @@
     %h2.rf-h3= t('.your_internet_presence')
     = f.simple_fields_for :user do |user_form|
       = user_form.input :website_url, required: false
-
-    %h2.rf-h3= t('.your_profile')
-    = f.simple_fields_for :profile do |profile_form|
-      = profile_form.input :gender, collection: enum_options_for_select(Profile, :gender), input_html: { class: "rf-select" }
-      = profile_form.input :has_corporate_experience
-      = profile_form.association :age_range, input_html: { class: "rf-select" }
-      = profile_form.association :availability_range, input_html: { class: "rf-select" }
-      = profile_form.association :experience_level, input_html: { class: "rf-select" }
-      = profile_form.association :study_level, input_html: { class: "rf-select" }
-      = render partial: '/profile_foreign_languages/form', locals: { profile_form: profile_form }
 
     - unless user_signed_in?
       %h2.rf-h3= t('.your_account_creation')

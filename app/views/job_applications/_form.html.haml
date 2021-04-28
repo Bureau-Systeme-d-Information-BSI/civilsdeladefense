@@ -20,8 +20,8 @@
     %h2.rf-h3= t('.your_profile')
     = f.simple_fields_for :profile do |profile_form|
       = profile_form.association :availability_range, input_html: { class: "rf-select" }
-      = profile_form.association :study_level, input_html: { class: "rf-select" }
-      = profile_form.association :experience_level, required: true, input_html: { class: "rf-select" }
+      = profile_form.association :study_level, required: true, input_html: { class: "rf-select" }
+      = profile_form.association :experience_level, input_html: { class: "rf-select" }
       = profile_form.input :has_corporate_experience
 
     - job_application_files = @job_application.job_application_files.to_a

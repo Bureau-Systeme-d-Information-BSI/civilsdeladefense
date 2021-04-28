@@ -19,13 +19,16 @@ module JobApplicationsHelper
   end
 
   def profile_value_for_attribute(profile, attribute)
+    value = profile.send(attribute)
+    return "-" if value.blank?
+
     case attribute
     when :gender
-      enum_i18n(Profile, :gender, profile.send(attribute))
+      enum_i18n(Profile, :gender, value)
     when :has_corporate_experience
-      I18n.t(profile.send(attribute))
+      I18n.t(value)
     when :study_level, :experience_level, :age_range, :availability_range
-      profile.send(attribute).name
+      value.name || "-"
     end
   end
 

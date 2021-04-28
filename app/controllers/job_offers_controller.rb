@@ -35,15 +35,22 @@ class JobOffersController < ApplicationController
   def apply
     # Store location if user signup after
     store_location_for(:user, request.fullpath)
-
     if user_signed_in? && (@previous_job_application = current_user.job_applications.first)
       @job_application = @previous_job_application.dup
       @job_application.state = JobApplication.new.state
       @job_application.profile = @previous_job_application.profile.dup
+      @previous_job_application.profile.profile_foreign_languages.each do |foreign_language|
+        @job_application.profile.profile_foreign_languages << foreign_language.dup
+      end
+      # to_a to not execute a SQL query (0 language in database)
+      if @job_application.profile.profile_foreign_languages.to_a.size.zero?
+        @job_application.profile.profile_foreign_languages.build
+      end
     else
       @job_application = JobApplication.new
       @job_application.user = user_signed_in? ? current_user : User.new
       @job_application.build_profile
+      @job_application.profile.profile_foreign_languages.build
     end
   end
 
@@ -112,6 +119,9 @@ class JobOffersController < ApplicationController
     profile_attributes = %i[
       gender has_corporate_experience age_range_id availability_range_id experience_level_id study_level_id
     ]
+    profile_attributes << {
+      profile_foreign_languages_attributes: %i[foreign_language_id foreign_language_level_id]
+    }
     user_attributes = %i[first_name last_name current_position phone website_url]
     base_user_attributes = %i[
       photo email password password_confirmation terms_of_service certify_majority

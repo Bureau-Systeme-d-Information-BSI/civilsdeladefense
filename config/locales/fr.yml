@@ -507,6 +507,8 @@ fr:
           templates : "Modèles"
           writing_job_offers: "Rédaction offres d'emploi"
           contract_durations: "Durées de contrat"
+          foreign_languages: "Langue étrangères"
+          foreign_language_levels: "Niveaux de langues étrangères"
       base:
         index:
           title: "Paramètres"
@@ -788,7 +790,39 @@ fr:
         update:
           success: "Niveau d'étude mis à jour !"
         destroy:
-          success: "Niveau d'étude supprim !"
+          success: "Niveau d'étude supprimé !"
+      foreign_languages:
+        index:
+          card_title:
+            zero: "Aucune langue étrangère"
+            one: "1 langue étrangère"
+            other: "%{count} langues étrangères"
+        new:
+          title: "Ajouter une nouvelle langue étrangère"
+        edit:
+          title: "Modifier la langue étrangère '%{name}'"
+        create:
+          success: "Langue étrangère créée !"
+        update:
+          success: "Langue étrangère mise à jour !"
+        destroy:
+          success: "Langue étrangère supprimée !"
+      foreign_language_levels:
+        index:
+          card_title:
+            zero: "Aucun niveau de langue étrangère"
+            one: "1 niveau de langue étrangère"
+            other: "%{count} niveaux de langues étrangères"
+        new:
+          title: "Ajouter un nouveau niveau de langue étrangère"
+        edit:
+          title: "Modifier le niveau de langue étrangère '%{name}'"
+        create:
+          success: "Niveau de langue étrangère créée !"
+        update:
+          success: "Niveau de langue étrangère mise à jour !"
+        destroy:
+          success: "Niveau de langue étrangère supprimée !"
       experience_levels:
         index:
           card_title:
@@ -1039,6 +1073,7 @@ fr:
         has_corporate_experience: Expérience MinArm
         study_level: Niveau d'études
         experience_level: Expérience professionnel
+        profile_foreign_languages: Langues étrangères
         age_range: Tranche d'âge
         availability_range: Disponibilité
       salary_range:

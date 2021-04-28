@@ -4,7 +4,6 @@
     = fa_icon('file-document', class: 'text-secondary')
     Spécificités vis-à-vis de l'offre sélectionnée
   .card-body.bg-white
-    - fields = job_application_profile_fields2
-    - fields.each do |field|
+    - %i[skills_fit_job_offer experiences_fit_job_offer].each do |field|
       - hsh = { form_object: job_application, field: field, disabled: is_archived }
       = render partial: '/admin/profiles/profile_field', locals: hsh

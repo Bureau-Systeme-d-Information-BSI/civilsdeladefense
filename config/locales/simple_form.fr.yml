@@ -56,6 +56,8 @@ fr:
         subject: "Sujet"
         title: "Fonction"
         website_url: "Site web"
+        foreign_language: Langue étrangère
+        foreign_language_level: Niveau de langue étrangère
       administrator:
         current_password: 'Mot de passe actuel'
         password: 'Nouveau mot de passe'

@@ -192,6 +192,13 @@ ContractDuration.create!(name: "6 mois")
 ContractDuration.create!(name: "2 ans")
 ContractDuration.create!(name: "4 ans")
 
+ForeignLanguage.create!(name: "Anglais")
+ForeignLanguage.create!(name: "Allemand")
+ForeignLanguage.create!(name: "Russe")
+ForeignLanguageLevel.create!(name: "A1")
+ForeignLanguageLevel.create!(name: "B2")
+ForeignLanguageLevel.create!(name: "C3")
+
 resume = JobApplicationFileType.create!(
   name: "CV",
   kind: :applicant_provided,

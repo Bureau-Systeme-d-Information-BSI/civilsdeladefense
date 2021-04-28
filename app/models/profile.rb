@@ -7,6 +7,8 @@ class Profile < ApplicationRecord
   belongs_to :experience_level, optional: true
   belongs_to :availability_range, optional: true
   belongs_to :age_range, optional: true
+  has_many :profile_foreign_languages, dependent: :destroy
+  accepts_nested_attributes_for :profile_foreign_languages
 
   #####################################
   # Validations

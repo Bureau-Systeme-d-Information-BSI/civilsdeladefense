@@ -32,7 +32,7 @@
       - job_application_file ||= @job_application.job_application_files.build(job_application_file_type: job_application_file_type)
       = f.simple_fields_for :job_application_files, job_application_file, input_html: {placeholder: false, required: true} do |file_form|
         = file_form.hidden_field :job_application_file_type_id
-        = file_form.input :content, label: job_application_file_type.name, wrapper: :custom_file, required: true
+        = file_form.input :content, label: job_application_file_type.name, wrapper: :custom_file, required: false
         - if current_user
           - collection = current_user.job_application_files.where(job_application_file_type: job_application_file_type).uniq { |f| f.content_file_name }
           = file_form.input :job_application_file_existing_id, collection: collection, label_method: :content_file_name, value_method: :id, input_html: { class: "rf-select" } if collection.any?
@@ -40,6 +40,16 @@
     %h2.rf-h3= t('.your_internet_presence')
     = f.simple_fields_for :user do |user_form|
       = user_form.input :website_url, required: false
+
+    %h2.rf-h3= t('.your_profile')
+    = f.simple_fields_for :profile do |profile_form|
+      = profile_form.input :gender, collection: enum_options_for_select(Profile, :gender), input_html: { class: "rf-select" }
+      = profile_form.input :has_corporate_experience
+      = profile_form.association :age_range, input_html: { class: "rf-select" }
+      = profile_form.association :availability_range, input_html: { class: "rf-select" }
+      = profile_form.association :experience_level, input_html: { class: "rf-select" }
+      = profile_form.association :study_level, input_html: { class: "rf-select" }
+      = render partial: '/profile_foreign_languages/form', locals: { profile_form: profile_form }
 
     - unless user_signed_in?
       %h2.rf-h3= t('.your_account_creation')

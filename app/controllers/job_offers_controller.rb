@@ -100,7 +100,7 @@ class JobOffersController < ApplicationController
     @job_offers = @job_offers.where(category_id: searched_category_ids) if searched_category_ids.present?
 
     @job_offers = @job_offers.where("contract_start_on <= ?", params[:contract_start_on]) if params[:contract_start_on].present?
-    @job_offers = @job_offers.where("published_at <= ?", params[:published_at]) if params[:published_at].present?
+    @job_offers = @job_offers.where("published_at >= ?", params[:published_at]) if params[:published_at].present?
 
     @job_offers = @job_offers.search_full_text(params[:q]) if params[:q].present?
     @job_offers = @job_offers.paginate(page: params[:page], per_page: 15) unless params[:no_pagination]

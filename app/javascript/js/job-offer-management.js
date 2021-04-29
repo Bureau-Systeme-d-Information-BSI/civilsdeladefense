@@ -10,13 +10,13 @@ export default function jobOfferManagement() {
         var hidden_field, hidden_value, job_offer_actor_node
         job_offer_actor_node = node.closest('.job-offer-actor')
         hidden_field = job_offer_actor_node.querySelector('[name$="[_destroy]"]')
-        hidden_value = hidden_field.val()
-        if (hidden_value === '1') {
-          hidden_field.val('0')
-          $(job_offer_actor_node).classList.remove('opacify')
+        hidden_value = hidden_field.value
+        if (hidden_value === 'true') {
+          hidden_field.value = 'false'
+          job_offer_actor_node.classList.remove('opacify')
         } else {
-          hidden_field.val('1')
-          $(job_offer_actor_node).classList.add('opacify')
+          hidden_field.value = 'true'
+          job_offer_actor_node.classList.add('opacify')
         }
         return event.preventDefault()
       })

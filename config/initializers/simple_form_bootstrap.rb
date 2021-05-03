@@ -349,21 +349,6 @@ SimpleForm.setup do |config|
     b.use :hint, wrap_with: {tag: "small", class: "form-text text-muted rf-hint-text"}
   end
 
-  # custom file input
-  config.wrappers :custom_file_with_dropzone, tag: "div", class: "form-group drop-area", error_class: "form-group-invalid rf-input-group--error", valid_class: "form-group-valid" do |b|
-    b.use :html5
-    b.use :placeholder
-    b.optional :maxlength
-    b.optional :minlength
-    b.optional :readonly
-    b.wrapper :custom_file_wrapper, tag: "div", class: "custom-file-drop-area" do |ba|
-      ba.use :input, error_class: "is-invalid rf-input--error", valid_class: "is-valid rf-input--valid"
-      ba.use :label, class: "rf-label rf-card__link rf-mt-1w d-inline-block text-truncate"
-      ba.use :error, wrap_with: {tag: "div", class: "invalid-feedback rf-error-text"}
-    end
-    b.use :hint, wrap_with: {tag: "small", class: "form-text text-muted rf-hint-text"}
-  end
-
   # custom multi select
   config.wrappers :custom_multi_select, tag: "div", class: "form-group rf-input-group", error_class: "form-group-invalid rf-input-group--error", valid_class: "form-group-valid" do |b|
     b.use :html5

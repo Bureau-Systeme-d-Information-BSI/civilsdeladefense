@@ -22,15 +22,10 @@ ou
 
 Des fichiers de définition docker-compose sont présents pour faciliter la mise en place de l'environnements de développement (voir paragraphe Gestion avec Docker Compose).
 
-Installation des gems
+Installation des dépendances
 
 ```
 bundle install
-```
-
-Installation des packages Javascript
-
-```
 yarn install
 ```
 

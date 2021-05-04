@@ -30,6 +30,14 @@ class Admin::JobOffersController < Admin::BaseController
 
   alias_method :archived, :index
 
+  def export
+    ids = params[:job_offer_ids] || params[:id]
+    job_offers = JobOffer.find(ids)
+    csv = Exporter.new(job_offers, :job_offer, current_administrator).generate
+
+    send_data csv, filename: "offres-#{Time.zone.now}.csv"
+  end
+
   # GET /admin/job_offers/1
   # GET /admin/job_offers/1.json
   def show

@@ -311,66 +311,6 @@ a {
   }
 }
 
-.job-offer-title, .job-offer-bop, .job-offer-employer-name, .job-offer-localization, .job-offer-contract-type, .job-offer-contract-duration, .job-offer-job-applications-number, .job-offer-job-applications-most-advanced-state {
-  @extend .text-truncate, .font-weight-bold, .text-primary;
-}
-.job-offer {
-  .job-offer-title, .job-offer-bop, .job-offer-employer-name, .job-offer-localization, .job-offer-contract-type, .job-offer-contract-duration, .job-offer-job-applications-number, .job-offer-job-applications-most-advanced-state {
-    @extend .text-dark;
-  }
-}
-.job-offer-title {
-  padding-right: 5px;
-}
-.job-offer-job-applications-most-advanced-state {
-  padding-left: 5px;
-}
-.job-offer-employer-name, .job-offer-bop, .job-offer-localization, .job-offer-contract-type, .job-offer-contract-duration, .job-offer-job-applications-number {
-  padding-left: 5px;
-  padding-right: 5px;
-}
-.job-offer-title {
-  @extend .col-md-5;
-  flex: 0 0 39%;
-  max-width: 39%;
-}
-.job-offer-bop {
-  @extend .col-md-1;
-  flex: 0 0 5%;
-  max-width: 5%;
-}
-.job-offer-employer-name {
-  @extend .col-md-1;
-  flex: 0 0 11%;
-  max-width: 11%;
-}
-.job-offer-localization {
-  @extend .col-md-2;
-  flex: 0 0 11%;
-  max-width: 11%;
-}
-.job-offer-contract-type {
-  @extend .col-md-1;
-  flex: 0 0 8%;
-  max-width: 8%;
-}
-.job-offer-contract-duration {
-  @extend .col-md-1;
-  flex: 0 0 8%;
-  max-width: 8%;
-}
-.job-offer-job-applications-number {
-  @extend .col-md-1, .text-center;
-  flex: 0 0 10%;
-  max-width: 10%;
-}
-.job-offer-job-applications-most-advanced-state {
-  @extend .col-md-1, .text-center;
-  flex: 0 0 8%;
-  max-width: 8%;
-}
-
-
 .user-full-name, .personal-profile-current-position, .personal-profile-is-currently-employed, .user-job-applications-count, .personal-profile-address-short {
   @extend .text-truncate, .font-weight-bold, .text-primary;
 }

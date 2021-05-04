@@ -1,68 +1,73 @@
-- extra_klasses = []
-- extra_klasses << "card-state-#{job_offer.state}"
-.card.job-offer.mt-3{class: extra_klasses, id: dom_id(job_offer)}
-  - notifications_count = job_offer.notifications_count
-  - if notifications_count > 0
-    .notification= notifications_count
-  = link_to [:admin, job_offer], class: 'card-body' do
-    .row
-      .col-12.job-offer-title
-        = job_offer.identifier
-        = job_offer.title
-      .col-12.job-offer-bop
-        = job_offer.bop&.name
-      .col-12.job-offer-employer-name
-        = job_offer.employer&.name
-      .col-12.job-offer-localization
-        %span{title: job_offer.location}= job_offer.location.split(',').first
-      .col-12.job-offer-contract-type
-        = job_offer.contract_type.name
-      .col-12.job-offer-contract-duration
-        = job_offer.contract_duration&.name
-      .col-12.job-offer-job-applications-number
-        - count = job_offer.job_applications_count
-        - title = JobOffer.human_attribute_name('job_applications_count', count: count)
-        %span{title: title}
-          = count
-      .col-12.job-offer-job-applications-most-advanced-state
-        - title = JobApplication.human_attribute_name("state/#{job_offer.most_advanced_job_applications_state}")
-        %span{title: title}= job_offer.most_advanced_job_applications_state_as_number
-  .card-footer.d-flex.flex-column.flex-md-row
-    .mr-auto
-      - klass = badge_class(job_offer.state.to_sym)
-      %small.badge.text-white.text-uppercase.text-nowrap.mr-1{class: klass}
-        = job_offer.aasm.human_state
-      - if job_offer.published_at.present? && !(job_offer.suspended? || job_offer.draft?)
-        = t('.published_date', date: I18n.l(job_offer.published_at.to_date))
-    %ul.list-inline.mb-0.actions.mt-2.mt-md-0
-      %li.list-inline-item.d-none
-        = link_to '#' do
-          = fa_icon 'star'
-          = t('.follow')
-      - if can? :edit, job_offer
-        %li.list-inline-item
-          = link_to [:edit, :admin, job_offer] do
-            = fa_icon 'pencil'
-            = t('buttons.edit')
-      %li.list-inline-item
-        = link_to [job_offer], target: '_blank' do
-          = fa_icon 'eye'
-          = t('buttons.preview')
-      - if can? :manage, job_offer
-        %li.list-inline-item
-          .dropdown
-            = button_tag type: 'button', data: { toggle: "dropdown" }, aria: { haspopup: true, expanded: false }, class: "btn btn-link btn-sm mb-0 px-0 py-0" do
-              = fa_icon 'dots-horizontal'
-            .dropdown-menu{"aria-labelledby" => "dropdownMenuLink"}
-              - job_offer.possible_events.each do |event_name|
-                - unless event_name.starts_with?(job_offer.state)
-                  = link_to [event_name.to_sym, :admin, job_offer], method: :patch, remote: true, class: "dropdown-item" do
-                    = fa_icon('arrow-right', class: 'mr-1')
-                    = t("buttons.#{ event_name }")
-              = link_to [:new, :admin, :job_offer, {job_offer_id: job_offer.to_param}], class: "dropdown-item" do
-                = fa_icon('content-copy', class: 'mr-1')
-                = t("buttons.copy")
-              - if can? :transfer, job_offer
-                = link_to [:new_transfer, :admin, job_offer], class: "dropdown-item" do
-                  = fa_icon('arrow-right', class: 'mr-1')
-                  = t("buttons.transfer")
+.row
+  - if defined?(list)
+    .col-auto.align-self-center.text-center
+      = check_box_tag "job_offer_ids[]", job_offer.id, false, data: {action: "change->subcheckbox#propagate_upward", "subcheckbox-target": "downcheckbox"}
+  .col
+    .card.job-offer.mt-3{class: "card-state-#{job_offer.state}", id: dom_id(job_offer)}
+      - notifications_count = job_offer.notifications_count
+      - if notifications_count > 0
+        .notification= notifications_count
+      = link_to [:admin, job_offer], class: 'card-body' do
+        .row
+          .col-6.text-truncate.font-weight-bold.text-primary.text-dark
+            = job_offer.identifier
+            = job_offer.title
+          .col-1.text-truncate.font-weight-bold.text-primary.text-dark
+            = job_offer.bop&.name
+          .col-1.text-truncate.font-weight-bold.text-primary.text-dark
+            = job_offer.employer&.name
+          .col-1.text-truncate.font-weight-bold.text-primary.text-dark
+            %span{title: job_offer.location}= job_offer.location.split(',').first
+          .col-1.text-truncate.font-weight-bold.text-primary.text-dark
+            = job_offer.contract_type.name
+          .col-1.text-truncate.font-weight-bold.text-primary.text-dark.text-center
+            - count = job_offer.job_applications_count
+            - title = JobOffer.human_attribute_name('job_applications_count', count: count)
+            %span{title: title}
+              = count
+          .col-1.text-truncate.font-weight-bold.text-primary.text-dark.text-center
+            - title = JobApplication.human_attribute_name("state/#{job_offer.most_advanced_job_applications_state}")
+            %span{title: title}= job_offer.most_advanced_job_applications_state_as_number
+      .card-footer.d-flex.flex-column.flex-md-row
+        .mr-auto
+          - klass = badge_class(job_offer.state.to_sym)
+          %small.badge.text-white.text-uppercase.text-nowrap.mr-1{class: klass}
+            = job_offer.aasm.human_state
+          - if job_offer.published_at.present? && !(job_offer.suspended? || job_offer.draft?)
+            = t('.published_date', date: I18n.l(job_offer.published_at.to_date))
+        %ul.list-inline.mb-0.actions.mt-2.mt-md-0
+          %li.list-inline-item.d-none
+            = link_to '#' do
+              = fa_icon 'star'
+              = t('.follow')
+          - if can? :edit, job_offer
+            %li.list-inline-item
+              = link_to [:edit, :admin, job_offer] do
+                = fa_icon 'pencil'
+                = t('buttons.edit')
+          %li.list-inline-item
+            = link_to [job_offer], target: '_blank' do
+              = fa_icon 'eye'
+              = t('buttons.preview')
+          %li.list-inline-item
+            = link_to [:export, :admin, job_offer] do
+              = fa_icon 'arrow-down'
+              = t('buttons.export')
+          - if can? :manage, job_offer
+            %li.list-inline-item
+              .dropdown
+                = button_tag type: 'button', data: { toggle: "dropdown" }, aria: { haspopup: true, expanded: false }, class: "btn btn-link btn-sm mb-0 px-0 py-0" do
+                  = fa_icon 'dots-horizontal'
+                .dropdown-menu{"aria-labelledby" => "dropdownMenuLink"}
+                  - job_offer.possible_events.each do |event_name|
+                    - unless event_name.starts_with?(job_offer.state)
+                      = link_to [event_name.to_sym, :admin, job_offer], method: :patch, remote: true, class: "dropdown-item" do
+                        = fa_icon('arrow-right', class: 'mr-1')
+                        = t("buttons.#{ event_name }")
+                  = link_to [:new, :admin, :job_offer, {job_offer_id: job_offer.to_param}], class: "dropdown-item" do
+                    = fa_icon('content-copy', class: 'mr-1')
+                    = t("buttons.copy")
+                  - if can? :transfer, job_offer
+                    = link_to [:new_transfer, :admin, job_offer], class: "dropdown-item" do
+                      = fa_icon('arrow-right', class: 'mr-1')
+                      = t("buttons.transfer")

@@ -21,27 +21,31 @@
     .row
       .col-12
         - if @job_offers_filtered.any?
-          .card.bg-transparent
-            .card-body
-              .row
-                .col-12.job-offer-title
-                  Métier
-                .col-12.job-offer-bop
-                  BOP
-                .col-12.job-offer-employer-name
-                  Employeur
-                .col-12.job-offer-localization
-                  Secteur
-                .col-12.job-offer-contract-type
-                  Type
-                .col-12.job-offer-contract-duration
-                  Durée
-                .col-12.job-offer-job-applications-number
-                  Candidats
-                .col-12.job-offer-job-applications-most-advanced-state
-                  Étape
-          = render partial: 'job_offer', collection: @job_offers_filtered
-          .mt-5
-            = will_paginate @job_offers_filtered, params: { controller: 'job_offers', action: controller.action_name }
+          = form_tag(export_admin_job_offers_url, data: { controller: 'subcheckbox'}) do
+            .row
+              .col-auto.align-self-center.text-center
+                = check_box_tag :select_all, nil, nil, data: {action: "change->subcheckbox#propagate_downward", "subcheckbox-target": "upcheckbox"}
+              .col
+                .card.bg-transparent
+                  .card-body
+                    .row
+                      .col-6.text-truncate.font-weight-bold.text-primary
+                        Métier
+                      .col-1.text-truncate.font-weight-bold.text-primary
+                        BOP
+                      .col-1.text-truncate.font-weight-bold.text-primary
+                        Employeur
+                      .col-1.text-truncate.font-weight-bold.text-primary
+                        Secteur
+                      .col-1.text-truncate.font-weight-bold.text-primary
+                        Type
+                      .col-1.text-truncate.font-weight-bold.text-primary
+                        Candidats
+                      .col-1.text-truncate.font-weight-bold.text-primary
+                        Étape
+            = render partial: 'job_offer', collection: @job_offers_filtered, locals: { list: true}
+            .mt-5
+              = will_paginate @job_offers_filtered, params: { controller: 'job_offers', action: controller.action_name }
+            = submit_tag 'Exporter', class: "btn btn-primary btn-raised"
         - else
           %em Aucun résultat

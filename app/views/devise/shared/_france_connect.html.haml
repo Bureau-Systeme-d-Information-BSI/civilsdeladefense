@@ -9,7 +9,7 @@
 - if devise_mapping.omniauthable? && resource_class.omniauth_providers.include?(provider)
   .text-center
     %p FranceConnect est la solution proposée par l’État pour sécuriser et simplifier la connexion à vos services en ligne
-    = button_to user_france_connect_omniauth_authorize_path, class: "france-connect-link" do
+    = button_to user_france_connect_omniauth_authorize_path, class: "france-connect-link", "data-turbo": false do
       .normal= image_pack_tag('images/franceconnect-bouton.svg')
       .hover= image_pack_tag('images/franceconnect-bouton-hover.svg')
     .france-connect-details.rf-mt-2w= link_to "Qu’est-ce que FranceConnect ?", "https://franceconnect.gouv.fr/", target: "_blank"

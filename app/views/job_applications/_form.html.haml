@@ -1,6 +1,5 @@
--# Hide button until solution for CORS error is found
--# - unless user_signed_in?
--#   = render "devise/shared/france_connect"
+- unless user_signed_in?
+  = render "devise/shared/france_connect"
 = simple_form_for(@job_application, url: [:send_application, @job_offer], method: :post, data: { turbo: true }) do |f|
   .form-inputs.mt-3
     = f.error_notification

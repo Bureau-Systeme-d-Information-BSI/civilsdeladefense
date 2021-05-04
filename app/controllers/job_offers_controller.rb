@@ -32,6 +32,12 @@ class JobOffersController < ApplicationController
 
   # GET /job_offers/1/apply
   # GET /job_offers/1/apply.json
+  def old_apply
+    redirect_to apply_job_offers_path(id: params[:id]), status: :moved_permanently
+  end
+
+  # GET /job_offers/apply?id=1
+  # GET /job_offers/apply.json?id=1
   def apply
     # Store location if user signup after
     store_location_for(:user, request.fullpath)
@@ -107,11 +113,15 @@ class JobOffersController < ApplicationController
   end
 
   def set_job_offer
+    if params[:id].blank?
+      return redirect_to job_offers_url
+    end
+
     @job_offer = JobOffer.find(params[:id])
     if !@job_offer.published? && !always_display_job_offer(@job_offer)
       raise JobOfferNotAvailableAnymore.new(job_offer_title: @job_offer.title)
     end
-    return redirect_to @job_offer, status: :moved_permanently if params[:id] != @job_offer.slug
+    redirect_to @job_offer, status: :moved_permanently if params[:id] != @job_offer.slug
   end
 
   def job_application_params

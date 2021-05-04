@@ -177,8 +177,11 @@ Rails.application.routes.draw do
   end
 
   resources :job_offers, path: "offresdemploi", only: %i[index show] do
-    member do
+    collection do
       get :apply
+    end
+    member do
+      get :apply, to: "job_offers#old_apply"
       post :send_application
       get :successful
     end

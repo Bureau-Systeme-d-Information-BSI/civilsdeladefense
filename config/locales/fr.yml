@@ -1105,6 +1105,6 @@ fr:
         cancel: "Annuler"
   errors:
     messages:
-      content_type_whitelist_error: "Mauvais format. Seuls sont acceptés les formats PDF pour les documents et PNG/JPG pour les photos."
+      content_type_allowlist_error: "Mauvais format. Seuls sont acceptés les formats PDF pour les documents et PNG/JPG pour les photos."
       carrierwave_integrity_error: is not an allowed file type
       france_connect: Une erreur est survenue, veuillez réessayer.

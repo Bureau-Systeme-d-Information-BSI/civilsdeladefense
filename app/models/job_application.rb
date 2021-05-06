@@ -34,7 +34,7 @@ class JobApplication < ApplicationRecord
 
   before_validation :set_employer
   before_save :compute_notifications_counter
-  before_save :cleanup_rejection_reason, unless: proc { |ja| ja.rejected? }
+  before_save :cleanup_rejection_reason, unless: proc { |ja| ja.rejected_state? }
 
   FINISHED_STATES = %w[rejected phone_meeting_rejected after_meeting_rejected affected].freeze
   REJECTED_STATES = %w[rejected phone_meeting_rejected after_meeting_rejected].freeze

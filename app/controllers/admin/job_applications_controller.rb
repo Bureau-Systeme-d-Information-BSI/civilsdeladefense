@@ -43,8 +43,6 @@ class Admin::JobApplicationsController < Admin::BaseController
   def update
     respond_to do |format|
       if @job_application.update(job_application_params)
-        # profile = @job_application.user.profile
-        # profile&.datalake_to_job_application_profiles!
         format.html { redirect_to [:admin, @job_application], notice: t(".success") }
         format.js do
           @notification = t(".success")

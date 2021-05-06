@@ -36,7 +36,6 @@ class Organization < ApplicationRecord
   # Enums
   INBOUND_EMAIL_CONFIGS = {
     not_available: 0,
-    hidden_headers: 10,
     catch_all: 20
   }.freeze
   enum inbound_email_config: INBOUND_EMAIL_CONFIGS, _prefix: true

@@ -56,12 +56,7 @@ class ProcessInboundMessage
   end
 
   def fetch_original_email_id
-    current_organization = Organization.first
-    if current_organization.inbound_email_config_catch_all?
-      fetch_id_in_to
-    elsif current_organization.inbound_email_config_hidden_headers?
-      fetch_id_in_headers
-    end
+    fetch_id_in_to || fetch_id_in_headers
   end
 
   def fetch_id_in_to
@@ -69,6 +64,7 @@ class ProcessInboundMessage
   end
 
   def fetch_id_in_headers
+    ActiveSupport::Deprecation.warn("Old method to retreive mail id")
     references = message.header["References"]
     message_id_parent = references&.value
     message_id_parent&.scan(/<(.*)@/)&.flatten&.first

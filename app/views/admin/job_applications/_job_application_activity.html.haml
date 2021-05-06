@@ -18,7 +18,7 @@
       .my-3
       - url = [:admin, @job_application]
       = simple_form_for url, method: :patch, remote: true, wrapper: :inline_form, html: { class: 'form-inline auto-submit w-100 px-1 py-1', data: {flash: true}} do |f|
-        = f.input :rejection_reason, collection: RejectionReason.all, label: false, prompt: :translate, wrapper: :custom_multi_select_full_wide
+        = f.input :rejection_reason_id, collection: RejectionReason.all, label: false, prompt: :translate, wrapper: :custom_multi_select_full_wide
 
     .font-weight-bold.text-secondary.mb-3.mt-4
       = fa_icon('forum', class: 'text-secondary')

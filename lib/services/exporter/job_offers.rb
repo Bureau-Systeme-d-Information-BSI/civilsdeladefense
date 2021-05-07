@@ -1,32 +1,7 @@
-require "csv"
-
-class Exporter
-  attr_reader :data, :kind, :user
-
-  def initialize(data, kind, user)
-    @data = [data].flatten
-    @kind = kind.to_sym
-    @user = user
-  end
-
-  def generate
-    CSV.generate do |csv|
-      fill_csv(csv)
-    end
-  end
-
-  private
-
-  def fill_csv(csv)
-    csv << []
-    csv << [Time.zone.now.strftime("%d/%m/%Y %H:%M")]
-    csv << [user.email]
-    csv << []
+class Exporter::JobOffers < Exporter::Base
+  def fill_data(sheet)
     data.map do |line|
-      case kind
-      when :job_offer
-        csv << format_job_offer(line)
-      end
+      sheet.add_row(format_job_offer(line))
     end
   end
 
@@ -46,7 +21,9 @@ class Exporter
       job_offer.category.name,
       job_offer.estimate_monthly_salary_net,
       job_offer.estimate_annual_salary_gross,
-      job_offer.job_offer_actors.map { |a| a.administrator.email }.join(", ")
+      job_offer.is_remote_possible ? "Télétravail" : "",
+      job_offer.benefit&.name,
+      format_actors(job_offer.job_offer_actors)
     ]
   end
 end

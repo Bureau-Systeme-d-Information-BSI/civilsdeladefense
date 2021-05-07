@@ -31,11 +31,17 @@ class Admin::JobOffersController < Admin::BaseController
   alias_method :archived, :index
 
   def export
-    ids = params[:job_offer_ids] || params[:id]
-    job_offers = JobOffer.find(ids)
-    csv = Exporter.new(job_offers, :job_offer, current_administrator).generate
+    job_offer = JobOffer.find(params[:id])
+    file = Exporter::JobOffer.new(job_offer, current_administrator).generate
 
-    send_data csv, filename: "offres-#{Time.zone.now}.csv"
+    send_data file.read, filename: "#{Time.zone.today}_e-recrutement_offres.xlsx"
+  end
+
+  def exports
+    job_offers = JobOffer.where(id: params[:job_offer_ids])
+    file = Exporter::JobOffers.new(job_offers, current_administrator).generate
+
+    send_data file.read, filename: "#{Time.zone.today}_e-recrutement_offre.xlsx"
   end
 
   # GET /admin/job_offers/1

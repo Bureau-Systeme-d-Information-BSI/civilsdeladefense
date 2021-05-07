@@ -21,7 +21,7 @@
     .row
       .col-12
         - if @job_offers_filtered.any?
-          = form_tag(export_admin_job_offers_url, data: { controller: 'subcheckbox'}) do
+          = form_tag(exports_admin_job_offers_url, data: { controller: 'subcheckbox'}, target: "_blank") do
             .row
               .col-auto.align-self-center.text-center
                 = check_box_tag :select_all, nil, nil, data: {action: "change->subcheckbox#propagate_downward", "subcheckbox-target": "upcheckbox"}
@@ -46,6 +46,6 @@
             = render partial: 'job_offer', collection: @job_offers_filtered, locals: { list: true}
             .mt-5
               = will_paginate @job_offers_filtered, params: { controller: 'job_offers', action: controller.action_name }
-            = submit_tag 'Exporter', class: "btn btn-primary btn-raised"
+            = button_tag 'Exporter', type: "submit", class: "btn btn-primary btn-raised"
         - else
           %em Aucun résultat

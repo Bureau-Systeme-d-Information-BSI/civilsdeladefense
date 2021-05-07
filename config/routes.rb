@@ -41,7 +41,7 @@ Rails.application.routes.draw do
     end
     resources :job_offers, path: "offresdemploi" do
       collection do
-        post :export
+        post :exports
         get :add_actor
         get :archived
         JobOffer.aasm.events.map(&:name).each do |event_name|

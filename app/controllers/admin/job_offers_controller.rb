@@ -12,14 +12,6 @@ class Admin::JobOffersController < Admin::BaseController
   def index
     respond_to do |format|
       format.html do
-        @job_offers_unfiltered = action_name == "index" ? @job_offers_active : @job_offers_archived
-        job_offers_nearly_filtered = @job_offers_unfiltered
-        if params[:s].present?
-          job_offers_nearly_filtered = job_offers_nearly_filtered.search_full_text(params[:s])
-            .unscope(:order)
-        end
-        @q = job_offers_nearly_filtered.ransack(params[:q])
-        @job_offers_filtered = @q.result(distinct: true).page(params[:page]).per_page(20)
         render action: :index
       end
       format.js do
@@ -156,6 +148,15 @@ class Admin::JobOffersController < Admin::BaseController
     @employers = Employer.all
     @job_offers_active = @job_offers.admin_index_active
     @job_offers_archived = @job_offers.admin_index_archived
+    @job_offers_unfiltered = action_name == "index" ? @job_offers_active : @job_offers_archived
+    job_offers_nearly_filtered = @job_offers_unfiltered
+    if params[:s].present?
+      job_offers_nearly_filtered = job_offers_nearly_filtered.search_full_text(params[:s])
+        .unscope(:order)
+    end
+    @q = job_offers_nearly_filtered.ransack(params[:q])
+    @job_offers_filtered_unpaged = @q.result(distinct: true)
+    @job_offers_filtered = @job_offers_filtered_unpaged.page(params[:page]).per_page(20)
   end
 
   # Use callbacks to share common setup or constraints between actions.

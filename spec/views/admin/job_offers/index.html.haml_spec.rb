@@ -30,6 +30,7 @@ RSpec.describe "admin/job_offers/index", type: :view do
     ary1.each do |elt|
       collection << elt
     end
+    assign(:job_offers_filtered_unpaged, collection)
     assign(:job_offers_filtered, collection)
     assign(:employers, employers)
   end

@@ -17,11 +17,16 @@ class Admin::UsersController < Admin::InheritedResourcesController
     render action: :index, layout: "admin/pool"
   end
 
-  def exports
+  def multi_select
     users = User.where(id: params[:user_ids])
-    file = Exporter::Users.new(users, current_administrator).generate
-
-    send_data file.read, filename: "#{Time.zone.today}_e-recrutement_vivers.xlsx"
+    if params[:list_id]
+      list = current_administrator.preferred_users_lists.find(params[:list_id])
+      list.update(users: [users, list.users].flatten.uniq)
+      redirect_to [:admin, list]
+    else
+      file = Exporter::Users.new(users, current_administrator).generate
+      send_data file.read, filename: "#{Time.zone.today}_e-recrutement_vivers.xlsx"
+    end
   end
 
   def show

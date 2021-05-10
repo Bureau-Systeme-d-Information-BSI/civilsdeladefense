@@ -76,7 +76,7 @@ Rails.application.routes.draw do
     end
     resources :users, path: "candidats", except: %i[create] do
       collection do
-        post :exports
+        post :multi_select
       end
       member do
         get :listing

@@ -4,15 +4,10 @@
     .h4.text-primary.d-md-flex.align-items-center
       #{@users.count} candidats
     = render partial: 'search'
-    = form_tag(exports_admin_users_url, target: "_blank") do
-      .d-flex.align-items-end{data: { controller: 'subcheckbox'}}
-        %label.h5.text-primary.mr-auto
-          = check_box_tag nil, nil, nil, data: {action: "change->subcheckbox#propagate_downward", "subcheckbox-target": "upcheckbox"}, class: 'mr-2'
+    = form_tag(multi_select_admin_users_url) do
+      .d-flex.align-items-end
+        .h5.text-primary.mr-auto
           = t('.users_filtered', count: @users_filtered.count)
-        .d-none
-          - @users_filtered_unpaged.each do |user|
-            = check_box_tag "user_ids[]", user.id, false, data: {"subcheckbox-target": "downcheckbox"}
-
         - klasses = %w[btn btn-link mb-0]
         = sort_link(@q, :created_at, {}, {class: klasses}) do
           Date de création
@@ -20,12 +15,24 @@
             &nbsp;▼
       .row{data: { controller: 'subcheckbox'}}
         .col-12
+          %label
+            = check_box_tag nil, nil, nil, data: {action: "change->subcheckbox#propagate_downward", "subcheckbox-target": "upcheckbox"}, class: 'mr-2'
+            Tout sélectionner
+          .d-none
+            - @users_filtered_unpaged.each do |user|
+              = check_box_tag "user_ids[]", user.id, false, data: {"subcheckbox-target": "downcheckbox"}
+
+      .row{data: { controller: 'subcheckbox'}}
+        .col-12
           - if @users_filtered.any?
             .row
               .col-auto.align-self-center.text-center
-                = check_box_tag nil, nil, nil, data: {action: "change->subcheckbox#propagate_downward", "subcheckbox-target": "upcheckbox"}
+                %label
+                  = check_box_tag nil, nil, nil, data: {action: "change->subcheckbox#propagate_downward", "subcheckbox-target": "upcheckbox"}, class: 'mr-2'
+                  Sélectionner la page
+            .row
               .col
-                .card.bg-transparent
+                .card.bg-transparent.ml-4
                   .card-body
                     .row
                       .col-12.user-full-name
@@ -37,7 +44,25 @@
             = render partial: 'user', collection: @users_filtered, locals: { list: true}
             .mt-5
               = will_paginate @users_filtered, params: { controller: 'users', action: controller.action_name }
-            .text-right
-              = button_tag 'Exporter', type: "submit", class: "btn btn-primary btn-raised"
+            .row.text-right
+              .col
+                .dropdown.dropdown-checks.form-group
+                  %button.form-control.dropdown-toggle.btn#dropdownAddToList{type: 'button', data: {toggle: 'dropdown'}, aria: {haspopup: true, expanded: false}}
+                    Ajouter à une liste
+                  .dropdown-menu.dropdown-menu-right.allow-focus{aria: {labelledby: 'dropdownAddToList'}}
+                    %ul
+                      - current_administrator.preferred_users_lists.each do |list|
+                        %li
+                          .form-check.form-check-inline.w-100
+                            = radio_button_tag "list_id", list.id, false, class: 'form-check-input', id: list.id
+                            %label.form-check-label.text-truncate.d-block{for: list.id}
+                              = list.name
+                              %small
+                                = surround '(', ')' do
+                                  = list.preferred_users_count
+                    = button_tag 'Ajouter', type: "submit", class: "btn btn-primary btn-raised"
+              .col
+                = button_tag 'Exporter', type: "submit", class: "btn btn-primary btn-raised"
+
           - else
             %em Aucun résultat

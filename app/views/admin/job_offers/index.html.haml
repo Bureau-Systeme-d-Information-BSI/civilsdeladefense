@@ -11,24 +11,31 @@
     = form_tag(exports_admin_job_offers_url, target: "_blank") do
       .d-flex.align-items-end{data: { controller: 'subcheckbox'}}
         %label.h5.text-primary.mr-auto
-          = check_box_tag nil, nil, nil, data: {action: "change->subcheckbox#propagate_downward", "subcheckbox-target": "upcheckbox"}, class: 'mr-2'
           = t('.job_offers_filtered', count: @job_offers_filtered.count)
-        .d-none
-          - @job_offers_filtered_unpaged.each do |job_offer|
-            = check_box_tag "job_offer_ids[]", job_offer.id, false, data: {"subcheckbox-target": "downcheckbox"}
-
         = sort_link(@q, :created_at, {}, {class: %w[btn btn-link mb-0]}) do
           Date de création
           - unless @q.sorts.detect{|x| x.name == 'created_at'}
             &nbsp;▼
       .row{data: { controller: 'subcheckbox'}}
         .col-12
+          %label
+            = check_box_tag nil, nil, nil, data: {action: "change->subcheckbox#propagate_downward", "subcheckbox-target": "upcheckbox"}, class: 'mr-2'
+            Tout sélectionner
+          .d-none
+            - @job_offers_filtered_unpaged.each do |job_offer|
+              = check_box_tag "job_offer_ids[]", job_offer.id, false, data: {"subcheckbox-target": "downcheckbox"}
+
+      .row{data: { controller: 'subcheckbox'}}
+        .col-12
           - if @job_offers_filtered.any?
             .row
               .col-auto.align-self-center.text-center
-                = check_box_tag nil, nil, nil, data: {action: "change->subcheckbox#propagate_downward", "subcheckbox-target": "upcheckbox"}
+                %label
+                  = check_box_tag nil, nil, nil, data: {action: "change->subcheckbox#propagate_downward", "subcheckbox-target": "upcheckbox"}, class: 'mr-2'
+                  Sélectionner la page
+            .row
               .col
-                .card.bg-transparent
+                .card.bg-transparent.ml-4
                   .card-body
                     .row
                       .col-6.text-truncate.font-weight-bold.text-primary

@@ -335,7 +335,7 @@ fr:
         new_job_offer: "Ajouter une offre"
         job_offers_count_index: "%{count} offres"
         job_offers_count_archived: "%{count} offres archivées"
-        job_offers_filtered: "Sélectionner les %{count} résultats de recherche"
+        job_offers_filtered: "%{count} résultats de recherche"
       new:
         title: "Rédaction d'une nouvelle offre"
       edit:

@@ -69,9 +69,15 @@ Rails.application.routes.draw do
     end
     resources :preferred_users
     resources :preferred_users_lists, path: "liste-candidats" do
+      member do
+        get :export
+      end
       resources :preferred_users
     end
     resources :users, path: "candidats", except: %i[create] do
+      collection do
+        post :exports
+      end
       member do
         get :listing
         put :update_listing

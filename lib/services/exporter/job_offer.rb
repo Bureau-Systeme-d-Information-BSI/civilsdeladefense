@@ -1,5 +1,5 @@
 class Exporter::JobOffer < Exporter::Base
-  def fill_data(sheet)
+  def fill_data
     sheet.add_row([remove_html(data.description)])
     sheet.add_row([remove_html(data.recruitment_process)])
     sheet.add_row([remove_html(data.required_profile)])

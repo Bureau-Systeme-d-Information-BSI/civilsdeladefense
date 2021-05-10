@@ -48,6 +48,7 @@
             = render partial: 'job_offer', collection: @job_offers_filtered, locals: { list: true}
             .mt-5
               = will_paginate @job_offers_filtered, params: { controller: 'job_offers', action: controller.action_name }
-            = button_tag 'Exporter', type: "submit", class: "btn btn-primary btn-raised"
+            .text-right
+              = button_tag 'Exporter', type: "submit", class: "btn btn-primary btn-raised"
           - else
             %em Aucun résultat

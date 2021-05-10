@@ -10,10 +10,18 @@ class Admin::UsersController < Admin::InheritedResourcesController
         relation
       end
     }.yield_self { |relation|
-      relation.includes(job_applications: %i[profile]).paginate(page: params[:page], per_page: 25)
+      relation.includes(job_applications: %i[profile])
     }
-
+    @users_filtered_unpaged = @users_filtered
+    @users_filtered = @users_filtered.paginate(page: params[:page], per_page: 25)
     render action: :index, layout: "admin/pool"
+  end
+
+  def exports
+    users = User.where(id: params[:user_ids])
+    file = Exporter::Users.new(users, current_administrator).generate
+
+    send_data file.read, filename: "#{Time.zone.today}_e-recrutement_vivers.xlsx"
   end
 
   def show

@@ -1,29 +1,32 @@
 class Exporter::Base
-  attr_reader :data, :user
+  attr_reader :data, :user, :name, :sheet
 
-  def initialize(data, user)
+  def initialize(data, user, name: nil)
     @data = data
     @user = user
+    @name = name
   end
 
   def generate
     p = Axlsx::Package.new
     p.workbook.add_worksheet do |sheet|
-      basic_data(sheet)
-      fill_data(sheet)
+      @sheet = sheet
+      basic_data
+      fill_data
     end
     p.to_stream
   end
 
-  def fill_data(sheet)
+  def fill_data
   end
 
   private
 
-  def basic_data(sheet)
+  def basic_data
     sheet.add_row([])
     sheet.add_row([Time.zone.now.strftime("%d/%m/%Y %H:%M")])
     sheet.add_row([user.email])
+    sheet.add_row([name]) if name
     sheet.add_row([data.count]) if data.respond_to?(:count)
     sheet.add_row([])
   end

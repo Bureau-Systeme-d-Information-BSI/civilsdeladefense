@@ -4,7 +4,9 @@
     .d-flex.align-items-center
       .h4.text-primary.d-md-flex.align-items-center.mr-auto
         = t('.preferred_users_html', count: @preferred_users.count, list_name: @preferred_users_list.name)
-      = link_to [:edit, :admin, :preferred_users_list], class: 'btn btn-primary btn-raised' do
+      = link_to [:export, :admin, :preferred_users_list], class: 'btn btn-primary', target: "_blank" do
+        = Exporter
+      = link_to [:edit, :admin, :preferred_users_list], class: 'btn btn-primary btn-raised ml-4' do
         = t('buttons.edit')
       = link_to [:admin, @preferred_users_list], method: :delete, data: {confirm: t('buttons.confirm'), turbolinks: false}, class: 'btn btn-danger btn-raised ml-4' do
         = t('buttons.delete')

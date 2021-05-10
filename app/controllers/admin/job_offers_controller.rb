@@ -26,14 +26,14 @@ class Admin::JobOffersController < Admin::BaseController
     job_offer = JobOffer.find(params[:id])
     file = Exporter::JobOffer.new(job_offer, current_administrator).generate
 
-    send_data file.read, filename: "#{Time.zone.today}_e-recrutement_offres.xlsx"
+    send_data file.read, filename: "#{Time.zone.today}_e-recrutement_offre.xlsx"
   end
 
   def exports
     job_offers = JobOffer.where(id: params[:job_offer_ids])
     file = Exporter::JobOffers.new(job_offers, current_administrator).generate
 
-    send_data file.read, filename: "#{Time.zone.today}_e-recrutement_offre.xlsx"
+    send_data file.read, filename: "#{Time.zone.today}_e-recrutement_offres.xlsx"
   end
 
   # GET /admin/job_offers/1

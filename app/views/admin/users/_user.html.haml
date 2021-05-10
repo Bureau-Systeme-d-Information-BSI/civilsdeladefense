@@ -1,33 +1,38 @@
 - last_job_application = user.last_job_application
-.card.job-application.mt-3{id: dom_id(user)}
-  .card-body
-    = link_to [:admin, user] do
-      .row
-        .col-12.user-full-name
-          .d-flex
-            = image_user_tag user.photo, width: 32, class: 'mr-2'
-            = user.full_name
-        .col-12.personal-profile-current-position
-          - current_position = user&.current_position
-          - if current_position
-            %span{title: current_position}
-              = current_position
-        .col-12.user-job-applications-count
-          = user.job_applications_count
-  .card-footer.d-flex.flex-column.flex-md-row
-    .mr-auto
-      - if last_job_application
-        - klass = badge_class(last_job_application.state.to_sym)
-        %small.badge.text-white.text-uppercase.text-nowrap.mr-1{class: klass}
-          = last_job_application.aasm.human_state
-        %small
-          = t('admin.job_applications.job_application.applied_on', date: I18n.l(last_job_application.created_at.to_date))
-      - else
-        %small
-          = t('.subscribed_on', date: I18n.l(user.created_at.to_date))
-    - if can?(:manage, PreferredUsersList)
-      %ul.list-inline.mb-0.actions.mt-2.mt-md-0
-        %li.list-inline-item
-          = link_to listing_admin_user_path(user), role: :button do
-            = fa_icon 'star'
-            = t('.my_preferred_user_lists')
+.row
+  - if defined?(list)
+    .col-auto.align-self-center.text-center
+      = check_box_tag "user_ids[]", user.id, false, data: {action: "change->subcheckbox#propagate_upward", "subcheckbox-target": "downcheckbox"}
+  .col
+    .card.job-application.mt-3{id: dom_id(user)}
+      .card-body
+        = link_to [:admin, user] do
+          .row
+            .col-12.user-full-name
+              .d-flex
+                = image_user_tag user.photo, width: 32, class: 'mr-2'
+                = user.full_name
+            .col-12.personal-profile-current-position
+              - current_position = user&.current_position
+              - if current_position
+                %span{title: current_position}
+                  = current_position
+            .col-12.user-job-applications-count
+              = user.job_applications_count
+      .card-footer.d-flex.flex-column.flex-md-row
+        .mr-auto
+          - if last_job_application
+            - klass = badge_class(last_job_application.state.to_sym)
+            %small.badge.text-white.text-uppercase.text-nowrap.mr-1{class: klass}
+              = last_job_application.aasm.human_state
+            %small
+              = t('admin.job_applications.job_application.applied_on', date: I18n.l(last_job_application.created_at.to_date))
+          - else
+            %small
+              = t('.subscribed_on', date: I18n.l(user.created_at.to_date))
+        - if can?(:manage, PreferredUsersList)
+          %ul.list-inline.mb-0.actions.mt-2.mt-md-0
+            %li.list-inline-item
+              = link_to listing_admin_user_path(user), role: :button do
+                = fa_icon 'star'
+                = t('.my_preferred_user_lists')

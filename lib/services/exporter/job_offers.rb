@@ -1,5 +1,5 @@
 class Exporter::JobOffers < Exporter::Base
-  def fill_data(sheet)
+  def fill_data
     data.map do |line|
       sheet.add_row(format_job_offer(line))
     end

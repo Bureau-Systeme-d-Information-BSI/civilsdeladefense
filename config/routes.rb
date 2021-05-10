@@ -128,6 +128,7 @@ Rails.application.routes.draw do
       end
       resources :administrators, path: "administrateurs", except: %i[destroy] do
         collection do
+          get :export
           get :inactive
         end
         member do

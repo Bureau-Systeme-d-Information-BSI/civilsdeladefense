@@ -11,6 +11,13 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
     @administrators_count = @administrators.size
   end
 
+  def export
+    administrators = Administrator.all
+    file = Exporter::Administrator.new(administrators, current_administrator).generate
+
+    send_data file.read, filename: "#{Time.zone.today}_e-recrutement_admins.xlsx"
+  end
+
   # GET /admin/settings/administrators/inactive
   def inactive
     @administrators = @administrators_inactive

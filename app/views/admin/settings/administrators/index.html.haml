@@ -1,11 +1,15 @@
 - @page_title = t('.title')
 .card
   .card-header
-    .card-title.d-md-flex.align-items-center
+    .card-title.align-items-center
+      .float-right
+        = link_to [:export, :admin, :settings, :administrators], class: 'btn btn-primary btn-raised ml-auto mt-2 mt-md-0 mb-0 mr-3' do
+          = fa_icon 'arrow-down', class: 'mr-1'
+          = Exporter
+        = link_to [:new, :admin, :settings, :administrator], class: 'btn btn-primary btn-raised ml-auto mt-2 mt-md-0 mb-0' do
+          = fa_icon 'plus', class: 'mr-1'
+          = t('.add')
       = t('.card_title', count: @administrators_count)
-      = link_to [:new, :admin, :settings, :administrator], class: 'btn btn-primary btn-raised ml-auto mt-2 mt-md-0 mb-0' do
-        = fa_icon 'plus', class: 'mr-1'
-        = t('.add')
   .card-body
     .d-flex
       %ul.nav.nav-tabs{role: :tablist}

@@ -45,4 +45,10 @@ class Exporter::Base
   def remove_html(value)
     ActionView::Base.full_sanitizer.sanitize(value)
   end
+
+  def localize(date)
+    return if date.blank?
+
+    I18n.l(date)
+  end
 end

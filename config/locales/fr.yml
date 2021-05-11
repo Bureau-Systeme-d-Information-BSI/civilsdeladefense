@@ -459,6 +459,12 @@ fr:
         account: "Mon compte"
         logout: "Déconnexion"
     users:
+      send_job_offer:
+        success: "Offre envoyée au candidat"
+        error: "L'offre n'a pa pu être envoyé, veuillez vérifier la référence"
+      multi_select:
+        success: "Offre envoyée aux candidats"
+        error: "L'offre n'a pa pu être envoyé, veuillez vérifier la référence"
       actions:
         title: "Actions"
       destroy:
@@ -901,6 +907,9 @@ fr:
       form:
         title: "Note personnelle"
     preferred_users_lists:
+      send_job_offer:
+        success: "Offre envoyée aux candidats"
+        error: "L'offre n'a pa pu être envoyé, veuillez vérifier la référence"
       form:
         title_new: "Ajout d'une nouvelle liste de candidats"
         title_edit: "Édition d'une liste de candidats"

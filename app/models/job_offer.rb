@@ -244,6 +244,12 @@ class JobOffer < ApplicationRecord
     job_offer_actors.where(administrator: owner).update_all(administrator_id: administrator.id)
     update!(owner: administrator)
   end
+
+  def send_to_users(users)
+    users.each do |user|
+      ApplicantNotificationsMailer.send_job_offer(user, self).deliver_now
+    end
+  end
 end
 
 # == Schema Information

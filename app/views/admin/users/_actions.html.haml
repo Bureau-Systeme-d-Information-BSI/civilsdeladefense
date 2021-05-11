@@ -3,6 +3,17 @@
     = fa_icon('settings', class: 'text-secondary')
     = t('.title')
 
+  = form_tag [:send_job_offer, :admin, user] do
+    .form-group.input-group
+      .row
+        .col-12
+          = label_tag "job_offer_identifier", "Envoyer une offre par email au candidat", class: "form-control-label"
+      .row
+        .col-8
+          = text_field_tag 'job_offer_identifier', nil, class: "form-control", placeholder: "Référence de l'offre", required: true
+        .col-4
+          = submit_tag 'Envoyer', class: 'btn btn-primary btn-raised'
+
   - if user.suspended?
     .mb-3
       %span

@@ -29,6 +29,14 @@ class Admin::UsersController < Admin::InheritedResourcesController
     elsif params.key?("export")
       file = Exporter::Users.new(users, current_administrator).generate
       send_data file.read, filename: "#{Time.zone.today}_e-recrutement_vivers.xlsx"
+    elsif params.key?("send_job_offer")
+      job_offer = JobOffer.find_by(identifier: params["job_offer_identifier"])
+
+      if job_offer&.send_to_users(users)
+        redirect_back(fallback_location: [:admin, :users], notice: t(".success"))
+      else
+        redirect_back(fallback_location: [:admin, :users], notice: t(".error"))
+      end
     end
   end
 
@@ -95,6 +103,17 @@ class Admin::UsersController < Admin::InheritedResourcesController
       reason = @user.errors.full_messages.join(", ")
       msg = t(".failure", reason: reason)
       redirect_back(fallback_location: %i[admin users], notice: msg)
+    end
+  end
+
+  def send_job_offer
+    user = User.find(params[:id])
+    job_offer = JobOffer.find_by(identifier: params["job_offer_identifier"])
+
+    if job_offer&.send_to_users([user])
+      redirect_back(fallback_location: [:admin, user], notice: t(".success"))
+    else
+      redirect_back(fallback_location: [:admin, user], notice: t(".error"))
     end
   end
 

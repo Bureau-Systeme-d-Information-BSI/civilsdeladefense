@@ -46,7 +46,7 @@
               = will_paginate @users_filtered, params: { controller: 'users', action: controller.action_name }
             .row.text-right
               .col
-                .dropdown.dropdown-checks.form-group
+                .dropdown.dropdown-checks.form-group.w-50
                   %button.form-control.dropdown-toggle.btn#dropdownAddToList{type: 'button', data: {toggle: 'dropdown'}, aria: {haspopup: true, expanded: false}}
                     Ajouter à une liste
                   .dropdown-menu.dropdown-menu-right.allow-focus{aria: {labelledby: 'dropdownAddToList'}}
@@ -54,15 +54,15 @@
                       - current_administrator.preferred_users_lists.each do |list|
                         %li
                           .form-check.form-check-inline.w-100
-                            = radio_button_tag "list_id", list.id, false, class: 'form-check-input', id: list.id
+                            = check_box_tag "list_ids[]", list.id, false, class: 'form-check-input', id: list.id
                             %label.form-check-label.text-truncate.d-block{for: list.id}
                               = list.name
                               %small
                                 = surround '(', ')' do
                                   = list.preferred_users_count
-                    = button_tag 'Ajouter', type: "submit", class: "btn btn-primary btn-raised"
+                    = button_tag 'Ajouter', type: "submit", class: "btn btn-primary btn-raised", name: "add_to_list"
               .col
-                = button_tag 'Exporter', type: "submit", class: "btn btn-primary btn-raised"
+                = button_tag 'Exporter', type: "submit", class: "btn btn-primary btn-raised", name: "export"
 
           - else
             %em Aucun résultat

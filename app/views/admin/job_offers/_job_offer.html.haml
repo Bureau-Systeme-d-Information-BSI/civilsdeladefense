@@ -67,6 +67,15 @@
                   = link_to [:new, :admin, :job_offer, {job_offer_id: job_offer.to_param}], class: "dropdown-item" do
                     = fa_icon('content-copy', class: 'mr-1')
                     = t("buttons.copy")
+                  - if can? :feature, :job_offer
+                    - if job_offer.featured
+                      = link_to [:unfeature, :admin, job_offer], class: "dropdown-item", method: :post do
+                        = fa_icon('star', class: 'mr-1')
+                        Retirer de la une
+                    - else
+                      = link_to [:feature, :admin, job_offer], class: "dropdown-item", method: :post do
+                        = fa_icon('star', class: 'mr-1')
+                        Afficher à la une
                   - if can? :transfer, job_offer
                     = link_to [:new_transfer, :admin, job_offer], class: "dropdown-item" do
                       = fa_icon('arrow-right', class: 'mr-1')

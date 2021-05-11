@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_19_123021) do
+ActiveRecord::Schema.define(version: 2021_05_11_143219) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -373,6 +373,7 @@ ActiveRecord::Schema.define(version: 2021_04_19_123021) do
     t.uuid "organization_id"
     t.uuid "benefit_id"
     t.uuid "contract_duration_id"
+    t.boolean "featured", default: false
     t.index ["benefit_id"], name: "index_job_offers_on_benefit_id"
     t.index ["bop_id"], name: "index_job_offers_on_bop_id"
     t.index ["category_id"], name: "index_job_offers_on_category_id"

@@ -66,6 +66,7 @@ class JobOffer < ApplicationRecord
   scope :admin_index, -> { includes(:bop, :contract_type, :employer, :job_offer_actors) }
   scope :admin_index_active, -> { admin_index.where.not(state: :archived) }
   scope :admin_index_archived, -> { admin_index.archived }
+  scope :admin_index_featured, -> { admin_index.where(featured: true) }
   scope :publicly_visible, -> { where(state: :published) }
   scope :search_import, -> { includes(*SETTINGS) }
 
@@ -267,6 +268,7 @@ end
 #  duration_contract                                :string
 #  estimate_annual_salary_gross                     :string
 #  estimate_monthly_salary_net                      :string
+#  featured                                         :boolean          default(FALSE)
 #  identifier                                       :string
 #  initial_job_applications_count                   :integer          default(0), not null
 #  is_remote_possible                               :boolean

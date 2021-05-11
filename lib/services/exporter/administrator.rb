@@ -1,5 +1,17 @@
 class Exporter::Administrator < Exporter::Base
   def fill_data
+    sheet.add_row([
+      "Prénom",
+      "Nom",
+      "Email",
+      "Employeur",
+      "État",
+      "Role",
+      "Date de création de compte",
+      "Date de la dernière connexion",
+      "Agent à l'origine de l'invitation",
+      "Liste des offres"
+    ])
     data.each do |line|
       sheet.add_row(format_user(line))
     end

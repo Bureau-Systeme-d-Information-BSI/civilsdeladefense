@@ -1,5 +1,24 @@
 class Exporter::JobOffers < Exporter::Base
   def fill_data
+    sheet.add_row([
+      "Référence",
+      "Titre",
+      "Employeur",
+      "Secteur",
+      "Type",
+      "Durée",
+      "Nombre de candidatures",
+      "Status",
+      "Candidature la plus avancée",
+      "Date de publication",
+      "Lieu",
+      "Catégorie",
+      "Salaire NET",
+      "Salaire BRUT",
+      "Télétravail",
+      "Option",
+      "Acteurs"
+    ])
     data.map do |line|
       sheet.add_row(format_job_offer(line))
     end

@@ -2,13 +2,13 @@ class Exporter::JobOffers < Exporter::Base
   def fill_data
     sheet.add_row([
       "Référence",
-      "Titre",
+      "Intitulé",
       "Employeur",
       "Secteur",
       "Type",
       "Durée",
       "Nombre de candidatures",
-      "Status",
+      "Statut",
       "Candidature la plus avancée",
       "Date de publication",
       "Lieu",

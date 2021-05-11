@@ -45,6 +45,7 @@ Rails.application.routes.draw do
     end
     resources :job_offers, path: "offresdemploi" do
       collection do
+        post :exports
         get :add_actor
         get :archived
         JobOffer.aasm.events.map(&:name).each do |event_name|
@@ -53,6 +54,7 @@ Rails.application.routes.draw do
         end
       end
       member do
+        get :export
         get :board, :stats, :new_transfer
         post :transfer
         JobOffer.aasm.events.map(&:name).each do |event_name|
@@ -71,9 +73,15 @@ Rails.application.routes.draw do
     end
     resources :preferred_users
     resources :preferred_users_lists, path: "liste-candidats" do
+      member do
+        get :export
+      end
       resources :preferred_users
     end
     resources :users, path: "candidats", except: %i[create] do
+      collection do
+        post :multi_select
+      end
       member do
         get :listing
         put :update_listing
@@ -124,6 +132,7 @@ Rails.application.routes.draw do
       end
       resources :administrators, path: "administrateurs", except: %i[destroy] do
         collection do
+          get :export
           get :inactive
         end
         member do

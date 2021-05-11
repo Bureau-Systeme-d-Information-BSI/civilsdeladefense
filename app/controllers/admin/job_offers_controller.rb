@@ -12,14 +12,6 @@ class Admin::JobOffersController < Admin::BaseController
   def index
     respond_to do |format|
       format.html do
-        @job_offers_unfiltered = action_name == "index" ? @job_offers_active : @job_offers_archived
-        job_offers_nearly_filtered = @job_offers_unfiltered
-        if params[:s].present?
-          job_offers_nearly_filtered = job_offers_nearly_filtered.search_full_text(params[:s])
-            .unscope(:order)
-        end
-        @q = job_offers_nearly_filtered.ransack(params[:q])
-        @job_offers_filtered = @q.result(distinct: true).page(params[:page]).per_page(20)
         render action: :index
       end
       format.js do
@@ -29,6 +21,20 @@ class Admin::JobOffersController < Admin::BaseController
   end
 
   alias_method :archived, :index
+
+  def export
+    job_offer = JobOffer.find(params[:id])
+    file = Exporter::JobOffer.new(job_offer, current_administrator).generate
+
+    send_data file.read, filename: "#{Time.zone.today}_e-recrutement_offre.xlsx"
+  end
+
+  def exports
+    job_offers = JobOffer.where(id: params[:job_offer_ids])
+    file = Exporter::JobOffers.new(job_offers, current_administrator).generate
+
+    send_data file.read, filename: "#{Time.zone.today}_e-recrutement_offres.xlsx"
+  end
 
   # GET /admin/job_offers/1
   # GET /admin/job_offers/1.json
@@ -142,6 +148,15 @@ class Admin::JobOffersController < Admin::BaseController
     @employers = Employer.all
     @job_offers_active = @job_offers.admin_index_active
     @job_offers_archived = @job_offers.admin_index_archived
+    @job_offers_unfiltered = action_name == "index" ? @job_offers_active : @job_offers_archived
+    job_offers_nearly_filtered = @job_offers_unfiltered
+    if params[:s].present?
+      job_offers_nearly_filtered = job_offers_nearly_filtered.search_full_text(params[:s])
+        .unscope(:order)
+    end
+    @q = job_offers_nearly_filtered.ransack(params[:q])
+    @job_offers_filtered_unpaged = @q.result(distinct: true)
+    @job_offers_filtered = @job_offers_filtered_unpaged.page(params[:page]).per_page(20)
   end
 
   # Use callbacks to share common setup or constraints between actions.

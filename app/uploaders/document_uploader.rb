@@ -3,7 +3,7 @@
 class DocumentUploader < CommonUploader
   encrypt unless Rails.env.test? || Rails.env.cucumber?
 
-  def content_type_whitelist
+  def content_type_allowlist
     %r{application/pdf}
   end
 end

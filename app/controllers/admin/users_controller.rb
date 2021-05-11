@@ -10,10 +10,26 @@ class Admin::UsersController < Admin::InheritedResourcesController
         relation
       end
     }.yield_self { |relation|
-      relation.includes(job_applications: %i[profile]).paginate(page: params[:page], per_page: 25)
+      relation.includes(job_applications: %i[profile])
     }
-
+    @users_filtered_unpaged = @users_filtered
+    @users_filtered = @users_filtered.paginate(page: params[:page], per_page: 25)
     render action: :index, layout: "admin/pool"
+  end
+
+  def multi_select
+    users = User.where(id: params[:user_ids])
+    if params.key?("add_to_list")
+      lists = current_administrator.preferred_users_lists.where(id: params[:list_ids])
+      lists.each do |list|
+        list.update(users: [users, list.users].flatten.uniq)
+      end
+
+      redirect_to [:admin, lists.first]
+    elsif params.key?("export")
+      file = Exporter::Users.new(users, current_administrator).generate
+      send_data file.read, filename: "#{Time.zone.today}_e-recrutement_vivers.xlsx"
+    end
   end
 
   def show

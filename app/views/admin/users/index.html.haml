@@ -4,27 +4,65 @@
     .h4.text-primary.d-md-flex.align-items-center
       #{@users.count} candidats
     = render partial: 'search'
-    .d-flex.align-items-end
-      .h5.text-primary.mr-auto= t('.users_filtered', count: @users_filtered.count)
-      - klasses = %w[btn btn-link mb-0]
-      = sort_link(@q, :created_at, {}, {class: klasses}) do
-        Date de création
-        - unless @q.sorts.detect{|x| x.name == 'created_at'}
-          &nbsp;▼
-    .row
-      .col-12
-        - if @users_filtered.any?
-          .card.bg-transparent
-            .card-body
-              .row
-                .col-12.user-full-name
-                  = User.human_attribute_name(:name)
-                .col-12.personal-profile-current-position
-                  = User.human_attribute_name(:current_position)
-                .col-12.user-job-applications-count
-                  Candidatures
-          = render partial: 'user', collection: @users_filtered
-          .mt-5
-            = will_paginate @users_filtered, params: { controller: 'users', action: controller.action_name }
-        - else
-          %em Aucun résultat
+    = form_tag(multi_select_admin_users_url) do
+      .d-flex.align-items-end
+        .h5.text-primary.mr-auto
+          = t('.users_filtered', count: @users_filtered.count)
+        - klasses = %w[btn btn-link mb-0]
+        = sort_link(@q, :created_at, {}, {class: klasses}) do
+          Date de création
+          - unless @q.sorts.detect{|x| x.name == 'created_at'}
+            &nbsp;▼
+      .row{data: { controller: 'subcheckbox'}}
+        .col-12
+          %label
+            = check_box_tag nil, nil, nil, data: {action: "change->subcheckbox#propagate_downward", "subcheckbox-target": "upcheckbox"}, class: 'mr-2'
+            Tout sélectionner
+          .d-none
+            - @users_filtered_unpaged.each do |user|
+              = check_box_tag "user_ids[]", user.id, false, data: {"subcheckbox-target": "downcheckbox"}
+
+      .row{data: { controller: 'subcheckbox'}}
+        .col-12
+          - if @users_filtered.any?
+            .row
+              .col-auto.align-self-center.text-center
+                %label
+                  = check_box_tag nil, nil, nil, data: {action: "change->subcheckbox#propagate_downward", "subcheckbox-target": "upcheckbox"}, class: 'mr-2'
+                  Sélectionner la page
+            .row
+              .col
+                .card.bg-transparent.ml-4
+                  .card-body
+                    .row
+                      .col-12.user-full-name
+                        = User.human_attribute_name(:name)
+                      .col-12.personal-profile-current-position
+                        = User.human_attribute_name(:current_position)
+                      .col-12.user-job-applications-count
+                        Candidatures
+            = render partial: 'user', collection: @users_filtered, locals: { list: true}
+            .mt-5
+              = will_paginate @users_filtered, params: { controller: 'users', action: controller.action_name }
+            .row.text-right
+              .col
+                .dropdown.dropdown-checks.form-group.w-50
+                  %button.form-control.dropdown-toggle.btn#dropdownAddToList{type: 'button', data: {toggle: 'dropdown'}, aria: {haspopup: true, expanded: false}}
+                    Ajouter à une liste
+                  .dropdown-menu.dropdown-menu-right.allow-focus{aria: {labelledby: 'dropdownAddToList'}}
+                    %ul
+                      - current_administrator.preferred_users_lists.each do |list|
+                        %li
+                          .form-check.form-check-inline.w-100
+                            = check_box_tag "list_ids[]", list.id, false, class: 'form-check-input', id: list.id
+                            %label.form-check-label.text-truncate.d-block{for: list.id}
+                              = list.name
+                              %small
+                                = surround '(', ')' do
+                                  = list.preferred_users_count
+                    = button_tag 'Ajouter', type: "submit", class: "btn btn-primary btn-raised", name: "add_to_list"
+              .col
+                = button_tag 'Exporter', type: "submit", class: "btn btn-primary btn-raised", name: "export"
+
+          - else
+            %em Aucun résultat

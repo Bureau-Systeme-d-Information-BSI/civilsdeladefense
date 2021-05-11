@@ -58,6 +58,13 @@ class Admin::PreferredUsersListsController < Admin::InheritedResourcesController
     render action: :show, layout: "admin/pool"
   end
 
+  def export
+    preferred_users_list = PreferredUsersList.find(params[:id])
+    file = Exporter::Users.new(preferred_users_list.users, current_administrator, name: preferred_users_list.name).generate
+
+    send_data file.read, filename: "#{Time.zone.today}_e-recrutement_vivers.xlsx"
+  end
+
   def destroy
     @preferred_users_list.destroy
 

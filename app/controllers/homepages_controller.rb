@@ -8,7 +8,7 @@ class HomepagesController < ApplicationController
       .publicly_visible
       .includes(:contract_type)
       .order(published_at: :asc)
-    @job_offers_selected = root_rel.limit(3)
+    @job_offers_selected = root_rel.where(featured: true)
     @job_offers_last = root_rel.limit(6)
 
     @page = current_organization.pages.where(parent_id: nil).first

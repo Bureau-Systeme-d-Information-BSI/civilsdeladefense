@@ -1,0 +1,37 @@
+.card
+  .card-body
+    .d-flex.flex-column.flex-md-row.align-items-start.align-items-md-center
+      .h3.text-primary.mr-auto= "#{@job_offers_unfiltered.count} offre(s) à la Une"
+    = form_tag [:feature, :admin, :job_offers], method: :post do
+      .row.mt-2.mb-3
+        .col-3
+          = text_field_tag 'job_offer_identifier', nil, class: "form-control", placeholder: "Référence de l'offre", required: true
+        .col-2
+          = submit_tag 'Mettre à la une', class: 'btn btn-primary btn-raised'
+    .row
+      .col-12
+        - if @job_offers_filtered.any?
+          .row
+            .col
+              .card.bg-transparent.ml-4
+                .card-body
+                  .row
+                    .col-6.text-truncate.font-weight-bold.text-primary
+                      Métier
+                    .col-1.text-truncate.font-weight-bold.text-primary
+                      BOP
+                    .col-1.text-truncate.font-weight-bold.text-primary
+                      Employeur
+                    .col-1.text-truncate.font-weight-bold.text-primary
+                      Secteur
+                    .col-1.text-truncate.font-weight-bold.text-primary
+                      Type
+                    .col-1.text-truncate.font-weight-bold.text-primary
+                      Candidats
+                    .col-1.text-truncate.font-weight-bold.text-primary
+                      Étape
+          = render partial: 'job_offer', collection: @job_offers_filtered
+          .mt-5
+            = will_paginate @job_offers_filtered, params: { controller: 'job_offers', action: controller.action_name }
+        - else
+          %em Aucun résultat

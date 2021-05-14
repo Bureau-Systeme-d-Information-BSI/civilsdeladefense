@@ -52,9 +52,11 @@ class JobOffersController < ApplicationController
       if @job_application.profile.profile_foreign_languages.to_a.size.zero?
         @job_application.profile.profile_foreign_languages.build
       end
+      @job_application.user.department_users.build if @job_application.user.department_users.blank?
     else
       @job_application = JobApplication.new
       @job_application.user = user_signed_in? ? current_user : User.new
+      @job_application.user.department_users.build
       @job_application.build_profile
       @job_application.profile.profile_foreign_languages.build
     end
@@ -136,6 +138,9 @@ class JobOffersController < ApplicationController
     base_user_attributes = %i[
       photo email password password_confirmation terms_of_service certify_majority
     ]
+    user_attributes << {
+      department_users_attributes: %i[department_id]
+    }
     user_attributes += base_user_attributes unless user_signed_in?
     permitted_params << {user_attributes: user_attributes, profile_attributes: profile_attributes}
     job_application_files_attributes = %i[content job_application_file_type_id job_application_file_existing_id]

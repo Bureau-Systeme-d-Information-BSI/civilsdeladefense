@@ -60,6 +60,8 @@ class JobOffer < ApplicationRecord
   validates :contract_duration_id, presence: true, if: -> { contract_type&.duration }
   validates :contract_duration_id, absence: true, unless: -> { contract_type&.duration }
   validates :title, format: {with: %r{\A.*F/H\z}, message: :f_h}
+  validates :title, format: {without: %r{\A.*\(.*\z}, message: :brackets}
+  validates :title, format: {without: %r{\A.*\).*\z}, message: :brackets}
 
   ## Scopes
   default_scope { order(created_at: :desc) }

@@ -6,7 +6,7 @@ module JobOfferStateTimestamp
 
   def set_timestamp
     to = aasm.to_state
-    send("#{to}_at=", updated_at) if %i[published archived suspended].include?(to)
+    send("#{to}_at=", updated_at || Time.zone.now) if %i[published archived suspended].include?(to)
   end
 
   def rebuild_published_timestamp!
@@ -25,9 +25,9 @@ module JobOfferStateTimestamp
     enum_val = JobOffer.states[state_name]
     target_audit = audits.reorder(version: :desc).detect { |audit|
       state_val = audit.audited_changes["state"]
-      return false if state_val.nil?
-
       case state_val
+      when nil
+        false
       when Array
         state_val.last == enum_val
       when String

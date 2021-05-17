@@ -5,7 +5,7 @@
       .rf-grid-row.rf-grid-row--gutters
         .rf-col-12
           - name = "#{form}[department_users_attributes][index][department_id]"
-          = label_tag name, "Département"
+          = label_tag name, "Souhait(s) géographique(s) (département)"
           = select_tag name, options_from_collection_for_select(Department.all, "id", "label"), class: "rf-select", include_blank: true
     .rf-col-1.text-center.rf-mt-4w
       %button.blank_button.rf-fi-delete-line{data: { action: 'click->duplicator#remove' }}
@@ -16,9 +16,9 @@
           .rf-grid-row.rf-grid-row--gutters
             .rf-col-12
               - name = "#{form}[department_users_attributes][#{index}][department_id]"
-              = label_tag name, "Département"
+              = label_tag name, "Souhait(s) géographique(s) (département)"
               = select_tag name, options_from_collection_for_select(Department.all, "id", "label", selected: department_user.department_id), class: "rf-select", include_blank: true
         .rf-col-1.text-center.rf-mt-4w
           %button.blank_button.rf-fi-delete-line{data: { action: 'click->duplicator#remove' }}
 
-  = button_tag("Ajouter un département", type: :button, class: 'rf-btn rf-mb-3w', data: { action: 'click->duplicator#duplicate' })
+  = button_tag("Ajouter un souhait géographique", type: :button, class: 'rf-btn rf-mb-3w', data: { action: 'click->duplicator#duplicate' })

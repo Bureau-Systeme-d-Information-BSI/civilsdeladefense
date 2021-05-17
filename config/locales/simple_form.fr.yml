@@ -34,6 +34,7 @@ fr:
         age_range: "Tranche d'âge"
         availability_range: "Disponibilité"
         body: "Corps du courriel"
+        department: "Souhait(s) géographique(s) (département)"
         city: "Ville"
         country: "Pays"
         current_position: "Poste actuel"

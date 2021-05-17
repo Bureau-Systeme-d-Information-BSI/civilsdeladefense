@@ -18,6 +18,8 @@
           = render partial: 'filter_availability_range'
         .col-12.col-sm-3
           = render partial: 'filter_has_corporate_experience'
+        .col-12.col-sm-3
+          = render partial: 'department'
       .d-flex.flex-row-reverse.align-items-center
         = submit_tag t('buttons.search'), name: nil, class: 'btn btn-primary btn-raised btn-small'
         = link_to 'Réinitialiser', url_for, class: 'mr-3 text-grey text-underline'

@@ -135,6 +135,7 @@ class JobOffersController < ApplicationController
     user_attributes = %i[first_name last_name current_position phone website_url]
     base_user_attributes = %i[
       photo email password password_confirmation terms_of_service certify_majority
+      receive_job_offer_mails
     ]
     user_attributes += base_user_attributes unless user_signed_in?
     permitted_params << {user_attributes: user_attributes, profile_attributes: profile_attributes}

@@ -52,6 +52,8 @@ class ApplicantNotificationsMailer < ApplicationMailer
   end
 
   def send_job_offer(user, job_offer)
+    return unless user.receive_job_offer_mails
+
     @user = user
     @job_offer = job_offer
 

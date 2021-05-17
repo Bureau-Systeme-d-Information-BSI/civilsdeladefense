@@ -232,14 +232,14 @@ ActiveRecord::Schema.define(version: 2021_05_11_143219) do
     t.index ["position"], name: "index_experience_levels_on_position"
   end
 
-  create_table "foreign_language_levels", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "foreign_language_levels", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.integer "position"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "foreign_languages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "foreign_languages", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.integer "position"
     t.datetime "created_at", precision: 6, null: false
@@ -555,7 +555,7 @@ ActiveRecord::Schema.define(version: 2021_05_11_143219) do
     t.index ["position"], name: "index_professional_categories_on_position"
   end
 
-  create_table "profile_foreign_languages", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "profile_foreign_languages", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "profile_id", null: false
     t.uuid "foreign_language_id", null: false
     t.uuid "foreign_language_level_id", null: false

@@ -7,23 +7,28 @@ class Exporter::Users < Exporter::Base
 
   def format_user(user, index)
     last_job_application = user.last_job_application
-    sheet.add_row(["Carte candidat N°#{index}"])
-    sheet.add_row([user.first_name])
-    sheet.add_row([user.last_name])
-    sheet.add_row([user.current_position])
-    sheet.add_row([user.job_applications_count])
-    sheet.add_row([last_job_application.aasm.human_state]) if last_job_application
-    sheet.add_row([I18n.l(last_job_application.created_at.to_date)]) if last_job_application
-    sheet.add_row([user.email])
-    sheet.add_row([user.phone])
+    sheet.add_row(["Carte candidat N°#{index + 1}"])
+    sheet.add_row(["Prénom", user.first_name])
+    sheet.add_row(["Nom", user.last_name])
+    sheet.add_row(["Poste actuel", user.current_position])
+    sheet.add_row(["Nombre de candidatures", user.job_applications_count])
+    sheet.add_row(["Status", last_job_application.aasm.human_state]) if last_job_application
+    sheet.add_row(["Date de candidature", I18n.l(last_job_application.created_at.to_date)]) if last_job_application
+    sheet.add_row(["Courriel", user.email])
+    sheet.add_row(["Numéro de téléphone", user.phone])
     sheet.add_row(["Candidatures"])
-    user.job_applications.each do |job_application|
-      sheet.add_row(format_job_application(job_application))
+    sheet.add_row([
+      "CANDIDATURES CANDIDAT N°#{index + 1}", "Employeur", "Date de la candidature",
+      "Status", "Genre", "Expérience dans l'entreprise", "Actuellement employé",
+      "Disponibilité", "Expérience professionnel", "Niveau d'études", "Langues étrangères"
+    ])
+    user.job_applications.each_with_index do |job_application, index|
+      sheet.add_row(format_job_application(job_application, index))
     end
     sheet.add_row([])
   end
 
-  def format_job_application(job_application)
+  def format_job_application(job_application, index)
     profile = job_application.profile
     [
       nil,
@@ -31,8 +36,8 @@ class Exporter::Users < Exporter::Base
       job_application.created_at,
       JobApplication.human_attribute_name("state/#{job_application.state}"),
       profile.gender ? Profile.human_attribute_name("gender/#{profile.gender}") : "",
-      profile.has_corporate_experience ? "Expérience dans l'entreprise" : "",
-      profile.is_currently_employed ? "Actuellement employé" : "",
+      profile.has_corporate_experience ? "Oui" : "Non",
+      profile.is_currently_employed ? "Oui" : "Non",
       profile.availability_range&.name,
       profile.experience_level&.name,
       profile.study_level&.name,

@@ -1961,10 +1961,10 @@ bootstrap-material-design@^4.1.2:
   resolved "https://registry.yarnpkg.com/bootstrap-material-design/-/bootstrap-material-design-4.1.3.tgz#f48c9c94784adf0273261ba0741ed2b927f16bce"
   integrity sha512-jOB9io76BKLxwF+IAgObFH9f88ityqOiYsQe9Aa8m88h7sSP3eFL1K8ygb0FsYyIiVm194iodg9i4GMOSlLeRA==
 
-bootstrap.native@=3.0.13:
-  version "3.0.13"
-  resolved "https://registry.yarnpkg.com/bootstrap.native/-/bootstrap.native-3.0.13.tgz#95c6ed59c3dcb180643d140a1e9095d35a246c9d"
-  integrity sha512-8df8/6+zXDxolYCIn7QNsQ+3NozgNmMfBgSyOolhs0GDUWyG6MfM3oGv7GsOfFbQRjBL7VFqQ1KJuBb/uW/HXA==
+bootstrap.native@=3.0.14:
+  version "3.0.14"
+  resolved "https://registry.yarnpkg.com/bootstrap.native/-/bootstrap.native-3.0.14.tgz#05631cdb03aacb4d8229781a8c7cca6329e6dbef"
+  integrity sha512-G/Lwc0flkp1DLe/EB+w4P7sXaTwym0G8pCQr+3WcfN/rMo8Cat+EUn5ChLUX309X/Z67/VnQGO0peX62jRXc1Q==
   dependencies:
     minifill "^0.0.8"
     shorter-js "^0.1.7"

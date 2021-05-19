@@ -18,8 +18,6 @@
           .bar-chart__bar{style: "width: #{percentage}%;"}
   - else
     %em= t('.no_stats')
-- if show_stats_debug?
-  %code= @per_gender
 
 %strong.text-quaternary.d-block.mt-4= t('.title_per_age_range')
 .pl-3.mt-2
@@ -40,8 +38,6 @@
           .bar-chart__bar{style: "width: #{percentage}%;"}
   - else
     %em= t('.no_stats')
-- if show_stats_debug?
-  %code= @per_age_range
 
 .statistics-row.mt-5
   .col-12.col-md-3.statistic__block

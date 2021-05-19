@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 module ApplicationHelper
-  def show_stats_debug?
-    params[:debug].present?
-  end
-
   def time_ago_in_words_minimal(time)
     res = time_ago_in_words(time)
     res.split(" ").map { |x|

@@ -9,4 +9,28 @@
       .card-body
         %strong.text-secondary #{@job_offers_count} offres
         = render partial: 'date_pickers'
+        %h1.h5.text-primary.mt-4 Offres
+        .statistics-row.mt-3
+          .col-12.col-md-3.statistic__block
+            .statistic__name Publiées
+            .statistic__value
+              = @job_offer_published.count
+          .col-12.col-md-3.statistic__block
+            .statistic__name À pourvoir
+            .statistic__value
+              = @job_offer_unfilled.count
+          .col-12.col-md-3.statistic__block
+            .statistic__name Pourvues
+            .statistic__value
+              = @job_offer_filled.count
+        %h1.h5.text-primary.mt-4 Candidatures
+        .statistics-row.mt-3
+          .col-12.col-md-3.statistic__block
+            .statistic__name Total
+            .statistic__value
+              = @profiles.count
+          .col-12.col-md-3.statistic__block
+            .statistic__name Candidats disponibles
+            .statistic__value
+              = @profile_availables.count
         = render partial: 'state_duration'

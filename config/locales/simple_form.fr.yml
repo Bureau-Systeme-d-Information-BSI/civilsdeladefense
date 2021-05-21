@@ -94,7 +94,7 @@ fr:
         description: "Descriptif de l’offre"
         required_profile: "Profil recherché"
         recruitment_process: "Process de recrutement"
-        benefit: "Avantage en nature"
+        benefits: "Avantages en natures"
         bop: "BOP"
         contract_type: "Type de contrat"
         contract_type_id: "Type de contrat"

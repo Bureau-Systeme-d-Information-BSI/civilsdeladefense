@@ -41,7 +41,7 @@ class Exporter::JobOffers < Exporter::Base
       job_offer.estimate_monthly_salary_net,
       job_offer.estimate_annual_salary_gross,
       job_offer.is_remote_possible ? "Télétravail" : "",
-      job_offer.benefit&.name,
+      job_offer.benefit,
       format_actors(job_offer.job_offer_actors)
     ]
   end

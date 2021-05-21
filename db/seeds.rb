@@ -199,6 +199,10 @@ ForeignLanguageLevel.create!(name: "A1")
 ForeignLanguageLevel.create!(name: "B2")
 ForeignLanguageLevel.create!(name: "C3")
 
+Benefit.create!(name: "Voiture")
+Benefit.create!(name: "Crèche")
+Benefit.create!(name: "Appartement de fonction")
+
 resume = JobApplicationFileType.create!(
   name: "CV",
   kind: :applicant_provided,

@@ -196,17 +196,19 @@ class Admin::JobOffersController < Admin::BaseController
     redirect_to [:admin, @job_offer], status: :moved_permanently if params[:id] != @job_offer.slug
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
   def job_offer_params
     params.require(:job_offer).permit(permitted_fields)
   end
 
   def permitted_fields
-    fields = %i[title description category_id professional_category_id employer_id required_profile
+    fields = %i[
+      title description category_id professional_category_id employer_id required_profile
       recruitment_process contract_type_id contract_duration_id contract_start_on
       is_remote_possible available_immediately study_level_id experience_level_id bop_id
-      sector_id estimate_monthly_salary_net estimate_annual_salary_gross benefit_id
-      location city county county_code country_code postcode region]
+      sector_id estimate_monthly_salary_net estimate_annual_salary_gross
+      location city county county_code country_code postcode region
+    ]
+    fields << {benefit_ids: []}
     job_offer_actors_attributes = %i[id role _destroy]
     job_offer_actors_attributes << {administrator_attributes: %i[id email _destroy]}
     fields << {job_offer_actors_attributes: job_offer_actors_attributes}

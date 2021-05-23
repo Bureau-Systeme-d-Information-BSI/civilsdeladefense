@@ -519,6 +519,7 @@ fr:
           contract_durations: "Durées de contrat"
           foreign_languages: "Langue étrangères"
           foreign_language_levels: "Niveaux de langues étrangères"
+          frequently_asked_questions: "FAQ"
       base:
         index:
           title: "Paramètres"
@@ -580,6 +581,14 @@ fr:
             zero: 'Aucun CMG'
             one: '1 CMG'
             other: '%{count} CMGs'
+      frequently_asked_questions:
+        index:
+          title: "FAQ"
+          add: "Ajouter"
+          card_title:
+            zero: 'Aucune FAQ'
+            one: '1 FAQ'
+            other: '%{count} FAQ'
         new:
           title: "Ajouter un nouveau CMG"
         create:

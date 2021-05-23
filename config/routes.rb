@@ -118,6 +118,12 @@ Rails.application.routes.draw do
         end
       end
       resources :organization_defaults
+      resources :frequently_asked_questions do
+        member do
+          post :move_higher, :move_lower
+        end
+      end
+
       resources :pages do
         member do
           post :move_higher, :move_lower

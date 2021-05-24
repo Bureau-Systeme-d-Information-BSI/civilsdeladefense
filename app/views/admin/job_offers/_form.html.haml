@@ -51,6 +51,9 @@
                         = f.input :country_code, as: :hidden, input_html: { 'data-autocomplete-city-target' => :countryCode }
                         = f.input :postcode, as: :hidden, input_html: { 'data-autocomplete-city-target' => :postcode }
                         = f.input :region, as: :hidden, input_html: { 'data-autocomplete-city-target' => :region }
+                      - if current_administrator.bant?
+                        .col-12.col-md-6
+                          = f.input :spontaneous
                     = f.input :description, as: :trix_editor
                     = f.input :required_profile, as: :trix_editor
                     = f.input :recruitment_process, as: :trix_editor

@@ -12,3 +12,7 @@
           = t('.time_ago', time_ago_in_words: time_ago_in_words(email.created_at))
     %strong= sanitize(email.subject, tags: %w())
     %span= simple_format(sanitize(email.body, tags: %w()))
+    - email.attachments.each do |attachment|
+      = link_to attachment.url do
+        = fa_icon('file-document')
+        = attachment.filename

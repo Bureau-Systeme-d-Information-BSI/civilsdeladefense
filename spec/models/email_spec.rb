@@ -12,6 +12,7 @@ end
 # Table name: emails
 #
 #  id                 :uuid             not null, primary key
+#  attachments        :json
 #  body               :text
 #  is_unread          :boolean          default(TRUE)
 #  sender_type        :string

@@ -14,6 +14,7 @@ class Admin::Stats::JobOffersController < Admin::Stats::BaseController
       .per_page(20)
     @job_offers_count = @job_offers_filtered.count
     build_state_duration
+    build_employer_ids unless current_administrator.bant?
   end
 
   protected
@@ -43,6 +44,10 @@ class Admin::Stats::JobOffersController < Admin::Stats::BaseController
     @state_duration = {
       from: from, to: to, average: average
     }
+  end
+
+  def build_employer_ids
+    @employer_ids = @job_offers.pluck(:employer_id).uniq
   end
 
   def date_start

@@ -7,7 +7,7 @@ class Exporter::Users < Exporter::Base
 
   def format_user(user, index)
     last_job_application = user.last_job_application
-    sheet.add_row(["Carte candidat N°#{index + 1}"])
+    sheet.add_row(["CARTE CANDIDAT N°#{index + 1}"])
     sheet.add_row(["Prénom", user.first_name])
     sheet.add_row(["Nom", user.last_name])
     sheet.add_row(["Poste actuel", user.current_position])

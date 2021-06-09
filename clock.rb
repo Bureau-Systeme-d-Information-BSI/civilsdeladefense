@@ -17,7 +17,9 @@ module Clockwork
   cond = ENV["CRON_FETCH_INBOUND"].present?
   if cond
     every 5.minutes, "inbound_message_fetch_and_process" do
-      InboundMessage.fetch_and_process
+      ActiveRecord::Base.connection_pool.with_connection do
+        InboundMessage.fetch_and_process
+      end
     end
   end
 

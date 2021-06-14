@@ -45,7 +45,7 @@ class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
   end
 
   def build_employer_ids
-    @employer_ids = @job_applications_filtered.reorder('').pluck(:employer_id).uniq
+    @employer_ids = @job_applications_filtered.reorder("").pluck(:employer_id).uniq
   end
 
   def filter_by_full_text

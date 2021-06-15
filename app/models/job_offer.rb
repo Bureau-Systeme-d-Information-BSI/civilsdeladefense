@@ -22,10 +22,10 @@ class JobOffer < ApplicationRecord
 
   include PgSearch::Model
   pg_search_scope :search_full_text, against: [
-    [:identifier, "A"],
-    [:title, "A"],
-    [:description, "B"],
-    [:location, "C"]
+    identifier: "A",
+    title: "A",
+    description: "B",
+    location: "C"
   ], associated_against: SETTINGS.each_with_object({}) { |obj, memo|
     memo[obj] = %i[name]
   }

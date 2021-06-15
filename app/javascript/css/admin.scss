@@ -435,3 +435,14 @@ a {
   background-color: #f5f5f5;
   border-bottom: 1px solid #eee;
 }
+
+.scroll {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  padding: 1rem 1rem;
+  position: fixed;
+  bottom: 1.2rem;
+  right: 1.5rem;
+  z-index: 15;
+}

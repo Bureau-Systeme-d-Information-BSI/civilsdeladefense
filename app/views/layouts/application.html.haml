@@ -15,6 +15,7 @@
   %body
     #__SVG_SPRITE_NODE__{'data-turbo-permanent': true}
     = render partial: '/shared/header'
+    %button.scroll.rf-btn{data: { controller: "scroll", action: "scroll#top"}} ▲
     - if flash[:notice] || flash[:alert] || flash[:error] || flash[:success]
       .rf-container
         .rf-grid-row

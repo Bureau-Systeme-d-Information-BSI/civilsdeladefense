@@ -1,0 +1,21 @@
+- content_for :card_inner do
+  .card.mt-3
+    .card-body
+      = form_with url: [:send_to_list, :admin, @job_offer] do |f|
+        .form-inputs
+          .row
+            .col-12.col-md-6
+              .form-group.rf-input-group
+                = f.label :transfer_email, "Mes listes de candidats", class: "form-control-label rf-label"
+
+                - current_administrator.preferred_users_lists.each do |list|
+                  %br
+                  %label
+                    = check_box_tag("preferred_users_lists[]", list.id)
+                    = list.name
+                    %small
+                      = surround '(', ')' do
+                        = list.preferred_users_count
+          .form-actions.text-right.mt-4
+            = f.submit 'Envoyer', class: 'btn btn-primary btn-raised'
+

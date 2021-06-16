@@ -53,8 +53,8 @@ Rails.application.routes.draw do
         end
       end
       member do
-        get :export, :board, :stats, :new_transfer
-        post :transfer, :feature, :unfeature
+        get :export, :board, :stats, :new_transfer, :new_send
+        post :transfer, :feature, :unfeature, :send_to_list
         JobOffer.aasm.events.map(&:name).each do |event_name|
           patch(event_name.to_sym)
           action_name = "update_and_#{event_name}".to_sym

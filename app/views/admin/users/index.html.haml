@@ -41,7 +41,7 @@
                         = User.human_attribute_name(:current_position)
                       .col-12.user-job-applications-count
                         Candidatures
-            = render partial: 'user', collection: @users_filtered, locals: { list: true}
+            = render partial: 'user', collection: @users_filtered, locals: {list: true}
             .mt-5
               = will_paginate @users_filtered, params: { controller: 'users', action: controller.action_name }
             .row.text-right

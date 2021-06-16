@@ -49,9 +49,19 @@ class User < ApplicationRecord
 
   default_scope { order(created_at: :desc) }
 
+  scope :concerned, ->(administrator) {
+    joins(job_offers: [:administrators, :owner]).where(administrators: {id: administrator.id}).or(
+      joins(job_offers: [:administrators, :owner]).where(owners_job_offers: {id: administrator.id})
+    )
+  }
+
   attr_accessor :is_deleted, :delete_photo
 
   before_update :destroy_photo
+
+  def self.ransackable_scopes(auth_object = nil)
+    %i[concerned]
+  end
 
   def full_name
     if is_deleted

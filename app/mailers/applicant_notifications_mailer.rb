@@ -16,7 +16,7 @@ class ApplicantNotificationsMailer < ApplicationMailer
     @service_name = @organization.service_name
 
     @email.attachments.each do |attachment|
-      attachments[attachment.filename.to_s] = attachment.blob.download
+      attachments[attachment.filename.to_s] = attachment.read
     end
 
     reply_to = nil

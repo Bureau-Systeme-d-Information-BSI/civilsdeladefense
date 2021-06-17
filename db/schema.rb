@@ -224,6 +224,7 @@ ActiveRecord::Schema.define(version: 2021_05_24_140135) do
     t.string "sender_type"
     t.uuid "sender_id"
     t.boolean "is_unread", default: true
+    t.json "attachments"
     t.index ["job_application_id"], name: "index_emails_on_job_application_id"
     t.index ["sender_type", "sender_id"], name: "index_emails_on_sender_type_and_sender_id"
   end

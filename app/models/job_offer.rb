@@ -22,10 +22,10 @@ class JobOffer < ApplicationRecord
 
   include PgSearch::Model
   pg_search_scope :search_full_text, against: [
-    [:identifier, "A"],
-    [:title, "A"],
-    [:description, "B"],
-    [:location, "C"]
+    identifier: "A",
+    title: "A",
+    description: "B",
+    location: "C"
   ], associated_against: SETTINGS.each_with_object({}) { |obj, memo|
     memo[obj] = %i[name]
   }
@@ -60,6 +60,8 @@ class JobOffer < ApplicationRecord
   validates :contract_duration_id, presence: true, if: -> { contract_type&.duration }
   validates :contract_duration_id, absence: true, unless: -> { contract_type&.duration }
   validates :title, format: {with: %r{\A.*F/H\z}, message: :f_h}
+  validates :title, format: {without: %r{\A.*\(.*\z}, message: :brackets}
+  validates :title, format: {without: %r{\A.*\).*\z}, message: :brackets}
 
   ## Scopes
   default_scope { order(created_at: :desc) }
@@ -292,6 +294,7 @@ end
 #  rejected_job_applications_count                  :integer          default(0), not null
 #  required_profile                                 :text
 #  slug                                             :string           not null
+#  spontaneous                                      :boolean          default(FALSE)
 #  state                                            :integer
 #  suspended_at                                     :datetime
 #  title                                            :string

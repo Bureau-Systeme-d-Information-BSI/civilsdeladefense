@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-if [[ -z ${DATABASE_URL} ]];
-then
+if [[ -z ${DATABASE_URL} ]]; then
     echo "Environement variable DATABASE_URL need to be set!"
     exit 1
 fi
@@ -22,7 +21,7 @@ fi
 if scalingo apps-info --app $APP_NAME --region $SCALINGO_REGION 2>/dev/null 1>/dev/null; then
     echo "Congrats $APP_NAME exist"
 else
-    echo "$APP_NAME doesn't exist, maybe try another region ?"
+    echo "$APP_NAME doesn't exist, maybe try another region (osc-fr1, osc-secnum-fr1)?"
     exit 1
 fi
 

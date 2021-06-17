@@ -199,6 +199,12 @@ ForeignLanguageLevel.create!(name: "A1")
 ForeignLanguageLevel.create!(name: "B2")
 ForeignLanguageLevel.create!(name: "C3")
 
+AvailabilityRange.create!(name: "En poste")
+AvailabilityRange.create!(name: "Disponible immédiatement")
+AvailabilityRange.create!(name: "Disponible sous 1 mois")
+AvailabilityRange.create!(name: "Disponible sous 2 mois")
+AvailabilityRange.create!(name: "Disponible sous 3 mois ou plus")
+
 resume = JobApplicationFileType.create!(
   name: "CV",
   kind: :applicant_provided,

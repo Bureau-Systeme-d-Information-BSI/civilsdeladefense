@@ -16,6 +16,7 @@
   - klasses << 'devise' if devise_controller?
   %body{class: klasses, style: style}
     #__SVG_SPRITE_NODE__{'data-turbolinks-permanent': true}
+    %button.scroll.btn.btn-primary.btn-raised{data: { controller: "scroll", action: "scroll#top"}} ▲
     - if administrator_signed_in?
       = render partial: '/admin/shared/navbar'
       - if flash[:notice]

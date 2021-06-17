@@ -20,9 +20,11 @@ class JobApplication < ApplicationRecord
   belongs_to :job_offer
   belongs_to :organization
   belongs_to :user, optional: true
-  belongs_to :rejection_reason, optional: true
   accepts_nested_attributes_for :user
+  belongs_to :rejection_reason, optional: true
   belongs_to :employer
+  belongs_to :category, optional: true
+
   has_one :profile, as: :profileable, required: true
   accepts_nested_attributes_for :profile
   has_many :messages, dependent: :destroy
@@ -160,10 +162,6 @@ class JobApplication < ApplicationRecord
     self.administrator_notifications_count = emails_administrator_unread_count + files_unread_count
   end
 
-  def all_available_file_types
-    @all_available_file_types ||= JobApplicationFileType.all.to_a
-  end
-
   # Return two arrays
   # First with JobApplicationFile already existing
   # Second with JobApplicationFileType
@@ -190,12 +188,28 @@ class JobApplication < ApplicationRecord
   def send_confirmation_email
     job_offer_identifier = job_offer.identifier
     service_name = job_offer.organization.service_name
-    subject = I18n.t("job_offers.successful.subject", job_offer_identifier: job_offer_identifier,
-                                                      service_name: service_name)
-    body = I18n.t("job_offers.successful.body", first_name: user.first_name,
-                                                job_offer_title: job_offer.title,
-                                                job_offer_identifier: job_offer_identifier,
-                                                service_name: service_name)
+
+    if job_offer.spontaneous
+      subject = I18n.t(
+        "job_offers.successful.spontaneous_subject", service_name: service_name
+      )
+      body = I18n.t(
+        "job_offers.successful.spontaneous_body", service_name: service_name
+      )
+    else
+      subject = I18n.t(
+        "job_offers.successful.subject",
+        job_offer_identifier: job_offer_identifier,
+        service_name: service_name
+      )
+      body = I18n.t(
+        "job_offers.successful.body",
+        job_offer_title: job_offer.title,
+        job_offer_identifier: job_offer_identifier,
+        service_name: service_name
+      )
+    end
+
     email = emails.create(subject: subject, body: body)
     ApplicantNotificationsMailer.new_email(email.id).deliver_now
   end
@@ -246,6 +260,7 @@ end
 #  state                             :integer
 #  created_at                        :datetime         not null
 #  updated_at                        :datetime         not null
+#  category_id                       :uuid
 #  employer_id                       :uuid
 #  job_offer_id                      :uuid
 #  organization_id                   :uuid
@@ -254,6 +269,7 @@ end
 #
 # Indexes
 #
+#  index_job_applications_on_category_id          (category_id)
 #  index_job_applications_on_employer_id          (employer_id)
 #  index_job_applications_on_job_offer_id         (job_offer_id)
 #  index_job_applications_on_organization_id      (organization_id)
@@ -264,6 +280,7 @@ end
 # Foreign Keys
 #
 #  fk_rails_0e9ee51b69  (user_id => users.id)
+#  fk_rails_36c9b0d626  (category_id => categories.id)
 #  fk_rails_88b000fe87  (job_offer_id => job_offers.id)
 #  fk_rails_e668fb8ac4  (employer_id => employers.id)
 #  fk_rails_e73e1d195a  (rejection_reason_id => rejection_reasons.id)

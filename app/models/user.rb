@@ -14,7 +14,15 @@ class User < ApplicationRecord
   include DeletionFlow
   include PgSearch::Model
   pg_search_scope :search_full_text,
-    against: %i[first_name last_name]
+    against: [:first_name, :last_name],
+    associated_against: {
+      job_offers: {
+        identifier: "A",
+        title: "A",
+        description: "B",
+        location: "C"
+      }
+    }
 
   belongs_to :organization
   has_many :omniauth_informations

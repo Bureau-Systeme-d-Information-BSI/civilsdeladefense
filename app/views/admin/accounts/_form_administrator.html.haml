@@ -15,7 +15,6 @@
         = f.label :photo
         = f.input :photo, label: t('buttons.choose_file'), wrapper: :custom_file_without_label
 
-
         - if @administrator.employer?
           - %i(supervisor_administrator grand_employer_administrator).each do |submodel|
             .my-2= t(".mention_#{submodel}_html")

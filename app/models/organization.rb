@@ -21,8 +21,7 @@ class Organization < ApplicationRecord
     testimony_logo
   ].each do |field|
     mount_uploader field, LogoUploader, mount_on: :"#{field}_file_name"
-    validates field,
-      file_size: {less_than: 1.megabytes}
+    validates field, file_size: {less_than: 1.megabytes}
   end
 
   mount_uploader :image_background, LogoUploader, mount_on: :image_background_file_name

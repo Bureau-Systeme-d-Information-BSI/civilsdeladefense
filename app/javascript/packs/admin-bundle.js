@@ -51,13 +51,6 @@ window.reloadWithTurbolinks = reloadWithTurbolinks
 document.addEventListener('turbolinks:load', function() {
   BSN.initCallback()
 
-  ;[].forEach.call(document.querySelectorAll('.custom-file-input'), function(node) {
-    node.addEventListener('change', function(e) {
-      let fileName = node.val().split('\\').pop()
-      node.parentNode.querySelector('.custom-file-label').classList.add('selected').innerHTML = fileName
-    })
-  })
-
   ;[].forEach.call(document.querySelectorAll('.allow-focus'), function(node) {
     node.addEventListener('click', function(e) {
       e.stopPropagation();

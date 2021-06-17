@@ -15,7 +15,7 @@
       = render partial: '/department_users/form', locals: { user_form: user_form, kind: :job_application }
     - unless user_signed_in?
       = f.simple_fields_for :user do |user_form|
-        = user_form.input :photo, wrapper: :custom_file
+        = user_form.input :photo
 
     %h2.rf-h3= t('.your_profile')
     - grouped_options = nested_set_options(Category, @category) {|i| "#{'-' * i.level} #{i.name}" }
@@ -39,7 +39,7 @@
       - job_application_file ||= @job_application.job_application_files.build(job_application_file_type: job_application_file_type)
       = f.simple_fields_for :job_application_files, job_application_file, input_html: {placeholder: false, required: true} do |file_form|
         = file_form.hidden_field :job_application_file_type_id
-        = file_form.input :content, label: job_application_file_type.name, wrapper: :custom_file, required: false
+        = file_form.input :content, label: job_application_file_type.name, required: false
         - if current_user
           - collection = current_user.job_application_files.where(job_application_file_type: job_application_file_type).uniq { |f| f.content_file_name }
           = file_form.input :job_application_file_existing_id, collection: collection, label_method: :content_file_name, value_method: :id, input_html: { class: "rf-select" } if collection.any?

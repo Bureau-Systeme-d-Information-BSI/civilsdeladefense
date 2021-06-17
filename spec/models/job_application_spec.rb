@@ -93,6 +93,7 @@ end
 #  state                             :integer
 #  created_at                        :datetime         not null
 #  updated_at                        :datetime         not null
+#  category_id                       :uuid
 #  employer_id                       :uuid
 #  job_offer_id                      :uuid
 #  organization_id                   :uuid
@@ -101,6 +102,7 @@ end
 #
 # Indexes
 #
+#  index_job_applications_on_category_id          (category_id)
 #  index_job_applications_on_employer_id          (employer_id)
 #  index_job_applications_on_job_offer_id         (job_offer_id)
 #  index_job_applications_on_organization_id      (organization_id)
@@ -111,6 +113,7 @@ end
 # Foreign Keys
 #
 #  fk_rails_0e9ee51b69  (user_id => users.id)
+#  fk_rails_36c9b0d626  (category_id => categories.id)
 #  fk_rails_88b000fe87  (job_offer_id => job_offers.id)
 #  fk_rails_e668fb8ac4  (employer_id => employers.id)
 #  fk_rails_e73e1d195a  (rejection_reason_id => rejection_reasons.id)

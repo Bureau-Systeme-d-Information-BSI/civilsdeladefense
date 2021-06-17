@@ -29,6 +29,9 @@ Rails.application.routes.draw do
     registrations: "users/registrations",
     omniauth_callbacks: "users/omniauth_callbacks"
   }
+  devise_scope :user do
+    get "/users/sign_up/success" => "users/registrations#success", :as => :success_user_registration
+  end
 
   namespace :admin do
     resource :account do
@@ -53,8 +56,8 @@ Rails.application.routes.draw do
         end
       end
       member do
-        get :export, :board, :stats, :new_transfer
-        post :transfer, :feature, :unfeature
+        get :export, :board, :stats, :new_transfer, :new_send
+        post :transfer, :feature, :unfeature, :send_to_list
         JobOffer.aasm.events.map(&:name).each do |event_name|
           patch(event_name.to_sym)
           action_name = "update_and_#{event_name}".to_sym
@@ -73,6 +76,7 @@ Rails.application.routes.draw do
     resources :preferred_users_lists, path: "liste-candidats" do
       member do
         get :export
+        post :send_job_offer
       end
       resources :preferred_users
     end
@@ -83,7 +87,7 @@ Rails.application.routes.draw do
       member do
         get :listing
         put :update_listing
-        post :suspend, :unsuspend
+        post :suspend, :unsuspend, :send_job_offer
       end
     end
     resources :job_applications, path: "candidatures", only: %i[index show update] do
@@ -118,6 +122,12 @@ Rails.application.routes.draw do
         end
       end
       resources :organization_defaults
+      resources :frequently_asked_questions do
+        member do
+          post :move_higher, :move_lower
+        end
+      end
+
       resources :pages do
         member do
           post :move_higher, :move_lower

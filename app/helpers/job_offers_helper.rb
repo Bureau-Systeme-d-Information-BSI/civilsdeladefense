@@ -10,7 +10,8 @@ module JobOffersHelper
       category: "building-line",
       experience_level: "focus-3-line",
       salary: "money-euro-box-line",
-      benefits: "money-euro-box-line"
+      benefits: "money-euro-box-line",
+      is_remote_possible: "map-pin-line"
     }[attribute]
   end
 
@@ -28,6 +29,8 @@ module JobOffersHelper
       job_offer_salary_display(job_offer)
     when :benefits
       job_offer_benefits_display(job_offer)
+    when :is_remote_possible
+      job_offer_remote_display(job_offer)
     end
   end
 
@@ -55,6 +58,14 @@ module JobOffersHelper
       job_offer.benefits.pluck(:name).join("<br/>").html_safe
     else
       "-"
+    end
+  end
+
+  def job_offer_remote_display(job_offer)
+    if job_offer.is_remote_possible
+      "Oui"
+    else
+      "Non"
     end
   end
 end

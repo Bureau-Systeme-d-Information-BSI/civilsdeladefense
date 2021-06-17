@@ -16,7 +16,7 @@ class ApplicantNotificationsMailer < ApplicationMailer
     @service_name = @organization.service_name
 
     @email.attachments.each do |attachment|
-      attachments[attachment.filename.to_s] = attachment.blob.download
+      attachments[attachment.filename.to_s] = attachment.read
     end
 
     reply_to = nil
@@ -49,5 +49,16 @@ class ApplicantNotificationsMailer < ApplicationMailer
     subject = "[#{@service_name}] Votre compte candidat a été supprimé"
 
     mail to: to, subject: subject
+  end
+
+  def send_job_offer(user, job_offer)
+    return unless user.receive_job_offer_mails
+
+    @user = user
+    @job_offer = job_offer
+
+    @service_name = @user.organization.service_name
+
+    mail to: @user.email, subject: "Nouvelle offre"
   end
 end

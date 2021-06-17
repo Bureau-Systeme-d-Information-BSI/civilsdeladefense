@@ -1,4 +1,5 @@
 - @page_title = t('.title')
+- @active = controller.action_name == "index"
 .card
   .card-header
     .card-title.align-items-center
@@ -15,15 +16,16 @@
       %ul.nav.nav-tabs{role: :tablist}
         %li.nav-item.mr-3
           - klasses = %i(nav-link text-uppercase my-0)
-          - klasses << :active if controller.action_name == "index"
+          - klasses << :active if @active
           - url = [:admin, :settings, :root]
           = link_to t('.account_active', count: @administrators_active.size), url, class: klasses
         %li.nav-item.mr-3
           - klasses = %i(nav-link text-uppercase my-0)
-          - klasses << :active if controller.action_name == "inactive"
+          - klasses << :active unless @active
           - url = [:inactive, :admin, :settings, :administrators]
           = link_to t('.account_inactive', count: @administrators_inactive.size), url, class: klasses
-  = search_form_for [:admin, :settings, @q], wrapper: :inline_form, html: { class: 'form-inline auto-submit' }, builder: SimpleForm::FormBuilder do |f|
+  - url = @active ? [:admin, :settings, @q] : [:inactive, :admin, :settings, @q]
+  = search_form_for url, wrapper: :inline_form, html: { class: 'form-inline auto-submit' }, builder: SimpleForm::FormBuilder do |f|
     %table.table.table-hover.mb-0.mt-3
       %thead
         %tr

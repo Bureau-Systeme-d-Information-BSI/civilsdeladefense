@@ -5,8 +5,6 @@
 %h2.h5.text-primary.mt-4= t('.title')
 #per-day-graph.mt-3{style: 'height:200px;'}
   = javascript_tag "var perDayData = #{@per_day.to_a.to_json.html_safe};"
-- if show_stats_debug?
-  %code= @per_day
 .statistics-row.mt-4
   .col-12.col-md-3.statistic__block
     .statistic__name

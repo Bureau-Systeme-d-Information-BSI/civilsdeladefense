@@ -18,8 +18,6 @@
           .bar-chart__bar{style: "width: #{percentage}%;"}
   - else
     %em= t('.no_stats')
-- if show_stats_debug?
-  %code= @per_gender
 
 %strong.text-quaternary.d-block.mt-4= t('.title_per_age_range')
 .pl-3.mt-2
@@ -40,8 +38,6 @@
           .bar-chart__bar{style: "width: #{percentage}%;"}
   - else
     %em= t('.no_stats')
-- if show_stats_debug?
-  %code= @per_age_range
 
 .statistics-row.mt-5
   .col-12.col-md-3.statistic__block
@@ -71,6 +67,14 @@
       - is_currently_employed_count = @per_is_currently_employed[true] || 0
       - if @job_applications_count > 0 && is_currently_employed_count > 0
         - percentage = (is_currently_employed_count * 100.0) / @job_applications_count
+        = number_to_percentage(percentage, precision: 0)
+      - else
+        = t('non_applicable')
+  .col-12.col-md-3.statistic__block
+    .statistic__name Localisés dans le bassin de l'offre
+    .statistic__value
+      - if @job_applications_count > 0 && @in_department_count > 0
+        - percentage = (@in_department_count * 100.0) / @job_applications_count
         = number_to_percentage(percentage, precision: 0)
       - else
         = t('non_applicable')

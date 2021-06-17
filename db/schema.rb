@@ -665,16 +665,6 @@ ActiveRecord::Schema.define(version: 2021_05_24_140135) do
     t.index ["position"], name: "index_study_levels_on_position"
   end
 
-  create_table "user_departments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.string "department"
-    t.uuid "user_id", null: false
-    t.string "code_region"
-    t.string "code_department"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_user_departments_on_user_id"
-  end
-
   create_table "users", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -765,5 +755,4 @@ ActiveRecord::Schema.define(version: 2021_05_24_140135) do
   add_foreign_key "salary_ranges", "experience_levels"
   add_foreign_key "salary_ranges", "professional_categories"
   add_foreign_key "salary_ranges", "sectors"
-  add_foreign_key "user_departments", "users"
 end

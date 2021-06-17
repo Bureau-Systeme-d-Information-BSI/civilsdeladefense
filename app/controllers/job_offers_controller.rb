@@ -52,9 +52,11 @@ class JobOffersController < ApplicationController
       if @job_application.profile.profile_foreign_languages.to_a.size.zero?
         @job_application.profile.profile_foreign_languages.build
       end
+      @job_application.user.department_users.build if @job_application.user.department_users.blank?
     else
       @job_application = JobApplication.new
       @job_application.user = user_signed_in? ? current_user : User.new
+      @job_application.user.department_users.build
       @job_application.build_profile
       @job_application.profile.profile_foreign_languages.build
     end
@@ -125,7 +127,7 @@ class JobOffersController < ApplicationController
   end
 
   def job_application_params
-    permitted_params = %i[]
+    permitted_params = %i[category_id]
     profile_attributes = %i[
       gender has_corporate_experience age_range_id availability_range_id experience_level_id study_level_id
     ]
@@ -135,7 +137,11 @@ class JobOffersController < ApplicationController
     user_attributes = %i[first_name last_name current_position phone website_url]
     base_user_attributes = %i[
       photo email password password_confirmation terms_of_service certify_majority
+      receive_job_offer_mails
     ]
+    user_attributes << {
+      department_users_attributes: %i[department_id]
+    }
     user_attributes += base_user_attributes unless user_signed_in?
     permitted_params << {user_attributes: user_attributes, profile_attributes: profile_attributes}
     job_application_files_attributes = %i[content job_application_file_type_id job_application_file_existing_id]

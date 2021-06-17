@@ -50,4 +50,15 @@ class ApplicantNotificationsMailer < ApplicationMailer
 
     mail to: to, subject: subject
   end
+
+  def send_job_offer(user, job_offer)
+    return unless user.receive_job_offer_mails
+
+    @user = user
+    @job_offer = job_offer
+
+    @service_name = @user.organization.service_name
+
+    mail to: @user.email, subject: "Nouvelle offre"
+  end
 end

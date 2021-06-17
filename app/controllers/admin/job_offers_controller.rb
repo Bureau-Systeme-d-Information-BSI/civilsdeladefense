@@ -149,6 +149,26 @@ class Admin::JobOffersController < Admin::BaseController
     end
   end
 
+  # GET /admin/job_offers/1/new_send
+  # GET /admin/job_offers/1/new_send.json
+  def new_send
+  end
+
+  # POST /admin/job_offers/1/send_to_list
+  # POST /admin/job_offers/1/send_to_list.json
+  def send_to_list
+    preferred_users_lists = PreferredUsersList.where(
+      id: params[:preferred_users_lists]
+    )
+    preferred_users_lists.each do |list|
+      @job_offer.send_to_users(list.users)
+    end
+
+    respond_to do |format|
+      format.html { redirect_to %i[admin job_offers], notice: t(".success") }
+    end
+  end
+
   # DELETE /admin/job_offers/1
   # DELETE /admin/job_offers/1.json
   def destroy
@@ -202,11 +222,13 @@ class Admin::JobOffersController < Admin::BaseController
   end
 
   def permitted_fields
-    fields = %i[title description category_id professional_category_id employer_id required_profile
+    fields = %i[
+      title description category_id professional_category_id employer_id required_profile
       recruitment_process contract_type_id contract_duration_id contract_start_on
       is_remote_possible available_immediately study_level_id experience_level_id bop_id
       sector_id estimate_monthly_salary_net estimate_annual_salary_gross benefit_id
-      location city county county_code country_code postcode region]
+      location city county county_code country_code postcode region spontaneous
+    ]
     job_offer_actors_attributes = %i[id role _destroy]
     job_offer_actors_attributes << {administrator_attributes: %i[id email _destroy]}
     fields << {job_offer_actors_attributes: job_offer_actors_attributes}

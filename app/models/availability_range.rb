@@ -13,6 +13,10 @@ class AvailabilityRange < ApplicationRecord
   #####################################
   # Relations
   has_many :profiles
+
+  def self.en_poste
+    find_by(name: "En poste")
+  end
 end
 
 # == Schema Information

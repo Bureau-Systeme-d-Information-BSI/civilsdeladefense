@@ -11,6 +11,7 @@
             = f.input :current_position
             = f.input :phone
             = f.input :website_url
+            = render partial: '/department_users/form', locals: { user_form: f, kind: :user }
             = f.input :photo
             - if @user.photo.present?
               = f.input :delete_photo, as: :boolean

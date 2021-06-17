@@ -187,6 +187,24 @@ ActiveRecord::Schema.define(version: 2021_05_24_140135) do
     t.index ["position"], name: "index_contract_types_on_position"
   end
 
+  create_table "department_users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.uuid "department_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["department_id"], name: "index_department_users_on_department_id"
+    t.index ["user_id"], name: "index_department_users_on_user_id"
+  end
+
+  create_table "departments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "name_region"
+    t.string "code_region"
+    t.string "code"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "email_templates", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
     t.string "subject"
@@ -637,6 +655,16 @@ ActiveRecord::Schema.define(version: 2021_05_24_140135) do
     t.index ["position"], name: "index_study_levels_on_position"
   end
 
+  create_table "user_departments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "department"
+    t.uuid "user_id", null: false
+    t.string "code_region"
+    t.string "code_department"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_user_departments_on_user_id"
+  end
+
   create_table "users", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -687,6 +715,8 @@ ActiveRecord::Schema.define(version: 2021_05_24_140135) do
   add_foreign_key "administrators", "administrators", column: "supervisor_administrator_id"
   add_foreign_key "administrators", "employers"
   add_foreign_key "cmgs", "organizations"
+  add_foreign_key "department_users", "departments"
+  add_foreign_key "department_users", "users"
   add_foreign_key "emails", "job_applications"
   add_foreign_key "job_application_files", "job_application_file_types"
   add_foreign_key "job_application_files", "job_applications"
@@ -723,4 +753,5 @@ ActiveRecord::Schema.define(version: 2021_05_24_140135) do
   add_foreign_key "salary_ranges", "experience_levels"
   add_foreign_key "salary_ranges", "professional_categories"
   add_foreign_key "salary_ranges", "sectors"
+  add_foreign_key "user_departments", "users"
 end

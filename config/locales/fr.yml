@@ -1065,6 +1065,7 @@ fr:
         category: "Domaine professionnel"
         experience_level: "Niveau d'expérience"
         salary: "Rémunération"
+        is_remote_possible: "Télétravail"
       job_offer_actor/role:
         employer: "Employeur"
         grand_employer: "Grand Employeur"

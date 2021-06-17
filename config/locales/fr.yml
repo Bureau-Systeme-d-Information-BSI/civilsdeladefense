@@ -326,6 +326,8 @@ fr:
         submit: "Transférer"
       transfer:
         success: "Annonce transférée !"
+      send_to_list:
+        success: "Annonce diffusées !"
       feature:
         success: "Annonce mise à la une"
         error: "L'offre n'a pa pu être mise à la une, veuillez vérifier la référence"
@@ -461,6 +463,12 @@ fr:
         account: "Mon compte"
         logout: "Déconnexion"
     users:
+      send_job_offer:
+        success: "Offre envoyée au candidat"
+        error: "L'offre n'a pa pu être envoyé, veuillez vérifier la référence"
+      multi_select:
+        success: "Offre envoyée aux candidats"
+        error: "L'offre n'a pa pu être envoyé, veuillez vérifier la référence"
       actions:
         title: "Actions"
       destroy:
@@ -521,6 +529,7 @@ fr:
           contract_durations: "Durées de contrat"
           foreign_languages: "Langue étrangères"
           foreign_language_levels: "Niveaux de langues étrangères"
+          frequently_asked_questions: "FAQ"
       base:
         index:
           title: "Paramètres"
@@ -582,6 +591,14 @@ fr:
             zero: 'Aucun CMG'
             one: '1 CMG'
             other: '%{count} CMGs'
+      frequently_asked_questions:
+        index:
+          title: "FAQ"
+          add: "Ajouter"
+          card_title:
+            zero: 'Aucune FAQ'
+            one: '1 FAQ'
+            other: '%{count} FAQ'
         new:
           title: "Ajouter un nouveau CMG"
         create:
@@ -903,6 +920,9 @@ fr:
       form:
         title: "Note personnelle"
     preferred_users_lists:
+      send_job_offer:
+        success: "Offre envoyée aux candidats"
+        error: "L'offre n'a pa pu être envoyé, veuillez vérifier la référence"
       form:
         title_new: "Ajout d'une nouvelle liste de candidats"
         title_edit: "Édition d'une liste de candidats"

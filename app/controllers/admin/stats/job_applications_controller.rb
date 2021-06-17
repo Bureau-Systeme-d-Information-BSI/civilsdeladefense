@@ -64,6 +64,9 @@ class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
     @per_rejection_reason = root_rel.where.not(rejection_reason_id: nil)
       .group(:rejection_reason_id).count
     @per_state = root_rel.group(:state).count
+    @in_department_count = root_rel.joins(:job_offer, user: :departments).where(
+      "departments.code = job_offers.county_code::text"
+    ).count
   end
 
   def build_stats_per_profile

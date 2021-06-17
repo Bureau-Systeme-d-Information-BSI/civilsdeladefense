@@ -33,6 +33,11 @@ class User < ApplicationRecord
   has_many :preferred_users, dependent: :destroy
   has_many :preferred_users_lists, through: :preferred_users
 
+  has_many :department_users, dependent: :destroy
+  has_many :departments, through: :department_users
+
+  accepts_nested_attributes_for :department_users, reject_if: :all_blank
+
   mount_uploader :photo, PhotoUploader, mount_on: :photo_file_name
   validates :photo,
     file_size: {less_than: 1.megabytes}
@@ -127,6 +132,7 @@ end
 #  photo_file_size                  :bigint
 #  photo_is_validated               :integer          default(0)
 #  photo_updated_at                 :datetime
+#  receive_job_offer_mails          :boolean          default(FALSE)
 #  remember_created_at              :datetime
 #  reset_password_sent_at           :datetime
 #  reset_password_token             :string

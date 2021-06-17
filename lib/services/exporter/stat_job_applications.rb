@@ -94,6 +94,7 @@ class Exporter::StatJobApplications < Exporter::Base
       end
     end
 
+    add_row("", "Age moyen")
     total = data[:per_age_range].values.sum
     if total > 0
       data[:per_age_range].each_with_index do |(k, v), index|

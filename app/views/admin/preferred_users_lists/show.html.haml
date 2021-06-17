@@ -11,6 +11,16 @@
       = link_to [:admin, @preferred_users_list], method: :delete, data: {confirm: t('buttons.confirm'), turbolinks: false}, class: 'btn btn-danger btn-raised ml-4' do
         = t('buttons.delete')
     = render partial: 'search'
+
+    = form_tag [:send_job_offer, :admin, @preferred_users_list] do
+      .row.mt-2.mb-3
+        .col-4
+          = label_tag "job_offer_identifier", "Envoyer une offre par email aux candidats", class: "form-control-label"
+        .col-3
+          = text_field_tag 'job_offer_identifier', nil, class: "form-control", placeholder: "Référence de l'offre", required: true
+        .col-2
+          = submit_tag 'Envoyer', class: 'btn btn-primary btn-raised'
+
     .d-flex.align-items-end
       .h5.text-primary.mr-auto
         = t('.preferred_users_filtered', count: @preferred_users_filtered.count)

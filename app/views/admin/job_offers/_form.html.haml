@@ -2,7 +2,7 @@
 - suffix = @job_offer.new_record? ? 'new' : 'edit'
 - card_1_title = t(".card_1_title_#{ suffix }", job_offer_identifier: @job_offer.identifier)
 - card_2_title = t('.card_2_title')
-.container-fluid
+.container-fluid{data: { controller: "job-offer-management"}}
   .row
     .col-12.px-0
       = simple_form_for([:admin, @job_offer], defaults: { disabled: @job_offer.archived? ? true : nil }) do |f|

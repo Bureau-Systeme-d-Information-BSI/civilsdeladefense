@@ -44,6 +44,7 @@ end
 #  name              :string
 #  notification      :boolean          default(TRUE)
 #  position          :integer
+#  spontaneous       :boolean          default(FALSE)
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #

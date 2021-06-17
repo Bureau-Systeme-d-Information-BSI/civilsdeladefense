@@ -54,6 +54,7 @@
         = user_form.input :email, required: true
         = user_form.input :password, required: true
         = user_form.input :password_confirmation, required: true
+        = user_form.input :receive_job_offer_mails
         = user_form.input :terms_of_service, as: :boolean, label: tos_acceptance_text
         = user_form.input :certify_majority, as: :boolean
     = f.invisible_captcha :subtitle

@@ -673,6 +673,7 @@ ActiveRecord::Schema.define(version: 2021_05_24_140135) do
     t.string "suspension_reason"
     t.datetime "suspended_at"
     t.date "marked_for_deletion_on"
+    t.boolean "receive_job_offer_mails", default: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["organization_id"], name: "index_users_on_organization_id"

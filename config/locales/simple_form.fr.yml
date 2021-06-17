@@ -168,6 +168,7 @@ fr:
         password: 'Mot de passe'
         password_confirmation: 'Confirmation du mot de passe'
         preferred_users_list_ids: "Mes listes de candidats"
+        receive_job_offer_mails: "J'accepte de recevoir de nouvelles offres d'emploi par email"
         suspension_reason: "Raison"
         terms_of_service: "En soumettant ce formulaire, j'accepte que les informations saisies sur le site %{service_name} soient exploitées pour l'instruction de ma candidature par %{legal_name}. Les informations personnelles portées sur ce formulaire et celles communiquées aux étapes ultérieures du processus de recrutement sont enregistrées dans un fichier informatisé administré par %{legal_name} conformément à la <a href='%{link}' target='_blank'>déclaration de confidentialité</a> du portail %{service_name}, dont j'ai pris connaissance"
       frequently_asked_question:

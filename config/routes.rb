@@ -56,8 +56,8 @@ Rails.application.routes.draw do
         end
       end
       member do
-        get :export, :board, :stats, :new_transfer
-        post :transfer, :feature, :unfeature
+        get :export, :board, :stats, :new_transfer, :new_send
+        post :transfer, :feature, :unfeature, :send_to_list
         JobOffer.aasm.events.map(&:name).each do |event_name|
           patch(event_name.to_sym)
           action_name = "update_and_#{event_name}".to_sym
@@ -76,6 +76,7 @@ Rails.application.routes.draw do
     resources :preferred_users_lists, path: "liste-candidats" do
       member do
         get :export
+        post :send_job_offer
       end
       resources :preferred_users
     end
@@ -86,7 +87,7 @@ Rails.application.routes.draw do
       member do
         get :listing
         put :update_listing
-        post :suspend, :unsuspend
+        post :suspend, :unsuspend, :send_job_offer
       end
     end
     resources :job_applications, path: "candidatures", only: %i[index show update] do

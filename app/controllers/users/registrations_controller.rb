@@ -14,7 +14,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def configure_sign_up_params
     permitted_params = %i[
       first_name last_name terms_of_service certify_majority current_position phone
-      website_url
+      website_url receive_job_offer_mails
     ]
     devise_parameter_sanitizer.permit(:sign_up, keys: permitted_params)
   end

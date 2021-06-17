@@ -141,7 +141,7 @@ fr:
       recruitment_process: "Process de recrutement"
     job_offer_head:
       available_immediately: "Poste à pourvoir immédiatement"
-      benefit: "Bénéfice en nature: "
+      benefit: "Avantage en nature"
     successful:
       subject: "Votre candidature à l'offre %{job_offer_identifier} sur %{service_name}"
       body: "Nous avons bien reçu votre candidature à l'offre %{job_offer_identifier} '%{job_offer_title}'.\n\nNous y répondrons dans les meilleurs délais.\n\nL'équipe %{service_name}."
@@ -503,7 +503,7 @@ fr:
         navbar:
           admin: "Administration"
           administrators: "Comptes admin"
-          benefits: "Bénéfices en nature"
+          benefits: "Avantage(s) en nature"
           bops: "BOPs"
           categories: "Domaines professionnels"
           cmgs: "Liste des CMG"
@@ -681,11 +681,11 @@ fr:
       benefits:
         index:
           card_title:
-            zero: 'Aucun bénéfice en nature'
-            one: '1 bénéfice en nature'
-            other: '%{count} bénéfices en nature'
+            zero: 'Aucun avantage en nature'
+            one: '1 avantage en nature'
+            other: '%{count} avantages en nature'
         new:
-          title: "Ajouter un bénéfice en nature"
+          title: "Ajouter un avantage en nature"
         edit:
           title: "Modifier '%{name}'"
         create:
@@ -1085,6 +1085,7 @@ fr:
         category: "Domaine professionnel"
         experience_level: "Niveau d'expérience"
         salary: "Rémunération"
+        benefits: "Avantages en nature"
         is_remote_possible: "Télétravail"
       job_offer_actor/role:
         employer: "Employeur"

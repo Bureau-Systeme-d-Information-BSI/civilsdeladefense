@@ -38,8 +38,10 @@ class JobOffer < ApplicationRecord
     belongs_to setting
   end
   belongs_to :contract_duration, optional: true
-  belongs_to :benefit, optional: true
   belongs_to :bop, optional: true
+
+  has_many :benefit_job_offers
+  has_many :benefits, through: :benefit_job_offers
 
   has_many :job_applications, dependent: :destroy
   has_many :job_offer_actors, inverse_of: :job_offer, dependent: :destroy
@@ -245,6 +247,10 @@ class JobOffer < ApplicationRecord
     administrator.save!
     job_offer_actors.where(administrator: owner).update_all(administrator_id: administrator.id)
     update!(owner: administrator)
+  end
+
+  def benefit
+    benefits.pluck(:name).join(", ")
   end
 
   def send_to_users(users)

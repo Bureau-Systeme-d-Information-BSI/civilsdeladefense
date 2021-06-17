@@ -131,6 +131,15 @@ ActiveRecord::Schema.define(version: 2021_05_24_140135) do
     t.index ["position"], name: "index_availability_ranges_on_position"
   end
 
+  create_table "benefit_job_offers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "benefit_id", null: false
+    t.uuid "job_offer_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["benefit_id"], name: "index_benefit_job_offers_on_benefit_id"
+    t.index ["job_offer_id"], name: "index_benefit_job_offers_on_job_offer_id"
+  end
+
   create_table "benefits", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.integer "position"
@@ -715,6 +724,8 @@ ActiveRecord::Schema.define(version: 2021_05_24_140135) do
   add_foreign_key "administrators", "administrators", column: "inviter_id"
   add_foreign_key "administrators", "administrators", column: "supervisor_administrator_id"
   add_foreign_key "administrators", "employers"
+  add_foreign_key "benefit_job_offers", "benefits"
+  add_foreign_key "benefit_job_offers", "job_offers"
   add_foreign_key "cmgs", "organizations"
   add_foreign_key "department_users", "departments"
   add_foreign_key "department_users", "users"

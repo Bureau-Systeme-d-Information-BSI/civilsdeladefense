@@ -199,6 +199,10 @@ ForeignLanguageLevel.create!(name: "A1")
 ForeignLanguageLevel.create!(name: "B2")
 ForeignLanguageLevel.create!(name: "C3")
 
+Benefit.create!(name: "Voiture")
+Benefit.create!(name: "Crèche")
+Benefit.create!(name: "Appartement de fonction")
+
 AvailabilityRange.create!(name: "En poste")
 AvailabilityRange.create!(name: "Disponible immédiatement")
 AvailabilityRange.create!(name: "Disponible sous 1 mois")

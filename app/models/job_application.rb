@@ -41,6 +41,9 @@ class JobApplication < ApplicationRecord
   FINISHED_STATES = %w[rejected phone_meeting_rejected after_meeting_rejected affected].freeze
   REJECTED_STATES = %w[rejected phone_meeting_rejected after_meeting_rejected].freeze
   PROCESSING_STATES = %w[initial phone_meeting to_be_met].freeze
+  FILLED_STATES = %w[
+    accepted contract_drafting contract_feedback_waiting contract_received affected
+  ].freeze
   enum state: {
     initial: 0,
     rejected: 1,

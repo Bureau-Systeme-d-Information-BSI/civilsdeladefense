@@ -3,6 +3,7 @@
 # User information without PII
 class Profile < ApplicationRecord
   belongs_to :profileable, polymorphic: true
+  belongs_to :job_application, -> { where(profiles: {profileable_type: "JobApplication"}) }, foreign_key: "profileable_id", optional: true
   belongs_to :study_level, optional: true
   belongs_to :experience_level, optional: true
   belongs_to :availability_range, optional: true

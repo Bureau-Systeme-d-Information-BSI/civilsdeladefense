@@ -40,3 +40,8 @@
           - klass = controller.controller_name == 'job_offers' && controller.action_name == 'index' ? 'rf-nav__item--active' : nil
           %li.rf-nav__item{class: klass}
             = link_to "Nos offres", job_offers_path, class: 'rf-link'
+          - spontaneous = JobOffer.find_by(spontaneous: true)
+          - if spontaneous
+            - klass = controller.controller_name == 'job_offers' && controller.action_name == 'show' ? 'rf-nav__item--active' : nil
+            %li.rf-nav__item{class: klass}
+              = link_to "Candidature spontanée", spontaneous, class: 'rf-link'

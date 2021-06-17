@@ -1,22 +1,51 @@
 # frozen_string_literal: true
 
 class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
-  before_action :filter_by_full_text, only: %i[index], if: -> { params[:s].present? }
+  before_action :filter_by_full_text, only: %i[index], if: -> { permitted_params[:s].present? }
   before_action :fetch_base_ressources, only: %i[index]
 
   # GET /admin/stats/candidatures
   # GET /admin/stats/candidatures.json
   def index
     @job_applications = @job_applications.where(created_at: date_range)
-    @q = @job_applications.ransack(params[:q])
+    @q = @job_applications.ransack(permitted_params[:q])
     @job_applications_filtered = @q.result(distinct: true)
-      .page(params[:page])
-      .per_page(20)
     @job_applications_count = @job_applications_filtered.count
+    @permitted_params = permitted_params
     build_stats
     build_stats_per_profile
     build_state_duration
     build_employer_ids unless current_administrator.bant?
+
+    respond_to do |format|
+      format.html {}
+      format.js {}
+      format.xlsx {
+        data = {
+          job_applications_count: @job_applications_count,
+          date_start: @date_start,
+          date_end: @date_end,
+          per_day: @per_day,
+          state_duration: @state_duration,
+          per_state: @per_state,
+          per_experiences_fit_job_offer: @per_experiences_fit_job_offer,
+          per_has_corporate_experience: @per_has_corporate_experience,
+          per_is_currently_employed: @per_is_currently_employed,
+          per_rejection_reason: @per_rejection_reason,
+          per_gender: @per_gender,
+          per_age_range: @per_age_range,
+          bops: @bops,
+          contract_types: @contract_types,
+          employers: @employers,
+          rejection_reasons: @rejection_reasons,
+          age_ranges: @age_ranges,
+          q: permitted_params[:q] || {}
+
+        }
+        file = Exporter::StatJobApplications.new(data, current_administrator).generate
+        send_data file.read, filename: "#{Time.zone.today}_e-recrutement_stats_candidatures.xlsx"
+      }
+    end
   end
 
   protected
@@ -52,7 +81,7 @@ class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
   end
 
   def filter_by_full_text
-    @job_applications = @job_applications.search_full_text(params[:s]).unscope(:order)
+    @job_applications = @job_applications.search_full_text(permitted_params[:s]).unscope(:order)
   end
 
   STATE_DURATION = [
@@ -85,7 +114,7 @@ class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
 
   def date_start
     @date_start ||= begin
-      res = Date.parse(params[:start]) if params[:start].present?
+      res = Date.parse(permitted_params[:start]) if permitted_params[:start].present?
       res ||= 30.days.ago.beginning_of_day
       res
     end
@@ -93,7 +122,7 @@ class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
 
   def date_end
     @date_end ||= begin
-      res = Date.parse(params[:end]) if params[:end].present?
+      res = Date.parse(permitted_params[:end]) if permitted_params[:end].present?
       res ||= Time.current
       res
     end
@@ -109,5 +138,15 @@ class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
     @employers = Employer.all
     @rejection_reasons = RejectionReason.all
     @age_ranges = AgeRange.all
+  end
+
+  def permitted_params
+    params.permit(
+      :s, :start, :end,
+      q: {
+        employer_id_in: [], job_offer_category_id_in: [],
+        contract_type_id_in: [], job_offer_bop_id_in: []
+      }
+    )
   end
 end

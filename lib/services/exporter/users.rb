@@ -7,25 +7,25 @@ class Exporter::Users < Exporter::Base
 
   def format_user(user, index)
     last_job_application = user.last_job_application
-    sheet.add_row(["CARTE CANDIDAT N°#{index + 1}"])
-    sheet.add_row(["Prénom", user.first_name])
-    sheet.add_row(["Nom", user.last_name])
-    sheet.add_row(["Poste actuel", user.current_position])
-    sheet.add_row(["Nombre de candidatures", user.job_applications_count])
-    sheet.add_row(["Status", last_job_application.aasm.human_state]) if last_job_application
-    sheet.add_row(["Date de candidature", I18n.l(last_job_application.created_at.to_date)]) if last_job_application
-    sheet.add_row(["Courriel", user.email])
-    sheet.add_row(["Numéro de téléphone", user.phone])
-    sheet.add_row(["Candidatures"])
-    sheet.add_row([
+    add_row("Carte candidat N°#{index + 1}")
+    add_row("Prénom", user.first_name)
+    add_row("Nom", user.last_name)
+    add_row("Poste actuel", user.current_position)
+    add_row("Nombre de candidatures", user.job_applications_count)
+    add_row("Status", last_job_application.aasm.human_state) if last_job_application
+    add_row("Date de candidature", I18n.l(last_job_application.created_at.to_date)) if last_job_application
+    add_row("Courriel", user.email)
+    add_row("Numéro de téléphone", user.phone)
+    add_row("Candidatures")
+    add_row(
       "CANDIDATURES CANDIDAT N°#{index + 1}", "Employeur", "Date de la candidature",
       "Status", "Genre", "Expérience dans l'entreprise", "Actuellement employé",
       "Disponibilité", "Expérience professionnel", "Niveau d'études", "Langues étrangères"
-    ])
+    )
     user.job_applications.each_with_index do |job_application, index|
-      sheet.add_row(format_job_application(job_application, index))
+      add_row(format_job_application(job_application, index))
     end
-    sheet.add_row([])
+    add_row
   end
 
   def format_job_application(job_application, index)

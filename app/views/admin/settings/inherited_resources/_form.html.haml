@@ -15,6 +15,7 @@
           = f.input :from_state, collection: states, prompt: true
           = f.input :by_default
           = f.input :notification
+          = f.input :spontaneous, as: :boolean
         - elsif resource.is_a?(Organization)
           = f.input :name
           = f.input :name_business_owner

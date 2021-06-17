@@ -22,10 +22,10 @@ class JobOffer < ApplicationRecord
 
   include PgSearch::Model
   pg_search_scope :search_full_text, against: [
-    [:identifier, "A"],
-    [:title, "A"],
-    [:description, "B"],
-    [:location, "C"]
+    identifier: "A",
+    title: "A",
+    description: "B",
+    location: "C"
   ], associated_against: SETTINGS.each_with_object({}) { |obj, memo|
     memo[obj] = %i[name]
   }
@@ -286,6 +286,7 @@ end
 #  rejected_job_applications_count                  :integer          default(0), not null
 #  required_profile                                 :text
 #  slug                                             :string           not null
+#  spontaneous                                      :boolean          default(FALSE)
 #  state                                            :integer
 #  suspended_at                                     :datetime
 #  title                                            :string

@@ -29,6 +29,9 @@ Rails.application.routes.draw do
     registrations: "users/registrations",
     omniauth_callbacks: "users/omniauth_callbacks"
   }
+  devise_scope :user do
+    get "/users/sign_up/success" => "users/registrations#success", :as => :success_user_registration
+  end
 
   namespace :admin do
     resource :account do

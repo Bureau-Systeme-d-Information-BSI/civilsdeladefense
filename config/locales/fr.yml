@@ -996,7 +996,7 @@ fr:
         job_offer:
           attributes:
             title:
-              no_bracket: "ne doit pas contenir de parenthèse"
+              brackets: "ne doit pas contenir de parenthèse"
               f_h: "doit finir par F/H"
         user:
           attributes:

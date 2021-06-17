@@ -246,6 +246,14 @@ ActiveRecord::Schema.define(version: 2021_05_24_140135) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "frequently_asked_questions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.integer "position"
+    t.string "value"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
     t.string "slug", null: false
     t.string "sluggable_type", limit: 50

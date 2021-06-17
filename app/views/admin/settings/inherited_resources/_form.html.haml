@@ -33,6 +33,9 @@
           = f.input :title
           = f.input :subject
           = f.input :body, style: 'height:400px;'
+        - elsif resource.is_a?(FrequentlyAskedQuestion)
+          = f.input :name
+          = f.input :value, as: :trix_editor
         - elsif resource.is_a?(SalaryRange)
           = f.input :professional_category, collection: ProfessionalCategory.all
           = f.input :experience_level, collection: ExperienceLevel.all

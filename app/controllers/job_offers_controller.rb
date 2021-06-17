@@ -127,7 +127,7 @@ class JobOffersController < ApplicationController
   end
 
   def job_application_params
-    permitted_params = %i[]
+    permitted_params = %i[category_id]
     profile_attributes = %i[
       gender has_corporate_experience age_range_id availability_range_id experience_level_id study_level_id
     ]

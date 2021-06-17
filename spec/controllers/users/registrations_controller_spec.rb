@@ -41,7 +41,7 @@ RSpec.describe Users::RegistrationsController, type: :controller do
       expect {
         post :create, params: {user: user_attrs}
       }.to change(User, :count).by(1)
-      expect(response).to redirect_to(root_url)
+      expect(response).to redirect_to(success_user_registration_url(email: user_attrs[:email]))
     end
   end
 end

@@ -22,10 +22,10 @@ class JobOffer < ApplicationRecord
 
   include PgSearch::Model
   pg_search_scope :search_full_text, against: [
-    [:identifier, "A"],
-    [:title, "A"],
-    [:description, "B"],
-    [:location, "C"]
+    identifier: "A",
+    title: "A",
+    description: "B",
+    location: "C"
   ], associated_against: SETTINGS.each_with_object({}) { |obj, memo|
     memo[obj] = %i[name]
   }
@@ -60,12 +60,15 @@ class JobOffer < ApplicationRecord
   validates :contract_duration_id, presence: true, if: -> { contract_type&.duration }
   validates :contract_duration_id, absence: true, unless: -> { contract_type&.duration }
   validates :title, format: {with: %r{\A.*F/H\z}, message: :f_h}
+  validates :title, format: {without: %r{\A.*\(.*\z}, message: :brackets}
+  validates :title, format: {without: %r{\A.*\).*\z}, message: :brackets}
 
   ## Scopes
   default_scope { order(created_at: :desc) }
   scope :admin_index, -> { includes(:bop, :contract_type, :employer, :job_offer_actors) }
   scope :admin_index_active, -> { admin_index.where.not(state: :archived) }
   scope :admin_index_archived, -> { admin_index.archived }
+  scope :admin_index_featured, -> { admin_index.where(featured: true) }
   scope :publicly_visible, -> { where(state: :published) }
   scope :search_import, -> { includes(*SETTINGS) }
 
@@ -267,6 +270,7 @@ end
 #  duration_contract                                :string
 #  estimate_annual_salary_gross                     :string
 #  estimate_monthly_salary_net                      :string
+#  featured                                         :boolean          default(FALSE)
 #  identifier                                       :string
 #  initial_job_applications_count                   :integer          default(0), not null
 #  is_remote_possible                               :boolean
@@ -284,6 +288,7 @@ end
 #  rejected_job_applications_count                  :integer          default(0), not null
 #  required_profile                                 :text
 #  slug                                             :string           not null
+#  spontaneous                                      :boolean          default(FALSE)
 #  state                                            :integer
 #  suspended_at                                     :datetime
 #  title                                            :string

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Admin::JobOffersController < Admin::BaseController
-  before_action :set_job_offers, only: %i[index archived]
+  before_action :set_job_offers, only: %i[index archived featured]
   layout :choose_layout
 
   include JobOfferStateActions
@@ -21,6 +21,31 @@ class Admin::JobOffersController < Admin::BaseController
   end
 
   alias_method :archived, :index
+
+  def featured
+  end
+
+  def feature
+    job_offer = if params[:job_offer_identifier]
+      JobOffer.find_by(identifier: params[:job_offer_identifier])
+    else
+      JobOffer.find(params[:id])
+    end
+    if job_offer&.update(featured: true)
+      redirect_back(fallback_location: %i[admin job_offers], notice: t(".success"))
+    else
+      redirect_back(fallback_location: %i[admin job_offers], notice: t(".error"))
+    end
+  end
+
+  def unfeature
+    job_offer = JobOffer.find(params[:id])
+    if job_offer.update(featured: false)
+      redirect_back(fallback_location: %i[admin job_offers], notice: t(".success"))
+    else
+      render json: job_offer.errors, status: :unprocessable_entity
+    end
+  end
 
   def export
     job_offer = JobOffer.find(params[:id])
@@ -147,8 +172,15 @@ class Admin::JobOffersController < Admin::BaseController
   def set_job_offers
     @employers = Employer.all
     @job_offers_active = @job_offers.admin_index_active
+    @job_offers_featured = @job_offers.admin_index_featured
     @job_offers_archived = @job_offers.admin_index_archived
-    @job_offers_unfiltered = action_name == "index" ? @job_offers_active : @job_offers_archived
+    @job_offers_unfiltered = if action_name == "featured"
+      @job_offers_featured
+    elsif action_name == "archived"
+      @job_offers_archived
+    else
+      @job_offers_active
+    end
     job_offers_nearly_filtered = @job_offers_unfiltered
     if params[:s].present?
       job_offers_nearly_filtered = job_offers_nearly_filtered.search_full_text(params[:s])
@@ -170,11 +202,13 @@ class Admin::JobOffersController < Admin::BaseController
   end
 
   def permitted_fields
-    fields = %i[title description category_id professional_category_id employer_id required_profile
+    fields = %i[
+      title description category_id professional_category_id employer_id required_profile
       recruitment_process contract_type_id contract_duration_id contract_start_on
       is_remote_possible available_immediately study_level_id experience_level_id bop_id
       sector_id estimate_monthly_salary_net estimate_annual_salary_gross benefit_id
-      location city county county_code country_code postcode region]
+      location city county county_code country_code postcode region spontaneous
+    ]
     job_offer_actors_attributes = %i[id role _destroy]
     job_offer_actors_attributes << {administrator_attributes: %i[id email _destroy]}
     fields << {job_offer_actors_attributes: job_offer_actors_attributes}

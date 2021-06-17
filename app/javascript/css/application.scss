@@ -322,3 +322,13 @@ h2 {
   border: 2px dashed purple;
   margin: -2px;
 }
+
+.scroll {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  padding: 1rem 1rem;
+  position: fixed;
+  bottom: 1.2rem;
+  right: 1.5rem;
+}

@@ -21,7 +21,7 @@ class Admin::MessagesController < Admin::BaseController
         end
         format.json { render :show, status: :created, location: @message }
       else
-        format.html { render :new }
+        format.html { render @job_application }
         format.js do
           @notification = t(".failure")
           render :new

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_14_121035) do
+ActiveRecord::Schema.define(version: 2021_05_24_140135) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -287,6 +287,7 @@ ActiveRecord::Schema.define(version: 2021_05_14_121035) do
     t.datetime "updated_at", null: false
     t.integer "from_state"
     t.boolean "notification", default: true
+    t.boolean "spontaneous", default: false
   end
 
   create_table "job_application_files", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
@@ -319,6 +320,8 @@ ActiveRecord::Schema.define(version: 2021_05_14_121035) do
     t.boolean "experiences_fit_job_offer"
     t.uuid "rejection_reason_id"
     t.uuid "organization_id"
+    t.uuid "category_id"
+    t.index ["category_id"], name: "index_job_applications_on_category_id"
     t.index ["employer_id"], name: "index_job_applications_on_employer_id"
     t.index ["job_offer_id"], name: "index_job_applications_on_job_offer_id"
     t.index ["organization_id"], name: "index_job_applications_on_organization_id"
@@ -391,6 +394,8 @@ ActiveRecord::Schema.define(version: 2021_05_14_121035) do
     t.uuid "organization_id"
     t.uuid "benefit_id"
     t.uuid "contract_duration_id"
+    t.boolean "featured", default: false
+    t.boolean "spontaneous", default: false
     t.index ["benefit_id"], name: "index_job_offers_on_benefit_id"
     t.index ["bop_id"], name: "index_job_offers_on_bop_id"
     t.index ["category_id"], name: "index_job_offers_on_category_id"
@@ -706,6 +711,7 @@ ActiveRecord::Schema.define(version: 2021_05_14_121035) do
   add_foreign_key "emails", "job_applications"
   add_foreign_key "job_application_files", "job_application_file_types"
   add_foreign_key "job_application_files", "job_applications"
+  add_foreign_key "job_applications", "categories"
   add_foreign_key "job_applications", "employers"
   add_foreign_key "job_applications", "job_offers"
   add_foreign_key "job_applications", "rejection_reasons"

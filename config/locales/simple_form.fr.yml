@@ -59,6 +59,8 @@ fr:
         website_url: "Site web"
         foreign_language: Langue étrangère
         foreign_language_level: Niveau de langue étrangère
+        category: "Domaine professionnel"
+        spontaneous: "Candidature spontanée"
       administrator:
         current_password: 'Mot de passe actuel'
         password: 'Nouveau mot de passe'
@@ -88,7 +90,6 @@ fr:
         by_default: "Visible dès que l'état défini précédemment est atteint ?"
       job_offer:
         title: "Intitulé du poste"
-        category: "Domaines professionnels"
         professional_category: "Catégorie professionnelle"
         location: "Localisation"
         employer: "Employeur"

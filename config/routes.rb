@@ -29,6 +29,9 @@ Rails.application.routes.draw do
     registrations: "users/registrations",
     omniauth_callbacks: "users/omniauth_callbacks"
   }
+  devise_scope :user do
+    get "/users/sign_up/success" => "users/registrations#success", :as => :success_user_registration
+  end
 
   namespace :admin do
     resource :account do
@@ -45,18 +48,16 @@ Rails.application.routes.draw do
     end
     resources :job_offers, path: "offresdemploi" do
       collection do
-        post :exports
-        get :add_actor
-        get :archived
+        post :exports, :feature
+        get :add_actor, :featured, :archived
         JobOffer.aasm.events.map(&:name).each do |event_name|
           action_name = "create_and_#{event_name}".to_sym
           post :create, constraints: CommitParamConstraint.new(action_name), action: action_name
         end
       end
       member do
-        get :export
-        get :board, :stats, :new_transfer
-        post :transfer
+        get :export, :board, :stats, :new_transfer
+        post :transfer, :feature, :unfeature
         JobOffer.aasm.events.map(&:name).each do |event_name|
           patch(event_name.to_sym)
           action_name = "update_and_#{event_name}".to_sym

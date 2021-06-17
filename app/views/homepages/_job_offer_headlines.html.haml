@@ -1,5 +1,6 @@
-.rf-container.rf-my-9w
-  .rf-grid-row
-    %h2.rf-h3.rf-mb-2w Nos offres à la une
-  .rf-grid-row.rf-grid-row--gutters.rf-card-deck.rf-mb-0
-    = render partial: 'job_offer_headline_card', collection: @job_offers_selected, as: :job_offer
+- if @job_offers_selected.count > 0
+  .rf-container.rf-my-9w
+    .rf-grid-row
+      %h2.rf-h3.rf-mb-2w Nos offres à la une
+    .rf-grid-row.rf-grid-row--gutters.rf-card-deck.rf-mb-0
+      = render partial: 'job_offer_headline_card', collection: @job_offers_selected, as: :job_offer

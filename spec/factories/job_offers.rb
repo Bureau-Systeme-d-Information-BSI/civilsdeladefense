@@ -45,6 +45,7 @@ end
 #  duration_contract                                :string
 #  estimate_annual_salary_gross                     :string
 #  estimate_monthly_salary_net                      :string
+#  featured                                         :boolean          default(FALSE)
 #  identifier                                       :string
 #  initial_job_applications_count                   :integer          default(0), not null
 #  is_remote_possible                               :boolean
@@ -62,6 +63,7 @@ end
 #  rejected_job_applications_count                  :integer          default(0), not null
 #  required_profile                                 :text
 #  slug                                             :string           not null
+#  spontaneous                                      :boolean          default(FALSE)
 #  state                                            :integer
 #  suspended_at                                     :datetime
 #  title                                            :string

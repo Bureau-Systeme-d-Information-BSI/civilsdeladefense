@@ -45,7 +45,6 @@ import displaySnackbars from 'js/display-snackbars'
 import { boardManagement, boardRedraw, boardShowRejectionModal } from 'js/board'
 window.boardRedraw = boardRedraw
 window.boardShowRejectionModal = boardShowRejectionModal
-import jobOfferManagement from 'js/job-offer-management'
 import reloadWithTurbolinks from 'js/reload-with-turbolinks'
 window.reloadWithTurbolinks = reloadWithTurbolinks
 
@@ -74,7 +73,6 @@ document.addEventListener('turbolinks:load', function() {
   displayCharts()
   displaySnackbars()
   boardManagement()
-  jobOfferManagement()
 
   flatpickr('#job_offer_contract_start_on', {
     locale: French,

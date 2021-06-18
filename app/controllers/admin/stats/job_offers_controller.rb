@@ -21,6 +21,8 @@ class Admin::Stats::JobOffersController < Admin::Stats::BaseController
 
     @profiles = Profile.joins(job_application: :job_offer).where(job_applications: {job_offers: @job_offers})
     @profile_availables = @profiles.where.not(availability_range: AvailabilityRange.en_poste)
+
+    @per_day = root_rel.group_by_day(:created_at, range: date_range).count
     build_state_duration
     build_employer_ids unless current_administrator.bant?
   end

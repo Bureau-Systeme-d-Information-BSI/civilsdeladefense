@@ -15,7 +15,6 @@ class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
     build_stats
     build_stats_per_profile
     build_state_duration
-    build_employer_ids unless current_administrator.bant?
 
     respond_to do |format|
       format.html {}
@@ -76,10 +75,6 @@ class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
     @per_is_currently_employed = root_rel_profile.group(:is_currently_employed).count
   end
 
-  def build_employer_ids
-    @employer_ids = @job_applications_filtered.reorder("").pluck(:employer_id).uniq
-  end
-
   def filter_by_full_text
     @job_applications = @job_applications.search_full_text(permitted_params[:s]).unscope(:order)
   end
@@ -135,7 +130,7 @@ class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
   def fetch_base_ressources
     @bops = Bop.all
     @contract_types = ContractType.all
-    @employers = Employer.all
+    @employers = Employer.tree
     @rejection_reasons = RejectionReason.all
     @age_ranges = AgeRange.all
   end

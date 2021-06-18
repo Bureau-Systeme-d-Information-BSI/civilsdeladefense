@@ -6,7 +6,8 @@ RSpec.describe "admin/job_offers/index", type: :view do
   login_admin
 
   before(:each) do
-    employers = create_list(:employer, 5)
+    grand_employer = create(:employer)
+    employers = create_list(:employer, 5, parent: grand_employer)
 
     owner = create(:owner)
     category = create(:category)
@@ -32,7 +33,7 @@ RSpec.describe "admin/job_offers/index", type: :view do
     end
     assign(:job_offers_filtered_unpaged, collection)
     assign(:job_offers_filtered, collection)
-    assign(:employers, employers)
+    assign(:employers, [[grand_employer.name, employers]])
   end
 
   it "renders a list of job_offers" do

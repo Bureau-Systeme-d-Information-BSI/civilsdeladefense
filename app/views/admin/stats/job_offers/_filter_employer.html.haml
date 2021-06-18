@@ -5,17 +5,15 @@
     - if ary.any?
       = "(#{ary.size})"
   .dropdown-menu.dropdown-menu-right{aria: {labelledby: 'dropdownEmployeur'}}
-    - grouped_options = Employer.roots.map{|x| [x.name, x.children]}
     %ul
-      - for option in grouped_options
+      - @employers.each do |option|
         %li
           = option.first
           %ul
-            - for sub_option in option.last
-              - if current_administrator.bant? || @employer_ids.include?(sub_option.id)
-                - input_id = dom_id(sub_option)
-                %li
-                  .form-check.form-check-inline.w-100
-                    - checked = ary.include?(sub_option.id)
-                    = check_box_tag 'q[employer_id_in][]', sub_option.id, checked, class: 'form-check-input', id: input_id
-                    %label.form-check-label.text-truncate.d-block{for: input_id}= sub_option.name
+            - option.last.each do |sub_option|
+              - input_id = dom_id(sub_option)
+              %li
+                .form-check.form-check-inline.w-100
+                  - checked = ary.include?(sub_option.id)
+                  = check_box_tag 'q[employer_id_in][]', sub_option.id, checked, class: 'form-check-input', id: input_id
+                  %label.form-check-label.text-truncate.d-block{for: input_id}= sub_option.name

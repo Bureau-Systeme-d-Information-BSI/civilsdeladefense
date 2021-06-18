@@ -24,7 +24,6 @@ class Admin::Stats::JobOffersController < Admin::Stats::BaseController
 
     @per_day = root_rel.group_by_day(:created_at, range: date_range).count
     build_state_duration
-    build_employer_ids unless current_administrator.bant?
   end
 
   protected
@@ -56,10 +55,6 @@ class Admin::Stats::JobOffersController < Admin::Stats::BaseController
     }
   end
 
-  def build_employer_ids
-    @employer_ids = @job_offers.pluck(:employer_id).uniq
-  end
-
   def date_start
     @date_start ||= begin
       res = Date.parse(params[:start]) if params[:start].present?
@@ -83,7 +78,7 @@ class Admin::Stats::JobOffersController < Admin::Stats::BaseController
   def fetch_base_ressources
     @bops = Bop.all
     @contract_types = ContractType.all
-    @employers = Employer.all
+    @employers = current_administrator.employers
     @rejection_reasons = RejectionReason.all
     @age_ranges = AgeRange.all
   end

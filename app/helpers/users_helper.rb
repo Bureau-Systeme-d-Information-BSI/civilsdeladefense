@@ -25,18 +25,14 @@ module UsersHelper
   def image_user_url(photo)
     if photo&.present?
       Rails.cache.fetch(photo.model) do
-        encoded = Base64.encode64(photo.read)
+        encoded = Base64.encode64(photo.small.read)
         "data:#{photo.content_type};base64,#{encoded}"
-      rescue NoMethodError => e
-        if e.to_s == "undefined method `body' for nil:NilClass"
-          asset_pack_path("images/default_user_avatar.svg")
-        end
-      rescue URI::InvalidURIError
-        asset_pack_path("images/default_user_avatar.svg")
       end
     else
       asset_pack_path("images/default_user_avatar.svg")
     end
+  rescue NoMethodError, URI::InvalidURIError, Excon::Error::Socket
+    asset_pack_path("images/default_user_avatar.svg")
   end
 
   def hint_text_for_file(job_application, job_application_file)

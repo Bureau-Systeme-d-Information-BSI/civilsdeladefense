@@ -457,7 +457,7 @@ GEM
     tilt (2.0.10)
     trix-rails (2.3.0)
       rails (> 4.1, < 7.0)
-    turbo-rails (0.5.10)
+    turbo-rails (0.5.11)
       rails (>= 6.0.0)
     turbolinks (5.2.1)
       turbolinks-source (~> 5.2)

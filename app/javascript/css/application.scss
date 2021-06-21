@@ -332,3 +332,22 @@ h2 {
   bottom: 1.2rem;
   right: 1.5rem;
 }
+
+.social-links {
+  float: right;
+  svg {
+    top: 0;
+  }
+  a {
+    box-shadow: none !important;
+  }
+  a::after {
+    content: none !important;
+  }
+  svg {
+    fill: var(--bf500);
+  }
+  svg:hover {
+    fill: rgba(0, 0, 246);
+  }
+}

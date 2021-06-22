@@ -2,7 +2,7 @@
 - ary = params.dig(:q, search_key)  || []
 .dropdown.dropdown-checks.form-group
   %button.form-control.dropdown-toggle.text-left.d-flex.align-items-center#dropdownCategory{type: 'button', data: {toggle: 'dropdown'}, aria: {haspopup: true, expanded: false}}
-    Départements
+    Localisation géographique
     - if ary.any?
       = "(#{ary.size})"
   .dropdown-menu.dropdown-menu-right.allow-focus{aria: {labelledby: 'dropdownCategory'}}

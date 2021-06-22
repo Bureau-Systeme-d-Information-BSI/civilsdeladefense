@@ -3,7 +3,7 @@
 - choices = [['Oui', 1], ['Non', 0]]
 .dropdown.dropdown-checks.form-group
   %button.form-control.dropdown-toggle.text-left.d-flex.align-items-center#dropdownContractType{type: 'button', data: {toggle: 'dropdown'}, aria: {haspopup: true, expanded: false}}
-    = t('simple_form.labels.defaults.has_corporate_experience')
+    = "Expérience #{current_organization.operator_name}"
     - if val.present?
       = "(#{choices.detect{|x| x.last.to_s == val}.first})"
   .dropdown-menu.dropdown-menu-right.allow-focus{aria: {labelledby: 'dropdownContractType'}}

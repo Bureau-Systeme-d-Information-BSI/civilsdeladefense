@@ -1,0 +1,13 @@
+- search_key = :job_applications_profile_has_corporate_experience_true
+- val = params.dig(:q, :concerned).present?
+.dropdown.dropdown-checks.form-group
+  %button.form-control.dropdown-toggle.text-left.d-flex.align-items-center#dropdownContractType{type: 'button', data: {toggle: 'dropdown'}, aria: {haspopup: true, expanded: false}}
+    Mon vivier
+    - if val.present?
+      (oui)
+  .dropdown-menu.dropdown-menu-right.allow-focus{aria: {labelledby: 'dropdownContractType'}}
+    %ul
+      %li
+        .form-check.form-check-inline.w-100
+          = check_box_tag "q[concerned]", true, val, class: 'form-check-input', id: :concerned_true
+          %label.form-check-label.text-truncate.d-block{for: :concerned_true} Oui

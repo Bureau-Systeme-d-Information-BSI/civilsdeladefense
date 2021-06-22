@@ -2,7 +2,6 @@
 - encoded_url = url_encode(request.original_url)
 
 %h1.rf-mt-0.rf-h2
-  = @job_offer.title
   .social-links
     %a{onclick: "window.print(); return false", href: "#"}
       = fa_icon 'print-solid', class: 'rf-icon-xl'
@@ -12,4 +11,5 @@
       = fa_icon 'linkedin-box-fill', class: 'rf-icon-xl'
     %a{href: "https://twitter.com/intent/tweet?url=#{encoded_url}", target: "_blank"}
       = fa_icon 'twitter-fill', class: 'rf-icon-xl'
+  = @job_offer.title
 = render partial: 'job_offer_content', locals: {job_offer: @job_offer}

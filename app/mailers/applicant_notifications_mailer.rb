@@ -30,9 +30,8 @@ class ApplicantNotificationsMailer < ApplicationMailer
 
   def notice_period_before_deletion(user_id)
     @user = User.find(user_id)
-    organization = @user.organization
-    @service_name = organization.service_name
-    @nbr_days_notice_period_before_deletion = ENV["NBR_DAYS_NOTICE_PERIOD_BEFORE_DELETION"].to_i
+    @service_name = @user.organization.service_name
+    @days_notice_period_before_deletion = ENV["DAYS_NOTICE_PERIOD_BEFORE_DELETION"].to_i
 
     to = @user.email
     subject = "[#{@service_name}] Votre compte candidat : mise à jour nécessaire"

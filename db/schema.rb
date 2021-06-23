@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(version: 2021_07_05_101934) do
     t.uuid "supervisor_administrator_id"
     t.uuid "grand_employer_administrator_id"
     t.uuid "organization_id"
+    t.date "marked_for_deactivation_on"
     t.index ["confirmation_token"], name: "index_administrators_on_confirmation_token", unique: true
     t.index ["email"], name: "index_administrators_on_email", unique: true
     t.index ["employer_id"], name: "index_administrators_on_employer_id"

@@ -32,6 +32,7 @@ end
 #  last_sign_in_at                 :datetime
 #  last_sign_in_ip                 :inet
 #  locked_at                       :datetime
+#  marked_for_deactivation_on      :date
 #  photo_content_type              :string
 #  photo_file_name                 :string
 #  photo_file_size                 :bigint

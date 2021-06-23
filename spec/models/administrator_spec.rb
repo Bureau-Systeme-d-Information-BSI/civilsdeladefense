@@ -3,33 +3,31 @@
 require "rails_helper"
 
 RSpec.describe Administrator, type: :model do
-  before(:all) do
-    @administrator = create(:administrator)
-  end
+  let(:administrator) { create(:administrator) }
 
   it "is valid with valid attributes" do
-    expect(@administrator).to be_valid
+    expect(administrator).to be_valid
   end
 
   it "has a unique email" do
-    administrator2 = build(:administrator, email: @administrator.email)
+    administrator2 = build(:administrator, email: administrator.email)
     expect(administrator2).to_not be_valid
   end
 
   it "lock the administrator after 10 wrong authentication attempts" do
     1.upto(9) do |i|
-      @administrator.valid_for_authentication? { false }
-      expect(@administrator.failed_attempts).to eq(i)
-      expect(@administrator.locked_at).to be_nil
+      administrator.valid_for_authentication? { false }
+      expect(administrator.failed_attempts).to eq(i)
+      expect(administrator.locked_at).to be_nil
     end
 
-    @administrator.valid_for_authentication? { false }
-    expect(@administrator.failed_attempts).to eq(10)
-    expect(@administrator.locked_at).to_not be_nil
+    administrator.valid_for_authentication? { false }
+    expect(administrator.failed_attempts).to eq(10)
+    expect(administrator.locked_at).to_not be_nil
   end
 
   it "check correctly the confirmation token validity duration" do
-    expect(@administrator.confirmation_token_still_valid?).to be_truthy
+    expect(administrator.confirmation_token_still_valid?).to be_truthy
 
     administrator2 = build(:administrator, confirmed_at: nil, confirmation_sent_at: 4.days.ago)
     expect(administrator2.confirmation_token_still_valid?).to be_falsy
@@ -171,6 +169,63 @@ RSpec.describe Administrator, type: :model do
       expect(administrator_invalid).to be_valid
     end
   end
+
+  it "should compute notice period difference in days" do
+    ENV["DAYS_INACTIVITY_PERIOD_BEFORE_DEACTIVATION"] = "100"
+    ENV["DAYS_NOTICE_PERIOD_BEFORE_DEACTIVATION"] = "20"
+    expect(Administrator.notice_period_target_date.to_date).to eq(80.days.ago.to_date)
+  end
+
+  describe "automatic deactivation" do
+    before do
+      ENV["DAYS_INACTIVITY_PERIOD_BEFORE_DEACTIVATION"] = "100"
+      ENV["DAYS_NOTICE_PERIOD_BEFORE_DEACTIVATION"] = "20"
+      administrator.reload
+      Administrator.deactivate_when_too_old
+      administrator.reload
+    end
+
+    context "connected long time ago" do
+      let!(:administrator) { create(:administrator, last_sign_in_at: 81.days.ago) }
+
+      it "marked" do
+        expect(administrator.marked_for_deactivation_on).to eq(Time.zone.now.to_date)
+      end
+    end
+
+    context "marked yesterday and has not connected since" do
+      let!(:administrator) { create(:administrator, marked_for_deactivation_on: 1.day.ago, last_sign_in_at: 101.days.ago) }
+
+      it "dont delete" do
+        expect(administrator.deleted_at.blank?).to eq(true)
+      end
+    end
+
+    context "marked more than 20 days ago and has not connected since" do
+      let!(:administrator) { create(:administrator, marked_for_deactivation_on: 21.days.ago, last_sign_in_at: 101.days.ago) }
+
+      it "delete" do
+        expect(administrator.deleted_at&.to_date).to eq(Time.zone.now.to_date)
+      end
+    end
+
+    context "not marked and has not connected since" do
+      let!(:administrator) { create(:administrator, last_sign_in_at: 101.days.ago) }
+
+      it "marked & dont delete" do
+        expect(administrator.marked_for_deactivation_on).to eq(Time.zone.now.to_date)
+        expect(administrator.deleted_at.blank?).to eq(true)
+      end
+    end
+
+    context "marked and has connected since" do
+      let!(:administrator) { create(:administrator, marked_for_deactivation_on: 21.days.ago, last_sign_in_at: Time.zone.now) }
+
+      it "doesn't delete" do
+        expect(administrator.deleted_at).to eq(nil)
+      end
+    end
+  end
 end
 
 # == Schema Information
@@ -192,6 +247,7 @@ end
 #  last_sign_in_at                 :datetime
 #  last_sign_in_ip                 :inet
 #  locked_at                       :datetime
+#  marked_for_deactivation_on      :date
 #  photo_content_type              :string
 #  photo_file_name                 :string
 #  photo_file_size                 :bigint

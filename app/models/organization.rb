@@ -19,14 +19,11 @@ class Organization < ApplicationRecord
     partner_3_logo
     logo_horizontal
     testimony_logo
+    image_background
   ].each do |field|
     mount_uploader field, LogoUploader, mount_on: :"#{field}_file_name"
     validates field, file_size: {less_than: 1.megabytes}
   end
-
-  mount_uploader :image_background, LogoUploader, mount_on: :image_background_file_name
-  validates :image_background,
-    file_size: {less_than: 1.megabytes}
 
   #####################################
   # Enums

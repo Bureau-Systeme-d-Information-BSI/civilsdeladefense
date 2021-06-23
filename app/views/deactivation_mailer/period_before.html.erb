@@ -1,0 +1,19 @@
+<p>
+  <%-if @administrator.full_name.present? %>
+  Bonjour <%= @administrator.full_name %>,
+  <%- else %>
+  Bonjour,
+  <%- end %>
+</p>
+
+<p>
+  Nous vous invitons à mettre à jour votre compte utilisateur sur le site <%= @service_name %>. Sans mise à jour de celui-ci sous <%= @days_notice_period_before_deletion %> jours, nous vous informons qu'il sera désactivé automatiquement.
+</p>
+
+<p>
+  Cordialement,
+</p>
+
+<p>
+  L'équipe <%= @service_name %>
+</p>

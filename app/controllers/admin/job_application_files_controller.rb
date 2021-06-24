@@ -3,8 +3,8 @@
 class Admin::JobApplicationFilesController < Admin::BaseController
   include SendFileContent
 
-  load_and_authorize_resource :job_application
-  load_and_authorize_resource :job_application_file, through: :job_application
+  load_and_authorize_resource :job_application, except: :show
+  load_and_authorize_resource :job_application_file
 
   def create
     @job_application_file.do_not_provide_immediately = true

@@ -23,7 +23,7 @@
             Tout sélectionner
           .d-none
             - @job_offers_filtered_unpaged.each do |job_offer|
-              = check_box_tag "job_offer_ids[]", job_offer.id, false, data: {"subcheckbox-target": "downcheckbox"}
+              = check_box_tag "job_offer_ids[]", job_offer.id, false, data: {"subcheckbox-target": "downcheckbox"}, id: job_offer.id
 
       .row{data: { controller: 'subcheckbox'}}
         .col-12

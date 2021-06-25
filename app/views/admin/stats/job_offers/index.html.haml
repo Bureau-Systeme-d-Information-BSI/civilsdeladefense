@@ -4,6 +4,7 @@
     .card-title.d-md-flex.align-items-center
       = @page_title
     = render partial: 'search'
+    = link_to "Exporter", [:admin, :stats, :job_offers, @permitted_params.to_h.merge(format: :xlsx)], target: "_blank", class: "btn btn-primary btn-raised"
     %h2.h5.text-primary.mb-0.mt-4= t('.title')
     .card.mt-2
       .card-body
@@ -34,4 +35,9 @@
             .statistic__name Candidats disponibles
             .statistic__value
               = @profile_availables.count
-        = render partial: 'state_duration'
+        %h1.h5.text-primary.mt-4 Délai moyen de recrutement (en jours)
+        .statistics-row.mt-3
+          .col-12.col-md-3.statistic__block
+            .statistic__name Date de publication offre → Date d'affectation agent
+            .statistic__value
+              = @average_affection

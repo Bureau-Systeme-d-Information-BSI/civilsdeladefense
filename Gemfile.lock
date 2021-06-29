@@ -300,8 +300,6 @@ GEM
     rack (2.2.3)
     rack-cors (1.1.1)
       rack (>= 2.0.0)
-    rack-mini-profiler (2.3.2)
-      rack (>= 1.2.0)
     rack-oauth2 (1.16.0)
       activesupport
       attr_required
@@ -546,7 +544,6 @@ DEPENDENCIES
   pry-rails
   puma
   rack-cors
-  rack-mini-profiler (~> 2.3)
   rack-rewrite
   rails (~> 6.1.3)
   rails-controller-testing

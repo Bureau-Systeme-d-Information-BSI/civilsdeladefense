@@ -3,14 +3,25 @@
 class Admin::AccountsController < Admin::BaseController
   skip_load_and_authorize_resource
 
-  before_action :set_administrator, only: %i[show change_password change_email
-    update update_password update_email]
+  before_action :set_administrator, only: %i[
+    show change_password change_email update update_password update_email
+  ]
 
   layout "admin/account"
 
   # POST /admin/account
   # POST /admin/account.json
   def show
+  end
+
+  def photo
+    administrator = Administrator.find(params[:id])
+
+    send_data(
+      administrator.photo.big.read,
+      filename: administrator.photo.filename,
+      type: administrator.photo.content_type
+    )
   end
 
   # PATCH/PUT /admin/account/1

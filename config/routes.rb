@@ -36,7 +36,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resource :account do
       member do
-        get :change_email, :change_password
+        get :change_email, :change_password, :photo
         patch :update_email, :update_password
       end
     end
@@ -85,7 +85,7 @@ Rails.application.routes.draw do
         post :multi_select
       end
       member do
-        get :listing
+        get :listing, :photo
         put :update_listing
         post :suspend, :unsuspend, :send_job_offer
       end
@@ -190,7 +190,7 @@ Rails.application.routes.draw do
           patch :update
         end
         member do
-          get :change_email, :change_password
+          get :change_email, :change_password, :photo
           patch :update_email, :update_password, :unlink_france_connect, :set_password
         end
       end

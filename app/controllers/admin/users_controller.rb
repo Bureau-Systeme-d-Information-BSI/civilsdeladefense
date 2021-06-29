@@ -92,6 +92,14 @@ class Admin::UsersController < Admin::InheritedResourcesController
     redirect_back(fallback_location: [:admin, @user], notice: t(".success"))
   end
 
+  def photo
+    send_data(
+      @user.photo.big.read,
+      filename: @user.photo.filename,
+      type: @user.photo.content_type
+    )
+  end
+
   def destroy
     if @user.destroy
       redirect_back(fallback_location: %i[admin users], notice: t(".success"))

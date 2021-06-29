@@ -106,6 +106,14 @@ class Account::UsersController < Account::BaseController
     redirect_to %i[account user], notice: t(".success")
   end
 
+  def photo
+    send_data(
+      current_user.photo.big.read,
+      filename: current_user.photo.filename,
+      type: current_user.photo.content_type
+    )
+  end
+
   private
 
   def set_user

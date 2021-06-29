@@ -72,13 +72,15 @@ class Admin::JobApplicationsController < Admin::BaseController
       @job_offer.update(most_advanced_job_applications_state: current_max)
     end
 
+    @notification = t(".success", state: state_i18n)
+  rescue ActiveRecord::RecordInvalid
+    @notification = @job_application.errors.messages[:state].join(" ")
+  ensure
     respond_to do |format|
       format.html do
-        notice = t(".success", state: state_i18n)
-        redirect_back(fallback_location: [:admin, @job_application], notice: notice)
+        redirect_back(fallback_location: [:admin, @job_application], notice: @notification)
       end
       format.js do
-        @notification = t(".success", state: state_i18n)
         render :change_state
       end
       format.json { render :show, status: :ok, location: @job_application }

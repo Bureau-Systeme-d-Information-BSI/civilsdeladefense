@@ -33,6 +33,7 @@ class JobApplication < ApplicationRecord
   accepts_nested_attributes_for :job_application_files
 
   validates :user_id, uniqueness: {scope: :job_offer_id}, on: :create, allow_nil: true
+  validate :cant_accept_before_delay
 
   before_validation :set_employer
   before_save :compute_notifications_counter
@@ -219,6 +220,13 @@ class JobApplication < ApplicationRecord
 
   def rejected_state?
     REJECTED_STATES.include?(state)
+  end
+
+  def cant_accept_before_delay
+    return if state.to_s != "accepted"
+    return if job_offer.published_at + 30.days < Time.zone.now
+
+    errors.add(:state, :cant_accept_before_delay)
   end
 
   class << self

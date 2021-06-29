@@ -3,41 +3,42 @@
 require "rails_helper"
 
 RSpec.describe JobApplication, type: :model do
-  it "should correcty tell rejected state" do
-    job_offer = create(:job_offer)
-    job_application = create(:job_application, job_offer: job_offer)
+  let(:job_offer) { create(:job_offer) }
+  let(:job_application) { create(:job_application, job_offer: job_offer) }
 
-    expect(job_application.rejected_state?).to be false
+  it "should correcty tell rejected state" do
+    expect(job_application.rejected_state?).to be(false)
 
     job_application.reject!
-    expect(job_application.rejected_state?).to be true
+    expect(job_application.rejected_state?).to be(true)
 
     job_application.phone_meeting!
-    expect(job_application.rejected_state?).to be false
+    expect(job_application.rejected_state?).to be(false)
 
     job_application.phone_meeting_rejected!
-    expect(job_application.rejected_state?).to be true
+    expect(job_application.rejected_state?).to be(true)
 
     job_application.to_be_met!
-    expect(job_application.rejected_state?).to be false
+    expect(job_application.rejected_state?).to be(false)
 
     job_application.after_meeting_rejected!
-    expect(job_application.rejected_state?).to be true
+    expect(job_application.rejected_state?).to be(true)
 
+    job_offer.update(published_at: 40.days.before)
     job_application.accepted!
-    expect(job_application.rejected_state?).to be false
+    expect(job_application.rejected_state?).to be(false)
 
     job_application.contract_drafting!
-    expect(job_application.rejected_state?).to be false
+    expect(job_application.rejected_state?).to be(false)
 
     job_application.contract_feedback_waiting!
-    expect(job_application.rejected_state?).to be false
+    expect(job_application.rejected_state?).to be(false)
 
     job_application.contract_received!
-    expect(job_application.rejected_state?).to be false
+    expect(job_application.rejected_state?).to be(false)
 
     job_application.affected!
-    expect(job_application.rejected_state?).to be false
+    expect(job_application.rejected_state?).to be(false)
   end
 
   it "should correcty tell rejected states from JobOffer class" do
@@ -45,34 +46,56 @@ RSpec.describe JobApplication, type: :model do
     expect(JobApplication.rejected_states).to match_array(ary)
   end
 
-  it "should compute files to be provided" do
-    job_offer = create(:job_offer)
-    job_application = create(:job_application, job_offer: job_offer)
-
-    JobApplicationFileType.create name: "CV",
-                                  from_state: :initial,
-                                  kind: :applicant_provided,
-                                  by_default: true
-    JobApplicationFileType.create name: "LM",
-                                  from_state: :initial,
-                                  kind: :applicant_provided,
-                                  by_default: true
-    JobApplicationFileType.create name: "FILE",
-                                  from_state: :to_be_met,
-                                  kind: :applicant_provided,
-                                  by_default: true
-    ary1, ary2 = job_application.files_to_be_provided
-    expect(ary1.size).to eq(2)
-    expect(ary2.size).to eq(1)
-
-    job_application.job_application_files.each do |file|
-      file.content = fixture_file_upload("document.pdf", "application/pdf")
+  describe "files_to_be_provided" do
+    before do
+      JobApplicationFileType.create(
+        name: "CV", from_state: :initial, kind: :applicant_provided, by_default: true
+      )
+      JobApplicationFileType.create(
+        name: "LM", from_state: :initial, kind: :applicant_provided, by_default: true
+      )
+      JobApplicationFileType.create(
+        name: "FILE", from_state: :to_be_met, kind: :applicant_provided, by_default: true
+      )
     end
-    job_application.to_be_met!
 
-    ary1, ary2 = job_application.files_to_be_provided
-    expect(ary1.size).to eq(3)
-    expect(ary2.size).to eq(0)
+    it "should compute files to be provided" do
+      result = job_application.files_to_be_provided
+      must_be_provided_files = result[:must_be_provided_files]
+      optional_file_types = result[:optional_file_types]
+
+      expect(must_be_provided_files.size).to eq(2)
+      expect(optional_file_types.size).to eq(1)
+
+      job_application.job_application_files.each do |file|
+        file.content = fixture_file_upload("document.pdf", "application/pdf")
+      end
+      job_application.to_be_met!
+
+      result = job_application.files_to_be_provided
+      must_be_provided_files = result[:must_be_provided_files]
+      optional_file_types = result[:optional_file_types]
+      expect(must_be_provided_files.size).to eq(3)
+      expect(optional_file_types.size).to eq(0)
+    end
+  end
+
+  describe "cant_accept_before_delay" do
+    context "when job_offer published 20 days before" do
+      before { job_offer.update(published_at: 20.days.before) }
+
+      it "cant be accepted" do
+        expect { job_application.accepted! }.to raise_error(ActiveRecord::RecordInvalid)
+      end
+    end
+
+    context "when job_offer published 31 days before" do
+      before { job_offer.update(published_at: 31.days.before) }
+
+      it "can be accepted" do
+        expect(job_application.accepted!).to be(true)
+      end
+    end
   end
 end
 

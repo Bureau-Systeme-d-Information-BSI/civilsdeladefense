@@ -20,6 +20,11 @@ FactoryBot.define do
     sector { Sector.all.sample }
     estimate_monthly_salary_net { "3k€" }
     estimate_annual_salary_gross { "36k€" }
+
+    factory :published_job_offer do
+      published_at { 40.days.before }
+      state { :published }
+    end
   end
 end
 

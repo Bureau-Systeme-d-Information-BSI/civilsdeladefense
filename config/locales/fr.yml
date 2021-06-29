@@ -1022,6 +1022,8 @@ fr:
       models:
         job_application:
           attributes:
+            state:
+              cant_accept_before_delay: "Un délais de 30 jours après la publication d'une offre doit être respecté avant d'accepter une candidature"
             cover_letter_content_type:
               invalid: "PDF uniquement, max 2Mo"
             resume_content_type:

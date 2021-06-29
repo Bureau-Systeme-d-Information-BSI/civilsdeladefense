@@ -1,4 +1,7 @@
-- must_be_provided_files, optional_file_types = @job_application.files_to_be_provided
+- result = @job_application.files_to_be_provided
+- must_be_provided_files = result[:must_be_provided_files]
+- optional_file_types = result[:optional_file_types]
+
 .card.job-application-files
   .card-header.with-subheader.bg-white.font-weight-bold.text-secondary
     = fa_icon('file-document', class: 'text-secondary')

@@ -22,6 +22,11 @@ FactoryBot.define do
     estimate_annual_salary_gross { "36k€" }
     bne_value { "inconnue" }
     bne_date { 1.day.ago }
+
+    factory :published_job_offer do
+      published_at { 40.days.before }
+      state { :published }
+    end
   end
 end
 

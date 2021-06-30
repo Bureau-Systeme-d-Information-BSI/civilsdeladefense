@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_24_140135) do
+ActiveRecord::Schema.define(version: 2021_06_15_152719) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -542,6 +542,7 @@ ActiveRecord::Schema.define(version: 2021_05_24_140135) do
     t.string "testimony_logo_content_type"
     t.bigint "testimony_logo_file_size"
     t.datetime "testimony_logo_updated_at"
+    t.string "atinternet_site_id"
   end
 
   create_table "pages", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|

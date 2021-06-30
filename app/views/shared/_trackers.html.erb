@@ -1,5 +1,4 @@
 <%- if current_organization.matomo_site_id.present? %>
-<!-- Matomo -->
 <script type="text/javascript">
   var _paq = _paq || [];
   /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
@@ -13,5 +12,11 @@
     g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
   })();
 </script>
-<!-- End Matomo Code -->
+<%- end %>
+<%- if current_organization.atinternet_site_id.present? %>
+  <script type="text/javascript" src="https://tag.aticdn.net/<%= current_organization.atinternet_site_id %>/smarttag.js"></script>
+  <script type="text/javascript">
+    var ATTag = new ATInternet.Tracker.Tag();
+    ATTag.page.send({name: '<%= @page_title || "CVD" %>' });
+  </script>
 <%- end %>

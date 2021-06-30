@@ -402,7 +402,6 @@ fr:
         title_job_applications_after_meeting_rejected_number_html: "Après entretiens physiques"
       stats_job_offer:
         title: "Évolution des candidatures"
-        title_views_number_html: "Nombre de vues"
         title_job_applications_number_html: "Nombre de candidatures total"
         title_job_applications_processed_number_html: "Nombre de candidatures en&nbsp;cours&nbsp;de&nbsp;traitement"
         title_job_applications_accepted_number_html: "Nombre de candidatures retenues"

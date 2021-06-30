@@ -5,7 +5,7 @@ class Admin::JobOffersController < Admin::BaseController
   layout :choose_layout
 
   include JobOfferStateActions
-  include JobOfferStatisticsActions
+  include JobOfferStats
 
   # GET /admin/job_offers
   # GET /admin/job_offers.json
@@ -49,7 +49,7 @@ class Admin::JobOffersController < Admin::BaseController
 
   def export
     job_offer = JobOffer.find(params[:id])
-    file = Exporter::JobOffer.new(job_offer, current_administrator).generate
+    file = Exporter::JobOffer.new({stats: export_data, job_offer: job_offer}, current_administrator).generate
 
     send_data file.read, filename: "#{Time.zone.today}_e-recrutement_offre.xlsx"
   end

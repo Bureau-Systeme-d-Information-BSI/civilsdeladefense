@@ -1,17 +1,20 @@
-class Exporter::JobOffer < Exporter::Base
+class Exporter::JobOffer < Exporter::StatJobApplications
   def fill_data
-    add_row(remove_html(data.description))
-    add_row(remove_html(data.recruitment_process))
-    add_row(remove_html(data.required_profile))
+    add_row(remove_html(job_offer.description))
+    add_row(remove_html(job_offer.recruitment_process))
+    add_row(remove_html(job_offer.required_profile))
     add_row
-    add_row(format_job_offer(data))
+    add_row(format_job_offer)
     add_row
-    data.job_applications.each do |ja|
+    format_stat
+    add_row
+    add_row("Candidatures")
+    job_offer.job_applications.each do |ja|
       add_row(format_job_application(ja))
     end
   end
 
-  def format_job_offer(job_offer)
+  def format_job_offer
     [
       job_offer.identifier,
       job_offer.title,
@@ -33,6 +36,14 @@ class Exporter::JobOffer < Exporter::Base
     ]
   end
 
+  def format_stat
+    add_row("Statistiques")
+
+    fill_filling
+    fill_rejection
+    fill_application
+  end
+
   def format_job_application(job_application)
     user = job_application.user
     [
@@ -42,5 +53,13 @@ class Exporter::JobOffer < Exporter::Base
       JobApplication.human_attribute_name("state/#{job_application.state}"),
       job_application.created_at
     ]
+  end
+
+  def job_offer
+    data[:job_offer]
+  end
+
+  def stat_data
+    data[:stats]
   end
 end

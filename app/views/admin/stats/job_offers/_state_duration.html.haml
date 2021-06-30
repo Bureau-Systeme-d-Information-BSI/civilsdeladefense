@@ -1,9 +1,6 @@
 %h1.h5.text-primary.mt-4 Délai moyen de recrutement (en jours)
 .statistics-row.mt-3
-  - from = @state_duration[:from]
-  - to = @state_duration[:to]
-  - average = @state_duration[:average]
   .col-12.col-md-3.statistic__block
     .statistic__name Date de publication offre → Date d'affectation agent
     .statistic__value
-      = average
+      = @state_duration[:average]

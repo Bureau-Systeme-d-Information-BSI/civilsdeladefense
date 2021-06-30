@@ -5,7 +5,7 @@ class Email < ApplicationRecord
   belongs_to :job_application
   belongs_to :sender, optional: true, polymorphic: true
 
-  has_many_attached :attachments
+  mount_uploaders :attachments, AttachmentUploader
 
   validates :subject, :body, presence: true
 
@@ -33,6 +33,7 @@ end
 # Table name: emails
 #
 #  id                 :uuid             not null, primary key
+#  attachments        :json
 #  body               :text
 #  is_unread          :boolean          default(TRUE)
 #  sender_type        :string

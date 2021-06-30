@@ -1,3 +1,15 @@
 - @page_title = 'Offre d\'emploi ' + @job_offer.title + ' ' + @job_offer.location
-%h1.rf-mt-0.rf-h2= @job_offer.title
+- encoded_url = url_encode(request.original_url)
+
+%h1.rf-mt-0.rf-h2
+  .social-links
+    %a{onclick: "window.print(); return false", href: "#"}
+      = fa_icon 'print-solid', class: 'rf-icon-xl'
+    %a{href:"https://www.facebook.com/sharer/sharer.php?u=#{encoded_url}", target: "_blank"}
+      = fa_icon 'facebook-circle-fill', class: 'rf-icon-xl'
+    %a{href: "https://www.linkedin.com/shareArticle?url=#{encoded_url}", target: "_blank"}
+      = fa_icon 'linkedin-box-fill', class: 'rf-icon-xl'
+    %a{href: "https://twitter.com/intent/tweet?url=#{encoded_url}", target: "_blank"}
+      = fa_icon 'twitter-fill', class: 'rf-icon-xl'
+  = @job_offer.title
 = render partial: 'job_offer_content', locals: {job_offer: @job_offer}

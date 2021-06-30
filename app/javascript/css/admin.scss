@@ -443,6 +443,6 @@ a {
   padding: 1rem 1rem;
   position: fixed;
   bottom: 1.2rem;
-  right: 1.5rem;
-  z-index: 15;
+  left: 1.5rem;
+  z-index: 150 !important;
 }

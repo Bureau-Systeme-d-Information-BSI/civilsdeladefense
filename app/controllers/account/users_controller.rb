@@ -106,6 +106,14 @@ class Account::UsersController < Account::BaseController
     redirect_to %i[account user], notice: t(".success")
   end
 
+  def photo
+    send_data(
+      current_user.photo.big.read,
+      filename: current_user.photo.filename,
+      type: current_user.photo.content_type
+    )
+  end
+
   private
 
   def set_user
@@ -114,7 +122,7 @@ class Account::UsersController < Account::BaseController
 
   def user_params
     params.require(:user).permit(
-      :first_name, :last_name, :phone, :website_url, :current_position, :photo, :delete_photo
+      :first_name, :last_name, :phone, :website_url, :current_position, :photo, :delete_photo, department_users_attributes: %i[department_id]
     )
   end
 

@@ -1,13 +1,13 @@
 class Exporter::JobOffer < Exporter::Base
   def fill_data
-    sheet.add_row([remove_html(data.description)])
-    sheet.add_row([remove_html(data.recruitment_process)])
-    sheet.add_row([remove_html(data.required_profile)])
-    sheet.add_row([])
-    sheet.add_row(format_job_offer(data))
-    sheet.add_row([])
+    add_row(remove_html(data.description))
+    add_row(remove_html(data.recruitment_process))
+    add_row(remove_html(data.required_profile))
+    add_row
+    add_row(format_job_offer(data))
+    add_row
     data.job_applications.each do |ja|
-      sheet.add_row(format_job_application(ja))
+      add_row(format_job_application(ja))
     end
   end
 
@@ -28,7 +28,7 @@ class Exporter::JobOffer < Exporter::Base
       job_offer.estimate_monthly_salary_net,
       job_offer.estimate_annual_salary_gross,
       job_offer.is_remote_possible ? "Télétravail" : "",
-      job_offer.benefit&.name,
+      job_offer.benefit,
       format_actors(job_offer.job_offer_actors)
     ]
   end

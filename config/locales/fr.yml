@@ -141,10 +141,12 @@ fr:
       recruitment_process: "Process de recrutement"
     job_offer_head:
       available_immediately: "Poste à pourvoir immédiatement"
-      benefit: "Bénéfice en nature: "
+      benefit: "Avantage en nature"
     successful:
       subject: "Votre candidature à l'offre %{job_offer_identifier} sur %{service_name}"
       body: "Nous avons bien reçu votre candidature à l'offre %{job_offer_identifier} '%{job_offer_title}'.\n\nNous y répondrons dans les meilleurs délais.\n\nL'équipe %{service_name}."
+      spontaneous_subject: "Votre candidature spontanée sur %{service_name}"
+      spontaneous_body: "Nous avons bien reçu votre candidature spontanée.\n\nNous y répondrons dans les meilleurs délais.\n\nL'équipe %{service_name}."
       title: "Merci d'avoir soumis votre candidature !"
       subtitle_html: "Votre demande est prise en compte.\n\nVeuillez confirmer votre accès à l'aide du lien sur votre boîte courriel."
       link: "Retour à l'accueil"
@@ -324,6 +326,8 @@ fr:
         submit: "Transférer"
       transfer:
         success: "Annonce transférée !"
+      send_to_list:
+        success: "Annonce diffusées !"
       feature:
         success: "Annonce mise à la une"
         error: "L'offre n'a pa pu être mise à la une, veuillez vérifier la référence"
@@ -459,6 +463,12 @@ fr:
         account: "Mon compte"
         logout: "Déconnexion"
     users:
+      send_job_offer:
+        success: "Offre envoyée au candidat"
+        error: "L'offre n'a pa pu être envoyé, veuillez vérifier la référence"
+      multi_select:
+        success: "Offre envoyée aux candidats"
+        error: "L'offre n'a pa pu être envoyé, veuillez vérifier la référence"
       actions:
         title: "Actions"
       destroy:
@@ -493,7 +503,7 @@ fr:
         navbar:
           admin: "Administration"
           administrators: "Comptes admin"
-          benefits: "Bénéfices en nature"
+          benefits: "Avantage(s) en nature"
           bops: "BOPs"
           categories: "Domaines professionnels"
           cmgs: "Liste des CMG"
@@ -519,6 +529,7 @@ fr:
           contract_durations: "Durées de contrat"
           foreign_languages: "Langue étrangères"
           foreign_language_levels: "Niveaux de langues étrangères"
+          frequently_asked_questions: "FAQ"
       base:
         index:
           title: "Paramètres"
@@ -580,6 +591,14 @@ fr:
             zero: 'Aucun CMG'
             one: '1 CMG'
             other: '%{count} CMGs'
+      frequently_asked_questions:
+        index:
+          title: "FAQ"
+          add: "Ajouter"
+          card_title:
+            zero: 'Aucune FAQ'
+            one: '1 FAQ'
+            other: '%{count} FAQ'
         new:
           title: "Ajouter un nouveau CMG"
         create:
@@ -662,11 +681,11 @@ fr:
       benefits:
         index:
           card_title:
-            zero: 'Aucun bénéfice en nature'
-            one: '1 bénéfice en nature'
-            other: '%{count} bénéfices en nature'
+            zero: 'Aucun avantage en nature'
+            one: '1 avantage en nature'
+            other: '%{count} avantages en nature'
         new:
-          title: "Ajouter un bénéfice en nature"
+          title: "Ajouter un avantage en nature"
         edit:
           title: "Modifier '%{name}'"
         create:
@@ -901,6 +920,9 @@ fr:
       form:
         title: "Note personnelle"
     preferred_users_lists:
+      send_job_offer:
+        success: "Offre envoyée aux candidats"
+        error: "L'offre n'a pa pu être envoyé, veuillez vérifier la référence"
       form:
         title_new: "Ajout d'une nouvelle liste de candidats"
         title_edit: "Édition d'une liste de candidats"
@@ -994,7 +1016,7 @@ fr:
         job_offer:
           attributes:
             title:
-              no_bracket: "ne doit pas contenir de parenthèse"
+              brackets: "ne doit pas contenir de parenthèse"
               f_h: "doit finir par F/H"
         user:
           attributes:
@@ -1063,6 +1085,8 @@ fr:
         category: "Domaine professionnel"
         experience_level: "Niveau d'expérience"
         salary: "Rémunération"
+        benefits: "Avantages en nature"
+        is_remote_possible: "Télétravail"
       job_offer_actor/role:
         employer: "Employeur"
         grand_employer: "Grand Employeur"

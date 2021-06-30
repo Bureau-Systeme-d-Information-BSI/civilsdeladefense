@@ -6,7 +6,7 @@
     %meta{name: "viewport", content: "width=device-width, initial-scale=1, shrink-to-fit=no"}
     - if controller.action_name == 'apply'
       %meta{name: :robots, content: 'noindex nofollow'}
-    = stylesheet_pack_tag 'style'
+    = stylesheet_pack_tag 'style', media: nil
     = csrf_meta_tags
     = csp_meta_tag
     = favicon_pack_tag 'favicon-16x16.png', rel: 'icon', type: 'image/png', sizes: '16x16'

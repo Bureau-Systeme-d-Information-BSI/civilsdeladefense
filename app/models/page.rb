@@ -14,6 +14,10 @@ class Page < ApplicationRecord
 
   belongs_to :organization, touch: true
 
+  def self.contact
+    where("title ILIKE '%contact%'").first
+  end
+
   def reinsert_children_branch
     return unless children_count.positive?
 

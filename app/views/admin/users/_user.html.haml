@@ -2,7 +2,7 @@
 .row
   - if defined?(list)
     .col-auto.align-self-center.text-center
-      = check_box_tag "user_ids[]", user.id, false, data: {action: "change->subcheckbox#propagate_upward", "subcheckbox-target": "downcheckbox"}
+      = check_box_tag "user_ids[]", user.id, false, data: {action: "change->subcheckbox#propagate_upward", "subcheckbox-target": "downcheckbox"}, id: user.id
   .col
     .card.job-application.mt-3{id: dom_id(user)}
       .card-body

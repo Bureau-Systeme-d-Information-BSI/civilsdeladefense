@@ -12,11 +12,15 @@
       = user_form.input :last_name, readonly: user_signed_in?
       = user_form.input :current_position, required: true
       = user_form.input :phone, required: true
+      = render partial: '/department_users/form', locals: { user_form: user_form, kind: :job_application }
     - unless user_signed_in?
       = f.simple_fields_for :user do |user_form|
         = user_form.input :photo, wrapper: :custom_file
 
     %h2.rf-h3= t('.your_profile')
+    - if @job_offer.spontaneous
+      - grouped_options = nested_set_options(Category, @category) {|i| "#{'-' * i.level} #{i.name}" }
+      = f.association :category, collection: grouped_options, disabled: Category.all.select{|x| x.children.count != 0}.map(&:id), input_html: {class: 'rf-select'}, required: true
     = f.simple_fields_for :profile do |profile_form|
       = profile_form.association :availability_range, input_html: { class: "rf-select" }
       = profile_form.association :study_level, required: true, input_html: { class: "rf-select" }
@@ -27,7 +31,10 @@
     %h2.rf-h3= t('.documents')
     - job_application_files = @job_application.job_application_files.to_a
     - current_state = JobApplication.states[@job_application.state]
-    - job_application_file_types = JobApplicationFileType.where(by_default: true).where("from_state <= ?", current_state).where(kind: %i(applicant_provided template)).all
+    - if @job_offer.spontaneous
+      - job_application_file_types = JobApplicationFileType.where(spontaneous: true)
+    - else
+      - job_application_file_types = JobApplicationFileType.where(by_default: true).where("from_state <= ?", current_state).where(kind: %i(applicant_provided template)).all
     - job_application_file_types.each do |job_application_file_type, index|
       - job_application_file = job_application_files.detect{|x| x.job_application_file_type == job_application_file_type}
       - job_application_file ||= @job_application.job_application_files.build(job_application_file_type: job_application_file_type)
@@ -48,6 +55,7 @@
         = user_form.input :email, required: true
         = user_form.input :password, required: true
         = user_form.input :password_confirmation, required: true
+        = user_form.input :receive_job_offer_mails
         = user_form.input :terms_of_service, as: :boolean, label: tos_acceptance_text
         = user_form.input :certify_majority, as: :boolean
     = f.invisible_captcha :subtitle

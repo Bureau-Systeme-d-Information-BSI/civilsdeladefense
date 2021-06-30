@@ -10,9 +10,19 @@ class Admin::Stats::JobOffersController < Admin::Stats::BaseController
     @job_offers = @job_offers.where(created_at: date_range)
     @q = @job_offers.ransack(params[:q])
     @job_offers_filtered = @q.result(distinct: true)
-      .page(params[:page])
-      .per_page(20)
     @job_offers_count = @job_offers_filtered.count
+    @job_offer_published = @job_offers_filtered.where(state: :published)
+    @job_offer_unfilled = @job_offers_filtered.where.not(
+      most_advanced_job_applications_state: JobApplication::FILLED_STATES
+    )
+    @job_offer_filled = @job_offers_filtered.where(
+      most_advanced_job_applications_state: JobApplication::FILLED_STATES
+    )
+
+    @profiles = Profile.joins(job_application: :job_offer).where(job_applications: {job_offers: @job_offers})
+    @profile_availables = @profiles.where.not(availability_range: AvailabilityRange.en_poste)
+
+    @per_day = root_rel.group_by_day(:created_at, range: date_range).count
     build_state_duration
     build_employer_ids unless current_administrator.bant?
   end

@@ -22,13 +22,17 @@ class Exporter::Base
 
   private
 
+  def add_row(*row)
+    sheet.add_row(row.flatten)
+  end
+
   def basic_data
-    sheet.add_row([])
-    sheet.add_row([Time.zone.now.strftime("%d/%m/%Y %H:%M")])
-    sheet.add_row([user.email])
-    sheet.add_row([name]) if name
-    sheet.add_row([data.count]) if data.respond_to?(:count)
-    sheet.add_row([])
+    add_row
+    add_row(Time.zone.now.strftime("%d/%m/%Y %H:%M"))
+    add_row(user.email)
+    add_row(name) if name
+    add_row(data.count) if data.is_a?(Array)
+    add_row
   end
 
   def format_actors(job_offer_actors)
@@ -50,5 +54,9 @@ class Exporter::Base
     return if date.blank?
 
     I18n.l(date)
+  end
+
+  def number_to_percentage(number, options = {})
+    ActiveSupport::NumberHelper::NumberToPercentageConverter.convert(number, options)
   end
 end

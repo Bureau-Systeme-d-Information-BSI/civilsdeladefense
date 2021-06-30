@@ -1,0 +1,18 @@
+- search_key = :county_in
+- ary = params.dig(:q, search_key)  || []
+.dropdown.dropdown-checks.form-group
+  %button.form-control.dropdown-toggle.text-left.d-flex.align-items-center#dropdownCategory{type: 'button', data: {toggle: 'dropdown'}, aria: {haspopup: true, expanded: false}}
+    Localisation géographique
+    - if ary.any?
+      = "(#{ary.size})"
+  .dropdown-menu.dropdown-menu-right.allow-focus{aria: {labelledby: 'dropdownCategory'}}
+    - JobOffer.regions.each do |region, departments|
+      %ul.mb-0
+        %li
+          = region
+        - departments.each do |department|
+          %li{style: "padding-left:10px;"}
+            .form-check.form-check-inline.w-100
+              - checked = ary.include?(department)
+              = check_box_tag "q[#{search_key}][]", department, checked, class: 'form-check-input', id: department
+              %label.form-check-label.text-truncate.d-block{title: department, for: department}= department

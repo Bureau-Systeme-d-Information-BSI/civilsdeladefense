@@ -1,10 +1,8 @@
 - @page_title = t('.title')
 .card
   .card-header
-    .card-title.d-md-flex.align-items-center
-      = @page_title
     = render partial: 'search'
-    %h2.h5.text-primary.mb-0.mt-4= t('.title')
+    = link_to "Exporter", [:admin, :stats, :job_applications, @permitted_params.to_h.merge(format: :xlsx)], target: "_blank", class: "btn btn-primary btn-raised"
     .card.mt-2
       .card-body
         %strong.text-secondary #{@job_applications_count} candidatures
@@ -14,3 +12,4 @@
         = render partial: '/admin/job_offers/stats_job_applications_rejection_reasons'
         = render partial: '/admin/job_offers/stats_applicants'
         = render partial: 'state_duration'
+    = link_to "Exporter", [:admin, :stats, :job_applications, @permitted_params.to_h.merge(format: :xlsx)], target: "_blank", class: "btn btn-primary btn-raised mt-3 float-right"

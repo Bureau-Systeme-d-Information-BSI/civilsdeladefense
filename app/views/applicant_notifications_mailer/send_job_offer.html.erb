@@ -1,0 +1,19 @@
+<p>
+  <%-if @user.full_name.present? %>
+    Bonjour <%= @user.full_name %>,
+  <%- else %>
+    Bonjour,
+  <%- end %>
+</p>
+
+<p>
+  Voici une nouvelle super offre : <%= link_to(@job_offer.title, @job_offer) %>
+</p>
+
+<p>
+  Cordialement,
+</p>
+
+<p>
+  L'équipe <%= @service_name %>
+</p>

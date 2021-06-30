@@ -21,12 +21,12 @@ class JobOffer < ApplicationRecord
   acts_as_sequenced scope: :employer_id
 
   include PgSearch::Model
-  pg_search_scope :search_full_text, against: [
+  pg_search_scope :search_full_text, against: {
     identifier: "A",
     title: "A",
     description: "B",
     location: "C"
-  ], associated_against: SETTINGS.each_with_object({}) { |obj, memo|
+  }, associated_against: SETTINGS.each_with_object({}) { |obj, memo|
     memo[obj] = %i[name]
   }
 
@@ -38,8 +38,10 @@ class JobOffer < ApplicationRecord
     belongs_to setting
   end
   belongs_to :contract_duration, optional: true
-  belongs_to :benefit, optional: true
   belongs_to :bop, optional: true
+
+  has_many :benefit_job_offers
+  has_many :benefits, through: :benefit_job_offers
 
   has_many :job_applications, dependent: :destroy
   has_many :job_offer_actors, inverse_of: :job_offer, dependent: :destroy
@@ -60,6 +62,8 @@ class JobOffer < ApplicationRecord
   validates :contract_duration_id, presence: true, if: -> { contract_type&.duration }
   validates :contract_duration_id, absence: true, unless: -> { contract_type&.duration }
   validates :title, format: {with: %r{\A.*F/H\z}, message: :f_h}
+  validates :title, format: {without: %r{\A.*\(.*\z}, message: :brackets}
+  validates :title, format: {without: %r{\A.*\).*\z}, message: :brackets}
 
   ## Scopes
   default_scope { order(created_at: :desc) }
@@ -127,7 +131,7 @@ class JobOffer < ApplicationRecord
   # Return an hash where keys are regions and values are counties inside it
   # All regions and counties got job_offers associated
   def self.regions
-    job_with_regions_and_county = JobOffer.unscoped.where.not(region: ["", nil]).where.not(county: ["", nil])
+    job_with_regions_and_county = unscoped.where.not(region: ["", nil]).where.not(county: ["", nil])
     hash_region_county = job_with_regions_and_county.select(:region, :county).distinct.pluck(:region, :county)
     hash_region_county.group_by { |a, b| a }.each_with_object({}) { |(key, values), hash|
       hash[key] = values.flatten - [key]
@@ -244,6 +248,16 @@ class JobOffer < ApplicationRecord
     job_offer_actors.where(administrator: owner).update_all(administrator_id: administrator.id)
     update!(owner: administrator)
   end
+
+  def benefit
+    benefits.pluck(:name).join(", ")
+  end
+
+  def send_to_users(users)
+    users.each do |user|
+      ApplicantNotificationsMailer.send_job_offer(user, self).deliver_now
+    end
+  end
 end
 
 # == Schema Information
@@ -286,6 +300,7 @@ end
 #  rejected_job_applications_count                  :integer          default(0), not null
 #  required_profile                                 :text
 #  slug                                             :string           not null
+#  spontaneous                                      :boolean          default(FALSE)
 #  state                                            :integer
 #  suspended_at                                     :datetime
 #  title                                            :string

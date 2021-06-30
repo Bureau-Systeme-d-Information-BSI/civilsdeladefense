@@ -1,6 +1,6 @@
 class Exporter::JobOffers < Exporter::Base
   def fill_data
-    sheet.add_row([
+    add_row(
       "Référence",
       "Intitulé",
       "Employeur",
@@ -18,9 +18,9 @@ class Exporter::JobOffers < Exporter::Base
       "Télétravail",
       "Option",
       "Acteurs"
-    ])
+    )
     data.map do |line|
-      sheet.add_row(format_job_offer(line))
+      add_row(format_job_offer(line))
     end
   end
 
@@ -41,7 +41,7 @@ class Exporter::JobOffers < Exporter::Base
       job_offer.estimate_monthly_salary_net,
       job_offer.estimate_annual_salary_gross,
       job_offer.is_remote_possible ? "Télétravail" : "",
-      job_offer.benefit&.name,
+      job_offer.benefit,
       format_actors(job_offer.job_offer_actors)
     ]
   end

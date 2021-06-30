@@ -131,6 +131,15 @@ ActiveRecord::Schema.define(version: 2021_06_15_152719) do
     t.index ["position"], name: "index_availability_ranges_on_position"
   end
 
+  create_table "benefit_job_offers", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "benefit_id", null: false
+    t.uuid "job_offer_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["benefit_id"], name: "index_benefit_job_offers_on_benefit_id"
+    t.index ["job_offer_id"], name: "index_benefit_job_offers_on_job_offer_id"
+  end
+
   create_table "benefits", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.integer "position"
@@ -187,6 +196,24 @@ ActiveRecord::Schema.define(version: 2021_06_15_152719) do
     t.index ["position"], name: "index_contract_types_on_position"
   end
 
+  create_table "department_users", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.uuid "department_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["department_id"], name: "index_department_users_on_department_id"
+    t.index ["user_id"], name: "index_department_users_on_user_id"
+  end
+
+  create_table "departments", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "name_region"
+    t.string "code_region"
+    t.string "code"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "email_templates", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
     t.string "subject"
@@ -206,6 +233,7 @@ ActiveRecord::Schema.define(version: 2021_06_15_152719) do
     t.string "sender_type"
     t.uuid "sender_id"
     t.boolean "is_unread", default: true
+    t.json "attachments"
     t.index ["job_application_id"], name: "index_emails_on_job_application_id"
     t.index ["sender_type", "sender_id"], name: "index_emails_on_sender_type_and_sender_id"
   end
@@ -246,6 +274,14 @@ ActiveRecord::Schema.define(version: 2021_06_15_152719) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "frequently_asked_questions", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.integer "position"
+    t.string "value"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
     t.string "slug", null: false
     t.string "sluggable_type", limit: 50
@@ -269,6 +305,7 @@ ActiveRecord::Schema.define(version: 2021_06_15_152719) do
     t.datetime "updated_at", null: false
     t.integer "from_state"
     t.boolean "notification", default: true
+    t.boolean "spontaneous", default: false
   end
 
   create_table "job_application_files", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
@@ -301,6 +338,8 @@ ActiveRecord::Schema.define(version: 2021_06_15_152719) do
     t.boolean "experiences_fit_job_offer"
     t.uuid "rejection_reason_id"
     t.uuid "organization_id"
+    t.uuid "category_id"
+    t.index ["category_id"], name: "index_job_applications_on_category_id"
     t.index ["employer_id"], name: "index_job_applications_on_employer_id"
     t.index ["job_offer_id"], name: "index_job_applications_on_job_offer_id"
     t.index ["organization_id"], name: "index_job_applications_on_organization_id"
@@ -374,6 +413,7 @@ ActiveRecord::Schema.define(version: 2021_06_15_152719) do
     t.uuid "benefit_id"
     t.uuid "contract_duration_id"
     t.boolean "featured", default: false
+    t.boolean "spontaneous", default: false
     t.index ["benefit_id"], name: "index_job_offers_on_benefit_id"
     t.index ["bop_id"], name: "index_job_offers_on_bop_id"
     t.index ["category_id"], name: "index_job_offers_on_category_id"
@@ -662,6 +702,7 @@ ActiveRecord::Schema.define(version: 2021_06_15_152719) do
     t.string "suspension_reason"
     t.datetime "suspended_at"
     t.date "marked_for_deletion_on"
+    t.boolean "receive_job_offer_mails", default: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["organization_id"], name: "index_users_on_organization_id"
@@ -674,10 +715,15 @@ ActiveRecord::Schema.define(version: 2021_06_15_152719) do
   add_foreign_key "administrators", "administrators", column: "inviter_id"
   add_foreign_key "administrators", "administrators", column: "supervisor_administrator_id"
   add_foreign_key "administrators", "employers"
+  add_foreign_key "benefit_job_offers", "benefits"
+  add_foreign_key "benefit_job_offers", "job_offers"
   add_foreign_key "cmgs", "organizations"
+  add_foreign_key "department_users", "departments"
+  add_foreign_key "department_users", "users"
   add_foreign_key "emails", "job_applications"
   add_foreign_key "job_application_files", "job_application_file_types"
   add_foreign_key "job_application_files", "job_applications"
+  add_foreign_key "job_applications", "categories"
   add_foreign_key "job_applications", "employers"
   add_foreign_key "job_applications", "job_offers"
   add_foreign_key "job_applications", "rejection_reasons"

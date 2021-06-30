@@ -10,7 +10,7 @@
         %strong.text-secondary #{@job_offers_count} offres
         = render partial: 'date_pickers'
         = render partial: 'graph'
-        %h1.h5.text-primary.mt-4 Offres
+        %h1.h5.text-primary.mt-4 Statistiques offres
         .statistics-row.mt-3
           .col-12.col-md-3.statistic__block
             .statistic__name Publiées
@@ -24,7 +24,7 @@
             .statistic__name Pourvues
             .statistic__value
               = @job_offer_filled.count
-        %h1.h5.text-primary.mt-4 Candidatures
+        %h1.h5.text-primary.mt-4 Statistiques candidatures
         .statistics-row.mt-3
           .col-12.col-md-3.statistic__block
             .statistic__name Total

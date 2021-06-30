@@ -1,17 +1,19 @@
 - search_key = :department_users_department_id_in
 - ary = params.dig(:q, search_key)  || []
-- departments = Department.all
 .dropdown.dropdown-checks.form-group
   %button.form-control.dropdown-toggle.text-left.d-flex.align-items-center#dropdownContractType{type: 'button', data: {toggle: 'dropdown'}, aria: {haspopup: true, expanded: false}}
     = t('simple_form.labels.defaults.department')
     - if ary.any?
       = "(#{ary.size})"
   .dropdown-menu.dropdown-menu-right.allow-focus{aria: {labelledby: 'dropdownContractType'}}
-    %ul
-      - departments.each do |department|
-        - input_id = "department_#{department.id}"
+    - Department.regions.each do |region, departments|
+      %ul.mb-0
         %li
-          .form-check.form-check-inline.w-100
-            - checked = ary.include?(department.id.to_s)
-            = check_box_tag "q[#{search_key}][]", department.id, checked, class: 'form-check-input', id: input_id
-            %label.form-check-label.text-truncate.d-block{for: input_id, title: department.name}= "#{department.code} #{department.name}"
+          = region
+        - departments.each do |department|
+          - input_id = "department_#{department.id}"
+          %li
+            .form-check.form-check-inline.w-100
+              - checked = ary.include?(department.id.to_s)
+              = check_box_tag "q[#{search_key}][]", department.id, checked, class: 'form-check-input', id: input_id
+              %label.form-check-label.text-truncate.d-block{for: input_id, title: department.name}= "#{department.code} #{department.name}"

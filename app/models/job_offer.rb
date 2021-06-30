@@ -138,15 +138,6 @@ class JobOffer < ApplicationRecord
     }
   end
 
-  def self.departments
-    unscoped
-      .where.not(county: ["", nil])
-      .select(:county, :county_code)
-      .distinct
-      .order(:county_code)
-      .pluck(:county, :county_code)
-  end
-
   def delay_before_publishing_over?
     delay = organization&.hours_delay_before_publishing
     if published_at.present?

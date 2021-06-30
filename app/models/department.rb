@@ -5,6 +5,10 @@ class Department < ApplicationRecord
   def label
     "#{code} #{name} - #{name_region}"
   end
+
+  def self.regions
+    Department.all.group_by(&:name_region)
+  end
 end
 
 # == Schema Information

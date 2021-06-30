@@ -6,10 +6,13 @@
     - if ary.any?
       = "(#{ary.size})"
   .dropdown-menu.dropdown-menu-right.allow-focus{aria: {labelledby: 'dropdownCategory'}}
-    - JobOffer.departments.each do |name, code|
+    - JobOffer.regions.each do |region, departments|
       %ul.mb-0
         %li
-          .form-check.form-check-inline.w-100
-            - checked = ary.include?(name)
-            = check_box_tag "q[#{search_key}][]", name, checked, class: 'form-check-input', id: name
-            %label.form-check-label.text-truncate.d-block{title: name, for: name}= "#{code} #{name}"
+          = region
+        - departments.each do |department|
+          %li{style: "padding-left:10px;"}
+            .form-check.form-check-inline.w-100
+              - checked = ary.include?(department)
+              = check_box_tag "q[#{search_key}][]", department, checked, class: 'form-check-input', id: department
+              %label.form-check-label.text-truncate.d-block{title: department, for: department}= department

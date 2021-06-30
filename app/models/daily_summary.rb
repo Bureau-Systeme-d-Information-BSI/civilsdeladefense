@@ -33,7 +33,7 @@ class DailySummary
 
   def send_mail(organization)
     service_name = organization.service_name
-    administrators = Administrator.find @concerned_administrators.map(&:uuid)
+    administrators = Administrator.find(@concerned_administrators.map(&:uuid))
 
     @concerned_administrators.each do |concerned_administrator|
       administrator = administrators.detect { |x| x.id == concerned_administrator.uuid }

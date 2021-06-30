@@ -2,7 +2,6 @@
 .card
   .card-header
     = render partial: 'search'
-    = link_to "Exporter", [:admin, :stats, :job_applications, @permitted_params.to_h.merge(format: :xlsx)], target: "_blank", class: "btn btn-primary btn-raised"
     .card.mt-2
       .card-body
         %strong.text-secondary #{@job_applications_count} candidatures

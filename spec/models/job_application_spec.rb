@@ -48,13 +48,16 @@ RSpec.describe JobApplication, type: :model do
 
   describe "files_to_be_provided" do
     before do
-      JobApplicationFileType.create(
+      create(
+        :job_application_file_type,
         name: "CV", from_state: :initial, kind: :applicant_provided, by_default: true
       )
-      JobApplicationFileType.create(
+      create(
+        :job_application_file_type,
         name: "LM", from_state: :initial, kind: :applicant_provided, by_default: true
       )
-      JobApplicationFileType.create(
+      create(
+        :job_application_file_type,
         name: "FILE", from_state: :to_be_met, kind: :applicant_provided, by_default: true
       )
     end
@@ -75,6 +78,7 @@ RSpec.describe JobApplication, type: :model do
       result = job_application.files_to_be_provided
       must_be_provided_files = result[:must_be_provided_files]
       optional_file_types = result[:optional_file_types]
+
       expect(must_be_provided_files.size).to eq(3)
       expect(optional_file_types.size).to eq(0)
     end
@@ -94,6 +98,68 @@ RSpec.describe JobApplication, type: :model do
 
       it "can be accepted" do
         expect(job_application.accepted!).to be(true)
+      end
+    end
+  end
+
+  describe "complete_files_before_draft_contract" do
+    let(:job_application) { create(:job_application, state: :accepted) }
+    let!(:jaft_1) do
+      create(
+        :job_application_file_type,
+        name: "File 1", from_state: :accepted, kind: :applicant_provided, by_default: true
+      )
+    end
+    let!(:jaft_2) do
+      create(
+        :job_application_file_type,
+        name: "File 2", from_state: :to_be_met, kind: :applicant_provided, by_default: true
+      )
+    end
+    let!(:jaft_3) do
+      create(
+        :job_application_file_type,
+        name: "File 3", from_state: :accepted, kind: :applicant_provided, by_default: false
+      )
+    end
+
+    context "when no files are filled" do
+      it "cant pass to contract_drafting" do
+        expect { job_application.contract_drafting! }.to raise_error(ActiveRecord::RecordInvalid)
+      end
+    end
+
+    context "when files are fill but not validated" do
+      before do
+        create(
+          :job_application_file,
+          job_application: job_application, job_application_file_type: jaft_1
+        )
+        create(
+          :job_application_file,
+          job_application: job_application, job_application_file_type: jaft_2
+        )
+      end
+
+      it "cant pass to contract_drafting" do
+        expect { job_application.contract_drafting! }.to raise_error(ActiveRecord::RecordInvalid)
+      end
+    end
+
+    context "when files are fill and validated" do
+      before do
+        create(
+          :job_application_file,
+          job_application: job_application, job_application_file_type: jaft_1, is_validated: true
+        )
+        create(
+          :job_application_file,
+          job_application: job_application, job_application_file_type: jaft_2, is_validated: true
+        )
+      end
+
+      it "cant pass to contract_drafting" do
+        expect(job_application.contract_drafting!).to eq(true)
       end
     end
   end

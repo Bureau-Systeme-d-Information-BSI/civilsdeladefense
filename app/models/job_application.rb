@@ -35,6 +35,7 @@ class JobApplication < ApplicationRecord
 
   validates :user_id, uniqueness: {scope: :job_offer_id}, on: :create, allow_nil: true
   validate :cant_accept_before_delay
+  validate :complete_files_before_draft_contract
 
   before_validation :set_employer
   before_save :compute_notifications_counter
@@ -235,6 +236,17 @@ class JobApplication < ApplicationRecord
     return if job_offer.published_at + 30.days < Time.zone.now
 
     errors.add(:state, :cant_accept_before_delay)
+  end
+
+  def complete_files_before_draft_contract
+    return if state.to_s != "contract_drafting"
+
+    default_types = JobApplicationFileType.by_default(:accepted).pluck(:id)
+    validated_types = job_application_files.where(is_validated: true).pluck(:job_application_file_type_id)
+
+    return if (default_types - validated_types).blank?
+
+    errors.add(:state, :complete_files_before_draft_contract)
   end
 
   class << self

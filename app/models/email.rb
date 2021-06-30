@@ -2,10 +2,12 @@
 
 # Email exchanged between a candidate and a group of recruiters around a job application
 class Email < ApplicationRecord
+  attr_accessor :attachments
+
   belongs_to :job_application
   belongs_to :sender, optional: true, polymorphic: true
 
-  mount_uploaders :attachments, AttachmentUploader
+  has_many :email_attachments, dependent: :destroy
 
   validates :subject, :body, presence: true
 
@@ -13,11 +15,10 @@ class Email < ApplicationRecord
 
   attr_accessor :template
 
-  counter_culture :job_application,
-    column_name: :emails_count,
-    touch: true
+  counter_culture :job_application, column_name: :emails_count, touch: true
 
   after_save :compute_job_application_notifications_counter
+  before_validation :fill_attachments
 
   def compute_job_application_notifications_counter
     job_application.compute_notifications_counter!
@@ -26,6 +27,12 @@ class Email < ApplicationRecord
   def automatic_email?
     sender.nil?
   end
+
+  def fill_attachments
+    return if attachments.blank?
+
+    attachments.map { |a| email_attachments.build(content: a) }
+  end
 end
 
 # == Schema Information
@@ -33,7 +40,6 @@ end
 # Table name: emails
 #
 #  id                 :uuid             not null, primary key
-#  attachments        :json
 #  body               :text
 #  is_unread          :boolean          default(TRUE)
 #  sender_type        :string

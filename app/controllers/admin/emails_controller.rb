@@ -75,9 +75,17 @@ class Admin::EmailsController < Admin::BaseController
     end
   end
 
+  def attachment
+    content = @email.email_attachments.find(params[:email_attachment_id]).content
+    send_data(
+      content.read,
+      filename: content.filename,
+      type: content.content_type
+    )
+  end
+
   private
 
-  # Never trust parameters from the scary internet, only allow the white list through.
   def email_params
     params.require(:email).permit(:subject, :body, attachments: [])
   end

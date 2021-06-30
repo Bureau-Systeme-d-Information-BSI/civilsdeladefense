@@ -39,11 +39,22 @@ class Account::EmailsController < Account::BaseController
     end
   end
 
+  def attachment
+    job_application = current_user.job_applications.find(params[:job_application_id])
+    email = job_application.emails.find(params[:id])
+    content = email.email_attachments.find(params[:email_attachment_id]).content
+
+    send_data(
+      content.read,
+      filename: content.filename,
+      type: content.content_type
+    )
+  end
+
   private
 
-  # Never trust parameters from the scary internet, only allow the white list through.
   def email_params
-    params.require(:email).permit(:subject, :body).tap do |whitelisted|
+    params.require(:email).permit(:subject, :body, attachments: []).tap do |whitelisted|
       whitelisted[:sender] = current_user
       whitelisted[:job_application] = @job_application
     end

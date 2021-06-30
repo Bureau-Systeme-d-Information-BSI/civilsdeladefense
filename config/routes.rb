@@ -103,8 +103,8 @@ Rails.application.routes.draw do
       resources :messages, only: %i[create]
       resources :emails, only: %i[create] do
         member do
-          post :mark_as_read
-          post :mark_as_unread
+          post :mark_as_read, :mark_as_unread
+          get :attachment
         end
       end
     end
@@ -182,7 +182,11 @@ Rails.application.routes.draw do
           get :profile
         end
         resources :job_application_files, path: "documents"
-        resources :emails, only: %i[index create]
+        resources :emails, only: %i[index create] do
+          member do
+            get :attachment
+          end
+        end
       end
       resource :user, path: "mon-compte", only: %i[show destroy] do
         collection do

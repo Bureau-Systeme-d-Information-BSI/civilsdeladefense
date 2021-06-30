@@ -26,6 +26,18 @@ class JobApplicationFileType < ApplicationRecord
 
   enum from_state: JobApplication.states
 
+  scope :by_default_before, ->(state) {
+    where(
+      by_default: true, kind: %i[applicant_provided template]
+    ).where("from_state <= ?", JobApplication.states[state])
+  }
+
+  scope :by_default, ->(state) {
+    where(
+      by_default: true, kind: %i[applicant_provided template]
+    ).where(from_state: JobApplication.states[state])
+  }
+
   #####################################
   # Relations
   has_many :job_applications

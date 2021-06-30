@@ -9,10 +9,6 @@ FactoryBot.define do
       )
     end
     job_application_file_type
-
-    # after :create do |b|
-    #   b.update_column(:content_file_name, 'document.pdf')
-    # end
   end
 end
 

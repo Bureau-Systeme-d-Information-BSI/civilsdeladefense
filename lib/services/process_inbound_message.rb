@@ -26,7 +26,11 @@ class ProcessInboundMessage
     job_application = original_email.job_application
     sender_email = message.from.first
     user = User.find_by(email: sender_email)
-    create_email(user, job_application, safe_body, message.subject)
+    email = create_email(user, job_application, safe_body, message.subject)
+
+    message.attachments.each do |attachment|
+      email.email_attachments.create!(content: attachment.decoded)
+    end
 
     true
   end
@@ -72,15 +76,10 @@ class ProcessInboundMessage
 
   def create_email(user, job_application, body, subject)
     Audited.audit_class.as_user(user) do
-      email_params = {
-        subject: subject,
-        body: body
-      }
-      email = job_application.emails.build(email_params)
-      email.created_at = email.updated_at = message.date
-      email.sender = user
-      email.job_application = job_application
-      email.save!
+      job_application.emails.create!(
+        subject: subject, body: body, sender: user,
+        created_at: message.date, updated_at: message.date
+      )
     end
   end
 end

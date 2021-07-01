@@ -48,17 +48,12 @@ class JobOffersController < ApplicationController
       @previous_job_application.profile.profile_foreign_languages.each do |foreign_language|
         @job_application.profile.profile_foreign_languages << foreign_language.dup
       end
-      # to_a to not execute a SQL query (0 language in database)
-      if @job_application.profile.profile_foreign_languages.to_a.size.zero?
-        @job_application.profile.profile_foreign_languages.build
-      end
       @job_application.user.department_users.build if @job_application.user.department_users.blank?
     else
       @job_application = JobApplication.new
       @job_application.user = user_signed_in? ? current_user : User.new
       @job_application.user.department_users.build
       @job_application.build_profile
-      @job_application.profile.profile_foreign_languages.build
     end
   end
 

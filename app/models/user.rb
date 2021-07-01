@@ -15,6 +15,7 @@ class User < ApplicationRecord
   include PgSearch::Model
   pg_search_scope :search_full_text,
     against: [:first_name, :last_name],
+    ignoring: :accents,
     associated_against: {
       job_offers: {
         identifier: "A",

@@ -4,11 +4,14 @@
   - title = data_line[:title]
   - link = data_line[:link]
   - kind_underscored = kind.underscore
+
   - if kind != current_kind
     - if %w(NewJobOffer PublishedJobOffer NewJobApplication).include?(kind)
-      %strong= t(".#{kind_underscored.pluralize}.title")
+      %h1= t(".#{kind_underscored.pluralize}.title")
     - else
       - state = JobApplication.human_attribute_name("state/#{kind_underscored.split('_').first}")
-      %strong= t(".generic_title", state: state).gsub('(', '').gsub(')', '').capitalize.pluralize
-  = [title, link].join(' ')
+      %h1= t(".generic_title", state: state).gsub('(', '').gsub(')', '').capitalize.pluralize
+  = title
+  = link_to link, link
   - current_kind = kind
+  %br

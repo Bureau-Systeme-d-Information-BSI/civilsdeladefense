@@ -32,9 +32,9 @@
         .mr-auto
           - klass = badge_class(job_offer.state.to_sym)
           %small.badge.text-white.text-uppercase.text-nowrap.mr-1{class: klass}
-            = job_offer.aasm.human_state
-          - if job_offer.published_at.present? && !(job_offer.suspended? || job_offer.draft?)
-            = t('.published_date', date: I18n.l(job_offer.published_at.to_date))
+            = "#{job_offer.aasm.human_state}"
+          - if job_offer.state_date
+            = I18n.l(job_offer.state_date.to_date)
         %ul.list-inline.mb-0.actions.mt-2.mt-md-0
           %li.list-inline-item.d-none
             = link_to '#' do

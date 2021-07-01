@@ -367,7 +367,6 @@ fr:
       job_offer:
         follow: 'Suivre'
         unfollow: 'Ne plus suivre'
-        published_date: 'Publié le %{date}'
         job_applications_count:
           zero: 'Candidature'
           one: 'Candidature'

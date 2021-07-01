@@ -3,6 +3,10 @@
 require "rails_helper"
 
 RSpec.describe JobOffer, type: :model do
+  let(:job_offer) { create(:job_offer) }
+  let(:employer) { create(:employer) }
+  let(:organization) { job_offer.organization }
+
   describe "contract_duration" do
     let(:job_offer) do
       build(:job_offer, contract_type: contract_type, contract_duration: contract_duration)
@@ -49,100 +53,61 @@ RSpec.describe JobOffer, type: :model do
     end
   end
 
-  it "should set published_at date when state is published" do
-    job_offer = create(:job_offer)
-    expect(job_offer.state).to eq("draft")
-    expect(job_offer.published_at).to be_nil
-    job_offer.publish!
-    expect(job_offer.state).to eq("published")
-    expect(job_offer.published_at).not_to be_nil
-  end
+  describe "state_date" do
+    it "should set published_at date when state is published" do
+      expect(job_offer.state).to eq("draft")
+      expect(job_offer.published_at).to be_nil
+      job_offer.publish!
+      expect(job_offer.state).to eq("published")
+      expect(job_offer.published_at).not_to be_nil
+    end
 
-  it "should set archived_at date when state is archived" do
-    job_offer = create(:job_offer)
-    expect(job_offer.state).to eq("draft")
-    expect(job_offer.archived_at).to be_nil
-    job_offer.publish!
-    job_offer.archive!
-    job_offer.reload
-    expect(job_offer.state).to eq("archived")
-    expect(job_offer.archived_at).not_to be_nil
-  end
+    it "should set archived_at date when state is archived" do
+      expect(job_offer.state).to eq("draft")
+      expect(job_offer.archived_at).to be_nil
+      job_offer.publish!
+      job_offer.archive!
+      job_offer.reload
+      expect(job_offer.state).to eq("archived")
+      expect(job_offer.archived_at).not_to be_nil
+    end
 
-  it "should set suspended_at date when state is suspended" do
-    job_offer = create(:job_offer)
-    expect(job_offer.state).to eq("draft")
-    expect(job_offer.suspended_at).to be_nil
-    job_offer.publish!
-    job_offer.suspend!
-    job_offer.reload
-    expect(job_offer.state).to eq("suspended")
-    expect(job_offer.suspended_at).not_to be_nil
+    it "should set suspended_at date when state is suspended" do
+      expect(job_offer.state).to eq("draft")
+      expect(job_offer.suspended_at).to be_nil
+      job_offer.publish!
+      job_offer.suspend!
+      job_offer.reload
+      expect(job_offer.state).to eq("suspended")
+      expect(job_offer.suspended_at).not_to be_nil
+    end
   end
 
   it "should prevent publishing according to organization config" do
-    job_offer = create(:job_offer)
-    organization = job_offer.organization
-    organization.hours_delay_before_publishing = 1
-    organization.save
+    organization.update(hours_delay_before_publishing: 1)
 
     expect { job_offer.publish! }.to raise_error(AASM::InvalidTransition)
   end
 
   it "should allow publishing according to organization config" do
-    job_offer = create(:job_offer)
-    organization = job_offer.organization
-    organization.hours_delay_before_publishing = nil
-    organization.save
+    organization.update(hours_delay_before_publishing: nil)
 
     expect { job_offer.publish! }.to_not raise_error
+  end
 
-    job_offer = create(:job_offer)
-    organization = job_offer.organization
-    organization.hours_delay_before_publishing = 0
-    organization.save
+  it "should allow publishing according to organization config" do
+    organization.update(hours_delay_before_publishing: 0)
 
     expect { job_offer.publish! }.to_not raise_error
   end
 
   it "should compute publishing_possible_at" do
-    duration = 2
-    job_offer = create(:job_offer)
-    organization = job_offer.organization
-    organization.hours_delay_before_publishing = duration
-    organization.save
+    organization.update(hours_delay_before_publishing: 2)
 
-    expect(job_offer.publishing_possible_at).to eq(job_offer.created_at + duration.hours)
-  end
-
-  it "should correctly rebuild timestamp from audit log" do
-    job_offer = create(:job_offer)
-    job_offer.publish!
-    published_at = job_offer.published_at
-    expect(published_at).not_to be_nil
-    job_offer.archive!
-    archived_at = job_offer.archived_at
-    expect(archived_at).not_to be_nil
-
-    job_offer.update_columns(archived_at: nil, published_at: nil)
-    expect(job_offer.published_at).to be_nil
-    expect(job_offer.archived_at).to be_nil
-
-    job_offer.rebuild_published_timestamp!
-    job_offer.reload
-    expect(job_offer.published_at).not_to be_nil
-    time_diff = (published_at - job_offer.published_at).abs
-    expect(time_diff).to be_within(1.0).of(1.0)
-
-    job_offer.rebuild_archived_timestamp!
-    job_offer.reload
-    expect(job_offer.archived_at).not_to be_nil
-    time_diff = (published_at - job_offer.published_at).abs
-    expect(time_diff).to be_within(1.0).of(1.0)
+    expect(job_offer.publishing_possible_at).to eq(job_offer.created_at + 2.hours)
   end
 
   it "should correctly find current most advanced job application state" do
-    job_offer = create(:job_offer)
     job_applications = create_list(:job_application, 10, job_offer: job_offer)
     expect(job_offer.current_most_advanced_job_applications_state).to eq(0)
     last_state_name, last_state_enum = JobApplication.states.to_a.last
@@ -151,7 +116,6 @@ RSpec.describe JobOffer, type: :model do
   end
 
   it "should be visible by owner" do
-    employer = create(:employer)
     owner = create(:administrator, role: "employer", employer: employer)
     job_offer = create(:job_offer, owner: owner)
     ability = Ability.new(owner)
@@ -159,11 +123,9 @@ RSpec.describe JobOffer, type: :model do
   end
 
   it "should be visible by actors" do
-    employer = create(:employer)
     brh = create(:administrator, role: nil, employer: employer)
     other_admin = create(:administrator, role: nil, employer: employer)
 
-    job_offer = create(:job_offer)
     create(:job_offer_actor, role: "brh", administrator: brh, job_offer: job_offer)
 
     ability = Ability.new(brh)
@@ -264,6 +226,7 @@ end
 #  county                                           :string
 #  county_code                                      :integer
 #  description                                      :text
+#  draft_at                                         :datetime
 #  duration_contract                                :string
 #  estimate_annual_salary_gross                     :string
 #  estimate_monthly_salary_net                      :string

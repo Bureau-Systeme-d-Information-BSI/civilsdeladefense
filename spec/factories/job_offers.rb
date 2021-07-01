@@ -42,6 +42,7 @@ end
 #  county                                           :string
 #  county_code                                      :integer
 #  description                                      :text
+#  draft_at                                         :datetime
 #  duration_contract                                :string
 #  estimate_annual_salary_gross                     :string
 #  estimate_monthly_salary_net                      :string

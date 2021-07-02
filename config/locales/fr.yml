@@ -599,7 +599,7 @@ fr:
             one: '1 FAQ'
             other: '%{count} FAQ'
         new:
-          title: "Ajouter un nouveau CMG"
+          title: "Ajouter une question"
         create:
           success: "CMG ajouté !"
         update:
@@ -661,7 +661,7 @@ fr:
           title: "Paramètres généraux"
           title_social: "Réseaux sociaux"
           title_partners: "Partenaires"
-          title_testimony: "Témoignage page d'acceuil"
+          title_testimony: "Accueil"
         form_security:
           title: "Paramètres de sécurité"
         update:

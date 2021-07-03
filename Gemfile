@@ -33,7 +33,6 @@ gem "cancancan"
 gem "carrierwave"
 gem "charlock_holmes", require: false
 gem "counter_culture"
-gem "country_select"
 gem "devise"
 gem "file_validators"
 gem "fog-aws"

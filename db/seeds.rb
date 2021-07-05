@@ -12,9 +12,7 @@ organization = Organization.create!(
   brand_name: "Ministère\n\ndes Armées",
   prefix_article: "le",
   service_description: desc,
-  service_description_short: desc_short,
-  subdomain: "cvd",
-  domain: "civilsdeladefense.fabnum.fr"
+  service_description_short: desc_short
 )
 
 Page.destroy_all
@@ -75,12 +73,6 @@ organization.pages.create!(
 
 File.open("spec/fixtures/files/logo_horizontal.svg") do |f|
   organization.logo_horizontal = f
-end
-File.open("spec/fixtures/files/logo_vertical.svg") do |f|
-  organization.logo_vertical = f
-end
-File.open("spec/fixtures/files/logo_vertical_negative.svg") do |f|
-  organization.logo_vertical_negative = f
 end
 File.open("spec/fixtures/files/image_background.jpg") do |f|
   organization.image_background = f

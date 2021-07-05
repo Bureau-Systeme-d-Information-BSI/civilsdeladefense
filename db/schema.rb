@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_01_164746) do
+ActiveRecord::Schema.define(version: 2021_07_05_101934) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -476,24 +476,10 @@ ActiveRecord::Schema.define(version: 2021_07_01_164746) do
     t.string "service_name"
     t.string "brand_name"
     t.string "administrator_email_suffix"
-    t.string "subdomain"
-    t.string "domain"
-    t.string "logo_vertical_file_name"
-    t.string "logo_vertical_content_type"
-    t.bigint "logo_vertical_file_size"
-    t.datetime "logo_vertical_updated_at"
     t.string "logo_horizontal_file_name"
     t.string "logo_horizontal_content_type"
     t.bigint "logo_horizontal_file_size"
     t.datetime "logo_horizontal_updated_at"
-    t.string "logo_vertical_negative_file_name"
-    t.string "logo_vertical_negative_content_type"
-    t.bigint "logo_vertical_negative_file_size"
-    t.datetime "logo_vertical_negative_updated_at"
-    t.string "logo_horizontal_negative_file_name"
-    t.string "logo_horizontal_negative_content_type"
-    t.bigint "logo_horizontal_negative_file_size"
-    t.datetime "logo_horizontal_negative_updated_at"
     t.string "image_background_file_name"
     t.string "image_background_content_type"
     t.bigint "image_background_file_size"

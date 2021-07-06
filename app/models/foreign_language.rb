@@ -1,4 +1,5 @@
 class ForeignLanguage < ApplicationRecord
+  acts_as_list
   has_many :profile_foreign_languages
 end
 

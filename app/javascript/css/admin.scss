@@ -446,3 +446,13 @@ a {
   left: 1.5rem;
   z-index: 150 !important;
 }
+
+.warning-snackbar {
+  background-color: $orange !important;
+
+  p {
+    color: #000 !important;
+    font-weight: bold !important;
+    line-height: 1.5em !important;
+  }
+}

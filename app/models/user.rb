@@ -56,12 +56,22 @@ class User < ApplicationRecord
     )
   }
 
+  scope :by_category, ->(*category_ids) {
+    joins(job_applications: :job_offer).where(
+      job_applications: {category_id: category_ids}
+    ).or(
+      joins(job_applications: :job_offer).where(
+        job_applications: {job_offers: {category_id: category_ids}}
+      )
+    )
+  }
+
   attr_accessor :is_deleted, :delete_photo
 
   before_update :destroy_photo
 
   def self.ransackable_scopes(auth_object = nil)
-    %i[concerned]
+    %i[concerned by_category]
   end
 
   def full_name

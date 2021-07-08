@@ -5,7 +5,7 @@ class Admin::JobApplicationsController < Admin::BaseController
   # GET /admin/candidatures.json
   def index
     @contract_types = ContractType.all
-    @employers = Employer.all
+    @employers = Employer.tree
     @preferred_users_lists = current_administrator.preferred_users_lists
 
     @job_applications = @job_applications.includes(:job_offer, :user)

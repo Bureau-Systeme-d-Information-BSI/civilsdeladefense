@@ -190,7 +190,7 @@ class Admin::JobOffersController < Admin::BaseController
   private
 
   def set_job_offers
-    @employers = Employer.all
+    @employers = Employer.tree
     @job_offers_active = @job_offers.admin_index_active
     @job_offers_featured = @job_offers.admin_index_featured
     @job_offers_archived = @job_offers.admin_index_archived

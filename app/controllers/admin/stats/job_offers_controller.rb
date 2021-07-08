@@ -25,7 +25,6 @@ class Admin::Stats::JobOffersController < Admin::Stats::BaseController
 
     @per_day = root_rel.group_by_day(:created_at, range: date_range).count
     build_average_affection
-    build_employer_ids unless current_administrator.bant?
 
     respond_to do |format|
       format.html {}
@@ -61,10 +60,6 @@ class Admin::Stats::JobOffersController < Admin::Stats::BaseController
     @average_affection = days.present? ? (days.reduce(:+) / days.size.to_f).round : "-"
   end
 
-  def build_employer_ids
-    @employer_ids = @job_offers.pluck(:employer_id).uniq
-  end
-
   def date_start
     @date_start ||= begin
       res = Date.parse(permitted_params[:start]) if permitted_params[:start].present?
@@ -88,7 +83,7 @@ class Admin::Stats::JobOffersController < Admin::Stats::BaseController
   def fetch_base_ressources
     @bops = Bop.all
     @contract_types = ContractType.all
-    @employers = Employer.all
+    @employers = current_administrator.employers
     @rejection_reasons = RejectionReason.all
     @age_ranges = AgeRange.all
   end

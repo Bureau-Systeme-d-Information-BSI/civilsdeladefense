@@ -1,4 +1,3 @@
--# frozen_string_literal: true
 - is_archived_or_is_deleted = @job_application.job_offer.archived? || @job_application.user.nil?
 - @email ||= Email.new(job_application: @job_application)
 .card

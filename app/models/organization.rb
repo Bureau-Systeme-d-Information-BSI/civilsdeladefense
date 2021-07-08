@@ -10,17 +10,14 @@ class Organization < ApplicationRecord
   has_many :pages
   has_many :users
 
-  validates :service_name, :brand_name, :prefix_article, :subdomain, presence: true
+  validates :service_name, :brand_name, :prefix_article, presence: true
 
   %i[
     operator_logo
     partner_1_logo
     partner_2_logo
     partner_3_logo
-    logo_vertical
     logo_horizontal
-    logo_vertical_negative
-    logo_horizontal_negative
     testimony_logo
   ].each do |field|
     mount_uploader field, LogoUploader, mount_on: :"#{field}_file_name"
@@ -64,76 +61,62 @@ end
 #
 # Table name: organizations
 #
-#  id                                    :uuid             not null, primary key
-#  administrator_email_suffix            :string
-#  brand_name                            :string
-#  domain                                :string
-#  facebook_url                          :string
-#  hours_delay_before_publishing         :integer
-#  image_background_content_type         :string
-#  image_background_file_name            :string
-#  image_background_file_size            :bigint
-#  image_background_updated_at           :datetime
-#  inbound_email_config                  :integer          default("not_available")
-#  instagram_url                         :string
-#  linkedin_url                          :string
-#  logo_horizontal_content_type          :string
-#  logo_horizontal_file_name             :string
-#  logo_horizontal_file_size             :bigint
-#  logo_horizontal_negative_content_type :string
-#  logo_horizontal_negative_file_name    :string
-#  logo_horizontal_negative_file_size    :bigint
-#  logo_horizontal_negative_updated_at   :datetime
-#  logo_horizontal_updated_at            :datetime
-#  logo_vertical_content_type            :string
-#  logo_vertical_file_name               :string
-#  logo_vertical_file_size               :bigint
-#  logo_vertical_negative_content_type   :string
-#  logo_vertical_negative_file_name      :string
-#  logo_vertical_negative_file_size      :bigint
-#  logo_vertical_negative_updated_at     :datetime
-#  logo_vertical_updated_at              :datetime
-#  operator_logo_content_type            :string
-#  operator_logo_file_name               :string
-#  operator_logo_file_size               :bigint
-#  operator_logo_updated_at              :datetime
-#  operator_name                         :string
-#  operator_url                          :string
-#  partner_1_logo_content_type           :string
-#  partner_1_logo_file_name              :string
-#  partner_1_logo_file_size              :bigint
-#  partner_1_logo_updated_at             :datetime
-#  partner_1_name                        :string
-#  partner_1_url                         :string
-#  partner_2_logo_content_type           :string
-#  partner_2_logo_file_name              :string
-#  partner_2_logo_file_size              :bigint
-#  partner_2_logo_updated_at             :datetime
-#  partner_2_name                        :string
-#  partner_2_url                         :string
-#  partner_3_logo_content_type           :string
-#  partner_3_logo_file_name              :string
-#  partner_3_logo_file_size              :bigint
-#  partner_3_logo_updated_at             :datetime
-#  partner_3_name                        :string
-#  partner_3_url                         :string
-#  prefix_article                        :string
-#  privacy_policy_url                    :string
-#  service_description                   :string
-#  service_description_short             :string
-#  service_name                          :string
-#  subdomain                             :string
-#  testimony_logo_content_type           :string
-#  testimony_logo_file_name              :string
-#  testimony_logo_file_size              :bigint
-#  testimony_logo_updated_at             :datetime
-#  testimony_subtitle                    :string
-#  testimony_title                       :string
-#  testimony_url                         :string
-#  twitter_url                           :string
-#  youtube_url                           :string
-#  created_at                            :datetime         not null
-#  updated_at                            :datetime         not null
-#  atinternet_site_id                    :string
-#  matomo_site_id                        :string
+#  id                            :uuid             not null, primary key
+#  administrator_email_suffix    :string
+#  brand_name                    :string
+#  facebook_url                  :string
+#  hours_delay_before_publishing :integer
+#  image_background_content_type :string
+#  image_background_file_name    :string
+#  image_background_file_size    :bigint
+#  image_background_updated_at   :datetime
+#  inbound_email_config          :integer          default("not_available")
+#  instagram_url                 :string
+#  linkedin_url                  :string
+#  logo_horizontal_content_type  :string
+#  logo_horizontal_file_name     :string
+#  logo_horizontal_file_size     :bigint
+#  logo_horizontal_updated_at    :datetime
+#  operator_logo_content_type    :string
+#  operator_logo_file_name       :string
+#  operator_logo_file_size       :bigint
+#  operator_logo_updated_at      :datetime
+#  operator_name                 :string
+#  operator_url                  :string
+#  partner_1_logo_content_type   :string
+#  partner_1_logo_file_name      :string
+#  partner_1_logo_file_size      :bigint
+#  partner_1_logo_updated_at     :datetime
+#  partner_1_name                :string
+#  partner_1_url                 :string
+#  partner_2_logo_content_type   :string
+#  partner_2_logo_file_name      :string
+#  partner_2_logo_file_size      :bigint
+#  partner_2_logo_updated_at     :datetime
+#  partner_2_name                :string
+#  partner_2_url                 :string
+#  partner_3_logo_content_type   :string
+#  partner_3_logo_file_name      :string
+#  partner_3_logo_file_size      :bigint
+#  partner_3_logo_updated_at     :datetime
+#  partner_3_name                :string
+#  partner_3_url                 :string
+#  prefix_article                :string
+#  privacy_policy_url            :string
+#  service_description           :string
+#  service_description_short     :string
+#  service_name                  :string
+#  testimony_logo_content_type   :string
+#  testimony_logo_file_name      :string
+#  testimony_logo_file_size      :bigint
+#  testimony_logo_updated_at     :datetime
+#  testimony_subtitle            :string
+#  testimony_title               :string
+#  testimony_url                 :string
+#  twitter_url                   :string
+#  youtube_url                   :string
+#  created_at                    :datetime         not null
+#  updated_at                    :datetime         not null
+#  atinternet_site_id            :string
+#  matomo_site_id                :string
 #

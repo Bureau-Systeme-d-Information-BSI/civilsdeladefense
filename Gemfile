@@ -3,7 +3,7 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "2.7.3"
+ruby "2.7.4"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem "rails", "~> 6.1.4"
@@ -33,7 +33,6 @@ gem "cancancan"
 gem "carrierwave"
 gem "charlock_holmes", require: false
 gem "counter_culture"
-gem "country_select"
 gem "devise"
 gem "file_validators"
 gem "fog-aws"

@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_30_201043) do
+ActiveRecord::Schema.define(version: 2021_07_05_101934) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+  enable_extension "unaccent"
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -421,6 +422,7 @@ ActiveRecord::Schema.define(version: 2021_06_30_201043) do
     t.uuid "contract_duration_id"
     t.boolean "featured", default: false
     t.boolean "spontaneous", default: false
+    t.text "organization_description"
     t.index ["benefit_id"], name: "index_job_offers_on_benefit_id"
     t.index ["bop_id"], name: "index_job_offers_on_bop_id"
     t.index ["category_id"], name: "index_job_offers_on_category_id"
@@ -482,24 +484,10 @@ ActiveRecord::Schema.define(version: 2021_06_30_201043) do
     t.string "service_name"
     t.string "brand_name"
     t.string "administrator_email_suffix"
-    t.string "subdomain"
-    t.string "domain"
-    t.string "logo_vertical_file_name"
-    t.string "logo_vertical_content_type"
-    t.bigint "logo_vertical_file_size"
-    t.datetime "logo_vertical_updated_at"
     t.string "logo_horizontal_file_name"
     t.string "logo_horizontal_content_type"
     t.bigint "logo_horizontal_file_size"
     t.datetime "logo_horizontal_updated_at"
-    t.string "logo_vertical_negative_file_name"
-    t.string "logo_vertical_negative_content_type"
-    t.bigint "logo_vertical_negative_file_size"
-    t.datetime "logo_vertical_negative_updated_at"
-    t.string "logo_horizontal_negative_file_name"
-    t.string "logo_horizontal_negative_content_type"
-    t.bigint "logo_horizontal_negative_file_size"
-    t.datetime "logo_horizontal_negative_updated_at"
     t.string "image_background_file_name"
     t.string "image_background_content_type"
     t.bigint "image_background_file_size"

@@ -227,6 +227,7 @@ class Admin::JobOffersController < Admin::BaseController
       is_remote_possible available_immediately study_level_id experience_level_id bop_id
       sector_id estimate_monthly_salary_net estimate_annual_salary_gross
       location city county county_code country_code postcode region spontaneous
+      organization_description
     ]
     fields << {benefit_ids: []}
     job_offer_actors_attributes = %i[id role _destroy]

@@ -2,7 +2,7 @@
 
 class Admin::Settings::AdministratorsController < Admin::Settings::BaseController
   before_action :set_role_and_employer, only: %i[new create]
-  before_action :set_administrators, only: %i[index inactive]
+  before_action :set_administrators, only: %i[index inactive export]
 
   # GET /admin/settings/administrators
   # GET /admin/settings/administrators.json
@@ -12,8 +12,9 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
   end
 
   def export
-    administrators = Administrator.all
-    file = Exporter::Administrator.new(administrators, current_administrator).generate
+    @administrators = params[:active] ? @administrators_active : @administrators_inactive
+
+    file = Exporter::Administrator.new(@administrators, current_administrator).generate
 
     send_data file.read, filename: "#{Time.zone.today}_e-recrutement_admins.xlsx"
   end
@@ -127,7 +128,8 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
   private
 
   def set_administrators
-    @q = Administrator.includes(:inviter).ransack(params[:q])
+    @permitted_params = permitted_params
+    @q = Administrator.includes(:inviter).ransack(permitted_params[:q])
     @q.sorts = "created_at desc" if @q.sorts.empty?
     @administrators_active = @q.result.active.includes(:employer)
     @administrators_inactive = @q.result.inactive.includes(:employer)
@@ -147,5 +149,11 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
 
   def set_role_and_employer
     @administrator.employer = current_administrator.employer unless current_administrator.bant?
+  end
+
+  def permitted_params
+    params.permit(
+      q: [:employer_id_eq, :first_name_or_last_name_or_email_cont, :role_eq, :s]
+    )
   end
 end

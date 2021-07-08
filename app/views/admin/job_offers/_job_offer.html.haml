@@ -9,7 +9,7 @@
         .notification= notifications_count
       = link_to [:admin, job_offer], class: 'card-body' do
         .row
-          .col-6.text-truncate.font-weight-bold.text-primary.text-dark
+          .col-5.text-truncate.font-weight-bold.text-primary.text-dark
             = job_offer.identifier
             = job_offer.title
           .col-1.text-truncate.font-weight-bold.text-primary.text-dark
@@ -25,9 +25,9 @@
             - title = JobOffer.human_attribute_name('job_applications_count', count: count)
             %span{title: title}
               = count
-          .col-1.text-truncate.font-weight-bold.text-primary.text-dark.text-center
+          .col-2.text-truncate.font-weight-bold.text-primary.text-dark.text-center
             - title = JobApplication.human_attribute_name("state/#{job_offer.most_advanced_job_applications_state}")
-            %span{title: title}= job_offer.most_advanced_job_applications_state_as_number
+            %span.small= title
       .card-footer.d-flex.flex-column.flex-md-row
         .mr-auto
           - klass = badge_class(job_offer.state.to_sym)

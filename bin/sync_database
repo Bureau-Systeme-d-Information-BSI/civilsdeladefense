@@ -35,15 +35,18 @@ fi
 if pgrep rails; then pkill rails; fi
 rails db:drop db:create
 
-echo "Downloading last postgre backup from Scalingo..."
+echo "Downloading last postgre backup from Scalingo"
 ADDON_ID=`scalingo --app $APP_NAME --region $SCALINGO_REGION addons | grep postgre | awk '{ print $4; }'`
 ARCHIVE_PATH=`scalingo --app $APP_NAME --region $SCALINGO_REGION --addon $ADDON_ID backups-download --output tmp | awk 'NR==3' | awk '{ print $2; }'`
 
 tar -xzf $ARCHIVE_PATH -C tmp --strip-components 1
-echo "Backup saved $ARCHIVE_PATH"
+echo "Restoring backup $ARCHIVE_PATH"
 
 DUMP_PATH=${ARCHIVE_PATH/.tar.gz/.pgsql}
 pg_restore --clean --if-exists --no-owner --no-privileges --no-comments --dbname $DATABASE_URL $DUMP_PATH
 
 echo "Backup restored! Running missing rails migrations"
 rails db:migrate
+
+rm $ARCHIVE_PATH
+rm $DUMP_PATH

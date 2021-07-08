@@ -50,9 +50,11 @@ class Admin::Settings::OrganizationsController < Admin::Settings::BaseController
       partner_1_name partner_1_url partner_1_logo
       partner_2_name partner_2_url partner_2_logo
       partner_3_name partner_3_url partner_3_logo
+      remove_operator_logo remove_image_background remove_testimony_logo
+      remove_partner_1_logo remove_partner_2_logo remove_partner_3_logo
       testimony_title testimony_subtitle testimony_url testimony_logo
       linkedin_url twitter_url youtube_url instagram_url facebook_url
-      image_background
+      image_background remove_image_background
       matomo_site_id inbound_email_config hours_delay_before_publishing
     ]
     params.require(:organization).permit(permitted_fields)

@@ -146,6 +146,12 @@ fr:
         testimony_subtitle: Sous-titre
         testimony_url: Lien
         testimony_logo: Image d'arrière plan
+        remove_operator_logo: "Supprimer le logo opérateur"
+        remove_partner_1_logo: "Supprimer le logo partenaire 1"
+        remove_partner_2_logo: "Supprimer le logo partenaire 2"
+        remove_partner_3_logo: "Supprimer le logo partenaire 3"
+        remove_testimony_logo: "Supprimer l'image d'arrière plan"
+        remove_image_background: "Supprimer l'image d'arrière plan"
       organization_default:
         kind: "Nom du champ"
         value: "Valeur par défaut"

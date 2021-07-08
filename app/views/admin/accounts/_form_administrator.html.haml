@@ -12,8 +12,7 @@
             = f.input :first_name
           .col-12.col-md-6
             = f.input :last_name
-        = f.label :photo
-        = f.input :photo, label: t('buttons.choose_file'), wrapper: :custom_file_without_label
+        = f.input :photo
 
         - if @administrator.employer?
           - %i(supervisor_administrator grand_employer_administrator).each do |submodel|

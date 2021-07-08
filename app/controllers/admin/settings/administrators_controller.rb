@@ -14,7 +14,10 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
   def export
     @administrators = params[:active] ? @administrators_active : @administrators_inactive
 
-    file = Exporter::Administrator.new(@administrators, current_administrator).generate
+    file = Exporter::Administrator.new(
+      {data: @administrators, q: permitted_params[:q]},
+      current_administrator
+    ).generate
 
     send_data file.read, filename: "#{Time.zone.today}_e-recrutement_admins.xlsx"
   end

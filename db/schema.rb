@@ -215,6 +215,14 @@ ActiveRecord::Schema.define(version: 2021_07_05_101934) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "email_attachments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "email_id", null: false
+    t.string "content"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["email_id"], name: "index_email_attachments_on_email_id"
+  end
+
   create_table "email_templates", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
     t.string "subject"
@@ -234,7 +242,6 @@ ActiveRecord::Schema.define(version: 2021_07_05_101934) do
     t.string "sender_type"
     t.uuid "sender_id"
     t.boolean "is_unread", default: true
-    t.json "attachments"
     t.index ["job_application_id"], name: "index_emails_on_job_application_id"
     t.index ["sender_type", "sender_id"], name: "index_emails_on_sender_type_and_sender_id"
   end
@@ -708,6 +715,7 @@ ActiveRecord::Schema.define(version: 2021_07_05_101934) do
   add_foreign_key "cmgs", "organizations"
   add_foreign_key "department_users", "departments"
   add_foreign_key "department_users", "users"
+  add_foreign_key "email_attachments", "emails"
   add_foreign_key "emails", "job_applications"
   add_foreign_key "job_application_files", "job_application_file_types"
   add_foreign_key "job_application_files", "job_applications"

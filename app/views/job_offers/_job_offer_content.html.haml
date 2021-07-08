@@ -1,6 +1,6 @@
 - display_apply_button = @job_offer.published?
 - cache job_offer do
-  - fields = %i(description required_profile recruitment_process)
+  - fields = %i(organization_description description required_profile recruitment_process)
   - fields.each_with_index do |field, index|
     %h2.rf-h3.rf-mt-0= t('.'+field.to_s)
     = sanitize(job_offer.send(field))

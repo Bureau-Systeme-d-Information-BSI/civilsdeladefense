@@ -175,12 +175,9 @@ class JobApplication < ApplicationRecord
         file.job_application_file_type == file_type
       }
 
-      from_state_as_val = JobApplication.states[file_type.from_state]
-      current_state_as_val = JobApplication.states[state]
-
       if existing_file
         memo.first << existing_file
-      elsif (current_state_as_val >= from_state_as_val) && file_type.by_default
+      elsif file_type.is_mandatory?(state) && file_type.by_default
         virgin = job_application_files.build(job_application_file_type: file_type)
         memo.first << virgin
       else

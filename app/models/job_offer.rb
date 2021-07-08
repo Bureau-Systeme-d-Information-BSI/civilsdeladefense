@@ -68,6 +68,14 @@ class JobOffer < ApplicationRecord
   validates :title, format: {without: %r{\A.*\(.*\z}, message: :brackets}
   validates :title, format: {without: %r{\A.*\).*\z}, message: :brackets}
 
+  with_options if: -> { published? } do
+    validates :title, length: {maximum: 70}
+    validates :description, html_length: {maximum: 2000}
+    validates :organization_description, html_length: {maximum: 1000}
+    validates :required_profile, html_length: {maximum: 1000}
+    validates :recruitment_process, html_length: {maximum: 700}
+  end
+
   ## Scopes
   default_scope { order(created_at: :desc) }
   scope :admin_index, -> { includes(:bop, :contract_type, :employer, :job_offer_actors) }
@@ -294,6 +302,7 @@ end
 #  most_advanced_job_applications_state             :integer          default("start")
 #  notifications_count                              :integer          default(0)
 #  option_photo                                     :integer
+#  organization_description                         :text
 #  phone_meeting_job_applications_count             :integer          default(0), not null
 #  phone_meeting_rejected_job_applications_count    :integer          default(0), not null
 #  postcode                                         :string

@@ -2,7 +2,7 @@
   .card.mt-3
     .card-body
       = render partial: '/job_offers/job_offer_head', locals: {job_offer: @job_offer, inside_card: true, title_uncentered: true}
-      - fields = %i(description required_profile recruitment_process)
+      - fields = %i(organization_description description required_profile recruitment_process)
       - fields.each_with_index do |field, index|
         - klasses = index == 0 ? %w() : %w(mt-4)
         %div{class: klasses}

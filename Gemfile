@@ -3,19 +3,19 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "2.7.3"
+ruby "2.7.4"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem "rails", "~> 6.1.0"
+gem "rails", "~> 6.1.4"
 gem "rails-i18n"
 
 # Use postgresql as the database for Active Record
 gem "pg", ">= 0.18", "< 2.0"
 gem "puma"
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-gem "webpacker", "~> 5.0"
+gem "webpacker", "~> 5.4"
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem "jbuilder", "~> 2.7"
+gem "jbuilder", "~> 2.11"
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -33,7 +33,6 @@ gem "cancancan"
 gem "carrierwave"
 gem "charlock_holmes", require: false
 gem "counter_culture"
-gem "country_select"
 gem "devise"
 gem "file_validators"
 gem "fog-aws"
@@ -42,7 +41,7 @@ gem "groupdate"
 gem "haml-rails"
 gem "inherited_resources"
 gem "invisible_captcha"
-gem "lockbox", "~> 0.2.0"
+gem "lockbox", "~> 0.6.4"
 gem "mail"
 gem "mini_magick"
 gem "pg_search"
@@ -50,6 +49,7 @@ gem "rack-cors"
 gem "rack-rewrite"
 gem "ransack"
 gem "redis"
+gem "caxlsx", "~> 3.1.0"
 gem "rollbar"
 gem "sequenced"
 gem "simple_form"
@@ -78,7 +78,7 @@ group :development, :test do
   gem "factory_bot_rails"
   gem "rails-controller-testing"
   gem "rspec_junit_formatter"
-  gem "rspec-rails", "~> 4.0.1"
+  gem "rspec-rails", "~> 5.0.1"
   gem "shoulda-matchers"
   gem "simplecov", require: false
 
@@ -89,14 +89,14 @@ group :development, :test do
   gem "rubocop-performance"
   gem "standard", "> 0.10"
 
-  gem "pry", "~> 0.13.1"
+  gem "pry-rails"
 end
 
 group :development do
   gem "annotate"
 
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
-  gem "listen", ">= 3.0.5", "< 3.2"
+  gem "listen", ">= 3.0.5", "< 3.6"
   gem "web-console", ">= 3.3.0"
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem "spring"

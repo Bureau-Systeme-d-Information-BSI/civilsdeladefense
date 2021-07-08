@@ -1,7 +1,7 @@
-- target_state = JobApplication.states.first.last
-- target_file_type_ids = JobApplicationFileType.where(by_default: true, from_state: target_state, kind: :applicant_provided).select(:id).all.map(&:id)
-- job_application_files = job_application.job_application_files.where(job_application_file_type_id: target_file_type_ids)
-- job_application_files = job_application_files.sort_by{|job_application_file| target_file_type_ids.index(job_application_file.job_application_file_type_id) }
+- target_state = JobApplication.states["initial"]
+- target_file_type = JobApplicationFileType.where(by_default: true, from_state: target_state, kind: :applicant_provided)
+- job_application_files = job_application.job_application_files.where(job_application_file_type: target_file_type).joins(:job_application_file_type).order('job_application_file_types.position')
+- job_application_files = job_application_files.limit(1) if defined?(only_first) && only_first
 - job_application_files.each do |job_application_file|
   - if job_application_file.content.present?
     - file_type = job_application_file.job_application_file_type
@@ -10,7 +10,7 @@
         = fa_icon('file-document', class: 'text-secondary')
         = file_type.name
       .card-subheader.bg-secondary
-      .card-body.bg-body-bg
+      %div
         - pdf_url = url_for([:admin, job_application, job_application_file, {format: :pdf}])
         %object{data: pdf_url, type: "application/pdf", width: "100%", height: "500px"}
           = link_to t("buttons.download") + file_type.name, pdf_url

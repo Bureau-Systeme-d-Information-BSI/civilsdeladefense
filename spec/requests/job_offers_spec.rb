@@ -20,11 +20,11 @@ RSpec.describe "JobOffers", type: :request do
     end
   end
 
-  describe "GET /job_offers/:id/apply" do
+  describe "GET /job_offers/apply?id=:id" do
     it "returns 200 when fetching a specific job offers application page" do
       job_offer = create(:job_offer)
       job_offer.publish!
-      get apply_job_offer_path(job_offer)
+      get apply_job_offers_path(id: job_offer.slug)
       expect(response).to have_http_status(200)
     end
   end

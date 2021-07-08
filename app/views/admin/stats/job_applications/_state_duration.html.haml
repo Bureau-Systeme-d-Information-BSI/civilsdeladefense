@@ -1,0 +1,10 @@
+%h1.h5.text-primary.mt-4 Délai moyen par étape de recrutement (en jours)
+.statistics-row.mt-3
+  - @state_duration.each do |from, to, average|
+    .col-12.col-md-3.statistic__block
+      .statistic__name
+        - from_text = JobApplication.human_attribute_name("state/#{from}")
+        - to_text = JobApplication.human_attribute_name("state/#{to}")
+        = "#{from_text} → #{to_text}"
+      .statistic__value
+        = average

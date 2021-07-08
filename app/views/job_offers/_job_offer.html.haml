@@ -1,12 +1,11 @@
-- container_class ||= %w[rf-col-12]
+- container_class ||= ""
 %div{class: container_class}
   - cache [job_offer] do
-    .rf-py-2w
-      - category = job_offer.category
-      = link_to job_offer do
+    .rf-pb-2w.rf-pt-2w
+      = link_to job_offer, target: "_top" do
         .d-flex.align-items-center
           .d-flex.flex-column
-            %small= category.name
+            %small= job_offer.category.name
             %strong.rf-text--lg.rf-mb-1w= job_offer.title
             .d-flex
               .rf-mr-1w
@@ -17,4 +16,4 @@
               %small.rf-mt-1w= t('.published_date', time_ago_in_words: time_ago_in_words(job_offer.published_at))
           %button.rf-btn.rf-fi-arrow-right-line.ml-auto{title: t('.show')}
             %sr-only=t('.show')
-  %hr.rf-b--g100.rf-my-0
+    %hr.rf-b--g100.rf-my-0

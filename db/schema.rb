@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_17_140820) do
+ActiveRecord::Schema.define(version: 2021_07_05_101934) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+  enable_extension "unaccent"
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -131,6 +132,15 @@ ActiveRecord::Schema.define(version: 2021_03_17_140820) do
     t.index ["position"], name: "index_availability_ranges_on_position"
   end
 
+  create_table "benefit_job_offers", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "benefit_id", null: false
+    t.uuid "job_offer_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["benefit_id"], name: "index_benefit_job_offers_on_benefit_id"
+    t.index ["job_offer_id"], name: "index_benefit_job_offers_on_job_offer_id"
+  end
+
   create_table "benefits", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.integer "position"
@@ -187,6 +197,24 @@ ActiveRecord::Schema.define(version: 2021_03_17_140820) do
     t.index ["position"], name: "index_contract_types_on_position"
   end
 
+  create_table "department_users", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "user_id", null: false
+    t.uuid "department_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["department_id"], name: "index_department_users_on_department_id"
+    t.index ["user_id"], name: "index_department_users_on_user_id"
+  end
+
+  create_table "departments", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "name_region"
+    t.string "code_region"
+    t.string "code"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "email_templates", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "title"
     t.string "subject"
@@ -206,6 +234,7 @@ ActiveRecord::Schema.define(version: 2021_03_17_140820) do
     t.string "sender_type"
     t.uuid "sender_id"
     t.boolean "is_unread", default: true
+    t.json "attachments"
     t.index ["job_application_id"], name: "index_emails_on_job_application_id"
     t.index ["sender_type", "sender_id"], name: "index_emails_on_sender_type_and_sender_id"
   end
@@ -232,6 +261,28 @@ ActiveRecord::Schema.define(version: 2021_03_17_140820) do
     t.index ["position"], name: "index_experience_levels_on_position"
   end
 
+  create_table "foreign_language_levels", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.integer "position"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "foreign_languages", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.integer "position"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "frequently_asked_questions", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.integer "position"
+    t.string "value"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "friendly_id_slugs", id: :serial, force: :cascade do |t|
     t.string "slug", null: false
     t.string "sluggable_type", limit: 50
@@ -255,6 +306,7 @@ ActiveRecord::Schema.define(version: 2021_03_17_140820) do
     t.datetime "updated_at", null: false
     t.integer "from_state"
     t.boolean "notification", default: true
+    t.boolean "spontaneous", default: false
   end
 
   create_table "job_application_files", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
@@ -287,6 +339,8 @@ ActiveRecord::Schema.define(version: 2021_03_17_140820) do
     t.boolean "experiences_fit_job_offer"
     t.uuid "rejection_reason_id"
     t.uuid "organization_id"
+    t.uuid "category_id"
+    t.index ["category_id"], name: "index_job_applications_on_category_id"
     t.index ["employer_id"], name: "index_job_applications_on_employer_id"
     t.index ["job_offer_id"], name: "index_job_applications_on_job_offer_id"
     t.index ["organization_id"], name: "index_job_applications_on_organization_id"
@@ -359,6 +413,8 @@ ActiveRecord::Schema.define(version: 2021_03_17_140820) do
     t.uuid "organization_id"
     t.uuid "benefit_id"
     t.uuid "contract_duration_id"
+    t.boolean "featured", default: false
+    t.boolean "spontaneous", default: false
     t.text "organization_description"
     t.index ["benefit_id"], name: "index_job_offers_on_benefit_id"
     t.index ["bop_id"], name: "index_job_offers_on_bop_id"
@@ -421,24 +477,10 @@ ActiveRecord::Schema.define(version: 2021_03_17_140820) do
     t.string "service_name"
     t.string "brand_name"
     t.string "administrator_email_suffix"
-    t.string "subdomain"
-    t.string "domain"
-    t.string "logo_vertical_file_name"
-    t.string "logo_vertical_content_type"
-    t.bigint "logo_vertical_file_size"
-    t.datetime "logo_vertical_updated_at"
     t.string "logo_horizontal_file_name"
     t.string "logo_horizontal_content_type"
     t.bigint "logo_horizontal_file_size"
     t.datetime "logo_horizontal_updated_at"
-    t.string "logo_vertical_negative_file_name"
-    t.string "logo_vertical_negative_content_type"
-    t.bigint "logo_vertical_negative_file_size"
-    t.datetime "logo_vertical_negative_updated_at"
-    t.string "logo_horizontal_negative_file_name"
-    t.string "logo_horizontal_negative_content_type"
-    t.bigint "logo_horizontal_negative_file_size"
-    t.datetime "logo_horizontal_negative_updated_at"
     t.string "image_background_file_name"
     t.string "image_background_content_type"
     t.bigint "image_background_file_size"
@@ -488,6 +530,7 @@ ActiveRecord::Schema.define(version: 2021_03_17_140820) do
     t.string "testimony_logo_content_type"
     t.bigint "testimony_logo_file_size"
     t.datetime "testimony_logo_updated_at"
+    t.string "atinternet_site_id"
   end
 
   create_table "pages", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
@@ -539,6 +582,17 @@ ActiveRecord::Schema.define(version: 2021_03_17_140820) do
     t.integer "position"
     t.index ["name"], name: "index_professional_categories_on_name", unique: true
     t.index ["position"], name: "index_professional_categories_on_position"
+  end
+
+  create_table "profile_foreign_languages", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "profile_id", null: false
+    t.uuid "foreign_language_id", null: false
+    t.uuid "foreign_language_level_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["foreign_language_id"], name: "index_profile_foreign_languages_on_foreign_language_id"
+    t.index ["foreign_language_level_id"], name: "index_profile_foreign_languages_on_foreign_language_level_id"
+    t.index ["profile_id"], name: "index_profile_foreign_languages_on_profile_id"
   end
 
   create_table "profiles", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
@@ -633,13 +687,12 @@ ActiveRecord::Schema.define(version: 2021_03_17_140820) do
     t.string "website_url"
     t.string "phone"
     t.string "current_position"
-    t.uuid "last_job_application_id"
     t.string "suspension_reason"
     t.datetime "suspended_at"
     t.date "marked_for_deletion_on"
+    t.boolean "receive_job_offer_mails", default: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["last_job_application_id"], name: "index_users_on_last_job_application_id"
     t.index ["organization_id"], name: "index_users_on_organization_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
@@ -650,10 +703,15 @@ ActiveRecord::Schema.define(version: 2021_03_17_140820) do
   add_foreign_key "administrators", "administrators", column: "inviter_id"
   add_foreign_key "administrators", "administrators", column: "supervisor_administrator_id"
   add_foreign_key "administrators", "employers"
+  add_foreign_key "benefit_job_offers", "benefits"
+  add_foreign_key "benefit_job_offers", "job_offers"
   add_foreign_key "cmgs", "organizations"
+  add_foreign_key "department_users", "departments"
+  add_foreign_key "department_users", "users"
   add_foreign_key "emails", "job_applications"
   add_foreign_key "job_application_files", "job_application_file_types"
   add_foreign_key "job_application_files", "job_applications"
+  add_foreign_key "job_applications", "categories"
   add_foreign_key "job_applications", "employers"
   add_foreign_key "job_applications", "job_offers"
   add_foreign_key "job_applications", "rejection_reasons"
@@ -676,6 +734,9 @@ ActiveRecord::Schema.define(version: 2021_03_17_140820) do
   add_foreign_key "preferred_users", "preferred_users_lists"
   add_foreign_key "preferred_users", "users"
   add_foreign_key "preferred_users_lists", "administrators"
+  add_foreign_key "profile_foreign_languages", "foreign_language_levels"
+  add_foreign_key "profile_foreign_languages", "foreign_languages"
+  add_foreign_key "profile_foreign_languages", "profiles"
   add_foreign_key "profiles", "age_ranges"
   add_foreign_key "profiles", "availability_ranges"
   add_foreign_key "profiles", "experience_levels"
@@ -683,5 +744,4 @@ ActiveRecord::Schema.define(version: 2021_03_17_140820) do
   add_foreign_key "salary_ranges", "experience_levels"
   add_foreign_key "salary_ranges", "professional_categories"
   add_foreign_key "salary_ranges", "sectors"
-  add_foreign_key "users", "job_applications", column: "last_job_application_id"
 end

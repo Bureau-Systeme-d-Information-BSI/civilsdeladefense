@@ -1,22 +1,18 @@
 - file_type = job_application_file.job_application_file_type
 - is_validated_value = job_application_file.is_validated
 - hint_text = hint_text_for_file(job_application, job_application_file)
-- klasses = %w()
-- klasses << "is-validated-#{ is_validated_value }"
-- html = {}
-- html[:id] = "job_application_file_#{file_type.name.parameterize}"
-- html[:class] = klasses
-- options = {}
-- options[:html] = html
-- options[:namespace] = file_type.name.parameterize
+- klasses = ["is-validated-#{ is_validated_value }"]
+- html = { id: "job_application_file_#{file_type.name.parameterize}", class: klasses, "data-file-drop-target" => "form" }
+- options = { html: html, namespace: file_type.name.parameterize }
 = turbo_frame_tag dom_id(job_application_file.job_application_file_type) do
-  .rf-card.rf-card--no-arrow.rf-card--no-full-height.rounded-lg.zoomable.h-auto.rf-mb-3w
+  %h3= file_type.name
+  .rf-mb-1w= hint_text
+  - data = { controller: "file-drop", action: "dragenter->file-drop#highlight dragover->file-drop#highlight dragleave->file-drop#unhighlight drop->file-drop#unhighlight drop->file-drop#setFile" }
+  .rf-card.rf-card--no-arrow.rf-card--no-full-height.rf-mb-3w{ data: data }
     .rf-card__body
       = simple_form_for([:account, job_application, job_application_file], options) do |f|
         - if job_application_file.new_record?
           = f.hidden_field :job_application_file_type_id
-        .form-inputs
-          %label.rf-label= file_type.name
-          - label = is_validated_value == 1 ? t('buttons.choose_file_validated_html') : t('buttons.choose_file_drop_zone_html')
-          - html = {data: {controller: 'auto-submit', action: "change->auto-submit#submit"}}
-          = f.input :content, label: label, wrapper: :custom_file_with_dropzone, hint: hint_text, input_html: html
+        - label = is_validated_value == 1 ? t('buttons.choose_file_validated_html') : t('buttons.choose_file_drop_zone_html')
+        - data = { controller: "auto-submit", action: "change->auto-submit#submit", "file-drop-target" => "input" }
+        = f.input :content, label: label, hint: "Seuls les fichiers PDF de taille inférieure à 2Mo sont acceptés.", input_html: { data: data }

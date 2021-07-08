@@ -1,4 +1,4 @@
-- attributes = %i[contract_type contract_start_on location study_level category experience_level salary]
+- attributes = %i[contract_type contract_start_on location study_level category experience_level salary benefits is_remote_possible]
 - attributes.each_with_index do |attribute, index|
   .d-flex{class: index == 0 ? nil : 'rf-mt-1w'}
     = fa_icon job_offer_icon_for_attribute(attribute)

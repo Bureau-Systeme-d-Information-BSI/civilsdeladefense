@@ -1,25 +1,20 @@
-= form_tag request.original_url, method: :get, class: 'auto-submit filters' do
-  .rf-input-group
-    = text_field_tag :q, params[:q], placeholder: 'Mot-clé', class: 'rf-input'
-  = render 'filter', collection: @categories, kind: :category, name: :name_with_depth
-  = render 'filter', collection: @contract_types, kind: :contract_type
-  = render 'filter', collection: @study_levels, kind: :study_level
-  = render 'filter', collection: @experience_levels, kind: :experience_level
-
-  - cache [@regions, params[:region]] do
+.rf-sidemenu.rf-sidemenu--sticky-full-height
+  = form_tag(request.original_url, method: :get, "data-turbo-frame" => 'job-offers') do
     .rf-input-group
-      - options = options_for_select(@regions, @region)
-      - prompt = t(".select_region")
-      - data = {placeholder: prompt, 'allow-clear': true}
-      = select_tag :region, options, include_blank: false, prompt: prompt, data: data, class: 'rf-select'
+      = text_field_tag :q, params[:q], placeholder: 'Mot-clé', class: 'rf-input'
+    %ul.rf-sidemenu__list
+      = render 'filter_categories', collection: @categories
+      = render 'filter_regions', collection: @regions
+      = render 'filter', collection: @contract_types, kind: :contract_type
+      = render 'filter', collection: @study_levels, kind: :study_level
+      = render 'filter', collection: @experience_levels, kind: :experience_level
 
-  .rf-input-group
-    = label_tag :contract_start_on, t(".contract_start_on_filter"), class: 'rf-label'
-    = date_field_tag :contract_start_on, @contract_start_on, class: 'rf-input'
-  .rf-input-group
-    = label_tag :published_at, t(".published_at_filter"), class: 'rf-label'
-    = date_field_tag :published_at, @published_at, class: 'rf-input'
-  = hidden_field_tag(:page, 1)
-  = submit_tag t('.search'), name: nil, class: 'rf-btn'
-.d-flex.justify-content-end.pt-1.invisible.spinner
-  = spinner
+    - pattern = "(?:((?:0[1-9]|1[0-9]|2[0-9])\/(?:0[1-9]|1[0-2])|(?:30)\/(?!02)(?:0[1-9]|1[0-2])|31\/(?:0[13578]|1[02]))\/(?:19|20)[0-9]{2})"
+    .rf-input-group
+      = label_tag :contract_start_on, t(".contract_start_on_filter"), class: 'rf-label'
+      = date_field_tag :contract_start_on, @contract_start_on, class: 'rf-input', placeholder: 'JJ/MM/AAAA', pattern: pattern
+    .rf-input-group
+      = label_tag :published_at, t(".published_at_filter"), class: 'rf-label'
+      = date_field_tag :published_at, @published_at, class: 'rf-input', placeholder: 'JJ/MM/AAAA', pattern: pattern, max: Date.today.strftime('%F')
+    .text-center.rf-my-1w
+      = submit_tag t('.search'), class: 'rf-btn'

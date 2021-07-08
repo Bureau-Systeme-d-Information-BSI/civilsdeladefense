@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+set -e
+
+if [[ -z ${DATABASE_URL} ]]; then
+    echo "Environement variable DATABASE_URL need to be set!"
+    exit 1
+fi
+
+if [ "$#" -eq  "0" ]; then
+    echo "Please call '$0 APP_NAME *REGION*' to run this command! REGION is optional, osc-fr1 by default"
+    exit 1
+fi
+APP_NAME=$1
+
+if [ "$#" -eq  "2" ]; then
+    SCALINGO_REGION=$2
+else
+    SCALINGO_REGION=osc-fr1
+fi
+
+if scalingo apps-info --app $APP_NAME --region $SCALINGO_REGION 2>/dev/null 1>/dev/null; then
+    echo "Congrats $APP_NAME exist"
+else
+    echo "$APP_NAME doesn't exist, maybe try another region (osc-fr1, osc-secnum-fr1)?"
+    exit 1
+fi
+
+echo "Killing rails server & console !"
+# Kill rails server
+SERVER_PID=tmp/pids/server.pid
+if test -f "$SERVER_PID"; then
+    kill `cat tmp/pids/server.pid`
+fi
+# Kill rails console
+if pgrep rails; then pkill rails; fi
+rails db:drop db:create
+
+echo "Downloading last postgre backup from Scalingo"
+ADDON_ID=`scalingo --app $APP_NAME --region $SCALINGO_REGION addons | grep postgre | awk '{ print $4; }'`
+ARCHIVE_PATH=`scalingo --app $APP_NAME --region $SCALINGO_REGION --addon $ADDON_ID backups-download --output tmp | awk 'NR==3' | awk '{ print $2; }'`
+
+tar -xzf $ARCHIVE_PATH -C tmp --strip-components 1
+echo "Restoring backup $ARCHIVE_PATH"
+
+DUMP_PATH=${ARCHIVE_PATH/.tar.gz/.pgsql}
+pg_restore --clean --if-exists --no-owner --no-privileges --no-comments --dbname $DATABASE_URL $DUMP_PATH
+
+echo "Backup restored! Running missing rails migrations"
+rails db:migrate
+
+rm $ARCHIVE_PATH
+rm $DUMP_PATH

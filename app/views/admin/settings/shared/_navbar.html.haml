@@ -25,6 +25,11 @@
       - klasses << 'active' if controller.controller_name == 'organization_defaults'
       = link_to [:admin, :settings, :organization_defaults], class: klasses do
         = t(".organization_defaults")
+    - if can? :read, FrequentlyAskedQuestion
+      - klasses = %w(list-group-item d-flex justify-content-between align-items-center)
+      - klasses << 'active' if controller.controller_name == 'frequently_asked_questions'
+      = link_to [:admin, :settings, :frequently_asked_questions], class: klasses do
+        = t(".frequently_asked_questions")
     - if can? :read, Page
       - klasses = %w(list-group-item d-flex justify-content-between align-items-center)
       - klasses << 'active' if controller.controller_name == 'pages'
@@ -62,7 +67,8 @@
       - klasses << 'active' if controller.controller_name == entry
       = link_to [:admin, :settings, entry.to_sym], class: klasses do
         = t(".#{ entry }")
-  - entries = JobOffer::SETTINGS.map{|x| x.to_s.pluralize.to_sym} + %i[benefits bops salary_ranges rejection_reasons contract_durations]
+  - entries = JobOffer::SETTINGS.map{|x| x.to_s.pluralize.to_sym}
+  - entries += %i[benefits bops salary_ranges rejection_reasons contract_durations foreign_languages foreign_language_levels]
   - if entries.any?{ |entry| can?(:manage, entry.to_s.singularize.classify.constantize) }
     .list-group-item.menu
       = t(".writing_job_offers")

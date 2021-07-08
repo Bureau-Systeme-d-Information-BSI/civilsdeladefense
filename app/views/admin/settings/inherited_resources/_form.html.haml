@@ -15,23 +15,16 @@
           = f.input :from_state, collection: states, prompt: true
           = f.input :by_default
           = f.input :notification
-        - elsif resource.is_a?(Organization)
-          = f.input :name
-          = f.input :name_business_owner
-          = f.input :administrator_email_suffix
-          = f.input :subdomain
-          = f.input :domain
-          = f.input :logo_vertical
-          = f.input :logo_horizontal
-          = f.input :logo_vertical_negative
-          = f.input :logo_horizontal_negative
-          = f.input :image_background
+          = f.input :spontaneous, as: :boolean
         - elsif resource.is_a?(Cmg)
           = f.input :email
         - elsif resource.is_a?(EmailTemplate)
           = f.input :title
           = f.input :subject
           = f.input :body, style: 'height:400px;'
+        - elsif resource.is_a?(FrequentlyAskedQuestion)
+          = f.input :name
+          = f.input :value, as: :trix_editor
         - elsif resource.is_a?(SalaryRange)
           = f.input :professional_category, collection: ProfessionalCategory.all
           = f.input :experience_level, collection: ExperienceLevel.all

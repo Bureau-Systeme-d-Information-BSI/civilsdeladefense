@@ -38,6 +38,6 @@
         %ul.list-unstyled.mb-0
           - for attachment in email.attachments
             %li
-              = link_to rails_blob_path(attachment, disposition: "attachment") do
+              = link_to attachment.url do
                 = fa_icon('file-document')
                 = attachment.filename

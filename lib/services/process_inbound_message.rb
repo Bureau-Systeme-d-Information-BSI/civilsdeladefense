@@ -13,23 +13,14 @@ class ProcessInboundMessage
   def call
     from = message[:from]
     to = message[:to]
-    Rails.logger.debug "InboundMessage treating message from #{from} to #{to}"
-    original_email_id = fetch_original_email_id(message)
+    Rails.logger.info "InboundMessage treating message from #{from} to #{to}"
+    original_email_id = fetch_original_email_id
 
     return false if original_email_id.blank?
 
     original_email = Email.find_by(id: original_email_id)
 
     return false if original_email.blank?
-
-    body = mail_body(message)
-    safe_body = Rails::Html::WhiteListSanitizer.new.sanitize(body)
-    unless safe_body.valid_encoding?
-      detection = CharlockHolmes::EncodingDetector.detect(safe_body)
-      corrected_encoding = detection[:ruby_encoding]
-      safe_body = safe_body.encode("UTF-8", corrected_encoding)
-    end
-
     return false if safe_body.blank?
 
     job_application = original_email.job_application
@@ -42,27 +33,38 @@ class ProcessInboundMessage
 
   private
 
-  def mail_body(message)
-    @mail_body ||= begin
-      body = message.multipart? ? message.parts[0].body.decoded : message.decoded
-      body
-    end
+  def safe_body
+    return @safe_body if @safe_body
+
+    body = message.multipart? ? multipart_body : message.decoded
+    @safe_body = sanitize_and_encode(body)
+    @safe_body
   end
 
-  def fetch_original_email_id(message)
-    current_organization = Organization.first
-    if current_organization.inbound_email_config_catch_all?
-      fetch_id_in_to(message)
-    elsif current_organization.inbound_email_config_hidden_headers?
-      fetch_id_in_headers(message)
-    end
+  def multipart_body
+    message.html_part&.body&.decoded || message.text_part&.body&.decoded
   end
 
-  def fetch_id_in_to(message)
+  def sanitize_and_encode(body)
+    body = Rails::Html::WhiteListSanitizer.new.sanitize(body)
+
+    unless body.valid_encoding?
+      detection = CharlockHolmes::EncodingDetector.detect(body)
+      body = body.encode("UTF-8", detection[:ruby_encoding])
+    end
+    body
+  end
+
+  def fetch_original_email_id
+    fetch_id_in_to || fetch_id_in_headers
+  end
+
+  def fetch_id_in_to
     message.to.map { |to| to.split(/\+(.*)@/)[1] }.compact.first
   end
 
-  def fetch_id_in_headers(message)
+  def fetch_id_in_headers
+    ActiveSupport::Deprecation.warn("Old method to retreive mail id")
     references = message.header["References"]
     message_id_parent = references&.value
     message_id_parent&.scan(/<(.*)@/)&.flatten&.first

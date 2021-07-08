@@ -41,25 +41,5 @@ RSpec.describe ApplicantNotificationsMailer, type: :mailer do
         expect(mail.body.encoded).to match(/vous pouvez répondre à cet email directement/)
       end
     end
-
-    context "from organization with inbound email configured with hidden_headers" do
-      before do
-        organization.inbound_email_config = :hidden_headers
-        organization.save
-      end
-
-      it "renders the headers" do
-        expect(mail.subject).to eq("New email")
-        expect(mail.to).to eq([job_application.user.email])
-        expect(mail.from).to eq(["hello@localhost"])
-        expect(mail.reply_to.first).not_to match(/\+/)
-        expect(mail.header["Message-ID"].value).to eq("<#{email.id}@localhost>")
-      end
-
-      it "renders the body" do
-        expect(mail.body.encoded).to match(/Vous recevez ce message parce que vous avez candidat/)
-        expect(mail.body.encoded).to match(/vous pouvez répondre à cet email directement/)
-      end
-    end
   end
 end

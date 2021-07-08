@@ -8,7 +8,7 @@
     .d-flex.flex-row
       .text-dark
         = administrator.full_name_with_title
-      = link_to '#', class: 'remove_record btn btn-danger mb-0 ml-auto btn-sm', title: t('buttons.delete') do
+      = link_to '#', class: 'btn btn-danger mb-0 ml-auto btn-sm', title: t('buttons.delete'), data: { action: "job-offer-management#removeRecord" } do
         = fa_icon('close')
     %small.text-muted
       %em

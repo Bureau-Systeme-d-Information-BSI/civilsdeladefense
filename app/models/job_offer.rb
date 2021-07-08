@@ -21,14 +21,17 @@ class JobOffer < ApplicationRecord
   acts_as_sequenced scope: :employer_id
 
   include PgSearch::Model
-  pg_search_scope :search_full_text, against: [
-    [:identifier, "A"],
-    [:title, "A"],
-    [:description, "B"],
-    [:location, "C"]
-  ], associated_against: SETTINGS.each_with_object({}) { |obj, memo|
-    memo[obj] = %i[name]
-  }
+  pg_search_scope :search_full_text,
+    ignoring: :accents,
+    against: {
+      identifier: "A",
+      title: "A",
+      description: "B",
+      location: "C"
+    },
+    associated_against: SETTINGS.each_with_object({}) { |obj, memo|
+      memo[obj] = %i[name]
+    }
 
   ## Relationships
   belongs_to :owner, class_name: "Administrator"
@@ -38,8 +41,10 @@ class JobOffer < ApplicationRecord
     belongs_to setting
   end
   belongs_to :contract_duration, optional: true
-  belongs_to :benefit, optional: true
   belongs_to :bop, optional: true
+
+  has_many :benefit_job_offers
+  has_many :benefits, through: :benefit_job_offers
 
   has_many :job_applications, dependent: :destroy
   has_many :job_offer_actors, inverse_of: :job_offer, dependent: :destroy
@@ -60,6 +65,8 @@ class JobOffer < ApplicationRecord
   validates :contract_duration_id, presence: true, if: -> { contract_type&.duration }
   validates :contract_duration_id, absence: true, unless: -> { contract_type&.duration }
   validates :title, format: {with: %r{\A.*F/H\z}, message: :f_h}
+  validates :title, format: {without: %r{\A.*\(.*\z}, message: :brackets}
+  validates :title, format: {without: %r{\A.*\).*\z}, message: :brackets}
 
   with_options if: -> { published? } do
     validates :title, length: {maximum: 70}
@@ -74,6 +81,7 @@ class JobOffer < ApplicationRecord
   scope :admin_index, -> { includes(:bop, :contract_type, :employer, :job_offer_actors) }
   scope :admin_index_active, -> { admin_index.where.not(state: :archived) }
   scope :admin_index_archived, -> { admin_index.archived }
+  scope :admin_index_featured, -> { admin_index.where(featured: true) }
   scope :publicly_visible, -> { where(state: :published) }
   scope :search_import, -> { includes(*SETTINGS) }
 
@@ -129,6 +137,16 @@ class JobOffer < ApplicationRecord
     event :unarchive do
       transitions from: %i[archived], to: :draft
     end
+  end
+
+  # Return an hash where keys are regions and values are counties inside it
+  # All regions and counties got job_offers associated
+  def self.regions
+    job_with_regions_and_county = unscoped.where.not(region: ["", nil]).where.not(county: ["", nil])
+    hash_region_county = job_with_regions_and_county.select(:region, :county).distinct.pluck(:region, :county)
+    hash_region_county.group_by { |a, b| a }.each_with_object({}) { |(key, values), hash|
+      hash[key] = values.flatten - [key]
+    }
   end
 
   def delay_before_publishing_over?
@@ -232,6 +250,25 @@ class JobOffer < ApplicationRecord
       end
     end
   end
+
+  def transfer(email, current_administrator)
+    administrator = Administrator.find_by(email: email.downcase) || Administrator.new(email: email)
+    administrator.inviter ||= current_administrator
+    administrator.organization = current_administrator.organization
+    administrator.save!
+    job_offer_actors.where(administrator: owner).update_all(administrator_id: administrator.id)
+    update!(owner: administrator)
+  end
+
+  def benefit
+    benefits.pluck(:name).join(", ")
+  end
+
+  def send_to_users(users)
+    users.each do |user|
+      ApplicantNotificationsMailer.send_job_offer(user, self).deliver_now
+    end
+  end
 end
 
 # == Schema Information
@@ -256,6 +293,7 @@ end
 #  duration_contract                                :string
 #  estimate_annual_salary_gross                     :string
 #  estimate_monthly_salary_net                      :string
+#  featured                                         :boolean          default(FALSE)
 #  identifier                                       :string
 #  initial_job_applications_count                   :integer          default(0), not null
 #  is_remote_possible                               :boolean
@@ -274,6 +312,7 @@ end
 #  rejected_job_applications_count                  :integer          default(0), not null
 #  required_profile                                 :text
 #  slug                                             :string           not null
+#  spontaneous                                      :boolean          default(FALSE)
 #  state                                            :integer
 #  suspended_at                                     :datetime
 #  title                                            :string

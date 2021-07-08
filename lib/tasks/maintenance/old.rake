@@ -3,9 +3,7 @@ namespace :maintenance do
     hsh = {
       name: "Civils de la Défense",
       business_owner_name: "le Ministère des Armées",
-      administrator_email_suffix: "@intradef.gouv.fr",
-      subdomain: "cvd",
-      domain: "civilsdeladefense.fabnum.fr"
+      administrator_email_suffix: "@intradef.gouv.fr"
     }
     organization = Organization.create!(hsh)
     Administrator.update_all(organization_id: organization.id)

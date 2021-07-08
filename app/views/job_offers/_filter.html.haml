@@ -1,9 +1,13 @@
 - filter_name = "#{kind}_id"
-- id = params[filter_name]
-- cache [collection, id] do
-  .rf-input-group
-    - name_tag = local_assigns[:name] || "name"
-    - options = options_from_collection_for_select(collection, "id", name_tag, id)
-    - prompt = t(".select_#{kind}")
-    - data = {placeholder: prompt, 'allow-clear': true}
-    = select_tag filter_name, options, include_blank: false, prompt: prompt, data: data, class: 'rf-select'
+- ids = params.dig(:search, filter_name) || []
+- cache [collection, ids] do
+  %li.rf-sidemenu__item
+    - data = {controller: 'rf-accordions-management', action: 'click->rf-accordions-management#collapse'}
+    - options = {type: "button", aria: {controls: "rf-accordion-#{kind}", expanded: false}, data: data}
+    %button.rf-sidemenu__btn{options}= t(".select_#{kind}")
+    .rf-collapse{id: "rf-accordion-#{kind}"}
+      %ul.rf-sidemenu__list.rf-my-1w
+        = collection_check_boxes(:job_offers, filter_name, collection, :id, :name, include_hidden: false) do |b|
+          .rf-checkbox-group
+            = b.check_box(checked: false)
+            = b.label

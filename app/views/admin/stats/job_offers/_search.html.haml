@@ -1,0 +1,22 @@
+.sticky-top.py-1
+  .row.mt-4.mb-3
+    .col-12
+      - url = [:admin, :stats, @q]
+      = search_form_for url, class: 'auto-submit' do |f|
+        .form-group.input-group.input-search
+          .input-group-prepend
+            %span.input-group-text.bg-white
+              = fa_icon('magnify')
+          = text_field_tag :s, params[:s]
+        .row.mt-5
+          .col-12.col-sm-3
+            = render partial: 'filter_employer'
+          .col-12.col-sm-3
+            = render partial: 'filter_category'
+          .col-12.col-sm-3
+            = render partial: 'filter_contract_type'
+          .col-12.col-sm-3
+            = render partial: 'filter_bop'
+          .col-12.col-sm-3
+            = render partial: 'filter_department'
+        = submit_tag 'Rechercher', name: nil, class: 'd-none'

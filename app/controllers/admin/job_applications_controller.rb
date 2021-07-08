@@ -43,8 +43,6 @@ class Admin::JobApplicationsController < Admin::BaseController
   def update
     respond_to do |format|
       if @job_application.update(job_application_params)
-        # profile = @job_application.user.profile
-        # profile&.datalake_to_job_application_profiles!
         format.html { redirect_to [:admin, @job_application], notice: t(".success") }
         format.js do
           @notification = t(".success")
@@ -71,7 +69,7 @@ class Admin::JobApplicationsController < Admin::BaseController
 
     current_max = @job_offer.current_most_advanced_job_applications_state
     if @job_offer.most_advanced_job_applications_state_before_type_cast != current_max
-      @job_offer.update_column(:most_advanced_job_applications_state, current_max)
+      @job_offer.update(most_advanced_job_applications_state: current_max)
     end
 
     respond_to do |format|

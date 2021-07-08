@@ -1,25 +1,31 @@
 - @page_title = t('.title')
+- @active = controller.action_name == "index"
 .card
   .card-header
-    .card-title.d-md-flex.align-items-center
+    .card-title.align-items-center
+      .float-right
+        = link_to export_admin_settings_administrators_path(@permitted_params.merge(active: @active)), target: "_blank", class: 'btn btn-primary btn-raised ml-auto mt-2 mt-md-0 mb-0 mr-3' do
+          = fa_icon 'arrow-down', class: 'mr-1'
+          = Exporter
+        = link_to [:new, :admin, :settings, :administrator], class: 'btn btn-primary btn-raised ml-auto mt-2 mt-md-0 mb-0' do
+          = fa_icon 'plus', class: 'mr-1'
+          = t('.add')
       = t('.card_title', count: @administrators_count)
-      = link_to [:new, :admin, :settings, :administrator], class: 'btn btn-primary btn-raised ml-auto mt-2 mt-md-0 mb-0' do
-        = fa_icon 'plus', class: 'mr-1'
-        = t('.add')
   .card-body
     .d-flex
       %ul.nav.nav-tabs{role: :tablist}
         %li.nav-item.mr-3
           - klasses = %i(nav-link text-uppercase my-0)
-          - klasses << :active if controller.action_name == "index"
+          - klasses << :active if @active
           - url = [:admin, :settings, :root]
           = link_to t('.account_active', count: @administrators_active.size), url, class: klasses
         %li.nav-item.mr-3
           - klasses = %i(nav-link text-uppercase my-0)
-          - klasses << :active if controller.action_name == "inactive"
+          - klasses << :active unless @active
           - url = [:inactive, :admin, :settings, :administrators]
           = link_to t('.account_inactive', count: @administrators_inactive.size), url, class: klasses
-  = search_form_for [:admin, :settings, @q], wrapper: :inline_form, html: { class: 'form-inline auto-submit' }, builder: SimpleForm::FormBuilder do |f|
+  - url = @active ? [:admin, :settings, @q] : [:inactive, :admin, :settings, @q]
+  = search_form_for url, wrapper: :inline_form, html: { class: 'form-inline auto-submit' }, builder: SimpleForm::FormBuilder do |f|
     %table.table.table-hover.mb-0.mt-3
       %thead
         %tr

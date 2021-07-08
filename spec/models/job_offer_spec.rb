@@ -192,29 +192,29 @@ RSpec.describe JobOffer, type: :model do
   describe "validate" do
     let(:job_offer) { build(:job_offer, state: :published, description: description) }
     describe "title" do
-      # context "with ( in title and no F/H at the end" do
-      #   let(:job_offer) { build(:job_offer, title: "(") }
+      context "with ( in title and no F/H at the end" do
+        let(:job_offer) { build(:job_offer, title: "(") }
 
-      #   it "is not valid" do
-      #     expect(job_offer).to_not be_valid
-      #   end
-      # end
+        it "is not valid" do
+          expect(job_offer).to_not be_valid
+        end
+      end
 
-      # context "with ( in title and F/H at the end" do
-      #   let(:job_offer) { build(:job_offer, title: "( F/H") }
+      context "with ( in title and F/H at the end" do
+        let(:job_offer) { build(:job_offer, title: "( F/H") }
 
-      #   it "is not valid" do
-      #     expect(job_offer).to_not be_valid
-      #   end
-      # end
+        it "is not valid" do
+          expect(job_offer).to_not be_valid
+        end
+      end
 
-      # context "without ( in title and with F/H at the end" do
-      #   let(:job_offer) { build(:job_offer, title: "no parenthesis F/H") }
+      context "without ( in title and with F/H at the end" do
+        let(:job_offer) { build(:job_offer, title: "no parenthesis F/H") }
 
-      #   it "is valid" do
-      #     expect(job_offer).to be_valid
-      #   end
-      # end
+        it "is valid" do
+          expect(job_offer).to be_valid
+        end
+      end
     end
 
     describe "description" do
@@ -267,6 +267,7 @@ end
 #  duration_contract                                :string
 #  estimate_annual_salary_gross                     :string
 #  estimate_monthly_salary_net                      :string
+#  featured                                         :boolean          default(FALSE)
 #  identifier                                       :string
 #  initial_job_applications_count                   :integer          default(0), not null
 #  is_remote_possible                               :boolean
@@ -285,6 +286,7 @@ end
 #  rejected_job_applications_count                  :integer          default(0), not null
 #  required_profile                                 :text
 #  slug                                             :string           not null
+#  spontaneous                                      :boolean          default(FALSE)
 #  state                                            :integer
 #  suspended_at                                     :datetime
 #  title                                            :string

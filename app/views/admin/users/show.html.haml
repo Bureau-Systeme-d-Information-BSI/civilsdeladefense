@@ -1,5 +1,3 @@
--# profile = @user.profile || @user.build_profile
-- last_job_application = @user.last_job_application
 - tab_active = job_applications_tab_active
 - if @preferred_users_list
   - url_opts = request.referrer ? 'javascript:history.back()' : [:admin, @preferred_users_list]
@@ -8,12 +6,17 @@
 .container-fluid
   = render partial: 'head', locals: {user: @user}
   .row.bg-card-bg
-    .col-12.col-md-8.border-right{class: job_application_modal_section_classes}
-      .tab-content
-        .tab-pane.fade.active.show
-          - if (job_applications = @user.job_applications).any?
-            = render partial: "/admin/job_applications/user_job_applications", locals: {job_applications: job_applications, narrow: true}
-
+    .col-12.col-md-8
+      - if @user.last_job_application
+        .border-right{class: job_application_modal_section_classes}
+          .tab-content
+            .tab-pane.fade.active.show
+              = render template: '/admin/job_applications/cvlm', locals: {job_application: @user.last_job_application, only_first: true}
+      .border-right{class: job_application_modal_section_classes}
+        .tab-content
+          .tab-pane.fade.active.show
+            - if @user.job_applications.any?
+              = render partial: "/admin/job_applications/user_job_applications", locals: {job_applications:  @user.job_applications, narrow: true}
     .col-12.col-md-4{class: job_application_modal_section_classes}
       - unless @user.new_record?
         = render partial: 'actions', locals: { user: @user }

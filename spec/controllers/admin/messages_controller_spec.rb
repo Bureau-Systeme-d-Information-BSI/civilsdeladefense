@@ -28,39 +28,32 @@ require "rails_helper"
 RSpec.describe Admin::MessagesController, type: :controller do
   login_admin
 
-  # This should return the minimal set of attributes required to create a valid
-  # Message. As you add validations to Admin::Message, be sure to
-  # adjust the attributes here as well.
+  let(:job_application) { create(:job_application) }
   let(:valid_attributes) do
-    skip("Add a hash of attributes valid for your model")
+    attributes_for(:message).merge(job_application_id: job_application.id)
   end
 
   let(:invalid_attributes) do
-    skip("Add a hash of attributes invalid for your model")
+    attributes_for(:message, body: nil)
   end
-
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # Admin::MessagesController. Be sure to keep this updated too.
-  let(:valid_session) { {} }
 
   describe "POST #create" do
     context "with valid params" do
       it "creates a new Admin::Message" do
         expect {
-          post :create, params: {admin_message: valid_attributes}, session: valid_session
+          post :create, params: {message: valid_attributes, job_application_id: job_application.id}
         }.to change(Message, :count).by(1)
       end
 
-      it "redirects to the created admin_message" do
-        post :create, params: {admin_message: valid_attributes}, session: valid_session
-        expect(response).to redirect_to(Message.last)
+      it "redirects to the created message" do
+        post :create, params: {message: valid_attributes, job_application_id: job_application.id}
+        expect(response).to redirect_to([:admin, job_application])
       end
     end
 
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'new' template)" do
-        post :create, params: {admin_message: invalid_attributes}, session: valid_session
+        post :create, params: {message: invalid_attributes, job_application_id: job_application.id}
         expect(response).to be_successful
       end
     end

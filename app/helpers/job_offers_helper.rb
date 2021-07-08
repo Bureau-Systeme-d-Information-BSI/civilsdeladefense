@@ -9,7 +9,9 @@ module JobOffersHelper
       study_level: "focus-line",
       category: "building-line",
       experience_level: "focus-3-line",
-      salary: "money-euro-box-line"
+      salary: "money-euro-box-line",
+      benefits: "money-euro-box-line",
+      is_remote_possible: "map-pin-line"
     }[attribute]
   end
 
@@ -25,6 +27,10 @@ module JobOffersHelper
       job_offer.send(attribute).name
     when :salary
       job_offer_salary_display(job_offer)
+    when :benefits
+      job_offer_benefits_display(job_offer)
+    when :is_remote_possible
+      job_offer_remote_display(job_offer)
     end
   end
 
@@ -44,7 +50,22 @@ module JobOffersHelper
     res = []
     res << "#{job_offer.estimate_monthly_salary_net} mensuel net"
     res << "#{job_offer.estimate_annual_salary_gross} annuel brut (selon expérience)"
-    res << "#{t(".benefit")} : #{job_offer.benefit.name}" if job_offer.benefit.present?
     res.join("<br/>").html_safe
+  end
+
+  def job_offer_benefits_display(job_offer)
+    if job_offer.benefits.present?
+      job_offer.benefits.pluck(:name).join("<br/>").html_safe
+    else
+      "-"
+    end
+  end
+
+  def job_offer_remote_display(job_offer)
+    if job_offer.is_remote_possible
+      "Oui"
+    else
+      "Non"
+    end
   end
 end

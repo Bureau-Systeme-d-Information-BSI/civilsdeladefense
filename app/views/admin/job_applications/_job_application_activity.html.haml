@@ -17,7 +17,7 @@
     - if @job_application.rejected_state?
       .my-3
       - url = [:admin, @job_application]
-      = simple_form_for url, remote: true, wrapper: :inline_form, html: { class: 'form-inline auto-submit w-100 px-1 py-1', data: {flash: true}} do |f|
+      = simple_form_for url, method: :patch, remote: true, wrapper: :inline_form, html: { class: 'form-inline auto-submit w-100 px-1 py-1', data: {flash: true}} do |f|
         = f.input :rejection_reason_id, collection: RejectionReason.all, label: false, prompt: :translate, wrapper: :custom_multi_select_full_wide
 
     .font-weight-bold.text-secondary.mb-3.mt-4
@@ -43,7 +43,8 @@
                 - if audit.version == 1 && audit.auditable_type == 'JobApplication'
                   = t('.activities.creation_html', name: full_name)
                 - elsif audited_changes.key?('state')
-                  - state_name = audited_changes['state'].last
+                  - state_index = audited_changes['state'].last
+                  - state_name = JobApplication.states.find { |k, v| v == state_index }&.first
                   - state_name_i18n = JobApplication.human_attribute_name("state/#{state_name}")
                   = t('.activities.change_state_html', admin_name: whodunnit, name: full_name, state_name: state_name_i18n)
                 - elsif audit.auditable_type == "Message"

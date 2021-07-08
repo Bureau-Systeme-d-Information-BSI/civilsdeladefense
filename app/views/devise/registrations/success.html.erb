@@ -1,0 +1,15 @@
+<h2>Merci d’avoir soumis votre candidature !</h2>
+
+<p>Votre demande a bien été prise en compte.</p>
+
+<p>Un e-mail de confirmation a été envoyé à l’adresse <%= @email %> 📩</p>
+
+<p>Afin de finaliser votre inscription, veuillez cliquer sur le lien envoyé par e-mail. Vous pourrez ensuite accéder à votre espace candidat et suivre l’avancement de votre candidature.</p>
+
+<p>Pour votre information, un délai est parfois nécessaire avant la réception de l’e-mail de confirmation. Il arrive également que l’e-mail atterrisse dans vos courriers indésirables/spams.</p>
+
+<% if @contact_page %>
+  <p>En cas de non réception ou pour toute autre question, <%= link_to "contactez notre équipe !", page_path(@contact_page) %></p>
+<% else %>
+  <p>En cas de non réception ou pour toute autre question, contactez notre équipe !</p>
+<% end %>

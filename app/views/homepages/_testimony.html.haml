@@ -1,4 +1,4 @@
-- if current_organization.testimony_title
+- if current_organization.testimony_title.present?
   - style = current_organization.testimony_logo.present? ? "background-image: linear-gradient(var(--bg-image), var(--bg-image)), url(#{ current_organization.testimony_logo.url });" : nil
   %section.rf-bg--alt-2.rf-bg--hero-image.d-flex.align-items-center.rf-py-9w{style: style}
     .rf-container
@@ -9,4 +9,4 @@
         .rf-text--lead.text-uppercase.rf-mb-3w
           = current_organization.testimony_subtitle
       .rf-grid-row.rf-grid-row--center
-        = link_to 'Découvrir son histoire', current_organization.testimony_url, class: 'rf-btn', target: "_blank"
+        = link_to 'Voir plus', current_organization.testimony_url, class: 'rf-btn', target: "_blank"

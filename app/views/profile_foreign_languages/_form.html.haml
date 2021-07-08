@@ -1,0 +1,31 @@
+%div{ data: { controller: "duplicator"}}
+  .rf-grid-row.fr-grid-row--center.d-none{ data: { duplicator: { target: :duplicated }}}
+    .rf-col-11
+      .rf-grid-row.rf-grid-row--gutters
+        .rf-col-6
+          - name = "job_application[profile_attributes][profile_foreign_languages_attributes][index][foreign_language_id]"
+          = label_tag name, t("simple_form.labels.defaults.foreign_language")
+          = select_tag name, options_from_collection_for_select(ForeignLanguage.all, "id", "name"), class: "rf-select"
+        .rf-col-6
+          - name = "job_application[profile_attributes][profile_foreign_languages_attributes][index][foreign_language_level_id]"
+          = label_tag name, t("simple_form.labels.defaults.foreign_language_level")
+          = select_tag name, options_from_collection_for_select(ForeignLanguageLevel.all, "id", "name"), class: "rf-select"
+    .rf-col-1.text-center.rf-mt-4w
+      %button.blank_button.rf-fi-delete-line{data: { action: 'click->duplicator#remove' }}
+  %div{ data: { duplicator: { target: :root }}}
+    - profile_form.object.profile_foreign_languages.each_with_index do |profile_foreign_language, index|
+      .rf-grid-row.fr-grid-row--center{ data: { duplicator: { target: :element }}}
+        .rf-col-11
+          .rf-grid-row.rf-grid-row--gutters
+            .rf-col-6
+              - name = "job_application[profile_attributes][profile_foreign_languages_attributes][#{index}][foreign_language_id]"
+              = label_tag name, t("simple_form.labels.defaults.foreign_language")
+              = select_tag name, options_from_collection_for_select(ForeignLanguage.all, "id", "name", selected: profile_foreign_language.foreign_language_id), class: "rf-select"
+            .rf-col-6
+              - name = "job_application[profile_attributes][profile_foreign_languages_attributes][#{index}][foreign_language_level_id]"
+              = label_tag name, t("simple_form.labels.defaults.foreign_language_level")
+              = select_tag name, options_from_collection_for_select(ForeignLanguageLevel.all, "id", "name", selected: profile_foreign_language.foreign_language_level_id), class: "rf-select"
+        .rf-col-1.text-center.rf-mt-4w
+          %button.blank_button.rf-fi-delete-line{data: { action: 'click->duplicator#remove' }}
+
+  = button_tag("Ajouter une langue étrangère", type: :button, class: 'rf-btn rf-mb-3w', data: { action: 'click->duplicator#duplicate' })

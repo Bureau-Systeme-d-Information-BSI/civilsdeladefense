@@ -147,6 +147,10 @@ label {
   height: 1.5rem;
   width: auto;
 }
+.avatar-xl {
+  height: 10rem;
+  width: auto;
+}
 
 h1,
 h2 {
@@ -275,4 +279,75 @@ h2 {
 
 .text-justify {
   text-align: justify;
+}
+
+.rf-nav__item--active > .rf-link {
+  pointer-events: initial;
+}
+
+.job-offer-index {
+  input[type="submit"] {
+    position: sticky;
+  }
+
+  .rf-accordion .rf-collapse--expanded {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+  .side {
+    width: initial;
+    padding: 0;
+  }
+  .rf-sidemenu__list {
+    .rf-sidemenu__list {
+      margin: 0 0.5rem;
+      .rf-sidemenu__list .rf-label {
+        font-size: 0.95rem;
+        padding: 0.5rem 0;
+      }
+    }
+  }
+}
+.blank_button {
+  background: none;
+  color: inherit;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+.highlight {
+  border: 2px dashed purple;
+  margin: -2px;
+}
+
+.scroll {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  padding: 1rem 1rem;
+  position: fixed;
+  bottom: 1.2rem;
+  right: 1.5rem;
+}
+
+.social-links {
+  float: right;
+  svg {
+    top: 0;
+  }
+  a {
+    box-shadow: none !important;
+  }
+  a::after {
+    content: none !important;
+  }
+  svg {
+    fill: var(--bf500);
+  }
+  svg:hover {
+    fill: rgba(0, 0, 246);
+  }
 }

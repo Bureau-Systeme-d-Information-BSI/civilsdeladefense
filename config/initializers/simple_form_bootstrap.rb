@@ -319,6 +319,20 @@ SimpleForm.setup do |config|
     b.use :hint, wrap_with: {tag: "small", class: "form-text text-muted rf-hint-text"}
   end
 
+  config.wrappers :basic_file, tag: "div", class: "form-group rf-input-group", error_class: "form-group-invalid rf-input-group--error", valid_class: "form-group-valid" do |b|
+    b.use :html5
+    b.use :placeholder
+    b.optional :maxlength
+    b.optional :minlength
+    b.optional :readonly
+    b.use :label, class: "form-control-label rf-label"
+    b.wrapper :basic_file_wrapper, tag: "div", class: "basic-file rf-mt-1w" do |ba|
+      ba.use :input, error_class: "is-invalid rf-input--error", valid_class: "is-valid rf-input--valid"
+      ba.use :error, wrap_with: {tag: "div", class: "invalid-feedback rf-error-text"}
+    end
+    b.use :hint, wrap_with: {tag: "small", class: "form-text text-muted rf-hint-text"}
+  end
+
   # custom file input
   config.wrappers :custom_file, tag: "div", class: "form-group rf-input-group", error_class: "form-group-invalid rf-input-group--error", valid_class: "form-group-valid" do |b|
     b.use :html5
@@ -329,7 +343,6 @@ SimpleForm.setup do |config|
     b.use :label, class: "form-control-label rf-label"
     b.wrapper :custom_file_wrapper, tag: "div", class: "custom-file rf-mt-1w" do |ba|
       ba.use :input, class: "custom-file-input", error_class: "is-invalid rf-input--error", valid_class: "is-valid rf-input--valid"
-      ba.use :label, class: "custom-file-label"
       ba.use :error, wrap_with: {tag: "div", class: "invalid-feedback rf-error-text"}
     end
     b.use :hint, wrap_with: {tag: "small", class: "form-text text-muted rf-hint-text"}
@@ -343,23 +356,8 @@ SimpleForm.setup do |config|
     b.optional :minlength
     b.optional :readonly
     b.wrapper :custom_file_wrapper, tag: "div", class: "custom-file" do |ba|
-      ba.use :label, class: "rf-label"
       ba.use :input, class: "custom-file-input", error_class: "is-invalid rf-input--error", valid_class: "is-valid rf-input--valid"
-      ba.use :error, wrap_with: {tag: "div", class: "invalid-feedback rf-error-text"}
-    end
-    b.use :hint, wrap_with: {tag: "small", class: "form-text text-muted rf-hint-text"}
-  end
-
-  # custom file input
-  config.wrappers :custom_file_with_dropzone, tag: "div", class: "form-group drop-area", error_class: "form-group-invalid rf-input-group--error", valid_class: "form-group-valid" do |b|
-    b.use :html5
-    b.use :placeholder
-    b.optional :maxlength
-    b.optional :minlength
-    b.optional :readonly
-    b.wrapper :custom_file_wrapper, tag: "div", class: "custom-file-drop-area" do |ba|
-      ba.use :input, error_class: "is-invalid rf-input--error", valid_class: "is-valid rf-input--valid"
-      ba.use :label, class: "rf-label rf-card__link rf-mt-1w d-inline-block text-truncate"
+      ba.use :label, class: "custom-file-label text-truncate"
       ba.use :error, wrap_with: {tag: "div", class: "invalid-feedback rf-error-text"}
     end
     b.use :hint, wrap_with: {tag: "small", class: "form-text text-muted rf-hint-text"}
@@ -458,23 +456,11 @@ SimpleForm.setup do |config|
     check_boxes: :vertical_collection,
     date: :custom_multi_select,
     datetime: :custom_multi_select,
-    file: :custom_file,
+    file: :basic_file,
     radio_buttons: :vertical_collection_inline,
     range: :vertical_range,
     time: :custom_multi_select,
     select: :custom_multi_select,
     country: :custom_multi_select
   }
-
-  # enable custom form wrappers
-  # config.wrapper_mappings = {
-  #   boolean:       :custom_boolean,
-  #   check_boxes:   :custom_collection,
-  #   date:          :custom_multi_select,
-  #   datetime:      :custom_multi_select,
-  #   file:          :custom_file,
-  #   radio_buttons: :custom_collection,
-  #   range:         :custom_range,
-  #   time:          :custom_multi_select
-  # }
 end

@@ -1,25 +1,17 @@
 # frozen_string_literal: true
 
 class Admin::JobOffersController < Admin::BaseController
-  before_action :set_job_offers, only: %i[index archived]
+  before_action :set_job_offers, only: %i[index archived featured]
   layout :choose_layout
 
   include JobOfferStateActions
-  include JobOfferStatisticsActions
+  include JobOfferStats
 
   # GET /admin/job_offers
   # GET /admin/job_offers.json
   def index
     respond_to do |format|
       format.html do
-        @job_offers_unfiltered = action_name == "index" ? @job_offers_active : @job_offers_archived
-        job_offers_nearly_filtered = @job_offers_unfiltered
-        if params[:s].present?
-          job_offers_nearly_filtered = job_offers_nearly_filtered.search_full_text(params[:s])
-            .unscope(:order)
-        end
-        @q = job_offers_nearly_filtered.ransack(params[:q])
-        @job_offers_filtered = @q.result(distinct: true).page(params[:page]).per_page(20)
         render action: :index
       end
       format.js do
@@ -29,6 +21,45 @@ class Admin::JobOffersController < Admin::BaseController
   end
 
   alias_method :archived, :index
+
+  def featured
+  end
+
+  def feature
+    job_offer = if params[:job_offer_identifier]
+      JobOffer.find_by(identifier: params[:job_offer_identifier])
+    else
+      JobOffer.find(params[:id])
+    end
+    if job_offer&.update(featured: true)
+      redirect_back(fallback_location: %i[admin job_offers], notice: t(".success"))
+    else
+      redirect_back(fallback_location: %i[admin job_offers], notice: t(".error"))
+    end
+  end
+
+  def unfeature
+    job_offer = JobOffer.find(params[:id])
+    if job_offer.update(featured: false)
+      redirect_back(fallback_location: %i[admin job_offers], notice: t(".success"))
+    else
+      render json: job_offer.errors, status: :unprocessable_entity
+    end
+  end
+
+  def export
+    job_offer = JobOffer.find(params[:id])
+    file = Exporter::JobOffer.new({stats: export_data, job_offer: job_offer}, current_administrator).generate
+
+    send_data file.read, filename: "#{Time.zone.today}_e-recrutement_offre.xlsx"
+  end
+
+  def exports
+    job_offers = JobOffer.where(id: params[:job_offer_ids])
+    file = Exporter::JobOffers.new(job_offers, current_administrator).generate
+
+    send_data file.read, filename: "#{Time.zone.today}_e-recrutement_offres.xlsx"
+  end
 
   # GET /admin/job_offers/1
   # GET /admin/job_offers/1.json
@@ -104,6 +135,40 @@ class Admin::JobOffersController < Admin::BaseController
     end
   end
 
+  # GET /admin/job_offers/1/new_transfer
+  # GET /admin/job_offers/1/new_transfer.json
+  def new_transfer
+  end
+
+  # POST /admin/job_offers/1/transfer
+  # POST /admin/job_offers/1/transfer.json
+  def transfer
+    @job_offer.transfer(params[:transfer_email], current_administrator)
+    respond_to do |format|
+      format.html { redirect_to %i[admin job_offers], notice: t(".success") }
+    end
+  end
+
+  # GET /admin/job_offers/1/new_send
+  # GET /admin/job_offers/1/new_send.json
+  def new_send
+  end
+
+  # POST /admin/job_offers/1/send_to_list
+  # POST /admin/job_offers/1/send_to_list.json
+  def send_to_list
+    preferred_users_lists = PreferredUsersList.where(
+      id: params[:preferred_users_lists]
+    )
+    preferred_users_lists.each do |list|
+      @job_offer.send_to_users(list.users)
+    end
+
+    respond_to do |format|
+      format.html { redirect_to %i[admin job_offers], notice: t(".success") }
+    end
+  end
+
   # DELETE /admin/job_offers/1
   # DELETE /admin/job_offers/1.json
   def destroy
@@ -127,7 +192,23 @@ class Admin::JobOffersController < Admin::BaseController
   def set_job_offers
     @employers = Employer.all
     @job_offers_active = @job_offers.admin_index_active
+    @job_offers_featured = @job_offers.admin_index_featured
     @job_offers_archived = @job_offers.admin_index_archived
+    @job_offers_unfiltered = if action_name == "featured"
+      @job_offers_featured
+    elsif action_name == "archived"
+      @job_offers_archived
+    else
+      @job_offers_active
+    end
+    job_offers_nearly_filtered = @job_offers_unfiltered
+    if params[:s].present?
+      job_offers_nearly_filtered = job_offers_nearly_filtered.search_full_text(params[:s])
+        .unscope(:order)
+    end
+    @q = job_offers_nearly_filtered.ransack(params[:q])
+    @job_offers_filtered_unpaged = @q.result(distinct: true)
+    @job_offers_filtered = @job_offers_filtered_unpaged.page(params[:page]).per_page(20)
   end
 
   # Use callbacks to share common setup or constraints between actions.
@@ -135,17 +216,20 @@ class Admin::JobOffersController < Admin::BaseController
     redirect_to [:admin, @job_offer], status: :moved_permanently if params[:id] != @job_offer.slug
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
   def job_offer_params
     params.require(:job_offer).permit(permitted_fields)
   end
 
   def permitted_fields
-    fields = %i[title description category_id professional_category_id employer_id required_profile
-      organization_description recruitment_process contract_type_id contract_duration_id contract_start_on
+    fields = %i[
+      title description category_id professional_category_id employer_id required_profile
+      recruitment_process contract_type_id contract_duration_id contract_start_on
       is_remote_possible available_immediately study_level_id experience_level_id bop_id
-      sector_id estimate_monthly_salary_net estimate_annual_salary_gross benefit_id
-      location city county county_code country_code postcode region]
+      sector_id estimate_monthly_salary_net estimate_annual_salary_gross
+      location city county county_code country_code postcode region spontaneous
+      organization_description
+    ]
+    fields << {benefit_ids: []}
     job_offer_actors_attributes = %i[id role _destroy]
     job_offer_actors_attributes << {administrator_attributes: %i[id email _destroy]}
     fields << {job_offer_actors_attributes: job_offer_actors_attributes}

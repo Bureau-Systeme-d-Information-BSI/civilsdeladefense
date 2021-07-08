@@ -14,16 +14,30 @@ class User < ApplicationRecord
   include DeletionFlow
   include PgSearch::Model
   pg_search_scope :search_full_text,
-    against: %i[first_name last_name]
+    against: [:first_name, :last_name],
+    ignoring: :accents,
+    associated_against: {
+      job_offers: {
+        identifier: "A",
+        title: "A",
+        description: "B",
+        location: "C"
+      }
+    }
 
   belongs_to :organization
-  belongs_to :last_job_application, class_name: "JobApplication", optional: true
   has_many :omniauth_informations
 
   has_many :job_applications, -> { order(created_at: :desc) }, dependent: :nullify
+  has_many :job_application_files, through: :job_applications
   has_many :job_offers, through: :job_applications
   has_many :preferred_users, dependent: :destroy
   has_many :preferred_users_lists, through: :preferred_users
+
+  has_many :department_users, dependent: :destroy
+  has_many :departments, through: :department_users
+
+  accepts_nested_attributes_for :department_users, reject_if: :all_blank
 
   mount_uploader :photo, PhotoUploader, mount_on: :photo_file_name
   validates :photo,
@@ -36,7 +50,29 @@ class User < ApplicationRecord
 
   default_scope { order(created_at: :desc) }
 
-  attr_accessor :is_deleted
+  scope :concerned, ->(administrator) {
+    joins(job_offers: [:administrators, :owner]).where(administrators: {id: administrator.id}).or(
+      joins(job_offers: [:administrators, :owner]).where(owners_job_offers: {id: administrator.id})
+    )
+  }
+
+  scope :by_category, ->(*category_ids) {
+    joins(job_applications: :job_offer).where(
+      job_applications: {category_id: category_ids}
+    ).or(
+      joins(job_applications: :job_offer).where(
+        job_applications: {job_offers: {category_id: category_ids}}
+      )
+    )
+  }
+
+  attr_accessor :is_deleted, :delete_photo
+
+  before_update :destroy_photo
+
+  def self.ransackable_scopes(auth_object = nil)
+    %i[concerned by_category]
+  end
 
   def full_name
     if is_deleted
@@ -74,10 +110,18 @@ class User < ApplicationRecord
     end
   end
 
+  def last_job_application
+    job_applications.order(created_at: :desc).first
+  end
+
   private
 
   def password_required?
     !link_to_omniauth? && super
+  end
+
+  def destroy_photo
+    remove_photo! if delete_photo
   end
 end
 
@@ -109,6 +153,7 @@ end
 #  photo_file_size                  :bigint
 #  photo_is_validated               :integer          default(0)
 #  photo_updated_at                 :datetime
+#  receive_job_offer_mails          :boolean          default(FALSE)
 #  remember_created_at              :datetime
 #  reset_password_sent_at           :datetime
 #  reset_password_token             :string
@@ -120,19 +165,13 @@ end
 #  website_url                      :string
 #  created_at                       :datetime         not null
 #  updated_at                       :datetime         not null
-#  last_job_application_id          :uuid
 #  organization_id                  :uuid
 #
 # Indexes
 #
-#  index_users_on_confirmation_token       (confirmation_token) UNIQUE
-#  index_users_on_email                    (email) UNIQUE
-#  index_users_on_last_job_application_id  (last_job_application_id)
-#  index_users_on_organization_id          (organization_id)
-#  index_users_on_reset_password_token     (reset_password_token) UNIQUE
-#  index_users_on_unlock_token             (unlock_token) UNIQUE
-#
-# Foreign Keys
-#
-#  fk_rails_ce23a23041  (last_job_application_id => job_applications.id)
+#  index_users_on_confirmation_token    (confirmation_token) UNIQUE
+#  index_users_on_email                 (email) UNIQUE
+#  index_users_on_organization_id       (organization_id)
+#  index_users_on_reset_password_token  (reset_password_token) UNIQUE
+#  index_users_on_unlock_token          (unlock_token) UNIQUE
 #

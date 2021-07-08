@@ -2,10 +2,10 @@
 - suffix = @job_offer.new_record? ? 'new' : 'edit'
 - card_1_title = t(".card_1_title_#{ suffix }", job_offer_identifier: @job_offer.identifier)
 - card_2_title = t('.card_2_title')
-.container-fluid
+.container-fluid{data: { controller: "job-offer-management"}}
   .row
     .col-12.px-0
-      = simple_form_for([:admin, @job_offer], defaults: { disabled: @job_offer.archived? ? true : nil }) do |f|
+      = simple_form_for([:admin, @job_offer]) do |f|
         = f.error_notification
         = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
         - if @job_offer.errors.any?
@@ -25,7 +25,7 @@
                   .form-inputs
                     .row
                       .col-12{class: f.object.new_record? ? nil : "col-md-9"}
-                        = f.input :title
+                        = f.input :title, disabled: @job_offer.archived?
                       - if !f.object.new_record?
                         .col-12.col-md-3
                           = f.input :identifier, readonly: true
@@ -43,14 +43,17 @@
                       .col-12.col-md-3
                         = f.association :bop
                     .row
-                      .col-12.col-md-6
-                        = f.input :location
-                        = f.input :city, as: :hidden
-                        = f.input :county, as: :hidden
-                        = f.input :county_code, as: :hidden
-                        = f.input :country_code, as: :hidden
-                        = f.input :postcode, as: :hidden
-                        = f.input :region, as: :hidden
+                      .col-12.col-md-6{data: { controller: 'autocomplete-city' }}
+                        = f.input :location, input_html: { 'data-autocomplete-city-target' => :query }
+                        = f.input :city, as: :hidden, input_html: { 'data-autocomplete-city-target' => :city }
+                        = f.input :county, as: :hidden, input_html: { 'data-autocomplete-city-target' => :county }
+                        = f.input :county_code, as: :hidden, input_html: { 'data-autocomplete-city-target' => :countyCode }
+                        = f.input :country_code, as: :hidden, input_html: { 'data-autocomplete-city-target' => :countryCode }
+                        = f.input :postcode, as: :hidden, input_html: { 'data-autocomplete-city-target' => :postcode }
+                        = f.input :region, as: :hidden, input_html: { 'data-autocomplete-city-target' => :region }
+                      - if current_administrator.bant?
+                        .col-12.col-md-6
+                          = f.input :spontaneous
                     = f.input :organization_description, as: :trix_editor_custom
                     = f.input :description, as: :trix_editor_custom
                     = f.input :required_profile, as: :trix_editor_custom
@@ -71,7 +74,7 @@
                         = f.input :contract_start_on, as: :string
                     .row
                       .col-12.col-md-3
-                        = f.association :benefit
+                        = f.association :benefits, as: :check_boxes
                     .row
                       .col-12.col-md-3
                         = f.input :is_remote_possible, as: :radio_buttons

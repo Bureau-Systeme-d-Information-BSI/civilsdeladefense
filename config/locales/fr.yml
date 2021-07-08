@@ -1,8 +1,10 @@
 fr:
   "yes": "Oui"
   "no": "Non"
+  "true": "Oui"
+  "false": "Non"
   help: "Aide"
-  non_applicable: "N/A"
+  non_applicable: "-"
   non_accessible: "Pas accessible pour le moment"
   nothing_to_see: "Rien à voir pour le moment"
   unknown: "Inconnu"
@@ -55,13 +57,14 @@ fr:
           other: "%{count} s"
   buttons:
     add: "Ajouter"
+    export: "Exporter"
     add_child: "Ajouter une sous-catégorie"
     add_first_page: "Ajouter la première page"
     add_page_child: "Ajouter une page"
     archive: "Archiver"
     cancel: "Annuler"
     choose_file: "Choisir un fichier"
-    choose_file_drop_zone_html: "<u>Choisissez un fichier</u> ou transférez le par glisser/déposer."
+    choose_file_drop_zone_html: "Choisissez un fichier ou transférez le par glisser/déposer."
     choose_file_validated_html: "Ce fichier a été validé !"
     click_to_edit: "Cliquer pour éditer"
     close: "Fermer"
@@ -92,6 +95,7 @@ fr:
     update: "Mettre à jour"
     unsuspend: "Republier"
     unsuspend_user: "Réactiver"
+    transfer: "Transférer"
   homepages:
     stepper:
       step_1: "Dépôt de la candidature"
@@ -102,8 +106,9 @@ fr:
       step_6: "Prise de fonctions"
   job_applications:
     form:
-      general_informations: "Informations générales"
+      general_informations: "Vos informations"
       your_profile: "Votre profil"
+      documents: "Vos documents"
       your_internet_presence: "Votre présence sur internet"
       your_account_creation: "Votre création de compte"
   job_offers:
@@ -113,8 +118,11 @@ fr:
         zero: "Aucune offre ne correspond à votre recherche"
         one: "1 offre d'emploi trouvée"
         other: "%{count} offres d'emploi trouvées"
+    filter_categories:
+      select: "Secteur"
+    filter_regions:
+      select: "Region"
     filter:
-      select_category: "Secteur"
       select_contract_type: "Contrat"
       select_study_level: "Niveau d'étude"
       select_experience_level: "Niveau d'expérience"
@@ -134,10 +142,12 @@ fr:
       recruitment_process: "Process de recrutement"
     job_offer_head:
       available_immediately: "Poste à pourvoir immédiatement"
-      benefit: "Bénéfice en nature: "
+      benefit: "Avantage en nature"
     successful:
       subject: "Votre candidature à l'offre %{job_offer_identifier} sur %{service_name}"
       body: "Nous avons bien reçu votre candidature à l'offre %{job_offer_identifier} '%{job_offer_title}'.\n\nNous y répondrons dans les meilleurs délais.\n\nL'équipe %{service_name}."
+      spontaneous_subject: "Votre candidature spontanée sur %{service_name}"
+      spontaneous_body: "Nous avons bien reçu votre candidature spontanée.\n\nNous y répondrons dans les meilleurs délais.\n\nL'équipe %{service_name}."
       title: "Merci d'avoir soumis votre candidature !"
       subtitle_html: "Votre demande est prise en compte.\n\nVeuillez confirmer votre accès à l'aide du lien sur votre boîte courriel."
       link: "Retour à l'accueil"
@@ -147,6 +157,7 @@ fr:
         nav_emails: "Mes échanges"
         nav_files: "Mes documents"
         nav_offer: "L'offre"
+        nav_profile: "Profile"
   notifications_mailer:
     daily_summary:
       subject: "[%{service_name}] Rapport journalier"
@@ -171,6 +182,9 @@ fr:
       job_offers: "Nos offres"
       logout: "Déconnexion"
   account:
+    job_application_files:
+      update:
+        success: "Le document a bien été modifié"
     job_applications:
       index:
         title: "Mes candidatures"
@@ -202,8 +216,12 @@ fr:
         title: "Choisir un mot de passe"
       destroy:
         success: "Votre compte a bien été supprimé"
+      edit:
+        title: "Mes informations"
       update_email:
         success: "Votre adresse de courriel a bien été modifié"
+      update:
+        success: "Vos informations ont bien été modifiées"
       update_password:
         success: "Votre mot de passe a bien été modifié"
       want_destroy:
@@ -305,6 +323,17 @@ fr:
       uncheck:
         success: "Fichier invalidé !"
     job_offers:
+      new_transfer:
+        submit: "Transférer"
+      transfer:
+        success: "Annonce transférée !"
+      send_to_list:
+        success: "Annonce diffusées !"
+      feature:
+        success: "Annonce mise à la une"
+        error: "L'offre n'a pa pu être mise à la une, veuillez vérifier la référence"
+      unfeature:
+        success: "Annonce retirée de la une"
       administrator:
         new_record: "Cliquer sur \"Enregistrer\" pour inviter"
         waiting: "En attente de confirmation"
@@ -346,6 +375,7 @@ fr:
         job_applications_to_be_treated_count:
           "Nouvelles candidatures"
       job_offer_nav:
+        new_transfer: "Transférer"
         show: "Description"
         stats: "Statistiques"
         board: "Candidatures"
@@ -373,7 +403,6 @@ fr:
         title_job_applications_after_meeting_rejected_number_html: "Après entretiens physiques"
       stats_job_offer:
         title: "Évolution des candidatures"
-        title_views_number_html: "Nombre de vues"
         title_job_applications_number_html: "Nombre de candidatures total"
         title_job_applications_processed_number_html: "Nombre de candidatures en&nbsp;cours&nbsp;de&nbsp;traitement"
         title_job_applications_accepted_number_html: "Nombre de candidatures retenues"
@@ -434,6 +463,12 @@ fr:
         account: "Mon compte"
         logout: "Déconnexion"
     users:
+      send_job_offer:
+        success: "Offre envoyée au candidat"
+        error: "L'offre n'a pa pu être envoyé, veuillez vérifier la référence"
+      multi_select:
+        success: "Offre envoyée aux candidats"
+        error: "L'offre n'a pa pu être envoyé, veuillez vérifier la référence"
       actions:
         title: "Actions"
       destroy:
@@ -468,7 +503,7 @@ fr:
         navbar:
           admin: "Administration"
           administrators: "Comptes admin"
-          benefits: "Bénéfices en nature"
+          benefits: "Avantage(s) en nature"
           bops: "BOPs"
           categories: "Domaines professionnels"
           cmgs: "Liste des CMG"
@@ -492,10 +527,15 @@ fr:
           templates : "Modèles"
           writing_job_offers: "Rédaction offres d'emploi"
           contract_durations: "Durées de contrat"
+          foreign_languages: "Langue étrangères"
+          foreign_language_levels: "Niveaux de langues étrangères"
+          frequently_asked_questions: "FAQ"
       base:
         index:
           title: "Paramètres"
       administrators:
+        transfer:
+          success: "Les offres ont bien été transférées"
         administrator:
           last_connection: "Dernière conn. :"
           invited_by: "Invité par"
@@ -534,6 +574,9 @@ fr:
           success: "Compte supprimé !"
         edit:
           title: "Modifier un compte admin"
+          transfer: "Transférer les offres"
+          submit: "Transférer"
+          list: "Liste des offres"
         deactivate:
           success: "Compte désactivé"
         reactivate:
@@ -548,8 +591,16 @@ fr:
             zero: 'Aucun CMG'
             one: '1 CMG'
             other: '%{count} CMGs'
+      frequently_asked_questions:
+        index:
+          title: "FAQ"
+          add: "Ajouter"
+          card_title:
+            zero: 'Aucune FAQ'
+            one: '1 FAQ'
+            other: '%{count} FAQ'
         new:
-          title: "Ajouter un nouveau CMG"
+          title: "Ajouter une question"
         create:
           success: "CMG ajouté !"
         update:
@@ -611,7 +662,7 @@ fr:
           title: "Paramètres généraux"
           title_social: "Réseaux sociaux"
           title_partners: "Partenaires"
-          title_testimony: "Témoignage page d'acceuil"
+          title_testimony: "Accueil"
         form_security:
           title: "Paramètres de sécurité"
         update:
@@ -630,11 +681,11 @@ fr:
       benefits:
         index:
           card_title:
-            zero: 'Aucun bénéfice en nature'
-            one: '1 bénéfice en nature'
-            other: '%{count} bénéfices en nature'
+            zero: 'Aucun avantage en nature'
+            one: '1 avantage en nature'
+            other: '%{count} avantages en nature'
         new:
-          title: "Ajouter un bénéfice en nature"
+          title: "Ajouter un avantage en nature"
         edit:
           title: "Modifier '%{name}'"
         create:
@@ -768,7 +819,39 @@ fr:
         update:
           success: "Niveau d'étude mis à jour !"
         destroy:
-          success: "Niveau d'étude supprim !"
+          success: "Niveau d'étude supprimé !"
+      foreign_languages:
+        index:
+          card_title:
+            zero: "Aucune langue étrangère"
+            one: "1 langue étrangère"
+            other: "%{count} langues étrangères"
+        new:
+          title: "Ajouter une nouvelle langue étrangère"
+        edit:
+          title: "Modifier la langue étrangère '%{name}'"
+        create:
+          success: "Langue étrangère créée !"
+        update:
+          success: "Langue étrangère mise à jour !"
+        destroy:
+          success: "Langue étrangère supprimée !"
+      foreign_language_levels:
+        index:
+          card_title:
+            zero: "Aucun niveau de langue étrangère"
+            one: "1 niveau de langue étrangère"
+            other: "%{count} niveaux de langues étrangères"
+        new:
+          title: "Ajouter un nouveau niveau de langue étrangère"
+        edit:
+          title: "Modifier le niveau de langue étrangère '%{name}'"
+        create:
+          success: "Niveau de langue étrangère créée !"
+        update:
+          success: "Niveau de langue étrangère mise à jour !"
+        destroy:
+          success: "Niveau de langue étrangère supprimée !"
       experience_levels:
         index:
           card_title:
@@ -837,6 +920,9 @@ fr:
       form:
         title: "Note personnelle"
     preferred_users_lists:
+      send_job_offer:
+        success: "Offre envoyée aux candidats"
+        error: "L'offre n'a pa pu être envoyé, veuillez vérifier la référence"
       form:
         title_new: "Ajout d'une nouvelle liste de candidats"
         title_edit: "Édition d'une liste de candidats"
@@ -891,11 +977,17 @@ fr:
           title_job_applications_rejected_number_html: "Après sélection des candidats"
           title_job_applications_phone_meeting_rejected_number_html: "Après entretiens téléphoniques"
           title_job_applications_after_meeting_rejected_number_html: "Après entretiens physiques"
+      job_offers:
+        index:
+          title: "Offres"
+        results:
+          title: "Résultats de la recherche"
       shared:
         navbar:
           title: "Statistiques"
           job_applications: "Candidatures"
           recruitments: "Recrutements"
+          job_offers: "Offres"
   attributes:
     name: "Nom"
     current_position: "Poste actuel"
@@ -924,7 +1016,7 @@ fr:
         job_offer:
           attributes:
             title:
-              no_bracket: "ne doit pas contenir de parenthèse"
+              brackets: "ne doit pas contenir de parenthèse"
               f_h: "doit finir par F/H"
         user:
           attributes:
@@ -995,6 +1087,8 @@ fr:
         experience_level: "Niveau d'expérience"
         salary: "Rémunération"
         recruitment_process: Process de recrutement
+        benefits: "Avantages en nature"
+        is_remote_possible: "Télétravail"
       job_offer_actor/role:
         employer: "Employeur"
         grand_employer: "Grand Employeur"
@@ -1012,6 +1106,13 @@ fr:
         gender/female: "Femme"
         gender/male: "Homme"
         gender/other: "Autre"
+        gender: Civilité
+        has_corporate_experience: Expérience MinArm
+        study_level: Niveau d'études
+        experience_level: Expérience professionnel
+        profile_foreign_languages: Langues étrangères
+        age_range: Tranche d'âge
+        availability_range: Disponibilité
       salary_range:
         professional_category: "Catégorie"
         experience_level: "Éxpérience"
@@ -1036,6 +1137,6 @@ fr:
         cancel: "Annuler"
   errors:
     messages:
-      content_type_whitelist_error: "Mauvais format. Seuls sont acceptés les formats PDF pour les documents et PNG/JPG pour les photos."
+      content_type_allowlist_error: "Mauvais format. Seuls sont acceptés les formats PDF pour les documents et PNG/JPG pour les photos."
       carrierwave_integrity_error: is not an allowed file type
       france_connect: Une erreur est survenue, veuillez réessayer.

@@ -88,5 +88,5 @@ export default function displayCharts() {
         window.location.href = url.href
       }
     })
-  }  
+  }
 }

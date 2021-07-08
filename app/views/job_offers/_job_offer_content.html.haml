@@ -6,4 +6,4 @@
     = sanitize(job_offer.send(field))
 - if display_apply_button && !(controller.action_name == 'apply')
   .rf-grid-row.rf-grid-row--center.rf-mt-4w
-    = link_to t('.apply'), [:apply, @job_offer], class: 'rf-btn rf-btn--lg', rel: 'noindex nofollow'
+    = link_to t('.apply'), apply_job_offers_path(id: @job_offer.slug), class: 'rf-btn rf-btn--lg', rel: 'noindex nofollow'

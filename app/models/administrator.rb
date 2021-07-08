@@ -24,9 +24,6 @@ class Administrator < ApplicationRecord
   accepts_nested_attributes_for :supervisor_administrator
   accepts_nested_attributes_for :grand_employer_administrator
 
-  has_many :job_application_actors
-  has_many :job_applications, through: :job_applications_actors
-
   has_many :preferred_users
   has_many :preferred_users_lists
 
@@ -199,6 +196,15 @@ class Administrator < ApplicationRecord
 
   def reactivate
     update_attribute(:deleted_at, nil)
+  end
+
+  def transfer!(email)
+    administrator = Administrator.find_by(email: email.downcase) || Administrator.new(email: email)
+    administrator.inviter ||= self
+    administrator.organization = organization
+    administrator.save!
+    job_offer_actors.update_all(administrator_id: administrator.id)
+    owned_job_offers.update_all(owner_id: administrator.id)
   end
 
   def password_complexity

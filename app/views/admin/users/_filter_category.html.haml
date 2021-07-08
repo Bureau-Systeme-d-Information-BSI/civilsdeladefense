@@ -1,0 +1,20 @@
+- search_key = :by_category
+- ary = params.dig(:q, search_key)  || []
+.dropdown.dropdown-checks.form-group
+  %button.form-control.dropdown-toggle.text-left.d-flex.align-items-center#dropdownCategory{type: 'button', data: {toggle: 'dropdown'}, aria: {haspopup: true, expanded: false}}
+    Domaine professionnel
+    - if ary.any?
+      = "(#{ary.size})"
+  .dropdown-menu.dropdown-menu-right.allow-focus{aria: {labelledby: 'dropdownCategory'}}
+    - Category.roots.each do |root|
+      %ul.mb-0
+        - Category.each_with_level(root.self_and_descendants) do |category, level|
+          %li{style: "padding-left:#{10*level}px;"}
+            - if category.leaf?
+              .form-check.form-check-inline.w-100
+                - checked = ary.include?(category.id)
+                - input_id = dom_id(category)
+                = check_box_tag "q[#{search_key}][]", category.id, checked, class: 'form-check-input', id: input_id
+                %label.form-check-label.text-truncate.d-block{title: category.name, for: input_id}= category.name
+            - else
+              = category.name

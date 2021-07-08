@@ -4,7 +4,11 @@
     = fa_icon('file-document', class: 'text-secondary')
     Données personnelles
   .card-body.bg-white
-    - fields = personal_fields
-    - fields.each do |field|
+    - %i[current_position phone website_url].each do |field|
       - hsh = {form_object: user, field: field, disabled: is_archived}
       = render partial: '/admin/profiles/profile_field', locals: hsh
+    .row
+      %p.col-sm-4 Souhait(s) géographique(s) (département)
+      .col-sm-8
+        - user.department_users.each do |du|
+          = "#{du.department.name} -"

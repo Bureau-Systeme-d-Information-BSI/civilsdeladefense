@@ -34,6 +34,7 @@ fr:
         age_range: "Tranche d'âge"
         availability_range: "Disponibilité"
         body: "Corps du courriel"
+        department: "Souhait(s) géographique(s) (département)"
         city: "Ville"
         country: "Pays"
         current_position: "Poste actuel"
@@ -42,19 +43,24 @@ fr:
         estimate_monthly_salary_net: "Estimation mensuel net (fonction publique)"
         experience_level: "Expérience"
         first_name: "Prénom"
-        gender: "Genre"
-        has_corporate_experience: "Expérience MINARM"
+        gender: "Civilité"
+        has_corporate_experience: "Expérience antérieure au sein du Ministère des Armées"
         is_currently_employed: "Statut actuel"
         last_name: "Nom"
         name: "Nom"
         note: "Note"
         phone: "Téléphone"
+        delete_photo: "Supprimer la photo"
         postal_code: "Code postal"
         postcode: "Code postal"
         study_level: "Niveau d'études"
         subject: "Sujet"
         title: "Fonction"
         website_url: "Site web"
+        foreign_language: Langue étrangère
+        foreign_language_level: Niveau de langue étrangère
+        category: "Domaine professionnel"
+        spontaneous: "Candidature spontanée"
       administrator:
         current_password: 'Mot de passe actuel'
         password: 'Nouveau mot de passe'
@@ -75,6 +81,8 @@ fr:
       job_application:
         experiences_fit_job_offer: "Expérience pour l'offre"
         skills_fit_job_offer: "Adéquate pour l'offre"
+      job_application_files:
+        job_application_file_existing_id: Choisir un fichier existant
       job_application_file_type:
         kind: "Type"
         content: "Fichier"
@@ -82,7 +90,6 @@ fr:
         by_default: "Visible dès que l'état défini précédemment est atteint ?"
       job_offer:
         title: "Intitulé du poste"
-        category: "Domaines professionnels"
         professional_category: "Catégorie professionnelle"
         location: "Localisation"
         employer: "Employeur"
@@ -90,7 +97,7 @@ fr:
         required_profile: "Profil recherché"
         organization_description: "Descriptif de l'organisation"
         recruitment_process: "Process de recrutement"
-        benefit: "Avantage en nature"
+        benefits: "Avantages en nature"
         bop: "BOP"
         contract_type: "Type de contrat"
         contract_type_id: "Type de contrat"
@@ -108,15 +115,11 @@ fr:
         administrator_email_suffix: "Suffixe d'email obligatoire pour les comptes admin"
         brand_name: "Entité bloc marque"
         prefix_article: "Article défini de l'entité légale (opérateur ou bloc marque)"
-        domain: "Nom de domaine officiel"
         hours_delay_before_publishing: "Délai incompressible avant de pouvoir publier une annonce"
         image_background: "Image d'arrière plan"
         inbound_email_config: "Configuration passerelle mail/plateforme"
         logo_operator: "Logo opérateur"
-        logo_vertical: "Logo au format vertical (affichage fond blanc)"
         logo_horizontal: "Logo au format horizontal (affichage fond blanc)"
-        logo_vertical_negative: "Logo au format vertical (affichage fond coloré)"
-        logo_horizontal_negative: "Logo au format horizontal (affichage fond coloré)"
         matomo_site_id: "Matomo siteId"
         operator_logo: "Logo opérateur"
         operator_name: "Nom de l'opérateur"
@@ -134,7 +137,6 @@ fr:
         service_description: "Description du service"
         service_description_short: "Description courte du service"
         service_name: "Nom du service / Nom de la plateforme"
-        subdomain: "Sous-domaine"
         linkedin_url: "Lien LinkedIn"
         twitter_url: "Lien Twitter"
         youtube_url: "Lien Youtube"
@@ -163,8 +165,12 @@ fr:
         password: 'Mot de passe'
         password_confirmation: 'Confirmation du mot de passe'
         preferred_users_list_ids: "Mes listes de candidats"
+        receive_job_offer_mails: "J'accepte de recevoir de nouvelles offres d'emploi par email"
         suspension_reason: "Raison"
         terms_of_service: "En soumettant ce formulaire, j'accepte que les informations saisies sur le site %{service_name} soient exploitées pour l'instruction de ma candidature par %{legal_name}. Les informations personnelles portées sur ce formulaire et celles communiquées aux étapes ultérieures du processus de recrutement sont enregistrées dans un fichier informatisé administré par %{legal_name} conformément à la <a href='%{link}' target='_blank'>déclaration de confidentialité</a> du portail %{service_name}, dont j'ai pris connaissance"
+      frequently_asked_question:
+        name: Question
+        value: Réponse
     placeholders:
       defaults:
         first_name: "Prénom"

@@ -12,6 +12,10 @@ class CommitParamConstraint
 end
 
 Rails.application.routes.draw do
+  # Dynamic error pages
+  get "/404", to: "application#resource_not_found", via: :all
+  get "/500", to: "application#internal_error", via: :all
+
   get "/mentions-legales", to: redirect("/pages/mentions-legales")
   get "/cgu", to: redirect("/pages/conditions-generales-d-utilisation")
   get "/politique-confidentialite", to: redirect("/pages/politique-de-confidentialite")
@@ -25,11 +29,14 @@ Rails.application.routes.draw do
     registrations: "users/registrations",
     omniauth_callbacks: "users/omniauth_callbacks"
   }
+  devise_scope :user do
+    get "/users/sign_up/success" => "users/registrations#success", :as => :success_user_registration
+  end
 
   namespace :admin do
     resource :account do
       member do
-        get :change_email, :change_password
+        get :change_email, :change_password, :photo
         patch :update_email, :update_password
       end
     end
@@ -41,15 +48,16 @@ Rails.application.routes.draw do
     end
     resources :job_offers, path: "offresdemploi" do
       collection do
-        get :add_actor
-        get :archived
+        post :exports, :feature
+        get :add_actor, :featured, :archived
         JobOffer.aasm.events.map(&:name).each do |event_name|
           action_name = "create_and_#{event_name}".to_sym
           post :create, constraints: CommitParamConstraint.new(action_name), action: action_name
         end
       end
       member do
-        get :board, :stats
+        get :export, :board, :stats, :new_transfer, :new_send
+        post :transfer, :feature, :unfeature, :send_to_list
         JobOffer.aasm.events.map(&:name).each do |event_name|
           patch(event_name.to_sym)
           action_name = "update_and_#{event_name}".to_sym
@@ -66,13 +74,20 @@ Rails.application.routes.draw do
     end
     resources :preferred_users
     resources :preferred_users_lists, path: "liste-candidats" do
+      member do
+        get :export
+        post :send_job_offer
+      end
       resources :preferred_users
     end
     resources :users, path: "candidats", except: %i[create] do
+      collection do
+        post :multi_select
+      end
       member do
-        get :listing
+        get :listing, :photo
         put :update_listing
-        post :suspend, :unsuspend
+        post :suspend, :unsuspend, :send_job_offer
       end
     end
     resources :job_applications, path: "candidatures", only: %i[index show update] do
@@ -95,6 +110,7 @@ Rails.application.routes.draw do
     end
     namespace :stats do
       root to: "job_applications#index"
+      get :job_offers, to: "job_offers#index"
       resources :job_applications, path: "candidatures", only: %i[index]
       resources :recruitments, path: "recrutements"
     end
@@ -106,6 +122,12 @@ Rails.application.routes.draw do
         end
       end
       resources :organization_defaults
+      resources :frequently_asked_questions do
+        member do
+          post :move_higher, :move_lower
+        end
+      end
+
       resources :pages do
         member do
           post :move_higher, :move_lower
@@ -118,6 +140,7 @@ Rails.application.routes.draw do
       end
       resources :administrators, path: "administrateurs", except: %i[destroy] do
         collection do
+          get :export
           get :inactive
         end
         member do
@@ -125,6 +148,7 @@ Rails.application.routes.draw do
           post :send_unlock_instructions
           post :deactivate
           post :reactivate
+          post :transfer
         end
       end
       resources :employers, :categories do
@@ -134,8 +158,10 @@ Rails.application.routes.draw do
       end
       resources :salary_ranges
       resources :job_application_file_types
-      other_settings = %i[benefit bops email_template job_application_file_types
-        rejection_reasons contract_duration]
+      other_settings = %i[
+        benefit bops email_template job_application_file_types rejection_reasons
+        contract_duration foreign_languages foreign_language_levels
+      ]
       (JobOffer::SETTINGS + other_settings).each do |setting|
         resources setting.to_s.pluralize.to_sym, except: %i[show] do
           member do
@@ -153,13 +179,18 @@ Rails.application.routes.draw do
       resources :job_applications, path: "mes-candidatures" do
         member do
           get :job_offer, path: "offre"
+          get :profile
         end
         resources :job_application_files, path: "documents"
         resources :emails, only: %i[index create]
       end
-      resource :user, path: "mon-compte", only: %i[show update destroy] do
+      resource :user, path: "mon-compte", only: %i[show destroy] do
+        collection do
+          get :edit
+          patch :update
+        end
         member do
-          get :change_email, :change_password
+          get :change_email, :change_password, :photo
           patch :update_email, :update_password, :unlink_france_connect, :set_password
         end
       end
@@ -167,8 +198,11 @@ Rails.application.routes.draw do
   end
 
   resources :job_offers, path: "offresdemploi", only: %i[index show] do
-    member do
+    collection do
       get :apply
+    end
+    member do
+      get :apply, to: "job_offers#old_apply"
       post :send_application
       get :successful
     end

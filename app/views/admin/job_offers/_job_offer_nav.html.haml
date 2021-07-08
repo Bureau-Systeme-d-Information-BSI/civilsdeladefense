@@ -15,3 +15,12 @@
       = t('.board')
       = surround '(', ')' do
         = job_offer.job_applications_count
+  %li.mr-3.nav-item
+    - klasses = base_link_klasses.dup
+    - klasses << :active if active_tab[:action_name] == 'new_send'
+    = link_to "Envoyer", [:new_send, :admin, job_offer], class: klasses
+  - if can? :transfer, job_offer
+    %li.mr-3.nav-item
+      - klasses = base_link_klasses.dup
+      - klasses << :active if active_tab[:action_name] == 'new_transfer'
+      = link_to t('.new_transfer'), [:new_transfer, :admin, job_offer], class: klasses

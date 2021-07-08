@@ -41,7 +41,6 @@ import Snackbar from 'node-snackbar'
 window.Snackbar = Snackbar
 import offCanvas from 'js/off-canvas'
 import dependentFields from 'js/dependent-fields'
-import cityAutocomplete from 'js/city-autocomplete'
 import salaryRangeInputsHandling from 'js/salary-range-inputs-handling'
 import emailTemplateSelectHandling from 'js/email-template-select-handling'
 import formAutoSubmit from 'js/form-auto-submit'
@@ -53,7 +52,6 @@ import displaySnackbars from 'js/display-snackbars'
 import { boardManagement, boardRedraw, boardShowRejectionModal } from 'js/board'
 window.boardRedraw = boardRedraw
 window.boardShowRejectionModal = boardShowRejectionModal
-import jobOfferManagement from 'js/job-offer-management'
 import reloadWithTurbolinks from 'js/reload-with-turbolinks'
 window.reloadWithTurbolinks = reloadWithTurbolinks
 
@@ -79,11 +77,9 @@ document.addEventListener('turbolinks:load', function() {
   salaryRangeInputsHandling()
   emailTemplateSelectHandling()
   dependentFields()
-  cityAutocomplete()
   displayCharts()
   displaySnackbars()
   boardManagement()
-  jobOfferManagement()
 
   flatpickr('#job_offer_contract_start_on', {
     locale: French,

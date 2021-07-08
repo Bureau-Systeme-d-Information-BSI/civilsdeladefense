@@ -19,37 +19,26 @@ module UsersHelper
       klasses << options[:class]
     end
 
-    image_tag image_user_url(photo, options[:width]), class: klasses
+    image_tag(image_user_url(photo), class: klasses)
   end
 
-  def image_user_url(photo, _width)
-    if photo&.present?
-      # style = image_user_style(width) not sure how to use style for the moment
-      Rails.cache.fetch(photo.model) do
-        encoded = Base64.encode64(photo.read)
-        "data:#{photo.content_type};base64,#{encoded}"
-      rescue NoMethodError => e
-        if e.to_s == "undefined method `body' for nil:NilClass"
-          asset_pack_path("images/default_user_avatar.svg")
-        end
-      rescue URI::InvalidURIError
-        # nothing we can do
-        asset_pack_path("images/default_user_avatar.svg")
-      end
+  def image_user_url(photo)
+    return blank_photo if photo.blank?
+    return photo_account_user_path if current_user&.photo
+
+    if current_administrator && photo.model.is_a?(User)
+      photo_admin_user_path(photo.model)
+    elsif current_administrator && photo.model.is_a?(Administrator)
+      photo_admin_account_path(id: photo.model.id)
     else
-      asset_pack_path("images/default_user_avatar.svg")
+      blank_photo
     end
+  rescue NoMethodError, URI::InvalidURIError, Excon::Error::Socket
+    blank_photo
   end
 
-  def image_user_style(width)
-    case width
-    when 32
-      :small
-    when 40
-      :medium
-    when 80
-      :big
-    end
+  def blank_photo
+    asset_pack_path("images/default_user_avatar.svg")
   end
 
   def hint_text_for_file(job_application, job_application_file)
@@ -64,16 +53,14 @@ module UsersHelper
       link = link_for_file(job_application, job_application_file)
       link_text = link_to "fichier", link, target: "_blank", class: "text-dark-gray"
       txt << "Votre #{link_text} n'est pas valide, veuillez en téléverser un nouveau.".html_safe
-      txt << "Seuls les fichiers PDF de taille inférieure à 2Mo sont acceptés."
     else
       if file.present?
         link = link_for_file(job_application, job_application_file)
         link_text = link_to "fichier", link, target: "_blank", class: "text-dark-gray"
         txt << "Vous avez déjà téléversé ce #{link_text}, il est en attente de validation.".html_safe
         txt << 'Pour téléverser une nouvelle version,
-                vous pouvez utiliser la zone ci-dessus.'.html_safe
+                vous pouvez utiliser la zone ci-dessous.'.html_safe
       end
-      txt << "Seuls les fichiers PDF de taille inférieure à 2Mo sont acceptés."
     end
     txt.join("<br/>").html_safe
   end

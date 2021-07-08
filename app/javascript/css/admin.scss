@@ -129,11 +129,6 @@ $job-application-gutter: 3px;
   }
 }
 
-.ck.ck-content {
-  min-height: 300px;
-  max-height: 500px;
-}
-
 #message_body {
   height: 110px;
 }
@@ -316,66 +311,6 @@ a {
   }
 }
 
-.job-offer-title, .job-offer-bop, .job-offer-employer-name, .job-offer-localization, .job-offer-contract-type, .job-offer-contract-duration, .job-offer-job-applications-number, .job-offer-job-applications-most-advanced-state {
-  @extend .text-truncate, .font-weight-bold, .text-primary;
-}
-.job-offer {
-  .job-offer-title, .job-offer-bop, .job-offer-employer-name, .job-offer-localization, .job-offer-contract-type, .job-offer-contract-duration, .job-offer-job-applications-number, .job-offer-job-applications-most-advanced-state {
-    @extend .text-dark;
-  }
-}
-.job-offer-title {
-  padding-right: 5px;
-}
-.job-offer-job-applications-most-advanced-state {
-  padding-left: 5px;
-}
-.job-offer-employer-name, .job-offer-bop, .job-offer-localization, .job-offer-contract-type, .job-offer-contract-duration, .job-offer-job-applications-number {
-  padding-left: 5px;
-  padding-right: 5px;
-}
-.job-offer-title {
-  @extend .col-md-5;
-  flex: 0 0 39%;
-  max-width: 39%;
-}
-.job-offer-bop {
-  @extend .col-md-1;
-  flex: 0 0 5%;
-  max-width: 5%;
-}
-.job-offer-employer-name {
-  @extend .col-md-1;
-  flex: 0 0 11%;
-  max-width: 11%;
-}
-.job-offer-localization {
-  @extend .col-md-2;
-  flex: 0 0 11%;
-  max-width: 11%;
-}
-.job-offer-contract-type {
-  @extend .col-md-1;
-  flex: 0 0 8%;
-  max-width: 8%;
-}
-.job-offer-contract-duration {
-  @extend .col-md-1;
-  flex: 0 0 8%;
-  max-width: 8%;
-}
-.job-offer-job-applications-number {
-  @extend .col-md-1, .text-center;
-  flex: 0 0 10%;
-  max-width: 10%;
-}
-.job-offer-job-applications-most-advanced-state {
-  @extend .col-md-1, .text-center;
-  flex: 0 0 8%;
-  max-width: 8%;
-}
-
-
 .user-full-name, .personal-profile-current-position, .personal-profile-is-currently-employed, .user-job-applications-count, .personal-profile-address-short {
   @extend .text-truncate, .font-weight-bold, .text-primary;
 }
@@ -461,4 +396,53 @@ a {
 .bar-chart__bar {
   @extend .bg-secondary;
   height: 15px;
+}
+
+.algolia-autocomplete {
+  width: 100%;
+
+  .aa-input {
+    width: 100%;
+  }
+
+  .aa-dropdown-menu {
+    width: 100%;
+    background-color: $card-bg;
+    border: 1px solid $card-border-color;
+
+    .aa-suggestion, .aa-empty {
+      padding: 10px 8px;
+    }
+    .aa-suggestion {
+      cursor: pointer;
+    }
+    .aa-suggestion.aa-cursor {
+      background-color: $card-border-color;
+    }
+    .aa-suggestion em {
+      font-weight: bold;
+      font-style: normal;
+    }
+  }
+}
+.sticky-top {
+  top: 50px;
+  background-color: #f5f5f5;
+  margin-right: -15px;
+  margin-left: -15px;
+  padding-right: 15px;
+  padding-left: 15px;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #eee;
+}
+
+.scroll {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  padding: 1rem 1rem;
+  position: fixed;
+  bottom: 1.2rem;
+  left: 1.5rem;
+  z-index: 150 !important;
 }

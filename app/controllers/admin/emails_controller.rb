@@ -23,7 +23,7 @@ class Admin::EmailsController < Admin::BaseController
         end
         format.json { render :show, status: :created, location: @email }
       else
-        format.html { render :new }
+        format.html { render @job_application }
         format.js do
           @notification = t(".unsuccess")
           render :create

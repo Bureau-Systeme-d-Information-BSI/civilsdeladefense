@@ -43,7 +43,7 @@ class Admin::PreferredUsersListsController < Admin::InheritedResourcesController
   end
 
   def show
-    @preferred_users = @preferred_users_list.users.includes(:last_job_application)
+    @preferred_users = @preferred_users_list.users.includes(:job_applications)
     @q = @preferred_users.ransack(params[:q])
     @preferred_users_filtered = @q.result.yield_self { |relation|
       if params[:s].present?
@@ -58,10 +58,28 @@ class Admin::PreferredUsersListsController < Admin::InheritedResourcesController
     render action: :show, layout: "admin/pool"
   end
 
+  def export
+    preferred_users_list = PreferredUsersList.find(params[:id])
+    file = Exporter::Users.new(preferred_users_list.users, current_administrator, name: preferred_users_list.name).generate
+
+    send_data file.read, filename: "#{Time.zone.today}_e-recrutement_vivers.xlsx"
+  end
+
   def destroy
     @preferred_users_list.destroy
 
     redirect_to %i[admin users]
+  end
+
+  def send_job_offer
+    preferred_users_list = PreferredUsersList.find(params[:id])
+    job_offer = JobOffer.find_by(identifier: params["job_offer_identifier"])
+
+    if job_offer&.send_to_users(preferred_users_list.users)
+      redirect_back(fallback_location: [:admin, preferred_users_list], notice: t(".success"))
+    else
+      redirect_back(fallback_location: [:admin, preferred_users_list], notice: t(".error"))
+    end
   end
 
   protected

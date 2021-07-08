@@ -13,6 +13,10 @@
       - hsh[:choices] = choices_gender if field == :gender
       = render partial: '/admin/profiles/profile_field', locals: hsh
     .row
+      %p.col-sm-4 Domaine professionnel
+      .col-sm-8
+        = form_object.category&.name
+    .row
       %p.col-sm-4 Langues étrangères
       .col-sm-8
         - profile.profile_foreign_languages.each do |fl|

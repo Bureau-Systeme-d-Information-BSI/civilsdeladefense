@@ -20,7 +20,7 @@
             Tout sélectionner
           .d-none
             - @users_filtered_unpaged.each do |user|
-              = check_box_tag "user_ids[]", user.id, false, data: {"subcheckbox-target": "downcheckbox"}
+              = check_box_tag "user_ids[]", user.id, false, data: {"subcheckbox-target": "downcheckbox"}, id: user.id
 
       .row{data: { controller: 'subcheckbox'}}
         .col-12
@@ -41,7 +41,7 @@
                         = User.human_attribute_name(:current_position)
                       .col-12.user-job-applications-count
                         Candidatures
-            = render partial: 'user', collection: @users_filtered, locals: { list: true}
+            = render partial: 'user', collection: @users_filtered, locals: {list: true}
             .mt-5
               = will_paginate @users_filtered, params: { controller: 'users', action: controller.action_name }
             .row.text-right
@@ -67,7 +67,7 @@
                   %button.form-control.dropdown-toggle.btn#dropdownSendJobOffer{type: 'button', data: {toggle: 'dropdown'}, aria: {haspopup: true, expanded: false}}
                     Envoyer une offre
                   .dropdown-menu.dropdown-menu-right.allow-focus{aria: {labelledby: 'dropdownSendJobOffer'}}
-                    = text_field_tag 'job_offer_identifier', nil, class: "form-control", placeholder: "Référence de l'offre", required: true
+                    = text_field_tag 'job_offer_identifier', nil, class: "form-control", placeholder: "Référence de l'offre"
                     = button_tag 'Envoyer', type: "submit", class: "btn btn-primary btn-raised mt-3", name: "send_job_offer"
               .col-1
                 = button_tag 'Exporter', type: "submit", class: "btn btn-primary btn-raised", name: "export"

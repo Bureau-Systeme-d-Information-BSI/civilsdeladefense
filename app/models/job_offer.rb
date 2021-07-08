@@ -21,14 +21,17 @@ class JobOffer < ApplicationRecord
   acts_as_sequenced scope: :employer_id
 
   include PgSearch::Model
-  pg_search_scope :search_full_text, against: {
-    identifier: "A",
-    title: "A",
-    description: "B",
-    location: "C"
-  }, associated_against: SETTINGS.each_with_object({}) { |obj, memo|
-    memo[obj] = %i[name]
-  }
+  pg_search_scope :search_full_text,
+    ignoring: :accents,
+    against: {
+      identifier: "A",
+      title: "A",
+      description: "B",
+      location: "C"
+    },
+    associated_against: SETTINGS.each_with_object({}) { |obj, memo|
+      memo[obj] = %i[name]
+    }
 
   ## Relationships
   belongs_to :owner, class_name: "Administrator"
@@ -64,6 +67,14 @@ class JobOffer < ApplicationRecord
   validates :title, format: {with: %r{\A.*F/H\z}, message: :f_h}
   validates :title, format: {without: %r{\A.*\(.*\z}, message: :brackets}
   validates :title, format: {without: %r{\A.*\).*\z}, message: :brackets}
+
+  with_options if: -> { published? } do
+    validates :title, length: {maximum: 70}
+    validates :description, html_length: {maximum: 2000}
+    validates :organization_description, html_length: {maximum: 1000}
+    validates :required_profile, html_length: {maximum: 1000}
+    validates :recruitment_process, html_length: {maximum: 700}
+  end
 
   ## Scopes
   default_scope { order(created_at: :desc) }
@@ -131,7 +142,7 @@ class JobOffer < ApplicationRecord
   # Return an hash where keys are regions and values are counties inside it
   # All regions and counties got job_offers associated
   def self.regions
-    job_with_regions_and_county = JobOffer.unscoped.where.not(region: ["", nil]).where.not(county: ["", nil])
+    job_with_regions_and_county = unscoped.where.not(region: ["", nil]).where.not(county: ["", nil])
     hash_region_county = job_with_regions_and_county.select(:region, :county).distinct.pluck(:region, :county)
     hash_region_county.group_by { |a, b| a }.each_with_object({}) { |(key, values), hash|
       hash[key] = values.flatten - [key]
@@ -291,6 +302,7 @@ end
 #  most_advanced_job_applications_state             :integer          default("start")
 #  notifications_count                              :integer          default(0)
 #  option_photo                                     :integer
+#  organization_description                         :text
 #  phone_meeting_job_applications_count             :integer          default(0), not null
 #  phone_meeting_rejected_job_applications_count    :integer          default(0), not null
 #  postcode                                         :string

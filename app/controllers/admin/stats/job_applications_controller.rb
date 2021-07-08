@@ -20,28 +20,7 @@ class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
       format.html {}
       format.js {}
       format.xlsx {
-        data = {
-          job_applications_count: @job_applications_count,
-          date_start: @date_start,
-          date_end: @date_end,
-          per_day: @per_day,
-          state_duration: @state_duration,
-          per_state: @per_state,
-          per_experiences_fit_job_offer: @per_experiences_fit_job_offer,
-          per_has_corporate_experience: @per_has_corporate_experience,
-          per_is_currently_employed: @per_is_currently_employed,
-          per_rejection_reason: @per_rejection_reason,
-          per_gender: @per_gender,
-          per_age_range: @per_age_range,
-          bops: @bops,
-          contract_types: @contract_types,
-          employers: @employers,
-          rejection_reasons: @rejection_reasons,
-          age_ranges: @age_ranges,
-          q: permitted_params[:q] || {}
-
-        }
-        file = Exporter::StatJobApplications.new(data, current_administrator).generate
+        file = Exporter::StatJobApplications.new(export_data, current_administrator).generate
         send_data file.read, filename: "#{Time.zone.today}_e-recrutement_stats_candidatures.xlsx"
       }
     end
@@ -143,5 +122,24 @@ class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
         contract_type_id_in: [], job_offer_bop_id_in: []
       }
     )
+  end
+
+  def export_data
+    {
+      job_applications_count: @job_applications_count,
+      date_start: @date_start,
+      date_end: @date_end,
+      state_duration: @state_duration,
+      per_state: @per_state,
+      per_experiences_fit_job_offer: @per_experiences_fit_job_offer,
+      per_has_corporate_experience: @per_has_corporate_experience,
+      per_is_currently_employed: @per_is_currently_employed,
+      per_rejection_reason: @per_rejection_reason,
+      per_gender: @per_gender,
+      per_age_range: @per_age_range,
+      rejection_reasons: @rejection_reasons,
+      age_ranges: @age_ranges,
+      q: permitted_params[:q] || {}
+    }
   end
 end

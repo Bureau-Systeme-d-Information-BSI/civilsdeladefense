@@ -16,17 +16,6 @@
           = f.input :by_default
           = f.input :notification
           = f.input :spontaneous, as: :boolean
-        - elsif resource.is_a?(Organization)
-          = f.input :name
-          = f.input :name_business_owner
-          = f.input :administrator_email_suffix
-          = f.input :subdomain
-          = f.input :domain
-          = f.input :logo_vertical
-          = f.input :logo_horizontal
-          = f.input :logo_vertical_negative
-          = f.input :logo_horizontal_negative
-          = f.input :image_background
         - elsif resource.is_a?(Cmg)
           = f.input :email
         - elsif resource.is_a?(EmailTemplate)

@@ -6,6 +6,7 @@
   .form-inputs
     = f.input :subject
     = f.input :body
+    = f.file_field :attachments, multiple: true
 
   .rf-input-group.rf-grid-row.justify-content-end.rf-mt-3w
     = button_tag(type: 'submit', class: 'rf-btn') do

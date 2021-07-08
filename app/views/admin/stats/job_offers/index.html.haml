@@ -1,16 +1,13 @@
 - @page_title = t('.title')
 .card
   .card-header
-    .card-title.d-md-flex.align-items-center
-      = @page_title
     = render partial: 'search'
-    %h2.h5.text-primary.mb-0.mt-4= t('.title')
     .card.mt-2
       .card-body
         %strong.text-secondary #{@job_offers_count} offres
         = render partial: 'date_pickers'
         = render partial: 'graph'
-        %h1.h5.text-primary.mt-4 Offres
+        %h1.h5.text-primary.mt-4 Statistiques offres
         .statistics-row.mt-3
           .col-12.col-md-3.statistic__block
             .statistic__name Publiées
@@ -24,7 +21,7 @@
             .statistic__name Pourvues
             .statistic__value
               = @job_offer_filled.count
-        %h1.h5.text-primary.mt-4 Candidatures
+        %h1.h5.text-primary.mt-4 Statistiques candidatures
         .statistics-row.mt-3
           .col-12.col-md-3.statistic__block
             .statistic__name Total
@@ -34,4 +31,10 @@
             .statistic__name Candidats disponibles
             .statistic__value
               = @profile_availables.count
-        = render partial: 'state_duration'
+        %h1.h5.text-primary.mt-4 Délai moyen de recrutement (en jours)
+        .statistics-row.mt-3
+          .col-12.col-md-3.statistic__block
+            .statistic__name Date de publication offre → Date d'affectation agent
+            .statistic__value
+              = @average_affection
+    = link_to "Exporter", [:admin, :stats, :job_offers, @permitted_params.to_h.merge(format: :xlsx)], target: "_blank", class: "btn btn-primary btn-raised mt-3 float-right"

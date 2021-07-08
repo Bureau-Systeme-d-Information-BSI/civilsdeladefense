@@ -137,8 +137,7 @@ organization = Organization.create!(
   prefix_article: "le",
   service_description: "Plateforme de recrutement de personnel civil contractuel du ministère des Armées",
   service_description_short: "Plateforme de recrutement de personnel civil contractuel",
-  service_name: "Civils de la Défense ",
-  subdomain: "cvd-staging"
+  service_name: "Civils de la Défense "
 )
 ```
 

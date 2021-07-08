@@ -4,7 +4,7 @@
 .container-fluid{data: { controller: "job-offer-management"}}
   .row
     .col-12.px-0
-      = simple_form_for([:admin, @job_offer], defaults: { disabled: @job_offer.archived? ? true : nil }) do |f|
+      = simple_form_for([:admin, @job_offer]) do |f|
         = f.error_notification
         = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
         - if @job_offer.errors.any?
@@ -24,7 +24,7 @@
                   .form-inputs
                     .row
                       .col-12{class: f.object.new_record? ? nil : "col-md-9"}
-                        = f.input :title
+                        = f.input :title, disabled: @job_offer.archived?
                       - if !f.object.new_record?
                         .col-12.col-md-3
                           = f.input :identifier, readonly: true
@@ -53,9 +53,10 @@
                       - if current_administrator.bant?
                         .col-12.col-md-6
                           = f.input :spontaneous
-                    = f.input :description, as: :trix_editor
-                    = f.input :required_profile, as: :trix_editor
-                    = f.input :recruitment_process, as: :trix_editor
+                    = f.input :organization_description, as: :trix_editor_custom
+                    = f.input :description, as: :trix_editor_custom
+                    = f.input :required_profile, as: :trix_editor_custom
+                    = f.input :recruitment_process, as: :trix_editor_custom
               .card.mt-5
                 .card-header
                   .card-title= t('.card_1_2_title')

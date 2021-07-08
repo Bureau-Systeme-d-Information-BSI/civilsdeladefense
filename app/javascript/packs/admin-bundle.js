@@ -7,6 +7,13 @@
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
 
+import { Application } from "stimulus"
+import { definitionsFromContext } from "stimulus/webpack-helpers"
+
+const application = Application.start()
+const context = require.context("../controllers", true, /\.js$/)
+application.load(definitionsFromContext(context))
+
 import Turbolinks from 'turbolinks'
 Turbolinks.start()
 
@@ -51,13 +58,6 @@ window.reloadWithTurbolinks = reloadWithTurbolinks
 document.addEventListener('turbolinks:load', function() {
   BSN.initCallback()
 
-  ;[].forEach.call(document.querySelectorAll('.custom-file-input'), function(node) {
-    node.addEventListener('change', function(e) {
-      let fileName = node.val().split('\\').pop()
-      node.parentNode.querySelector('.custom-file-label').classList.add('selected').innerHTML = fileName
-    })
-  })
-
   ;[].forEach.call(document.querySelectorAll('.allow-focus'), function(node) {
     node.addEventListener('click', function(e) {
       e.stopPropagation();
@@ -81,10 +81,3 @@ document.addEventListener('turbolinks:load', function() {
     dateFormat: 'Y-m-d'
   })
 })
-
-import { Application } from 'stimulus'
-import { definitionsFromContext } from 'stimulus/webpack-helpers'
-
-const application = Application.start()
-const context = require.context('../controllers', true, /\.js$/)
-application.load(definitionsFromContext(context))

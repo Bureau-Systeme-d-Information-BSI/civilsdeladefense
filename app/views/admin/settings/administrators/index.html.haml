@@ -4,7 +4,7 @@
   .card-header
     .card-title.align-items-center
       .float-right
-        = link_to [:export, :admin, :settings, :administrators], class: 'btn btn-primary btn-raised ml-auto mt-2 mt-md-0 mb-0 mr-3' do
+        = link_to export_admin_settings_administrators_path(@permitted_params.merge(active: @active)), target: "_blank", class: 'btn btn-primary btn-raised ml-auto mt-2 mt-md-0 mb-0 mr-3' do
           = fa_icon 'arrow-down', class: 'mr-1'
           = Exporter
         = link_to [:new, :admin, :settings, :administrator], class: 'btn btn-primary btn-raised ml-auto mt-2 mt-md-0 mb-0' do

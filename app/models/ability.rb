@@ -7,7 +7,7 @@ class Ability
   def initialize(administrator)
     return unless administrator
 
-    alias_action :archived, :stats, :board, :cvlm, :export, :multi_select, :export, to: :read
+    alias_action :archived, :stats, :board, :cvlm, :export, :multi_select, :export, :send_job_offer, to: :read
     alias_action :listing, :update_listing, to: :read
     alias_action :suspend, to: :destroy
 

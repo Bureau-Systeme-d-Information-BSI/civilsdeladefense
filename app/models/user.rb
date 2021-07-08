@@ -15,6 +15,7 @@ class User < ApplicationRecord
   include PgSearch::Model
   pg_search_scope :search_full_text,
     against: [:first_name, :last_name],
+    ignoring: :accents,
     associated_against: {
       job_offers: {
         identifier: "A",
@@ -49,9 +50,29 @@ class User < ApplicationRecord
 
   default_scope { order(created_at: :desc) }
 
+  scope :concerned, ->(administrator) {
+    joins(job_offers: [:administrators, :owner]).where(administrators: {id: administrator.id}).or(
+      joins(job_offers: [:administrators, :owner]).where(owners_job_offers: {id: administrator.id})
+    )
+  }
+
+  scope :by_category, ->(*category_ids) {
+    joins(job_applications: :job_offer).where(
+      job_applications: {category_id: category_ids}
+    ).or(
+      joins(job_applications: :job_offer).where(
+        job_applications: {job_offers: {category_id: category_ids}}
+      )
+    )
+  }
+
   attr_accessor :is_deleted, :delete_photo
 
   before_update :destroy_photo
+
+  def self.ransackable_scopes(auth_object = nil)
+    %i[concerned by_category]
+  end
 
   def full_name
     if is_deleted

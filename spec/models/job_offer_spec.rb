@@ -190,6 +190,7 @@ RSpec.describe JobOffer, type: :model do
   end
 
   describe "validate" do
+    let(:job_offer) { build(:job_offer, state: :published, description: description) }
     describe "title" do
       context "with ( in title and no F/H at the end" do
         let(:job_offer) { build(:job_offer, title: "(") }
@@ -216,23 +217,31 @@ RSpec.describe JobOffer, type: :model do
       end
     end
 
-    # describe "description" do
-    #   context "with description more than 1000 chars" do
-    #     let(:job_offer) { build(:job_offer, description: "desc" * 1000) }
+    describe "description" do
+      context "with description more than 2000 chars" do
+        let(:description) { "desc" * 2000 }
 
-    #     it "is not valid" do
-    #       expect(job_offer).to_not be_valid
-    #     end
-    #   end
+        it "is not valid" do
+          expect(job_offer).to_not be_valid
+        end
+      end
 
-    #   context "with description less than 1000 chars" do
-    #     let(:job_offer) { build(:job_offer, description: "desc") }
+      context "with description less than 2000 chars with lot of HTML" do
+        let(:description) { "<p>d</p>" * 1999 }
 
-    #     it "is valid" do
-    #       expect(job_offer).to be_valid
-    #     end
-    #   end
-    # end
+        it "is valid" do
+          expect(job_offer).to be_valid
+        end
+      end
+
+      context "with description less than 2000 chars" do
+        let(:description) { "desc" }
+
+        it "is valid" do
+          expect(job_offer).to be_valid
+        end
+      end
+    end
   end
 end
 
@@ -267,6 +276,7 @@ end
 #  most_advanced_job_applications_state             :integer          default("start")
 #  notifications_count                              :integer          default(0)
 #  option_photo                                     :integer
+#  organization_description                         :text
 #  phone_meeting_job_applications_count             :integer          default(0), not null
 #  phone_meeting_rejected_job_applications_count    :integer          default(0), not null
 #  postcode                                         :string

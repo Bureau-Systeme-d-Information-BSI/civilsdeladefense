@@ -36,7 +36,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resource :account do
       member do
-        get :change_email, :change_password
+        get :change_email, :change_password, :photo
         patch :update_email, :update_password
       end
     end
@@ -85,7 +85,7 @@ Rails.application.routes.draw do
         post :multi_select
       end
       member do
-        get :listing
+        get :listing, :photo
         put :update_listing
         post :suspend, :unsuspend, :send_job_offer
       end
@@ -103,8 +103,8 @@ Rails.application.routes.draw do
       resources :messages, only: %i[create]
       resources :emails, only: %i[create] do
         member do
-          post :mark_as_read
-          post :mark_as_unread
+          post :mark_as_read, :mark_as_unread
+          get :attachment
         end
       end
     end
@@ -182,7 +182,11 @@ Rails.application.routes.draw do
           get :profile
         end
         resources :job_application_files, path: "documents"
-        resources :emails, only: %i[index create]
+        resources :emails, only: %i[index create] do
+          member do
+            get :attachment
+          end
+        end
       end
       resource :user, path: "mon-compte", only: %i[show destroy] do
         collection do
@@ -190,7 +194,7 @@ Rails.application.routes.draw do
           patch :update
         end
         member do
-          get :change_email, :change_password
+          get :change_email, :change_password, :photo
           patch :update_email, :update_password, :unlink_france_connect, :set_password
         end
       end

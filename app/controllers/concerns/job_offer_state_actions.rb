@@ -55,7 +55,7 @@ module JobOfferStateActions
     @job_offer.cleanup_actor_administrator_dep(current_administrator, current_organization)
 
     respond_to do |format|
-      if @job_offer.save && @job_offer.send("#{event_name}!")
+      if @job_offer.send("#{event_name}!") && @job_offer.save
         format.html { redirect_to %i[admin job_offers], notice: t(".success") }
         format.json { render :show, status: :ok, location: @job_offer }
       else

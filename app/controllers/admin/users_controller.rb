@@ -2,18 +2,14 @@
 
 class Admin::UsersController < Admin::InheritedResourcesController
   def index
-    @q = @users.ransack(params[:q])
-    @users_filtered = @q.result.yield_self { |relation|
-      if params[:s].present?
-        relation.search_full_text(params[:s])
-      else
-        relation
-      end
-    }.yield_self { |relation|
-      relation.includes(job_applications: %i[profile])
-    }
-    @users_filtered_unpaged = @users_filtered
-    @users_filtered = @users_filtered.paginate(page: params[:page], per_page: 25)
+    pq = params[:q] || {}
+    pq[:concerned] = current_administrator if pq[:concerned]
+    @q = @users.ransack(pq)
+    users = @q.result.includes(job_applications: %i[profile])
+    users = users.search_full_text(params[:s]) if params[:s].present?
+    @users_filtered_unpaged = users
+    @users_filtered = users.paginate(page: params[:page], per_page: 25)
+
     render action: :index, layout: "admin/pool"
   end
 
@@ -94,6 +90,14 @@ class Admin::UsersController < Admin::InheritedResourcesController
   def unsuspend
     @user.unsuspend!
     redirect_back(fallback_location: [:admin, @user], notice: t(".success"))
+  end
+
+  def photo
+    send_data(
+      @user.photo.big.read,
+      filename: @user.photo.filename,
+      type: @user.photo.content_type
+    )
   end
 
   def destroy

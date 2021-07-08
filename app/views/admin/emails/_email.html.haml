@@ -34,10 +34,10 @@
       = sanitize(email.subject, tags: %w())
     .card-body.bg-white
       = simple_format(sanitize(email.body, tags: %w()))
-      - if email.attachments.any?
+      - if email.email_attachments.any?
         %ul.list-unstyled.mb-0
-          - for attachment in email.attachments
+          - email.email_attachments.each do |attachment|
             %li
-              = link_to attachment.url do
+              = link_to attachment_admin_job_application_email_path(email, email_attachment_id: attachment, job_application_id: email.job_application_id), target: "_blank" do
                 = fa_icon('file-document')
-                = attachment.filename
+                = attachment.content.filename

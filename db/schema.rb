@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_24_140135) do
+ActiveRecord::Schema.define(version: 2021_07_05_101934) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+  enable_extension "unaccent"
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -131,7 +132,7 @@ ActiveRecord::Schema.define(version: 2021_05_24_140135) do
     t.index ["position"], name: "index_availability_ranges_on_position"
   end
 
-  create_table "benefit_job_offers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "benefit_job_offers", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "benefit_id", null: false
     t.uuid "job_offer_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -196,7 +197,7 @@ ActiveRecord::Schema.define(version: 2021_05_24_140135) do
     t.index ["position"], name: "index_contract_types_on_position"
   end
 
-  create_table "department_users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "department_users", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
     t.uuid "department_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -205,13 +206,21 @@ ActiveRecord::Schema.define(version: 2021_05_24_140135) do
     t.index ["user_id"], name: "index_department_users_on_user_id"
   end
 
-  create_table "departments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "departments", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "name_region"
     t.string "code_region"
     t.string "code"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "email_attachments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "email_id", null: false
+    t.string "content"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["email_id"], name: "index_email_attachments_on_email_id"
   end
 
   create_table "email_templates", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
@@ -233,7 +242,6 @@ ActiveRecord::Schema.define(version: 2021_05_24_140135) do
     t.string "sender_type"
     t.uuid "sender_id"
     t.boolean "is_unread", default: true
-    t.json "attachments"
     t.index ["job_application_id"], name: "index_emails_on_job_application_id"
     t.index ["sender_type", "sender_id"], name: "index_emails_on_sender_type_and_sender_id"
   end
@@ -274,7 +282,7 @@ ActiveRecord::Schema.define(version: 2021_05_24_140135) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "frequently_asked_questions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "frequently_asked_questions", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.integer "position"
     t.string "value"
@@ -414,6 +422,7 @@ ActiveRecord::Schema.define(version: 2021_05_24_140135) do
     t.uuid "contract_duration_id"
     t.boolean "featured", default: false
     t.boolean "spontaneous", default: false
+    t.text "organization_description"
     t.index ["benefit_id"], name: "index_job_offers_on_benefit_id"
     t.index ["bop_id"], name: "index_job_offers_on_bop_id"
     t.index ["category_id"], name: "index_job_offers_on_category_id"
@@ -475,24 +484,10 @@ ActiveRecord::Schema.define(version: 2021_05_24_140135) do
     t.string "service_name"
     t.string "brand_name"
     t.string "administrator_email_suffix"
-    t.string "subdomain"
-    t.string "domain"
-    t.string "logo_vertical_file_name"
-    t.string "logo_vertical_content_type"
-    t.bigint "logo_vertical_file_size"
-    t.datetime "logo_vertical_updated_at"
     t.string "logo_horizontal_file_name"
     t.string "logo_horizontal_content_type"
     t.bigint "logo_horizontal_file_size"
     t.datetime "logo_horizontal_updated_at"
-    t.string "logo_vertical_negative_file_name"
-    t.string "logo_vertical_negative_content_type"
-    t.bigint "logo_vertical_negative_file_size"
-    t.datetime "logo_vertical_negative_updated_at"
-    t.string "logo_horizontal_negative_file_name"
-    t.string "logo_horizontal_negative_content_type"
-    t.bigint "logo_horizontal_negative_file_size"
-    t.datetime "logo_horizontal_negative_updated_at"
     t.string "image_background_file_name"
     t.string "image_background_content_type"
     t.bigint "image_background_file_size"
@@ -542,6 +537,7 @@ ActiveRecord::Schema.define(version: 2021_05_24_140135) do
     t.string "testimony_logo_content_type"
     t.bigint "testimony_logo_file_size"
     t.datetime "testimony_logo_updated_at"
+    t.string "atinternet_site_id"
   end
 
   create_table "pages", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
@@ -719,6 +715,7 @@ ActiveRecord::Schema.define(version: 2021_05_24_140135) do
   add_foreign_key "cmgs", "organizations"
   add_foreign_key "department_users", "departments"
   add_foreign_key "department_users", "users"
+  add_foreign_key "email_attachments", "emails"
   add_foreign_key "emails", "job_applications"
   add_foreign_key "job_application_files", "job_application_file_types"
   add_foreign_key "job_application_files", "job_applications"

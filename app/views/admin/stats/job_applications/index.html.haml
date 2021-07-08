@@ -1,11 +1,7 @@
 - @page_title = t('.title')
 .card
   .card-header
-    .card-title.d-md-flex.align-items-center
-      = @page_title
     = render partial: 'search'
-    = link_to "Exporter", [:admin, :stats, :job_applications, @permitted_params.to_h.merge(format: :xlsx)], target: "_blank", class: "btn btn-primary btn-raised"
-    %h2.h5.text-primary.mb-0.mt-4= t('.title')
     .card.mt-2
       .card-body
         %strong.text-secondary #{@job_applications_count} candidatures

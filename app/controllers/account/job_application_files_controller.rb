@@ -73,7 +73,6 @@ class Account::JobApplicationFilesController < Account::BaseController
 
   private
 
-  # Never trust parameters from the scary internet, only allow the white list through.
   def job_application_file_params
     params.require(:job_application_file).permit(:job_application_file_type_id, :content)
   end

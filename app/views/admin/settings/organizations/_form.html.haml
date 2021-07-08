@@ -14,13 +14,17 @@
             = f.input :service_description, as: :text, input_html: { rows: 5 }
             = f.input :operator_name
             = f.input :operator_url
-            = f.input :operator_logo
+            = f.input(:operator_logo)
+            - if @organization.operator_logo.present?
+              = f.input :remove_operator_logo, as: :boolean
             = f.input :prefix_article
             = f.input :privacy_policy_url
             = f.input :matomo_site_id
             = f.input :inbound_email_config, collection: Organization.inbound_email_configs.keys.map(&:to_sym), include_blank: false
             = f.input :hours_delay_before_publishing
             = f.input :image_background
+            - if @organization.image_background.present?
+              = f.input :remove_image_background, as: :boolean
           .card-header
             .card-title= t('.title_social')
           .card-body
@@ -33,6 +37,8 @@
             = f.input :testimony_subtitle
             = f.input :testimony_url
             = f.input :testimony_logo
+            - if @organization.testimony_logo.present?
+              = f.input :remove_testimony_logo, as: :boolean
           .card-header
             .card-title= t('.title_partners')
           .card-body
@@ -40,6 +46,8 @@
               = f.input "#{field}_name"
               = f.input "#{field}_url"
               = f.input "#{field}_logo"
+              - if @organization.send("#{field}_logo").present?
+                = f.input "remove_#{field}_logo", as: :boolean
           .card-body
             .d-flex
               = button_tag(type: 'submit', class: 'btn btn-primary btn-raised mb-0 ml-auto') do

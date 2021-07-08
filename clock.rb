@@ -14,8 +14,7 @@ module Clockwork
     config[:tz] = "Europe/Paris"
   end
 
-  cond = ENV["CRON_FETCH_INBOUND"].present?
-  if cond
+  if ENV["CRON_FETCH_INBOUND"].present?
     every 5.minutes, "inbound_message_fetch_and_process" do
       ActiveRecord::Base.connection_pool.with_connection do
         InboundMessage.fetch_and_process
@@ -32,9 +31,7 @@ module Clockwork
     end
   end
 
-  cond = ENV["CRON_DAILY_SUMMARY"].present?
-  cond ||= ENV["SEND_DAILY_SUMMARY"].present?
-  if cond
+  if (ENV["SEND_DAILY_SUMMARY"] || ENV["CRON_DAILY_SUMMARY"]).present?
     every 1.day, "daily_summary", at: "08:00" do
       DailySummary.new(day: 1.day.ago).prepare_and_send
     end

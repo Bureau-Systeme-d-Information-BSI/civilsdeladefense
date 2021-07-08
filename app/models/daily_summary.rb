@@ -72,7 +72,7 @@ class DailySummary
         concerned_administrator = DailySummaryConcernedAdministrator.new(uuid: administrator.id)
       end
       concerned_administrator.add_summary_info(
-        title: job_offer.title,
+        title: "#{job_offer.identifier} #{job_offer.title}",
         link: url_helpers.edit_admin_job_offer_url(job_offer),
         kind: kind
       )

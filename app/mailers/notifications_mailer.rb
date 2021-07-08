@@ -4,8 +4,8 @@
 class NotificationsMailer < ApplicationMailer
   def daily_summary(administrator, data, service_name)
     @data = data
-    subject_with_org = t("notifications_mailer.daily_summary.subject", service_name: service_name)
+    subject = t(".subject", service_name: service_name)
 
-    mail to: administrator.email, subject: subject_with_org
+    mail to: administrator.email, subject: subject
   end
 end

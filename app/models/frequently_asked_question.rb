@@ -1,5 +1,6 @@
 class FrequentlyAskedQuestion < ApplicationRecord
   acts_as_list
+  default_scope -> { order(position: :asc) }
 
   validates :name, :value, presence: true
 end

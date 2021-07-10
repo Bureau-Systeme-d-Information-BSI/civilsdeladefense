@@ -171,10 +171,9 @@ class JobOffer < ApplicationRecord
 
   def set_timestamp
     to = aasm.to_state
-    date = updated_at || Time.zone.now
     return unless respond_to?("#{to}_at=")
 
-    send("#{to}_at=", date)
+    send("#{to}_at=", Time.zone.now)
   end
 
   def self.new_from_scratch(reference_administrator)

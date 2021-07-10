@@ -83,7 +83,7 @@ class Admin::Stats::JobOffersController < Admin::Stats::BaseController
   def fetch_base_ressources
     @bops = Bop.all
     @contract_types = ContractType.all
-    @employers = current_administrator.employers
+    @employers = Employer.tree
     @rejection_reasons = RejectionReason.all
     @age_ranges = AgeRange.all
   end

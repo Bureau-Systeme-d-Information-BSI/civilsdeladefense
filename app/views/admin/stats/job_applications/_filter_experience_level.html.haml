@@ -1,0 +1,19 @@
+- search_key = :profile_experience_level_id_in
+- ary = params.dig(:q, search_key)  || []
+- experience_levels = ExperienceLevel.all
+.dropdown.dropdown-checks.form-group
+  %button.form-control.dropdown-toggle.text-left.d-flex.align-items-center#dropdownContractType{type: 'button', data: {toggle: 'dropdown'}, aria: {haspopup: true, expanded: false}}
+    = t('simple_form.labels.defaults.experience_level')
+    - if ary.any?
+      = " (#{ary.size})"
+  .dropdown-menu.dropdown-menu-right.allow-focus{aria: {labelledby: 'dropdownContractType'}}
+    %ul
+      - experience_levels.each do |experience_level|
+        - experience_level_name = experience_level.name
+        - experience_level_id = experience_level.id
+        - input_id = "experience_level_#{experience_level_id}"
+        %li
+          .form-check.form-check-inline.w-100
+            - checked = ary.include?(experience_level_id.to_s)
+            = check_box_tag "q[#{search_key}][]", experience_level_id, checked, class: 'form-check-input', id: input_id
+            %label.form-check-label.text-truncate.d-block{for: input_id, title: experience_level_name}= experience_level_name

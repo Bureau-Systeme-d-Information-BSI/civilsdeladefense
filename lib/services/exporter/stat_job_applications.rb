@@ -30,6 +30,14 @@ class Exporter::StatJobApplications < Exporter::Base
     job_offer_bops.each do |model|
       add_row("", "", model.name)
     end
+    add_row("", "Expérience")
+    experience_levels.each do |model|
+      add_row("", "", model.name)
+    end
+    add_row("", "Niveau d'études")
+    study_levels.each do |model|
+      add_row("", "", model.name)
+    end
   end
 
   def fill_filling
@@ -160,6 +168,14 @@ class Exporter::StatJobApplications < Exporter::Base
 
   def job_offer_bops
     Bop.where(id: stat_data[:q][:job_offer_bop_id_in])
+  end
+
+  def experience_levels
+    ExperienceLevel.where(id: stat_data[:q][:profile_experience_level_id_in])
+  end
+
+  def study_levels
+    StudyLevel.where(id: stat_data[:q][:profile_study_level_id_in])
   end
 
   def i18n_key

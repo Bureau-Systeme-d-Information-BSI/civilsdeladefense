@@ -1,0 +1,19 @@
+<p>
+  <%-if @full_name.present? %>
+    Bonjour <%= @full_name %>,
+  <%- else %>
+    Bonjour,
+  <%- end %>
+</p>
+
+<p>Le message avec comme sujet "<%= @original_subject %>" n'a pas pu être pris en compte pas notre plateforme, merci de passer directement par notre site.</p>
+
+<p><%= link_to(root_url, root_url) %></p>
+
+<p>
+  Cordialement,
+</p>
+
+<p>
+  L'équipe <%= @service_name %>
+</p>

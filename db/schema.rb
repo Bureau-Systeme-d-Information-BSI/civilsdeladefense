@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_05_101934) do
+ActiveRecord::Schema.define(version: 2021_07_12_094907) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -215,7 +215,7 @@ ActiveRecord::Schema.define(version: 2021_07_05_101934) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "email_attachments", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "email_attachments", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "email_id", null: false
     t.string "content"
     t.datetime "created_at", precision: 6, null: false
@@ -364,6 +364,13 @@ ActiveRecord::Schema.define(version: 2021_07_05_101934) do
     t.datetime "updated_at", null: false
     t.index ["administrator_id"], name: "index_job_offer_actors_on_administrator_id"
     t.index ["job_offer_id"], name: "index_job_offer_actors_on_job_offer_id"
+  end
+
+  create_table "job_offer_terms", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.integer "position"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "job_offers", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
@@ -538,6 +545,9 @@ ActiveRecord::Schema.define(version: 2021_07_05_101934) do
     t.bigint "testimony_logo_file_size"
     t.datetime "testimony_logo_updated_at"
     t.string "atinternet_site_id"
+    t.string "job_offer_term_title"
+    t.string "job_offer_term_subtitle"
+    t.string "job_offer_term_warning"
   end
 
   create_table "pages", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|

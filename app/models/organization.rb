@@ -54,6 +54,14 @@ class Organization < ApplicationRecord
       "de l'"
     end
   end
+
+  def job_offer_term?
+    [
+      job_offer_term_title,
+      job_offer_term_subtitle,
+      job_offer_term_warning
+    ].all?(&:present?) && JobOfferTerm.count > 0
+  end
 end
 
 # == Schema Information
@@ -71,6 +79,9 @@ end
 #  image_background_updated_at   :datetime
 #  inbound_email_config          :integer          default("not_available")
 #  instagram_url                 :string
+#  job_offer_term_subtitle       :string
+#  job_offer_term_title          :string
+#  job_offer_term_warning        :string
 #  linkedin_url                  :string
 #  logo_horizontal_content_type  :string
 #  logo_horizontal_file_name     :string

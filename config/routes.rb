@@ -46,9 +46,12 @@ Rails.application.routes.draw do
         get :pick
       end
     end
-    resources :job_offers, path: "offresdemploi" do
+    resources :job_offer_terms, only: %i[index]
+    resources :job_offers, path: "offresdemploi", except: %i[new] do
       collection do
         post :exports, :feature
+        post :init, to: "job_offers#new"
+        get :init, to: "job_offer_terms#index"
         get :add_actor, :featured, :archived
         JobOffer.aasm.events.map(&:name).each do |event_name|
           action_name = "create_and_#{event_name}".to_sym
@@ -160,7 +163,7 @@ Rails.application.routes.draw do
       resources :job_application_file_types
       other_settings = %i[
         benefit bops email_template job_application_file_types rejection_reasons
-        contract_duration foreign_languages foreign_language_levels
+        contract_duration foreign_languages foreign_language_levels job_offer_terms
       ]
       (JobOffer::SETTINGS + other_settings).each do |setting|
         resources setting.to_s.pluralize.to_sym, except: %i[show] do

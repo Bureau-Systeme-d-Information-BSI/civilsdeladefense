@@ -28,6 +28,9 @@ end
 #  image_background_updated_at   :datetime
 #  inbound_email_config          :integer          default("not_available")
 #  instagram_url                 :string
+#  job_offer_term_subtitle       :string
+#  job_offer_term_title          :string
+#  job_offer_term_warning        :string
 #  linkedin_url                  :string
 #  logo_horizontal_content_type  :string
 #  logo_horizontal_file_name     :string

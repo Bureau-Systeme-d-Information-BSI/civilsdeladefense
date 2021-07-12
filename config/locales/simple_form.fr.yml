@@ -152,6 +152,9 @@ fr:
         remove_partner_3_logo: "Supprimer le logo partenaire 3"
         remove_testimony_logo: "Supprimer l'image d'arrière plan"
         remove_image_background: "Supprimer l'image d'arrière plan"
+        job_offer_term_title: "Titre"
+        job_offer_term_subtitle: "Sous-titre"
+        job_offer_term_warning: "Message d'erreur"
       organization_default:
         kind: "Nom du champ"
         value: "Valeur par défaut"

@@ -4,9 +4,14 @@
     .d-flex.flex-column.flex-md-row.align-items-start.align-items-md-center
       .h3.text-primary.mr-auto= t(".job_offers_count_#{controller.action_name}", count: @job_offers_unfiltered.count)
       - if can? :create, JobOffer
-        = link_to [:new, :admin, :job_offer], class: 'btn btn-primary btn-raised mb-0 mt-3 mt-md-0 ml-auto' do
-          = fa_icon 'plus', class: 'mr-1'
-          = t('.new_job_offer')
+        - if current_organization.job_offer_term?
+          = link_to [:admin, :job_offer_terms], class: 'btn btn-primary btn-raised mb-0 mt-3 mt-md-0 ml-auto' do
+            = fa_icon 'plus', class: 'mr-1'
+            = t('.new_job_offer')
+        - else
+          = link_to [:init, :admin, :job_offers], method: :post, class: 'btn btn-primary btn-raised mb-0 mt-3 mt-md-0 ml-auto' do
+            = fa_icon 'plus', class: 'mr-1'
+            = t('.new_job_offer')
     = render partial: 'search'
     = form_tag(exports_admin_job_offers_url, target: "_blank") do
       .d-flex.align-items-end{data: { controller: 'subcheckbox'}}

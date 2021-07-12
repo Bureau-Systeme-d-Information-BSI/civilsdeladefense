@@ -12,8 +12,16 @@ organization = Organization.create!(
   brand_name: "Ministère\n\ndes Armées",
   prefix_article: "le",
   service_description: desc,
-  service_description_short: desc_short
+  service_description_short: desc_short,
+  job_offer_term_title: "Bienvenue sur l'outil E-recrutement contractuels",
+  job_offer_term_subtitle: "Vous souhaitez recourir à un agent contractuel civil car",
+  job_offer_term_warning: "C'est pas possible"
 )
+[
+  "Le poste fait appel à des compétences techniques spécialisées ou nouvelles (un encart en surbrillance en passant la souris sur la première les compétences sollicitées sont trop récentes ou trop spécialisées pour recourir dans l'immédiat à un fonctionnaire)", "Car l'emploi ne requiert pas d'être honoré par un fonctionnaire formé par une école de la fonction publique (poste d'attaché uniquement).", "Vous n'avez reçu aucune candidature de fonctionnaire suite à la publication de l'annonce sur la Bourse nationale de l'emploi (BNE) et à la Place de l'emploi public (РЕР)"
+].each do |str|
+  JobOfferTerm.create(name: str)
+end
 
 Page.destroy_all
 organization ||= Organization.first

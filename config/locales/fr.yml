@@ -185,6 +185,10 @@ fr:
     job_application_files:
       update:
         success: "Le document a bien été modifié"
+        error: "Le fichier n'est pas valide, seuls les fichiers PDF de taille inférieure à 2Mo sont acceptés."
+      create:
+        success: "Le document a bien été modifié"
+        error: "Le fichier n'est pas valide, seuls les fichiers PDF de taille inférieure à 2Mo sont acceptés."
     job_applications:
       index:
         title: "Mes candidatures"

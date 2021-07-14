@@ -32,12 +32,12 @@ class Account::JobApplicationFilesController < Account::BaseController
             })
           render turbo_stream: str
         end
-        format.html { redirect_to url, notice: t(".success") }
+        format.html { redirect_to redirect_back_location, notice: t(".success") }
       else
         format.turbo_stream do
           render turbo_stream: turbo_stream_update_response(file_type)
         end
-        format.html { render :new }
+        format.html { redirect_to redirect_back_location, notice: t(".error") }
       end
     end
   end
@@ -56,7 +56,7 @@ class Account::JobApplicationFilesController < Account::BaseController
         format.turbo_stream do
           render turbo_stream: turbo_stream_update_response(file_type)
         end
-        format.html { render :edit }
+        format.html { redirect_to redirect_back_location, notice: t(".error") }
       end
     end
   end

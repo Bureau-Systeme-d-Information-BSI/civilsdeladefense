@@ -42,30 +42,15 @@ module UsersHelper
   end
 
   def hint_text_for_file(job_application, job_application_file)
-    is_validated_value = job_application_file.is_validated
-    file = job_application_file.content
-    txt = []
-    case is_validated_value
-    when 1
-      link = link_for_file(job_application, job_application_file)
-      txt << "Vous pouvez #{link_to "consulter", link, target: "_blank", class: "text-dark-gray"} ce fichier.".html_safe
-    when 2
-      link = link_for_file(job_application, job_application_file)
-      link_text = link_to "fichier", link, target: "_blank", class: "text-dark-gray"
-      txt << "Votre #{link_text} n'est pas valide, veuillez en téléverser un nouveau.".html_safe
-    else
-      if file.present?
-        link = link_for_file(job_application, job_application_file)
-        link_text = link_to "fichier", link, target: "_blank", class: "text-dark-gray"
-        txt << "Vous avez déjà téléversé ce #{link_text}, il est en attente de validation.".html_safe
-        txt << 'Pour téléverser une nouvelle version,
-                vous pouvez utiliser la zone ci-dessous.'.html_safe
-      end
+    link = [:account, job_application, job_application_file, {format: :pdf}]
+    fichier_text = link_to("fichier", link, target: "_blank", class: "text-dark-gray")
+    if job_application_file.is_validated == 1
+      "<span class=\"valid-text\">Ce #{fichier_text} a été validé !</span>".html_safe
+    elsif job_application_file.is_validated == 2
+      "<span class=\"error-text\">Votre #{fichier_text} n'est pas valide, veuillez en téléverser un nouveau.</span>".html_safe
+    elsif job_application_file.content.present?
+      "<span class=\"font-weight-bold\">Vous avez déjà téléversé ce #{fichier_text}</span>, il est en attente de validation.<br/>Pour téléverser une nouvelle version,
+              vous pouvez utiliser la zone ci-dessous.".html_safe
     end
-    txt.join("<br/>").html_safe
-  end
-
-  def link_for_file(job_application, job_application_file)
-    [:account, job_application, job_application_file, {format: :pdf}]
   end
 end

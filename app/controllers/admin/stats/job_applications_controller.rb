@@ -120,7 +120,8 @@ class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
       q: {
         employer_id_in: [], job_offer_category_id_in: [],
         contract_type_id_in: [], job_offer_bop_id_in: [],
-        profile_experience_level_id_in: [], profile_study_level_id_in: []
+        profile_experience_level_id_in: [], profile_study_level_id_in: [],
+        user_department_users_department_id_in: []
       }
     )
   end

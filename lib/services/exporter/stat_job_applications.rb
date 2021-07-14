@@ -38,6 +38,11 @@ class Exporter::StatJobApplications < Exporter::Base
     study_levels.each do |model|
       add_row("", "", model.name)
     end
+
+    add_row("", "Souhait(s) géographique(s) (département)")
+    departments.each do |model|
+      add_row("", "", model.name)
+    end
   end
 
   def fill_filling
@@ -176,6 +181,10 @@ class Exporter::StatJobApplications < Exporter::Base
 
   def study_levels
     StudyLevel.where(id: stat_data[:q][:profile_study_level_id_in])
+  end
+
+  def departments
+    Department.where(id: stat_data[:q][:user_department_users_department_id_in])
   end
 
   def i18n_key

@@ -20,7 +20,7 @@ class Exporter::Users < Exporter::Base
     add_row(
       "CANDIDATURES CANDIDAT N°#{index + 1}", "Employeur", "Date de la candidature",
       "Status", "Genre", "Expérience dans l'entreprise", "Actuellement employé",
-      "Disponibilité", "Expérience professionnel", "Niveau d'études", "Langues étrangères"
+      "Disponibilité", "Expérience professionnelle", "Niveau d'études", "Langues étrangères"
     )
     user.job_applications.each_with_index do |job_application, index|
       add_row(format_job_application(job_application, index))

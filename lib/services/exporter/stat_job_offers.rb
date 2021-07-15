@@ -30,6 +30,10 @@ class Exporter::StatJobOffers < Exporter::Base
     job_offer_bops.each do |model|
       add_row("", "", model.name)
     end
+    add_row("", "Localisation géographique")
+    data[:q][:county_in].each do |county|
+      add_row("", "", county)
+    end
   end
 
   def fill_offers

@@ -92,7 +92,7 @@ class Admin::Stats::JobOffersController < Admin::Stats::BaseController
     params.permit(
       :s, :start, :end,
       q: {
-        employer_id_in: [], job_offer_category_id_in: [],
+        employer_id_in: [], job_offer_category_id_in: [], county_in: [],
         contract_type_id_in: [], job_offer_bop_id_in: []
       }
     )

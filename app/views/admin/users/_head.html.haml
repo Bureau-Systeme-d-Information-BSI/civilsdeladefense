@@ -21,10 +21,6 @@
             - icon_name = website_url =~ /linkedin/ ? 'linkedin' : 'web'
             = fa_icon(icon_name, class: 'fa-w-15 mr-1')
             = link_to website_url, website_url, target: :_blank, class: 'text-body-color'
-      .ml-auto
-        %button{type: :button, class: :close, data: {dismiss: :modal}, aria: {label: t('buttons.close')}}
-          %span{aria: {hidden: true}}
-            = fa_icon('close')
 
     - if defined?(job_application) && !user.new_record?
       %ul.nav.nav-tabs{role: :tablist}

@@ -26,6 +26,12 @@
             - if @organization.image_background.present?
               = f.input :remove_image_background, as: :boolean
           .card-header
+            .card-title Conditions d'accès à la création d'offres
+          .card-body
+            = f.input :job_offer_term_title
+            = f.input :job_offer_term_subtitle
+            = f.input :job_offer_term_warning
+          .card-header
             .card-title= t('.title_social')
           .card-body
             - %w[linkedin_url twitter_url youtube_url instagram_url facebook_url].each do |social_url|

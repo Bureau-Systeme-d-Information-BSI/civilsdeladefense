@@ -534,6 +534,7 @@ fr:
           foreign_languages: "Langue étrangères"
           foreign_language_levels: "Niveaux de langues étrangères"
           frequently_asked_questions: "FAQ"
+          job_offer_terms: Conditions d'accès à la création d'offres
       base:
         index:
           title: "Paramètres"
@@ -698,6 +699,22 @@ fr:
           success: "Avantage en nature mis à jour !"
         destroy:
           success: "Avantage en nature supprimé !"
+      job_offer_terms:
+        index:
+          card_title:
+            zero: 'Aucune condition'
+            one: '1 condition'
+            other: '%{count} conditions'
+        new:
+          title: "Ajouter une condition"
+        edit:
+          title: "Modifier '%{name}'"
+        create:
+          success: "Condition créée !"
+        update:
+          success: "Condition mise à jour !"
+        destroy:
+          success: "Condition supprimée !"
       bops:
         index:
           card_title:

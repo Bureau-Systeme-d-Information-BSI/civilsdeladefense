@@ -1,0 +1,17 @@
+.container-fluid.pt-3{data: {controller: "job-offer-term"}}
+  .row
+    .col-12.col-md-10.mx-md-auto
+      .card
+        .card-header
+          .card-title= current_organization.job_offer_term_title
+        .card-body
+          %fieldset.form-group.rf-input-group.rf-fieldset.check_boxes.optional
+            %legend.col-form-label.pt-0= current_organization.job_offer_term_subtitle
+            = form_tag init_admin_job_offers_path(job_offer_id: params[:job_offer_id]), method: :post do
+              .form-check.rf-checkbox-group
+                - @job_offer_terms.each do |job_offer_term|
+                  .form-check.custom-control.custom-radio
+                    = check_box_tag("job_offer_term_ids[]", job_offer_term.id, false, id: job_offer_term.id, class: "form-check-input check_boxes optional", data: { "job-offer-term-target" => "checkbox", action: "job-offer-term#check" })
+                    %label{for: job_offer_term.id}= job_offer_term.name
+                .alert.alert-danger.mb-3.d-none{data: { "job-offer-term-target" => "warning"}}= current_organization.job_offer_term_warning
+                = submit_tag "Valider", name: nil, disabled: true, class: 'btn btn-primary btn-raised btn-small float-right', data: { "job-offer-term-target" => "submit" }

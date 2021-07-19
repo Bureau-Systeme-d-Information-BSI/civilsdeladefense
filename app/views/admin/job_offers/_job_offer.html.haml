@@ -64,9 +64,14 @@
                       = link_to [event_name.to_sym, :admin, job_offer], method: :patch, remote: true, class: "dropdown-item" do
                         = fa_icon('arrow-right', class: 'mr-1')
                         = t("buttons.#{ event_name }")
-                  = link_to [:new, :admin, :job_offer, {job_offer_id: job_offer.to_param}], class: "dropdown-item" do
-                    = fa_icon('content-copy', class: 'mr-1')
-                    = t("buttons.copy")
+                  - if current_organization.job_offer_term?
+                    = link_to [:admin, :job_offer_terms, {job_offer_id: job_offer.to_param}], class: "dropdown-item" do
+                      = fa_icon('content-copy', class: 'mr-1')
+                      = t("buttons.copy")
+                  - else
+                    = link_to [:init, :admin, :job_offers, {job_offer_id: job_offer.to_param}], method: :post, class: "dropdown-item" do
+                      = fa_icon('content-copy', class: 'mr-1')
+                      = t("buttons.copy")
                   - if can? :feature, :job_offer
                     - if job_offer.featured
                       = link_to [:unfeature, :admin, job_offer], class: "dropdown-item", method: :post do

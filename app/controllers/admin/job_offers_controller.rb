@@ -87,6 +87,11 @@ class Admin::JobOffersController < Admin::BaseController
 
   # GET /admin/job_offers/new
   def new
+    if current_organization.job_offer_term? && params[:job_offer_term_ids].blank?
+      notice = "Au moins un critère est requis pour accéder à la création d'une offre"
+      return redirect_back(fallback_location: [:index, :job_offers], notice: notice)
+    end
+
     @job_offer = JobOffer.new_from_source(params[:job_offer_id])
     @job_offer ||= JobOffer.new_from_scratch(current_administrator)
     @job_offer.employer = current_administrator.employer unless current_administrator.bant?

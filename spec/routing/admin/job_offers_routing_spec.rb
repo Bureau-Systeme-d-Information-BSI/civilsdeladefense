@@ -9,7 +9,15 @@ RSpec.describe Admin::JobOffersController, type: :routing do
     end
 
     it "routes to #new" do
-      expect(get: "/admin/offresdemploi/new").to route_to("admin/job_offers#new")
+      expect(post: "/admin/offresdemploi/init").to route_to("admin/job_offers#new")
+    end
+
+    it "routes to #job_offer_terms" do
+      expect(get: "/admin/offresdemploi/init").to route_to("admin/job_offer_terms#index")
+    end
+
+    it "routes to #job_offer_terms" do
+      expect(get: "/admin/job_offer_terms").to route_to("admin/job_offer_terms#index")
     end
 
     it "routes to #show" do

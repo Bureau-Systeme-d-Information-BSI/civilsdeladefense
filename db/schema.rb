@@ -430,6 +430,7 @@ ActiveRecord::Schema.define(version: 2021_07_12_094907) do
     t.boolean "featured", default: false
     t.boolean "spontaneous", default: false
     t.text "organization_description"
+    t.datetime "draft_at"
     t.index ["benefit_id"], name: "index_job_offers_on_benefit_id"
     t.index ["bop_id"], name: "index_job_offers_on_bop_id"
     t.index ["category_id"], name: "index_job_offers_on_category_id"

@@ -6,7 +6,6 @@ class JobOffer < ApplicationRecord
     category contract_type experience_level professional_category sector study_level
   ].freeze
 
-  include JobOfferStateTimestamp
   include AASM
   audited
   has_associated_audits
@@ -109,7 +108,7 @@ class JobOffer < ApplicationRecord
 
   ## States and events
   aasm column: :state, enum: true do
-    state :draft, initial: true
+    state :draft, initial: true, before_enter: :set_timestamp
     state :published, before_enter: :set_timestamp
     state :suspended, before_enter: :set_timestamp
     state :archived, before_enter: :set_timestamp
@@ -164,6 +163,17 @@ class JobOffer < ApplicationRecord
 
   def publishing_possible_at
     created_at + (organization.hours_delay_before_publishing || 0).hours
+  end
+
+  def state_date
+    send("#{state}_at") if respond_to?("#{state}_at")
+  end
+
+  def set_timestamp
+    to = aasm.to_state
+    return unless respond_to?("#{to}_at=")
+
+    send("#{to}_at=", Time.zone.now)
   end
 
   def self.new_from_scratch(reference_administrator)
@@ -290,6 +300,7 @@ end
 #  county                                           :string
 #  county_code                                      :integer
 #  description                                      :text
+#  draft_at                                         :datetime
 #  duration_contract                                :string
 #  estimate_annual_salary_gross                     :string
 #  estimate_monthly_salary_net                      :string

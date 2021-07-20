@@ -6,6 +6,8 @@ class Administrator < ApplicationRecord
     :recoverable, :trackable, :validatable,
     :confirmable, :lockable, :timeoutable
 
+  include DeactivationFlow
+
   #####################################
   # Relationships
   belongs_to :organization
@@ -182,22 +184,6 @@ class Administrator < ApplicationRecord
     end
   end
 
-  def active?
-    deleted_at.blank?
-  end
-
-  def inactive?
-    deleted_at.present?
-  end
-
-  def deactivate
-    update_attribute(:deleted_at, Time.current)
-  end
-
-  def reactivate
-    update_attribute(:deleted_at, nil)
-  end
-
   def transfer!(email)
     administrator = Administrator.find_by(email: email.downcase) || Administrator.new(email: email)
     administrator.inviter ||= self
@@ -235,6 +221,7 @@ end
 #  last_sign_in_at                 :datetime
 #  last_sign_in_ip                 :inet
 #  locked_at                       :datetime
+#  marked_for_deactivation_on      :date
 #  photo_content_type              :string
 #  photo_file_name                 :string
 #  photo_file_size                 :bigint

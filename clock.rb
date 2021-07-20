@@ -22,12 +22,19 @@ module Clockwork
     end
   end
 
-  cond = ENV["CRON_PURGE_USERS"].present?
-  cond &&= ENV["NBR_DAYS_INACTIVITY_PERIOD_BEFORE_DELETION"].present?
-  cond &&= ENV["NBR_DAYS_NOTICE_PERIOD_BEFORE_DELETION"].present?
+  cond = ENV["DAYS_INACTIVITY_PERIOD_BEFORE_DELETION"].present?
+  cond &&= ENV["DAYS_NOTICE_PERIOD_BEFORE_DELETION"].present?
   if cond
     every 1.day, "purge_users", at: "03:00" do
       User.destroy_when_too_old
+    end
+  end
+
+  cond = ENV["DAYS_INACTIVITY_PERIOD_BEFORE_DEACTIVATION"].present?
+  cond &&= ENV["DAYS_NOTICE_PERIOD_BEFORE_DEACTIVATION"].present?
+  if cond
+    every 1.day, "purge_administrators", at: "03:00" do
+      Administrator.deactivate_when_too_old
     end
   end
 

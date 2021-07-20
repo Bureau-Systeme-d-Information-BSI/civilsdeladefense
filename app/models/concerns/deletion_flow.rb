@@ -11,35 +11,37 @@ module DeletionFlow
   # Deletion management class method
   module ClassMethods
     def destroy_when_too_old
-      where("last_sign_in_at < ?", notice_period_target_date).all.each do |user|
+      target_date = days_notice_period_before_deletion.days.ago.to_date
+      where("marked_for_deletion_on < ?", target_date)
+        .where("last_sign_in_at < ?", days_inactivity_period_before_deletion.days.ago)
+        .each do |user|
+          email = user.email
+          name = user.full_name
+          org_id = user.organization_id
+          user.destroy
+          ApplicantNotificationsMailer.deletion_notice(email, name, org_id).deliver_now
+        end
+
+      where("last_sign_in_at < ?", notice_period_target_date).each do |user|
         user.mark_for_deletion!
         ApplicantNotificationsMailer.notice_period_before_deletion(user.id).deliver_now
-      end
-      target_date = nbr_days_notice_period_before_deletion.days.ago.to_date
-      where("marked_for_deletion_on < ?", target_date)
-        .where("last_sign_in_at < ?", notice_period_target_date).all.each do |user|
-        email = user.email
-        name = user.full_name
-        org_id = user.organization_id
-        user.destroy
-        ApplicantNotificationsMailer.deletion_notice(email, name, org_id).deliver_now
       end
     end
 
     def notice_period_target_date
-      nbr_days_diff = nbr_days_inactivity_period_before_deletion -
-        nbr_days_notice_period_before_deletion
-      nbr_days_diff.days.ago
+      days_diff = days_inactivity_period_before_deletion -
+        days_notice_period_before_deletion
+      days_diff.days.ago
     end
 
     private
 
-    def nbr_days_inactivity_period_before_deletion
-      ENV["NBR_DAYS_INACTIVITY_PERIOD_BEFORE_DELETION"].to_i
+    def days_inactivity_period_before_deletion
+      ENV["DAYS_INACTIVITY_PERIOD_BEFORE_DELETION"].to_i
     end
 
-    def nbr_days_notice_period_before_deletion
-      ENV["NBR_DAYS_NOTICE_PERIOD_BEFORE_DELETION"].to_i
+    def days_notice_period_before_deletion
+      ENV["DAYS_NOTICE_PERIOD_BEFORE_DELETION"].to_i
     end
   end
 

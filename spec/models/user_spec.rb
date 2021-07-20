@@ -3,40 +3,38 @@
 require "rails_helper"
 
 RSpec.describe User, type: :model do
-  before(:all) do
-    @user = create(:confirmed_user)
-  end
+  let(:user) { create(:confirmed_user) }
+  let(:another_user) { create(:confirmed_user) }
 
   it "is valid with valid attributes" do
-    expect(@user).to be_valid
+    expect(user).to be_valid
   end
 
   it "can be suspended" do
     text = "Bad guy"
-    expect(@user.suspended_at).to be_nil
-    expect(@user.active_for_authentication?).to be_truthy
-    @user.suspend!(text)
-    expect(@user.suspended?).to be_truthy
-    expect(@user.suspended_at).to_not be_nil
-    expect(@user.suspension_reason).to eq(text)
-    expect(@user.active_for_authentication?).to be_falsey
+    expect(user.suspended_at).to be_nil
+    expect(user.active_for_authentication?).to be_truthy
+    user.suspend!(text)
+    expect(user.suspended?).to be_truthy
+    expect(user.suspended_at).to_not be_nil
+    expect(user.suspension_reason).to eq(text)
+    expect(user.active_for_authentication?).to be_falsey
   end
 
   it "cannot be destroyed when suspended" do
-    @user.unsuspend!
-    expect { @user.destroy }.to change(User, :count).by(-1)
+    user.unsuspend!
+    expect { user.destroy }.to change(User, :count).by(-1)
 
-    @another_user = create(:confirmed_user)
-    @another_user.unsuspend!
-    @another_user.suspend!("Bad guy")
-    expect(@another_user.suspended?).to be_truthy
-    expect { @another_user.destroy }.to change(User, :count).by(0)
+    another_user.unsuspend!
+    another_user.suspend!("Bad guy")
+    expect(another_user.suspended?).to be_truthy
+    expect { another_user.destroy }.to change(User, :count).by(0)
   end
 
   it "should purge associated objects when destroyed" do
     job_application_file_type = create(:job_application_file_type)
 
-    job_application = create(:job_application, user: @user)
+    job_application = create(:job_application, user: user)
     job_application_file = build(:job_application_file,
       job_application_file_type: job_application_file_type)
     job_application.job_application_files << job_application_file
@@ -44,37 +42,30 @@ RSpec.describe User, type: :model do
     count = job_application.job_application_files.count
     expect(count).to eq(1)
 
-    @user.unsuspend!
     count_before = JobApplicationFile.count
     expect(count_before).to eq(1)
 
-    @user.destroy
+    user.destroy
     count_after = JobApplicationFile.count
     expect(count_after).to eq(count_before - 1)
   end
 
-  it "should compute notice period difference in days" do
-    ENV["NBR_DAYS_INACTIVITY_PERIOD_BEFORE_DELETION"] = "100"
-    ENV["NBR_DAYS_NOTICE_PERIOD_BEFORE_DELETION"] = "20"
-    expect(User.notice_period_target_date.to_date).to eq(80.days.ago.to_date)
-  end
-
   it "should correctly answer if already applied or not" do
     job_application_file_type = create(:job_application_file_type)
-    job_application = create(:job_application, user: @user)
+    job_application = create(:job_application, user: user)
     expect(job_application).to be_valid
 
     create(:job_application_file,
       job_application: job_application,
       job_application_file_type: job_application_file_type)
 
-    already_applied = @user.already_applied?(job_application.job_offer)
+    already_applied = user.already_applied?(job_application.job_offer)
 
     expect(already_applied).to be_truthy
 
     another_job_offer = create(:job_offer)
 
-    another_already_applied = @user.already_applied?(another_job_offer)
+    another_already_applied = user.already_applied?(another_job_offer)
 
     expect(another_already_applied).to be_falsey
   end
@@ -89,7 +80,7 @@ RSpec.describe User, type: :model do
       }
     ]
     job_application = create(:job_application,
-      user: @user,
+      user: user,
       job_application_files_attributes: jaf_attrs)
 
     expect(job_application).to be_valid
@@ -103,18 +94,18 @@ RSpec.describe User, type: :model do
       }
     ]
     job_application2 = create(:job_application,
-      user: @user,
+      user: user,
       job_application_files_attributes: jaf_attrs)
 
     expect(job_application2).to be_valid
 
-    expect(@user.job_applications_active.count).to eq(2)
+    expect(user.job_applications_active.count).to eq(2)
 
     job_offer = job_application2.job_offer
     job_offer.publish!
     job_offer.archive!
 
-    expect(@user.job_applications_active.count).to eq(1)
+    expect(user.job_applications_active.count).to eq(1)
   end
 
   describe "required password" do
@@ -138,6 +129,45 @@ RSpec.describe User, type: :model do
 
       it "is required" do
         expect(user).to be_invalid
+      end
+    end
+  end
+
+  it "should compute notice period difference in days" do
+    ENV["DAYS_INACTIVITY_PERIOD_BEFORE_DELETION"] = "100"
+    ENV["DAYS_NOTICE_PERIOD_BEFORE_DELETION"] = "20"
+    expect(User.notice_period_target_date.to_date).to eq(80.days.ago.to_date)
+  end
+
+  describe "automatic deletion" do
+    before do
+      ENV["DAYS_INACTIVITY_PERIOD_BEFORE_DELETION"] = "100"
+      ENV["DAYS_NOTICE_PERIOD_BEFORE_DELETION"] = "20"
+      user.reload
+      User.destroy_when_too_old
+    end
+
+    context "connected long time ago" do
+      let!(:user) { create(:user, last_sign_in_at: 81.days.ago) }
+
+      it "marked" do
+        expect(user.reload.marked_for_deletion_on).to eq(Time.zone.now.to_date)
+      end
+    end
+
+    context "marked but has not connected since" do
+      let!(:user) { create(:user, marked_for_deletion_on: 21.days.ago, last_sign_in_at: 101.days.ago) }
+
+      it "delete" do
+        expect(User.exists?(user.id)).to eq(false)
+      end
+    end
+
+    context "marked but has connected since" do
+      let!(:user) { create(:user, marked_for_deletion_on: 21.days.ago, last_sign_in_at: Time.zone.now) }
+
+      it "doesn't delete" do
+        expect(User.exists?(user.id)).to eq(true)
       end
     end
   end

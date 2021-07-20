@@ -1,0 +1,19 @@
+<p>
+  <%-if @user_full_name.present? %>
+  Bonjour <%= @user_full_name %>,
+  <%- else %>
+  Bonjour,
+  <%- end %>
+</p>
+
+<p>
+  Nous vous confirmons la désactivation de votre compte utilisateur. Pour accéder à nouveau à l'application, nous vous invitons à saisir le responsable fonctionnel de l'application afin qu'il procède à la réactivation de votre compte.
+</p>
+
+<p>
+  Cordialement,
+</p>
+
+<p>
+  L'équipe <%= @service_name %>
+</p>

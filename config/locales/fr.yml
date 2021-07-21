@@ -1035,6 +1035,8 @@ fr:
               file_size_is_less_than: "Fichier trop volumineux, doit être max. 2Mo"
         job_offer:
           attributes:
+            base:
+              pep_or_bne: "PEP et/ou BNE doit être remplis"
             title:
               brackets: "ne doit pas contenir de parenthèse"
               f_h: "doit finir par F/H"

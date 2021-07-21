@@ -20,6 +20,8 @@ FactoryBot.define do
     sector { Sector.all.sample }
     estimate_monthly_salary_net { "3k€" }
     estimate_annual_salary_gross { "36k€" }
+    bne_value { "inconnue" }
+    bne_date { 1.day.ago }
   end
 end
 
@@ -33,6 +35,8 @@ end
 #  after_meeting_rejected_job_applications_count    :integer          default(0), not null
 #  archived_at                                      :datetime
 #  available_immediately                            :boolean          default(FALSE)
+#  bne_date                                         :date
+#  bne_value                                        :string
 #  city                                             :string
 #  contract_drafting_job_applications_count         :integer          default(0), not null
 #  contract_feedback_waiting_job_applications_count :integer          default(0), not null
@@ -56,6 +60,8 @@ end
 #  notifications_count                              :integer          default(0)
 #  option_photo                                     :integer
 #  organization_description                         :text
+#  pep_date                                         :date
+#  pep_value                                        :string
 #  phone_meeting_job_applications_count             :integer          default(0), not null
 #  phone_meeting_rejected_job_applications_count    :integer          default(0), not null
 #  postcode                                         :string

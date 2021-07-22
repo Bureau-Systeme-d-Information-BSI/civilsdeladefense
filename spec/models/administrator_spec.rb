@@ -132,40 +132,27 @@ RSpec.describe Administrator, type: :model do
     }.to change(Administrator, :count).by(3)
   end
 
-  describe "with ADMINISTRATOR_EMAIL_SUFFIX env variable defined" do
-    before(:all) do
-      ENV["ADMINISTRATOR_EMAIL_SUFFIX"] = "@gmail.com"
-    end
+  describe "administrator_email_suffix" do
+    let(:organization) { Organization.first }
 
-    after(:all) do
-      ENV["ADMINISTRATOR_EMAIL_SUFFIX"] = nil
+    before do
+      organization.update(administrator_email_suffix: "@gmail.com")
     end
 
     it "is valid with valid attributes" do
       administrator_valid = create(:administrator, email: "admin@gmail.com")
       expect(administrator_valid).to be_valid
+
+      organization.update(administrator_email_suffix: "@laposte.net")
+      expect(administrator_valid.reload).to be_invalid
     end
 
     it "is invalid with invalid attributes" do
       administrator_invalid = build(:administrator, email: "admin@laposte.net")
       expect(administrator_invalid).to be_invalid
-    end
 
-    it "is valid with valid attributes and org takes precedence" do
-      administrator_valid = create(:administrator, email: "admin@gmail.com")
-      expect(administrator_valid).to be_valid
-
-      org = administrator_valid.organization
-      org.update_attribute(:administrator_email_suffix, "@laposte.net")
-      expect(administrator_valid).to be_invalid
-    end
-
-    it "is invalid with invalid attributes and org takes precedence" do
+      organization.update(administrator_email_suffix: "@laposte.net")
       administrator_invalid = build(:administrator, email: "admin@laposte.net")
-      expect(administrator_invalid).to be_invalid
-
-      org = administrator_invalid.organization
-      org.update_attribute(:administrator_email_suffix, "@laposte.net")
       expect(administrator_invalid).to be_valid
     end
   end

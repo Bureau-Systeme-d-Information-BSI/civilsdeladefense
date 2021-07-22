@@ -23,7 +23,7 @@ class Admin::Settings::OrganizationsController < Admin::Settings::BaseController
 
   def update_security
     if @organization.update(security_permitted_params)
-      redirect_to({action: :edit}, notice: t(".success"))
+      redirect_to({action: :edit_security}, notice: t(".success"))
     else
       @organization_form_general = @organization_cloned
       @organization_form_display = @organization_cloned
@@ -62,7 +62,6 @@ class Admin::Settings::OrganizationsController < Admin::Settings::BaseController
   end
 
   def security_permitted_params
-    permitted_fields = %i[administrator_email_suffix]
-    params.require(:organization).permit(permitted_fields)
+    params.require(:organization).permit(:administrator_email_suffix)
   end
 end

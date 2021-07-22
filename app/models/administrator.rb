@@ -144,15 +144,11 @@ class Administrator < ApplicationRecord
     pending_any_confirmation(&block)
   end
 
-  # If global suffix is provided, we should not let admin be invited when their email is not suffixed correctly.
-  # Adds a thin layer of security to force admin to invite only other admin with their official email address.
   def email_conformance
-    suffix = organization.try(:administrator_email_suffix)
-    suffix ||= ENV["ADMINISTRATOR_EMAIL_SUFFIX"]
+    suffixes = organization.administrator_email_suffix&.split("\r\n")
+    return if suffixes.blank? || suffixes.map { |suffix| email.ends_with?(suffix) }.any?
 
-    return if suffix.blank? || email.ends_with?(suffix)
-
-    msg = I18n.t("activerecord.errors.messages.invalid_suffix", suffix: suffix)
+    msg = I18n.t("activerecord.errors.messages.invalid_suffix", suffixes: suffixes.join(" ou "))
     errors.add(:email, msg)
   end
 

@@ -112,7 +112,7 @@ fr:
         option_website_url: "Site internet (URL)"
         identifier: "Référence de l'offre"
       organization:
-        administrator_email_suffix: "Suffixe d'email obligatoire pour les comptes admin"
+        administrator_email_suffix: "Suffixes d'email obligatoire pour les comptes admin"
         brand_name: "Entité bloc marque"
         prefix_article: "Article défini de l'entité légale (opérateur ou bloc marque)"
         hours_delay_before_publishing: "Délai incompressible avant de pouvoir publier une annonce"

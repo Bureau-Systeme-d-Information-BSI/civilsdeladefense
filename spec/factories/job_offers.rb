@@ -72,7 +72,6 @@ end
 #  to_be_met_job_applications_count                 :integer          default(0), not null
 #  created_at                                       :datetime         not null
 #  updated_at                                       :datetime         not null
-#  benefit_id                                       :uuid
 #  bop_id                                           :uuid
 #  category_id                                      :uuid
 #  contract_duration_id                             :uuid
@@ -88,7 +87,6 @@ end
 #
 # Indexes
 #
-#  index_job_offers_on_benefit_id                (benefit_id)
 #  index_job_offers_on_bop_id                    (bop_id)
 #  index_job_offers_on_category_id               (category_id)
 #  index_job_offers_on_contract_duration_id      (contract_duration_id)

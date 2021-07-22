@@ -367,7 +367,7 @@ ActiveRecord::Schema.define(version: 2021_07_12_094907) do
     t.index ["job_offer_id"], name: "index_job_offer_actors_on_job_offer_id"
   end
 
-  create_table "job_offer_terms", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "job_offer_terms", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.integer "position"
     t.datetime "created_at", precision: 6, null: false
@@ -426,13 +426,11 @@ ActiveRecord::Schema.define(version: 2021_07_12_094907) do
     t.datetime "suspended_at"
     t.uuid "bop_id"
     t.uuid "organization_id"
-    t.uuid "benefit_id"
     t.uuid "contract_duration_id"
     t.boolean "featured", default: false
     t.boolean "spontaneous", default: false
     t.text "organization_description"
     t.datetime "draft_at"
-    t.index ["benefit_id"], name: "index_job_offers_on_benefit_id"
     t.index ["bop_id"], name: "index_job_offers_on_bop_id"
     t.index ["category_id"], name: "index_job_offers_on_category_id"
     t.index ["contract_duration_id"], name: "index_job_offers_on_contract_duration_id"

@@ -435,7 +435,6 @@ ActiveRecord::Schema.define(version: 2021_07_21_090735) do
     t.date "pep_date"
     t.string "bne_value"
     t.date "bne_date"
-    t.index ["benefit_id"], name: "index_job_offers_on_benefit_id"
     t.index ["bop_id"], name: "index_job_offers_on_bop_id"
     t.index ["category_id"], name: "index_job_offers_on_category_id"
     t.index ["contract_duration_id"], name: "index_job_offers_on_contract_duration_id"

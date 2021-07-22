@@ -20,6 +20,13 @@ FactoryBot.define do
     sector { Sector.all.sample }
     estimate_monthly_salary_net { "3k€" }
     estimate_annual_salary_gross { "36k€" }
+    bne_value { "inconnue" }
+    bne_date { 1.day.ago }
+
+    factory :published_job_offer do
+      published_at { 40.days.before }
+      state { :published }
+    end
   end
 end
 
@@ -33,6 +40,8 @@ end
 #  after_meeting_rejected_job_applications_count    :integer          default(0), not null
 #  archived_at                                      :datetime
 #  available_immediately                            :boolean          default(FALSE)
+#  bne_date                                         :date
+#  bne_value                                        :string
 #  city                                             :string
 #  contract_drafting_job_applications_count         :integer          default(0), not null
 #  contract_feedback_waiting_job_applications_count :integer          default(0), not null
@@ -56,6 +65,8 @@ end
 #  notifications_count                              :integer          default(0)
 #  option_photo                                     :integer
 #  organization_description                         :text
+#  pep_date                                         :date
+#  pep_value                                        :string
 #  phone_meeting_job_applications_count             :integer          default(0), not null
 #  phone_meeting_rejected_job_applications_count    :integer          default(0), not null
 #  postcode                                         :string
@@ -72,7 +83,6 @@ end
 #  to_be_met_job_applications_count                 :integer          default(0), not null
 #  created_at                                       :datetime         not null
 #  updated_at                                       :datetime         not null
-#  benefit_id                                       :uuid
 #  bop_id                                           :uuid
 #  category_id                                      :uuid
 #  contract_duration_id                             :uuid
@@ -88,7 +98,6 @@ end
 #
 # Indexes
 #
-#  index_job_offers_on_benefit_id                (benefit_id)
 #  index_job_offers_on_bop_id                    (bop_id)
 #  index_job_offers_on_category_id               (category_id)
 #  index_job_offers_on_contract_duration_id      (contract_duration_id)

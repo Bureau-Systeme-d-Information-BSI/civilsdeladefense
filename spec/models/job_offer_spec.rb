@@ -7,6 +7,35 @@ RSpec.describe JobOffer, type: :model do
   let(:employer) { create(:employer) }
   let(:organization) { job_offer.organization }
 
+  describe "pep or bne" do
+    let(:job_offer) do
+      build(
+        :job_offer,
+        pep_value: pep_value, pep_date: 1.day.ago,
+        bne_value: bne_value, bne_date: 1.day.ago
+      )
+    end
+    let(:pep_value) { "TEST" }
+    let(:bne_value) { "TEST" }
+
+    context "when create" do
+      context "with values" do
+        it "is valid" do
+          expect(job_offer.save).to eq(true)
+        end
+      end
+
+      context "without values" do
+        let(:pep_value) { nil }
+        let(:bne_value) { nil }
+
+        it "is unvalid" do
+          expect(job_offer.save).to eq(false)
+        end
+      end
+    end
+  end
+
   describe "contract_duration" do
     let(:job_offer) do
       build(:job_offer, contract_type: contract_type, contract_duration: contract_duration)
@@ -217,6 +246,8 @@ end
 #  after_meeting_rejected_job_applications_count    :integer          default(0), not null
 #  archived_at                                      :datetime
 #  available_immediately                            :boolean          default(FALSE)
+#  bne_date                                         :date
+#  bne_value                                        :string
 #  city                                             :string
 #  contract_drafting_job_applications_count         :integer          default(0), not null
 #  contract_feedback_waiting_job_applications_count :integer          default(0), not null
@@ -240,6 +271,8 @@ end
 #  notifications_count                              :integer          default(0)
 #  option_photo                                     :integer
 #  organization_description                         :text
+#  pep_date                                         :date
+#  pep_value                                        :string
 #  phone_meeting_job_applications_count             :integer          default(0), not null
 #  phone_meeting_rejected_job_applications_count    :integer          default(0), not null
 #  postcode                                         :string
@@ -256,7 +289,6 @@ end
 #  to_be_met_job_applications_count                 :integer          default(0), not null
 #  created_at                                       :datetime         not null
 #  updated_at                                       :datetime         not null
-#  benefit_id                                       :uuid
 #  bop_id                                           :uuid
 #  category_id                                      :uuid
 #  contract_duration_id                             :uuid
@@ -272,7 +304,6 @@ end
 #
 # Indexes
 #
-#  index_job_offers_on_benefit_id                (benefit_id)
 #  index_job_offers_on_bop_id                    (bop_id)
 #  index_job_offers_on_category_id               (category_id)
 #  index_job_offers_on_contract_duration_id      (contract_duration_id)

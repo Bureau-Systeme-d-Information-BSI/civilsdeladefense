@@ -426,13 +426,15 @@ ActiveRecord::Schema.define(version: 2021_07_22_125727) do
     t.datetime "suspended_at"
     t.uuid "bop_id"
     t.uuid "organization_id"
-    t.uuid "benefit_id"
     t.uuid "contract_duration_id"
     t.boolean "featured", default: false
     t.boolean "spontaneous", default: false
     t.text "organization_description"
     t.datetime "draft_at"
-    t.index ["benefit_id"], name: "index_job_offers_on_benefit_id"
+    t.string "pep_value"
+    t.date "pep_date"
+    t.string "bne_value"
+    t.date "bne_date"
     t.index ["bop_id"], name: "index_job_offers_on_bop_id"
     t.index ["category_id"], name: "index_job_offers_on_category_id"
     t.index ["contract_duration_id"], name: "index_job_offers_on_contract_duration_id"

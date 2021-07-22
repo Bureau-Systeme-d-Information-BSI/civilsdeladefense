@@ -68,9 +68,18 @@
                         = f.input :contract_type_id, collection: options, required: true
                       .col-12.col-md-3
                         = f.association :contract_duration
-                    .row
                       .col-12.col-md-3
                         = f.input :contract_start_on, as: :string
+                    .row
+                      .col-12.col-md-3
+                        = f.input :pep_value
+                      .col-12.col-md-6
+                        = f.input :pep_date, as: :string
+                    .row
+                      .col-12.col-md-3
+                        = f.input :bne_value
+                      .col-12.col-md-6
+                        = f.input :bne_date, as: :string
                     .row
                       .col-12.col-md-3
                         = f.association :benefits, as: :check_boxes

@@ -21,7 +21,7 @@
             = f.input :privacy_policy_url
             = f.input :matomo_site_id
             = f.input :inbound_email_config, collection: Organization.inbound_email_configs.keys.map(&:to_sym), include_blank: false
-            = f.input :hours_delay_before_publishing
+            = f.input :days_before_publishing
             = f.input :image_background
             - if @organization.image_background.present?
               = f.input :remove_image_background, as: :boolean

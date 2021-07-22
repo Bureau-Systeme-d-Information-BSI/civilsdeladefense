@@ -68,8 +68,8 @@ end
 #  id                            :uuid             not null, primary key
 #  administrator_email_suffix    :string
 #  brand_name                    :string
+#  days_before_publishing        :integer
 #  facebook_url                  :string
-#  hours_delay_before_publishing :integer
 #  image_background_content_type :string
 #  image_background_file_name    :string
 #  image_background_file_size    :bigint

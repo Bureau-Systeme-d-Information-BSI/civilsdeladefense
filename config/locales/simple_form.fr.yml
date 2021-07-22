@@ -115,7 +115,7 @@ fr:
         administrator_email_suffix: "Suffixe d'email obligatoire pour les comptes admin"
         brand_name: "Entité bloc marque"
         prefix_article: "Article défini de l'entité légale (opérateur ou bloc marque)"
-        hours_delay_before_publishing: "Délai incompressible avant de pouvoir publier une annonce"
+        days_before_publishing: "Délai incompressible avant de pouvoir publier une annonce"
         image_background: "Image d'arrière plan"
         inbound_email_config: "Configuration passerelle mail/plateforme"
         logo_operator: "Logo opérateur"
@@ -227,7 +227,7 @@ autres membres de votre équipe.'
         website_url: "LinkedIn, Viadeo, portfolio, etc."
       organization:
         privacy_policy_url: "Ce lien est utilisé dans le formulaire de soumission d'une candidature"
-        hours_delay_before_publishing: "Indiquez un nombre d'heures. Laissez à 0 ou vide pour supprimer complètement le délai avant publication"
+        days_before_publishing: "Indiquez un nombre de jours ouvrés. Laissez à 0 ou vide pour supprimer complètement le délai avant publication"
         brand_name: "À mettre sur plusieurs lignes pour être conforme au bloc marque avec la Marianne. Ex: République Française, Ministère des Armées, etc."
         prefix_article: "Utilisé dans les phrases incluant le nom de l'entité. Ex: le, la, l'."
       user:

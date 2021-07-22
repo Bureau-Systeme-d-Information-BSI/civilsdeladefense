@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_12_094907) do
+ActiveRecord::Schema.define(version: 2021_07_22_125727) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -367,7 +367,7 @@ ActiveRecord::Schema.define(version: 2021_07_12_094907) do
     t.index ["job_offer_id"], name: "index_job_offer_actors_on_job_offer_id"
   end
 
-  create_table "job_offer_terms", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "job_offer_terms", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.integer "position"
     t.datetime "created_at", precision: 6, null: false
@@ -506,7 +506,7 @@ ActiveRecord::Schema.define(version: 2021_07_12_094907) do
     t.string "privacy_policy_url"
     t.integer "inbound_email_config", default: 0
     t.string "matomo_site_id"
-    t.integer "hours_delay_before_publishing"
+    t.integer "days_before_publishing"
     t.string "service_description"
     t.string "service_description_short"
     t.string "prefix_article"

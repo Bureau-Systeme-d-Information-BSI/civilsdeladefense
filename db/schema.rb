@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_21_090735) do
+ActiveRecord::Schema.define(version: 2021_07_22_125727) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -508,7 +508,7 @@ ActiveRecord::Schema.define(version: 2021_07_21_090735) do
     t.string "privacy_policy_url"
     t.integer "inbound_email_config", default: 0
     t.string "matomo_site_id"
-    t.integer "hours_delay_before_publishing"
+    t.integer "days_before_publishing"
     t.string "service_description"
     t.string "service_description_short"
     t.string "prefix_article"

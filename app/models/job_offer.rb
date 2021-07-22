@@ -159,7 +159,7 @@ class JobOffer < ApplicationRecord
   end
 
   def delay_before_publishing_over?
-    delay = organization&.hours_delay_before_publishing
+    delay = organization&.days_before_publishing
     if published_at.present?
       true
     elsif delay.blank? || delay.zero?
@@ -167,12 +167,12 @@ class JobOffer < ApplicationRecord
     elsif created_at.nil?
       false
     else
-      Time.zone.now > (created_at + delay.hours)
+      Time.zone.now > (created_at + delay.days)
     end
   end
 
   def publishing_possible_at
-    created_at + (organization.hours_delay_before_publishing || 0).hours
+    created_at + (organization.days_before_publishing || 0).working.days
   end
 
   def state_date

@@ -55,7 +55,7 @@ class Admin::Settings::OrganizationsController < Admin::Settings::BaseController
       testimony_title testimony_subtitle testimony_url testimony_logo
       linkedin_url twitter_url youtube_url instagram_url facebook_url
       image_background remove_image_background
-      matomo_site_id inbound_email_config hours_delay_before_publishing
+      matomo_site_id inbound_email_config days_before_publishing
       job_offer_term_title job_offer_term_subtitle job_offer_term_warning
     ]
     params.require(:organization).permit(permitted_fields)

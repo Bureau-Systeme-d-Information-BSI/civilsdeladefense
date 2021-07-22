@@ -113,27 +113,27 @@ RSpec.describe JobOffer, type: :model do
   end
 
   it "should prevent publishing according to organization config" do
-    organization.update(hours_delay_before_publishing: 1)
+    organization.update(days_before_publishing: 1)
 
     expect { job_offer.publish! }.to raise_error(AASM::InvalidTransition)
   end
 
   it "should allow publishing according to organization config" do
-    organization.update(hours_delay_before_publishing: nil)
+    organization.update(days_before_publishing: nil)
 
     expect { job_offer.publish! }.to_not raise_error
   end
 
   it "should allow publishing according to organization config" do
-    organization.update(hours_delay_before_publishing: 0)
+    organization.update(days_before_publishing: 0)
 
     expect { job_offer.publish! }.to_not raise_error
   end
 
   it "should compute publishing_possible_at" do
-    organization.update(hours_delay_before_publishing: 2)
+    organization.update(days_before_publishing: 2)
 
-    expect(job_offer.publishing_possible_at).to eq(job_offer.created_at + 2.hours)
+    expect(job_offer.publishing_possible_at).to eq(job_offer.created_at + 2.working.days)
   end
 
   it "should correctly find current most advanced job application state" do

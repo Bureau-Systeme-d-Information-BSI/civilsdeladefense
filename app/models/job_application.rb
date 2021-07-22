@@ -34,6 +34,8 @@ class JobApplication < ApplicationRecord
   accepts_nested_attributes_for :job_application_files
 
   validates :user_id, uniqueness: {scope: :job_offer_id}, on: :create, allow_nil: true
+  validate :cant_accept_before_delay
+  validate :complete_files_before_draft_contract
 
   before_validation :set_employer
   before_save :compute_notifications_counter
@@ -167,23 +169,32 @@ class JobApplication < ApplicationRecord
   end
 
   # Return two arrays
-  # First with JobApplicationFile already existing
-  # Second with JobApplicationFileType
+  # First with JobApplicationFile already existing or that need to be fill
+  # Second with JobApplicationFileType where no instance exist in first array
   def files_to_be_provided
-    JobApplicationFileType.all.each_with_object([[], []]) do |file_type, memo|
+    result = {}
+    result[:must_be_provided_files] = []
+    result[:optional_file_types] = []
+
+    JobApplicationFileType.all.each do |file_type|
       existing_file = job_application_files.detect { |file|
         file.job_application_file_type == file_type
       }
 
+      from_state_as_val = JobApplication.states[file_type.from_state]
+      current_state_as_val = JobApplication.states[state]
+
       if existing_file
-        memo.first << existing_file
-      elsif file_type.is_mandatory?(state) && file_type.by_default
+        result[:must_be_provided_files] << existing_file
+      elsif (current_state_as_val >= from_state_as_val) && file_type.by_default
         virgin = job_application_files.build(job_application_file_type: file_type)
-        memo.first << virgin
+        result[:must_be_provided_files] << virgin
       else
-        memo.last << file_type
+        result[:optional_file_types] << file_type
       end
     end
+
+    result
   end
 
   def send_confirmation_email
@@ -217,6 +228,26 @@ class JobApplication < ApplicationRecord
 
   def rejected_state?
     REJECTED_STATES.include?(state)
+  end
+
+  def cant_accept_before_delay
+    return if state.to_s != "accepted"
+    return if state_was.to_s == "accepted"
+    return if job_offer.pep_date.blank?
+    return if job_offer.pep_date + 30.days < Time.zone.now
+
+    errors.add(:state, :cant_accept_before_delay)
+  end
+
+  def complete_files_before_draft_contract
+    return if state.to_s != "contract_drafting"
+
+    default_types = JobApplicationFileType.by_default(:accepted).pluck(:id)
+    validated_types = job_application_files.where(is_validated: true).pluck(:job_application_file_type_id)
+
+    return if (default_types - validated_types).blank?
+
+    errors.add(:state, :complete_files_before_draft_contract)
   end
 
   class << self

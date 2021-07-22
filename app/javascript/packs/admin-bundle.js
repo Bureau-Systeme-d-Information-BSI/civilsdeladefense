@@ -82,4 +82,16 @@ document.addEventListener('turbolinks:load', function() {
     altFormat: 'd/m/Y',
     dateFormat: 'Y-m-d'
   })
+  flatpickr('#job_offer_pep_date', {
+    locale: French,
+    altInput: true,
+    altFormat: 'd/m/Y',
+    dateFormat: 'Y-m-d'
+  })
+  flatpickr('#job_offer_bne_date', {
+    locale: French,
+    altInput: true,
+    altFormat: 'd/m/Y',
+    dateFormat: 'Y-m-d'
+  })
 })

@@ -111,6 +111,10 @@ fr:
         option_photo: "Photo"
         option_website_url: "Site internet (URL)"
         identifier: "Référence de l'offre"
+        pep_value: "Référence PEP"
+        pep_date: "Date de publication"
+        bne_value: "Référence BNE"
+        bne_date: "Date de publication"
       organization:
         administrator_email_suffix: "Suffixe d'email obligatoire pour les comptes admin"
         brand_name: "Entité bloc marque"

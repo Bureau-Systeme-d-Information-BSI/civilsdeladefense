@@ -8,7 +8,7 @@
 
     - if can? :manage, @job_application
       - url = [:change_state, :admin, @job_application]
-      = simple_form_for url, method: :patch, remote: true, wrapper: :inline_form, html: { class: 'edit_job_application_state form-inline auto-submit w-100 px-1 py-1', data: {flash: true}} do |f|
+      = simple_form_for url, method: :patch, wrapper: :inline_form, html: { class: 'edit_job_application_state form-inline auto-submit w-100 px-1 py-1', data: {flash: true}} do |f|
         - opts = @job_application.aasm.states.map{ |state| [JobApplication.human_attribute_name("state/#{ state }"), state] }
         = f.input :state, collection: opts, label: false, prompt: :translate, wrapper: :custom_multi_select_full_wide
     - else

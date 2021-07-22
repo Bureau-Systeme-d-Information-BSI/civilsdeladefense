@@ -4,7 +4,7 @@
 class Administrator < ApplicationRecord
   devise :database_authenticatable,
     :recoverable, :trackable, :validatable, :confirmable, :lockable,
-    :timeoutable, timeout_in: 1.minutes # TODO: Set it to 60.minutes
+    :timeoutable, timeout_in: 60.minutes
 
   include DeactivationFlow
 

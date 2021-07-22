@@ -22,5 +22,5 @@ export default function timeoutAlert() {
       showAction: false,
       customClass: 'warning-snackbar'
     });
-  }, 1 * 5 * 1000) // TODO: Set it to 50min or less
+  }, 1 * 45 * 1000)
 }

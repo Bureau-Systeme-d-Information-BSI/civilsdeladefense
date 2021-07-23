@@ -1023,7 +1023,7 @@ fr:
         job_application:
           attributes:
             state:
-              cant_accept_before_delay: "Un délai de 30 jours après la publication d'une offre doit être respecté avant d'accepter une candidature"
+              cant_accept_before_delay: "Un délai de 30 jours après la publication de l'offre sur la PEP doit être respecté avant d'accepter une candidature"
               complete_files_before_draft_contract: "Tous les documents doivent être téléversés et validés avant la rédaction du contrat"
             cover_letter_content_type:
               invalid: "PDF uniquement, max 2Mo"

@@ -46,7 +46,7 @@ class Account::JobApplicationFilesController < Account::BaseController
     file_type = @job_application_file.job_application_file_type
 
     respond_to do |format|
-      if @job_application_file.update(job_application_file_params)
+      if @job_application_file.update(job_application_file_params.merge(is_validated: 0))
         @job_application.compute_notifications_counter!
         format.turbo_stream do
           render turbo_stream: turbo_stream_update_response(file_type)

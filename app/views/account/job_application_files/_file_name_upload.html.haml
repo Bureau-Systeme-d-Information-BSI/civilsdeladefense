@@ -8,11 +8,12 @@
   %h3= file_type.name
   .rf-mb-1w= hint_text
   - data = { controller: "file-drop", action: "dragenter->file-drop#highlight dragover->file-drop#highlight dragleave->file-drop#unhighlight drop->file-drop#unhighlight drop->file-drop#setFile" }
-  .rf-card.rf-card--no-arrow.rf-card--no-full-height.rf-mb-3w{ data: data }
-    .rf-card__body
-      = simple_form_for([:account, job_application, job_application_file], options) do |f|
-        - if job_application_file.new_record?
-          = f.hidden_field :job_application_file_type_id
-        - label = is_validated_value == 1 ? t('buttons.choose_file_validated_html') : t('buttons.choose_file_drop_zone_html')
-        - data = { controller: "auto-submit", action: "change->auto-submit#submit", "file-drop-target" => "input" }
-        = f.input :content, label: label, hint: "Seuls les fichiers PDF de taille inférieure à 2Mo sont acceptés.", input_html: { data: data }
+  = simple_form_for([:account, job_application, job_application_file], options) do |f|
+    %label
+      .rf-card.rf-card--no-arrow.rf-card--no-full-height.rf-mb-3w.hidden-file-input{ data: data }
+        .rf-card__body
+          - if job_application_file.new_record?
+            = f.hidden_field :job_application_file_type_id
+          - data = { controller: "auto-submit", action: "change->auto-submit#submit", "file-drop-target" => "input" }
+          %span= t('buttons.choose_file_drop_zone_html')
+          = f.input :content, label: false, hint: "Seuls les fichiers PDF de taille inférieure à 2Mo sont acceptés.", input_html: { data: data }

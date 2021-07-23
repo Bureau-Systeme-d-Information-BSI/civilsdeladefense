@@ -25,6 +25,8 @@ class Organization < ApplicationRecord
     validates field, file_size: {less_than: 1.megabytes}
   end
 
+  mount_uploader :help_file, CommonUploader
+
   #####################################
   # Enums
   INBOUND_EMAIL_CONFIGS = {
@@ -70,6 +72,7 @@ end
 #  brand_name                    :string
 #  days_before_publishing        :integer
 #  facebook_url                  :string
+#  help_file                     :string
 #  image_background_content_type :string
 #  image_background_file_name    :string
 #  image_background_file_size    :bigint

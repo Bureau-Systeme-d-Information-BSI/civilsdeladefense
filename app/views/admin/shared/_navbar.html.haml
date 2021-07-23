@@ -21,6 +21,10 @@
             = fa_icon(icon_for_controller(item))
             - ary = [:admin] + item
             = link_to t(".#{ item.first.to_s }"), ary, class: "nav-link"
+      - if current_organization.help_file.present?
+        %li.nav-item.mr-3
+          = fa_icon("open-in-new")
+          = link_to "Aide", current_organization.help_file.url, class: "nav-link", target: "_blank"
     %ul.navbar-nav
       %li.nav-item.mr-2
         .d-flex.flex-column.justify-content-center.align-items-end

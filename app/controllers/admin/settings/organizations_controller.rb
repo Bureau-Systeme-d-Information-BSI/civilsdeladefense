@@ -46,7 +46,7 @@ class Admin::Settings::OrganizationsController < Admin::Settings::BaseController
     permitted_fields = %i[
       brand_name prefix_article
       service_name service_description_short service_description privacy_policy_url
-      operator_name operator_url operator_logo
+      operator_name operator_url operator_logo help_file
       partner_1_name partner_1_url partner_1_logo
       partner_2_name partner_2_url partner_2_logo
       partner_3_name partner_3_url partner_3_logo

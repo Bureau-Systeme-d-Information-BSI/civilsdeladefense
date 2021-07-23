@@ -25,6 +25,9 @@
             = f.input :image_background
             - if @organization.image_background.present?
               = f.input :remove_image_background, as: :boolean
+            = f.input :help_file
+            - if @organization.help_file.present?
+              = f.input :remove_help_file, as: :boolean
           .card-header
             .card-title Conditions d'accès à la création d'offres
           .card-body

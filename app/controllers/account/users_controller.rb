@@ -16,6 +16,7 @@ class Account::UsersController < Account::BaseController
 
   def update
     respond_to do |format|
+      @user.department_users = []
       if @user.update(user_params)
         format.html { redirect_to %i[edit account user], notice: t(".success") }
         format.js {}

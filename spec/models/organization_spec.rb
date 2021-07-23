@@ -22,6 +22,7 @@ end
 #  brand_name                    :string
 #  days_before_publishing        :integer
 #  facebook_url                  :string
+#  help_file                     :string
 #  image_background_content_type :string
 #  image_background_file_name    :string
 #  image_background_file_size    :bigint

@@ -159,6 +159,8 @@ fr:
         job_offer_term_title: "Titre"
         job_offer_term_subtitle: "Sous-titre"
         job_offer_term_warning: "Message d'erreur"
+        help_file: "Aide"
+        remove_help_file: "Supprimer l'aide"
       organization_default:
         kind: "Nom du champ"
         value: "Valeur par défaut"

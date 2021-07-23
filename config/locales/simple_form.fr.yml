@@ -116,7 +116,7 @@ fr:
         bne_value: "Référence BNE"
         bne_date: "Date de publication"
       organization:
-        administrator_email_suffix: "Suffixe d'email obligatoire pour les comptes admin"
+        administrator_email_suffix: "Suffixes d'email obligatoire pour les comptes admin"
         brand_name: "Entité bloc marque"
         prefix_article: "Article défini de l'entité légale (opérateur ou bloc marque)"
         days_before_publishing: "Délai incompressible avant de pouvoir publier une annonce"

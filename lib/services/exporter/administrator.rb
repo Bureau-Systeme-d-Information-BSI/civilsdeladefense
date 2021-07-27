@@ -21,11 +21,13 @@ class Exporter::Administrator < Exporter::Base
 
   def fill_filters
     add_row("Filtres")
-    employer = Employer.find_by(id: data[:q][:employer_id_eq])
+    employer = Employer.find_by(id: data[:q][:employer_id_eq]) if data.dig(:q, :employer_id_eq)
     add_row("Employeur", employer.name) if employer
-    add_row("Nom", data[:q][:first_name_or_last_name_or_email_cont]) if data[:q][:first_name_or_last_name_or_email_cont]
-    role = Administrator.roles.find { |name, id| id.to_s == data[:q][:role_eq] }
-    add_row("Rôle", role.first) if role
+    add_row("Nom", data[:q][:first_name_or_last_name_or_email_cont]) if data.dig(:q, :first_name_or_last_name_or_email_cont)
+    if data.dig(:q, :role_eq)
+      role = Administrator.roles.find { |name, id| id.to_s == data[:q][:role_eq] }
+      add_row("Rôle", role.first) if role
+    end
   end
 
   def format_user(administrator)
@@ -33,7 +35,7 @@ class Exporter::Administrator < Exporter::Base
       administrator.first_name,
       administrator.last_name,
       administrator.email,
-      administrator.employer.code,
+      administrator.employer&.code,
       administrator.deleted_at ? "Actif" : "Inactif",
       Administrator.human_attribute_name("role.#{administrator.role}"),
       localize(administrator.created_at),

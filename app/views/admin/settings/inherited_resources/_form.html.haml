@@ -22,6 +22,9 @@
           = f.input :title
           = f.input :subject
           = f.input :body, style: 'height:400px;'
+        - elsif resource.is_a?(UserMenuLink)
+          = f.input :name
+          = f.input :url
         - elsif resource.is_a?(FrequentlyAskedQuestion)
           = f.input :name
           = f.input :value, as: :trix_editor

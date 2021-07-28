@@ -533,7 +533,8 @@ fr:
           foreign_languages: "Langue étrangères"
           foreign_language_levels: "Niveaux de langues étrangères"
           frequently_asked_questions: "FAQ"
-          job_offer_terms: Conditions d'accès à la création d'offres
+          job_offer_terms: "Conditions d'accès à la création d'offres"
+          user_menu_links: "Onglet espace candidat"
       base:
         index:
           title: "Paramètres"
@@ -704,6 +705,12 @@ fr:
             zero: 'Aucune condition'
             one: '1 condition'
             other: '%{count} conditions'
+      user_menu_links:
+        index:
+          card_title:
+            zero: 'Aucun lien'
+            one: '1 lien'
+            other: '%{count} liens'
         new:
           title: "Ajouter une condition"
         edit:

@@ -35,6 +35,11 @@
       - klasses << 'active' if controller.controller_name == 'pages'
       = link_to [:admin, :settings, :pages], class: klasses do
         = t(".pages")
+    - if can? :read, UserMenuLink
+      - klasses = %w(list-group-item d-flex justify-content-between align-items-center)
+      - klasses << 'active' if controller.controller_name == 'user_menu_links'
+      = link_to [:admin, :settings, :user_menu_links], class: klasses do
+        = t(".user_menu_links")
   - if can? :read, Employer
     .list-group-item.menu
       = t(".company")

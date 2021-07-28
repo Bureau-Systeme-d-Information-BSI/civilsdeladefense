@@ -1,0 +1,47 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 4,
+      "fingerprint": "bee8ff4f4d06d5734fa78fa0fae35ee869c7849558615be896377936572abd85",
+      "check_name": "LinkToHref",
+      "message": "Potentially unsafe model attribute in `link_to` href",
+      "file": "app/views/account/_navbar.html.haml",
+      "line": 16,
+      "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
+      "code": "link_to(UserMenuLink.new.name, UserMenuLink.new.url, :class => \"rf-sidemenu__link\", :target => \"_blank\")",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Account::BaseController",
+          "method": "show",
+          "line": 8,
+          "file": "app/controllers/account/base_controller.rb",
+          "rendered": {
+            "name": "layouts/account",
+            "file": "app/views/layouts/account.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "layouts/account",
+          "line": 12,
+          "file": "app/views/layouts/account.html.haml",
+          "rendered": {
+            "name": "account/_navbar",
+            "file": "app/views/account/_navbar.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "account/_navbar"
+      },
+      "user_input": "UserMenuLink.new.url",
+      "confidence": "Weak",
+      "note": ""
+    }
+  ],
+  "updated": "2021-07-28 12:55:09 +0200",
+  "brakeman_version": "5.1.1"
+}

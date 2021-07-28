@@ -13,3 +13,6 @@
         - klass = controller.controller_name == 'users' && controller.action_name == 'show' ? 'rf-sidemenu__item--active' : nil
         %li.rf-sidemenu__item{class: klass}
           = link_to "Mon compte", [:account, :user], class: "rf-sidemenu__link"
+        - UserMenuLink.all.each do |menu_link|
+          %li.rf-sidemenu__item
+            = link_to menu_link.name, menu_link.url, class: "rf-sidemenu__link", target: "_blank"

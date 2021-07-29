@@ -23,7 +23,7 @@ FactoryBot.define do
     bne_value { "inconnue" }
     bne_date { 1.day.ago }
 
-    factory :published_job_offer do
+    factory :job_offer_published do
       published_at { 40.days.before }
       state { :published }
     end

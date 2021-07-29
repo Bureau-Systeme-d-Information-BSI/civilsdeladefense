@@ -5,12 +5,16 @@ require "rails_helper"
 RSpec.describe Admin::JobOffersController, type: :controller do
   context "when logged in as BANT administrator" do
     login_admin
+    let(:administrator) { create(:administrator) }
 
     let(:valid_attributes) do
-      hsh = build(:job_offer).attributes
-      hsh[:employer_id] = create(:employer).id
-      hsh[:category_id] = create(:category).id
-      hsh
+      attrs = build(:job_offer).attributes
+      attrs[:employer_id] = create(:employer).id
+      attrs[:category_id] = create(:category).id
+      attrs[:job_offer_actors_attributes] = [
+        {role: :employer, administrator_attributes: {id: administrator.id}}
+      ]
+      attrs
     end
 
     let(:invalid_attributes) do
@@ -88,6 +92,18 @@ RSpec.describe Admin::JobOffersController, type: :controller do
           post :create, params: {job_offer: valid_attributes}
           expect(response).to redirect_to(%i[admin job_offers])
         end
+
+        it "create job_offer_actor" do
+          expect {
+            post :create, params: {job_offer: valid_attributes}
+          }.to change(JobOfferActor, :count)
+        end
+
+        it "create Notification" do
+          expect {
+            post :create, params: {job_offer: valid_attributes}
+          }.to change(Notification, :count)
+        end
       end
 
       context "with invalid params" do
@@ -114,6 +130,18 @@ RSpec.describe Admin::JobOffersController, type: :controller do
         it "set published_at" do
           post :create_and_publish, params: {job_offer: valid_attributes}
           expect(JobOffer.order(:created_at).first.published_at.present?).to eq(true)
+        end
+
+        it "create job_offer_actor" do
+          expect {
+            post :create, params: {job_offer: valid_attributes}
+          }.to change(JobOfferActor, :count).by(1)
+        end
+
+        it "create two notification" do
+          expect {
+            post :create, params: {job_offer: valid_attributes}
+          }.to change(Notification, :count)
         end
       end
 

@@ -3,10 +3,11 @@
 # Candidacy to a job offer
 class JobApplication < ApplicationRecord
   include AASM
-  audited except: %i[files_count files_unread_count emails_count
+  audited except: %i[
+    files_count files_unread_count emails_count
     emails_administrator_unread_count emails_user_unread_count
-    administrator_notifications_count
-    skills_fit_job_offer experiences_fit_job_offer]
+    administrator_notifications_count skills_fit_job_offer experiences_fit_job_offer
+  ]
   has_associated_audits
 
   include PgSearch::Model
@@ -40,6 +41,7 @@ class JobApplication < ApplicationRecord
   before_validation :set_employer
   before_save :compute_notifications_counter
   before_save :cleanup_rejection_reason, unless: proc { |ja| ja.rejected_state? }
+  before_save :notify_event
 
   FINISHED_STATES = %w[rejected phone_meeting_rejected after_meeting_rejected affected].freeze
   REJECTED_STATES = %w[rejected phone_meeting_rejected after_meeting_rejected].freeze
@@ -248,6 +250,16 @@ class JobApplication < ApplicationRecord
     return if (default_types - validated_types).blank?
 
     errors.add(:state, :complete_files_before_draft_contract)
+  end
+
+  def notify_event
+    %w[accepted contract_received].each do |event|
+      next unless state == event && state_was != event
+
+      Notification.generate(
+        kind: "job_application_#{event}", job_application: self
+      )
+    end
   end
 
   class << self

@@ -69,6 +69,7 @@ class JobOffersController < ApplicationController
     respond_to do |format|
       if @job_application.save
         @job_offer.initial! if @job_offer.start?
+        Notification.generate(kind: :job_application_new, job_application: @job_application)
         @job_application.send_confirmation_email
         format.html { redirect_to [:successful, @job_offer] }
         format.json do

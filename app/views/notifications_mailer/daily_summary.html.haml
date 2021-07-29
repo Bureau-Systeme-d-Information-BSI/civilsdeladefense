@@ -1,17 +1,9 @@
-- current_kind = nil
-- @data.each do |data_line|
-  - kind = data_line[:kind]
-  - title = data_line[:title]
-  - link = data_line[:link]
-  - kind_underscored = kind.underscore
-
-  - if kind != current_kind
-    - if %w(NewJobOffer PublishedJobOffer NewJobApplication).include?(kind)
-      %h1= t(".#{kind_underscored.pluralize}.title")
-    - else
-      - state = JobApplication.human_attribute_name("state/#{kind_underscored.split('_').first}")
-      %h1= t(".generic_title", state: state).gsub('(', '').gsub(')', '').capitalize.pluralize
-  = title
-  = link_to link, link
-  - current_kind = kind
-  %br
+- @notifications.each do |kind, notifications|
+  - if notifications.present?
+    %h1= t(".#{kind}.title")
+    %ul
+      - notifications.each do |notification|
+        %li
+          = notification.title
+          %br
+          = link_to notification.url, notification.url

@@ -123,7 +123,7 @@ class JobOffer < ApplicationRecord
     state :suspended, before_enter: :set_timestamp
     state :archived, before_enter: :set_timestamp
 
-    event :publish do
+    event :publish, after: :notify do
       transitions from: [:draft], to: :published, guard: :delay_before_publishing_over?
     end
 
@@ -131,11 +131,11 @@ class JobOffer < ApplicationRecord
       transitions from: [:published], to: :draft
     end
 
-    event :archive do
+    event :archive, after: :notify do
       transitions from: %i[published suspended], to: :archived
     end
 
-    event :suspend do
+    event :suspend, after: :notify do
       transitions from: %i[published suspended], to: :suspended
     end
 
@@ -288,6 +288,12 @@ class JobOffer < ApplicationRecord
     users.each do |user|
       ApplicantNotificationsMailer.send_job_offer(user, self).deliver_now
     end
+  end
+
+  def notify
+    Notification.generate(
+      kind: "job_offer_#{aasm.current_event.to_s.tr("!", "")}", job_offer: self
+    )
   end
 end
 

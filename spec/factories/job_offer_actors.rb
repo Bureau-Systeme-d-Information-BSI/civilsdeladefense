@@ -4,7 +4,7 @@ FactoryBot.define do
   factory :job_offer_actor do
     job_offer
     administrator
-    role { JobOfferActor.roles.keys.first }
+    role { JobOfferActor.roles.keys.sample }
   end
 end
 

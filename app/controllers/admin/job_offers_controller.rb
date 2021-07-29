@@ -112,6 +112,8 @@ class Admin::JobOffersController < Admin::BaseController
 
     respond_to do |format|
       if @job_offer.save
+        Notification.generate(kind: :job_offer_new, job_offer: @job_offer)
+
         format.html { redirect_to %i[admin job_offers], notice: t(".success") }
         format.json { render :show, status: :created, location: @job_offer }
       else

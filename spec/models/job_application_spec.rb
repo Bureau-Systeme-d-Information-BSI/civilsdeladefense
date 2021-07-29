@@ -163,6 +163,24 @@ RSpec.describe JobApplication, type: :model do
       end
     end
   end
+
+  describe "notification" do
+    context "accepted" do
+      it "create notification" do
+        expect {
+          job_application.update(state: :accepted)
+        }.to change(Notification, :count)
+      end
+    end
+
+    context "contract_received" do
+      it "create notification" do
+        expect {
+          job_application.update(state: :contract_received)
+        }.to change(Notification, :count)
+      end
+    end
+  end
 end
 
 # == Schema Information

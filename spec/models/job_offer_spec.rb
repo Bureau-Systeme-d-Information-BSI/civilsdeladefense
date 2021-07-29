@@ -112,28 +112,30 @@ RSpec.describe JobOffer, type: :model do
     end
   end
 
-  it "should prevent publishing according to organization config" do
-    organization.update(days_before_publishing: 1)
+  describe "days_before_publishing" do
+    it "should prevent publishing according to organization config" do
+      organization.update(days_before_publishing: 1)
 
-    expect { job_offer.publish! }.to raise_error(AASM::InvalidTransition)
-  end
+      expect { job_offer.publish! }.to raise_error(AASM::InvalidTransition)
+    end
 
-  it "should allow publishing according to organization config" do
-    organization.update(days_before_publishing: nil)
+    it "should allow publishing according to organization config" do
+      organization.update(days_before_publishing: nil)
 
-    expect { job_offer.publish! }.to_not raise_error
-  end
+      expect { job_offer.publish! }.to_not raise_error
+    end
 
-  it "should allow publishing according to organization config" do
-    organization.update(days_before_publishing: 0)
+    it "should allow publishing according to organization config" do
+      organization.update(days_before_publishing: 0)
 
-    expect { job_offer.publish! }.to_not raise_error
-  end
+      expect { job_offer.publish! }.to_not raise_error
+    end
 
-  it "should compute publishing_possible_at" do
-    organization.update(days_before_publishing: 2)
+    it "should compute publishing_possible_at" do
+      organization.update(days_before_publishing: 2)
 
-    expect(job_offer.publishing_possible_at).to eq(job_offer.created_at + 2.working.days)
+      expect(job_offer.publishing_possible_at).to eq(job_offer.created_at + 2.working.days)
+    end
   end
 
   it "should correctly find current most advanced job application state" do
@@ -144,25 +146,27 @@ RSpec.describe JobOffer, type: :model do
     expect(job_offer.current_most_advanced_job_applications_state).to eq(last_state_enum)
   end
 
-  it "should be visible by owner" do
-    owner = create(:administrator, role: "employer", employer: employer)
-    job_offer = create(:job_offer, owner: owner)
-    ability = Ability.new(owner)
-    expect(ability.can?(:manage, job_offer)).to be true
-  end
+  describe "ability" do
+    it "should be visible by owner" do
+      owner = create(:administrator, role: "employer", employer: employer)
+      job_offer = create(:job_offer, owner: owner)
+      ability = Ability.new(owner)
+      expect(ability.can?(:manage, job_offer)).to be true
+    end
 
-  it "should be visible by actors" do
-    brh = create(:administrator, role: nil, employer: employer)
-    other_admin = create(:administrator, role: nil, employer: employer)
+    it "should be visible by actors" do
+      brh = create(:administrator, role: nil, employer: employer)
+      other_admin = create(:administrator, role: nil, employer: employer)
 
-    create(:job_offer_actor, role: "brh", administrator: brh, job_offer: job_offer)
+      create(:job_offer_actor, role: "brh", administrator: brh, job_offer: job_offer)
 
-    ability = Ability.new(brh)
-    expect(ability.can?(:read, job_offer)).to be true
+      ability = Ability.new(brh)
+      expect(ability.can?(:read, job_offer)).to be true
 
-    ability = Ability.new(other_admin)
-    expect(ability.can?(:manage, job_offer)).to be false
-    expect(ability.can?(:read, job_offer)).to be false
+      ability = Ability.new(other_admin)
+      expect(ability.can?(:manage, job_offer)).to be false
+      expect(ability.can?(:read, job_offer)).to be false
+    end
   end
 
   it "should set identifier correctly even when employer has been changed" do
@@ -231,6 +235,40 @@ RSpec.describe JobOffer, type: :model do
         it "is valid" do
           expect(job_offer).to be_valid
         end
+      end
+    end
+  end
+
+  describe "event" do
+    before do
+      create(:job_offer_actor, job_offer: job_offer)
+    end
+
+    context "publish" do
+      it "create notification" do
+        expect {
+          job_offer.publish!
+        }.to change(Notification, :count)
+      end
+    end
+
+    context "suspend" do
+      let(:job_offer) { create(:job_offer_published) }
+
+      it "create notification" do
+        expect {
+          job_offer.suspend!
+        }.to change(Notification, :count)
+      end
+    end
+
+    context "archive" do
+      let(:job_offer) { create(:job_offer_published) }
+
+      it "create notification" do
+        expect {
+          job_offer.archive!
+        }.to change(Notification, :count)
       end
     end
   end

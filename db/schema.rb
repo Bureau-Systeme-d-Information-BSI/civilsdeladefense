@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_07_23_131804) do
+ActiveRecord::Schema.define(version: 2021_07_28_141305) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -461,6 +461,21 @@ ActiveRecord::Schema.define(version: 2021_07_23_131804) do
     t.index ["job_application_id"], name: "index_messages_on_job_application_id"
   end
 
+  create_table "notifications", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "recipient_id", null: false
+    t.uuid "instigator_id"
+    t.uuid "job_offer_id"
+    t.uuid "job_application_id"
+    t.boolean "daily", default: false
+    t.string "kind"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["instigator_id"], name: "index_notifications_on_instigator_id"
+    t.index ["job_application_id"], name: "index_notifications_on_job_application_id"
+    t.index ["job_offer_id"], name: "index_notifications_on_job_offer_id"
+    t.index ["recipient_id"], name: "index_notifications_on_recipient_id"
+  end
+
   create_table "official_statuses", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -752,6 +767,10 @@ ActiveRecord::Schema.define(version: 2021_07_23_131804) do
   add_foreign_key "job_offers", "study_levels"
   add_foreign_key "messages", "administrators"
   add_foreign_key "messages", "job_applications"
+  add_foreign_key "notifications", "administrators", column: "instigator_id"
+  add_foreign_key "notifications", "administrators", column: "recipient_id"
+  add_foreign_key "notifications", "job_applications"
+  add_foreign_key "notifications", "job_offers"
   add_foreign_key "organization_defaults", "organizations"
   add_foreign_key "pages", "organizations"
   add_foreign_key "preferred_users", "preferred_users_lists"

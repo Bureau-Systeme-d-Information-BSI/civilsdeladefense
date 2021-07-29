@@ -41,6 +41,7 @@ Rails.application.routes.draw do
         get :change_email, :change_password, :photo
         patch :update_email, :update_password
       end
+      resources :notifications, only: %i[index]
     end
     resources :salary_ranges, only: %i[index]
     resources :email_templates, only: %i[index] do

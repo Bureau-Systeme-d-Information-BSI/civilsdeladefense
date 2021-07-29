@@ -26,6 +26,10 @@ require "rails_helper"
 # `rails-controller-testing` gem.
 
 RSpec.describe JobOffersController, type: :controller do
+  let(:job_offer) { create(:job_offer_published) }
+  let(:job_application_file_type) { create(:job_application_file_type) }
+  let(:file) { fixture_file_upload("document.pdf", "application/pdf") }
+
   describe "GET #index" do
     it "returns a success response" do
       get :index, params: {}
@@ -35,7 +39,7 @@ RSpec.describe JobOffersController, type: :controller do
 
   describe "GET #show" do
     it "returns a 404 response when not published" do
-      job_offer = create(:job_offer)
+      job_offer = create(:job_offer, state: :draft)
       get :show, params: {id: job_offer.to_param}
       expect(response.status).to eq(404)
 
@@ -49,7 +53,6 @@ RSpec.describe JobOffersController, type: :controller do
     end
 
     it "returns a success response" do
-      job_offer = create(:job_offer, state: :published)
       get :show, params: {id: job_offer.to_param}
       expect(response).to be_successful
     end
@@ -60,56 +63,50 @@ RSpec.describe JobOffersController, type: :controller do
       login_user
 
       let(:valid_attributes) do
-        @job_application_file_type ||= create(:job_application_file_type)
-        file = fixture_file_upload("document.pdf", "application/pdf")
-        jaf_attrs = [
-          {
-            content: file,
-            job_application_file_type_id: @job_application_file_type.id
-          }
-        ]
         attributes_for(
           :job_application,
-          job_application_files_attributes: jaf_attrs,
-          profile_attributes: attributes_for(:profile)
+          job_application_files_attributes: [
+            {
+              content: file,
+              job_application_file_type_id: job_application_file_type.id
+            }
+          ],
+          profile_attributes: attributes_for(:profile),
+          terms_of_service: 1,
+          certify_majority: 1
         )
       end
 
       it "returns a success response when all fields are valid" do
-        job_offer = create(:job_offer, state: :published)
-
-        hsh = valid_attributes
-        hsh[:terms_of_service] = 1
-        hsh[:certify_majority] = 1
         expect {
           post :send_application, format: :json, params: {
-            id: job_offer.to_param, job_application: hsh
+            id: job_offer.to_param, job_application: valid_attributes
           }
         }.to change(JobApplication, :count).by(1)
+
+        expect(response).to be_successful
+      end
+
+      it "create notification" do
+        expect {
+          post :send_application, format: :json, params: {
+            id: job_offer.to_param, job_application: valid_attributes
+          }
+        }.to change(Notification, :count)
         expect(response).to be_successful
       end
 
       it "shoult not accept double application" do
-        job_offer = create(:job_offer, state: :published)
-
-        hsh = valid_attributes
-        hsh[:terms_of_service] = 1
-        hsh[:certify_majority] = 1
         expect {
           post :send_application, format: :json, params: {
-            id: job_offer.to_param, job_application: hsh
+            id: job_offer.to_param, job_application: valid_attributes
           }
         }.to change(JobApplication, :count).by(1)
         expect(response).to be_successful
 
-        hsh = valid_attributes
-        file_content = fixture_file_upload("document.pdf", "application/pdf")
-        hsh[:job_application_files_attributes].first[:content] = file_content
-        hsh[:terms_of_service] = 1
-        hsh[:certify_majority] = 1
         expect {
           post :send_application, format: :json, params: {
-            id: job_offer.to_param, job_application: hsh
+            id: job_offer.to_param, job_application: valid_attributes
           }
         }.to change(JobApplication, :count).by(0)
         expect(response).not_to be_successful

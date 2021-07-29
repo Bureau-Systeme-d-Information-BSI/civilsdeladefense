@@ -83,17 +83,21 @@ class Admin::JobApplicationFilesController < Admin::BaseController
   end
 
   def check
+    @job_application_file.check!
+    Notification.job_application_contract_drafting_full(
+      @job_application_file.job_application
+    )
     check_and_uncheck
   end
 
   def uncheck
+    @job_application_file.uncheck!
     check_and_uncheck
   end
 
   protected
 
   def check_and_uncheck
-    @job_application_file.send("#{action_name}!") if %w[check uncheck].include?(action_name)
     @job_application.compute_notifications_counter!
     location = [:admin, @job_application, @job_application_file]
     @notification = t(".success")

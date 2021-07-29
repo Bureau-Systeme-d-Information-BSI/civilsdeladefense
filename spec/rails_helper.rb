@@ -109,4 +109,6 @@ RSpec.configure do |config|
   config.before(:each, type: :routing) do
     mock_warden_for_route_tests!
   end
+
+  config.before(:each, type: :controller) { Current.reset }
 end

@@ -161,13 +161,22 @@ fr:
   notifications_mailer:
     daily_summary:
       subject: "[%{service_name}] Rapport journalier"
-      generic_title: "Candidatures %{state}"
-      new_job_offers:
+      job_offer_new:
         title: "Nouvelles offres"
-      new_job_applications:
+      job_offer_publish:
+        title: "Offres publiées"
+      job_offer_suspend:
+        title: "Offres passées de l'état Publié à l'état Mis en pause"
+      job_offer_archive:
+        title: "Offres passées de l'état Publié à l'état Archivé"
+      job_application_new:
         title: "Nouvelles candidatures"
-      published_job_offers:
-        title: "Offres publiées récemment"
+      job_application_accepted:
+        title: "Candidatures retenues"
+      job_application_contract_drafting_full:
+        title: "Candidatures retenues (avec dossier complet)"
+      job_application_contract_received:
+        title: "Candidatures pour lesquelles le contrat est signé"
   shared:
     footer:
       legal_notice: "Mentions légales"

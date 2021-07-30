@@ -1139,7 +1139,7 @@ fr:
         gender/male: "Homme"
         gender/other: "Autre"
         gender: Civilité
-        has_corporate_experience: Expérience antérieure au Ministère des Armées
+        has_corporate_experience: Expérience en interne
         study_level: Niveau d'études
         experience_level: Expérience professionnelle
         profile_foreign_languages: Langues étrangères

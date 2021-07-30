@@ -24,7 +24,7 @@
       = profile_form.association :availability_range, input_html: { class: "rf-select" }
       = profile_form.association :study_level, required: true, input_html: { class: "rf-select" }
       = profile_form.association :experience_level, input_html: { class: "rf-select" }
-      = profile_form.input :has_corporate_experience
+      = profile_form.input :has_corporate_experience, label: "Expérience antérieure #{current_organization.operator_name}"
       = render partial: '/profile_foreign_languages/form', locals: { profile_form: profile_form }
 
     %h2.rf-h3= t('.documents')

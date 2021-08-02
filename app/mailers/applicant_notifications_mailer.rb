@@ -28,6 +28,14 @@ class ApplicantNotificationsMailer < ApplicationMailer
     mail to: to, subject: subject, reply_to: reply_to
   end
 
+  def error_email(to, original_subject)
+    @service_name = Organization.first.service_name
+    @original_subject = original_subject
+    @full_name = User.find_by(email: to)&.full_name
+
+    mail to: to, subject: "[#{@service_name}]"
+  end
+
   def notice_period_before_deletion(user_id)
     @user = User.find(user_id)
     @service_name = @user.organization.service_name

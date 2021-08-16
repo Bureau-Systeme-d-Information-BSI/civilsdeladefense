@@ -156,7 +156,11 @@ RSpec.describe User, type: :model do
     end
 
     context "marked but has not connected since" do
-      let!(:user) { create(:user, marked_for_deletion_on: 21.days.ago, last_sign_in_at: 101.days.ago) }
+      let!(:user) do
+        user = create(:user, last_sign_in_at: 101.days.ago)
+        user.update_column(:marked_for_deletion_on, 21.days.ago)
+        user
+      end
 
       it "delete" do
         expect(User.exists?(user.id)).to eq(false)

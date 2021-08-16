@@ -22,10 +22,12 @@ module DeletionFlow
           ApplicantNotificationsMailer.deletion_notice(email, name, org_id).deliver_now
         end
 
-      where("last_sign_in_at < ?", notice_period_target_date).each do |user|
-        user.mark_for_deletion!
-        ApplicantNotificationsMailer.notice_period_before_deletion(user.id).deliver_now
-      end
+      where("last_sign_in_at < ?", notice_period_target_date)
+        .where(marked_for_deletion_on: nil)
+        .each do |user|
+          user.mark_for_deletion!
+          ApplicantNotificationsMailer.notice_period_before_deletion(user.id).deliver_now
+        end
     end
 
     def notice_period_target_date

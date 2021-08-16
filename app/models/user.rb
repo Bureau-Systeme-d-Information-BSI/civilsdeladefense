@@ -69,6 +69,7 @@ class User < ApplicationRecord
   attr_accessor :is_deleted, :delete_photo
 
   before_update :destroy_photo
+  before_save :remove_mark_for_deletion
 
   def self.ransackable_scopes(auth_object = nil)
     %i[concerned by_category]
@@ -122,6 +123,10 @@ class User < ApplicationRecord
 
   def destroy_photo
     remove_photo! if delete_photo
+  end
+
+  def remove_mark_for_deletion
+    self.marked_for_deletion_on = nil
   end
 end
 

@@ -28,7 +28,8 @@ jobs:
       - run:
           name: install dependencies
           command: |
-            bundle install --jobs=4 --retry=3 --path vendor/bundle
+            bundle config set path 'vendor/bundle'
+            bundle install --jobs=4 --retry=3
       - save_cache:
           paths:
             - ./vendor/bundle
@@ -67,10 +68,12 @@ jobs:
     steps:
       - attach_workspace:
           at: ~/repo
-      - run: bundle config --local path vendor/bundle
+      - run: bundle config set path vendor/bundle
       # Database setup
       - run: bundle exec rake db:create
       - run: bundle exec rake db:schema:load
+      # Fix error with icu4c
+      - run: bundle pristine charlock_holmes
       # run tests!
       - run:
           name: run tests

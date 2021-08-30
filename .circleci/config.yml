@@ -72,6 +72,8 @@ jobs:
       # Database setup
       - run: bundle exec rake db:create
       - run: bundle exec rake db:schema:load
+      # Fix error with icu4c
+      - run: bundle pristine charlock_holmes
       # run tests!
       - run:
           name: run tests

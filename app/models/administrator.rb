@@ -7,6 +7,7 @@ class Administrator < ApplicationRecord
     :timeoutable, timeout_in: 60.minutes
 
   include DeactivationFlow
+  before_save :remove_mark_for_deactivation
 
   #####################################
   # Relationships
@@ -195,6 +196,10 @@ class Administrator < ApplicationRecord
     return if password.blank? || password =~ regexp
 
     errors.add :password, :not_strong_enough
+  end
+
+  def remove_mark_for_deactivation
+    self.marked_for_deactivation_on = nil
   end
 end
 

@@ -15,7 +15,9 @@ module DeactivationFlow
           DeactivationMailer.notice(administrator).deliver_now
         end
 
-      where("last_sign_in_at < ?", notice_period_target_date).each do |administrator|
+      where("last_sign_in_at < ?", notice_period_target_date)
+        .where(marked_for_deactivation_on: nil)
+        .each do |administrator|
         administrator.mark_for_deactivation!
         DeactivationMailer.period_before(administrator).deliver_now
       end

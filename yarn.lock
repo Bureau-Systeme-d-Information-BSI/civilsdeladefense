@@ -3781,9 +3781,9 @@ hex-color-regex@^1.1.0:
   integrity sha512-l9sfDFsuqtOqKDsQdqrMRk0U85RZc0RtOR9yPI7mRVOa4FsR/BVnZ0shmQRM96Ji99kYZP/7hn1cedc1+ApsTQ==
 
 highcharts@^9.0.0:
-  version "9.1.2"
-  resolved "https://registry.yarnpkg.com/highcharts/-/highcharts-9.1.2.tgz#c9b15390a10acb274a941d2aa5bc05c0889646d9"
-  integrity sha512-RwCnJnxAUCGG4R/WDG+QP/4VJNtOpkQTkXcuf58DjDvm9ZILplSMdZvrbMRC9Y9ecuJQCjjZsiifvyS5E2IBvQ==
+  version "9.2.1"
+  resolved "https://registry.yarnpkg.com/highcharts/-/highcharts-9.2.1.tgz#d44e16c0b9c9a372d5aca1707649cb2b61781cdb"
+  integrity sha512-MVovbnlD0+QsBSjVd1kgJNjq7xkzJ6dTebOQ+15pBYuYiEfTJpJZdVXeWSjMzbNmhDXN5rHC5uCGWGwK8YcSYQ==
 
 hmac-drbg@^1.0.1:
   version "1.0.1"

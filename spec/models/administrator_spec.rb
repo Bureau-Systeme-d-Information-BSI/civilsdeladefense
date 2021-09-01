@@ -189,7 +189,11 @@ RSpec.describe Administrator, type: :model do
     end
 
     context "marked more than 20 days ago and has not connected since" do
-      let!(:administrator) { create(:administrator, marked_for_deactivation_on: 21.days.ago, last_sign_in_at: 101.days.ago) }
+      let!(:administrator) do
+        administrator = create(:administrator, last_sign_in_at: 101.days.ago)
+        administrator.update_column(:marked_for_deactivation_on, 21.days.ago)
+        administrator
+      end
 
       it "delete" do
         expect(administrator.deleted_at&.to_date).to eq(Time.zone.now.to_date)

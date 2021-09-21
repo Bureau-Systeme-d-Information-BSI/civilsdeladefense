@@ -11,6 +11,7 @@ class Ability
     alias_action :listing, :update_listing, to: :read
     alias_action :suspend, to: :destroy
 
+    can :read, JobOfferTerm
     can :read, SalaryRange
     can :read, EmailTemplate
     cannot :manage, PreferredUsersList

@@ -372,7 +372,7 @@ h2 {
 
 .rf-checkbox-group input[type="checkbox"] + label {
   direction: initial !important;
-  grid-template-columns: 1fr 19rem !important;
+  grid-template-columns: 30px 90% !important;
 }
 
 .rf-checkbox-group input[type="checkbox"] + label:before {

@@ -676,7 +676,7 @@ ActiveRecord::Schema.define(version: 2021_07_28_100932) do
     t.index ["position"], name: "index_study_levels_on_position"
   end
 
-  create_table "user_menu_links", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+  create_table "user_menu_links", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "name"
     t.string "url"
     t.integer "position"

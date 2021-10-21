@@ -7,16 +7,16 @@ jobs:
   build:
     <<: *default
     docker:
-      - image: circleci/ruby:2.7-node-browsers-legacy
+      - image: cimg/ruby:2.7-node
         environment:
           RAILS_ENV: test
-          DATABASE_URL_TEST: postgresql://circleci:@127.0.0.1:5432/civilsdeladefense_test
+          DATABASE_URL_TEST: postgresql://circleci:password@127.0.0.1:5432/civilsdeladefense_test
           SMTP_URL: smtp://hello%40localhost@localhost
-      - image: circleci/postgres:11.5-alpine-ram
+      - image: postgis/postgis:12-3.0
         environment:
           POSTGRES_USER: circleci
           POSTGRES_DB: civilsdeladefense_test
-          POSTGRES_PASSWORD: ""
+          POSTGRES_PASSWORD: password
     steps:
       - checkout
       # Download and cache dependencies
@@ -28,6 +28,8 @@ jobs:
       - run:
           name: install dependencies
           command: |
+            sudo apt update
+            sudo apt install libicu-dev
             bundle config set path 'vendor/bundle'
             bundle install --jobs=4 --retry=3
       - save_cache:
@@ -54,17 +56,17 @@ jobs:
   test:
     <<: *default
     docker:
-      - image: circleci/ruby:2.7-node-browsers-legacy
+      - image: cimg/ruby:2.7-node
         environment:
           RAILS_ENV: test
-          DATABASE_URL_TEST: postgresql://circleci:@127.0.0.1:5432/civilsdeladefense_test
+          DATABASE_URL_TEST: postgresql://circleci:password@127.0.0.1:5432/civilsdeladefense_test
           SMTP_URL: smtp://hello%40localhost@localhost
           LOCKBOX_MASTER_KEY: 0000000000000000000000000000000000000000000000000000000000000000
-      - image: circleci/postgres:11.5-alpine-ram
+      - image: postgis/postgis:12-3.0
         environment:
           POSTGRES_USER: circleci
           POSTGRES_DB: civilsdeladefense_test
-          POSTGRES_PASSWORD: ""
+          POSTGRES_PASSWORD: password
     steps:
       - attach_workspace:
           at: ~/repo
@@ -72,7 +74,7 @@ jobs:
       # Database setup
       - run: bundle exec rake db:create
       - run: bundle exec rake db:schema:load
-      # Fix error with icu4c
+      # Fix error with icu
       - run: bundle pristine charlock_holmes
       # run tests!
       - run:
@@ -98,7 +100,7 @@ jobs:
   rubocop-brakeman:
     <<: *default
     docker:
-      - image: circleci/ruby:2.7-node-browsers-legacy
+      - image: cimg/ruby:2.7-node
         environment:
           RAILS_ENV: test
     steps:

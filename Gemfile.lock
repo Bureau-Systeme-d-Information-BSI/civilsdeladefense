@@ -214,7 +214,7 @@ GEM
     invisible_captcha (2.0.0)
       rails (>= 5.0)
     ipaddress (0.8.3)
-    jbuilder (2.11.2)
+    jbuilder (2.11.3)
       activesupport (>= 5.0.0)
     json-jwt (1.13.0)
       activesupport (>= 4.2)

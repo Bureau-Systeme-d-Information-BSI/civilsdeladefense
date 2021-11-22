@@ -132,12 +132,9 @@ Créer la première organisation
 
 ```ruby
 organization = Organization.create!(
-  brand_name: "Ministère des Armées",
-  domain: "domain.tld",
-  prefix_article: "le",
-  service_description: "Plateforme de recrutement de personnel civil contractuel du ministère des Armées",
-  service_description_short: "Plateforme de recrutement de personnel civil contractuel",
-  service_name: "Civils de la Défense "
+  brand_name: "...",
+  service_name: "...",
+  prefix_article: "..."
 )
 ```
 

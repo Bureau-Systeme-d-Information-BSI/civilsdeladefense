@@ -449,8 +449,9 @@ GEM
     tilt (2.0.10)
     trix-rails (2.3.0)
       rails (> 4.1, < 7.0)
-    turbo-rails (0.9.0)
-      rails (>= 6.0.0)
+    turbo-rails (1.0.0)
+      actionpack (>= 6.0.0)
+      railties (>= 6.0.0)
     turbolinks (5.2.1)
       turbolinks-source (~> 5.2)
     turbolinks-source (5.2.0)
@@ -491,7 +492,7 @@ GEM
       tzinfo
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.5.1)
+    zeitwerk (2.5.3)
 
 PLATFORMS
   ruby

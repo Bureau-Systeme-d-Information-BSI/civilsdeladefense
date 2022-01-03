@@ -1,0 +1,7 @@
+{
+  "jobs": [
+    {
+      "command": "0 2 * * * rails runner CarrierWave.clean_cached_files!"
+    }
+  ]
+}

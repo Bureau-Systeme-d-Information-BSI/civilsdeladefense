@@ -114,7 +114,7 @@ GEM
       tzinfo
     coderay (1.1.3)
     concurrent-ruby (1.1.9)
-    counter_culture (3.1.0)
+    counter_culture (3.2.0)
       activerecord (>= 4.2)
       activesupport (>= 4.2)
     crass (1.0.6)
@@ -201,7 +201,7 @@ GEM
       ruby_parser (~> 3.5)
     htmlentities (4.3.4)
     httpclient (2.8.3)
-    i18n (1.8.11)
+    i18n (1.9.1)
       concurrent-ruby (~> 1.0)
     image_processing (1.12.1)
       mini_magick (>= 4.9.5, < 5)
@@ -493,7 +493,7 @@ GEM
       tzinfo
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.5.3)
+    zeitwerk (2.5.4)
 
 PLATFORMS
   ruby

@@ -49,7 +49,7 @@ gem "rack-cors"
 gem "rack-rewrite"
 gem "ransack"
 gem "redis"
-gem "caxlsx", "~> 3.1.1"
+gem "caxlsx", "~> 3.2.0"
 gem "rollbar"
 gem "sequenced"
 gem "simple_form"
@@ -63,7 +63,7 @@ gem "clockwork" # simulate cron on Scalingo
 
 gem "faker", require: false
 
-gem "omniauth_openid_connect", "~> 0.3.5"
+gem "omniauth_openid_connect", "~> 0.4.0"
 gem "omniauth-rails_csrf_protection"
 
 group :development do

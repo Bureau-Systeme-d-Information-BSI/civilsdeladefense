@@ -160,3 +160,23 @@ admin.confirm
 - Envoie de mail SMTP `SMTP_URL=smtp://username_url_encoded:password@host:port`
 - Récupération mail IMAP `MAIL_URL=imaps://username_url_encoded:password@host:port`
 - Transfert des emails après traitement `MAIL_FOLDER_TRASH=Trash` et `MAIL_FOLDER_ARCHIVE=Archive`
+
+
+### Problème charlock_holmes
+
+Quand `icu4c` est mis à jour (par exemple suite à un `brew upgrade`), la gem `charlock_holmes` doit être ré-installé en utilisant la commande `bundle pristine charlock_holmes`.
+
+Erreur visible quand il est nécessaire de ré-installer :
+```
+An error occurred while loading ./spec/lib/process_inbound_message_spec.rb. - Did you mean?
+                    rspec ./spec/models/message_spec.rb
+
+Failure/Error: require "charlock_holmes"
+
+LoadError:
+  dlopen(/Users/jean_scalingo/.rbenv/versions/2.7.5/lib/ruby/gems/2.7.0/gems/charlock_holmes-0.7.7/lib/charlock_holmes/charlock_holmes.bundle, 0x0009): Library not loaded: /usr/local/opt/icu4c/lib/libicudata.69.dylib
+    Referenced from: /Users/jean_scalingo/.rbenv/versions/2.7.5/lib/ruby/gems/2.7.0/gems/charlock_holmes-0.7.7/lib/charlock_holmes/charlock_holmes.bundle
+    Reason: tried: '/usr/local/opt/icu4c/lib/libicudata.69.dylib' (no such file), '/usr/local/lib/libicudata.69.dylib' (no such file), '/usr/lib/libicudata.69.dylib' (no such file), '/usr/local/Cellar/icu4c/70.1/lib/libicudata.69.dylib' (no such file), '/usr/local/lib/libicudata.69.dylib' (no such file), '/usr/lib/libicudata.69.dylib' (no such file) - /Users/jean_scalingo/.rbenv/versions/2.7.5/lib/ruby/gems/2.7.0/gems/charlock_holmes-0.7.7/lib/charlock_holmes/charlock_holmes.bundle
+# ./lib/services/process_inbound_message.rb:3:in `<top (required)>'
+# ./spec/lib/process_inbound_message_spec.rb:5:in `<top (required)>'
+```

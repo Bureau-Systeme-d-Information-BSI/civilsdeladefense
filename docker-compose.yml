@@ -15,8 +15,6 @@ services:
       - .:/usr/src/app:rw
       - ./docker/ssh:/root/.ssh:ro
     environment:
-      ALGOLIA_APP_ID: "${ALGOLIA_APP_ID}"
-      ALGOLIA_API_KEY: "${ALGOLIA_API_KEY}"
       DATABASE_URL: postgresql://admin:admin-secret@postgresql:5432/civilsdeladefense_development
       DATABASE_URL_TEST: postgresql://admin:admin-secret@postgresql:5432/civilsdeladefense_test
       DEFAULT_FROM: "${DEFAULT_FROM}"
@@ -48,8 +46,6 @@ services:
       - ./:/usr/src/app
     command: ./bin/webpack-dev-server
     environment:
-      ALGOLIA_APP_ID: "${ALGOLIA_APP_ID}"
-      ALGOLIA_API_KEY: "${ALGOLIA_API_KEY}"
       WEBPACK_HOST: "172.17.0.1:3035"
   specs:
     build: .

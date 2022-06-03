@@ -497,7 +497,7 @@ boolean_choices = [true, false, nil]
 JobOffer.where.not(contract_duration_id: nil).where.not(id: [job_offer4.id, job_offer5.id]).each do |job_offer|
   15.times do |_i|
     user = User.new(
-      email: Faker::Internet.email,
+      email: Faker::Internet.unique.email,
       organization: organization,
       first_name: Faker::Name.first_name,
       last_name: Faker::Name.last_name,

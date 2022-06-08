@@ -39,8 +39,8 @@ end
 #
 # Foreign Keys
 #
-#  fk_rails_2729413eeb  (experience_level_id => experience_levels.id)
 #  fk_rails_75f0622ea4  (availability_range_id => availability_ranges.id)
+#  fk_rails_a4e341a6cb  (study_level_id => study_levels.id)
+#  fk_rails_a9c80e4a8d  (experience_level_id => experience_levels.id)
 #  fk_rails_b71acccf4c  (age_range_id => age_ranges.id)
-#  fk_rails_c4db57b12d  (study_level_id => study_levels.id)
 #

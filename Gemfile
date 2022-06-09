@@ -58,6 +58,7 @@ gem "turbolinks", require: false
 gem "turbo-rails"
 gem "will_paginate"
 gem "working_hours", "~> 1.4"
+gem "sidekiq" # Async jobs
 
 gem "clockwork" # simulate cron on Scalingo
 

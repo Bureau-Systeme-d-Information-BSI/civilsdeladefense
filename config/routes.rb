@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "sidekiq/web"
+
 # Handle multi-submit form
 class CommitParamConstraint
   def initialize(*param_values)
@@ -36,6 +38,10 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
+    authenticate :administrator do
+      mount Sidekiq::Web => "/sidekiq"
+    end
+
     resource :account do
       member do
         get :change_email, :change_password, :photo

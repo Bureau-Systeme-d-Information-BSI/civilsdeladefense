@@ -108,6 +108,14 @@ Pour lancer l'outil d'analyse statique de vulnérabilités Brakeman
 bundle exec brakeman
 ```
 
+## Lancer les jobs asynchrones
+
+Pour exécuter les jobs asynchrones
+
+```
+bundle exec sidekiq
+```
+
 ## Déploiement en préproduction et production
 
 Les branches master et production sont autodéployées grâce à Scalingo.

@@ -356,7 +356,6 @@ GEM
       actionpack (>= 5.0)
       railties (>= 5.0)
     rexml (3.2.5)
-    rollbar (3.3.0)
     rspec (3.10.0)
       rspec-core (~> 3.10.0)
       rspec-expectations (~> 3.10.0)
@@ -562,7 +561,6 @@ DEPENDENCIES
   rails-i18n
   ransack
   redis
-  rollbar
   rspec-rails (~> 5.1.2)
   rspec_junit_formatter
   rubocop

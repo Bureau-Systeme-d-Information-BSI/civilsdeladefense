@@ -11,7 +11,7 @@ updates:
       interval: "monthly"
       day: "monday"
     reviewers:
-      - "btrd"
+      - "sebastiencarceles"
   - package-ecosystem: "npm"
     directory: "/"
     versioning-strategy: lockfile-only
@@ -19,4 +19,4 @@ updates:
       interval: "weekly"
       day: "monday"
     reviewers:
-      - "btrd"
+      - "sebastiencarceles"

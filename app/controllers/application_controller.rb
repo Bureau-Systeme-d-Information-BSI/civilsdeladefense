@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   layout :layout_by_resource
 
   include ErrorResponseActions
+  include SentryIdentifier
 
   rescue_from CanCan::AccessDenied, with: :authorization_error
   rescue_from ActiveRecord::RecordNotFound, with: :resource_not_found

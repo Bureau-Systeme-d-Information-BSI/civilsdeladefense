@@ -7,7 +7,7 @@ require "./config/environment"
 # Clockwork/cron-like rules definition
 module Clockwork
   error_handler do |error|
-    Rollbar.error(error)
+    Sentry.capture_exception(error)
   end
 
   configure do |config|

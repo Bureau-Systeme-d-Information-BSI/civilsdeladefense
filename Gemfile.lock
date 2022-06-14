@@ -356,7 +356,6 @@ GEM
       actionpack (>= 5.0)
       railties (>= 5.0)
     rexml (3.2.5)
-    rollbar (3.3.0)
     rspec (3.10.0)
       rspec-core (~> 3.10.0)
       rspec-expectations (~> 3.10.0)
@@ -413,6 +412,14 @@ GEM
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
     semantic_range (3.0.0)
+    sentry-rails (5.3.1)
+      railties (>= 5.0)
+      sentry-ruby-core (~> 5.3.1)
+    sentry-ruby (5.3.1)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      sentry-ruby-core (= 5.3.1)
+    sentry-ruby-core (5.3.1)
+      concurrent-ruby
     sequenced (3.2.0)
       activerecord (>= 3.0)
       activesupport (>= 3.0)
@@ -554,7 +561,6 @@ DEPENDENCIES
   rails-i18n
   ransack
   redis
-  rollbar
   rspec-rails (~> 5.1.2)
   rspec_junit_formatter
   rubocop
@@ -562,6 +568,8 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   selenium-webdriver
+  sentry-rails
+  sentry-ruby
   sequenced
   shoulda-matchers
   sidekiq

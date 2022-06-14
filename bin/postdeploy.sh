@@ -7,6 +7,6 @@ if [ "$DO_NOT_POSTDEPLOY" = "1" ] ; then
 else
   bundle exec rails db:migrate
   if [ "$IS_REVIEW_APP" != "true" ]; then
-    curl https://api.rollbar.com/api/1/deploy/ -F access_token=$ROLLBAR_ACCESS_TOKEN -F environment=$ROLLBAR_ENV -F revision=$CONTAINER_VERSION -F local_username=scalingo
+    curl $SENTRY_DEPLOY_HOOK -X POST -H 'Content-Type: application/json' -d "{\"version\": \"${CONTAINER_VERSION}\"}"
   fi
 fi

@@ -45,7 +45,6 @@
             .mt-5
               = will_paginate @users_filtered, params: { controller: 'users', action: controller.action_name }
             .row.text-right
-              .col-4
               .col-3
                 .dropdown.dropdown-checks.form-group.w-100
                   %button.form-control.dropdown-toggle.btn#dropdownAddToList{type: 'button', data: {toggle: 'dropdown'}, aria: {haspopup: true, expanded: false}}
@@ -69,8 +68,11 @@
                   .dropdown-menu.dropdown-menu-right.allow-focus{aria: {labelledby: 'dropdownSendJobOffer'}}
                     = text_field_tag 'job_offer_identifier', nil, class: "form-control", placeholder: "Référence de l'offre"
                     = button_tag 'Envoyer', type: "submit", class: "btn btn-primary btn-raised mt-3", name: "send_job_offer"
-              .col-1
-                = button_tag 'Exporter', type: "submit", class: "btn btn-primary btn-raised", name: "export"
-
+              .col-6
+                %ul.list-inline
+                  %li.list-inline-item
+                    = button_tag 'Exporter XLSX', type: "submit", class: "btn btn-primary btn-raised", name: "export"
+                  %li.list-inline-item
+                    = button_tag 'Exporter PDF', type: "submit", class: "btn btn-primary btn-raised", name: "resumes"
           - else
             %em Aucun résultat

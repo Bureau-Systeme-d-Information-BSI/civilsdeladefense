@@ -119,6 +119,7 @@ Rails.application.routes.draw do
         end
       end
     end
+    resources :zip_files, only: :show
     namespace :stats do
       root to: "job_applications#index"
       get :job_offers, to: "job_offers#index"

@@ -1015,6 +1015,9 @@ fr:
           job_applications: "Candidatures"
           recruitments: "Recrutements"
           job_offers: "Offres"
+    zip_files:
+      show:
+        title: "Téléchargement"
   attributes:
     name: "Nom"
     current_position: "Poste actuel"

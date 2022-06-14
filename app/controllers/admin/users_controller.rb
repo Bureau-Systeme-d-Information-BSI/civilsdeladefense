@@ -25,6 +25,10 @@ class Admin::UsersController < Admin::InheritedResourcesController
     elsif params.key?("export")
       file = Exporter::Users.new(users, current_administrator).generate
       send_data file.read, filename: "#{Time.zone.today}_e-recrutement_vivers.xlsx"
+    elsif params.key?("resumes")
+      zip_id = SecureRandom.uuid
+      ZipJobApplicationFilesJob.perform_later(zip_id: zip_id, user_ids: params[:user_ids])
+      redirect_to admin_zip_file_path(zip_id)
     elsif params.key?("send_job_offer")
       job_offer = JobOffer.find_by(identifier: params["job_offer_identifier"])
 

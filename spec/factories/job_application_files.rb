@@ -9,6 +9,7 @@ FactoryBot.define do
       )
     end
     job_application_file_type
+    job_application
   end
 end
 

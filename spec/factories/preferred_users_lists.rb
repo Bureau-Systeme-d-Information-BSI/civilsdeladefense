@@ -3,7 +3,13 @@
 FactoryBot.define do
   factory :preferred_users_list do
     name { "Ma liste" }
-    administrator { nil }
+    administrator
+  end
+
+  trait :with_users do
+    after(:create) do |preferred_users_list|
+      3.times { preferred_users_list.users << create(:user) }
+    end
   end
 end
 

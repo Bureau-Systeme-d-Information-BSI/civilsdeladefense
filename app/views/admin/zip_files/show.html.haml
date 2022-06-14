@@ -1,0 +1,12 @@
+- @page_title = t(".title")
+
+.container-fluid.pt-3
+  .row
+    .col-12.col-md-10.mx-md-auto
+      .card
+        .card-header
+          .card-title= "Votre téléchargement"
+        .card-body{data: {controller: "zip-file-polling", zip_file_polling_url_value: "#{request.path}", zip_file_polling_target: "body"} }
+          %div{data: { zip_file_polling_target: "waitingBody"}}
+            Génération de l'archive, veuillez patienter
+          = link_to "Télécharger", "#", {class: "d-none", data: { zip_file_polling_target: "downloadLink"}}

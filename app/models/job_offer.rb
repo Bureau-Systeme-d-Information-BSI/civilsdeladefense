@@ -132,7 +132,7 @@ class JobOffer < ApplicationRecord
     end
 
     event :archive do
-      transitions from: %i[published suspended], to: :archived
+      transitions from: %i[draft published suspended], to: :archived
     end
 
     event :suspend do

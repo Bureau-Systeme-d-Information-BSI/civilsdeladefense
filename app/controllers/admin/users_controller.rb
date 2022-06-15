@@ -7,14 +7,13 @@ class Admin::UsersController < Admin::InheritedResourcesController
     @q = @users.ransack(pq)
     users = @q.result.includes(job_applications: %i[profile])
     users = users.search_full_text(params[:s]) if params[:s].present?
-    @users_filtered_unpaged = users
     @users_filtered = users.paginate(page: params[:page], per_page: 25)
 
     render action: :index, layout: "admin/pool"
   end
 
   def multi_select
-    users = User.where(id: params[:user_ids])
+    users = params[:select_all].present? ? User.all : User.where(id: params[:user_ids])
     if params.key?("add_to_list")
       lists = current_administrator.preferred_users_lists.where(id: params[:list_ids])
       lists.each do |list|
@@ -27,7 +26,7 @@ class Admin::UsersController < Admin::InheritedResourcesController
       send_data file.read, filename: "#{Time.zone.today}_e-recrutement_vivers.xlsx"
     elsif params.key?("resumes")
       zip_id = SecureRandom.uuid
-      ZipJobApplicationFilesJob.perform_later(zip_id: zip_id, user_ids: params[:user_ids])
+      ZipJobApplicationFilesJob.perform_later(zip_id: zip_id, user_ids: users.pluck(:id))
       redirect_to admin_zip_file_path(zip_id)
     elsif params.key?("send_job_offer")
       job_offer = JobOffer.find_by(identifier: params["job_offer_identifier"])

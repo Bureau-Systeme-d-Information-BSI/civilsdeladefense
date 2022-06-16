@@ -82,6 +82,18 @@ RSpec.describe JobOffer, type: :model do
     end
   end
 
+  describe "states" do
+    it { expect(subject).to transition_from(:draft).to(:published).on_event(:publish) }
+    it { expect(subject).to transition_from(:published).to(:draft).on_event(:draftize) }
+    it { expect(subject).to transition_from(:draft).to(:archived).on_event(:archive) }
+    it { expect(subject).to transition_from(:published).to(:archived).on_event(:archive) }
+    it { expect(subject).to transition_from(:suspended).to(:archived).on_event(:archive) }
+    it { expect(subject).to transition_from(:published).to(:suspended).on_event(:suspend) }
+    it { expect(subject).to transition_from(:suspended).to(:suspended).on_event(:suspend) }
+    it { expect(subject).to transition_from(:suspended).to(:published).on_event(:unsuspend) }
+    it { expect(subject).to transition_from(:archived).to(:draft).on_event(:unarchive) }
+  end
+
   describe "state_date" do
     it "should set published_at date when state is published" do
       expect(job_offer.state).to eq("draft")

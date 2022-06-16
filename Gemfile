@@ -6,7 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby "2.7.5"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem "rails", "~> 6.1.4"
+gem "rails", "~> 6.1.5.1"
 gem "rails-i18n"
 
 # Use postgresql as the database for Active Record
@@ -41,7 +41,7 @@ gem "groupdate"
 gem "haml-rails"
 gem "inherited_resources"
 gem "invisible_captcha"
-gem "lockbox", "~> 0.6.8"
+gem "lockbox", "~> 1.0.0"
 gem "mail"
 gem "mini_magick"
 gem "pg_search"

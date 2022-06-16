@@ -55,7 +55,7 @@ class Admin::JobOffersController < Admin::BaseController
   end
 
   def exports
-    job_offers = JobOffer.where(id: params[:job_offer_ids])
+    job_offers = params[:select_all].present? ? JobOffer.all : JobOffer.where(id: params[:job_offer_ids])
     file = Exporter::JobOffers.new(job_offers, current_administrator).generate
 
     send_data file.read, filename: "#{Time.zone.today}_e-recrutement_offres.xlsx"
@@ -212,8 +212,7 @@ class Admin::JobOffersController < Admin::BaseController
         .unscope(:order)
     end
     @q = job_offers_nearly_filtered.ransack(params[:q])
-    @job_offers_filtered_unpaged = @q.result(distinct: true)
-    @job_offers_filtered = @job_offers_filtered_unpaged.page(params[:page]).per_page(20)
+    @job_offers_filtered = @q.result(distinct: true).page(params[:page]).per_page(20)
   end
 
   # Use callbacks to share common setup or constraints between actions.

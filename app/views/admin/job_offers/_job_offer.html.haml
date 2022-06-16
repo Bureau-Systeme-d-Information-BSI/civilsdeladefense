@@ -1,7 +1,7 @@
 .row
   - if defined?(list)
     .col-auto.align-self-center.text-center
-      = check_box_tag "job_offer_ids[]", job_offer.id, false, data: {action: "change->subcheckbox#propagate_upward", "subcheckbox-target": "downcheckbox"}
+      = check_box_tag "job_offer_ids[]", job_offer.id, false, data: {action: "change->subcheckbox#propagate_upward", "subcheckbox-target": "downcheckbox", "selectall-target": "item"}
   .col
     .card.job-offer.mt-3{class: "card-state-#{job_offer.state}", id: dom_id(job_offer)}
       - notifications_count = job_offer.notifications_count

@@ -358,7 +358,6 @@ fr:
         card_1_title_new: "1. Rédaction de l'offre"
         card_1_title_edit: "1. Édition de l'offre %{job_offer_identifier}"
         card_1_1_title: "1.1 Description de l'offre"
-        card_1_1_title: "1.1 Description de l'offre"
         card_1_2_title: "1.2 Paramètres de l'offre"
         card_1_3_title: "1.3. Estimation rémunération salariale"
         estimate_monthly_salary_net_html: "Fourchette de référence : <span class='estimate_monthly_salary_net_reference'>%{value}</span>"
@@ -490,8 +489,8 @@ fr:
       unsuspend:
         success: "Utilisateur réactivé"
       user:
-        my_preferred_user_lists: "Mon vivier"
-        remove_user: "Supprimer de cette liste"
+        my_preferred_user_lists: "Listes"
+        remove_user: "Retirer"
         subscribed_on: "Inscrit le %{date}"
       head:
         nav_emails: "Courriels"
@@ -946,6 +945,9 @@ fr:
     preferred_users:
       form:
         title: "Note personnelle"
+      destroy:
+        success: "Candidat·e retiré·e avec succès"
+        error: "Une erreur s'est produite"
     preferred_users_lists:
       send_job_offer:
         success: "Offre envoyée aux candidats"

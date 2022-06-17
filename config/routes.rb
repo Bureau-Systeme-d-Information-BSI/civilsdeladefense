@@ -74,6 +74,9 @@ Rails.application.routes.draw do
           action_name = "update_and_#{event_name}".to_sym
           patch :update, constraints: CommitParamConstraint.new(action_name), action: action_name
         end
+        namespace :job_offers do
+          resources :readings, only: :create
+        end
       end
       resources :job_applications, path: "candidatures" do
         member do

@@ -96,6 +96,7 @@ fr:
     unsuspend: "Republier"
     unsuspend_user: "Réactiver"
     transfer: "Transférer"
+    mark_as_read: "Marquer comme lu"
   homepages:
     stepper:
       step_1: "Dépôt de la candidature"
@@ -437,6 +438,9 @@ fr:
         success: "Annonce republiée !"
       update_and_unsuspend:
         success: "Annonce mise à jour et republiée !"
+      readings:
+        create:
+          success: "Toutes les notifications ont été marquées comme lues !"
     emails:
       create:
         success: "Courriel envoyé !"

@@ -31,23 +31,34 @@ RSpec.describe User, type: :model do
     expect { another_user.destroy }.to change(User, :count).by(0)
   end
 
-  it "should purge associated objects when destroyed" do
-    job_application_file_type = create(:job_application_file_type)
+  context "when destroyed" do
+    let(:job_application_file_type) { create(:job_application_file_type) }
+    let(:job_application_file) { build(:job_application_file, job_application_file_type: job_application_file_type) }
+    let(:job_application) { create(:job_application, user: user) }
 
-    job_application = create(:job_application, user: user)
-    job_application_file = build(:job_application_file,
-      job_application_file_type: job_application_file_type)
-    job_application.job_application_files << job_application_file
+    before { job_application.job_application_files << job_application_file }
 
-    count = job_application.job_application_files.count
-    expect(count).to eq(1)
+    it "should purge associated objects" do
+      count = job_application.job_application_files.count
+      expect(count).to eq(1)
 
-    count_before = JobApplicationFile.count
-    expect(count_before).to eq(1)
+      count_before = JobApplicationFile.count
+      expect(count_before).to eq(1)
 
-    user.destroy
-    count_after = JobApplicationFile.count
-    expect(count_after).to eq(count_before - 1)
+      user.destroy
+      count_after = JobApplicationFile.count
+      expect(count_after).to eq(count_before - 1)
+    end
+
+    it "should recompute notifications counter" do
+      # job_application_file_type = create(:job_application_file_type)
+
+      # job_application_file = build(:job_application_file, job_application_file_type: job_application_file_type)
+      # job_application.job_application_files << job_application_file
+      create(:email, job_application: job_application, is_unread: true)
+
+      expect { user.destroy }.to change { job_application.reload.administrator_notifications_count }.from(1).to(0)
+    end
   end
 
   it "should correctly answer if already applied or not" do

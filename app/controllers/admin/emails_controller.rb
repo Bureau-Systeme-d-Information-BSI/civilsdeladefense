@@ -34,8 +34,7 @@ class Admin::EmailsController < Admin::BaseController
   end
 
   def mark_as_read
-    @email.is_unread = false
-    @email.save
+    @email.mark_as_read!
     @job_application.reload
 
     respond_to do |format|
@@ -55,8 +54,7 @@ class Admin::EmailsController < Admin::BaseController
   end
 
   def mark_as_unread
-    @email.is_unread = true
-    @email.save
+    @email.mark_as_unread!
     @job_application.reload
 
     respond_to do |format|

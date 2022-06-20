@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Admin::UsersController < Admin::InheritedResourcesController
+  rescue_from ActiveRecord::RecordNotFound, with: :redirect_to_index
+
   def index
     pq = params[:q] || {}
     pq[:concerned] = current_administrator if pq[:concerned]
@@ -105,11 +107,10 @@ class Admin::UsersController < Admin::InheritedResourcesController
 
   def destroy
     if @user.destroy
-      redirect_to(admin_users_path, notice: t(".success"))
+      redirect_back(fallback_location: %i[admin users], notice: t(".success"))
     else
       reason = @user.errors.full_messages.join(", ")
-      msg = t(".failure", reason: reason)
-      redirect_back(fallback_location: %i[admin users], notice: msg)
+      redirect_back(fallback_location: %i[admin users], notice: t(".failure", reason: reason))
     end
   end
 
@@ -137,4 +138,10 @@ class Admin::UsersController < Admin::InheritedResourcesController
   end
 
   alias_method :resource_params, :permitted_params
+
+  private
+
+  def redirect_to_index
+    redirect_to admin_users_path
+  end
 end

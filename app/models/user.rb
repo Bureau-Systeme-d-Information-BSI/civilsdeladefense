@@ -68,6 +68,7 @@ class User < ApplicationRecord
 
   attr_accessor :is_deleted, :delete_photo
 
+  before_destroy :mark_job_applications_as_read
   before_update :destroy_photo
   before_save :remove_mark_for_deletion
 
@@ -127,6 +128,10 @@ class User < ApplicationRecord
 
   def remove_mark_for_deletion
     self.marked_for_deletion_on = nil
+  end
+
+  def mark_job_applications_as_read
+    job_applications.map(&:mark_as_read!)
   end
 end
 

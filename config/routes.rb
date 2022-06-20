@@ -83,7 +83,7 @@ Rails.application.routes.draw do
         end
       end
     end
-    resources :preferred_users
+    resources :preferred_users, only: :destroy
     resources :preferred_users_lists, path: "liste-candidats" do
       member do
         get :export

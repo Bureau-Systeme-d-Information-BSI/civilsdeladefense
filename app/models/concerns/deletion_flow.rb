@@ -58,6 +58,7 @@ module DeletionFlow
       job_application.emails.destroy_all
       job_application.messages.destroy_all
       job_application.job_application_files.destroy_all
+      job_application.compute_notifications_counter!
     end
   end
 end

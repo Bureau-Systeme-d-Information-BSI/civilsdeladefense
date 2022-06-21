@@ -2,6 +2,8 @@
 
 # Candidacy to a job offer
 class JobApplication < ApplicationRecord
+  include Readable
+
   include AASM
   audited except: %i[files_count files_unread_count emails_count
     emails_administrator_unread_count emails_user_unread_count
@@ -149,7 +151,7 @@ class JobApplication < ApplicationRecord
     ary_start = [0, 0]
     ary = job_application_files.each_with_object(ary_start) { |job_application_file, memo|
       memo[0] += 1
-      memo[1] += 1 if job_application_file.is_validated.zero? && job_application_file.job_application_file_type.notification
+      memo[1] += 1 if job_application_file.waiting_validation? && job_application_file.job_application_file_type.notification
     }
     self.files_count, self.files_unread_count = ary
   end

@@ -85,3 +85,7 @@
                     = link_to [:new_transfer, :admin, job_offer], class: "dropdown-item" do
                       = fa_icon('arrow-right', class: 'mr-1')
                       = t("buttons.transfer")
+                  - if notifications_count > 0
+                    = link_to admin_job_offers_readings_path(job_offer), class: "dropdown-item", method: :post do
+                      = fa_icon('email', class: 'mr-1')
+                      = t("buttons.mark_as_read")

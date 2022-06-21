@@ -20,7 +20,7 @@ RSpec.describe ProcessInboundMessage do
   end
 
   describe "call" do
-    let(:result) { ProcessInboundMessage.new(message).call }
+    let(:result) { described_class.new(message).call }
 
     context "when all data are good" do
       it("true") do
@@ -28,11 +28,11 @@ RSpec.describe ProcessInboundMessage do
       end
 
       it "create new email" do
-        expect { result }.to(change { Email.count })
+        expect { result }.to(change(Email, :count))
       end
 
       it "create new email attachments" do
-        expect { result }.to(change { EmailAttachment.count })
+        expect { result }.to(change(EmailAttachment, :count))
       end
     end
 
@@ -44,7 +44,7 @@ RSpec.describe ProcessInboundMessage do
       end
 
       it "create new email without sender" do
-        expect { result }.to(change { Email.count })
+        expect { result }.to(change(Email, :count))
         expect(Email.order(:created_at).last.sender).to be(nil)
       end
     end
@@ -57,7 +57,7 @@ RSpec.describe ProcessInboundMessage do
       end
 
       it "dont create new email for user" do
-        expect { result }.to_not(change { Email.count })
+        expect { result }.not_to(change(Email, :count))
       end
     end
 
@@ -69,7 +69,7 @@ RSpec.describe ProcessInboundMessage do
       end
 
       it "create new email for user" do
-        expect { result }.to(change { Email.count })
+        expect { result }.to(change(Email, :count))
       end
     end
 
@@ -86,7 +86,7 @@ RSpec.describe ProcessInboundMessage do
       end
 
       it "create new email for user" do
-        expect { result }.to(change { Email.count })
+        expect { result }.to(change(Email, :count))
       end
     end
   end

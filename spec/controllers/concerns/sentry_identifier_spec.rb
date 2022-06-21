@@ -14,6 +14,7 @@ RSpec.describe ApplicationController, type: :controller do
   describe "before_action" do
     context "when a user is authenticated" do
       let(:user) { create(:confirmed_user) }
+
       before { sign_in user }
 
       it "identifies to sentry using the user" do
@@ -26,6 +27,7 @@ RSpec.describe ApplicationController, type: :controller do
 
     context "when an administrator is authenticated" do
       let(:admin) { create(:administrator) }
+
       before { sign_in admin }
 
       it "identifies to sentry using the admin" do

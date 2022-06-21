@@ -3,8 +3,8 @@
 require "rails_helper"
 
 RSpec.describe OrganizationDefault, type: :model do
-  it { should validate_presence_of(:kind) }
-  it { should validate_presence_of(:value) }
+  it { is_expected.to validate_presence_of(:kind) }
+  it { is_expected.to validate_presence_of(:value) }
 
   it "sets the corresponding default value for a job offer" do
     administrator = create(:administrator)

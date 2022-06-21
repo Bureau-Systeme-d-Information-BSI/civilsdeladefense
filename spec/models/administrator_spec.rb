@@ -11,7 +11,7 @@ RSpec.describe Administrator, type: :model do
 
   it "has a unique email" do
     administrator2 = build(:administrator, email: administrator.email)
-    expect(administrator2).to_not be_valid
+    expect(administrator2).not_to be_valid
   end
 
   it "lock the administrator after 10 wrong authentication attempts" do
@@ -23,14 +23,14 @@ RSpec.describe Administrator, type: :model do
 
     administrator.valid_for_authentication? { false }
     expect(administrator.failed_attempts).to eq(10)
-    expect(administrator.locked_at).to_not be_nil
+    expect(administrator.locked_at).not_to be_nil
   end
 
   it "check correctly the confirmation token validity duration" do
-    expect(administrator.confirmation_token_still_valid?).to be_truthy
+    expect(administrator).to be_confirmation_token_still_valid
 
     administrator2 = build(:administrator, confirmed_at: nil, confirmation_sent_at: 4.days.ago)
-    expect(administrator2.confirmation_token_still_valid?).to be_falsy
+    expect(administrator2).not_to be_confirmation_token_still_valid
   end
 
   it "creates provided supervisor administrator when non-preexisting" do
@@ -46,7 +46,7 @@ RSpec.describe Administrator, type: :model do
     expect {
       administrator.supervisor_administrator_attributes = attrs
       administrator.save
-    }.to change(Administrator, :count).by(2)
+    }.to change(described_class, :count).by(2)
 
     expect(administrator.supervisor_administrator.email).to eq("supervisor@gmail.com")
   end
@@ -65,7 +65,7 @@ RSpec.describe Administrator, type: :model do
     expect {
       administrator.supervisor_administrator_attributes = attrs
       administrator.save
-    }.to change(Administrator, :count).by(1)
+    }.to change(described_class, :count).by(1)
 
     expect(administrator.supervisor_administrator.email).to eq(supervisor_administrator.email)
   end
@@ -83,7 +83,7 @@ RSpec.describe Administrator, type: :model do
     expect {
       administrator.grand_employer_administrator_attributes = attrs
       administrator.save
-    }.to change(Administrator, :count).by(2)
+    }.to change(described_class, :count).by(2)
 
     expect(administrator.grand_employer_administrator.email).to eq("grand.employer@gmail.com")
   end
@@ -103,7 +103,7 @@ RSpec.describe Administrator, type: :model do
     expect {
       administrator.grand_employer_administrator_attributes = attrs
       administrator.save
-    }.to change(Administrator, :count).by(1)
+    }.to change(described_class, :count).by(1)
 
     expect(administrator.grand_employer_administrator.email).to eq(email)
   end
@@ -129,7 +129,7 @@ RSpec.describe Administrator, type: :model do
       administrator.supervisor_administrator_attributes = attrs1
       administrator.grand_employer_administrator_attributes = attrs2
       administrator.save
-    }.to change(Administrator, :count).by(3)
+    }.to change(described_class, :count).by(3)
   end
 
   describe "administrator_email_suffix" do
@@ -157,10 +157,10 @@ RSpec.describe Administrator, type: :model do
     end
   end
 
-  it "should compute notice period difference in days" do
+  it "computes notice period difference in days" do
     ENV["DAYS_INACTIVITY_PERIOD_BEFORE_DEACTIVATION"] = "100"
     ENV["DAYS_NOTICE_PERIOD_BEFORE_DEACTIVATION"] = "20"
-    expect(Administrator.notice_period_target_date.to_date).to eq(80.days.ago.to_date)
+    expect(described_class.notice_period_target_date.to_date).to eq(80.days.ago.to_date)
   end
 
   describe "automatic deactivation" do
@@ -168,7 +168,7 @@ RSpec.describe Administrator, type: :model do
       ENV["DAYS_INACTIVITY_PERIOD_BEFORE_DEACTIVATION"] = "100"
       ENV["DAYS_NOTICE_PERIOD_BEFORE_DEACTIVATION"] = "20"
       administrator.reload
-      Administrator.deactivate_when_too_old
+      described_class.deactivate_when_too_old
       administrator.reload
     end
 

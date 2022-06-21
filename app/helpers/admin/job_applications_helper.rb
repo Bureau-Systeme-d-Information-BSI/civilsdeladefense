@@ -11,18 +11,16 @@ module Admin::JobApplicationsHelper
   end
 
   def job_applications_tab_active
-    @job_applications_tab_active ||= begin
-      if controller.controller_name == "job_applications"
-        case controller.action_name
-        when "show"
-          :profile
-        when "cvlm"
-          :cvlm
-        when "emails"
-          :emails
-        when "files"
-          :files
-        end
+    @job_applications_tab_active ||= if controller.controller_name == "job_applications"
+      case controller.action_name
+      when "show"
+        :profile
+      when "cvlm"
+        :cvlm
+      when "emails"
+        :emails
+      when "files"
+        :files
       end
     end
   end

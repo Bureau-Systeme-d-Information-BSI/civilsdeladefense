@@ -25,7 +25,7 @@ module IconHelper
     when :job_offers
       :briefcase
     when :users
-      :'account-multiple'
+      :"account-multiple"
     when :settings
       :settings
     when :stats

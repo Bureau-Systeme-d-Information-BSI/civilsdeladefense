@@ -13,29 +13,29 @@ RSpec.describe User, type: :model do
   it "can be suspended" do
     text = "Bad guy"
     expect(user.suspended_at).to be_nil
-    expect(user.active_for_authentication?).to be_truthy
+    expect(user).to be_active_for_authentication
     user.suspend!(text)
-    expect(user.suspended?).to be_truthy
-    expect(user.suspended_at).to_not be_nil
+    expect(user).to be_suspended
+    expect(user.suspended_at).not_to be_nil
     expect(user.suspension_reason).to eq(text)
-    expect(user.active_for_authentication?).to be_falsey
+    expect(user).not_to be_active_for_authentication
   end
 
   it "cannot be destroyed when suspended" do
     user.unsuspend!
-    expect { user.destroy }.to change(User, :count).by(-1)
+    expect { user.destroy }.to change(described_class, :count).by(-1)
 
     another_user.unsuspend!
     another_user.suspend!("Bad guy")
-    expect(another_user.suspended?).to be_truthy
-    expect { another_user.destroy }.to change(User, :count).by(0)
+    expect(another_user).to be_suspended
+    expect { another_user.destroy }.to change(described_class, :count).by(0)
   end
 
   context "when destroyed" do
     let(:job_application) { create(:job_application, :with_job_application_file, user: user) }
     let(:job_application_file) { job_application.job_application_files.first }
 
-    it "should purge associated objects" do
+    it "purges associated objects" do
       count = job_application.job_application_files.count
       expect(count).to eq(1)
 
@@ -47,14 +47,14 @@ RSpec.describe User, type: :model do
       expect(count_after).to eq(count_before - 1)
     end
 
-    it "should recompute notifications counter" do
+    it "recomputes notifications counter" do
       create(:email, job_application: job_application, is_unread: true)
 
       expect { user.destroy }.to change { job_application.reload.administrator_notifications_count }.from(1).to(0)
     end
   end
 
-  it "should correctly answer if already applied or not" do
+  it "correctlies answer if already applied or not" do
     job_application_file_type = create(:job_application_file_type)
     job_application = create(:job_application, user: user)
     expect(job_application).to be_valid
@@ -74,7 +74,7 @@ RSpec.describe User, type: :model do
     expect(another_already_applied).to be_falsey
   end
 
-  it "should correctly count active job applications" do
+  it "correctlies count active job applications" do
     job_application_file_type = create(:job_application_file_type)
     file = fixture_file_upload("document.pdf", "application/pdf")
     jaf_attrs = [
@@ -137,10 +137,10 @@ RSpec.describe User, type: :model do
     end
   end
 
-  it "should compute notice period difference in days" do
+  it "computes notice period difference in days" do
     ENV["DAYS_INACTIVITY_PERIOD_BEFORE_DELETION"] = "100"
     ENV["DAYS_NOTICE_PERIOD_BEFORE_DELETION"] = "20"
-    expect(User.notice_period_target_date.to_date).to eq(80.days.ago.to_date)
+    expect(described_class.notice_period_target_date.to_date).to eq(80.days.ago.to_date)
   end
 
   describe "automatic deletion" do
@@ -148,7 +148,7 @@ RSpec.describe User, type: :model do
       ENV["DAYS_INACTIVITY_PERIOD_BEFORE_DELETION"] = "100"
       ENV["DAYS_NOTICE_PERIOD_BEFORE_DELETION"] = "20"
       user.reload
-      User.destroy_when_too_old
+      described_class.destroy_when_too_old
     end
 
     context "when connected long time ago" do
@@ -167,7 +167,7 @@ RSpec.describe User, type: :model do
       end
 
       it "delete" do
-        expect(User.exists?(user.id)).to eq(false)
+        expect(described_class.exists?(user.id)).to eq(false)
       end
     end
 
@@ -175,7 +175,7 @@ RSpec.describe User, type: :model do
       let!(:user) { create(:user, marked_for_deletion_on: 21.days.ago, last_sign_in_at: Time.zone.now) }
 
       it "doesn't delete" do
-        expect(User.exists?(user.id)).to eq(true)
+        expect(described_class.exists?(user.id)).to eq(true)
       end
     end
   end

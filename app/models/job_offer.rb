@@ -28,8 +28,8 @@ class JobOffer < ApplicationRecord
       description: "B",
       location: "C"
     },
-    associated_against: SETTINGS.each_with_object({}) { |obj, memo|
-      memo[obj] = %i[name]
+    associated_against: SETTINGS.index_with { |obj|
+      %i[name]
     }
 
   ## Relationships
@@ -263,11 +263,9 @@ class JobOffer < ApplicationRecord
   end
 
   def possible_events
-    @possible_events ||= begin
-      aasm.events.each_with_object([]) do |event, memo|
-        event_name = event.name.to_s
-        memo << event_name unless state.starts_with?(event_name)
-      end
+    @possible_events ||= aasm.events.each_with_object([]) do |event, memo|
+      event_name = event.name.to_s
+      memo << event_name unless state.starts_with?(event_name)
     end
   end
 

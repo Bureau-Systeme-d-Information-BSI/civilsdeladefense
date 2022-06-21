@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Layout/LineLength
 class Admin::Settings::OrganizationDefaultsController < Admin::Settings::InheritedResourcesController
   protected
 

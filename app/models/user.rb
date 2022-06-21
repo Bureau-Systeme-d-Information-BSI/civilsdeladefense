@@ -68,9 +68,9 @@ class User < ApplicationRecord
 
   attr_accessor :is_deleted, :delete_photo
 
-  before_destroy :mark_job_applications_as_read
-  before_update :destroy_photo
   before_save :remove_mark_for_deletion
+  before_update :destroy_photo
+  before_destroy :mark_job_applications_as_read
 
   def self.ransackable_scopes(auth_object = nil)
     %i[concerned by_category]

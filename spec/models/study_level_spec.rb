@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe StudyLevel, type: :model do
-  it { should validate_presence_of(:name) }
+  it { is_expected.to validate_presence_of(:name) }
 end
 
 # == Schema Information

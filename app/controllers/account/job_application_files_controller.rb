@@ -62,7 +62,7 @@ class Account::JobApplicationFilesController < Account::BaseController
   end
 
   def show
-    unless @job_application_file.content.file.present?
+    if @job_application_file.content.file.blank?
       return render json: {
         error: "not found"
       }, status: :not_found

@@ -12,7 +12,7 @@ class DailySummary
   end
 
   def prepare_and_send
-    Organization.all.each do |organization|
+    Organization.all.find_each do |organization|
       prepare(organization)
       send_mail(organization)
     end
@@ -113,7 +113,7 @@ class DailySummary
   def prepare_job_applications(organization)
     %w[accepted contract_received affected].each do |state|
       audits = find_job_applications_by_state(state)
-      audits.all.each do |element|
+      audits.all.find_each do |element|
         job_application = element.auditable
         if job_application.organization_id == organization.id
           add_summary_infos_for_job_application(job_application, state)

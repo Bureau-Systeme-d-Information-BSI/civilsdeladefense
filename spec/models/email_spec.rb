@@ -3,8 +3,8 @@
 require "rails_helper"
 
 RSpec.describe Email, type: :model do
-  it { should validate_presence_of(:subject) }
-  it { should validate_presence_of(:body) }
+  it { is_expected.to validate_presence_of(:subject) }
+  it { is_expected.to validate_presence_of(:body) }
 
   describe "#mark_as_read!" do
     it "marks the email as read" do

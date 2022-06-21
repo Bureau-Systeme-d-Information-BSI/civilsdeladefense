@@ -129,7 +129,7 @@ namespace :maintenance do
   # needed when migrating from audited 4.8 to 4.9
   # see https://github.com/collectiveidea/audited/issues/517
   task migrate_audits_enum_to_new_format: :environment do
-    class Audit < ActiveRecord::Base; end # rubocop:disable Lint/ConstantDefinitionInBlock
+    class Audit < ApplicationRecord; end # rubocop:disable Lint/ConstantDefinitionInBlock
     cases = {
       JobApplication => %w[state],
       JobOffer => %w[state most_advanced_job_applications_state]
@@ -273,6 +273,6 @@ namespace :maintenance do
   def destroy_file(file)
     file.destroy
   rescue Fog::OpenStack::Storage::NotFound
-    Rails.logger.debug "Deletion failed for file #{file.inspect}"
+    Rails.logger.debug { "Deletion failed for file #{file.inspect}" }
   end
 end

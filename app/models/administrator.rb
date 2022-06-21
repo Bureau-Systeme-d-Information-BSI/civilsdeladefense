@@ -70,17 +70,17 @@ class Administrator < ApplicationRecord
   validates :email, presence: true, uniqueness: true
   validates :employer, presence: true, if: proc { |a| %w[employer grand_employer].include?(a.role) }
   validates :inviter, presence: true, unless: proc { |a| a.very_first_account }, on: :create
-  validates_inclusion_of :role,
-    in: lambda { |a|
+  validates :role,
+    inclusion: {in: lambda { |a|
       if a.very_first_account
         a.class.roles.keys
       else
         (a.inviter&.authorized_roles_to_confer || a.class.roles.keys.last)
       end
     },
-    allow_blank: true,
-    message: :non_compliant_role,
-    on: :create
+                allow_blank: true,
+                message: :non_compliant_role,
+                on: :create}
 
   ####################################
   # Scope
@@ -113,17 +113,17 @@ class Administrator < ApplicationRecord
   def password_match?
     if password.blank?
       msg = I18n.t("errors.messages.blank")
-      errors[:password] << msg
+      errors.add(:password, msg)
     end
     if password_confirmation.blank?
       msg = I18n.t("errors.messages.blank")
-      errors[:password_confirmation] << msg
+      errors.add(:password_confirmation, msg)
     end
     if password != password_confirmation
-      msg = I18n.translate("errors.messages.confirmation", attribute: "password")
-      errors[:password_confirmation] << msg
+      msg = I18n.t("errors.messages.confirmation", attribute: "password")
+      errors.add(:password_confirmation, msg)
     end
-    password == password_confirmation && !password.blank?
+    password == password_confirmation && password.present?
   end
 
   # new function to return whether a password has been set
@@ -154,22 +154,18 @@ class Administrator < ApplicationRecord
   end
 
   def full_name
-    @full_name ||= begin
-      if first_name.present? || last_name.present?
-        [first_name, last_name].join(" ")
-      else
-        email
-      end
+    @full_name ||= if first_name.present? || last_name.present?
+      [first_name, last_name].join(" ")
+    else
+      email
     end
   end
 
   def full_name_with_title
-    @full_name_with_title ||= begin
-      if title.present? || first_name.present? || last_name.present?
-        [title, first_name, last_name].join(" ")
-      else
-        email
-      end
+    @full_name_with_title ||= if title.present? || first_name.present? || last_name.present?
+      [title, first_name, last_name].join(" ")
+    else
+      email
     end
   end
 

@@ -17,8 +17,8 @@ class Email < ApplicationRecord
 
   counter_culture :job_application, column_name: :emails_count, touch: true
 
-  after_save :compute_job_application_notifications_counter
   before_validation :fill_attachments
+  after_save :compute_job_application_notifications_counter
 
   def compute_job_application_notifications_counter
     job_application.compute_notifications_counter!

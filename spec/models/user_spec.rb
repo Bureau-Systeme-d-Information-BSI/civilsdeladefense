@@ -32,11 +32,8 @@ RSpec.describe User, type: :model do
   end
 
   context "when destroyed" do
-    let(:job_application_file_type) { create(:job_application_file_type) }
-    let(:job_application_file) { build(:job_application_file, job_application_file_type: job_application_file_type) }
-    let(:job_application) { create(:job_application, user: user) }
-
-    before { job_application.job_application_files << job_application_file }
+    let(:job_application) { create(:job_application, :with_job_application_file, user: user) }
+    let(:job_application_file) { job_application.job_application_files.first }
 
     it "should purge associated objects" do
       count = job_application.job_application_files.count
@@ -51,10 +48,6 @@ RSpec.describe User, type: :model do
     end
 
     it "should recompute notifications counter" do
-      # job_application_file_type = create(:job_application_file_type)
-
-      # job_application_file = build(:job_application_file, job_application_file_type: job_application_file_type)
-      # job_application.job_application_files << job_application_file
       create(:email, job_application: job_application, is_unread: true)
 
       expect { user.destroy }.to change { job_application.reload.administrator_notifications_count }.from(1).to(0)

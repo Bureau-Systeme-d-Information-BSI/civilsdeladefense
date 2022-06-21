@@ -33,6 +33,14 @@ class Email < ApplicationRecord
 
     attachments.map { |a| email_attachments.build(content: a) }
   end
+
+  def mark_as_read!
+    update!(is_unread: false)
+  end
+
+  def mark_as_unread!
+    update!(is_unread: true)
+  end
 end
 
 # == Schema Information

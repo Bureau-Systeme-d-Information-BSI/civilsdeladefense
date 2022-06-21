@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe "account/emails/index", type: :view do
   login_user
 
-  before(:each) do
+  before do
     job_application = create(:job_application, user: User.last)
     assign(:job_application, job_application)
     assign(:email, Email.new)

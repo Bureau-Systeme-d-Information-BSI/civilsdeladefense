@@ -15,7 +15,7 @@ RSpec.describe Page, type: :model do
   end
 
   describe "pages tree manipulation when level > 1" do
-    before(:each) do
+    before do
       @organization = organizations(:cvd)
       @root_page = create(:page, organization: @organization)
       @page1 = create(:page, organization: @organization, parent: @root_page)
@@ -53,7 +53,7 @@ RSpec.describe Page, type: :model do
   end
 
   describe "pages tree manipulation when level 1" do
-    before(:each) do
+    before do
       @organization = organizations(:cvd)
       @root_page = create(:page, organization: @organization)
       @branch1_page1 = create(:page, organization: @organization, parent: @root_page)

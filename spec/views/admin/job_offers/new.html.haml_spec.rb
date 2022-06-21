@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe "admin/job_offers/new", type: :view do
   login_admin
 
-  before(:each) do
+  before do
     assign(:job_offer, build(:job_offer))
   end
 

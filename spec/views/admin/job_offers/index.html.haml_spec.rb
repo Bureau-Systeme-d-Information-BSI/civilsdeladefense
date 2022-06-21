@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe "admin/job_offers/index", type: :view do
   login_admin
 
-  before(:each) do
+  before do
     grand_employer = create(:employer)
     employers = create_list(:employer, 5, parent: grand_employer)
 

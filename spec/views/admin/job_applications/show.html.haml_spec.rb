@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "admin/job_applications/show", type: :view do
-  before(:each) do
+  before do
     @job_application = assign(:job_application, create(:job_application))
     @job_offer = assign(:job_offer, @job_application.job_offer)
     @message = assign(:message, build(:message, job_application: @job_application))

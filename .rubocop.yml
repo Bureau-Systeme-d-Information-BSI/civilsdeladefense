@@ -10,8 +10,24 @@ require:
   - rubocop-performance
 
 AllCops:
+  NewCops: enable
   Exclude:
     - 'bin/{bundle,rails,rake,setup,spring,update,webpack,webpack-dev-server}'
-    - 'db/schema.rb'
+    - "db/**/*"
     - 'node_modules/**/*'
     - 'vendor/bundle/**/*'
+
+RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Max: 4
+
+RSpec/FilePath:
+  Enabled: false
+
+RSpec/AnyInstance:
+  Enabled: false

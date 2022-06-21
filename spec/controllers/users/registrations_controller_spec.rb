@@ -36,7 +36,7 @@ RSpec.describe Users::RegistrationsController, type: :controller do
         :current_position)
       user_attrs[:password_confirmation] = user_attrs[:password]
 
-      @request.env["devise.mapping"] = Devise.mappings[:user]
+      request.env["devise.mapping"] = Devise.mappings[:user]
 
       expect {
         post :create, params: {user: user_attrs}

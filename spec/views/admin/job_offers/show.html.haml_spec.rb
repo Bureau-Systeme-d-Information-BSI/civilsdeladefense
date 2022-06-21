@@ -4,8 +4,8 @@ require "rails_helper"
 
 RSpec.describe "admin/job_offers/show", type: :view do
   before do
-    @job_offer = assign(:job_offer, create(:job_offer))
-    @job_applications = assign(:job_applications, @job_offer.job_applications.group_by(&:state))
+    job_offer = assign(:job_offer, create(:job_offer))
+    assign(:job_applications, job_offer.job_applications.group_by(&:state))
   end
 
   it "renders attributes in <p>" do

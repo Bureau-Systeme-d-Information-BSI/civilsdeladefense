@@ -60,12 +60,12 @@ RSpec.describe JobOffersController, type: :controller do
       login_user
 
       let(:valid_attributes) do
-        @job_application_file_type ||= create(:job_application_file_type)
+        job_application_file_type ||= create(:job_application_file_type)
         file = fixture_file_upload("document.pdf", "application/pdf")
         jaf_attrs = [
           {
             content: file,
-            job_application_file_type_id: @job_application_file_type.id
+            job_application_file_type_id: job_application_file_type.id
           }
         ]
         attributes_for(

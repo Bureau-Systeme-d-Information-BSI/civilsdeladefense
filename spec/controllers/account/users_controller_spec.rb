@@ -29,7 +29,7 @@ RSpec.describe Account::UsersController, type: :controller do
   describe "PATCH #update_password" do
     context "with valid params" do
       it "updates the password" do
-        @request.env["devise.mapping"] = Devise.mappings[:user]
+        request.env["devise.mapping"] = Devise.mappings[:user]
         user = FactoryBot.create(:user)
         current_password = user.password
         new_password = "#{current_password}**"
@@ -50,7 +50,7 @@ RSpec.describe Account::UsersController, type: :controller do
       end
 
       it "redirects to the account page" do
-        @request.env["devise.mapping"] = Devise.mappings[:user]
+        request.env["devise.mapping"] = Devise.mappings[:user]
         user = FactoryBot.create(:user)
         current_password = user.password
         new_password = "#{current_password}**"
@@ -71,7 +71,7 @@ RSpec.describe Account::UsersController, type: :controller do
 
     context "with invalid params" do
       it "returns a success response (i.e. to display the 'show' template)" do
-        @request.env["devise.mapping"] = Devise.mappings[:user]
+        request.env["devise.mapping"] = Devise.mappings[:user]
         user = FactoryBot.create(:user)
         user.confirm
         sign_in user

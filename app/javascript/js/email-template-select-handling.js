@@ -5,11 +5,11 @@ export default function emailTemplateSelectHandling() {
       let detail = event.detail
       let emailTemplate = detail[0]
       if (emailTemplate) {
-        let subjectNode = document.getElementById('email_subject')
+        let subjectNode = document.querySelector('[id$="email_subject"]')
         if (subjectNode !== null) {
           subjectNode.value = emailTemplate.subject
         }
-        let bodyNode = document.getElementById('email_body')
+        let bodyNode = document.querySelector('[id$="email_body"]')
         if (bodyNode !== null) {
           bodyNode.value = emailTemplate.body
         }

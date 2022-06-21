@@ -85,6 +85,7 @@ Rails.application.routes.draw do
           get :emails
         end
       end
+      resources :multiple_recipients_emails, only: %i[new create]
     end
     resources :preferred_users, only: :destroy
     resources :preferred_users_lists, path: "liste-candidats" do

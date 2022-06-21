@@ -1,0 +1,32 @@
+.container-fluid.pt-3
+  .row 
+    .col-12.col-md-10.mx-md-auto
+      .card
+        .card-header.bg-white.font-weight-bold.text-secondary
+          = fa_icon('file-document', class: 'text-secondary')
+          = t('.title')
+        .card-subheader.bg-card-bg.font-weight-bold.text-muted
+          %ul.list-inline
+            - for job_application in @job_applications
+              %li.list-inline-item
+                = job_application.user.full_name
+        .card-body.bg-white
+          = simple_form_for(:email, url: [:admin, :email_templates], method: :get, remote: true, html: {id: :email_template_selector, class: 'auto-submit'}, defaults: { disabled: is_form_disabled? }) do |f|
+            .form-inputs
+              = f.input :template, collection: EmailTemplate.all
+
+          = simple_form_for([:admin, @job_offer, @multiple_recipients_email], defaults: { disabled: is_form_disabled? }) do |f|
+            = f.error_notification 
+            = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+            .form-inputs
+              - for job_application in @job_applications
+                = f.hidden_field :job_application_ids, value: job_application.id, multiple: true
+              = f.input :subject
+              = f.input :body, as: :text
+              = f.file_field :attachments, multiple: true
+
+            .form-actions.text-right
+              = button_tag(type: 'submit', class: 'btn btn-primary', disabled: is_form_disabled?) do
+                = t('buttons.send_to_candidates')
+                = fa_icon('send', class: 'ml-1')

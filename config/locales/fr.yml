@@ -87,6 +87,7 @@ fr:
     search: "Rechercher"
     send: "Envoyer"
     send_to_candidate: "Envoyer au candidat"
+    send_to_candidates: "Envoyer aux candidat·es"
     send_unlock_instructions: "Envoyer les instructions de déblocage"
     show: "Voir"
     suspend: "Mettre en pause"
@@ -97,6 +98,7 @@ fr:
     unsuspend_user: "Réactiver"
     transfer: "Transférer"
     mark_as_read: "Marquer comme lu"
+    email: "Courriel"
   homepages:
     stepper:
       step_1: "Dépôt de la candidature"
@@ -455,6 +457,11 @@ fr:
         success: "Courriel marqué comme lu !"
       mark_as_unread:
         success: "Courriel marqué comme non lu !"
+    multiple_recipients_emails:
+      new:
+        title: "Envoyer un courriel à ces candidat·es"
+      create:
+        success: "Les emails ont été envoyés !"
     messages:
       create:
         success: "Message envoyé !"
@@ -1085,16 +1092,16 @@ fr:
         state: "État"
         state/start: "N'a encore aucune candidature"
         state/initial: "Nouveau"
-        state/rejected: "Refusé(e)"
+        state/rejected: "Refusé·e"
         state/phone_meeting: "Entretien téléphonique"
-        state/phone_meeting_rejected: "Refusé(e) après e. tél."
+        state/phone_meeting_rejected: "Refusé·e après e. tél."
         state/to_be_met: "À rencontrer"
-        state/after_meeting_rejected: "Rencontré(e) mais refusé(e)"
-        state/accepted: "Retenu(e)"
+        state/after_meeting_rejected: "Rencontré·e mais refusé·e"
+        state/accepted: "Retenu·e"
         state/contract_drafting: "Rédaction contrat"
-        state/contract_feedback_waiting: "En attente retour contrat"
+        state/contract_feedback_waiting: "Attente retour contrat"
         state/contract_received: "Contrat reçu"
-        state/affected: "Affecté(e)"
+        state/affected: "Affecté·e"
         state/end_user_state_0: "Candidature soumise"
         state/end_user_state_1: "Examen candidature"
         state/end_user_state_2: "Entretien téléphonique"

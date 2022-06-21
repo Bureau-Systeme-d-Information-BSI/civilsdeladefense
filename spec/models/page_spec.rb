@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe Page, type: :model do
-  it { should validate_presence_of(:title) }
+  it { is_expected.to validate_presence_of(:title) }
 
   it "is valid with valid attributes" do
     organization = organizations(:cvd)
@@ -18,13 +18,13 @@ RSpec.describe Page, type: :model do
     let!(:page2) { create(:page, organization: organization, parent: page1) }
     let!(:page3) { create(:page, organization: organization, parent: page2) }
 
-    it "should create page trees" do
+    it "creates page trees" do
       expect(page1.parent_id).to eq(root_page.id)
       expect(page2.parent_id).to eq(page1.id)
       expect(page3.parent_id).to eq(page2.id)
     end
 
-    it "should reinsert children branch" do
+    it "reinserts children branch" do
       page4 = create(:page, organization: organization, parent: page1)
 
       expect(page4.parent_id).to eq(page1.id)
@@ -32,14 +32,14 @@ RSpec.describe Page, type: :model do
       expect(page2.parent_id).to eq(page4.id)
     end
 
-    it "should move higher" do
+    it "moves higher" do
       page3.move_higher
       page2.reload
       expect(page3.parent_id).to eq(page1.id)
       expect(page2.parent_id).to eq(page3.id)
     end
 
-    it "should move lower" do
+    it "moves lower" do
       page2.move_lower
       page3.reload
       expect(page3.parent_id).to eq(page1.id)
@@ -68,7 +68,7 @@ RSpec.describe Page, type: :model do
       expect(branch2_page3.parent_id).to eq(branch2_page2.id)
     end
 
-    it "should move higher" do
+    it "moves higher" do
       children = root_page.children
       expect(children.first.id).to eq(branch1_page1.id)
       expect(children.last.id).to eq(branch2_page1.id)
@@ -81,7 +81,7 @@ RSpec.describe Page, type: :model do
       expect(children.last.id).to eq(branch1_page1.id)
     end
 
-    it "should move lower" do
+    it "moves lower" do
       children = root_page.children
       expect(children.first.id).to eq(branch1_page1.id)
       expect(children.last.id).to eq(branch2_page1.id)

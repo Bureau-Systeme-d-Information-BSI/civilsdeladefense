@@ -43,7 +43,7 @@ module UsersHelper
 
   def hint_text_for_file(job_application, job_application_file)
     link = [:account, job_application, job_application_file, {format: :pdf}]
-    fichier_text = link_to("fichier", link, target: "_blank", class: "text-dark-gray")
+    fichier_text = link_to("fichier", link, target: "_blank", class: "text-dark-gray", rel: "noopener")
     if job_application_file.is_validated == 1
       "<span class=\"valid-text\">Ce #{fichier_text} a été validé !</span>".html_safe
     elsif job_application_file.is_validated == 2

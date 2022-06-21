@@ -187,7 +187,7 @@ class JobApplication < ApplicationRecord
     result[:must_be_provided_files] = []
     result[:optional_file_types] = []
 
-    JobApplicationFileType.all.each do |file_type|
+    JobApplicationFileType.all.find_each do |file_type|
       existing_file = job_application_files.detect { |file|
         file.job_application_file_type == file_type
       }

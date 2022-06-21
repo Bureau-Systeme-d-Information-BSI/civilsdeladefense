@@ -19,6 +19,6 @@ module NamingHelper
   end
 
   def copyright
-    "© #{current_organization.legal_name} #{Time.now.year}"
+    "© #{current_organization.legal_name} #{Time.zone.now.year}"
   end
 end

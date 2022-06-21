@@ -24,7 +24,7 @@ RSpec.describe NotificationsMailer, type: :mailer do
         }
       ]
       service_name = organization.service_name
-      NotificationsMailer.daily_summary(administrator, data, service_name)
+      described_class.daily_summary(administrator, data, service_name)
     end
 
     it "renders the headers" do

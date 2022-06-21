@@ -9,8 +9,8 @@ RSpec.describe ZipJobApplicationFilesJob, type: :job do
 
   it "creates a zip file with the given id linked to a temporary file that contains job application files" do
     expect {
-      ZipJobApplicationFilesJob.new.perform(zip_id: id, user_ids: [user.id])
-    }.to change { ZipFile.count }.by(1)
+      described_class.new.perform(zip_id: id, user_ids: [user.id])
+    }.to change(ZipFile, :count).by(1)
 
     zip_file = ZipFile.find(id)
     expect(zip_file.zip_url).to be_present

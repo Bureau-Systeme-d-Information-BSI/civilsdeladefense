@@ -7,7 +7,7 @@ RSpec.describe DailySummary do
   let(:job_offer) { job_offers.first }
   let(:job_applications) { create_list(:job_application, 5, job_offer: job_offer) }
   let(:job_application) { job_applications.first }
-  let(:summary) { DailySummary.new(day: Time.now) }
+  let(:summary) { described_class.new(day: Time.zone.now) }
 
   before do
     job_application.accepted!

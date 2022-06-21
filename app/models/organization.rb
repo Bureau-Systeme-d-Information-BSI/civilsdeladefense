@@ -40,7 +40,7 @@ class Organization < ApplicationRecord
   end
 
   def legal_name
-    operator_name.present? ? operator_name : brand_name
+    operator_name.presence || brand_name
   end
 
   def possessive_article

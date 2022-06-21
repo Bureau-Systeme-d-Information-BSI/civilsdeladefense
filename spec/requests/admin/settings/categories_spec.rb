@@ -9,7 +9,7 @@ RSpec.describe "Admin::Settings::Categories", type: :request do
       admin.confirm
       sign_in admin
       get admin_settings_categories_path
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
     end
   end
 end

@@ -7,7 +7,7 @@ RSpec.describe ApplicantNotificationsMailer, type: :mailer do
   let(:organization) { job_offer.organization }
   let(:job_application) { create(:job_application, job_offer: job_offer) }
   let(:email) { create(:email, job_application: job_application) }
-  let(:mail) { ApplicantNotificationsMailer.new_email(email.id) }
+  let(:mail) { described_class.new_email(email.id) }
 
   describe "new_email" do
     context "when from organization without inbound email configured" do

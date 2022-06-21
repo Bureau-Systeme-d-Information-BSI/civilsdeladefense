@@ -212,7 +212,7 @@ RSpec.describe Admin::JobOffersController, type: :controller do
 
           post :add_actor, params: invalid_attributes
 
-          expect(response).to_not be_successful
+          expect(response).not_to be_successful
         end
 
         it "returns a json filled with errors" do

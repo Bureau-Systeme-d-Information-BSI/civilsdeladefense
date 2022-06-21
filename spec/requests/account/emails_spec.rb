@@ -11,7 +11,7 @@ RSpec.describe "Account::Emails", type: :request do
 
       job_application = create(:job_application, user: user)
       get account_job_application_emails_path(job_application)
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
     end
   end
 end

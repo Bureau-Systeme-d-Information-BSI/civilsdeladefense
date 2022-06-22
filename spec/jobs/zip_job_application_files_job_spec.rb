@@ -3,11 +3,11 @@
 require "rails_helper"
 
 RSpec.describe ZipJobApplicationFilesJob, type: :job do
-  it "creates a zip file with the given id linked to a temporary file that contains job application files" do
-    job_application_file = create(:job_application_file)
-    user = job_application_file.job_application.user
-    id = SecureRandom.uuid
+  let(:job_application_file) { create(:job_application_file) }
+  let(:user) { job_application_file.job_application.user }
+  let(:id) { SecureRandom.uuid }
 
+  it "creates a zip file with the given id linked to a temporary file that contains job application files" do
     expect {
       ZipJobApplicationFilesJob.new.perform(zip_id: id, user_ids: [user.id])
     }.to change { ZipFile.count }.by(1)
@@ -23,6 +23,16 @@ RSpec.describe ZipJobApplicationFilesJob, type: :job do
           job_application_file.job_application_file_type.name
         ].join(" - "))
       end
+    end
+  end
+
+  describe "edge cases" do
+    it "doesn't crash when the file is unreadable" do
+      allow_any_instance_of(DocumentUploader).to receive(:read).and_raise(NoMethodError)
+
+      expect {
+        ZipJobApplicationFilesJob.new.perform(zip_id: id, user_ids: [user.id])
+      }.not_to raise_error
     end
   end
 end

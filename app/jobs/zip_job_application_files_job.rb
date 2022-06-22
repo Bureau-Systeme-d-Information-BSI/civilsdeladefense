@@ -38,8 +38,14 @@ class ZipJobApplicationFilesJob < ApplicationJob
       job_application.present?
     }.map { |job_application|
       job_application.job_application_files.select { |job_application_file|
-        job_application_file.content.present?
+        readable?(job_application_file)
       }
     }.flatten
+  end
+
+  def readable?(job_application_file)
+    job_application_file.content.present? && job_application_file.content.read
+  rescue NoMethodError
+    false
   end
 end

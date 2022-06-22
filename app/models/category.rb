@@ -11,9 +11,9 @@ class Category < ApplicationRecord
 
   def compute_published_job_offers_count!
     if leaf?
-      update_column :published_job_offers_count, publicly_visible_job_offers.count
+      update_column :published_job_offers_count, publicly_visible_job_offers.count # rubocop:disable Rails/SkipsModelValidations
     else
-      update_column :published_job_offers_count, children.map(&:published_job_offers_count).sum
+      update_column :published_job_offers_count, children.map(&:published_job_offers_count).sum # rubocop:disable Rails/SkipsModelValidations
     end
   end
 

@@ -39,7 +39,7 @@ module DeactivationFlow
   end
 
   def mark_for_deactivation!
-    update_column(:marked_for_deactivation_on, Time.zone.now.to_date)
+    update_column(:marked_for_deactivation_on, Time.zone.now.to_date) # rubocop:disable Rails/SkipsModelValidations
   end
 
   def active?
@@ -51,10 +51,10 @@ module DeactivationFlow
   end
 
   def deactivate
-    update_attribute(:deleted_at, Time.current)
+    update_attribute(:deleted_at, Time.current) # rubocop:disable Rails/SkipsModelValidations
   end
 
   def reactivate
-    update_attribute(:deleted_at, nil)
+    update_attribute(:deleted_at, nil) # rubocop:disable Rails/SkipsModelValidations
   end
 end

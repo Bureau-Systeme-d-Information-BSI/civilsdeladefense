@@ -4,7 +4,7 @@ namespace :migrate_data do
 
     Rails.logger.info("Migration start : set bne_value to `inconnue` and bne_date to `01/01/2020` for #{job_offers.count} job offers")
 
-    result = job_offers.update_all(bne_value: "inconnue", bne_date: "01/01/2020")
+    result = job_offers.update_all(bne_value: "inconnue", bne_date: "01/01/2020") # rubocop:disable Rails/SkipsModelValidations
 
     Rails.logger.info("#{result} job offers has been updated, list of ids -> #{job_offers.pluck(:id).join(" ")}")
   end

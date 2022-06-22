@@ -10,7 +10,7 @@ namespace :migrate_data do
       success = BenefitJobOffer.create(
         job_offer: job_offer, benefit_id: job_offer.benefit_id
       )
-      success = job_offer.update_column(:benefit_id, nil) if success
+      success = job_offer.update_column(:benefit_id, nil) if success # rubocop:disable Rails/SkipsModelValidations
       errors << job_offer unless success
     end
 

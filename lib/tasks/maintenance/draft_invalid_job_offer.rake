@@ -5,7 +5,7 @@ namespace :maintenance do
     JobOffer.publicly_visible.map do |job_offer|
       next if job_offer.valid?
 
-      job_offer.update_column(:state, :draft)
+      job_offer.update_column(:state, :draft) # rubocop:disable Rails/SkipsModelValidations
       result << job_offer
     end
 

@@ -21,11 +21,11 @@ class JobApplicationFile < ApplicationRecord
   end
 
   def check!
-    update_column :is_validated, 1
+    update_column :is_validated, 1 # rubocop:disable Rails/SkipsModelValidations
   end
 
   def uncheck!
-    update_column :is_validated, 2
+    update_column :is_validated, 2 # rubocop:disable Rails/SkipsModelValidations
   end
 
   def validated?

@@ -25,7 +25,7 @@ namespace :migrate_data do
 
         if target_audit
           res += 1
-          job_offer.update_column(at_attr, target_audit.created_at)
+          job_offer.update_column(at_attr, target_audit.created_at) # rubocop:disable Rails/SkipsModelValidations
         end
       end
 

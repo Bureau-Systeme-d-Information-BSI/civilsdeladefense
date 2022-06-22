@@ -193,34 +193,23 @@ RSpec.describe JobOffer, type: :model do
   end
 
   describe "validate" do
-    let(:job_offer) { build(:job_offer, state: :published, description: description) }
     describe "title" do
-      context "with ( in title and no F/H at the end" do
-        let(:job_offer) { build(:job_offer, title: "(") }
-
-        it "is not valid" do
-          expect(job_offer).to_not be_valid
-        end
+      it "is not valid with ( in title and no F/H at the end" do
+        expect(build(:job_offer, title: "(")).not_to be_valid
       end
 
-      context "with ( in title and F/H at the end" do
-        let(:job_offer) { build(:job_offer, title: "( F/H") }
-
-        it "is not valid" do
-          expect(job_offer).to_not be_valid
-        end
+      it "is not valid with ( in title and F/H at the end" do
+        expect(build(:job_offer, title: "( F/H")).not_to be_valid
       end
 
-      context "without ( in title and with F/H at the end" do
-        let(:job_offer) { build(:job_offer, title: "no parenthesis F/H") }
-
-        it "is valid" do
-          expect(job_offer).to be_valid
-        end
+      it "is valid without ( in title and with F/H at the end" do
+        expect(build(:job_offer, title: "no parenthesis F/H")).to be_valid
       end
     end
 
     describe "description" do
+      let(:job_offer) { build(:job_offer, state: :published, description: description) }
+
       context "with description more than 2000 chars" do
         let(:description) { "desc" * 2000 }
 

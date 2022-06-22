@@ -8,12 +8,9 @@ RSpec.describe Admin::RecipientsController, type: :request do
   before { sign_in create(:administrator) }
 
   describe "GET /index" do
-    let(:user_a) { create(:user, first_name: "Grant", last_name: "Hill") }
-    let(:user_b) { create(:user, first_name: "Hugh", last_name: "Grant") }
-    let(:user_c) { create(:user, email: "totoro@miyazaki.jp") }
-    let!(:job_application_a) { create(:job_application, job_offer: job_offer, user: user_a) }
-    let!(:job_application_b) { create(:job_application, job_offer: job_offer, user: user_b) }
-    let!(:job_application_c) { create(:job_application, job_offer: job_offer, user: user_c) }
+    let!(:job_application_a) { create(:job_application, job_offer: job_offer, user: create(:user, first_name: "Grant", last_name: "Hill")) }
+    let!(:job_application_b) { create(:job_application, job_offer: job_offer, user: create(:user, first_name: "Hugh", last_name: "Grant")) }
+    let!(:job_application_c) { create(:job_application, job_offer: job_offer, user: create(:user, email: "totoro@miyazaki.jp")) }
 
     it "is successful" do
       get admin_job_offer_recipients_path(job_offer, format: :json, s: "aaa")
@@ -35,11 +32,11 @@ RSpec.describe Admin::RecipientsController, type: :request do
       expect(JSON.parse(response.body)).to match([
         {
           id: job_application_b.id,
-          user: {first_name: user_b.first_name, last_name: user_b.last_name, email: user_b.email}
+          user: {first_name: job_application_b.user.first_name, last_name: job_application_b.user.last_name, email: job_application_b.user.email}
         }.with_indifferent_access,
         {
           id: job_application_a.id,
-          user: {first_name: user_a.first_name, last_name: user_a.last_name, email: user_a.email}
+          user: {first_name: job_application_a.user.first_name, last_name: job_application_a.user.last_name, email: job_application_a.user.email}
         }.with_indifferent_access
       ])
     end
@@ -49,7 +46,7 @@ RSpec.describe Admin::RecipientsController, type: :request do
       expect(JSON.parse(response.body)).to match([
         {
           id: job_application_b.id,
-          user: {first_name: user_b.first_name, last_name: user_b.last_name, email: user_b.email}
+          user: {first_name: job_application_b.user.first_name, last_name: job_application_b.user.last_name, email: job_application_b.user.email}
         }.with_indifferent_access
       ])
     end
@@ -59,7 +56,7 @@ RSpec.describe Admin::RecipientsController, type: :request do
       expect(JSON.parse(response.body)).to match([
         {
           id: job_application_c.id,
-          user: {first_name: user_c.first_name, last_name: user_c.last_name, email: user_c.email}
+          user: {first_name: job_application_c.user.first_name, last_name: job_application_c.user.last_name, email: job_application_c.user.email}
         }.with_indifferent_access
       ])
     end

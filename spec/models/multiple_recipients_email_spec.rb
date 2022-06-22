@@ -12,8 +12,8 @@ RSpec.describe MultipleRecipientsEmail do
     let(:job_offer) { create(:job_offer, :with_job_applications) }
     let(:job_applications) { job_offer.job_applications }
     let(:sender) { create(:administrator) }
-    subject {
-      MultipleRecipientsEmail.new(
+    subject(:multiple_recipients_email) {
+      described_class.new(
         subject: "subject",
         body: "body",
         job_application_ids: job_applications.pluck(:id),
@@ -28,11 +28,11 @@ RSpec.describe MultipleRecipientsEmail do
     }
 
     it "creates one email per job application" do
-      expect { subject.save }.to change { Email.count }.by(job_applications.size)
+      expect { multiple_recipients_email.save }.to change(Email, :count).by(job_applications.size)
     end
 
     it "populates created emails with the right data" do
-      subject.save
+      multiple_recipients_email.save
       job_applications.reload.each do |job_application|
         email = job_application.emails.last
         expect(email.sender).to eq(sender)
@@ -44,7 +44,7 @@ RSpec.describe MultipleRecipientsEmail do
 
     it "sends an email per job application" do
       expect {
-        subject.save
+        multiple_recipients_email.save
       }.to have_enqueued_job(ActionMailer::MailDeliveryJob).exactly(job_applications.count).times
     end
   end

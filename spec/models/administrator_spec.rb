@@ -172,7 +172,7 @@ RSpec.describe Administrator, type: :model do
       administrator.reload
     end
 
-    context "connected long time ago" do
+    context "when connected long time ago" do
       let!(:administrator) { create(:administrator, last_sign_in_at: 81.days.ago) }
 
       it "marked" do
@@ -180,7 +180,7 @@ RSpec.describe Administrator, type: :model do
       end
     end
 
-    context "marked yesterday and has not connected since" do
+    context "when marked yesterday and has not connected since" do
       let!(:administrator) { create(:administrator, marked_for_deactivation_on: 1.day.ago, last_sign_in_at: 101.days.ago) }
 
       it "dont delete" do
@@ -188,7 +188,7 @@ RSpec.describe Administrator, type: :model do
       end
     end
 
-    context "marked more than 20 days ago and has not connected since" do
+    context "when marked more than 20 days ago and has not connected since" do
       let!(:administrator) do
         administrator = create(:administrator, last_sign_in_at: 101.days.ago)
         administrator.update_column(:marked_for_deactivation_on, 21.days.ago)
@@ -200,7 +200,7 @@ RSpec.describe Administrator, type: :model do
       end
     end
 
-    context "not marked and has not connected since" do
+    context "when not marked and has not connected since" do
       let!(:administrator) { create(:administrator, last_sign_in_at: 101.days.ago) }
 
       it "marked & dont delete" do
@@ -209,7 +209,7 @@ RSpec.describe Administrator, type: :model do
       end
     end
 
-    context "marked and has connected since" do
+    context "when marked and has connected since" do
       let!(:administrator) { create(:administrator, marked_for_deactivation_on: 21.days.ago, last_sign_in_at: Time.zone.now) }
 
       it "doesn't delete" do

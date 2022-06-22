@@ -3,15 +3,12 @@
 require "rails_helper"
 
 RSpec.describe MultipleRecipientsEmail do
-  it { should validate_presence_of(:subject) }
-  it { should validate_presence_of(:body) }
-  it { should validate_presence_of(:sender) }
-  it { should validate_presence_of(:job_application_ids) }
+  it { is_expected.to validate_presence_of(:subject) }
+  it { is_expected.to validate_presence_of(:body) }
+  it { is_expected.to validate_presence_of(:sender) }
+  it { is_expected.to validate_presence_of(:job_application_ids) }
 
   describe "#save" do
-    let(:job_offer) { create(:job_offer, :with_job_applications) }
-    let(:job_applications) { job_offer.job_applications }
-    let(:sender) { create(:administrator) }
     subject(:multiple_recipients_email) {
       described_class.new(
         subject: "subject",
@@ -26,6 +23,10 @@ RSpec.describe MultipleRecipientsEmail do
         ]
       )
     }
+
+    let(:job_offer) { create(:job_offer, :with_job_applications) }
+    let(:job_applications) { job_offer.job_applications }
+    let(:sender) { create(:administrator) }
 
     it "creates one email per job application" do
       expect { multiple_recipients_email.save }.to change(Email, :count).by(job_applications.size)

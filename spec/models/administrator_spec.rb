@@ -230,7 +230,7 @@ RSpec.describe Administrator, type: :model do
       end
 
       it "doesn't create an administrator" do
-        expect { administrator.transfer(email) }.not_to change { Administrator.count }
+        expect { administrator.transfer(email) }.not_to change(described_class, :count)
       end
 
       it "transfers the job offers to the new administrator" do
@@ -244,7 +244,7 @@ RSpec.describe Administrator, type: :model do
       end
 
       it "creates a new administrator" do
-        expect { administrator.transfer(email) }.to change { Administrator.count }.by(1)
+        expect { administrator.transfer(email) }.to change(described_class, :count).by(1)
       end
 
       it "transfers the job offers to the new administrator" do

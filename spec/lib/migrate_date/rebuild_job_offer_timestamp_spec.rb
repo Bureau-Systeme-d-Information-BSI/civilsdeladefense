@@ -4,7 +4,7 @@ require "rails_helper"
 
 Rails.application.load_tasks
 
-RSpec.describe "migrate_data" do
+RSpec.describe "migrate_data" do # rubocop:disable RSpec/DescribeClass
   describe "rebuild_job_offer_timestamp" do
     let(:job_offer) { create(:job_offer) }
 

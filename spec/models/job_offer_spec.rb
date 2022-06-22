@@ -130,13 +130,13 @@ RSpec.describe JobOffer, type: :model do
     expect { job_offer.publish! }.to raise_error(AASM::InvalidTransition)
   end
 
-  it "should allow publishing according to organization config" do
+  it "allows publishing according to organization config (when days before publishing is nil)" do
     organization.update(days_before_publishing: nil)
 
     expect { job_offer.publish! }.to_not raise_error
   end
 
-  it "should allow publishing according to organization config" do
+  it "allows publishing according to organization config (when days before publishing is 0)" do
     organization.update(days_before_publishing: 0)
 
     expect { job_offer.publish! }.to_not raise_error

@@ -116,7 +116,8 @@ RSpec.describe JobApplication, type: :model do
         name: "File 2", from_state: :to_be_met, kind: :applicant_provided, by_default: true
       )
     end
-    let!(:jaft_3) do
+
+    before do
       create(
         :job_application_file_type,
         name: "File 3", from_state: :accepted, kind: :applicant_provided, by_default: false

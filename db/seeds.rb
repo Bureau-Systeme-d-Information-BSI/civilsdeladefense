@@ -695,3 +695,33 @@ end
 ].each do |data|
   Department.create!(code: data[0], name: data[1], code_region: data[2], name_region: data[3])
 end
+
+EmailTemplate.create!(
+  [
+    {
+      title: "Courriel de proposition de rendez-vous téléphonique",
+      subject: "Votre candidature à l'offre XXXX de Civils de la Défense",
+      body: "Madame, Monsieur,\r\nJe vous confirme notre rendez-vous...\r\n\r\nSuite à votre candidature pour l'offre N° XXX..."
+    },
+    {
+      title: "Courriel candidature retenue et documents à fournir",
+      subject: "Votre candidature à l'offre XXXX de Civils de la Défense – Avis favorable au recrutement",
+      body: "Madame, Monsieur,\r\n\r\nJ’ai l’honneur de vous informer que, suite à votre dernier entretien, ..."
+    },
+    {
+      title: "Courriel précisions compétences",
+      subject: "Compétences",
+      body: "Nous souhaiterions avoir des précisions sur vos compétences."
+    },
+    {
+      title: "Courriel de refus",
+      subject: "Votre candidature à l'offre XXX Civils de la Défense ",
+      body: "Madame, Monsieur,\r\n\r\nNous avons bien reçu votre candidature et nous vous remercions de l'intérêt que vous ..."
+    },
+    {
+      title: "Courriel entretien tèl.",
+      subject: "Disponibilités",
+      body: "Pourriez-vous indiquer vos disponibilités ? "
+    }
+  ]
+)

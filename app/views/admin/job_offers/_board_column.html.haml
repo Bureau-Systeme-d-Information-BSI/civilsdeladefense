@@ -1,7 +1,10 @@
 .list{id: "job-application--state-#{state_name}", data: {state: state_name}}
   %header
-    = JobApplication.human_attribute_name("state/#{state_name}")
-    = surround '(', ')' do
-      %span.total= job_applications.size
+    .d-flex.flex-row.justify-content-between 
+      %div 
+        = JobApplication.human_attribute_name("state/#{state_name}")
+        = surround '(', ')' do
+          %span.total= job_applications.size
+      = link_to fa_icon('email'), [:new, :admin, @job_offer, :multiple_recipients_email, state: state_name], title: t('buttons.email')
   .d-flex.flex-column.cards{data: {state: state_name}}
     = render partial: 'job_application', collection: job_applications, locals: {with_header: false}

@@ -61,6 +61,7 @@ fr:
         foreign_language_level: Niveau de langue étrangère
         category: "Domaine professionnel"
         spontaneous: "Candidature spontanée"
+        job_applications_count: "Candidatures"
       administrator:
         current_password: 'Mot de passe actuel'
         password: 'Nouveau mot de passe'

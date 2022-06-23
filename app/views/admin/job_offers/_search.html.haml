@@ -9,12 +9,14 @@
               = fa_icon('magnify')
           = text_field_tag :s, params[:s], placeholder: 'Mot-clés'
         .row.mt-2
-          .col-12.col-sm-3
+          .col-12.col-sm-2
             = render partial: 'filter_state'
-          .col-12.col-sm-3
+          .col-12.col-sm-2
             = render partial: 'filter_employer'
-          .col-12.col-sm-3
+          .col-12.col-sm-2
             = render partial: 'filter_contract_type'
+          .col-12.col-sm-3
+            = render partial: 'filter_job_applications_count'
           .col-12.col-sm-3
             = render partial: 'filter_most_advanced_job_applications_state'
         .d-flex.flex-row-reverse.align-items-center

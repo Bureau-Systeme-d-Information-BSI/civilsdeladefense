@@ -83,7 +83,6 @@ GEM
       msgpack (~> 1.2)
     brakeman (5.2.3)
     builder (3.2.4)
-    byebug (11.1.3)
     cancancan (3.3.0)
     capybara (3.37.1)
       addressable
@@ -119,6 +118,9 @@ GEM
       activerecord (>= 4.2)
       activesupport (>= 4.2)
     crass (1.0.6)
+    debug (1.5.0)
+      irb (>= 1.3.6)
+      reline (>= 0.2.7)
     devise (4.8.1)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -213,6 +215,9 @@ GEM
       responders (>= 2, < 4)
     invisible_captcha (2.0.0)
       rails (>= 5.0)
+    io-console (0.5.11)
+    irb (1.4.1)
+      reline (>= 0.3.0)
     jbuilder (2.11.5)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
@@ -352,6 +357,8 @@ GEM
       ffi (~> 1.0)
     redis (4.6.0)
     regexp_parser (2.5.0)
+    reline (0.3.1)
+      io-console (~> 0.5)
     responders (3.0.1)
       actionpack (>= 5.0)
       railties (>= 5.0)
@@ -522,7 +529,6 @@ DEPENDENCIES
   awesome_nested_set
   bootsnap (>= 1.4.2)
   brakeman
-  byebug
   cancancan
   capybara (>= 2.15, < 4.0)
   carrierwave
@@ -530,6 +536,7 @@ DEPENDENCIES
   charlock_holmes
   clockwork
   counter_culture
+  debug
   devise
   dotenv-rails
   factory_bot_rails

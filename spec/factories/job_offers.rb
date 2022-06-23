@@ -28,6 +28,12 @@ FactoryBot.define do
       state { :published }
     end
   end
+
+  trait :with_job_applications do
+    after(:create) do |job_offer|
+      3.times { job_offer.job_applications << create(:job_application) }
+    end
+  end
 end
 
 # == Schema Information

@@ -28,7 +28,7 @@ class JobApplication < ApplicationRecord
   belongs_to :employer
   belongs_to :category, optional: true
 
-  has_one :profile, as: :profileable, required: true
+  has_one :profile, as: :profileable, required: true, dependent: :destroy
   accepts_nested_attributes_for :profile
   has_many :messages, dependent: :destroy
   has_many :emails, dependent: :destroy

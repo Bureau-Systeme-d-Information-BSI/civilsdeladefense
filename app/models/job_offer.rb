@@ -42,7 +42,7 @@ class JobOffer < ApplicationRecord
   belongs_to :contract_duration, optional: true
   belongs_to :bop, optional: true
 
-  has_many :benefit_job_offers
+  has_many :benefit_job_offers, dependent: :destroy
   has_many :benefits, through: :benefit_job_offers
 
   has_many :job_applications, dependent: :destroy
@@ -55,7 +55,8 @@ class JobOffer < ApplicationRecord
     relationship2 = "#{actor_role}_actors".to_sym
     has_many relationship1,
       -> { where(role: JobOfferActor.roles[actor_role]) },
-      class_name: "JobOfferActor"
+      class_name: "JobOfferActor",
+      dependent: :nullify
     has_many relationship2, through: relationship1, source: "administrator"
   end
 

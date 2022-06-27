@@ -102,7 +102,7 @@ class JobOffersController < ApplicationController
 
     @job_offers = @job_offers.where(category_id: searched_category_ids) if searched_category_ids.present?
 
-    @job_offers = @job_offers.where("contract_start_on <= ?", params[:contract_start_on]) if params[:contract_start_on].present?
+    @job_offers = @job_offers.where("contract_start_on <= ?", contract_start_on) if contract_start_on.present?
     @job_offers = @job_offers.where("published_at >= ?", params[:published_at]) if params[:published_at].present?
 
     @job_offers = @job_offers.search_full_text(params[:q]) if params[:q].present?
@@ -174,5 +174,17 @@ class JobOffersController < ApplicationController
 
   def always_display_job_offer(job_offer)
     administrator_signed_in? || (user_signed_in? && current_user.already_applied?(job_offer))
+  end
+
+  def contract_start_on
+    @contract_start_on ||= parse_contract_start_on
+  end
+
+  def parse_contract_start_on
+    return nil if params[:contract_start_on].blank?
+
+    Date.parse(params[:contract_start_on])
+  rescue ArgumentError
+    nil
   end
 end

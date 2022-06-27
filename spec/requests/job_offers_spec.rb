@@ -9,6 +9,12 @@ RSpec.describe "JobOffers", type: :request do
       get job_offers_path
       expect(response).to have_http_status(200)
     end
+
+    describe "edge cases" do
+      it "doesn't crash when contract_start_on is badly formated" do
+        expect { get job_offers_path(contract_start_on: :test) }.not_to raise_error
+      end
+    end
   end
 
   describe "GET /job_offers/:id" do

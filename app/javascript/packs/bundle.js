@@ -18,12 +18,12 @@ importAll(require.context('icons/', true, /\.svg$/))
 import { Turbo } from "@hotwired/turbo-rails"
 window.Turbo = Turbo
 
-import { Application } from 'stimulus'
-import { definitionsFromContext } from 'stimulus/webpack-helpers'
+import { Application } from "@hotwired/stimulus"
+import { definitionsFromContext } from "@hotwired/stimulus-webpack-helpers"
 
-const application = Application.start()
-const context = require.context('../controllers', true, /\.js$/)
-application.load(definitionsFromContext(context))
+window.Stimulus = Application.start()
+const context = require.context("../controllers", true, /\.js$/)
+Stimulus.load(definitionsFromContext(context))
 
 // import '@gouvfr/core/dist/js/core.js'
 import { Header } from 'js/rf-header.js'

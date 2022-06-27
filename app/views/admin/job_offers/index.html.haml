@@ -21,6 +21,10 @@
           Date de création
           - unless @q.sorts.detect{|x| x.name == 'created_at'}
             &nbsp;▼
+        = sort_link(@q, :job_applications_count, {}, {class: %w[btn btn-link mb-0]}) do
+          Candidatures
+          - unless @q.sorts.detect{|x| x.name == 'job_applications_count'}
+            &nbsp;▼
       .row
         .col-12
           %label

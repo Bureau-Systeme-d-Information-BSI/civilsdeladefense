@@ -306,8 +306,7 @@ JobApplicationFileType.create!(
 job_offer = JobOffer.new { |j|
   j.organization = organization
   j.owner = bant_admin
-  j.title = "Ingénieur expert en systemes d’information, réseau et active directory - " \
-    "Chef de section F/H"
+  j.title = "Ingénieur expert en systemes d’information - Chef de section F/H"
   j.category = sub_sub_informatique
   j.professional_category = ProfessionalCategory.first
   j.location = "Rennes, FR"

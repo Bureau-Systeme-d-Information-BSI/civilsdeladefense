@@ -106,7 +106,7 @@ class JobOffersController < ApplicationController
     @job_offers = @job_offers.where("published_at >= ?", published_at) if published_at.present?
 
     @job_offers = @job_offers.search_full_text(params[:q]) if params[:q].present?
-    @job_offers = @job_offers.paginate(page: params[:page], per_page: 15) unless params[:no_pagination]
+    @job_offers = @job_offers.paginate(page: page, per_page: 15) unless params[:no_pagination]
   end
 
   def set_job_offer
@@ -190,5 +190,15 @@ class JobOffersController < ApplicationController
     Date.parse(params[param_name])
   rescue ArgumentError
     nil
+  end
+
+  def page
+    @page ||= parse_page
+  end
+
+  def parse_page
+    Integer(params[:page])
+  rescue ArgumentError, TypeError
+    1
   end
 end

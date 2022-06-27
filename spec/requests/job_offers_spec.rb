@@ -18,6 +18,12 @@ RSpec.describe "JobOffers", type: :request do
       it "doesn't crash when published_at is badly formated" do
         expect { get job_offers_path(published_at: :test) }.not_to raise_error
       end
+
+      it "doesn't crash when page is badly formated" do
+        expect { get job_offers_path(page: :test) }.not_to raise_error
+        expect { get job_offers_path(page: nil) }.not_to raise_error
+        expect { get job_offers_path(page: "") }.not_to raise_error
+      end
     end
   end
 

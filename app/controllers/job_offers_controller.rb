@@ -103,7 +103,7 @@ class JobOffersController < ApplicationController
     @job_offers = @job_offers.where(category_id: searched_category_ids) if searched_category_ids.present?
 
     @job_offers = @job_offers.where("contract_start_on <= ?", contract_start_on) if contract_start_on.present?
-    @job_offers = @job_offers.where("published_at >= ?", params[:published_at]) if params[:published_at].present?
+    @job_offers = @job_offers.where("published_at >= ?", published_at) if published_at.present?
 
     @job_offers = @job_offers.search_full_text(params[:q]) if params[:q].present?
     @job_offers = @job_offers.paginate(page: params[:page], per_page: 15) unless params[:no_pagination]
@@ -177,13 +177,17 @@ class JobOffersController < ApplicationController
   end
 
   def contract_start_on
-    @contract_start_on ||= parse_contract_start_on
+    @contract_start_on ||= parse_date(:contract_start_on)
   end
 
-  def parse_contract_start_on
-    return nil if params[:contract_start_on].blank?
+  def published_at
+    @published_at ||= parse_date(:published_at)
+  end
 
-    Date.parse(params[:contract_start_on])
+  def parse_date(param_name)
+    return nil if params[param_name].blank?
+
+    Date.parse(params[param_name])
   rescue ArgumentError
     nil
   end

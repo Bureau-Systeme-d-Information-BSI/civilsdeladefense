@@ -1,15 +1,14 @@
 .container-fluid.pt-3
   .row 
     .col-12.col-md-10.mx-md-auto
-      .card
+      .card{data: {controller: "remove-recipient"}}
         .card-header.bg-white.font-weight-bold.text-secondary
           = fa_icon('file-document', class: 'text-secondary')
           = t('.title')
-        .card-subheader.bg-card-bg.font-weight-bold.text-muted
+        .card-subheader.bg-card-bg
           %ul.list-inline
             - for job_application in @job_applications
-              %li.list-inline-item
-                = job_application.user.full_name
+              = render partial: "recipient", locals: { job_application: job_application }
         .card-body.bg-white
           = simple_form_for(:email, url: [:admin, :email_templates], method: :get, remote: true, html: {id: :email_template_selector, class: 'auto-submit'}, defaults: { disabled: is_form_disabled? }) do |f|
             .form-inputs
@@ -21,7 +20,7 @@
 
             .form-inputs
               - for job_application in @job_applications
-                = f.hidden_field :job_application_ids, value: job_application.id, multiple: true
+                = f.hidden_field :job_application_ids, value: job_application.id, multiple: true, data: {remove_recipient_target: "recipients"}
               = f.input :subject
               = f.input :body, as: :text
               = f.file_field :attachments, multiple: true

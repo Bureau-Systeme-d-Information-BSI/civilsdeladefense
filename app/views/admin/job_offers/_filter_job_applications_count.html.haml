@@ -1,0 +1,16 @@
+- choices = [["Avec", 1, :job_applications_count_gteq], ["Sans", 0, :job_applications_count_eq]]
+- vals = choices.select { |name, value, search_key| params.dig(:q, search_key).present? }.map { |name, _, _| name }
+.dropdown.dropdown-checks.form-group
+  %button.form-control.dropdown-toggle.text-left.d-flex.align-items-center#dropdownContractType{type: 'button', data: {toggle: 'dropdown'}, aria: {haspopup: true, expanded: false}}
+    = t('simple_form.labels.defaults.job_applications_count')
+    - if vals.any?
+      = "(#{vals.join(", ")})"
+  .dropdown-menu.dropdown-menu-right.allow-focus{aria: {labelledby: 'dropdownContractType'}}
+    %ul
+      - choices.each do |name, value, search_key|
+        - input_id = search_key
+        - checked = params.dig(:q, search_key) == value.to_s
+        %li
+          .form-check.form-check-inline.w-100
+            = check_box_tag "q[#{search_key}]", value, checked, class: 'form-check-input', id: input_id
+            %label.form-check-label.text-truncate.d-block{for: input_id, title: name}= name

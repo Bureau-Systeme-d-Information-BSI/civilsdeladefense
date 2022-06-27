@@ -1,5 +1,5 @@
 class ForeignLanguageLevel < ApplicationRecord
-  has_many :profile_foreign_languages, dependent: :nullify
+  has_many :profile_foreign_languages
 end
 
 # == Schema Information

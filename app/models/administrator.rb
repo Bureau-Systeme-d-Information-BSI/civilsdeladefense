@@ -15,10 +15,10 @@ class Administrator < ApplicationRecord
   belongs_to :employer, optional: true
   validates :employer, presence: true, if: proc { |a| a.employer? || a.ensure_employer_is_set }
   belongs_to :inviter, optional: true, class_name: "Administrator"
-  has_many :invitees, class_name: "Administrator", foreign_key: "inviter_id", dependent: :nullify
+  has_many :invitees, class_name: "Administrator", foreign_key: "inviter_id"
 
-  has_many :owned_job_offers, class_name: "JobOffer", foreign_key: "owner_id", dependent: :nullify
-  has_many :job_offer_actors, dependent: :nullify
+  has_many :owned_job_offers, class_name: "JobOffer", foreign_key: "owner_id"
+  has_many :job_offer_actors
   has_many :job_offers, through: :job_offer_actors
 
   belongs_to :supervisor_administrator, optional: true, class_name: "Administrator"
@@ -27,8 +27,8 @@ class Administrator < ApplicationRecord
   accepts_nested_attributes_for :supervisor_administrator
   accepts_nested_attributes_for :grand_employer_administrator
 
-  has_many :preferred_users, dependent: :destroy
-  has_many :preferred_users_lists, dependent: :destroy
+  has_many :preferred_users
+  has_many :preferred_users_lists
 
   def supervisor_administrator_attributes=(attributes)
     return if attributes[:email].blank?

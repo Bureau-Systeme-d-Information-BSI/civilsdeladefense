@@ -2,7 +2,7 @@ class ForeignLanguage < ApplicationRecord
   acts_as_list
   default_scope -> { order(position: :asc) }
 
-  has_many :profile_foreign_languages, dependent: :nullify
+  has_many :profile_foreign_languages
 end
 
 # == Schema Information

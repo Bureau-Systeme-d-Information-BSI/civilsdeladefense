@@ -12,7 +12,7 @@ class AgeRange < ApplicationRecord
 
   #####################################
   # Relations
-  has_many :profiles, dependent: :nullify
+  has_many :profiles
 end
 
 # == Schema Information

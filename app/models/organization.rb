@@ -3,12 +3,12 @@
 # Top level organization where all other resources are tight to
 # aka a customer for the SaaS platform
 class Organization < ApplicationRecord
-  has_many :administrators, dependent: :nullify
-  has_many :job_applications, dependent: :nullify
-  has_many :job_offers, dependent: :nullify
-  has_many :organization_defaults, dependent: :nullify
-  has_many :pages, dependent: :nullify
-  has_many :users, dependent: :nullify
+  has_many :administrators
+  has_many :job_applications
+  has_many :job_offers
+  has_many :organization_defaults
+  has_many :pages
+  has_many :users
 
   validates :service_name, :brand_name, :prefix_article, presence: true
 

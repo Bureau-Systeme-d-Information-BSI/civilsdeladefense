@@ -7,7 +7,7 @@ class ContractType < ApplicationRecord
 
   validates :name, presence: true, uniqueness: true
 
-  has_many :job_offers, dependent: :nullify
+  has_many :job_offers
 end
 
 # == Schema Information

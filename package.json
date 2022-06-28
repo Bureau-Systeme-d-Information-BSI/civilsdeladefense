@@ -2,6 +2,7 @@
   "name": "civilsdeladefense",
   "private": true,
   "dependencies": {
+    "@algolia/autocomplete-js": "^1.7.1",
     "@gouvfr/all": "^0.5.3",
     "@hotwired/stimulus": "^3.0.1",
     "@hotwired/stimulus-webpack-helpers": "^1.0.1",

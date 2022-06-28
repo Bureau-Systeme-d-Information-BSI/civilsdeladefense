@@ -19,6 +19,14 @@ class JobApplication < ApplicationRecord
       user: %i[first_name last_name],
       job_offer: %i[identifier title]
     }
+  pg_search_scope :search_users,
+    ignoring: :accents,
+    associated_against: {
+      user: %i[email first_name last_name]
+    },
+    using: {
+      tsearch: {prefix: true, any_word: true}
+    }
 
   belongs_to :job_offer
   belongs_to :organization

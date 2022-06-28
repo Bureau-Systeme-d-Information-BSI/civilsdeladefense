@@ -620,7 +620,7 @@ body {
     }
 
     @at-root .aa-ItemContentBody {
-      display: grid;
+      display: flex;
       gap: calc(var(--aa-spacing-half) / 2);
     }
 

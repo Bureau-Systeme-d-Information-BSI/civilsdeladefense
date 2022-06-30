@@ -1,73 +1,89 @@
-import autocompleteJS from "autocomplete.js"
 import { Controller } from "@hotwired/stimulus"
+import { autocomplete } from '@algolia/autocomplete-js'
 
 export default class extends Controller {
   static targets = [
-    "query", "city", "county", "countyCode", "countryCode", "postcode", "region",
+    "query", "city", "county", "countyCode", "countryCode", "postcode", "region", "location"
   ]
 
   initialize() {
-    autocompleteJS(
-      this.queryTarget,
-      { hint: false },
-      [{
-        source: (query, callback) => this.getSuggestions(query, callback),
-        name: "autocomplete-geo",
-        templates: {
-          suggestion: this.suggestionTemplate,
-          empty: this.emptyTemplate
-        },
-        displayKey: (suggestion) => `${suggestion.properties.label}, ${suggestion.properties.context}`,
-        debounce: 300
-      }]
-    ).on(
-      "autocomplete:selected",
-      (event, suggestion, dataset) => this.fillInput(event, suggestion, dataset)
-    );
+    autocomplete({
+      container: this.queryTarget,
+      placeholder: 'Chercher un lieu',
+      detachedMediaQuery: '',
+      translations: {
+        clearButtonTitle: "Effacer",
+        submitButtonTitle: ""
+      },
+      getSources: ({ query }) => this.getSources(query)
+    })
   }
 
-  getSuggestions(query, callback) {
+  search() {
+    console.log("SEARHCX")
+    this.queryTarget.querySelector("button").click()
+  }
+
+  getSources(query) {
     const url = "https://api-adresse.data.gouv.fr/search/"
     const searchParams = new URLSearchParams()
     searchParams.append("q", query)
     searchParams.append("type", "municipality")
 
-    fetch(
-      `${url}?${searchParams}`
-    ).then(
-      res => res.json()
-    ).then(
-      res => this.formatData(res)
-    ).then(
-      res => callback(res)
-    ).catch(
-      ex => console.log("fetch failed", ex)
-    )
+    return fetch(`${url}?${searchParams}`)
+      .then((response) => response.json())
+      .then((json) => json.features)
+      .then((data) => {
+        return [
+          {
+            sourceId: `adresses`,
+            getItems: () => data,
+            templates: {
+              item: ({ item, html }) => this.templateItem(item, html),
+              noResults: () => 'Aucun résultat',
+            },
+            onSelect: ({ item }) => this.fillInputs(item),
+          },
+        ];
+      })
+      .catch((ex) => console.log("fetch failed", ex))
   }
 
-  formatData(json) {
-    return json.features
+  templateItem(item, html) {
+    return html`<div class="aa-ItemWrapper">
+      <div class="aa-ItemContent">
+        <div class="aa-ItemContentBody">
+          <span class="aa-ItemContentTitle">
+            ${item.properties.label}
+          </span>
+          <span class="aa-ItemContentDescription">
+            ${item.properties.context}
+          </span>
+        </div>
+      </div>
+    </div>`
   }
 
-  suggestionTemplate(suggestion) {
-    const city = suggestion.properties.label
-    const context = suggestion.properties.context
-    return `<span class="font-weight-bold">${city}</span>, <span class="">${context}</span>`;
-  }
+  fillInputs(item) {
+    const properties = item.properties
+    const context = item.properties.context
+    const splittedContext = item.properties.context.split(", ") // 59, Nord, Hauts-de-France
 
-  emptyTemplate() {
-    return '<div class="aa-empty">Aucun résultat</div>'
-  }
-
-  fillInput(event, suggestion, dataset) {
-    const properties = suggestion.properties
-    const context = suggestion.properties.context.split(", ") // 59, Nord, Hauts-de-France
-
+    this.locationTarget.value = `${item.properties.label}, ${context}`
     this.cityTarget.value = properties.city // Ville (Lille)
     this.postcodeTarget.value = properties.postcode // Code postal (59000)
-    this.countyCodeTarget.value = context[0] // Code département (59)
-    this.countyTarget.value = context[1] // Département (Nord)
-    this.regionTarget.value = context[2] // Region (Hauts-de-France)
+    this.countyCodeTarget.value = splittedContext[0] // Code département (59)
+    this.countyTarget.value = splittedContext[1] // Département (Nord)
+    this.regionTarget.value = splittedContext[2] // Region (Hauts-de-France)
     this.countryCodeTarget.value = "fr" // Pays (fr)
+
+    // this.clearSearch()
+  }
+
+  clearSearch() {
+    var clearButton = this.queryTarget.querySelector(".aa-ClearButton")
+    if (clearButton) {
+      clearButton.click()
+    }
   }
 }

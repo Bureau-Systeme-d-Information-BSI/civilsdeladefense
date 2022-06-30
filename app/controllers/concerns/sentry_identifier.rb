@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
-# Job offer state actions metaprogrammed from the array of state names
 module SentryIdentifier
   extend ActiveSupport::Concern
 
   included do
-    after_action :identify_to_sentry
+    before_action :identify_to_sentry
   end
 
   private

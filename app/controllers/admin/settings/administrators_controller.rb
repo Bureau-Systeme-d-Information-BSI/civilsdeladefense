@@ -118,13 +118,12 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
   end
 
   # POST /admin/settings/administrators/1/transfer
-  # POST /admin/settings/administrators/1/transfer.json
   def transfer
-    @administrator.transfer!(params[:transfer_email])
-
-    respond_to do |format|
-      format.html { redirect_to %i[admin settings root], notice: t(".success") }
-      format.json { render :show, status: :ok, location: @administrator }
+    transfer = @administrator.transfer(params[:transfer_email])
+    if transfer.persisted?
+      redirect_to %i[admin settings root], notice: t(".success")
+    else
+      redirect_to [:edit, :admin, :settings, @administrator], notice: transfer.errors.full_messages.to_sentence
     end
   end
 

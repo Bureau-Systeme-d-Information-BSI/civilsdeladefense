@@ -192,13 +192,14 @@ end
 #
 # Indexes
 #
-#  index_job_applications_on_category_id          (category_id)
-#  index_job_applications_on_employer_id          (employer_id)
-#  index_job_applications_on_job_offer_id         (job_offer_id)
-#  index_job_applications_on_organization_id      (organization_id)
-#  index_job_applications_on_rejection_reason_id  (rejection_reason_id)
-#  index_job_applications_on_state                (state)
-#  index_job_applications_on_user_id              (user_id)
+#  index_job_applications_on_category_id               (category_id)
+#  index_job_applications_on_employer_id               (employer_id)
+#  index_job_applications_on_job_offer_id              (job_offer_id)
+#  index_job_applications_on_organization_id           (organization_id)
+#  index_job_applications_on_rejection_reason_id       (rejection_reason_id)
+#  index_job_applications_on_state                     (state)
+#  index_job_applications_on_user_id                   (user_id)
+#  index_job_applications_on_user_id_and_job_offer_id  (user_id,job_offer_id) UNIQUE
 #
 # Foreign Keys
 #

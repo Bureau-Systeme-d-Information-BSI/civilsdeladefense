@@ -18,5 +18,6 @@ end
 #
 # Indexes
 #
+#  index_bops_on_name      (name) UNIQUE
 #  index_bops_on_position  (position)
 #

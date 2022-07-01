@@ -35,8 +35,9 @@ end
 #
 # Indexes
 #
-#  index_organization_defaults_on_kind             (kind)
-#  index_organization_defaults_on_organization_id  (organization_id)
+#  index_organization_defaults_on_kind                      (kind)
+#  index_organization_defaults_on_kind_and_organization_id  (kind,organization_id) UNIQUE
+#  index_organization_defaults_on_organization_id           (organization_id)
 #
 # Foreign Keys
 #

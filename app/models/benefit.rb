@@ -23,5 +23,6 @@ end
 #
 # Indexes
 #
+#  index_benefits_on_name      (name) UNIQUE
 #  index_benefits_on_position  (position)
 #

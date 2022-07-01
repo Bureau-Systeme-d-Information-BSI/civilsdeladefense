@@ -1,0 +1,7 @@
+var recipientsNode = document.getElementById('<%= dom_id(@job_offer, 'recipients') %>')
+var recipientHtml = '<%= j render(partial: '/admin/multiple_recipients_emails/recipient', locals: { job_application: @recipient}) %>'
+recipientsNode.appendChild(document.createRange().createContextualFragment(recipientHtml))
+
+var jobApplicationIdsNode = document.getElementById('<%= dom_id(@job_offer, 'job_application_ids') %>')
+var jobApplicationIdHtml = '<%= j render(partial: '/admin/multiple_recipients_emails/job_application_id', locals: { job_application: @recipient}) %>'
+jobApplicationIdsNode.appendChild(document.createRange().createContextualFragment(jobApplicationIdHtml))

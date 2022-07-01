@@ -1,6 +1,6 @@
 import Rails from '@rails/ujs'
 import Url from 'domurl'
-import { Controller } from 'stimulus'
+import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
 

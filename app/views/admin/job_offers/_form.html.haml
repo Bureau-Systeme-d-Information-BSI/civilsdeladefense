@@ -41,15 +41,17 @@
                           = f.association :employer, collection: employers.map{|x| [x.code, x.id]}, disabled: true, include_blank: false
                       .col-12.col-md-3
                         = f.association :bop
-                    .row
-                      .col-12.col-md-6{data: { controller: 'autocomplete-city' }}
-                        = f.input :location, input_html: { 'data-autocomplete-city-target' => :query }
+                    .row{data: { controller: 'autocomplete-city' }}
+                      .col-12.col-md-6
+                        = f.input :location, input_html: { 'data-autocomplete-city-target' => :location, 'data-action' => "click->autocomplete-city#search" }
                         = f.input :city, as: :hidden, input_html: { 'data-autocomplete-city-target' => :city }
                         = f.input :county, as: :hidden, input_html: { 'data-autocomplete-city-target' => :county }
                         = f.input :county_code, as: :hidden, input_html: { 'data-autocomplete-city-target' => :countyCode }
                         = f.input :country_code, as: :hidden, input_html: { 'data-autocomplete-city-target' => :countryCode }
                         = f.input :postcode, as: :hidden, input_html: { 'data-autocomplete-city-target' => :postcode }
                         = f.input :region, as: :hidden, input_html: { 'data-autocomplete-city-target' => :region }
+                        .d-none
+                          .autocomplete{ 'data-autocomplete-city-target' => :query }
                       - if current_administrator.bant?
                         .col-12.col-md-6
                           = f.input :spontaneous

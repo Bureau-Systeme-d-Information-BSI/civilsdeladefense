@@ -1,0 +1,4 @@
+%li.list-inline-item.border.rounded
+  = job_application.user.full_name
+  = button_tag type: 'button', title: t("buttons.delete"), class: "btn btn-link mb-0 px-0 py-0", data: {action: "click->remove-recipient#remove", remove_recipient_id_param: job_application.id} do
+    = fa_icon("delete")

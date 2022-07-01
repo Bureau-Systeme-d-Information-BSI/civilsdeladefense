@@ -4,7 +4,7 @@ class ZipJobApplicationFilesJob < ApplicationJob
   queue_as :default
 
   def perform(zip_id:, user_ids:)
-    zip_file = ZipFile.create!(id: zip_id)
+    zip_file = ZipFile.first_or_create(id: zip_id)
     zip_file.zip = Pathname.new(Rails.root.join(zip(zip_id, job_application_files(user_ids)))).open
     zip_file.save!
   end

@@ -181,13 +181,15 @@ class Administrator < ApplicationRecord
     end
   end
 
-  def transfer!(email)
+  def transfer(email)
     administrator = Administrator.find_by(email: email.downcase) || Administrator.new(email: email)
     administrator.inviter ||= self
     administrator.organization = organization
-    administrator.save!
-    job_offer_actors.update_all(administrator_id: administrator.id)
-    owned_job_offers.update_all(owner_id: administrator.id)
+    if administrator.save
+      job_offer_actors.update_all(administrator_id: administrator.id)
+      owned_job_offers.update_all(owner_id: administrator.id)
+    end
+    administrator
   end
 
   def password_complexity

@@ -217,6 +217,54 @@ RSpec.describe Administrator, type: :model do
       end
     end
   end
+
+  describe "#transfer" do
+    let(:email) { "any@email.org" }
+    let!(:job_offer) { create(:job_offer, owner: administrator) }
+
+    context "when the new administrator exists" do
+      let!(:new_administrator) { create(:administrator, email: email) }
+
+      it "returns a persisted administrator" do
+        expect(administrator.transfer(email).persisted?).to eq(true)
+      end
+
+      it "doesn't create an administrator" do
+        expect { administrator.transfer(email) }.not_to change { Administrator.count }
+      end
+
+      it "transfers the job offers to the new administrator" do
+        expect { administrator.transfer(email) }.to change { job_offer.reload.owner }.to(new_administrator)
+      end
+    end
+
+    context "when the new administrator does not exist" do
+      it "returns a persisted administrator" do
+        expect(administrator.transfer(email).persisted?).to eq(true)
+      end
+
+      it "creates a new administrator" do
+        expect { administrator.transfer(email) }.to change { Administrator.count }.by(1)
+      end
+
+      it "transfers the job offers to the new administrator" do
+        expect { administrator.transfer(email) }.to change { job_offer.reload.owner }
+      end
+    end
+
+    context "when the organization has an administrator email suffix which isn't used by the new administrator" do
+      before { administrator.organization.update!(administrator_email_suffix: "example.com") }
+
+      it "returns a unpersisted administrator with errors" do
+        expect(administrator.transfer(email).persisted?).to eq(false)
+        expect(administrator.transfer(email).errors).to be_present
+      end
+
+      it "doesn't transfer the job offers" do
+        expect { administrator.transfer(email) }.not_to change { job_offer.reload.owner }
+      end
+    end
+  end
 end
 
 # == Schema Information

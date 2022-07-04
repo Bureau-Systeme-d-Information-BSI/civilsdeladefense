@@ -26,8 +26,8 @@ require "rails_helper"
 # `rails-controller-testing` gem.
 
 RSpec.describe Account::EmailsController, type: :controller do
-  login_user
-  let(:job_application) { create(:job_application, user: @logged_user) }
+  let(:user) { create(:confirmed_user) }
+  let(:job_application) { create(:job_application, user: user) }
   let(:valid_attributes) do
     attributes_for(:email).merge(job_application_id: job_application.id)
   end
@@ -35,6 +35,8 @@ RSpec.describe Account::EmailsController, type: :controller do
   let(:invalid_attributes) do
     attributes_for(:email, subject: nil)
   end
+
+  before { sign_in user }
 
   describe "GET #index" do
     it "returns a success response" do

@@ -12,9 +12,10 @@
     = favicon_pack_tag 'favicon-16x16.png', rel: 'icon', type: 'image/png', sizes: '16x16'
     = favicon_pack_tag 'favicon-32x32.png', rel: 'icon', type: 'image/png', sizes: '32x32'
     = javascript_pack_tag 'bundle'
-  %body
+  %body{data: { controller: "timeoutable", timeoutable_timeout_in_value: @timeout_in }}
     #__SVG_SPRITE_NODE__{'data-turbo-permanent': true}
     = render partial: '/shared/header'
+    = render partial: '/shared/timeout'
     %button.scroll.rf-btn{data: { controller: "scroll", action: "scroll#top"}} ▲
     - if flash[:notice] || flash[:alert] || flash[:error] || flash[:success]
       .rf-container

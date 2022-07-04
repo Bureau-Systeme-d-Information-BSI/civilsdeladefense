@@ -17,8 +17,8 @@ class Administrator < ApplicationRecord
   belongs_to :inviter, optional: true, class_name: "Administrator"
   has_many :invitees, class_name: "Administrator", foreign_key: "inviter_id", inverse_of: :inviter, dependent: :nullify
 
-  has_many :owned_job_offers, class_name: "JobOffer", foreign_key: "owner_id", inverse_of: :owner
-  has_many :job_offer_actors
+  has_many :owned_job_offers, class_name: "JobOffer", foreign_key: "owner_id", inverse_of: :owner, dependent: :nullify
+  has_many :job_offer_actors, dependent: :nullify
   has_many :job_offers, through: :job_offer_actors
 
   belongs_to :supervisor_administrator, optional: true, class_name: "Administrator"
@@ -27,8 +27,8 @@ class Administrator < ApplicationRecord
   accepts_nested_attributes_for :supervisor_administrator
   accepts_nested_attributes_for :grand_employer_administrator
 
-  has_many :preferred_users
-  has_many :preferred_users_lists
+  has_many :preferred_users, through: :preferred_users_list
+  has_many :preferred_users_lists, dependent: :destroy
 
   def supervisor_administrator_attributes=(attributes)
     return if attributes[:email].blank?

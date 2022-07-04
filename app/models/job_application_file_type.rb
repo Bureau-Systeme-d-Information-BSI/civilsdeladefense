@@ -40,7 +40,7 @@ class JobApplicationFileType < ApplicationRecord
 
   #####################################
   # Relations
-  has_many :job_applications
+  has_many :job_applications, dependent: :nullify
 
   def is_mandatory?(state)
     from_state_as_val = JobApplication.states[from_state]

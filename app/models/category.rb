@@ -6,8 +6,8 @@ class Category < ApplicationRecord
 
   acts_as_nested_set counter_cache: :children_count
 
-  has_many :job_offers
-  has_many :publicly_visible_job_offers, -> { publicly_visible }, class_name: "JobOffer", inverse_of: :category
+  has_many :job_offers, dependent: :nullify
+  has_many :publicly_visible_job_offers, -> { publicly_visible }, class_name: "JobOffer", inverse_of: :category, dependent: :nullify
 
   def compute_published_job_offers_count!
     if leaf?

@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "admin/settings/employers/index", type: :view do
-  before(:each) do
+  before do
     assign(:employers, [
       create(:employer),
       create(:employer)

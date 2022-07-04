@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "admin/settings/employers/new", type: :view do
-  before(:each) do
+  before do
     assign(:employer, build(:employer))
   end
 

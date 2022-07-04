@@ -3,7 +3,7 @@
 # Controller auth rspec macros
 module ControllerMacros
   def login_admin
-    before(:each) do
+    before do
       @request.env["devise.mapping"] = Devise.mappings[:admin]
       admin = FactoryBot.create(:administrator)
       admin.confirm
@@ -12,7 +12,7 @@ module ControllerMacros
   end
 
   def login_employer
-    before(:each) do
+    before do
       @request.env["devise.mapping"] = Devise.mappings[:admin]
       employer = FactoryBot.create(:employer)
       admin = FactoryBot.create(:administrator, role: :employer, employer: employer)
@@ -22,7 +22,7 @@ module ControllerMacros
   end
 
   def login_grand_employer
-    before(:each) do
+    before do
       @request.env["devise.mapping"] = Devise.mappings[:admin]
       admin = FactoryBot.create(:administrator, role: nil)
       admin.confirm
@@ -32,7 +32,7 @@ module ControllerMacros
   alias_method :login_cmg, :login_grand_employer
 
   def login_user
-    before(:each) do
+    before do
       @request.env["devise.mapping"] = Devise.mappings[:user]
       @logged_user = FactoryBot.create(:user)
       @logged_user.confirm

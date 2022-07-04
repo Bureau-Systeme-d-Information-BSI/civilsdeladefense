@@ -3,9 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "job_offers/show", type: :view do
-  before(:each) do
-    @job_offer = assign(:job_offer, create(:job_offer))
-  end
+  before { @job_offer = assign(:job_offer, create(:job_offer)) }
 
   it "renders attributes in <p>" do
     render

@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "admin/settings/categories/edit", type: :view do
-  before(:each) do
+  before do
     @category = assign(:category, create(:category))
   end
 

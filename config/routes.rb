@@ -23,6 +23,9 @@ Rails.application.routes.draw do
   get "/politique-confidentialite", to: redirect("/pages/politique-de-confidentialite")
   get "/suivi", to: redirect("/pages/suivi-d-audience-et-vie-privee")
 
+  # Domains check
+  get "/.well-known/pki-validation/:file_name" => "domain_validations#show", :as => :domain_validations
+
   as :administrator do
     patch "/admin/confirmation" => "administrators/confirmations#update", :as => :update_administrator_confirmation
   end

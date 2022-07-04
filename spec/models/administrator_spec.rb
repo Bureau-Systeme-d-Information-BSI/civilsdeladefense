@@ -5,6 +5,9 @@ require "rails_helper"
 RSpec.describe Administrator, type: :model do
   let(:administrator) { create(:administrator) }
 
+  it { is_expected.to have_many(:invitees).inverse_of(:inviter) }
+  it { is_expected.to have_many(:owned_job_offers).inverse_of(:owner) }
+
   it "is valid with valid attributes" do
     expect(administrator).to be_valid
   end

@@ -55,7 +55,8 @@ class JobOffer < ApplicationRecord
     relationship2 = "#{actor_role}_actors".to_sym
     has_many relationship1,
       -> { where(role: JobOfferActor.roles[actor_role]) },
-      class_name: "JobOfferActor"
+      class_name: "JobOfferActor",
+      inverse_of: :job_offer
     has_many relationship2, through: relationship1, source: "administrator"
   end
 

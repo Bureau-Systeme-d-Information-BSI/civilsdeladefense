@@ -7,6 +7,10 @@ RSpec.describe JobOffer, type: :model do
   let(:employer) { create(:employer) }
   let(:organization) { job_offer.organization }
 
+  %i[employer grand_employer supervisor_employer brh].each do |role|
+    it { is_expected.to have_many("job_offer_#{role}_actors".to_sym).inverse_of(:job_offer) }
+  end
+
   describe "pep or bne" do
     let(:job_offer) do
       build(

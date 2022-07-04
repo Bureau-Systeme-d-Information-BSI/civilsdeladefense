@@ -6,6 +6,8 @@ RSpec.describe User, type: :model do
   let(:user) { create(:confirmed_user) }
   let(:another_user) { create(:confirmed_user) }
 
+  it { is_expected.to have_many(:job_applications).inverse_of(:user) }
+
   it "is valid with valid attributes" do
     expect(user).to be_valid
   end

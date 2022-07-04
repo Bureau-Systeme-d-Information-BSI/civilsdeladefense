@@ -28,7 +28,7 @@ class User < ApplicationRecord
   belongs_to :organization
   has_many :omniauth_informations
 
-  has_many :job_applications, -> { order(created_at: :desc) }, dependent: :nullify
+  has_many :job_applications, -> { order(created_at: :desc) }, dependent: :nullify, inverse_of: :user
   has_many :job_application_files, through: :job_applications
   has_many :job_offers, through: :job_applications
   has_many :preferred_users, dependent: :destroy

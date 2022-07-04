@@ -8,7 +8,7 @@ class User < ApplicationRecord
 
   devise :database_authenticatable, :registerable,
     :recoverable, :rememberable, :trackable, :validatable,
-    :confirmable, :lockable,
+    :confirmable, :lockable, :timeoutable,
     :omniauthable, omniauth_providers: User.omniauth_providers
   include Suspendable
   include DeletionFlow

@@ -13,11 +13,10 @@ RSpec.describe Page, type: :model do
 
   describe "pages tree manipulation when level > 1" do
     let(:organization) { organizations(:cvd) }
-    let(:root_page) { create(:page, organization: organization)}
+    let(:root_page) { create(:page, organization: organization) }
     let!(:page1) { create(:page, organization: organization, parent: root_page) }
     let!(:page2) { create(:page, organization: organization, parent: page1) }
     let!(:page3) { create(:page, organization: organization, parent: page2) }
-    
 
     it "should create page trees" do
       expect(page1.parent_id).to eq(root_page.id)
@@ -50,7 +49,7 @@ RSpec.describe Page, type: :model do
 
   describe "pages tree manipulation when level 1" do
     let(:organization) { organizations(:cvd) }
-    let(:root_page) { create(:page, organization: organization)}
+    let(:root_page) { create(:page, organization: organization) }
     let!(:branch1_page1) { create(:page, organization: organization, parent: root_page) }
     let!(:branch1_page2) { create(:page, organization: organization, parent: branch1_page1) }
     let!(:branch1_page3) { create(:page, organization: organization, parent: branch1_page2) }

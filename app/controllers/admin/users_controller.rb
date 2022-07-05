@@ -9,7 +9,7 @@ class Admin::UsersController < Admin::InheritedResourcesController
     @q = @users.ransack(pq)
     users = @q.result.includes(job_applications: %i[profile])
     users = users.search_full_text(params[:s]) if params[:s].present?
-    @users_filtered = users.paginate(page: params[:page], per_page: 25)
+    @users_filtered = users.paginate(page: params[:page], per_page: 25).to_a
 
     render action: :index, layout: "admin/pool"
   end

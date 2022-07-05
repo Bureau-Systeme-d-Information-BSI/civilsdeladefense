@@ -1,5 +1,4 @@
 - @page_title = t('.title')
-- users_count = @users_filtered.count
 .card
   .card-header
     .h4.text-primary.d-md-flex.align-items-center
@@ -8,7 +7,7 @@
     = form_tag(multi_select_admin_users_url, data: {controller: "selectall"}) do
       .d-flex.align-items-end
         .h5.text-primary.mr-auto
-          = t('.users_filtered', count: users_count)
+          = t('.users_filtered', count: @users_filtered.count)
         - klasses = %w[btn btn-link mb-0]
         = sort_link(@q, :created_at, {}, {class: klasses}) do
           Date de création
@@ -22,7 +21,7 @@
 
       .row{data: { controller: 'subcheckbox'}}
         .col-12
-          - unless users_count.zero?
+          - if @users_filtered.any?
             .row
               .col-auto.align-self-center.text-center
                 %label

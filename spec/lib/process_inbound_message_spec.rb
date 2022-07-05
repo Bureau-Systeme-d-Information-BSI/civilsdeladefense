@@ -4,8 +4,7 @@ require "rails_helper"
 
 RSpec.describe ProcessInboundMessage do
   let!(:email) { create(:email) }
-  let(:user) { create(:user) }
-  let(:from) { user.email }
+  let(:from) { create(:user).email }
   let(:to) { "rejoindre+#{email.id}@test.com" }
 
   let(:message) do

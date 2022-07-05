@@ -10,7 +10,7 @@ RSpec.describe ApplicantNotificationsMailer, type: :mailer do
   let(:mail) { ApplicantNotificationsMailer.new_email(email.id) }
 
   describe "new_email" do
-    context "from organization without inbound email configured" do
+    context "when from organization without inbound email configured" do
       it "renders the headers" do
         expect(mail.subject).to eq("New email")
         expect(mail.to).to eq([job_application.user.email])
@@ -22,7 +22,7 @@ RSpec.describe ApplicantNotificationsMailer, type: :mailer do
       end
     end
 
-    context "from organization with inbound email configured with catch_all" do
+    context "when from organization with inbound email configured with catch_all" do
       before do
         organization.inbound_email_config = :catch_all
         organization.save

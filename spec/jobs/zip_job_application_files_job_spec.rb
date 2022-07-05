@@ -31,15 +31,15 @@ RSpec.describe ZipJobApplicationFilesJob, type: :job do
       allow_any_instance_of(DocumentUploader).to receive(:read).and_raise(NoMethodError)
 
       expect {
-        ZipJobApplicationFilesJob.new.perform(zip_id: id, user_ids: [user.id])
+        described_class.new.perform(zip_id: id, user_ids: [user.id])
       }.not_to raise_error
     end
 
     it "doesn't crash when the zip file already exists" do
-      ZipJobApplicationFilesJob.new.perform(zip_id: id, user_ids: [user.id])
+      described_class.new.perform(zip_id: id, user_ids: [user.id])
 
       expect {
-        ZipJobApplicationFilesJob.new.perform(zip_id: id, user_ids: [user.id])
+        described_class.new.perform(zip_id: id, user_ids: [user.id])
       }.not_to raise_error
     end
   end

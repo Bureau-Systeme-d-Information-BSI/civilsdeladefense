@@ -44,13 +44,12 @@ RSpec.describe Users::OmniauthCallbacksController, type: :controller do
     end
 
     context "when user has already used FranceConnect" do
-      let(:fci) do
+      let!(:fci) do
         FactoryBot.create(
           :omniauth_information,
           uid: uid, email: email, last_name: last_name, first_name: first_name
         )
       end
-      let!(:user) { fci.user }
 
       before do
         post :france_connect
@@ -61,7 +60,7 @@ RSpec.describe Users::OmniauthCallbacksController, type: :controller do
       end
 
       it "sign_in user" do
-        expect(controller.current_user).to eq(user)
+        expect(controller.current_user).to eq(fci.user)
       end
     end
 

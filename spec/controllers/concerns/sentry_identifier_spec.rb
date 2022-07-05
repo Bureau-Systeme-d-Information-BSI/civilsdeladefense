@@ -17,8 +17,10 @@ RSpec.describe ApplicationController, type: :controller do
       before { sign_in user }
 
       it "identifies to sentry using the user" do
-        expect(Sentry).to receive(:set_user).with(email: user.email, id: user.id, ip_address: "0.0.0.0")
+        allow(Sentry).to receive(:set_user).with(email: user.email, id: user.id, ip_address: "0.0.0.0")
+
         get :index
+        expect(Sentry).to have_received(:set_user).with(email: user.email, id: user.id, ip_address: "0.0.0.0")
       end
     end
 
@@ -27,15 +29,19 @@ RSpec.describe ApplicationController, type: :controller do
       before { sign_in admin }
 
       it "identifies to sentry using the admin" do
-        expect(Sentry).to receive(:set_user).with(email: admin.email, id: admin.id, ip_address: "0.0.0.0")
+        allow(Sentry).to receive(:set_user).with(email: admin.email, id: admin.id, ip_address: "0.0.0.0")
+
         get :index
+        expect(Sentry).to have_received(:set_user).with(email: admin.email, id: admin.id, ip_address: "0.0.0.0")
       end
     end
 
     context "when no user nor administrator is authenticated" do
       it "identifies to sentry using only the request ip" do
-        expect(Sentry).to receive(:set_user).with(email: nil, id: nil, ip_address: "0.0.0.0")
+        allow(Sentry).to receive(:set_user).with(email: nil, id: nil, ip_address: "0.0.0.0")
+
         get :index
+        expect(Sentry).to have_received(:set_user).with(email: nil, id: nil, ip_address: "0.0.0.0")
       end
     end
   end

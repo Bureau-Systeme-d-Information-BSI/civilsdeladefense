@@ -151,7 +151,7 @@ RSpec.describe User, type: :model do
       User.destroy_when_too_old
     end
 
-    context "connected long time ago" do
+    context "when connected long time ago" do
       let!(:user) { create(:user, last_sign_in_at: 81.days.ago) }
 
       it "marked" do
@@ -159,7 +159,7 @@ RSpec.describe User, type: :model do
       end
     end
 
-    context "marked but has not connected since" do
+    context "when marked but has not connected since" do
       let!(:user) do
         user = create(:user, last_sign_in_at: 101.days.ago)
         user.update_column(:marked_for_deletion_on, 21.days.ago)
@@ -171,7 +171,7 @@ RSpec.describe User, type: :model do
       end
     end
 
-    context "marked but has connected since" do
+    context "when marked but has connected since" do
       let!(:user) { create(:user, marked_for_deletion_on: 21.days.ago, last_sign_in_at: Time.zone.now) }
 
       it "doesn't delete" do

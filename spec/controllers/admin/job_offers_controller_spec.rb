@@ -169,7 +169,7 @@ RSpec.describe Admin::JobOffersController, type: :controller do
 
           post :add_actor, params: valid_attributes
 
-          expect(subject).to render_template(:add_actor)
+          expect(subject).to render_template(:add_actor) # rubocop:disable RSpec/NamedSubject
         end
 
         it "returns a successful response with a non existing user" do
@@ -197,7 +197,7 @@ RSpec.describe Admin::JobOffersController, type: :controller do
 
           post :add_actor, params: valid_attributes
 
-          expect(subject).to render_template(:add_actor)
+          expect(subject).to render_template(:add_actor) # rubocop:disable RSpec/NamedSubject
         end
       end
 
@@ -299,7 +299,7 @@ RSpec.describe Admin::JobOffersController, type: :controller do
           3,
           state: :archived,
           job_offer_actors_attributes: [{
-            administrator_id: subject.current_administrator.id,
+            administrator_id: subject.current_administrator.id, # rubocop:disable RSpec/NamedSubject
             role: :grand_employer
           }])
         get :archived, params: {}
@@ -311,7 +311,7 @@ RSpec.describe Admin::JobOffersController, type: :controller do
     describe "GET #board" do
       it "returns a success response" do
         attrs = [{
-          administrator_id: subject.current_administrator.id,
+          administrator_id: subject.current_administrator.id, # rubocop:disable RSpec/NamedSubject
           role: :grand_employer
         }]
         job_offer = create :job_offer, job_offer_actors_attributes: attrs
@@ -323,7 +323,7 @@ RSpec.describe Admin::JobOffersController, type: :controller do
     describe "GET #stats" do
       it "returns a success response" do
         attrs = [{
-          administrator_id: subject.current_administrator.id,
+          administrator_id: subject.current_administrator.id, # rubocop:disable RSpec/NamedSubject
           role: :grand_employer
         }]
         job_offer = create :job_offer, job_offer_actors_attributes: attrs

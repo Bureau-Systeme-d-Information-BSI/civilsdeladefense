@@ -75,7 +75,7 @@ RSpec.describe "MultipleRecipientsEmails", type: :request do
     it "creates emails" do
       expect {
         post admin_job_offer_multiple_recipients_emails_path(job_offer), params: params
-      }.to change { Email.count }.by(job_applications.count)
+      }.to change(Email, :count).by(job_applications.count)
 
       job_applications.reload.each do |job_application|
         email = job_application.emails.last

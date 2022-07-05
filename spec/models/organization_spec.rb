@@ -4,8 +4,8 @@ require "rails_helper"
 
 RSpec.describe Organization, type: :model do
   it "is valid with valid attributes" do
-    @organization = organizations(:cvd)
-    expect(@organization).to be_valid
+    organization = organizations(:cvd)
+    expect(organization).to be_valid
   end
 
   it { should validate_presence_of(:service_name) }

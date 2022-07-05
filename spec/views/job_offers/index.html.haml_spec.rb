@@ -4,7 +4,7 @@ require "rails_helper"
 require "will_paginate/array"
 
 RSpec.describe "job_offers/index", type: :view do
-  before(:each) do
+  before do
     categories = create_list(:category, 5)
     job_offers = create_list(:job_offer, 30)
 

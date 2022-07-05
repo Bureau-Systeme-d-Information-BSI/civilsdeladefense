@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe "admin/job_offers/archived", type: :view do
-  before(:each) do
+  before do
     owner = create(:owner)
     category = create(:category)
     employer = create(:employer)

@@ -17,6 +17,8 @@ ou
 - PostgreSQL
 - Ruby
 - Yarn
+- Redis
+- ImageMagick
 
 ### Installation
 

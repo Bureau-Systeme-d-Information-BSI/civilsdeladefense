@@ -87,7 +87,7 @@ RSpec.describe Admin::JobApplicationsController, type: :controller do
     before do
       create(
         :job_offer_actor,
-        administrator: subject.current_administrator,
+        administrator: subject.current_administrator, # rubocop:disable RSpec/NamedSubject
         job_offer: job_application.job_offer,
         role: :cmg
       )

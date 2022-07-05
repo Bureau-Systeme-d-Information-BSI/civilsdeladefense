@@ -36,7 +36,7 @@ RSpec.describe Account::UsersController, type: :controller do
         user.confirm
         sign_in user
 
-        old_password = subject.current_user.encrypted_password
+        old_password = subject.current_user.encrypted_password # rubocop:disable RSpec/NamedSubject
 
         hsh = {
           current_password: current_password,
@@ -46,7 +46,7 @@ RSpec.describe Account::UsersController, type: :controller do
 
         post :update_password, params: {user: hsh}
 
-        expect(subject.current_user.encrypted_password).not_to eq(old_password)
+        expect(subject.current_user.encrypted_password).not_to eq(old_password) # rubocop:disable RSpec/NamedSubject
       end
 
       it "redirects to the account page" do
@@ -94,7 +94,7 @@ RSpec.describe Account::UsersController, type: :controller do
 
     context "with valid params" do
       it "updates the email" do
-        old_email = subject.current_user.email
+        old_email = subject.current_user.email # rubocop:disable RSpec/NamedSubject
         new_email = "pipo@molo.fr"
 
         hsh = {
@@ -103,8 +103,8 @@ RSpec.describe Account::UsersController, type: :controller do
 
         post :update_email, params: {user: hsh}
 
-        expect(subject.current_user.email).to eq(old_email)
-        expect(subject.current_user.unconfirmed_email).to eq(new_email)
+        expect(subject.current_user.email).to eq(old_email) # rubocop:disable RSpec/NamedSubject
+        expect(subject.current_user.unconfirmed_email).to eq(new_email) # rubocop:disable RSpec/NamedSubject
       end
 
       it "redirects to the account page" do
@@ -138,13 +138,13 @@ RSpec.describe Account::UsersController, type: :controller do
 
     context "with omniauth_informations" do
       before do
-        FactoryBot.create(:omniauth_information, user: subject.current_user)
+        FactoryBot.create(:omniauth_information, user: subject.current_user) # rubocop:disable RSpec/NamedSubject
       end
 
       it "destroy omniauth_informations" do
         patch :unlink_france_connect
 
-        expect(subject.current_user.omniauth_informations.count).to eq(0)
+        expect(subject.current_user.omniauth_informations.count).to eq(0) # rubocop:disable RSpec/NamedSubject
       end
 
       it "redirects to the account page" do

@@ -51,13 +51,14 @@ RSpec.describe Page, type: :model do
     let(:organization) { organizations(:cvd) }
     let(:root_page) { create(:page, organization: organization) }
     let!(:branch1_page1) { create(:page, organization: organization, parent: root_page) }
-    let!(:branch1_page2) { create(:page, organization: organization, parent: branch1_page1) }
-    let!(:branch1_page3) { create(:page, organization: organization, parent: branch1_page2) }
     let!(:branch2_page1) { create(:page, organization: organization, parent: root_page) }
-    let!(:branch2_page2) { create(:page, organization: organization, parent: branch2_page1) }
-    let!(:branch2_page3) { create(:page, organization: organization, parent: branch2_page2) }
 
-    it "should create page trees" do
+    it "creates page trees" do
+      branch1_page2 = create(:page, organization: organization, parent: branch1_page1)
+      branch1_page3 = create(:page, organization: organization, parent: branch1_page2)
+      branch2_page2 = create(:page, organization: organization, parent: branch2_page1)
+      branch2_page3 = create(:page, organization: organization, parent: branch2_page2)
+
       expect(branch1_page1.parent_id).to eq(root_page.id)
       expect(branch1_page2.parent_id).to eq(branch1_page1.id)
       expect(branch1_page3.parent_id).to eq(branch1_page2.id)

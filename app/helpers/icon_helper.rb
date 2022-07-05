@@ -7,7 +7,7 @@ module IconHelper
     klasses += " #{options[:class]}" if options[:class].present?
     options[:viewbox] ||= "0 0 512 512"
     title = options[:title].present? ? content_tag("title", options[:title]) : ""
-    content = title.html_safe + content_tag("use", "", "xlink:href" => "##{name}")
+    content = title.html_safe + content_tag("use", "", "xlink:href" => "##{name}") # rubocop:disable Rails/OutputSafety
     content_tag "svg",
       content,
       :class => klasses,

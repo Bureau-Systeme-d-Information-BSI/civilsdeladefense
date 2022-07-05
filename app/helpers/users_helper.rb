@@ -45,12 +45,12 @@ module UsersHelper
     link = [:account, job_application, job_application_file, {format: :pdf}]
     fichier_text = link_to("fichier", link, target: "_blank", class: "text-dark-gray", rel: "noopener")
     if job_application_file.is_validated == 1
-      "<span class=\"valid-text\">Ce #{fichier_text} a été validé !</span>".html_safe
+      "<span class=\"valid-text\">Ce #{fichier_text} a été validé !</span>".html_safe # rubocop:disable Rails/OutputSafety
     elsif job_application_file.is_validated == 2
-      "<span class=\"error-text\">Votre #{fichier_text} n'est pas valide, veuillez en téléverser un nouveau.</span>".html_safe
+      "<span class=\"error-text\">Votre #{fichier_text} n'est pas valide, veuillez en téléverser un nouveau.</span>".html_safe # rubocop:disable Rails/OutputSafety
     elsif job_application_file.content.present?
       "<span class=\"font-weight-bold\">Vous avez déjà téléversé ce #{fichier_text}</span>, il est en attente de validation.<br/>Pour téléverser une nouvelle version,
-              vous pouvez utiliser la zone ci-dessous.".html_safe
+              vous pouvez utiliser la zone ci-dessous.".html_safe # rubocop:disable Rails/OutputSafety
     end
   end
 end

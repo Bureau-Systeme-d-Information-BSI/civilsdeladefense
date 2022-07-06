@@ -73,7 +73,7 @@
       = link_to [:admin, :settings, entry.to_sym], class: klasses do
         = t(".#{ entry }")
   - entries = JobOffer::SETTINGS.map{|x| x.to_s.pluralize.to_sym}
-  - entries += %i[benefits bops salary_ranges rejection_reasons contract_durations foreign_languages foreign_language_levels job_offer_terms]
+  - entries += %i[archiving_reasons benefits bops salary_ranges rejection_reasons contract_durations foreign_languages foreign_language_levels job_offer_terms]
   - if entries.any?{ |entry| can?(:manage, entry.to_s.singularize.classify.constantize) }
     .list-group-item.menu
       = t(".writing_job_offers")

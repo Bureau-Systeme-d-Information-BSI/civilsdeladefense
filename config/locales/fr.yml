@@ -433,6 +433,8 @@ fr:
         success: "Annonce mise à jour !"
       archive:
         success: "Annonce archivée !"
+      unarchive:
+        success: "Annonce désarchivée !"
       update_and_archive:
         success: "Annonce mise à jour et archivée !"
       suspend:

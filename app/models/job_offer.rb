@@ -222,7 +222,7 @@ class JobOffer < ApplicationRecord
   end
 
   def set_identifier
-    update_column :identifier, [employer.code, sequential_id].join("")
+    update_column :identifier, [employer.code, sequential_id].join("") # rubocop:disable Rails/SkipsModelValidations
   end
 
   def update_category_counter
@@ -276,7 +276,7 @@ class JobOffer < ApplicationRecord
     administrator.inviter ||= current_administrator
     administrator.organization = current_administrator.organization
     administrator.save!
-    job_offer_actors.where(administrator: owner).update_all(administrator_id: administrator.id)
+    job_offer_actors.where(administrator: owner).update_all(administrator_id: administrator.id) # rubocop:disable Rails/SkipsModelValidations
     update!(owner: administrator)
   end
 

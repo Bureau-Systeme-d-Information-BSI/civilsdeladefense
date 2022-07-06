@@ -15,7 +15,7 @@ RSpec.describe OrganizationDefault, type: :model do
     job_offer_new = JobOffer.new_from_scratch(administrator)
     expect(job_offer_new.recruitment_process).to eq("Yada Yada")
 
-    default.update_attribute :value, "Yo"
+    default.update value: "Yo"
     administrator.reload
     job_offer_new = JobOffer.new_from_scratch(administrator)
     expect(job_offer_new.recruitment_process).to eq("Yo")

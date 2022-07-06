@@ -162,7 +162,7 @@ RSpec.describe User, type: :model do
     context "when marked but has not connected since" do
       let!(:user) do
         user = create(:user, last_sign_in_at: 101.days.ago)
-        user.update_column(:marked_for_deletion_on, 21.days.ago)
+        user.update_column(:marked_for_deletion_on, 21.days.ago) # rubocop:disable Rails/SkipsModelValidations
         user
       end
 

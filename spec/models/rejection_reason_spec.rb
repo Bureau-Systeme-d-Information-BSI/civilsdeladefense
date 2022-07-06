@@ -10,14 +10,14 @@ RSpec.describe RejectionReason, type: :model do
     expect(job_application.rejection_reason).to be nil
 
     job_application.rejected!
-    job_application.update_attribute :rejection_reason_id, RejectionReason.all.sample.id
+    job_application.update rejection_reason_id: described_class.all.sample.id
     expect(job_application.rejection_reason).not_to be nil
 
     job_application.accepted!
     expect(job_application.rejection_reason).to be nil
 
     job_application.phone_meeting_rejected!
-    job_application.update_attribute :rejection_reason_id, RejectionReason.all.sample.id
+    job_application.update rejection_reason_id: described_class.all.sample.id
     expect(job_application.rejection_reason).not_to be nil
   end
 end

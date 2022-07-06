@@ -191,7 +191,7 @@ RSpec.describe Administrator, type: :model do
     context "when marked more than 20 days ago and has not connected since" do
       let!(:administrator) do
         administrator = create(:administrator, last_sign_in_at: 101.days.ago)
-        administrator.update_column(:marked_for_deactivation_on, 21.days.ago)
+        administrator.update_column(:marked_for_deactivation_on, 21.days.ago) # rubocop:disable Rails/SkipsModelValidations
         administrator
       end
 

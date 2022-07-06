@@ -3,6 +3,8 @@
 class ArchivingReason < ApplicationRecord
   acts_as_list
 
+  has_many :job_offers, dependent: :nullify, inverse_of: :archiving_reason
+
   default_scope -> { order(position: :asc) }
 
   validates :name, presence: true

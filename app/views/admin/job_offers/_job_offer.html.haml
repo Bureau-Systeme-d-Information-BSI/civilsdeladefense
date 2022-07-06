@@ -35,6 +35,8 @@
             = "#{job_offer.aasm.human_state}"
           - if job_offer.state_date
             = I18n.l(job_offer.state_date.to_date)
+          - if job_offer.archiving_reason.present?
+            = job_offer.archiving_reason.name
         %ul.list-inline.mb-0.actions.mt-2.mt-md-0
           %li.list-inline-item.d-none
             = link_to '#' do

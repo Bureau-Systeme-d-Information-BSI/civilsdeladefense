@@ -27,6 +27,12 @@ FactoryBot.define do
       published_at { 40.days.before }
       state { :published }
     end
+
+    factory :archived_job_offer do
+      archived_at { 40.days.before }
+      state { :archived }
+      archiving_reason
+    end
   end
 
   trait :with_job_applications do

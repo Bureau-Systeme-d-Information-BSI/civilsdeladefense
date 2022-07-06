@@ -243,6 +243,13 @@ RSpec.describe JobOffer, type: :model do
       end
     end
   end
+
+  describe "unarchiving" do
+    it "removes the archiving reason when it exists" do
+      job_offer = create(:archived_job_offer)
+      expect { job_offer.unarchive! }.to change { job_offer.reload.archiving_reason }.to(nil)
+    end
+  end
 end
 
 # == Schema Information

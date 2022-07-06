@@ -121,7 +121,7 @@ class JobOffer < ApplicationRecord
 
   ## States and events
   aasm column: :state, enum: true do
-    state :draft, initial: true, before_enter: :set_timestamp
+    state :draft, initial: true, before_enter: [:set_timestamp, :clean_archiving_reason]
     state :published, before_enter: :set_timestamp
     state :suspended, before_enter: :set_timestamp
     state :archived, before_enter: :set_timestamp
@@ -187,6 +187,10 @@ class JobOffer < ApplicationRecord
     return unless respond_to?("#{to}_at=")
 
     send("#{to}_at=", Time.zone.now)
+  end
+
+  def clean_archiving_reason
+    self.archiving_reason = nil
   end
 
   def self.new_from_scratch(reference_administrator)

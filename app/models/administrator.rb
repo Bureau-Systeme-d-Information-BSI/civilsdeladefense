@@ -186,8 +186,8 @@ class Administrator < ApplicationRecord
     administrator.inviter ||= self
     administrator.organization = organization
     if administrator.save
-      job_offer_actors.update_all(administrator_id: administrator.id)
-      owned_job_offers.update_all(owner_id: administrator.id)
+      job_offer_actors.update_all(administrator_id: administrator.id) # rubocop:disable Rails/SkipsModelValidations
+      owned_job_offers.update_all(owner_id: administrator.id) # rubocop:disable Rails/SkipsModelValidations
     end
     administrator
   end

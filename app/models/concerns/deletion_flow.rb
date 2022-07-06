@@ -48,7 +48,7 @@ module DeletionFlow
   end
 
   def mark_for_deletion!
-    update_column(:marked_for_deletion_on, Time.zone.now.to_date)
+    update_column(:marked_for_deletion_on, Time.zone.now.to_date) # rubocop:disable Rails/SkipsModelValidations
   end
 
   private

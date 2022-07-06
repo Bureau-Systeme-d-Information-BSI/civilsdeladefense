@@ -1,3 +1,4 @@
+# rubocop:disable Rails/SkipsModelValidations
 namespace :maintenance do
   task create_cvd_org: :environment do
     hsh = {
@@ -276,3 +277,4 @@ namespace :maintenance do
     Rails.logger.debug "Deletion failed for file #{file.inspect}"
   end
 end
+# rubocop:enable Rails/SkipsModelValidations

@@ -62,7 +62,11 @@
                   = fa_icon 'dots-horizontal'
                 .dropdown-menu.dropdown-menu-right{"aria-labelledby" => "dropdownMenuLink"}
                   - job_offer.possible_events.each do |event_name|
-                    - unless event_name.starts_with?(job_offer.state)
+                    - if event_name == "archive"
+                      = link_to [:new, :admin, job_offer, :archive], class: "dropdown-item", remote: true do
+                        = fa_icon('arrow-right', class: 'mr-1')
+                        = t("buttons.#{ event_name }")
+                    - elsif !event_name.starts_with?(job_offer.state)
                       = link_to [event_name.to_sym, :admin, job_offer], method: :patch, remote: true, class: "dropdown-item" do
                         = fa_icon('arrow-right', class: 'mr-1')
                         = t("buttons.#{ event_name }")

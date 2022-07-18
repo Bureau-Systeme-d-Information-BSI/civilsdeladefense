@@ -88,6 +88,7 @@ Rails.application.routes.draw do
           get :emails
         end
       end
+      resources :archives, only: [:new, :create]
       resources :multiple_recipients_emails, only: %i[new create]
       resources :recipients, only: %i[index create]
     end

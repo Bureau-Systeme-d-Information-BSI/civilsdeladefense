@@ -448,6 +448,12 @@ fr:
       readings:
         create:
           success: "Toutes les notifications ont été marquées comme lues !"
+    archives:
+      form:
+        submit: "Archiver"
+        title: "Archiver cette annonce ?"
+      create:
+        success: "Annonce archivée !"
     emails:
       create:
         success: "Courriel envoyé !"

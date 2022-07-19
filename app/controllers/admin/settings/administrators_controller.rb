@@ -7,8 +7,9 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
   # GET /admin/settings/administrators
   # GET /admin/settings/administrators.json
   def index
-    @administrators = @administrators_active
-    @administrators_count = @administrators.size
+    scope = @administrators_active
+    @administrators_count = scope.size
+    @administrators = scope.paginate(page: params[:page], per_page: 25)
   end
 
   def export

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Admin::UsersController, type: :request do
+RSpec.describe "Admin::Users", type: :request do
   before { sign_in create(:administrator) }
 
   describe "POST /admins/candidats/multi_select" do

@@ -7,27 +7,29 @@ RSpec.describe "Admin::Accounts", type: :request do
   before { sign_in administrator }
 
   describe "GET /admin/account/" do
+    subject(:show_request) { get admin_account_path }
+
     it "is successful" do
-      get admin_account_path
+      show_request
       expect(response).to be_successful
     end
 
     it "shows the account" do
-      get admin_account_path
-      expect(response).to render_template(:show)
+      expect(show_request).to render_template(:show)
     end
   end
 
   describe "GET /admin/account/photo" do
     let(:administrator) { create(:administrator, :with_photo) }
+    subject(:photo_request) { get photo_admin_account_path(id: administrator.id) }
 
     it "is successful" do
-      get photo_admin_account_path(id: administrator.id)
+      photo_request
       expect(response).to be_successful
     end
 
     it "shows the administrator photo" do
-      get photo_admin_account_path(id: administrator.id)
+      photo_request
       expect(response.headers["Content-Type"]).to eq("image/jpeg")
     end
   end
@@ -39,8 +41,7 @@ RSpec.describe "Admin::Accounts", type: :request do
     }
 
     it "redirects to admin_account_path" do
-      update_request
-      expect(response).to redirect_to(admin_account_path)
+      expect(update_request).to redirect_to(admin_account_path)
     end
 
     it "updates the account" do
@@ -50,8 +51,7 @@ RSpec.describe "Admin::Accounts", type: :request do
     it "shows an error when the account is invalid" do
       allow_any_instance_of(Administrator).to receive(:update).and_return(false)
 
-      update_request
-      expect(response).to render_template(:show)
+      expect(update_request).to render_template(:show)
     end
   end
 
@@ -62,8 +62,7 @@ RSpec.describe "Admin::Accounts", type: :request do
     }
 
     it "redirects to change_email_admin_account" do
-      update_email_request
-      expect(response).to redirect_to(change_email_admin_account_path)
+      expect(update_email_request).to redirect_to(change_email_admin_account_path)
     end
 
     it "updates the administrator's unconfirmed_email" do
@@ -73,8 +72,7 @@ RSpec.describe "Admin::Accounts", type: :request do
     it "shows an error when the account is invalid" do
       allow_any_instance_of(Administrator).to receive(:update).and_return(false)
 
-      update_email_request
-      expect(response).to render_template(:change_email)
+      expect(update_email_request).to render_template(:change_email)
     end
 
     describe "PATCH /admin/account/update_password" do
@@ -90,8 +88,7 @@ RSpec.describe "Admin::Accounts", type: :request do
       }
 
       it "redirects to change_password_admin_account_path" do
-        update_password_request
-        expect(response).to redirect_to(change_password_admin_account_path)
+        expect(update_password_request).to redirect_to(change_password_admin_account_path)
       end
 
       it "updates the administrator's password" do
@@ -101,8 +98,7 @@ RSpec.describe "Admin::Accounts", type: :request do
       it "shows an error when the account is invalid" do
         allow_any_instance_of(Administrator).to receive(:update).and_return(false)
 
-        update_password_request
-        expect(subject).to render_template(:change_password)
+        expect(update_password_request).to render_template(:change_password)
       end
     end
   end

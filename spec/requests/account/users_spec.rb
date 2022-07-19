@@ -20,6 +20,21 @@ RSpec.describe "Account::Users", type: :request do
     end
   end
 
+  describe "GET /espace-candidat/mon-compte/photo" do
+    let(:user) { create(:confirmed_user, :with_photo) }
+    subject(:photo_request) { get photo_account_user_path(user) }
+
+    it "is successful" do
+      photo_request
+      expect(response).to be_successful
+    end
+
+    it "shows the administrator photo" do
+      photo_request
+      expect(response.headers["Content-Type"]).to eq("image/jpg")
+    end
+  end
+
   describe "PATCH /espace-candidat/mon-compte" do
     let(:new_first_name) { "Sebastien" }
     subject(:update_request) { patch account_user_path, params: {user: {first_name: new_first_name}} }

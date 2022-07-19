@@ -12,7 +12,7 @@ class BootstrapRenderer < WillPaginate::ActionView::LinkRenderer
     @options[:class] ||= ""
     @options[:class] += " justify-content-center"
 
-    tag.nav(tag("ul", html, class: @options[:class]))
+    tag("nav", tag("ul", html, class: @options[:class])) # rubocop:disable Rails/ContentTag
   end
 
   protected

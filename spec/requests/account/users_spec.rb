@@ -56,6 +56,34 @@ RSpec.describe "Account::Users", type: :request do
     end
   end
 
+  describe "PATCH /espace-candidat/mon-compte/set_password" do
+    let(:new_password) { "An awesomly strong passw0rd!" }
+    subject(:update_password_request) {
+      patch set_password_account_user_path, params: {
+        user: {
+          password: new_password,
+          password_confirmation: new_password
+        }
+      }
+    }
+
+    it "redirects to account_user_path" do
+      update_password_request
+      expect(response).to redirect_to(account_user_path)
+    end
+
+    it "updates the user's password" do
+      expect { update_password_request }.to change { user.reload.password }
+    end
+
+    it "shows an error when the user is invalid" do
+      allow_any_instance_of(User).to receive(:update).and_return(false)
+
+      update_password_request
+      expect(response).to render_template(:show)
+    end
+  end
+
   describe "DELETE /espace-candidat/mon-compte" do
     subject(:destroy_request) {
       delete account_user_path, params: {

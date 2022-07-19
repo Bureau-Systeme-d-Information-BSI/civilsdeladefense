@@ -15,8 +15,7 @@ RSpec.describe "Account::Users", type: :request do
     end
 
     it "shows the user" do
-      show_request
-      expect(response).to render_template(:show)
+      expect(show_request).to render_template(:show)
     end
   end
 
@@ -40,8 +39,7 @@ RSpec.describe "Account::Users", type: :request do
     subject(:update_request) { patch account_user_path, params: {user: {first_name: new_first_name}} }
 
     it "redirects to edit_account_user_path" do
-      update_request
-      expect(response).to redirect_to(edit_account_user_path)
+      expect(update_request).to redirect_to(edit_account_user_path)
     end
 
     it "updates the user" do
@@ -51,8 +49,7 @@ RSpec.describe "Account::Users", type: :request do
     it "shows an error when the user can't be updated" do
       allow_any_instance_of(User).to receive(:update).and_return(false)
 
-      update_request
-      expect(response).to render_template(:edit)
+      expect(update_request).to render_template(:edit)
     end
   end
 
@@ -68,8 +65,7 @@ RSpec.describe "Account::Users", type: :request do
     }
 
     it "redirects to account_user_path" do
-      update_password_request
-      expect(response).to redirect_to(account_user_path)
+      expect(update_password_request).to redirect_to(account_user_path)
     end
 
     it "updates the user's password" do
@@ -79,8 +75,7 @@ RSpec.describe "Account::Users", type: :request do
     it "shows an error when the user is invalid" do
       allow_any_instance_of(User).to receive(:update).and_return(false)
 
-      update_password_request
-      expect(response).to render_template(:show)
+      expect(update_password_request).to render_template(:show)
     end
   end
 
@@ -94,8 +89,7 @@ RSpec.describe "Account::Users", type: :request do
     }
 
     it "redirects to the root path" do
-      destroy_request
-      expect(response).to redirect_to(root_path)
+      expect(destroy_request).to redirect_to(root_path)
     end
 
     it "destroys the user" do
@@ -105,8 +99,7 @@ RSpec.describe "Account::Users", type: :request do
     it "shows an error when the user can't be destroyed" do
       allow_any_instance_of(User).to receive(:destroy_with_password).and_return(false)
 
-      destroy_request
-      expect(response).to render_template(:want_destroy)
+      expect(destroy_request).to render_template(:want_destroy)
     end
   end
 end

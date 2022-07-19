@@ -12,6 +12,15 @@ FactoryBot.define do
     password { "f4k3p455w0rD!" }
     terms_of_service { true }
     certify_majority { true }
+
+    trait :with_photo do
+      photo {
+        Rack::Test::UploadedFile.new(
+          Rails.root.join("spec/fixtures/files/avatar.jpg"),
+          "image/jpg"
+        )
+      }
+    end
   end
 
   factory :confirmed_user, parent: :user do

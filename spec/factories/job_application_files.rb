@@ -28,7 +28,6 @@ end
 #
 # Indexes
 #
-#  file_type_by_job_application_id                              (job_application_file_type_id,job_application_id) UNIQUE
 #  index_job_application_files_on_job_application_file_type_id  (job_application_file_type_id)
 #  index_job_application_files_on_job_application_id            (job_application_id)
 #

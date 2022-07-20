@@ -4,6 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Admin::Accounts", type: :request do
   let(:administrator) { create(:administrator) }
+
   before { sign_in administrator }
 
   describe "GET /admin/account/" do
@@ -20,8 +21,9 @@ RSpec.describe "Admin::Accounts", type: :request do
   end
 
   describe "GET /admin/account/photo" do
-    let(:administrator) { create(:administrator, :with_photo) }
     subject(:photo_request) { get photo_admin_account_path(id: administrator.id) }
+
+    let(:administrator) { create(:administrator, :with_photo) }
 
     it "is successful" do
       photo_request
@@ -35,10 +37,11 @@ RSpec.describe "Admin::Accounts", type: :request do
   end
 
   describe "PATCH /admin/account/" do
-    let(:new_first_name) { "Sebastien" }
     subject(:update_request) {
       patch admin_account_path, params: {administrator: {first_name: new_first_name}}
     }
+
+    let(:new_first_name) { "Sebastien" }
 
     it "redirects to admin_account_path" do
       expect(update_request).to redirect_to(admin_account_path)
@@ -56,10 +59,11 @@ RSpec.describe "Admin::Accounts", type: :request do
   end
 
   describe "PATCH /admin/account/update_email" do
-    let(:new_email) { "test@example.com" }
     subject(:update_email_request) {
       patch update_email_admin_account_path, params: {administrator: {email: new_email}}
     }
+
+    let(:new_email) { "test@example.com" }
 
     it "redirects to change_email_admin_account" do
       expect(update_email_request).to redirect_to(change_email_admin_account_path)
@@ -76,7 +80,6 @@ RSpec.describe "Admin::Accounts", type: :request do
     end
 
     describe "PATCH /admin/account/update_password" do
-      let(:new_password) { "A perflectly plausible password 1234!" }
       subject(:update_password_request) {
         patch update_password_admin_account_path, params: {
           administrator: {
@@ -86,6 +89,8 @@ RSpec.describe "Admin::Accounts", type: :request do
           }
         }
       }
+
+      let(:new_password) { "A perflectly plausible password 1234!" }
 
       it "redirects to change_password_admin_account_path" do
         expect(update_password_request).to redirect_to(change_password_admin_account_path)

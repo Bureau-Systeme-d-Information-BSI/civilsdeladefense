@@ -4,6 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Account::Users", type: :request do
   let(:user) { create(:confirmed_user) }
+
   before { sign_in user }
 
   describe "GET /espace-candidat/mon-compte" do
@@ -20,8 +21,9 @@ RSpec.describe "Account::Users", type: :request do
   end
 
   describe "GET /espace-candidat/mon-compte/photo" do
-    let(:user) { create(:confirmed_user, :with_photo) }
     subject(:photo_request) { get photo_account_user_path(user) }
+
+    let(:user) { create(:confirmed_user, :with_photo) }
 
     it "is successful" do
       photo_request
@@ -35,8 +37,9 @@ RSpec.describe "Account::Users", type: :request do
   end
 
   describe "PATCH /espace-candidat/mon-compte" do
-    let(:new_first_name) { "Sebastien" }
     subject(:update_request) { patch account_user_path, params: {user: {first_name: new_first_name}} }
+
+    let(:new_first_name) { "Sebastien" }
 
     it "redirects to edit_account_user_path" do
       expect(update_request).to redirect_to(edit_account_user_path)
@@ -54,7 +57,6 @@ RSpec.describe "Account::Users", type: :request do
   end
 
   describe "PATCH /espace-candidat/mon-compte/set_password" do
-    let(:new_password) { "An awesomly strong passw0rd!" }
     subject(:update_password_request) {
       patch set_password_account_user_path, params: {
         user: {
@@ -63,6 +65,8 @@ RSpec.describe "Account::Users", type: :request do
         }
       }
     }
+
+    let(:new_password) { "An awesomly strong passw0rd!" }
 
     it "redirects to account_user_path" do
       expect(update_password_request).to redirect_to(account_user_path)
@@ -93,7 +97,7 @@ RSpec.describe "Account::Users", type: :request do
     end
 
     it "destroys the user" do
-      expect { destroy_request }.to change { User.count }.by(-1)
+      expect { destroy_request }.to change(User, :count).by(-1)
     end
 
     it "shows an error when the user can't be destroyed" do

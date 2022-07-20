@@ -26,4 +26,34 @@ RSpec.describe "Admin::JobApplicationFiles", type: :request do
       expect(response).to have_http_status(:not_found)
     end
   end
+
+  describe "DELETE /admin/candidatures/:job_application_id/job_application_files/:id" do
+    subject(:destroy_request) {
+      delete admin_job_application_job_application_file_path(job_application, job_application_file), options
+    }
+
+    context "when format is html" do
+      let(:options) { {} }
+      it "redirects to the job application" do
+        destroy_request
+        expect(destroy_request).to redirect_to(admin_job_application_path(job_application))
+      end
+    end
+
+    context "when format is js" do
+      let(:options) { {xhr: true} }
+      it "renders the template" do
+        destroy_request
+        expect(destroy_request).to render_template(:file_operation_total)
+      end
+    end
+
+    context "when format is json" do
+      let(:options) { {headers: {"ACCEPT" => "application/json"}} }
+      it "returns no_content" do
+        destroy_request
+        expect(response).to have_http_status(:no_content)
+      end
+    end
+  end
 end

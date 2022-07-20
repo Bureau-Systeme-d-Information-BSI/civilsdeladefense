@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
-  before_action :configure_sign_up_params, only: [:create]
+  before_action :configure_sign_up_params, only: [:create] # rubocop:disable Rails/LexicallyScopedActionFilter: change_password
 
   def success
     @email = params[:email]

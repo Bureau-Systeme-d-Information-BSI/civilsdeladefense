@@ -3,9 +3,11 @@
 class Admin::AccountsController < Admin::BaseController
   skip_load_and_authorize_resource
 
+  # rubocop:disable Rails/LexicallyScopedActionFilter: change_password
   before_action :set_administrator, only: %i[
     show change_password change_email update update_password update_email
   ]
+  # rubocop:enable Rails/LexicallyScopedActionFilter: change_password
 
   layout "admin/account"
 

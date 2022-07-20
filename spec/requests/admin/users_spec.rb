@@ -5,6 +5,7 @@ require "rails_helper"
 RSpec.describe "Admin::Users", type: :request do
   let(:admin) { create(:administrator) }
   let(:user) { create(:confirmed_user) }
+
   before { sign_in admin }
 
   describe "GET /admin/candidats" do
@@ -31,8 +32,9 @@ RSpec.describe "Admin::Users", type: :request do
   end
 
   describe "GET /admin/candidats/:id/photo" do
-    let(:user) { create(:user, :with_photo) }
     subject(:photo_request) { get photo_admin_user_path(user) }
+
+    let(:user) { create(:user, :with_photo) }
 
     it "is successful" do
       photo_request
@@ -59,10 +61,11 @@ RSpec.describe "Admin::Users", type: :request do
   end
 
   describe "PUT /admin/candidats/:id/update_listing" do
-    let(:list) { create(:preferred_users_list, administrator: admin) }
     subject(:update_listing_request) {
       put update_listing_admin_user_path(user), params: {user: {preferred_users_list_ids: [list.id]}}
     }
+
+    let(:list) { create(:preferred_users_list, administrator: admin) }
 
     it "redirects to the users index" do
       expect(update_listing_request).to redirect_to(admin_users_path)
@@ -80,8 +83,9 @@ RSpec.describe "Admin::Users", type: :request do
   end
 
   describe "POST /admins/candidats/multi_select" do
-    let(:user_ids) { create_list(:user, 2).pluck(:id) }
     subject(:multi_select_request) { post multi_select_admin_users_path, params: params }
+
+    let(:user_ids) { create_list(:user, 2).pluck(:id) }
 
     describe "adding to a list" do
       let(:list) { create(:preferred_users_list, administrator: admin) }
@@ -224,14 +228,14 @@ RSpec.describe "Admin::Users", type: :request do
 
   describe "POST /admin/candidats/:id/send_job_offer" do
     context "when the job offer is present" do
-      let!(:job_offer) { create(:job_offer) }
       subject(:send_job_offer_request) {
         post send_job_offer_admin_user_path(user, job_offer_identifier: job_offer.identifier)
       }
 
+      let!(:job_offer) { create(:job_offer) }
+
       it "sends the job offer to the user" do
-        expect(ApplicantNotificationsMailer).to receive(:send_job_offer).with(user, job_offer).and_call_original
-        send_job_offer_request
+        expect { send_job_offer_request }.to change { ActionMailer::Base.deliveries.count }.by(1)
       end
 
       it "redirects to user" do
@@ -262,6 +266,7 @@ RSpec.describe "Admin::Users", type: :request do
 
   describe "POST /admin/candidats/:id/unsuspend" do
     subject(:unsuspend_request) { post unsuspend_admin_user_path(user) }
+
     before { user.suspend! }
 
     it "redirects to user" do

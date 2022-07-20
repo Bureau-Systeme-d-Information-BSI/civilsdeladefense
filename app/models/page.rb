@@ -3,8 +3,8 @@
 # CMS Page for front-end display
 class Page < ApplicationRecord
   acts_as_nested_set scope: :organization,
-                     counter_cache: :children_count,
-                     dependent: :restrict_with_exception
+    counter_cache: :children_count,
+    dependent: :restrict_with_exception
   after_save :reinsert_previous_child
 
   extend FriendlyId

@@ -7,7 +7,7 @@ class Bop < ApplicationRecord
 
   validates :name, presence: true, uniqueness: true
 
-  has_many :job_offers
+  has_many :job_offers, dependent: :nullify
 end
 
 # == Schema Information
@@ -22,5 +22,6 @@ end
 #
 # Indexes
 #
+#  index_bops_on_name      (name) UNIQUE
 #  index_bops_on_position  (position)
 #

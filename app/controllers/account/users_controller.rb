@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 class Account::UsersController < Account::BaseController
+  # rubocop:disable Rails/LexicallyScopedActionFilter: change_password
   before_action :set_user, only: %i[
     show change_password change_email update update_password set_password update_email destroy edit
   ]
+  # rubocop:enable Rails/LexicallyScopedActionFilter: change_password
 
   def show
     @user_for_password_change = User.new

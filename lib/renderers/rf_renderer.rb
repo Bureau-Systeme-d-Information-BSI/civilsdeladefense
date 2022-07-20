@@ -13,14 +13,14 @@ class RfRenderer < WillPaginate::ActionView::LinkRenderer
     @options[:class] += " rf-pagination__list"
 
     ul = tag("ul", html, class: @options[:class])
-    tag("nav", ul, class: "rf-pagination", 'aria-label': "Pagination navigation")
+    tag("nav", ul, class: "rf-pagination", "aria-label": "Pagination navigation")
   end
 
   protected
 
   def page_item(text, url, link_status = nil)
     link_tag = generate_link(text, url) if link_status.nil?
-    link_tag ||= tag(:span, text, class: "rf-pagination__label", 'aria-current': "page")
+    link_tag ||= tag(:span, text, class: "rf-pagination__label", "aria-current": "page")
 
     tag(:li, link_tag, class: "rf-pagination__item #{link_status}")
   end
@@ -57,9 +57,9 @@ class RfRenderer < WillPaginate::ActionView::LinkRenderer
       class: "rf-pagination__link",
       rel: text,
       title: "Page #{text}",
-      'aria-label': "Page #{text}",
-      'data-controller': "scroll",
-      'data-action': "scroll#top"
+      "aria-label": "Page #{text}",
+      "data-controller": "scroll",
+      "data-action": "scroll#top"
     )
   end
 end

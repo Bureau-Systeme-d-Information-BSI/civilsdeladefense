@@ -9,7 +9,7 @@ RSpec.describe "Admin::Settings::Employers", type: :request do
       admin.confirm
       sign_in admin
       get admin_settings_employers_path
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
     end
   end
 end

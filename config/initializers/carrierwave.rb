@@ -5,9 +5,9 @@ CarrierWave.configure do |config|
   config.ignore_processing_errors = true
   config.ignore_download_errors = true
 
-  config.enable_processing = false if Rails.env.test? || Rails.env.cucumber?
+  config.enable_processing = false if Rails.env.test? || Rails.env.cucumber? # rubocop:disable Rails/UnknownEnv
 
-  if ENV["OSC_AK"] && !(Rails.env.test? || Rails.env.cucumber?)
+  if ENV["OSC_AK"] && !(Rails.env.test? || Rails.env.cucumber?) # rubocop:disable Rails/UnknownEnv
     config.fog_provider = "fog/aws"
     config.fog_credentials = {
       provider: "AWS",

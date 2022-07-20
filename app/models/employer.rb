@@ -2,7 +2,7 @@
 
 # Top level organization regrouping recruiters
 class Employer < ApplicationRecord
-  has_many :job_offers
+  has_many :job_offers, dependent: :nullify
 
   validates :name, :code, presence: true, uniqueness: true
 

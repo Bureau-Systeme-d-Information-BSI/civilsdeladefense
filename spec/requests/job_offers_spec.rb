@@ -7,7 +7,7 @@ RSpec.describe "JobOffers", type: :request do
   describe "GET /job_offers" do
     it "returns 200 when fetching the job offers page" do
       get job_offers_path
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
     end
 
     describe "edge cases" do
@@ -32,7 +32,7 @@ RSpec.describe "JobOffers", type: :request do
       job_offer = create(:job_offer)
       job_offer.publish!
       get job_offer_path(job_offer)
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
     end
   end
 
@@ -41,7 +41,7 @@ RSpec.describe "JobOffers", type: :request do
       job_offer = create(:job_offer)
       job_offer.publish!
       get apply_job_offers_path(id: job_offer.slug)
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
     end
   end
 
@@ -49,14 +49,14 @@ RSpec.describe "JobOffers", type: :request do
     include Rack::Test::Methods
 
     it "returns the response CORS headers" do
-      get root_path, nil, "HTTP_ORIGIN" => "*"
+      get root_path, nil, "HTTP_ORIGIN" => "*" # rubocop:disable Rails/HttpPositionalArguments
       expect(last_response.headers["Access-Control-Allow-Origin"]).to be_nil
 
-      get job_offers_path(format: :json), nil, "HTTP_ORIGIN" => "*"
+      get job_offers_path(format: :json), nil, "HTTP_ORIGIN" => "*" # rubocop:disable Rails/HttpPositionalArguments
       expect(last_response.headers["Access-Control-Allow-Origin"]).to eq("*")
     end
 
-    scenario "Send the CORS preflight OPTIONS request" do
+    it "Send the CORS preflight OPTIONS request" do
       headers = {
         "HTTP_ORIGIN" => "*",
         "HTTP_ACCESS_CONTROL_REQUEST_METHOD" => "GET",

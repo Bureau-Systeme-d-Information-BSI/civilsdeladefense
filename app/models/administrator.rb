@@ -15,10 +15,10 @@ class Administrator < ApplicationRecord
   belongs_to :employer, optional: true
   validates :employer, presence: true, if: proc { |a| a.employer? || a.ensure_employer_is_set }
   belongs_to :inviter, optional: true, class_name: "Administrator"
-  has_many :invitees, class_name: "Administrator", foreign_key: "inviter_id"
+  has_many :invitees, class_name: "Administrator", foreign_key: "inviter_id", inverse_of: :inviter, dependent: :nullify
 
-  has_many :owned_job_offers, class_name: "JobOffer", foreign_key: "owner_id"
-  has_many :job_offer_actors
+  has_many :owned_job_offers, class_name: "JobOffer", foreign_key: "owner_id", inverse_of: :owner, dependent: :nullify
+  has_many :job_offer_actors, dependent: :nullify
   has_many :job_offers, through: :job_offer_actors
 
   belongs_to :supervisor_administrator, optional: true, class_name: "Administrator"
@@ -27,8 +27,8 @@ class Administrator < ApplicationRecord
   accepts_nested_attributes_for :supervisor_administrator
   accepts_nested_attributes_for :grand_employer_administrator
 
-  has_many :preferred_users
-  has_many :preferred_users_lists
+  has_many :preferred_users, through: :preferred_users_list
+  has_many :preferred_users_lists, dependent: :destroy
 
   def supervisor_administrator_attributes=(attributes)
     return if attributes[:email].blank?
@@ -70,17 +70,17 @@ class Administrator < ApplicationRecord
   validates :email, presence: true, uniqueness: true
   validates :employer, presence: true, if: proc { |a| %w[employer grand_employer].include?(a.role) }
   validates :inviter, presence: true, unless: proc { |a| a.very_first_account }, on: :create
-  validates_inclusion_of :role,
-    in: lambda { |a|
+  validates :role,
+    inclusion: {in: lambda { |a|
       if a.very_first_account
         a.class.roles.keys
       else
         (a.inviter&.authorized_roles_to_confer || a.class.roles.keys.last)
       end
     },
-    allow_blank: true,
-    message: :non_compliant_role,
-    on: :create
+                allow_blank: true,
+                message: :non_compliant_role,
+                on: :create}
 
   ####################################
   # Scope
@@ -113,17 +113,17 @@ class Administrator < ApplicationRecord
   def password_match?
     if password.blank?
       msg = I18n.t("errors.messages.blank")
-      errors[:password] << msg
+      errors.add(:password, msg)
     end
     if password_confirmation.blank?
       msg = I18n.t("errors.messages.blank")
-      errors[:password_confirmation] << msg
+      errors.add(:password_confirmation, msg)
     end
     if password != password_confirmation
-      msg = I18n.translate("errors.messages.confirmation", attribute: "password")
-      errors[:password_confirmation] << msg
+      msg = I18n.t("errors.messages.confirmation", attribute: "password")
+      errors.add(:password_confirmation, msg)
     end
-    password == password_confirmation && !password.blank?
+    password == password_confirmation && password.present?
   end
 
   # new function to return whether a password has been set
@@ -154,22 +154,18 @@ class Administrator < ApplicationRecord
   end
 
   def full_name
-    @full_name ||= begin
-      if first_name.present? || last_name.present?
-        [first_name, last_name].join(" ")
-      else
-        email
-      end
+    @full_name ||= if first_name.present? || last_name.present?
+      [first_name, last_name].join(" ")
+    else
+      email
     end
   end
 
   def full_name_with_title
-    @full_name_with_title ||= begin
-      if title.present? || first_name.present? || last_name.present?
-        [title, first_name, last_name].join(" ")
-      else
-        email
-      end
+    @full_name_with_title ||= if title.present? || first_name.present? || last_name.present?
+      [title, first_name, last_name].join(" ")
+    else
+      email
     end
   end
 

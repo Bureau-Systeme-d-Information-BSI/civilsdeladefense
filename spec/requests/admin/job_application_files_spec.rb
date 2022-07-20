@@ -23,7 +23,7 @@ RSpec.describe "Admin::JobApplicationFiles", type: :request do
       allow_any_instance_of(JobApplicationFile).to receive(:content).and_return(nil)
 
       show_request
-      expect(response.status).to have_http_status(:not_found)
+      expect(response).to have_http_status(:not_found)
     end
   end
 end

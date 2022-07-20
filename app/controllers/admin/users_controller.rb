@@ -127,7 +127,6 @@ class Admin::UsersController < Admin::InheritedResourcesController
 
   protected
 
-  # Never trust parameters from the scary internet, only allow the white list through.
   def permitted_params
     fields = %i[first_name last_name current_position phone website_url]
     params.require(:user).permit(fields)

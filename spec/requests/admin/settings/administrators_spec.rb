@@ -4,6 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Admin::Settings::Administrators", type: :request do
   let(:administrator) { create(:administrator) }
+
   before { sign_in administrator }
 
   describe "GET /admin/parametres/administrateurs" do

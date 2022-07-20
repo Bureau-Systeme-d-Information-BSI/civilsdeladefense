@@ -10,6 +10,15 @@ FactoryBot.define do
     very_first_account { true }
     password { "f4k3p455w0rD!!" }
     confirmed_at { DateTime.now }
+
+    trait :with_photo do
+      photo {
+        Rack::Test::UploadedFile.new(
+          Rails.root.join("spec/fixtures/files/avatar.jpg"),
+          "image/jpg"
+        )
+      }
+    end
   end
 end
 

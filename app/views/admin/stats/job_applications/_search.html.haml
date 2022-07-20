@@ -9,18 +9,18 @@
               = fa_icon('magnify')
           = text_field_tag :s, params[:s]
         .row.mt-5
-          .col-12.col-sm-3
+          .col-12.col-md-6.col-lg-4
             = render partial: 'filter_employer'
-          .col-12.col-sm-3
+          .col-12.col-md-6.col-lg-4
             = render partial: 'filter_category'
-          .col-12.col-sm-3
+          .col-12.col-md-6.col-lg-4
             = render partial: 'filter_contract_type'
-          .col-12.col-sm-3
+          .col-12.col-md-6.col-lg-4
             = render partial: 'filter_bop'
-          .col-12.col-sm-3
+          .col-12.col-md-6.col-lg-4
             = render partial: 'filter_experience_level'
-          .col-12.col-sm-3
+          .col-12.col-md-6.col-lg-4
             = render partial: 'filter_study_level'
-          .col-12.col-sm-3
+          .col-12.col-md-6.col-lg-4
             = render partial: 'filter_department'
         = submit_tag 'Rechercher', name: nil, class: 'd-none'

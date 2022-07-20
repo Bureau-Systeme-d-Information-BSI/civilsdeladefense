@@ -92,7 +92,7 @@ group :development, :test do
   gem "rubocop-rails"
   gem "rubocop-rspec"
   gem "rubocop-performance"
-  gem "standard", "> 0.10"
+  gem "standard"
 
   gem "pry-rails"
 end

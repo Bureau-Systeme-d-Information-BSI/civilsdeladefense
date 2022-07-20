@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe Benefit, type: :model do
-  it { should validate_presence_of(:name) }
+  it { is_expected.to validate_presence_of(:name) }
 end
 
 # == Schema Information
@@ -18,5 +18,6 @@ end
 #
 # Indexes
 #
+#  index_benefits_on_name      (name) UNIQUE
 #  index_benefits_on_position  (position)
 #

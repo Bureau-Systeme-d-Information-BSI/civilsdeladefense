@@ -7,7 +7,7 @@ class Benefit < ApplicationRecord
 
   validates :name, presence: true, uniqueness: true
 
-  has_many :benefit_job_offers
+  has_many :benefit_job_offers, dependent: :nullify
   has_many :job_offers, through: :benefit_job_offers
 end
 
@@ -23,5 +23,6 @@ end
 #
 # Indexes
 #
+#  index_benefits_on_name      (name) UNIQUE
 #  index_benefits_on_position  (position)
 #

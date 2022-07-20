@@ -3,9 +3,9 @@
 require "rails_helper"
 
 RSpec.describe RejectionReason, type: :model do
-  it { should validate_presence_of(:name) }
+  it { is_expected.to validate_presence_of(:name) }
 
-  it "should cleanup rejection reason" do
+  it "cleanups rejection reason" do
     job_application = create(:job_application)
     expect(job_application.rejection_reason).to be nil
 

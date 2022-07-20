@@ -50,12 +50,12 @@ module JobOffersHelper
     res = []
     res << "#{job_offer.estimate_monthly_salary_net} mensuel net"
     res << "#{job_offer.estimate_annual_salary_gross} annuel brut (selon expérience)"
-    res.join("<br/>").html_safe
+    res.join("<br/>").html_safe # rubocop:disable Rails/OutputSafety
   end
 
   def job_offer_benefits_display(job_offer)
     if job_offer.benefits.present?
-      job_offer.benefits.pluck(:name).join("<br/>").html_safe
+      job_offer.benefits.pluck(:name).join("<br/>").html_safe # rubocop:disable Rails/OutputSafety
     else
       "-"
     end

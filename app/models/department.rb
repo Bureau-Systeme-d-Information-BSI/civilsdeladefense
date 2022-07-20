@@ -1,5 +1,5 @@
 class Department < ApplicationRecord
-  has_many :department_users
+  has_many :department_users, dependent: :nullify
   has_many :users, through: :department_users
 
   def label

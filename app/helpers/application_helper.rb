@@ -19,7 +19,7 @@ module ApplicationHelper
 
   def spinner
     content_tag "div", class: "indeterminate-circle mini text-primary" do
-      concat spinner_svg.html_safe
+      concat spinner_svg.html_safe # rubocop:disable Rails/OutputSafety
     end
   end
 

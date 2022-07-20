@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Layout/LineLength
 class Admin::Settings::JobApplicationFileTypesController < Admin::Settings::InheritedResourcesController
   # rubocop:enable Layout/LineLength
 

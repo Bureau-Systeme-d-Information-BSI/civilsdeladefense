@@ -56,7 +56,7 @@ module AwesomeNestedHelper
     end
 
     output << "</li></ul>" * path.length
-    output.html_safe
+    output.html_safe # rubocop:disable Rails/OutputSafety
   end
 
   def sorted_nested_li(objects, order, &block)

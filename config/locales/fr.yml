@@ -161,6 +161,9 @@ fr:
         nav_files: "Mes documents"
         nav_offer: "L'offre"
         nav_profile: "Mon profil"
+  applicant_notifications_mailer:
+    send_job_offer:
+      subject: "Nouvelle offre"
   notifications_mailer:
     daily_summary:
       subject: "[%{service_name}] Rapport journalier"

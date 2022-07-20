@@ -8,9 +8,9 @@ RSpec.describe Organization, type: :model do
     expect(organization).to be_valid
   end
 
-  it { should validate_presence_of(:service_name) }
-  it { should validate_presence_of(:brand_name) }
-  it { should validate_presence_of(:prefix_article) }
+  it { is_expected.to validate_presence_of(:service_name) }
+  it { is_expected.to validate_presence_of(:brand_name) }
+  it { is_expected.to validate_presence_of(:prefix_article) }
 end
 
 # == Schema Information

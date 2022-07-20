@@ -31,7 +31,7 @@ module Civilsdeladefense
     config.i18n.available_locales = [:fr]
     config.i18n.default_locale = :fr
 
-    config.autoload_paths << "#{Rails.root}/lib"
+    config.autoload_paths << "#{Rails.root}/lib" # rubocop:disable Rails/FilePath
 
     if Rails.env.production?
       # Cache assets for 1 year

@@ -17,8 +17,8 @@ class SalaryRange < ApplicationRecord
   scope :admin_settings_index, -> { admin_settings_index_includes.admin_settings_index_order }
   scope :by_main_factors, lambda { |professional_category_id, experience_level_id, sector_id|
     where(professional_category_id: professional_category_id,
-          experience_level_id: experience_level_id,
-          sector_id: sector_id)
+      experience_level_id: experience_level_id,
+      sector_id: sector_id)
   }
 end
 

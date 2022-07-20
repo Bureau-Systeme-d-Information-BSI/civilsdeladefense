@@ -81,7 +81,7 @@ RSpec.describe Users::OmniauthCallbacksController, type: :controller do
     end
   end
 end
-# rubocop:disable Layout/LineLength, Metrics/MethodLength
+
 def france_connect_mock(uid, email, first_name, last_name)
   {
     provider: :france_connect,

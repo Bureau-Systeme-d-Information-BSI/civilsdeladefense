@@ -3,8 +3,8 @@
 require "rails_helper"
 
 RSpec.describe OrganizationDefault, type: :model do
-  it { should validate_presence_of(:kind) }
-  it { should validate_presence_of(:value) }
+  it { is_expected.to validate_presence_of(:kind) }
+  it { is_expected.to validate_presence_of(:value) }
 
   it "sets the corresponding default value for a job offer" do
     administrator = create(:administrator)
@@ -35,8 +35,9 @@ end
 #
 # Indexes
 #
-#  index_organization_defaults_on_kind             (kind)
-#  index_organization_defaults_on_organization_id  (organization_id)
+#  index_organization_defaults_on_kind                      (kind)
+#  index_organization_defaults_on_kind_and_organization_id  (kind,organization_id) UNIQUE
+#  index_organization_defaults_on_organization_id           (organization_id)
 #
 # Foreign Keys
 #

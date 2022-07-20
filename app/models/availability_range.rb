@@ -12,7 +12,7 @@ class AvailabilityRange < ApplicationRecord
 
   #####################################
   # Relations
-  has_many :profiles
+  has_many :profiles, dependent: :nullify
 
   def self.en_poste
     find_by(name: "En poste")

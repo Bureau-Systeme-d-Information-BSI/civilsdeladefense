@@ -36,7 +36,7 @@ class JobApplication < ApplicationRecord
   belongs_to :employer
   belongs_to :category, optional: true
 
-  has_one :profile, as: :profileable, required: true
+  has_one :profile, as: :profileable, required: true, dependent: :nullify
   accepts_nested_attributes_for :profile
   has_many :messages, dependent: :destroy
   has_many :emails, dependent: :destroy
@@ -187,7 +187,7 @@ class JobApplication < ApplicationRecord
     result[:must_be_provided_files] = []
     result[:optional_file_types] = []
 
-    JobApplicationFileType.all.each do |file_type|
+    JobApplicationFileType.all.find_each do |file_type|
       existing_file = job_application_files.detect { |file|
         file.job_application_file_type == file_type
       }
@@ -312,13 +312,14 @@ end
 #
 # Indexes
 #
-#  index_job_applications_on_category_id          (category_id)
-#  index_job_applications_on_employer_id          (employer_id)
-#  index_job_applications_on_job_offer_id         (job_offer_id)
-#  index_job_applications_on_organization_id      (organization_id)
-#  index_job_applications_on_rejection_reason_id  (rejection_reason_id)
-#  index_job_applications_on_state                (state)
-#  index_job_applications_on_user_id              (user_id)
+#  index_job_applications_on_category_id               (category_id)
+#  index_job_applications_on_employer_id               (employer_id)
+#  index_job_applications_on_job_offer_id              (job_offer_id)
+#  index_job_applications_on_organization_id           (organization_id)
+#  index_job_applications_on_rejection_reason_id       (rejection_reason_id)
+#  index_job_applications_on_state                     (state)
+#  index_job_applications_on_user_id                   (user_id)
+#  index_job_applications_on_user_id_and_job_offer_id  (user_id,job_offer_id) UNIQUE
 #
 # Foreign Keys
 #

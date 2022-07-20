@@ -66,6 +66,6 @@ class ApplicantNotificationsMailer < ApplicationMailer
 
     @service_name = @user.organization.service_name
 
-    mail to: @user.email, subject: "Nouvelle offre"
+    mail to: @user.email, subject: t(".subject")
   end
 end

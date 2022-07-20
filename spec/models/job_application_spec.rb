@@ -6,7 +6,7 @@ RSpec.describe JobApplication, type: :model do
   let(:job_offer) { create(:job_offer) }
   let(:job_application) { create(:job_application, job_offer: job_offer) }
 
-  it "should correcty tell rejected state" do
+  it "correcties tell rejected state" do
     expect(job_application.rejected_state?).to be(false)
 
     job_application.reject!
@@ -41,9 +41,9 @@ RSpec.describe JobApplication, type: :model do
     expect(job_application.rejected_state?).to be(false)
   end
 
-  it "should correcty tell rejected states from JobOffer class" do
+  it "correcties tell rejected states from JobOffer class" do
     ary = %w[rejected phone_meeting_rejected after_meeting_rejected]
-    expect(JobApplication.rejected_states).to match_array(ary)
+    expect(described_class.rejected_states).to match_array(ary)
   end
 
   describe "files_to_be_provided" do
@@ -62,7 +62,7 @@ RSpec.describe JobApplication, type: :model do
       )
     end
 
-    it "should compute files to be provided" do
+    it "computes files to be provided" do
       result = job_application.files_to_be_provided
       must_be_provided_files = result[:must_be_provided_files]
       optional_file_types = result[:optional_file_types]
@@ -192,13 +192,14 @@ end
 #
 # Indexes
 #
-#  index_job_applications_on_category_id          (category_id)
-#  index_job_applications_on_employer_id          (employer_id)
-#  index_job_applications_on_job_offer_id         (job_offer_id)
-#  index_job_applications_on_organization_id      (organization_id)
-#  index_job_applications_on_rejection_reason_id  (rejection_reason_id)
-#  index_job_applications_on_state                (state)
-#  index_job_applications_on_user_id              (user_id)
+#  index_job_applications_on_category_id               (category_id)
+#  index_job_applications_on_employer_id               (employer_id)
+#  index_job_applications_on_job_offer_id              (job_offer_id)
+#  index_job_applications_on_organization_id           (organization_id)
+#  index_job_applications_on_rejection_reason_id       (rejection_reason_id)
+#  index_job_applications_on_state                     (state)
+#  index_job_applications_on_user_id                   (user_id)
+#  index_job_applications_on_user_id_and_job_offer_id  (user_id,job_offer_id) UNIQUE
 #
 # Foreign Keys
 #

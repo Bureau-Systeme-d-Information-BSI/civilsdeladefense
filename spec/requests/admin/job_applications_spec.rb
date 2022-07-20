@@ -9,7 +9,7 @@ RSpec.describe "Admin::JobApplications", type: :request do
       admin.confirm
       sign_in admin
       get admin_job_applications_path
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(:ok)
     end
   end
 end

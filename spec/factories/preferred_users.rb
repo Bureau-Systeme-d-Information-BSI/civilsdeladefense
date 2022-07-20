@@ -20,8 +20,9 @@ end
 #
 # Indexes
 #
-#  index_preferred_users_on_preferred_users_list_id  (preferred_users_list_id)
-#  index_preferred_users_on_user_id                  (user_id)
+#  index_preferred_users_on_preferred_users_list_id              (preferred_users_list_id)
+#  index_preferred_users_on_user_id                              (user_id)
+#  index_preferred_users_on_user_id_and_preferred_users_list_id  (user_id,preferred_users_list_id) UNIQUE
 #
 # Foreign Keys
 #

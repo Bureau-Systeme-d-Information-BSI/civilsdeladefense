@@ -53,6 +53,6 @@
           %td
           %td
       %tbody
-        = render @administrators
+        = render partial: "administrator", collection: @administrators
   .mt-5
     = will_paginate @administrators

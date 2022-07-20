@@ -25,8 +25,9 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
 
   # GET /admin/settings/administrators/inactive
   def inactive
-    @administrators = @administrators_inactive
-    @administrators_count = @administrators.size
+    scope = @administrators_inactive
+    @administrators_count = scope.size
+    @administrators = scope.paginate(page: params[:page], per_page: 25)
 
     render action: :index
   end

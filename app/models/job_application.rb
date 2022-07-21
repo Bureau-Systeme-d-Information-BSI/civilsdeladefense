@@ -43,7 +43,7 @@ class JobApplication < ApplicationRecord
   has_many :job_application_files, index_errors: true, dependent: :destroy
   accepts_nested_attributes_for :job_application_files
 
-  validates :user_id, uniqueness: {scope: :job_offer_id}, on: :create, allow_nil: true
+  validates :user_id, uniqueness: {scope: :job_offer_id}, on: :create, allow_nil: true # rubocop:disable Rails/UniqueValidationWithoutIndex
   validate :cant_accept_before_delay
   validate :complete_files_before_draft_contract
 
@@ -312,14 +312,13 @@ end
 #
 # Indexes
 #
-#  index_job_applications_on_category_id               (category_id)
-#  index_job_applications_on_employer_id               (employer_id)
-#  index_job_applications_on_job_offer_id              (job_offer_id)
-#  index_job_applications_on_organization_id           (organization_id)
-#  index_job_applications_on_rejection_reason_id       (rejection_reason_id)
-#  index_job_applications_on_state                     (state)
-#  index_job_applications_on_user_id                   (user_id)
-#  index_job_applications_on_user_id_and_job_offer_id  (user_id,job_offer_id) UNIQUE
+#  index_job_applications_on_category_id          (category_id)
+#  index_job_applications_on_employer_id          (employer_id)
+#  index_job_applications_on_job_offer_id         (job_offer_id)
+#  index_job_applications_on_organization_id      (organization_id)
+#  index_job_applications_on_rejection_reason_id  (rejection_reason_id)
+#  index_job_applications_on_state                (state)
+#  index_job_applications_on_user_id              (user_id)
 #
 # Foreign Keys
 #

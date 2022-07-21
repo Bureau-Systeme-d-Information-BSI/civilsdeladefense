@@ -11,7 +11,7 @@ class JobApplicationFile < ApplicationRecord
   validates :content, file_size: {less_than: 2.megabytes}
 
   validates :content, presence: true, unless: proc { |file| file.do_not_provide_immediately }
-  validates :job_application_file_type_id, uniqueness: {scope: :job_application_id}
+  validates :job_application_file_type_id, uniqueness: {scope: :job_application_id} # rubocop:disable Rails/UniqueValidationWithoutIndex
 
   before_validation do
     if job_application_file_existing_id
@@ -56,7 +56,6 @@ end
 #
 # Indexes
 #
-#  file_type_by_job_application_id                              (job_application_file_type_id,job_application_id) UNIQUE
 #  index_job_application_files_on_job_application_file_type_id  (job_application_file_type_id)
 #  index_job_application_files_on_job_application_id            (job_application_id)
 #

@@ -327,7 +327,6 @@ ActiveRecord::Schema.define(version: 2022_07_01_133806) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "encrypted_file_transfer_in_error", default: false
-    t.index ["job_application_file_type_id", "job_application_id"], name: "file_type_by_job_application_id", unique: true
     t.index ["job_application_file_type_id"], name: "index_job_application_files_on_job_application_file_type_id"
     t.index ["job_application_id"], name: "index_job_application_files_on_job_application_id"
   end
@@ -357,7 +356,6 @@ ActiveRecord::Schema.define(version: 2022_07_01_133806) do
     t.index ["organization_id"], name: "index_job_applications_on_organization_id"
     t.index ["rejection_reason_id"], name: "index_job_applications_on_rejection_reason_id"
     t.index ["state"], name: "index_job_applications_on_state"
-    t.index ["user_id", "job_offer_id"], name: "index_job_applications_on_user_id_and_job_offer_id", unique: true
     t.index ["user_id"], name: "index_job_applications_on_user_id"
   end
 

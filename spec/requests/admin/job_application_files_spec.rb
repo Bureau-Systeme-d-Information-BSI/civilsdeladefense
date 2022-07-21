@@ -48,6 +48,52 @@ RSpec.describe "Admin::JobApplicationFiles", type: :request do
     end
   end
 
+  describe "PATCH /admin/candidatures/:job_application_id/job_application_files/:id" do
+    let(:job_application_file_type) { create(:job_application_file_type) }
+    let(:params) {
+      {
+        job_application_file: {
+          job_application_file_type_id: job_application_file_type.id,
+          is_validated: false
+        }
+      }
+    }
+
+    context "when format is html" do
+      subject(:update_request) {
+        patch admin_job_application_job_application_file_path(job_application, job_application_file), params: params
+      }
+
+      it "redirects to the job application" do
+        expect(update_request).to redirect_to(admin_job_application_path(job_application))
+      end
+
+      it "updates the job application file" do
+        expect {
+          update_request
+        }.to change { job_application_file.reload.job_application_file_type }.to(job_application_file_type)
+      end
+    end
+
+    context "when format is js" do
+      subject(:update_request) {
+        patch admin_job_application_job_application_file_path(job_application, job_application_file),
+          params: params,
+          xhr: true
+      }
+
+      it "renders the template" do
+        expect(update_request).to render_template(:file_operation_total)
+      end
+
+      it "updates the job application file" do
+        expect {
+          update_request
+        }.to change { job_application_file.reload.job_application_file_type }.to(job_application_file_type)
+      end
+    end
+  end
+
   describe "GET /admin/candidatures/:job_application_id/job_application_files/:id" do
     subject(:show_request) {
       get admin_job_application_job_application_file_path(job_application, job_application_file)

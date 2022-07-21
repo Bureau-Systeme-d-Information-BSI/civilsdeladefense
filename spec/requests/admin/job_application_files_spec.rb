@@ -164,4 +164,72 @@ RSpec.describe "Admin::JobApplicationFiles", type: :request do
       end
     end
   end
+
+  describe "POST /admin/candidatures/:job_application_id/job_application_files/:id/check" do
+    before { job_application_file.uncheck! }
+
+    context "when format is html" do
+      subject(:check_request) {
+        post check_admin_job_application_job_application_file_path(job_application, job_application_file)
+      }
+
+      it "redirects to job application file" do
+        expect(
+          check_request
+        ).to redirect_to(admin_job_application_job_application_file_path(job_application, job_application_file))
+      end
+
+      it "checks the job application file" do
+        expect { check_request }.to change { job_application_file.reload.validated? }.to(true)
+      end
+    end
+
+    context "when format is js" do
+      subject(:check_request) {
+        post check_admin_job_application_job_application_file_path(job_application, job_application_file), xhr: true
+      }
+
+      it "renders the template" do
+        expect(check_request).to render_template(:file_operation)
+      end
+
+      it "checks the job application file" do
+        expect { check_request }.to change { job_application_file.reload.validated? }.to(true)
+      end
+    end
+  end
+
+  describe "POST /admin/candidatures/:job_application_id/job_application_files/:id/uncheck" do
+    before { job_application_file.check! }
+
+    context "when format is html" do
+      subject(:uncheck_request) {
+        post uncheck_admin_job_application_job_application_file_path(job_application, job_application_file)
+      }
+
+      it "redirects to job application file" do
+        expect(
+          uncheck_request
+        ).to redirect_to(admin_job_application_job_application_file_path(job_application, job_application_file))
+      end
+
+      it "unchecks the job application file" do
+        expect { uncheck_request }.to change { job_application_file.reload.validated? }.to(false)
+      end
+    end
+
+    context "when format is js" do
+      subject(:uncheck_request) {
+        post uncheck_admin_job_application_job_application_file_path(job_application, job_application_file), xhr: true
+      }
+
+      it "renders the template" do
+        expect(uncheck_request).to render_template(:file_operation)
+      end
+
+      it "unchecks the job application file" do
+        expect { uncheck_request }.to change { job_application_file.reload.validated? }.to(false)
+      end
+    end
+  end
 end

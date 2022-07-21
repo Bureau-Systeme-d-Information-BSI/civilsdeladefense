@@ -3,10 +3,50 @@
 require "rails_helper"
 
 RSpec.describe "Admin::JobApplicationFiles", type: :request do
-  let(:job_application_file) { create(:job_application_file) }
-  let(:job_application) { job_application_file.job_application }
+  let(:job_application) { create(:job_application) }
+  let(:job_application_file) { create(:job_application_file, job_application: job_application) }
 
   before { sign_in create(:administrator) }
+
+  describe "POST /admin/candidatures/:job_application_id/job_application_files" do
+    let(:job_application_file_type) { create(:job_application_file_type) }
+    let(:params) {
+      {
+        job_application_file: {
+          job_application_file_type_id: job_application_file_type.id,
+          is_validated: false
+        }
+      }
+    }
+
+    context "when format is html" do
+      subject(:create_request) {
+        post admin_job_application_job_application_files_path(job_application), params: params
+      }
+
+      it "redirects to the job application" do
+        expect(create_request).to redirect_to(admin_job_application_path(job_application))
+      end
+
+      it "creates the job application file" do
+        expect { create_request }.to change(JobApplicationFile, :count).by(1)
+      end
+    end
+
+    context "when format is js" do
+      subject(:create_request) {
+        post admin_job_application_job_application_files_path(job_application), params: params, xhr: true
+      }
+
+      it "renders the template" do
+        expect(create_request).to render_template(:file_operation_total)
+      end
+
+      it "creates the job application file" do
+        expect { create_request }.to change(JobApplicationFile, :count).by(1)
+      end
+    end
+  end
 
   describe "GET /admin/candidatures/:job_application_id/job_application_files/:id" do
     subject(:show_request) {

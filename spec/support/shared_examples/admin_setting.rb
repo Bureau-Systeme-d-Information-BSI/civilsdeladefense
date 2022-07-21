@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.shared_examples "an admin setting" do |class_name, attribute|
+RSpec.shared_examples "an admin setting" do |class_name, attribute, new_value|
   let(:setting) { create(class_name) }
   let(:klass) { class_name.to_s.classify.constantize }
   let(:plural) { class_name.to_s.pluralize }
@@ -39,7 +39,7 @@ RSpec.shared_examples "an admin setting" do |class_name, attribute|
 
   describe "updating a #{class_name} setting" do
     subject(:update_request) {
-      patch send("admin_settings_#{class_name}_path", setting), params: {class_name => {attribute => "new value"}}
+      patch send("admin_settings_#{class_name}_path", setting), params: {class_name => {attribute => new_value}}
     }
 
     it "redirects to the index page" do
@@ -47,7 +47,7 @@ RSpec.shared_examples "an admin setting" do |class_name, attribute|
     end
 
     it "updates the #{class_name} setting" do
-      expect { update_request }.to change { setting.reload.send(attribute) }.to("new value")
+      expect { update_request }.to change { setting.reload.send(attribute) }.to(new_value)
     end
   end
 

@@ -1,19 +1,22 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
-  factory :frequently_asked_question do
-    name { "MyString" }
-    position { 1 }
-    value { "MyString" }
+  factory :rejection_reason do
+    name { Faker::Name.unique.name }
   end
 end
 
 # == Schema Information
 #
-# Table name: frequently_asked_questions
+# Table name: rejection_reasons
 #
 #  id         :uuid             not null, primary key
 #  name       :string
 #  position   :integer
-#  value      :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#
+# Indexes
+#
+#  index_rejection_reasons_on_position  (position)
 #

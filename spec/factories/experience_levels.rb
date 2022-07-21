@@ -1,19 +1,24 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
-  factory :frequently_asked_question do
-    name { "MyString" }
+  factory :experience_level do
+    name { Faker::Name.unique.name }
     position { 1 }
-    value { "MyString" }
   end
 end
 
 # == Schema Information
 #
-# Table name: frequently_asked_questions
+# Table name: experience_levels
 #
 #  id         :uuid             not null, primary key
 #  name       :string
 #  position   :integer
-#  value      :string
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#
+# Indexes
+#
+#  index_experience_levels_on_name      (name) UNIQUE
+#  index_experience_levels_on_position  (position)
 #

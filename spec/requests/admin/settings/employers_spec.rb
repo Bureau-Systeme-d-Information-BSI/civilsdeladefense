@@ -3,13 +3,5 @@
 require "rails_helper"
 
 RSpec.describe "Admin::Settings::Employers", type: :request do
-  describe "GET /admin/parametres/employers" do
-    it "works! (now write some real specs)" do
-      admin = create(:administrator)
-      admin.confirm
-      sign_in admin
-      get admin_settings_employers_path
-      expect(response).to have_http_status(:ok)
-    end
-  end
+  it_behaves_like "an admin setting", :employer, :name, "a new name"
 end

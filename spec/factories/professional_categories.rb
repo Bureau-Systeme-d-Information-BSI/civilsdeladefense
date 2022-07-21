@@ -1,15 +1,14 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :contract_duration do
+  factory :professional_category do
     name { Faker::Name.unique.name }
-    position { 1 }
   end
 end
 
 # == Schema Information
 #
-# Table name: contract_durations
+# Table name: professional_categories
 #
 #  id         :uuid             not null, primary key
 #  name       :string
@@ -19,6 +18,6 @@ end
 #
 # Indexes
 #
-#  index_contract_durations_on_name      (name) UNIQUE
-#  index_contract_durations_on_position  (position)
+#  index_professional_categories_on_name      (name) UNIQUE
+#  index_professional_categories_on_position  (position)
 #

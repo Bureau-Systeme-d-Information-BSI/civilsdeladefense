@@ -28,31 +28,53 @@ RSpec.describe "Admin::JobApplicationFiles", type: :request do
   end
 
   describe "DELETE /admin/candidatures/:job_application_id/job_application_files/:id" do
-    subject(:destroy_request) {
-      delete admin_job_application_job_application_file_path(job_application, job_application_file), options
-    }
-
     context "when format is html" do
-      let(:options) { {} }
+      subject(:destroy_request) {
+        delete admin_job_application_job_application_file_path(job_application, job_application_file)
+      }
+
       it "redirects to the job application" do
         destroy_request
         expect(destroy_request).to redirect_to(admin_job_application_path(job_application))
       end
+
+      it "destroys the job application file" do
+        destroy_request
+        expect { job_application_file.reload }.to raise_error(ActiveRecord::RecordNotFound)
+      end
     end
 
     context "when format is js" do
-      let(:options) { {xhr: true} }
+      subject(:destroy_request) {
+        delete admin_job_application_job_application_file_path(job_application, job_application_file), xhr: true
+      }
+
       it "renders the template" do
         destroy_request
         expect(destroy_request).to render_template(:file_operation_total)
       end
+
+      it "destroys the job application file" do
+        destroy_request
+        expect { job_application_file.reload }.to raise_error(ActiveRecord::RecordNotFound)
+      end
     end
 
     context "when format is json" do
-      let(:options) { {headers: {"ACCEPT" => "application/json"}} }
+      subject(:destroy_request) {
+        delete admin_job_application_job_application_file_path(job_application, job_application_file), headers: {
+          "ACCEPT" => "application/json"
+        }
+      }
+
       it "returns no_content" do
         destroy_request
         expect(response).to have_http_status(:no_content)
+      end
+
+      it "destroys the job application file" do
+        destroy_request
+        expect { job_application_file.reload }.to raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end

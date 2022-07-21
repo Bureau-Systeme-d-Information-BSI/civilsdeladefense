@@ -3,11 +3,11 @@
 require "rails_helper"
 
 RSpec.describe JobOffer, type: :model do
-  it { is_expected.to belong_to(:archiving_reason).optional(true) }
-
-  let(:job_offer) { create(:job_offer) }
-  let(:employer) { create(:employer) }
   let(:organization) { job_offer.organization }
+  let(:employer) { create(:employer) }
+  let(:job_offer) { create(:job_offer) }
+
+  it { is_expected.to belong_to(:archiving_reason).optional(true) }
 
   %i[employer grand_employer supervisor_employer brh].each do |role|
     it { is_expected.to have_many("job_offer_#{role}_actors".to_sym).inverse_of(:job_offer) }

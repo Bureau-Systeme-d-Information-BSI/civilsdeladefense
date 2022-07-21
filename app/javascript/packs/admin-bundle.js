@@ -37,6 +37,7 @@ importAll(require.context('images/', true, /\.(ico|png|jpe?g|svg|gif)$/))
 importAll(require.context('icons/', true, /\.svg$/))
 
 import BSN from 'bootstrap.native/dist/bootstrap-native.js'
+window.BSN = BSN
 import Snackbar from 'node-snackbar'
 window.Snackbar = Snackbar
 import offCanvas from 'js/off-canvas'

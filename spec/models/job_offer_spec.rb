@@ -3,9 +3,11 @@
 require "rails_helper"
 
 RSpec.describe JobOffer, type: :model do
-  let(:job_offer) { create(:job_offer) }
-  let(:employer) { create(:employer) }
   let(:organization) { job_offer.organization }
+  let(:employer) { create(:employer) }
+  let(:job_offer) { create(:job_offer) }
+
+  it { is_expected.to belong_to(:archiving_reason).optional(true) }
 
   %i[employer grand_employer supervisor_employer brh].each do |role|
     it { is_expected.to have_many("job_offer_#{role}_actors".to_sym).inverse_of(:job_offer) }
@@ -241,6 +243,13 @@ RSpec.describe JobOffer, type: :model do
       end
     end
   end
+
+  describe "unarchiving" do
+    it "removes the archiving reason when it exists" do
+      job_offer = create(:archived_job_offer)
+      expect { job_offer.unarchive! }.to change { job_offer.reload.archiving_reason }.to(nil)
+    end
+  end
 end
 
 # == Schema Information
@@ -296,6 +305,7 @@ end
 #  to_be_met_job_applications_count                 :integer          default(0), not null
 #  created_at                                       :datetime         not null
 #  updated_at                                       :datetime         not null
+#  archiving_reason_id                              :uuid
 #  bop_id                                           :uuid
 #  category_id                                      :uuid
 #  contract_duration_id                             :uuid
@@ -311,6 +321,7 @@ end
 #
 # Indexes
 #
+#  index_job_offers_on_archiving_reason_id       (archiving_reason_id)
 #  index_job_offers_on_bop_id                    (bop_id)
 #  index_job_offers_on_category_id               (category_id)
 #  index_job_offers_on_contract_duration_id      (contract_duration_id)
@@ -333,6 +344,7 @@ end
 #  fk_rails_2e21ee1517  (study_level_id => study_levels.id)
 #  fk_rails_39bc76a4ec  (contract_type_id => contract_types.id)
 #  fk_rails_3afb853ff8  (bop_id => bops.id)
+#  fk_rails_4cbd429856  (archiving_reason_id => archiving_reasons.id)
 #  fk_rails_578c30296c  (category_id => categories.id)
 #  fk_rails_5aaea6c8db  (employer_id => employers.id)
 #  fk_rails_6cf1ead2e5  (owner_id => administrators.id)

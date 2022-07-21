@@ -433,6 +433,8 @@ fr:
         success: "Annonce mise à jour !"
       archive:
         success: "Annonce archivée !"
+      unarchive:
+        success: "Annonce désarchivée !"
       update_and_archive:
         success: "Annonce mise à jour et archivée !"
       suspend:
@@ -446,6 +448,12 @@ fr:
       readings:
         create:
           success: "Toutes les notifications ont été marquées comme lues !"
+    archives:
+      form:
+        submit: "Archiver"
+        title: "Archiver cette annonce ?"
+      create:
+        success: "Annonce archivée !"
     emails:
       create:
         success: "Courriel envoyé !"
@@ -548,6 +556,7 @@ fr:
           frequently_asked_questions: "FAQ"
           job_offer_terms: "Conditions d'accès à la création d'offres"
           user_menu_links: "Onglet espace candidat"
+          archiving_reasons: "Motifs d'archivage"
       base:
         index:
           title: "Paramètres"
@@ -819,6 +828,20 @@ fr:
       rejection_reasons:
         index:
           title: "Motifs de rejet d'une candidature"
+          add: "Ajouter"
+          card_title:
+            zero: 'Aucun motif pour le moment'
+            one: '1 motif'
+            other: '%{count} motifs'
+        new:
+          title: "Ajouter un motif"
+        create:
+          success: "Motif ajouté !"
+        destroy:
+          success: "Motif supprimé !"
+      archiving_reasons:
+        index:
+          title: "Motifs d'archivage d'une offre'"
           add: "Ajouter"
           card_title:
             zero: 'Aucun motif pour le moment'

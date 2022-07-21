@@ -1,0 +1,14 @@
+.card 
+  .card-header
+    = t('.title')
+  .card-body
+    = simple_form_for(@job_offer, url: [:admin, @job_offer, :archives], method: :post, remote: true) do |f|
+      = f.error_notification
+      = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+      - if @job_offer.errors.any?
+        .alert.alert-danger.pt-0
+          %ul.mb-0
+            - @job_offer.errors.full_messages.each do |msg|
+              %li= msg
+      = f.input :archiving_reason_id, collection: ArchivingReason.all, label: false, prompt: :translate, include_blank: :translate
+      = f.submit t('.submit'), class: 'btn btn-primary btn-raised'

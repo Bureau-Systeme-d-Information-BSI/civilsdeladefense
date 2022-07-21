@@ -88,6 +88,7 @@ Rails.application.routes.draw do
           get :emails
         end
       end
+      resources :archives, only: [:new, :create]
       resources :multiple_recipients_emails, only: %i[new create]
       resources :recipients, only: %i[index create]
     end
@@ -179,7 +180,7 @@ Rails.application.routes.draw do
       resources :salary_ranges
       resources :job_application_file_types
       other_settings = %i[
-        benefit bops email_template job_application_file_types rejection_reasons
+        archiving_reasons benefit bops email_template job_application_file_types rejection_reasons
         contract_duration foreign_languages foreign_language_levels job_offer_terms
         user_menu_links
       ]

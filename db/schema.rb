@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_01_133806) do
+ActiveRecord::Schema.define(version: 2022_07_06_090806) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -100,6 +100,14 @@ ActiveRecord::Schema.define(version: 2022_07_01_133806) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_age_ranges_on_name"
     t.index ["position"], name: "index_age_ranges_on_position"
+  end
+
+  create_table "archiving_reasons", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.integer "position"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["position"], name: "index_archiving_reasons_on_position"
   end
 
   create_table "audits", force: :cascade do |t|
@@ -437,6 +445,8 @@ ActiveRecord::Schema.define(version: 2022_07_01_133806) do
     t.date "pep_date"
     t.string "bne_value"
     t.date "bne_date"
+    t.uuid "archiving_reason_id"
+    t.index ["archiving_reason_id"], name: "index_job_offers_on_archiving_reason_id"
     t.index ["bop_id"], name: "index_job_offers_on_bop_id"
     t.index ["category_id"], name: "index_job_offers_on_category_id"
     t.index ["contract_duration_id"], name: "index_job_offers_on_contract_duration_id"
@@ -760,6 +770,7 @@ ActiveRecord::Schema.define(version: 2022_07_01_133806) do
   add_foreign_key "job_offer_actors", "administrators"
   add_foreign_key "job_offer_actors", "job_offers"
   add_foreign_key "job_offers", "administrators", column: "owner_id"
+  add_foreign_key "job_offers", "archiving_reasons"
   add_foreign_key "job_offers", "bops"
   add_foreign_key "job_offers", "categories"
   add_foreign_key "job_offers", "contract_types"

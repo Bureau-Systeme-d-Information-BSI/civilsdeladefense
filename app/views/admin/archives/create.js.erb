@@ -1,0 +1,10 @@
+<% if @job_offer.errors.any? %>
+  document.querySelector('#modal').querySelector('.modal-body').innerHTML = '<%= j render(partial: 'form') %>'
+<% else %>
+  var jobOffer = document.getElementById('<%= dom_id(@job_offer) %>')
+  var html = '<%= j render(partial: '/admin/job_offers/job_offer', locals: { job_offer: @job_offer }) %>'
+  var frag = document.createRange().createContextualFragment(html)
+  jobOffer.replaceWith(frag)
+  Snackbar.show({showAction: false, text: '<%= @notification %>'})
+  new window.BSN.Modal('#modal').hide()
+<% end %>

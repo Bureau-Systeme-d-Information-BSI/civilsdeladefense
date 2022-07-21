@@ -12,8 +12,8 @@ RSpec.shared_examples "a movable admin setting" do |class_name|
     }
 
     before {
-      create(class_name, position: 1)
-      setting.update!(position: 2)
+      create(class_name)
+      setting.move_to_bottom
     }
 
     it "redirects to index" do
@@ -31,8 +31,8 @@ RSpec.shared_examples "a movable admin setting" do |class_name|
     }
 
     before {
-      create(class_name, position: 2)
-      setting.update!(position: 1)
+      create(class_name)
+      setting.move_to_top
     }
 
     it "redirects to index" do

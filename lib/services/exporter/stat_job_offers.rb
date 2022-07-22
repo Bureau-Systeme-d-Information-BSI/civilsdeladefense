@@ -31,7 +31,7 @@ class Exporter::StatJobOffers < Exporter::Base
       add_row("", "", model.name)
     end
     add_row("", "Localisation géographique")
-    data[:q][:county_in].each do |county|
+    data[:q][:county_in]&.each do |county|
       add_row("", "", county)
     end
   end

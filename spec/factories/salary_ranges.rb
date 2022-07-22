@@ -2,10 +2,11 @@
 
 FactoryBot.define do
   factory :salary_range do
-    estimate_annual_salary_gross { "42 €" }
-    professional_category { nil }
-    experience_level { nil }
-    sector { nil }
+    estimate_annual_salary_gross { "45 000 €" }
+    estimate_monthly_salary_net { "3 000 €" }
+    professional_category
+    experience_level
+    sector
   end
 end
 

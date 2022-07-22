@@ -1052,7 +1052,6 @@ fr:
         navbar:
           title: "Statistiques"
           job_applications: "Candidatures"
-          recruitments: "Recrutements"
           job_offers: "Offres"
     zip_files:
       show:

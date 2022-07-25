@@ -728,3 +728,10 @@ EmailTemplate.create!(
     }
   ]
 )
+
+ArchivingReason.create!(
+  [
+    { name: "Offre suspendue"},
+    { name: "Candidat·e trouvé·e"}
+  ]
+)

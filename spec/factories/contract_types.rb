@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :contract_type do
-    name { Faker::Commerce.unique.department }
+    name { Faker::Name.unique.name }
     position { 1 }
   end
 end

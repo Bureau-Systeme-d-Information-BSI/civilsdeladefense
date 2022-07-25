@@ -1,6 +1,5 @@
 FactoryBot.define do
   factory :job_offer_term do
-    job_offer
     name { "MyString" }
   end
 end

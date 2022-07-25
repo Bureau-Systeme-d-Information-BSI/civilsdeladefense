@@ -27,6 +27,12 @@ FactoryBot.define do
       published_at { 40.days.before }
       state { :published }
     end
+
+    factory :archived_job_offer do
+      archived_at { 40.days.before }
+      state { :archived }
+      archiving_reason
+    end
   end
 
   trait :with_job_applications do
@@ -89,6 +95,7 @@ end
 #  to_be_met_job_applications_count                 :integer          default(0), not null
 #  created_at                                       :datetime         not null
 #  updated_at                                       :datetime         not null
+#  archiving_reason_id                              :uuid
 #  bop_id                                           :uuid
 #  category_id                                      :uuid
 #  contract_duration_id                             :uuid
@@ -104,6 +111,7 @@ end
 #
 # Indexes
 #
+#  index_job_offers_on_archiving_reason_id       (archiving_reason_id)
 #  index_job_offers_on_bop_id                    (bop_id)
 #  index_job_offers_on_category_id               (category_id)
 #  index_job_offers_on_contract_duration_id      (contract_duration_id)
@@ -126,6 +134,7 @@ end
 #  fk_rails_2e21ee1517  (study_level_id => study_levels.id)
 #  fk_rails_39bc76a4ec  (contract_type_id => contract_types.id)
 #  fk_rails_3afb853ff8  (bop_id => bops.id)
+#  fk_rails_4cbd429856  (archiving_reason_id => archiving_reasons.id)
 #  fk_rails_578c30296c  (category_id => categories.id)
 #  fk_rails_5aaea6c8db  (employer_id => employers.id)
 #  fk_rails_6cf1ead2e5  (owner_id => administrators.id)

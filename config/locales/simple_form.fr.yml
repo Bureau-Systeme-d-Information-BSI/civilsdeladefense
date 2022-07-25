@@ -206,16 +206,19 @@ fr:
           email: "Courriel Grand Employeur"
         title: "Fonction"
       message:
-        body: 'Ce commentaire ne sera visible que par vous et les
-autres membres de votre équipe.'
+        body: 'Ce commentaire ne sera visible que par vous et les autres membres de votre équipe.'
     prompts:
       administrator:
         role: 'Sélectionner un rôle'
       job_application:
         rejection_reason_id: 'Choisissez un motif de refus'
+      job_offer:
+        archiving_reason_id: "Choisissez un motif d'archivage"
     include_blanks:
       administrator:
         role: 'Aucun rôle'
+      job_offer:
+        archiving_reason_id: 'Aucune raison'
     hints:
       defaults:
         current_position: "Si aucun poste occupé actuellement, saisir \"sans emploi\"."

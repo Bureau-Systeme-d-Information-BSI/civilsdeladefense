@@ -3,13 +3,5 @@
 require "rails_helper"
 
 RSpec.describe "Admin::Settings::Categories", type: :request do
-  describe "GET /admin/parametres/categories" do
-    it "works! (now write some real specs)" do
-      admin = create(:administrator)
-      admin.confirm
-      sign_in admin
-      get admin_settings_categories_path
-      expect(response).to have_http_status(:ok)
-    end
-  end
+  it_behaves_like "an admin setting", :category, :name, "a new name"
 end

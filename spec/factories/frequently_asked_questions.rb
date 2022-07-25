@@ -2,7 +2,7 @@ FactoryBot.define do
   factory :frequently_asked_question do
     name { "MyString" }
     position { 1 }
-    description { "MyString" }
+    value { "MyString" }
   end
 end
 

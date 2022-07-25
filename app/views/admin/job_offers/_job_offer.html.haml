@@ -35,6 +35,8 @@
             = "#{job_offer.aasm.human_state}"
           - if job_offer.state_date
             = I18n.l(job_offer.state_date.to_date)
+          - if job_offer.archiving_reason.present?
+            = job_offer.archiving_reason.name
         %ul.list-inline.mb-0.actions.mt-2.mt-md-0
           %li.list-inline-item.d-none
             = link_to '#' do
@@ -58,9 +60,13 @@
               .dropdown
                 = button_tag type: 'button', data: { toggle: "dropdown" }, aria: { haspopup: true, expanded: false }, class: "btn btn-link btn-sm mb-0 px-0 py-0" do
                   = fa_icon 'dots-horizontal'
-                .dropdown-menu{"aria-labelledby" => "dropdownMenuLink"}
+                .dropdown-menu.dropdown-menu-right{"aria-labelledby" => "dropdownMenuLink"}
                   - job_offer.possible_events.each do |event_name|
-                    - unless event_name.starts_with?(job_offer.state)
+                    - if event_name == "archive"
+                      = link_to [:new, :admin, job_offer, :archive], class: "dropdown-item", remote: true do
+                        = fa_icon('arrow-right', class: 'mr-1')
+                        = t("buttons.#{ event_name }")
+                    - elsif !event_name.starts_with?(job_offer.state)
                       = link_to [event_name.to_sym, :admin, job_offer], method: :patch, remote: true, class: "dropdown-item" do
                         = fa_icon('arrow-right', class: 'mr-1')
                         = t("buttons.#{ event_name }")

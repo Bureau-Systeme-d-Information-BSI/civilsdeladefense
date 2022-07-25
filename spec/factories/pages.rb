@@ -2,11 +2,11 @@
 
 FactoryBot.define do
   factory :page do
+    organization { Organization.first }
     title { "MyString" }
     body { "MyText" }
     og_title { "MyString" }
     og_description { "MyString" }
-    organization { nil }
   end
 end
 

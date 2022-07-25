@@ -244,6 +244,13 @@ RSpec.describe JobOffer, type: :model do
     end
   end
 
+  describe "publishing" do
+    it "requires organization_description" do
+      job_offer = create(:job_offer, organization_description: nil)
+      expect { job_offer.publish! }.not_to change { job_offer.reload.state }
+    end
+  end
+
   describe "unarchiving" do
     it "removes the archiving reason when it exists" do
       job_offer = create(:archived_job_offer)

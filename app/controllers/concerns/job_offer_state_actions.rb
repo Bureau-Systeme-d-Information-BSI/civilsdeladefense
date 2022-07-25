@@ -39,14 +39,26 @@ module JobOfferStateActions
   protected
 
   def state_action(event_name)
-    @job_offer.send("#{event_name}!")
-    respond_to do |format|
-      format.html { redirect_back(fallback_location: job_offers_url, notice: t(".success")) }
-      format.js do
-        @notification = t(".success")
-        render :state_change
+    if @job_offer.send("#{event_name}!")
+      respond_to do |format|
+        format.html { redirect_back(fallback_location: %i[admin job_offers], notice: t(".success")) }
+        format.js do
+          @notification = t(".success")
+          render :state_change
+        end
+        format.json { render :show, status: :ok, location: @job_offer }
       end
-      format.json { render :show, status: :ok, location: @job_offer }
+    else
+      respond_to do |format|
+        format.html do
+          redirect_back(fallback_location: %i[admin job_offers], notice: @job_offer.errors.full_messages.to_sentence)
+        end
+        format.js do
+          @notification = @job_offer.errors.full_messages.to_sentence
+          render :state_unchanged
+        end
+        format.json { render json: @job_offer.errors, status: :unprocessable_entity }
+      end
     end
   end
 

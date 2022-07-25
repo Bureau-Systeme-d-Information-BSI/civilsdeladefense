@@ -15,14 +15,10 @@ module JobOfferStateActions
       end
     end
     @job_offer.publish
-    respond_to do |format|
-      if @job_offer.save
-        format.html { redirect_to %i[admin job_offers], notice: t(".success") }
-        format.json { render :show, status: :created, location: @job_offer }
-      else
-        format.html { render :new }
-        format.json { render json: @job_offer.errors, status: :unprocessable_entity }
-      end
+    if @job_offer.save
+      redirect_to %i[admin job_offers], notice: t(".success")
+    else
+      render :new
     end
   end
 
@@ -46,7 +42,6 @@ module JobOfferStateActions
           @notification = t(".success")
           render :state_change
         end
-        format.json { render :show, status: :ok, location: @job_offer }
       end
     else
       respond_to do |format|
@@ -57,7 +52,6 @@ module JobOfferStateActions
           @notification = @job_offer.errors.full_messages.to_sentence
           render :state_unchanged
         end
-        format.json { render json: @job_offer.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -66,14 +60,10 @@ module JobOfferStateActions
     @job_offer.assign_attributes(job_offer_params)
     @job_offer.cleanup_actor_administrator_dep(current_administrator, current_organization)
 
-    respond_to do |format|
-      if @job_offer.send("#{event_name}!") && @job_offer.save
-        format.html { redirect_to %i[admin job_offers], notice: t(".success") }
-        format.json { render :show, status: :ok, location: @job_offer }
-      else
-        format.html { render :edit }
-        format.json { render json: @job_offer.errors, status: :unprocessable_entity }
-      end
+    if @job_offer.send("#{event_name}!") && @job_offer.save
+      redirect_to %i[admin job_offers], notice: t(".success")
+    else
+      render :edit
     end
   end
 end

@@ -39,7 +39,7 @@ class Admin::EmailsController < Admin::BaseController
 
     respond_to do |format|
       format.html do
-        location = [:admin, @job_application, @email]
+        location = [:admin, @job_application]
         redirect_back(fallback_location: location, notice: t(".success"))
       end
       format.js do
@@ -47,7 +47,7 @@ class Admin::EmailsController < Admin::BaseController
         render :email_operation
       end
       format.json do
-        location = [:admin, @job_application, @email]
+        location = [:admin, @job_application]
         render json: @email.to_json, status: :ok, location: location
       end
     end
@@ -59,7 +59,7 @@ class Admin::EmailsController < Admin::BaseController
 
     respond_to do |format|
       format.html do
-        location = [:admin, @job_application, @email]
+        location = [:admin, @job_application]
         redirect_back(fallback_location: location, notice: t(".success"))
       end
       format.js do
@@ -67,7 +67,7 @@ class Admin::EmailsController < Admin::BaseController
         render :email_operation
       end
       format.json do
-        location = [:admin, @job_application, @email]
+        location = [:admin, @job_application]
         render json: @email.to_json, status: :ok, location: location
       end
     end

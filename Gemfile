@@ -55,7 +55,6 @@ gem "sentry-rails" # Performance tracking
 gem "sequenced"
 gem "simple_form"
 gem "trix-rails", require: "trix"
-gem "turbolinks", require: false
 gem "turbo-rails"
 gem "will_paginate"
 gem "working_hours", "~> 1.4"

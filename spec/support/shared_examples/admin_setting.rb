@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.shared_examples "an admin setting" do |class_name, attribute, new_value|
+RSpec.shared_examples "an admin setting" do |class_name, attribute, new_value, create_attributes|
   let(:setting) { create(class_name) }
   let(:klass) { class_name.to_s.classify.constantize }
   let(:plural) { class_name.to_s.pluralize }
@@ -25,7 +25,7 @@ RSpec.shared_examples "an admin setting" do |class_name, attribute, new_value|
 
   describe "creating a #{class_name} setting" do
     subject(:create_request) {
-      post index_path, params: {class_name => attributes_for(class_name)}
+      post index_path, params: {class_name => attributes_for(class_name).merge(create_attributes.presence || {})}
     }
 
     it "redirects to the index page" do

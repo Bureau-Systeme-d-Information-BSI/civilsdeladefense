@@ -536,7 +536,7 @@ fr:
           contract_types: "Types de contrat"
           email_templates: "Courriels"
           employers: "Employeurs"
-          experience_levels: "Éxpériences"
+          experience_levels: "Expériences"
           job_application_file_types: "Types de fichier"
           job_applications: "Candidatures"
           organization: "Paramètres généraux"
@@ -1189,7 +1189,7 @@ fr:
         availability_range: Disponibilité
       salary_range:
         professional_category: "Catégorie"
-        experience_level: "Éxpérience"
+        experience_level: "Expérience"
         sector: "Filière"
         estimate_monthly_salary_net_html: "<div class='d-block'>Estimation mensuel net</div> (fonction publique)"
         estimate_annual_salary_gross_html: "<div class='d-block'>Estimation annuel brut</div> (secteur privé)"

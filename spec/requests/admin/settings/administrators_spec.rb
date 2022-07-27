@@ -32,11 +32,20 @@ RSpec.describe "Admin::Settings::Administrators", type: :request do
   end
 
   describe "GET /admin/parametres/administrateurs/export" do
+    subject(:export_request) { get export_admin_settings_administrators_path, params: {active: true} }
+
     it "exports the administrators as an xlsx file" do
-      get export_admin_settings_administrators_path
+      export_request
       expect(response.headers["Content-Type"]).to eq(
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
       )
+    end
+
+    context "when an administrator doesn't have any inviter" do
+      it "doesn't raise an error" do
+        create(:administrator, inviter: nil)
+        expect { export_request }.not_to raise_error
+      end
     end
   end
 

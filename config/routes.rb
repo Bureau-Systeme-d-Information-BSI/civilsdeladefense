@@ -58,7 +58,7 @@ Rails.application.routes.draw do
       end
     end
     resources :job_offer_terms, only: %i[index]
-    resources :job_offers, path: "offresdemploi", except: %i[new] do
+    resources :job_offers, path: "offresdemploi" do
       collection do
         post :exports, :feature
         post :init, to: "job_offers#new"

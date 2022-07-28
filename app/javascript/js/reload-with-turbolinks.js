@@ -1,12 +1,12 @@
-export default function reloadWithTurbo() {
+export default function reloadWithTurbolinks() {
   var scrollPosition
 
-  function reload() {
+  function reload () {
     scrollPosition = [window.scrollX, window.scrollY]
-    Turbo.visit(window.location.toString(), { action: 'replace' })
+    Turbolinks.visit(window.location.toString(), { action: 'replace' })
   }
 
-  document.addEventListener('turbo:load', function () {
+  document.addEventListener('turbolinks:load', function () {
     if (scrollPosition) {
       window.scrollTo.apply(window, scrollPosition)
       scrollPosition = null

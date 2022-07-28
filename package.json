@@ -25,6 +25,7 @@
     "svgo": "^1.0.5",
     "svgo-loader": "^2.1.0",
     "trix": "^1.2.3",
+    "turbolinks": "^5.2.0",
     "webpack": "^4.46.0"
   },
   "devDependencies": {

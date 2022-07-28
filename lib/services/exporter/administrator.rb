@@ -40,7 +40,7 @@ class Exporter::Administrator < Exporter::Base
       Administrator.human_attribute_name("role.#{administrator.role}"),
       localize(administrator.created_at),
       localize(administrator.last_sign_in_at),
-      administrator.inviter&.full_name,
+      administrator.inviter.full_name,
       administrator.owned_job_offers.map { |o| o.identifier }.join(", ")
     ]
   end

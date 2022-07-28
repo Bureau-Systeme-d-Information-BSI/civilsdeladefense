@@ -4,7 +4,7 @@
     .h4.text-primary.d-md-flex.align-items-center
       #{@users.count} candidats
     = render partial: 'search'
-    = form_tag(multi_select_admin_users_url, data: {controller: "selectall", turbo: false}) do
+    = form_tag(multi_select_admin_users_url, data: {controller: "selectall"}) do
       .d-flex.align-items-end
         .h5.text-primary.mr-auto
           = t('.users_filtered', count: @users_filtered.count)

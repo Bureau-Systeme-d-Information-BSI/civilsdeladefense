@@ -125,7 +125,7 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
     if transfer.persisted?
       redirect_to %i[admin settings root], notice: t(".success")
     else
-      redirect_to edit_admin_settings_administrator_path(@administrator), notice: transfer.errors.full_messages.to_sentence
+      redirect_to [:edit, :admin, :settings, @administrator], notice: transfer.errors.full_messages.to_sentence
     end
   end
 

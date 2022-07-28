@@ -8,7 +8,6 @@ class ApplicationController < ActionController::Base
   include ErrorResponseActions
   include SentryIdentifier
   include Timeoutable
-  include Turbo::Redirection
 
   rescue_from CanCan::AccessDenied, with: :authorization_error
   rescue_from ActiveRecord::RecordNotFound, with: :resource_not_found

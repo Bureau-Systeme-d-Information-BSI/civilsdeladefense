@@ -13,7 +13,7 @@
             = fa_icon 'plus', class: 'mr-1'
             = t('.new_job_offer')
     = render partial: 'search'
-    = form_tag(exports_admin_job_offers_url, target: "_blank", data: {controller: "selectall", turbo: false}) do
+    = form_tag(exports_admin_job_offers_url, target: "_blank", data: {controller: "selectall"}) do
       .d-flex.align-items-end{data: { controller: 'subcheckbox'}}
         %label.h5.text-primary.mr-auto
           = t('.job_offers_filtered', count: @job_offers_filtered.count)

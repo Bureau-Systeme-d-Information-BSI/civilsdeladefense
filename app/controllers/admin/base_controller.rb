@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
+require "turbolinks/redirection"
+
 class Admin::BaseController < ApplicationController
+  include Turbolinks::Redirection
+
   before_action :authenticate_administrator!
   load_and_authorize_resource
   layout "admin"

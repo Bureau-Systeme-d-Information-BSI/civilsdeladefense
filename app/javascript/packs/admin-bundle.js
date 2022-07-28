@@ -14,7 +14,8 @@ window.Stimulus = Application.start()
 const context = require.context("../controllers", true, /\.js$/)
 Stimulus.load(definitionsFromContext(context))
 
-import "@hotwired/turbo-rails"
+import Turbolinks from 'turbolinks'
+Turbolinks.start()
 
 // Import Rails UJS
 import Rails from '@rails/ujs'
@@ -53,10 +54,10 @@ import displaySnackbars from 'js/display-snackbars'
 import { boardManagement, boardRedraw, boardShowRejectionModal } from 'js/board'
 window.boardRedraw = boardRedraw
 window.boardShowRejectionModal = boardShowRejectionModal
-import reloadWithTurbo from 'js/reload-with-turbo'
-window.reloadWithTurbo = reloadWithTurbo
+import reloadWithTurbolinks from 'js/reload-with-turbolinks'
+window.reloadWithTurbolinks = reloadWithTurbolinks
 
-document.addEventListener('turbo:load', function () {
+document.addEventListener('turbolinks:load', function() {
   BSN.initCallback()
 
   ;[].forEach.call(document.querySelectorAll('.allow-focus'), function(node) {

@@ -1,13 +1,13 @@
-function setTimeoutWithTurbo(intervalFunction, milliseconds) {
+function setTimeoutWithTurbolinks(intervalFunction, milliseconds) {
   var interval = setTimeout(intervalFunction, milliseconds);
 
-  document.addEventListener('turbo:before-render', function () {
+  document.addEventListener('turbolinks:before-render', function() {
     clearTimeout(interval);
   });
 }
 
 export default function timeoutAlert() {
-  setTimeoutWithTurbo(function () {
+  setTimeoutWithTurbolinks(function() {
     var date = new Date();
     date.setMinutes(date.getMinutes() + 10);
     options = {

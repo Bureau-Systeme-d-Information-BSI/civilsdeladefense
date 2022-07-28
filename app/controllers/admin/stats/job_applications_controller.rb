@@ -58,6 +58,10 @@ class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
     @job_applications = @job_applications.search_full_text(permitted_params[:s]).unscope(:order)
   end
 
+  def build_state_duration
+    @state_duration ||= cached_state_duration
+  end
+
   STATE_DURATION = [
     [:initial, :rejected],
     [:initial, :phone_meeting],
@@ -70,26 +74,28 @@ class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
     [:contract_feedback_waiting, :contract_received],
     [:contract_received, :affected]
   ]
-  def build_state_duration
-    @state_duration ||= STATE_DURATION.map { |from, to|
-      from_state = JobApplication.states[from].to_s
-      to_state = JobApplication.states[to].to_s
-      days = root_rel
-        .joins('INNER JOIN "audits" AS audits_start ON "audits_start"."auditable_type" = \'JobApplication\' AND "audits_start"."auditable_id" = "job_applications"."id"')
-        .joins('INNER JOIN "audits" AS audits_end ON "audits_start"."auditable_type" = \'JobApplication\'
-          AND "audits_end"."auditable_id" = "job_applications"."id"')
-        .where("audits_start.audited_changes->?->-1 @> ?", :state, from_state)
-        .where("audits_end.audited_changes->?->-1 @> ?", :state, to_state)
-        .pluck(Arel.sql("DATE_PART('day', audits_end.created_at - audits_start.created_at)"))
-      average = days.present? ? (days.reduce(:+) / days.size.to_f).round : "-"
-      [from, to, average]
-    }
+  def cached_state_duration
+    Rails.cache.fetch(root_rel.to_sql, expires_in: 24.hours) do
+      STATE_DURATION.map { |from, to|
+        from_state = JobApplication.states[from].to_s
+        to_state = JobApplication.states[to].to_s
+        days = root_rel
+          .joins('INNER JOIN "audits" AS audits_start ON "audits_start"."auditable_type" = \'JobApplication\' AND "audits_start"."auditable_id" = "job_applications"."id"')
+          .joins('INNER JOIN "audits" AS audits_end ON "audits_start"."auditable_type" = \'JobApplication\'
+            AND "audits_end"."auditable_id" = "job_applications"."id"')
+          .where("audits_start.audited_changes->?->-1 @> ?", :state, from_state)
+          .where("audits_end.audited_changes->?->-1 @> ?", :state, to_state)
+          .pluck(Arel.sql("DATE_PART('day', audits_end.created_at - audits_start.created_at)"))
+        average = days.present? ? (days.reduce(:+) / days.size.to_f).round : "-"
+        [from, to, average]
+      }
+    end
   end
 
   def date_start
     @date_start ||= begin
       res = Date.parse(permitted_params[:start]) if permitted_params[:start].present?
-      res ||= 30.days.ago.beginning_of_day
+      res ||= 30.days.ago.to_date
       res
     end
   end
@@ -97,7 +103,7 @@ class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
   def date_end
     @date_end ||= begin
       res = Date.parse(permitted_params[:end]) if permitted_params[:end].present?
-      res ||= Time.current
+      res ||= Time.zone.today
       res
     end
   end

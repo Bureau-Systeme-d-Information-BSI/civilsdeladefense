@@ -103,7 +103,7 @@ class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
   def date_end
     @date_end ||= begin
       res = Date.parse(permitted_params[:end]) if permitted_params[:end].present?
-      res ||= Time.zone.today
+      res ||= 1.day.ago.to_date
       res
     end
   end

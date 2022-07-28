@@ -25,7 +25,9 @@ RSpec.shared_examples "an admin setting" do |class_name, attribute, new_value|
 
   describe "creating a #{class_name} setting" do
     subject(:create_request) {
-      post index_path, params: {class_name => attributes_for(class_name)}
+      post index_path, params: {
+        class_name => attributes_for(class_name).merge(defined?(create_attributes) ? create_attributes : {})
+      }
     }
 
     it "redirects to the index page" do

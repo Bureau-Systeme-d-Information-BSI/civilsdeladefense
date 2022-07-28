@@ -82,7 +82,7 @@ RSpec.describe "Admin::Users", type: :request do
     end
   end
 
-  describe "POST /admins/candidats/multi_select" do
+  describe "POST /admin/candidats/multi_select" do
     subject(:multi_select_request) { post multi_select_admin_users_path, params: params }
 
     let(:user_ids) { create_list(:user, 2).pluck(:id) }
@@ -115,6 +115,18 @@ RSpec.describe "Admin::Users", type: :request do
 
           multi_select_request
           expect(list.users.pluck(:id)).to eq([user.id])
+        end
+      end
+
+      context "when no list is selected" do
+        let(:params) { {add_to_list: "add_to_list", user_ids: user_ids} }
+
+        it "doesn't raise error" do
+          expect { multi_select_request }.not_to raise_error
+        end
+
+        it "redirects to the users" do
+          expect(multi_select_request).to redirect_to(admin_users_path)
         end
       end
     end

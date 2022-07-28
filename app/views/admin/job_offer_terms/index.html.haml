@@ -7,7 +7,7 @@
         .card-body
           %fieldset.form-group.rf-input-group.rf-fieldset.check_boxes.optional
             %legend.col-form-label.pt-0= current_organization.job_offer_term_subtitle
-            = form_tag init_admin_job_offers_path(job_offer_id: params[:job_offer_id]), method: :post do
+            = form_tag init_admin_job_offers_path(job_offer_id: params[:job_offer_id]), data: {turbo: false}, method: :post do
               .form-check.rf-checkbox-group
                 - @job_offer_terms.each do |job_offer_term|
                   .form-check.custom-control.custom-radio

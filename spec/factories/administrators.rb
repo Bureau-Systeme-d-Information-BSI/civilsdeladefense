@@ -19,6 +19,10 @@ FactoryBot.define do
         )
       }
     end
+
+    trait :deactivated do
+      deleted_at { DateTime.now }
+    end
   end
 end
 

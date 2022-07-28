@@ -21,8 +21,11 @@ class Admin::UsersController < Admin::InheritedResourcesController
       lists.each do |list|
         list.update(users: [users, list.users].flatten.uniq)
       end
-
-      redirect_to [:admin, lists.first]
+      if lists.any?
+        redirect_to [:admin, lists.first]
+      else
+        redirect_to [:admin, :users]
+      end
     elsif params.key?("export")
       file = Exporter::Users.new(users, current_administrator).generate
       send_data file.read, filename: "#{Time.zone.today}_e-recrutement_vivers.xlsx"

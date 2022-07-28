@@ -75,7 +75,7 @@
                       = fa_icon('content-copy', class: 'mr-1')
                       = t("buttons.copy")
                   - else
-                    = link_to [:init, :admin, :job_offers, {job_offer_id: job_offer.to_param}], method: :post, class: "dropdown-item" do
+                    = button_to [:init, :admin, :job_offers, {job_offer_id: job_offer.to_param}], method: :post, data: {turbo: false}, class: "dropdown-item" do
                       = fa_icon('content-copy', class: 'mr-1')
                       = t("buttons.copy")
                   - if can? :feature, :job_offer

@@ -9,7 +9,7 @@
             = fa_icon 'plus', class: 'mr-1'
             = t('.new_job_offer')
         - else
-          = link_to [:init, :admin, :job_offers], method: :post, class: 'btn btn-primary btn-raised mb-0 mt-3 mt-md-0 ml-auto' do
+          = link_to [:new, :admin, :job_offer], class: 'btn btn-primary btn-raised mb-0 mt-3 mt-md-0 ml-auto' do
             = fa_icon 'plus', class: 'mr-1'
             = t('.new_job_offer')
     = render partial: 'search'

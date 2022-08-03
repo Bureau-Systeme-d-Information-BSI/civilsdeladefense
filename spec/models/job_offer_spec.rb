@@ -27,7 +27,7 @@ RSpec.describe JobOffer, type: :model do
     context "when create" do
       context "with values" do
         it "is valid" do
-          expect(job_offer.save).to eq(true)
+          expect(job_offer.save).to be(true)
         end
       end
 
@@ -36,7 +36,7 @@ RSpec.describe JobOffer, type: :model do
         let(:bne_value) { nil }
 
         it "is unvalid" do
-          expect(job_offer.save).to eq(false)
+          expect(job_offer.save).to be(false)
         end
       end
     end

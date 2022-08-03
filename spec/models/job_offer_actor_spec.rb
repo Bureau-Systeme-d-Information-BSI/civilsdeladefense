@@ -17,7 +17,7 @@ RSpec.describe JobOfferActor, type: :model do
       let(:attributes) { {"_destroy" => true} }
 
       it "marked job_offer_actor for destroy" do
-        expect(job_offer_actor.marked_for_destruction?).to eq(true)
+        expect(job_offer_actor.marked_for_destruction?).to be(true)
       end
     end
 
@@ -25,7 +25,7 @@ RSpec.describe JobOfferActor, type: :model do
       let(:attributes) { {} }
 
       it "doesnt marked job_offer_actor for destroy" do
-        expect(job_offer_actor.marked_for_destruction?).to eq(false)
+        expect(job_offer_actor.marked_for_destruction?).to be(false)
       end
     end
 

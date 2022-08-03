@@ -113,7 +113,7 @@ RSpec.describe Admin::JobOffersController, type: :controller do
 
         it "set published_at" do
           post :create_and_publish, params: {job_offer: valid_attributes}
-          expect(JobOffer.order(:created_at).first.published_at.present?).to eq(true)
+          expect(JobOffer.order(:created_at).first.published_at.present?).to be(true)
         end
       end
 

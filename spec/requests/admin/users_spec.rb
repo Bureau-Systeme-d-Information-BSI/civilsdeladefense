@@ -47,7 +47,7 @@ RSpec.describe "Admin::Users", type: :request do
     end
   end
 
-  describe "GET /admin/candidats/:id/listing(.:format) " do
+  describe "GET /admin/candidats/:id/listing(.:format)" do
     subject(:listing_request) { get listing_admin_user_path(user) }
 
     it "is successful" do

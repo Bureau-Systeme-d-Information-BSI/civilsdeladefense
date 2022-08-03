@@ -30,7 +30,7 @@ RSpec.describe User, type: :model do
     another_user.unsuspend!
     another_user.suspend!("Bad guy")
     expect(another_user).to be_suspended
-    expect { another_user.destroy }.to change(described_class, :count).by(0)
+    expect { another_user.destroy }.not_to change(described_class, :count)
   end
 
   context "when destroyed" do
@@ -115,11 +115,11 @@ RSpec.describe User, type: :model do
   end
 
   describe "required password" do
-    let(:user) { FactoryBot.build(:user) }
+    let(:user) { build(:user) }
 
     context "with omniauth_informations" do
       before do
-        FactoryBot.create_list(:omniauth_information, 10, user: user)
+        create_list(:omniauth_information, 10, user: user)
         user.password = ""
       end
 
@@ -169,7 +169,7 @@ RSpec.describe User, type: :model do
       end
 
       it "delete" do
-        expect(described_class.exists?(user.id)).to eq(false)
+        expect(described_class.exists?(user.id)).to be(false)
       end
     end
 
@@ -177,7 +177,7 @@ RSpec.describe User, type: :model do
       let!(:user) { create(:user, marked_for_deletion_on: 21.days.ago, last_sign_in_at: Time.zone.now) }
 
       it "doesn't delete" do
-        expect(described_class.exists?(user.id)).to eq(true)
+        expect(described_class.exists?(user.id)).to be(true)
       end
     end
   end

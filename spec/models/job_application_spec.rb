@@ -160,7 +160,7 @@ RSpec.describe JobApplication, type: :model do
       end
 
       it "cant pass to contract_drafting" do
-        expect(job_application.contract_drafting!).to eq(true)
+        expect(job_application.contract_drafting!).to be(true)
       end
     end
   end

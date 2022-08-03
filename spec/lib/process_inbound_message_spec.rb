@@ -45,7 +45,7 @@ RSpec.describe ProcessInboundMessage do
 
       it "create new email without sender" do
         expect { result }.to(change(Email, :count))
-        expect(Email.order(:created_at).last.sender).to be(nil)
+        expect(Email.order(:created_at).last.sender).to be_nil
       end
     end
 

@@ -45,7 +45,7 @@ RSpec.describe Users::OmniauthCallbacksController, type: :controller do
 
     context "when user has already used FranceConnect" do
       let!(:fci) do
-        FactoryBot.create(
+        create(
           :omniauth_information,
           uid: uid, email: email, last_name: last_name, first_name: first_name
         )
@@ -65,7 +65,7 @@ RSpec.describe Users::OmniauthCallbacksController, type: :controller do
     end
 
     context "when user has already login via email" do
-      let!(:user) { FactoryBot.create(:confirmed_user, email: email) }
+      let!(:user) { create(:confirmed_user, email: email) }
 
       before do
         post :france_connect

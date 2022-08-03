@@ -99,7 +99,7 @@ RSpec.describe Admin::PreferredUsersListsController, type: :controller do
         it "does not create a new PreferredUsersList" do
           expect {
             post :create, params: {preferred_users_list: valid_attributes}
-          }.to change(PreferredUsersList, :count).by(0)
+          }.not_to change(PreferredUsersList, :count)
           expect(response).not_to be_successful
         end
       end

@@ -111,7 +111,7 @@ RSpec.describe JobOffersController, type: :controller do
           post :send_application, format: :json, params: {
             id: job_offer.to_param, job_application: hsh
           }
-        }.to change(JobApplication, :count).by(0)
+        }.not_to change(JobApplication, :count)
         expect(response).not_to be_successful
       end
     end

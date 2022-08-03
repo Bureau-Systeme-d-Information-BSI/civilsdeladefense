@@ -187,7 +187,7 @@ RSpec.describe Administrator, type: :model do
       let!(:administrator) { create(:administrator, marked_for_deactivation_on: 1.day.ago, last_sign_in_at: 101.days.ago) }
 
       it "dont delete" do
-        expect(administrator.deleted_at.blank?).to eq(true)
+        expect(administrator.deleted_at.blank?).to be(true)
       end
     end
 
@@ -208,7 +208,7 @@ RSpec.describe Administrator, type: :model do
 
       it "marked & dont delete" do
         expect(administrator.marked_for_deactivation_on).to eq(Time.zone.now.to_date)
-        expect(administrator.deleted_at.blank?).to eq(true)
+        expect(administrator.deleted_at.blank?).to be(true)
       end
     end
 
@@ -216,7 +216,7 @@ RSpec.describe Administrator, type: :model do
       let!(:administrator) { create(:administrator, marked_for_deactivation_on: 21.days.ago, last_sign_in_at: Time.zone.now) }
 
       it "doesn't delete" do
-        expect(administrator.deleted_at).to eq(nil)
+        expect(administrator.deleted_at).to be_nil
       end
     end
   end
@@ -229,7 +229,7 @@ RSpec.describe Administrator, type: :model do
       let!(:new_administrator) { create(:administrator, email: email) }
 
       it "returns a persisted administrator" do
-        expect(administrator.transfer(email).persisted?).to eq(true)
+        expect(administrator.transfer(email).persisted?).to be(true)
       end
 
       it "doesn't create an administrator" do
@@ -243,7 +243,7 @@ RSpec.describe Administrator, type: :model do
 
     context "when the new administrator does not exist" do
       it "returns a persisted administrator" do
-        expect(administrator.transfer(email).persisted?).to eq(true)
+        expect(administrator.transfer(email).persisted?).to be(true)
       end
 
       it "creates a new administrator" do
@@ -259,7 +259,7 @@ RSpec.describe Administrator, type: :model do
       before { administrator.organization.update!(administrator_email_suffix: "example.com") }
 
       it "returns a unpersisted administrator with errors" do
-        expect(administrator.transfer(email).persisted?).to eq(false)
+        expect(administrator.transfer(email).persisted?).to be(false)
         expect(administrator.transfer(email).errors).to be_present
       end
 

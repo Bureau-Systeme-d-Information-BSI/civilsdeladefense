@@ -12,6 +12,7 @@ jobs:
           RAILS_ENV: test
           DATABASE_URL_TEST: postgresql://circleci:@127.0.0.1:5432/civilsdeladefense_test
           SMTP_URL: smtp://hello%40localhost@localhost
+          CI: true
       - image: circleci/postgres:11.5-alpine-ram
         environment:
           POSTGRES_USER: circleci

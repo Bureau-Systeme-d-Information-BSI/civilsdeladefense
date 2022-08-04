@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   get "/404", to: "application#resource_not_found", via: :all
   get "/500", to: "application#internal_error", via: :all
 
+  get "/accessibilite", to: redirect("/pages/declaration-d-accessibilite")
   get "/mentions-legales", to: redirect("/pages/mentions-legales")
   get "/cgu", to: redirect("/pages/conditions-generales-d-utilisation")
   get "/politique-confidentialite", to: redirect("/pages/politique-de-confidentialite")

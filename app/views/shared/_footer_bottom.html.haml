@@ -1,9 +1,10 @@
 .rf-footer__bottom
   %ul.rf-footer__bottom-list
-    %li.rf-footer__bottom-item
-      = link_to "Accessibilité : non", "#", class: 'rf-footer__bottom-link'
     - pages.each do |page|
       %li.rf-footer__bottom-item
-        = link_to page.title, page_path(page), class: 'rf-footer__bottom-link'
+        - if page.slug == "declaration-d-accessibilite"
+          = link_to "Accessibilité : non conforme", page_path(page), class: 'rf-footer__bottom-link'
+        - else
+          = link_to page.title, page_path(page), class: 'rf-footer__bottom-link'
   .rf-footer__bottom-copy
     = copyright

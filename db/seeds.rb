@@ -29,6 +29,12 @@ root_page = organization.pages.create!(
   title: "Plateforme de recrutement de personnel civils contractuels pour le Ministère des Armées",
   only_link: false
 )
+organization.pages.create!(
+  parent: root_page,
+  title: "Déclaration d'accessibilité",
+  only_link: false,
+  body: "Ici afficher déclaration d'accessibilité"
+)
 branch_1_page_1 = organization.pages.create!(
   parent: root_page,
   title: "Mentions légales",

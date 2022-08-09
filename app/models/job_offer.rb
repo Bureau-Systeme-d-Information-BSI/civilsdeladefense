@@ -73,7 +73,7 @@ class JobOffer < ApplicationRecord
   with_options if: -> { published? } do
     validates :title, length: {maximum: 70}
     validates :description, html_length: {maximum: 2000}
-    validates :organization_description, html_length: {maximum: 1000}
+    validates :organization_description, html_length: {maximum: 1000}, presence: true
     validates :required_profile, html_length: {maximum: 1000}
     validates :recruitment_process, html_length: {maximum: 700}
   end

@@ -6,6 +6,7 @@ FactoryBot.define do
     organization { Organization.first }
     title { "#{Faker::Job.title} F/H" }
     description { "Un super poste" }
+    organization_description { "Une super organisation" }
     category
     professional_category { ProfessionalCategory.all.sample }
     location { "Rennes, FR" }

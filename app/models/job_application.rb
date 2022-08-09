@@ -102,6 +102,37 @@ class JobApplication < ApplicationRecord
     ]
   end
 
+  STATE_DURATION = [
+    [:initial, :rejected],
+    [:initial, :phone_meeting],
+    [:phone_meeting, :phone_meeting_rejected],
+    [:phone_meeting, :to_be_met],
+    [:to_be_met, :after_meeting_rejected],
+    [:to_be_met, :accepted],
+    [:accepted, :contract_drafting],
+    [:contract_drafting, :contract_feedback_waiting],
+    [:contract_feedback_waiting, :contract_received],
+    [:contract_received, :affected]
+  ]
+
+  def self.cache_state_durations_map(scope)
+    Rails.cache.fetch(scope.to_sql, expires_in: 24.hours) do
+      STATE_DURATION.map { |from, to|
+        from_state = states[from].to_s
+        to_state = states[to].to_s
+        days = scope
+          .joins('INNER JOIN "audits" AS audits_start ON "audits_start"."auditable_type" = \'JobApplication\' AND "audits_start"."auditable_id" = "job_applications"."id"')
+          .joins('INNER JOIN "audits" AS audits_end ON "audits_start"."auditable_type" = \'JobApplication\'
+            AND "audits_end"."auditable_id" = "job_applications"."id"')
+          .where("audits_start.audited_changes->?->-1 @> ?", :state, from_state)
+          .where("audits_end.audited_changes->?->-1 @> ?", :state, to_state)
+          .pluck(Arel.sql("DATE_PART('day', audits_end.created_at - audits_start.created_at)"))
+        average = days.present? ? (days.reduce(:+) / days.size.to_f).round : "-"
+        [from, to, average]
+      }
+    end
+  end
+
   def end_user_state_number
     self.class.end_user_states_regrouping.index { |x| x.include?(state.to_sym) } + 1
   end

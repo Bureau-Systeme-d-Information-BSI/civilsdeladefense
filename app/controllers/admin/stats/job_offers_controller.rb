@@ -63,7 +63,7 @@ class Admin::Stats::JobOffersController < Admin::Stats::BaseController
   def date_start
     @date_start ||= begin
       res = Date.parse(permitted_params[:start]) if permitted_params[:start].present?
-      res ||= 30.days.ago.beginning_of_day
+      res ||= 30.days.ago.to_date
       res
     end
   end
@@ -71,7 +71,7 @@ class Admin::Stats::JobOffersController < Admin::Stats::BaseController
   def date_end
     @date_end ||= begin
       res = Date.parse(permitted_params[:end]) if permitted_params[:end].present?
-      res ||= Time.current
+      res ||= 1.day.ago.to_date
       res
     end
   end

@@ -20,7 +20,6 @@ export default class extends Controller {
   }
 
   search() {
-    console.log("SEARHCX")
     this.queryTarget.querySelector("button").click()
   }
 

@@ -319,6 +319,7 @@ job_offer = JobOffer.new { |j|
   j.employer = Employer.last
   j.bne_date = 1.day.ago
   j.bne_value = "inconnue"
+  j.organization_description = "Description de l'organisation"
   j.description = <<~HEREDOC
     Placé au sein du commandement des opérations cyber et rattaché à la direction interarmées
     des réseaux d’infrastructure

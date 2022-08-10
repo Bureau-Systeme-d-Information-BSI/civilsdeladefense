@@ -58,9 +58,9 @@
         = user_form.input :terms_of_service, as: :boolean, label: tos_acceptance_text
         = user_form.input :certify_majority, as: :boolean
     = f.invisible_captcha :subtitle
-  %div{data: {controller: "spinner"}}
+  %div
     .rf-input-group.rf-grid-row.rf-grid-row--center.rf-mt-6w
-      = button_tag(type: 'submit', class: 'rf-btn rf-btn--lg', data: { action: "click->spinner#show", "spinner-target" => "button" }) do
+      = button_tag(type: 'submit', class: 'rf-btn rf-btn--lg') do
         = t('helpers.submit.job_application.save')
-    .d-flex.justify-content-center.rf-btn--lg.spinner.d-none{data: {"spinner-target" => "spinner"}}
+    .d-flex.justify-content-center.rf-btn--lg.spinner.d-none
       = spinner

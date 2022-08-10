@@ -1,6 +1,6 @@
 - unless user_signed_in?
   = render "devise/shared/france_connect"
-= simple_form_for(@job_application, url: [:send_application, @job_offer], method: :post, data: { turbo: true }) do |f|
+= simple_form_for(@job_application, url: [:send_application, @job_offer], method: :post, data: { turbo: true, controller: "form-save", form_save_target: "form", action: "change->form-save#saveFormData submit->form-save#clearFormData" }) do |f|
   .form-inputs.mt-3
     = f.error_notification
     = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
@@ -57,7 +57,7 @@
         = user_form.input :receive_job_offer_mails
         = user_form.input :terms_of_service, as: :boolean, label: tos_acceptance_text
         = user_form.input :certify_majority, as: :boolean
-    = f.invisible_captcha :subtitle
+    = f.invisible_captcha :subtitle, data: { form_save_target: "ignored" }
   %div
     .rf-input-group.rf-grid-row.rf-grid-row--center.rf-mt-6w
       = button_tag(type: 'submit', class: 'rf-btn rf-btn--lg') do

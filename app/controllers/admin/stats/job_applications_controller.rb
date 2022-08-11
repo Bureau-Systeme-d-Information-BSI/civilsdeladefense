@@ -59,7 +59,7 @@ class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
   end
 
   def build_state_duration
-    @state_duration = JobApplication.cache_state_durations_map(root_rel)
+    @state_duration = JobApplication.state_durations_map(root_rel)
   end
 
   def date_start

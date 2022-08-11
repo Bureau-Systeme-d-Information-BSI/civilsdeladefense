@@ -46,16 +46,19 @@ module Clockwork
 
   every 30.minutes, "warm_up_job_applications_stats_cache" do
     [
-      [1.month.ago.to_date, 1.day.ago.to_date],
-      [1.month.ago.to_date, Time.zone.today],
-      [1.month.ago.beginning_of_month.to_date, 1.day.ago.to_date],
-      [1.month.ago.beginning_of_month.to_date, Time.zone.today],
-      [1.month.ago.beginning_of_month.to_date, 1.month.ago.end_of_month.to_date],
-      [2.months.ago.beginning_of_month.to_date, 2.months.ago.end_of_month.to_date],
-      [2.months.ago.beginning_of_month.to_date, 1.day.ago.to_date],
-      [2.months.ago.beginning_of_month.to_date, Time.zone.today]
-    ].each do |start_date, end_date|
-      WarmUpJobApplicationsStatsCacheJob.perform_later(start_date: start_date, end_date: end_date)
+      (1.month.ago.to_date..1.day.ago.to_date),
+      (1.month.ago.to_date..Time.zone.today),
+      (1.month.ago.beginning_of_month.to_date..1.day.ago.to_date),
+      (1.month.ago.beginning_of_month.to_date..Time.zone.today),
+      (1.month.ago.beginning_of_month.to_date..1.month.ago.end_of_month.to_date),
+      (2.months.ago.beginning_of_month.to_date..2.months.ago.end_of_month.to_date),
+      (2.months.ago.beginning_of_month.to_date..1.day.ago.to_date),
+      (2.months.ago.beginning_of_month.to_date..Time.zone.today)
+    ].each_with_index do |date_range, index|
+      WarmUpJobApplicationsStatsCacheJob.set(wait: index.minutes).perform_later(
+        start_date: date_range.first,
+        end_date: date_range.last
+      )
     end
   end
 end

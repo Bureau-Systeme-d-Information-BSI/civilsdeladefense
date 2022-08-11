@@ -20,7 +20,7 @@ class TrixEditorCustomInput < Trix::SimpleForm::TrixEditorInput
       input: input_class,
       class: "trix-content",
       data: {
-        action: "trix-change->trix-editor#limit",
+        action: "trix-change->trix-editor#limit trix-change->form-save#saveFormData",
         "trix-editor-target": "editor"
       }
     }

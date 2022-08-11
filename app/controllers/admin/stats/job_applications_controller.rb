@@ -65,7 +65,7 @@ class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
   def date_start
     @date_start ||= begin
       res = Date.parse(permitted_params[:start]) if permitted_params[:start].present?
-      res ||= 30.days.ago.to_date
+      res ||= 1.month.ago.to_date
       res
     end
   end

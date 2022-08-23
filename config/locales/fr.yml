@@ -471,6 +471,7 @@ fr:
     multiple_recipients_emails:
       new:
         title: "Envoyer un courriel à ces candidat·es"
+        add_attachment: "Ajouter une pièce jointe"
       create:
         success: "Les emails ont été envoyés !"
     messages:

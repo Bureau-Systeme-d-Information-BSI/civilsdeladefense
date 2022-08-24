@@ -31,7 +31,7 @@ class Email < ApplicationRecord
   def fill_attachments
     return if attachments.blank?
 
-    attachments.map { |a| email_attachments.build(content: a) }
+    attachments.compact_blank.map { |a| email_attachments.build(content: a) }
   end
 
   def mark_as_read!

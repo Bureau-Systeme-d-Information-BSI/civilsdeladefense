@@ -213,6 +213,7 @@ fr:
         time_ago: "il y a %{time_ago_in_words}"
       form:
         title: "Envoyer un courriel"
+        add_attachment: "Ajouter une pièce jointe"
       index:
     users:
       link_france_connect:

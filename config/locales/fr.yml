@@ -460,6 +460,7 @@ fr:
         unsuccess: "Impossible d'envoyer le courriel, veuillez vérifier tous les champs"
       form:
         title: "Envoyer un courriel à ce candidat"
+        add_attachment: "Ajouter une pièce jointe"
       email:
         mark_as_read: "Marquer comme lu"
         mark_as_unread: "Marquer comme non lu"

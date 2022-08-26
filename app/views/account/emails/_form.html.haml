@@ -1,4 +1,4 @@
-= simple_form_for([:account, @job_application, email], html: { class: 'rf-box rf-mb-5w rf-pb-5w' }) do |f|
+= simple_form_for([:account, @job_application, email], html: { class: 'rf-box rf-mb-5w rf-pb-5w' }, html: {data: {controller: "files-upload"}}) do |f|
   %strong.d-block.rf-mb-2w= t('.title')
   = f.error_notification
   = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
@@ -6,8 +6,10 @@
   .form-inputs
     = f.input :subject
     = f.input :body
-    = f.file_field :attachments, multiple: true
+    = f.file_field :attachments, multiple: true, data: {action: "change->files-upload#changed change->rf-tab-management#resize", files_upload_target: "input"}, class: "d-none"
+  = link_to t('.add_attachment'), "#", data: {action: "click->files-upload#add"}
+  %ul{data: {files_upload_target: "files"}}
 
   .rf-input-group.rf-grid-row.justify-content-end.rf-mt-3w
-    = button_tag(type: 'submit', class: 'rf-btn') do
+    = button_tag(type: 'submit', class: 'rf-btn', data: {action: "click->files-upload#setFilesToUpload"}) do
       = t('buttons.send')

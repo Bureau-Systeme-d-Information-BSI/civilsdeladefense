@@ -9,16 +9,18 @@
       .form-inputs
         = f.input :template, collection: EmailTemplate.all
 
-    = simple_form_for([:admin, @email.job_application, @email], remote: true, defaults: { disabled: is_archived_or_is_deleted }) do |f|
+    = simple_form_for([:admin, @email.job_application, @email], remote: true, defaults: { disabled: is_archived_or_is_deleted }, html: {data: {controller: "files-upload"}}) do |f|
       = f.error_notification
       = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
 
       .form-inputs
         = f.input :subject
         = f.input :body
-        = f.file_field :attachments, multiple: true
+        = f.file_field :attachments, multiple: true, data: {action: "change->files-upload#changed", files_upload_target: "input"}, class: "d-none"
+      = link_to t('.add_attachment'), "#", data: {action: "click->files-upload#add"}
+      %ul{data: {files_upload_target: "files"}}
 
       .form-actions.text-right
-        = button_tag(type: 'submit', class: 'btn btn-primary') do
+        = button_tag(type: 'submit', class: 'btn btn-primary', data: {action: "click->files-upload#setFilesToUpload"}) do
           = t('buttons.send_to_candidate')
           = fa_icon('send', class: 'ml-1')

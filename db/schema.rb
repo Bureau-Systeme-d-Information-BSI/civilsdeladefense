@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_08_03_080129) do
+ActiveRecord::Schema[7.0].define(version: 2022_08_26_140104) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -519,7 +519,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_03_080129) do
     t.datetime "updated_at", null: false
     t.string "privacy_policy_url"
     t.integer "inbound_email_config", default: 0
-    t.string "matomo_site_id"
     t.integer "days_before_publishing"
     t.string "service_description"
     t.string "service_description_short"
@@ -560,7 +559,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_03_080129) do
     t.string "testimony_logo_content_type"
     t.bigint "testimony_logo_file_size"
     t.datetime "testimony_logo_updated_at", precision: nil
-    t.string "atinternet_site_id"
     t.string "job_offer_term_title"
     t.string "job_offer_term_subtitle"
     t.string "job_offer_term_warning"

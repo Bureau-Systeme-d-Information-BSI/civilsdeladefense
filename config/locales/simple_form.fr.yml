@@ -125,7 +125,6 @@ fr:
         inbound_email_config: "Configuration passerelle mail/plateforme"
         logo_operator: "Logo opérateur"
         logo_horizontal: "Logo au format horizontal (affichage fond blanc)"
-        matomo_site_id: "Matomo siteId"
         operator_logo: "Logo opérateur"
         operator_name: "Nom de l'opérateur"
         operator_url: "Lien du site de l'opérateur"

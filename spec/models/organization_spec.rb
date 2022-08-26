@@ -77,6 +77,4 @@ end
 #  youtube_url                   :string
 #  created_at                    :datetime         not null
 #  updated_at                    :datetime         not null
-#  atinternet_site_id            :string
-#  matomo_site_id                :string
 #

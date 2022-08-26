@@ -19,7 +19,6 @@
               = f.input :remove_operator_logo, as: :boolean
             = f.input :prefix_article
             = f.input :privacy_policy_url
-            = f.input :matomo_site_id
             = f.input :inbound_email_config, collection: Organization.inbound_email_configs.keys.map(&:to_sym), include_blank: false
             = f.input :days_before_publishing
             = f.input :image_background

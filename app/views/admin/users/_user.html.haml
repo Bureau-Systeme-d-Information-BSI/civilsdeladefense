@@ -5,7 +5,7 @@
     .col-auto.align-self-center.text-center
       = check_box_tag "user_ids[]", user.id, false, data: {action: "change->subcheckbox#propagate_upward", "subcheckbox-target": "downcheckbox", "selectall-target": "item"}, id: user.id
   .col
-    .card.job-application.mt-3{id: dom_id(user)}
+    .card.job-application.mt-3{id: dom_id(user), data: {controller: "rich-tooltip", bs_custom_class: "tooltip-rich"}, title: "<img src='https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg' >"}
       .card-body
         = link_to [:admin, user] do
           .row

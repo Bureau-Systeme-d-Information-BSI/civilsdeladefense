@@ -1,11 +1,12 @@
 - last_job_application = user.last_job_application
 - preferred_user ||= false
+- last_job_application_resume_url = job_application_resume_url(last_job_application)
 .row
   - if defined?(list)
     .col-auto.align-self-center.text-center
       = check_box_tag "user_ids[]", user.id, false, data: {action: "change->subcheckbox#propagate_upward", "subcheckbox-target": "downcheckbox", "selectall-target": "item"}, id: user.id
   .col
-    .card.job-application.mt-3{id: dom_id(user), data: {controller: "rich-tooltip", bs_custom_class: "tooltip-rich"}, title: "<img src='https://interactive-examples.mdn.mozilla.net/media/cc0-images/grapefruit-slice-332-332.jpg' >"}
+    .card.job-application.mt-3{id: dom_id(user)}
       .card-body
         = link_to [:admin, user] do
           .row
@@ -13,6 +14,9 @@
               .d-flex
                 = image_user_tag user.photo, width: 32, class: 'mr-2'
                 = user.full_name
+                - if last_job_application_resume_url
+                  %div{data: {controller: "rich-tooltip", bs_custom_class: "tooltip-rich", bs_placement: "right"}, title: "<object data='#{last_job_application_resume_url}' style='margin-left: 10px; bottom: 0;' class='position-fixed' height='600px' width='800px' type='application/pdf'></object>"}
+                    = fa_icon "file-document", class: "ml-2"
             .col-12.personal-profile-current-position
               - current_position = user&.current_position
               - if current_position

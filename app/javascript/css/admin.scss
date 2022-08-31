@@ -433,3 +433,12 @@ a {
 .nocheck textarea {
   background-image: none !important;
 }
+
+.tooltip-rich {
+  .tooltip-inner {
+    background-color: transparent;
+  }
+}
+.tooltip-rich.tooltip.show {
+  opacity: 1;
+}

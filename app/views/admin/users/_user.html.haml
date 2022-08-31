@@ -1,5 +1,6 @@
 - last_job_application = user.last_job_application
 - preferred_user ||= false
+- last_job_application_resume_url = job_application_resume_url(last_job_application)
 .row
   - if defined?(list)
     .col-auto.align-self-center.text-center
@@ -13,6 +14,9 @@
               .d-flex
                 = image_user_tag user.photo, width: 32, class: 'mr-2'
                 = user.full_name
+                - if last_job_application_resume_url
+                  %div{data: {controller: "rich-tooltip", bs_custom_class: "tooltip-rich", bs_placement: "right"}, title: "<object data='#{last_job_application_resume_url}' style='margin-left: 10px; bottom: 0;' class='position-fixed' height='600px' width='800px' type='application/pdf'></object>"}
+                    = fa_icon "file-document", class: "ml-2"
             .col-12.personal-profile-current-position
               - current_position = user&.current_position
               - if current_position

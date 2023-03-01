@@ -1,15 +1,15 @@
-.rf-footer__body
-  .rf-footer__brand
-    = link_to root_path, title: strip_tags(current_organization.brand_name), class: 'rf-logo' do
-      %span.rf-logo__title
+.fr-footer__body
+  .fr-footer__brand
+    = link_to root_path, title: strip_tags(current_organization.brand_name), class: 'fr-logo' do
+      %span.fr-logo__title
         = simple_format(current_organization.brand_name, nil, wrapper_tag: 'span')
     - if current_organization.operator_logo.present?
-      = link_to current_organization.operator_url, class: 'rf-footer__brand-link' do
+      = link_to current_organization.operator_url, class: 'fr-footer__brand-link' do
         = image_tag(current_organization.operator_logo.url, alt: current_organization.service_name, style: 'width:auto; height:5rem;')
-  .rf-footer__content
+  .fr-footer__content
     - if (desc = current_organization.service_description).present?
-      %p.rf-footer__content-desc= current_organization.service_description
-    %ul.rf-footer__content-list
+      %p.fr-footer__content-desc= current_organization.service_description
+    %ul.fr-footer__content-list
       - links.each do |page|
         %li
-          = link_to page.title, page.url, class: 'rf-footer__content-link', target: '_blank'
+          = link_to page.title, page.url, class: 'fr-footer__content-link', target: '_blank'

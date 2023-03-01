@@ -5,8 +5,8 @@
         .form-inputs
           .row
             .col-12.col-md-6
-              .form-group.rf-input-group
-                = f.label :transfer_email, "Email du nouveau propriétaire de l'offre", class: "form-control-label rf-label"
-                = f.email_field :transfer_email, placeholder: 'Email', class: "form-control rf-input string optional"
+              .form-group.fr-input-group
+                = f.label :transfer_email, "Email du nouveau propriétaire de l'offre", class: "form-control-label fr-label"
+                = f.email_field :transfer_email, placeholder: 'Email', class: "form-control fr-input string optional"
           .form-actions.text-right.mt-4
             = f.submit t('.submit'), class: 'btn btn-primary btn-raised'

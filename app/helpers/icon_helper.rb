@@ -2,7 +2,7 @@
 
 module IconHelper
   def fa_icon(name, options = {})
-    klasses = "svg-inline--fa rf-icon fa-#{name}"
+    klasses = "svg-inline--fa fr-icon fa-#{name}"
     klasses += " fa-w-16" unless options[:class] && options[:class] =~ /fa-w-/
     klasses += " #{options[:class]}" if options[:class].present?
     options[:viewbox] ||= "0 0 512 512"

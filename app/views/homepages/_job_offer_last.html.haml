@@ -1,9 +1,9 @@
-%section.rf-py-9w.rf-bg-beige
-  .rf-container
-    .rf-grid-row.rf-grid-row--gutters
-      .rf-col-12
-        %h2.rf-h3.rf-mb-4w Nos dernières offres
-    .rf-grid-row.rf-grid-row--gutters.job-offer-grid
-      = render collection: @job_offers_last, partial: 'job_offers/job_offer', locals: { container_class: %w[rf-col-12 rf-col-md-6] }
-    .rf-grid-row.rf-grid-row--center.rf-mt-4w
-      = link_to "Voir toutes nos offres", :job_offers, class: "rf-btn"
+%section.fr-py-9w.fr-bg-beige
+  .fr-container
+    .fr-grid-row.fr-grid-row--gutters
+      .fr-col-12
+        %h2.fr-h3.fr-mb-4w Nos dernières offres
+    .fr-grid-row.fr-grid-row--gutters.job-offer-grid
+      = render collection: @job_offers_last, partial: 'job_offers/job_offer', locals: { container_class: %w[fr-col-12 fr-col-md-6] }
+    .fr-grid-row.fr-grid-row--center.fr-mt-4w
+      = link_to "Voir toutes nos offres", :job_offers, class: "fr-btn"

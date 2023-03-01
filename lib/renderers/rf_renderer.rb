@@ -10,29 +10,29 @@ class RfRenderer < WillPaginate::ActionView::LinkRenderer
     }.join(@options[:link_separator])
 
     @options[:class] ||= ""
-    @options[:class] += " rf-pagination__list"
+    @options[:class] += " fr-pagination__list"
 
     ul = tag("ul", html, class: @options[:class])
-    tag("nav", ul, class: "rf-pagination", "aria-label": "Pagination navigation")
+    tag("nav", ul, class: "fr-pagination", "aria-label": "Pagination navigation")
   end
 
   protected
 
   def page_item(text, url, link_status = nil)
     link_tag = generate_link(text, url) if link_status.nil?
-    link_tag ||= tag(:span, text, class: "rf-pagination__label", "aria-current": "page")
+    link_tag ||= tag(:span, text, class: "fr-pagination__label", "aria-current": "page")
 
-    tag(:li, link_tag, class: "rf-pagination__item #{link_status}")
+    tag(:li, link_tag, class: "fr-pagination__item #{link_status}")
   end
 
   def page_number(page)
-    link_status = "rf-pagination__item--active" if page == current_page
+    link_status = "fr-pagination__item--active" if page == current_page
     page_item(page, page, link_status)
   end
 
   def gap
     text = @template.will_paginate_translate(:page_gap) { "&hellip;" }
-    page_item(text, nil, "rf-pagination__item--disabled")
+    page_item(text, nil, "fr-pagination__item--disabled")
   end
 
   def previous_page
@@ -46,7 +46,7 @@ class RfRenderer < WillPaginate::ActionView::LinkRenderer
   end
 
   def previous_or_next_page(page, text, _aria_label)
-    link_status = "rf-pagination__item--disabled" unless page
+    link_status = "fr-pagination__item--disabled" unless page
     page_item(text, page, link_status)
   end
 
@@ -54,7 +54,7 @@ class RfRenderer < WillPaginate::ActionView::LinkRenderer
     link(
       text,
       url,
-      class: "rf-pagination__link",
+      class: "fr-pagination__link",
       rel: text,
       title: "Page #{text}",
       "aria-label": "Page #{text}",

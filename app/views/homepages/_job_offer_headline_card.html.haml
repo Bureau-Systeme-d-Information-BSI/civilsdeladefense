@@ -1,12 +1,12 @@
-.rf-col-12.rf-col-md-6.rf-col-lg-4
-  .rf-card.rounded-lg
-    .rf-card__body
-      %h4.rf-card__title
-        = link_to job_offer.title, job_offer, class: "rf-card__link"
-      %p.rf-card__desc
+.fr-col-12.fr-col-md-6.fr-col-lg-4
+  .fr-card.rounded-lg
+    .fr-card__body
+      %h4.fr-card__title
+        = link_to job_offer.title, job_offer, class: "fr-card__link"
+      %p.fr-card__desc
         = [job_offer.contract_type.name, job_offer.duration_contract].join(' ')
         %br
         = job_offer.location
       - if job_offer.published_at.present?
-        .rf-card__detail
+        .fr-card__detail
           = t('job_offers.job_offer.published_date', time_ago_in_words: time_ago_in_words(job_offer.published_at))

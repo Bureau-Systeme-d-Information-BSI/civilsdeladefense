@@ -1,11 +1,11 @@
-.rf-container.rf-mb-9w.rf-mt-4w
-  .rf-grid-row.rf-grid-row--gutters
-    .rf-col-12
-      = form_tag job_offers_url, method: :get, class: 'rf-search-bar rf-search-bar--lg' do
-        %label.rf-label{for: "q"}
+.fr-container.fr-mb-9w.fr-mt-4w
+  .fr-grid-row.fr-grid-row--gutters
+    .fr-col-12
+      = form_tag job_offers_url, method: :get, class: 'fr-search-bar fr-search-bar--lg' do
+        %label.fr-label{for: "q"}
           Mots-clés recherchés parmi les offres d'emploi
-        = search_field_tag :q, params[:q], placeholder: 'Recherche par mot-clé dans les offres d\'emploi', class: 'rf-input'
-        %button.rf-btn.rf-btn--lg{:title => "Rechercher"}
+        = search_field_tag :q, params[:q], placeholder: 'Recherche par mot-clé dans les offres d\'emploi', class: 'fr-input'
+        %button.fr-btn.fr-btn--lg{:title => "Rechercher"}
           Rechercher
-    .rf-col-12.text-center
-      = link_to "Recherche avancée", job_offers_path, class: 'rf-link rf-fi-arrow-right-line rf-link--icon-right'
+    .fr-col-12.text-center
+      = link_to "Recherche avancée", job_offers_path, class: 'fr-link fr-fi-arrow-right-line fr-link--icon-right'

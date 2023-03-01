@@ -26,7 +26,7 @@ const context = require.context("../controllers", true, /\.js$/)
 Stimulus.load(definitionsFromContext(context))
 
 // import '@gouvfr/core/dist/js/core.js'
-// TODO import { Header } from 'js/rf-header.js'
+// TODO import { Header } from 'js/fr-header.js'
 
 // document.addEventListener('turbo:load', function() {
 //   new Header

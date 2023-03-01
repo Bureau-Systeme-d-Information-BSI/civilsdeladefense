@@ -1,5 +1,5 @@
 !!!
-%html{lang: I18n.locale, "data-rf-reset" => true}
+%html{lang: I18n.locale, "data-fr-reset" => true}
   %head
     %title= [@page_title, current_organization.service_name].delete_if(&:blank?).join(' - ')
     %meta{charset: "utf-8"}
@@ -16,12 +16,12 @@
     #__SVG_SPRITE_NODE__{'data-turbo-permanent': true}
     = render partial: '/shared/header'
     = render partial: '/shared/timeout'
-    %button.scroll.rf-btn{data: { controller: "scroll", action: "scroll#top"}} ▲
+    %button.scroll.fr-btn{data: { controller: "scroll", action: "scroll#top"}} ▲
     - if flash[:notice] || flash[:alert] || flash[:error] || flash[:success]
-      .rf-container
-        .rf-grid-row
+      .fr-container
+        .fr-grid-row
           - klasses = devise_controller? ? %w(col-md-6 devise) : (controller.action_name == "show" && controller.controller_name != 'pages' ? %w() : %w(col-md-9))
-          .rf-col-12.mx-md-auto{class: klasses}
+          .fr-col-12.mx-md-auto{class: klasses}
             - if flash[:notice]
               .fixed-bottom.alert.alert-info= flash[:notice]
             - elsif flash[:error] || flash[:alert]

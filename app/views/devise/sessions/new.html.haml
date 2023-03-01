@@ -1,5 +1,5 @@
 - @page_title = t(".sign_in.#{ resource.class.to_s.downcase }")
-.rf-text--lead.rf-mb-3w
+.fr-text--lead.fr-mb-3w
   - if resource.is_a?(User)
     Vous avez déjà un espace candidat ?
     %br
@@ -13,6 +13,6 @@
   = f.input :email, required: false, autofocus: true
   = f.input :password, required: false, hint: false
   = f.input :remember_me, as: :boolean if devise_mapping.rememberable?
-  .rf-input-group
-    = f.button :submit, t(".sign_in.#{ resource.class.to_s.downcase }"), class: 'rf-btn btn btn-primary btn-raised'
+  .fr-input-group
+    = f.button :submit, t(".sign_in.#{ resource.class.to_s.downcase }"), class: 'fr-btn btn btn-primary btn-raised'
   = render "devise/shared/links"

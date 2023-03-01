@@ -4,7 +4,7 @@
 
 // class Header {
 //   constructor (header) {
-//     this.header = header || document.querySelector('.rf-header');
+//     this.header = header || document.querySelector('.fr-header');
 //     this.numId = count;
 //     count++;
 
@@ -14,21 +14,21 @@
 //   init () {
 //     this.popins = [];
 
-//     this.tools = this.header.querySelector('.rf-header__tools');
+//     this.tools = this.header.querySelector('.fr-header__tools');
 
-//     this.searchBar = this.header.querySelector('.rf-header__tools .rf-search-bar');
+//     this.searchBar = this.header.querySelector('.fr-header__tools .fr-search-bar');
 
-//     const navbar = this.header.querySelector('.rf-header__navbar');
+//     const navbar = this.header.querySelector('.fr-header__navbar');
 
-//     this.nav = this.header.querySelector('.rf-nav');
+//     this.nav = this.header.querySelector('.fr-nav');
 
-//     this.navItems = this.header.querySelectorAll('.rf-nav .rf-nav__item') || [];
+//     this.navItems = this.header.querySelectorAll('.fr-nav .fr-nav__item') || [];
 
 //     const append = this.numId === 0 ? '' : '-' + this.numId;
 
-//     this.shortcuts = this.header.querySelector('.rf-header__tools .rf-shortcuts');
+//     this.shortcuts = this.header.querySelector('.fr-header__tools .fr-shortcuts');
 
-//     this.navList = this.header.querySelector('.rf-nav .rf-nav__list');
+//     this.navList = this.header.querySelector('.fr-nav .fr-nav__list');
 
 //     if (this.searchBar) {
 //       this.popins.push(new HeaderPopin(
@@ -97,7 +97,7 @@
 
 //   create (icon, title, hasLabel, size) {
 //     const button = document.createElement('button');
-//     button.setAttribute('class', 'rf-btn rf-fi-' + icon + ' rf-btn--icon' + (hasLabel ? '-right' : '') + ' ' + (size !== undefined ? 'rf-btn--' + size : ''));
+//     button.setAttribute('class', 'fr-btn fr-fi-' + icon + ' fr-btn--icon' + (hasLabel ? '-right' : '') + ' ' + (size !== undefined ? 'fr-btn--' + size : ''));
 //     button.setAttribute('title', title);
 //     button.setAttribute('aria-controls', this.id);
 //     button.innerHTML = title;
@@ -110,14 +110,14 @@
 //       if (this.navbar.contains(this.button)) this.navbar.removeChild(this.button);
 //       if (this.popin.contains(this.close)) this.popin.removeChild(this.close);
 //       this.popin.removeAttribute('id');
-//       removeClass(this.popin, 'rf-header__popin');
-//       removeClass(this.popin, 'rf-header__popin--expanded');
+//       removeClass(this.popin, 'fr-header__popin');
+//       removeClass(this.popin, 'fr-header__popin--expanded');
 //     } else {
 //       if (!this.navbar.contains(this.button)) this.navbar.appendChild(this.button);
 //       if (!this.popin.contains(this.close)) this.popin.appendChild(this.close);
 
 //       this.popin.setAttribute('id', this.id);
-//       addClass(this.popin, 'rf-header__popin');
+//       addClass(this.popin, 'fr-header__popin');
 //       this.handle();
 //     }
 //   }
@@ -134,9 +134,9 @@
 
 //   handle () {
 //     if (this.isExpanded) {
-//       addClass(this.popin, 'rf-header__popin--expanded');
+//       addClass(this.popin, 'fr-header__popin--expanded');
 //     } else {
-//       removeClass(this.popin, 'rf-header__popin--expanded');
+//       removeClass(this.popin, 'fr-header__popin--expanded');
 //     }
 //   }
 // }

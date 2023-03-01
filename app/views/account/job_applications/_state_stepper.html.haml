@@ -1,15 +1,15 @@
 - current_number = job_application.end_user_state_number
 - state_name = job_application.state
-.rf-stepper.rf-mt-2w
+.fr-stepper.fr-mt-2w
   - 0.upto(8) do |i|
     - klasses = []
     - klasses << "active-step" if i <= current_number
     - klasses << "step-done" if i < current_number
     - klasses << "step-rejected" if job_application.rejected_state? && i == current_number
-    .rf-stepper-step{class: klasses}
-      .rf-stepper-circle
+    .fr-stepper-step{class: klasses}
+      .fr-stepper-circle
         %span= i
-      .rf-stepper-title
+      .fr-stepper-title
         = JobApplication.human_attribute_name("state/end_user_state_#{i}")
-      .rf-stepper-bar-left
-      .rf-stepper-bar-right
+      .fr-stepper-bar-left
+      .fr-stepper-bar-right

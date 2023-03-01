@@ -9,7 +9,7 @@
       "file": "app/views/account/_navbar.html.haml",
       "line": 16,
       "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
-      "code": "link_to(UserMenuLink.new.name, UserMenuLink.new.url, :class => \"rf-sidemenu__link\", :target => \"_blank\")",
+      "code": "link_to(UserMenuLink.new.name, UserMenuLink.new.url, :class => \"fr-sidemenu__link\", :target => \"_blank\")",
       "render_path": [
         {
           "type": "controller",

@@ -1,47 +1,47 @@
-%header.rf-header{role: "banner"}
-  .rf-container
-    .rf-header__body
-      .rf-header__brand.d-flex
-        = link_to root_path, title: strip_tags(current_organization.brand_name), class: 'rf-logo' do
-          %span.rf-logo__title
+%header.fr-header{role: "banner"}
+  .fr-container
+    .fr-header__body
+      .fr-header__brand.d-flex
+        = link_to root_path, title: strip_tags(current_organization.brand_name), class: 'fr-logo' do
+          %span.fr-logo__title
             = simple_format(current_organization.brand_name, nil, wrapper_tag: 'span')
       - if current_organization.operator_logo.present?
-        .rf-header__operator
+        .fr-header__operator
           = image_tag(current_organization.operator_logo.url, alt: current_organization.operator_name, style: 'width:auto; height:3.5rem;')
-      .rf-header__navbar
-        .rf-service
-          =  link_to root_path, title: current_organization.service_name, class: 'rf-service__title' do
+      .fr-header__navbar
+        .fr-service
+          =  link_to root_path, title: current_organization.service_name, class: 'fr-service__title' do
             = current_organization.service_name
           - if (desc = current_organization.service_description_short).present?
-            %p.rf-service__tagline
+            %p.fr-service__tagline
               = desc
-      .rf-header__tools
+      .fr-header__tools
         - if user_signed_in?
-          .d-flex.flex-row.align-items-center.rf-mb-1w
-            %small.rf-mr-1w Connecté en tant que #{ current_user.full_name }
+          .d-flex.flex-row.align-items-center.fr-mb-1w
+            %small.fr-mr-1w Connecté en tant que #{ current_user.full_name }
             = image_user_tag current_user.photo, class: "avatar"
-        .rf-shortcuts
-          %ul.rf-shortcuts__list
+        .fr-shortcuts
+          %ul.fr-shortcuts__list
             - if user_signed_in?
-              %li.rf-shortcuts__item
-                = link_to t(".account_root"), account_job_applications_path, class: %w[rf-link rf-fi-account-line]
-              %li.rf-shortcuts__item
-                = button_to t('.logout'), destroy_user_session_path, method: :delete, class: 'rf-link rf-border-0'
+              %li.fr-shortcuts__item
+                = link_to t(".account_root"), account_job_applications_path, class: %w[fr-link fr-fi-account-line]
+              %li.fr-shortcuts__item
+                = button_to t('.logout'), destroy_user_session_path, method: :delete, class: 'fr-link fr-border-0'
             - else
-              %li.rf-shortcuts__item
-                = link_to t(".account_root"), new_session_path(User), class: %w[rf-link rf-fi-account-line]
+              %li.fr-shortcuts__item
+                = link_to t(".account_root"), new_session_path(User), class: %w[fr-link fr-fi-account-line]
   - unless controller.class.module_parent == Account
-    .rf-container
-      %nav.rf-nav{"aria-label" => "Menu principal", role: "navigation"}
-        %ul.rf-nav__list
-          - klass = current_page?(root_path) ? 'rf-nav__item--active' : nil
-          %li.rf-nav__item{class: klass}
-            = link_to "Accueil", root_path, class: 'rf-link'
-          - klass = controller.controller_name == 'job_offers' && controller.action_name == 'index' ? 'rf-nav__item--active' : nil
-          %li.rf-nav__item{class: klass}
-            = link_to "Nos offres", job_offers_path, class: 'rf-link'
+    .fr-container
+      %nav.fr-nav{"aria-label" => "Menu principal", role: "navigation"}
+        %ul.fr-nav__list
+          - klass = current_page?(root_path) ? 'fr-nav__item--active' : nil
+          %li.fr-nav__item{class: klass}
+            = link_to "Accueil", root_path, class: 'fr-link'
+          - klass = controller.controller_name == 'job_offers' && controller.action_name == 'index' ? 'fr-nav__item--active' : nil
+          %li.fr-nav__item{class: klass}
+            = link_to "Nos offres", job_offers_path, class: 'fr-link'
           - spontaneous = JobOffer.find_by(spontaneous: true)
           - if spontaneous
-            - klass = controller.controller_name == 'job_offers' && controller.action_name == 'show' ? 'rf-nav__item--active' : nil
-            %li.rf-nav__item{class: klass}
-              = link_to "Candidature spontanée", spontaneous, class: 'rf-link'
+            - klass = controller.controller_name == 'job_offers' && controller.action_name == 'show' ? 'fr-nav__item--active' : nil
+            %li.fr-nav__item{class: klass}
+              = link_to "Candidature spontanée", spontaneous, class: 'fr-link'

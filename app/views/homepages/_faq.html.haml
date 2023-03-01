@@ -1,15 +1,15 @@
 - if FrequentlyAskedQuestion.count > 0
-  .rf-container.rf-my-9w
-    .rf-grid-row.rf-grid-row--center
-      .rf-col-12
-        %h2.rf-h3.text-center.rf-mt-0.rf-mb-4w Foire aux questions
-      .rf-col-12
-        %ul.rf-accordions-group
+  .fr-container.fr-my-9w
+    .fr-grid-row.fr-grid-row--center
+      .fr-col-12
+        %h2.fr-h3.text-center.fr-mt-0.fr-mb-4w Foire aux questions
+      .fr-col-12
+        %ul.fr-accordions-group
           - FrequentlyAskedQuestion.all.each_with_index do |faq, index|
             %li
-              %section.rf-accordion
-                %h3.rf-accordion__title
-                  %button.rf-accordion__btn{aria: {controls: faq.id, expanded: false}, data: {controller: 'rf-accordions-management', action: 'click->rf-accordions-management#collapse'}}
+              %section.fr-accordion
+                %h3.fr-accordion__title
+                  %button.fr-accordion__btn{aria: {controls: faq.id, expanded: false}, data: {controller: 'fr-accordions-management', action: 'click->fr-accordions-management#collapse'}}
                     = faq.name
-                .rf-collapse{id: faq.id}
+                .fr-collapse{id: faq.id}
                   = sanitize(faq.value)

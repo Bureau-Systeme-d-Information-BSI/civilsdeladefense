@@ -1,10 +1,10 @@
-.rf-footer__bottom
-  %ul.rf-footer__bottom-list
+.fr-footer__bottom
+  %ul.fr-footer__bottom-list
     - pages.each do |page|
-      %li.rf-footer__bottom-item
+      %li.fr-footer__bottom-item
         - if page.slug == "declaration-d-accessibilite"
-          = link_to "Accessibilité : non conforme", page_path(page), class: 'rf-footer__bottom-link'
+          = link_to "Accessibilité : non conforme", page_path(page), class: 'fr-footer__bottom-link'
         - else
-          = link_to page.title, page_path(page), class: 'rf-footer__bottom-link'
-  .rf-footer__bottom-copy
+          = link_to page.title, page_path(page), class: 'fr-footer__bottom-link'
+  .fr-footer__bottom-copy
     = copyright

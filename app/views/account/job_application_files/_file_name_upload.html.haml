@@ -6,12 +6,12 @@
 - options = { html: html, namespace: file_type.name.parameterize }
 = turbo_frame_tag dom_id(job_application_file.job_application_file_type) do
   %h3= file_type.name
-  .rf-mb-1w= hint_text
+  .fr-mb-1w= hint_text
   - data = { controller: "file-drop", action: "dragenter->file-drop#highlight dragover->file-drop#highlight dragleave->file-drop#unhighlight drop->file-drop#unhighlight drop->file-drop#setFile" }
   = simple_form_for([:account, job_application, job_application_file], options) do |f|
     %label
-      .rf-card.rf-card--no-arrow.rf-card--no-full-height.rf-mb-3w.hidden-file-input{ data: data }
-        .rf-card__body
+      .fr-card.fr-card--no-arrow.fr-card--no-full-height.fr-mb-3w.hidden-file-input{ data: data }
+        .fr-card__body
           - if job_application_file.new_record?
             = f.hidden_field :job_application_file_type_id
           - data = { controller: "auto-submit", action: "change->auto-submit#submit", "file-drop-target" => "input" }

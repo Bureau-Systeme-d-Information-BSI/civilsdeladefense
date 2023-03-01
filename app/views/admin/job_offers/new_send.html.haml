@@ -5,8 +5,8 @@
         .form-inputs
           .row
             .col-12.col-md-6
-              .form-group.rf-input-group
-                = f.label :transfer_email, "Mes listes de candidats", class: "form-control-label rf-label"
+              .form-group.fr-input-group
+                = f.label :transfer_email, "Mes listes de candidats", class: "form-control-label fr-label"
 
                 - current_administrator.preferred_users_lists.each do |list|
                   %br

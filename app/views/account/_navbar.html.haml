@@ -1,18 +1,18 @@
-%nav.rf-sidemenu.rf-sidemenu--sticky-full-height{"aria-label" => "Menu latéral"}
-  .rf-sidemenu__inner
-    %button.rf-sidemenu__btn--sidemenu-toggle{"aria-controls" => "rf-sidemenu-wrapper", "aria-expanded" => "false", :hidden => ""} Dans cette rubrique
-    #rf-sidemenu-wrapper.rf-sidemenu__wrapper
-      .rf-sidemenu__title Mon espace candidat
-      %ul.rf-sidemenu__list
-        - klass = controller.controller_name == 'job_applications' ? 'rf-sidemenu__item--active' : nil
-        %li.rf-sidemenu__item{class: klass}
-          = link_to "Mes candidatures", [:account, :job_applications], class: "rf-sidemenu__link"
-        - klass = controller.controller_name == 'users' && controller.action_name == 'edit' ? 'rf-sidemenu__item--active' : nil
-        %li.rf-sidemenu__item{class: klass}
-          = link_to "Mes informations", [:edit, :account, :user], class: "rf-sidemenu__link"
-        - klass = controller.controller_name == 'users' && controller.action_name == 'show' ? 'rf-sidemenu__item--active' : nil
-        %li.rf-sidemenu__item{class: klass}
-          = link_to "Mon compte", [:account, :user], class: "rf-sidemenu__link"
+%nav.fr-sidemenu.fr-sidemenu--sticky-full-height{"aria-label" => "Menu latéral"}
+  .fr-sidemenu__inner
+    %button.fr-sidemenu__btn--sidemenu-toggle{"aria-controls" => "fr-sidemenu-wrapper", "aria-expanded" => "false", :hidden => ""} Dans cette rubrique
+    #fr-sidemenu-wrapper.fr-sidemenu__wrapper
+      .fr-sidemenu__title Mon espace candidat
+      %ul.fr-sidemenu__list
+        - klass = controller.controller_name == 'job_applications' ? 'fr-sidemenu__item--active' : nil
+        %li.fr-sidemenu__item{class: klass}
+          = link_to "Mes candidatures", [:account, :job_applications], class: "fr-sidemenu__link"
+        - klass = controller.controller_name == 'users' && controller.action_name == 'edit' ? 'fr-sidemenu__item--active' : nil
+        %li.fr-sidemenu__item{class: klass}
+          = link_to "Mes informations", [:edit, :account, :user], class: "fr-sidemenu__link"
+        - klass = controller.controller_name == 'users' && controller.action_name == 'show' ? 'fr-sidemenu__item--active' : nil
+        %li.fr-sidemenu__item{class: klass}
+          = link_to "Mon compte", [:account, :user], class: "fr-sidemenu__link"
         - UserMenuLink.all.each do |menu_link|
-          %li.rf-sidemenu__item
-            = link_to menu_link.name, menu_link.url, class: "rf-sidemenu__link", target: "_blank"
+          %li.fr-sidemenu__item
+            = link_to menu_link.name, menu_link.url, class: "fr-sidemenu__link", target: "_blank"

@@ -25,9 +25,9 @@ window.Stimulus = Application.start()
 const context = require.context("../controllers", true, /\.js$/)
 Stimulus.load(definitionsFromContext(context))
 
-// import '@gouvfr/core/dist/js/core.js'
-// TODO import { Header } from 'js/fr-header.js'
+import '@gouvfr/dsfr/dist/dsfr.module.min.js'
+import { Header } from 'js/rf-header.js'
 
-// document.addEventListener('turbo:load', function() {
-//   new Header
-// })
+document.addEventListener('turbo:load', function() {
+  new Header
+})

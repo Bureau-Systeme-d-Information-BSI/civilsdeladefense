@@ -1,144 +1,160 @@
-// TODO import { addClass, removeClass } from '@gouvfr/core/src/scripts/manipulation/classes';
+let count = 0;
 
-// let count = 0;
+const sanitize = (className) => className.charAt(0) === '.' ? className.substr(1) : className;
 
-// class Header {
-//   constructor (header) {
-//     this.header = header || document.querySelector('.fr-header');
-//     this.numId = count;
-//     count++;
+const getClassNames = (element) => element.className ? element.className.split(' ') : [];
 
-//     this.init();
-//   }
+const modifyClass = (element, className, remove) => {
+  className = sanitize(className);
+  const classNames = getClassNames(element);
+  const index = classNames.indexOf(className);
+  if (remove === true) {
+    if (index > -1) classNames.splice(index, 1);
+  } else if (index === -1) classNames.push(className);
+  element.className = classNames.join(' ');
+};
 
-//   init () {
-//     this.popins = [];
+const addClass = (element, className) => modifyClass(element, className);
 
-//     this.tools = this.header.querySelector('.fr-header__tools');
+const removeClass = (element, className) => modifyClass(element, className, true);
 
-//     this.searchBar = this.header.querySelector('.fr-header__tools .fr-search-bar');
+class Header {
+  constructor (header) {
+    this.header = header || document.querySelector('.fr-header');
+    this.numId = count;
+    count++;
 
-//     const navbar = this.header.querySelector('.fr-header__navbar');
+    this.init();
+  }
 
-//     this.nav = this.header.querySelector('.fr-nav');
+  init () {
+    this.popins = [];
 
-//     this.navItems = this.header.querySelectorAll('.fr-nav .fr-nav__item') || [];
+    this.tools = this.header.querySelector('.fr-header__tools');
 
-//     const append = this.numId === 0 ? '' : '-' + this.numId;
+    this.searchBar = this.header.querySelector('.fr-header__tools .fr-search-bar');
 
-//     this.shortcuts = this.header.querySelector('.fr-header__tools .fr-shortcuts');
+    const navbar = this.header.querySelector('.fr-header__navbar');
 
-//     this.navList = this.header.querySelector('.fr-nav .fr-nav__list');
+    this.nav = this.header.querySelector('.fr-nav');
 
-//     if (this.searchBar) {
-//       this.popins.push(new HeaderPopin(
-//         'header-tools-popin' + append,
-//         'search-line',
-//         'Rechercher',
-//         this.tools,
-//         navbar
-//       ));
-//     }
+    this.navItems = this.header.querySelectorAll('.fr-nav .fr-nav__item') || [];
 
-//     if (this.navItems.length > 0 || this.shortcuts !== null) {
-//       // si on des raccourcis mais pas de nav, on la créé
-//       if (!this.nav) {
-//         this.nav = document.createElement('nav');
-//         this.nav.setAttribute('role', 'navigation');
-//         this.nav.setAttribute('aria-label', 'Menu principal');
-//         this.header.appendChild(this.nav);
-//       }
-//       this.popins.push(new HeaderPopin(
-//         'header-nav-popin' + append,
-//         'menu-fill',
-//         'Ouvrir le menu',
-//         this.nav,
-//         navbar
-//       ));
-//     }
+    const append = this.numId === 0 ? '' : '-' + this.numId;
 
-//     this.changing = this.change.bind(this);
+    this.shortcuts = this.header.querySelector('.fr-header__tools .fr-shortcuts');
 
-//     window.addEventListener('resize', this.changing);
-//     window.addEventListener('orientationchange', this.changing);
-//     this.change();
-//   }
+    this.navList = this.header.querySelector('.fr-nav .fr-nav__list');
 
-//   change () {
-//     this.isMedium = window.matchMedia('(min-width: 48em)').matches;
+    if (this.searchBar) {
+      this.popins.push(new HeaderPopin(
+        'header-tools-popin' + append,
+        'search-line',
+        'Rechercher',
+        this.tools,
+        navbar
+      ));
+    }
 
-//     for (let i = 0; i < this.popins.length; i++) this.popins[i].change(this.isMedium);
+    if (this.navItems.length > 0 || this.shortcuts !== null) {
+      // si on des raccourcis mais pas de nav, on la créé
+      if (!this.nav) {
+        this.nav = document.createElement('nav');
+        this.nav.setAttribute('role', 'navigation');
+        this.nav.setAttribute('aria-label', 'Menu principal');
+        this.header.appendChild(this.nav);
+      }
+      this.popins.push(new HeaderPopin(
+        'header-nav-popin' + append,
+        'menu-fill',
+        'Ouvrir le menu',
+        this.nav,
+        navbar
+      ));
+    }
 
-//     if (this.shortcuts !== null) {
-//       if (this.isMedium) {
-//         if (this.searchBar !== null) this.tools.insertBefore(this.shortcuts, this.searchBar);
-//         else this.tools.appendChild(this.shortcuts);
-//       } else {
-//         this.nav.insertBefore(this.shortcuts, this.navList);
-//       }
-//     }
-//   }
-// }
+    this.changing = this.change.bind(this);
 
-// class HeaderPopin {
-//   constructor (id, icon, title, popin, navbar) {
-//     this.id = id;
-//     this.button = this.create(icon, title);
-//     this.popin = popin;
-//     this.navbar = navbar;
+    window.addEventListener('resize', this.changing);
+    window.addEventListener('orientationchange', this.changing);
+    this.change();
+  }
 
-//     this.button.addEventListener('click', this.toggle.bind(this));
+  change () {
+    this.isMedium = window.matchMedia('(min-width: 48em)').matches;
 
-//     this.close = this.create('close-line', 'Fermer', true, 'sm');
-//     this.close.addEventListener('click', this.exit.bind(this));
+    for (let i = 0; i < this.popins.length; i++) this.popins[i].change(this.isMedium);
 
-//     this.isExpanded = false;
-//   }
+    if (this.shortcuts !== null) {
+      if (this.isMedium) {
+        if (this.searchBar !== null) this.tools.insertBefore(this.shortcuts, this.searchBar);
+        else this.tools.appendChild(this.shortcuts);
+      } else {
+        this.nav.insertBefore(this.shortcuts, this.navList);
+      }
+    }
+  }
+}
 
-//   create (icon, title, hasLabel, size) {
-//     const button = document.createElement('button');
-//     button.setAttribute('class', 'fr-btn fr-fi-' + icon + ' fr-btn--icon' + (hasLabel ? '-right' : '') + ' ' + (size !== undefined ? 'fr-btn--' + size : ''));
-//     button.setAttribute('title', title);
-//     button.setAttribute('aria-controls', this.id);
-//     button.innerHTML = title;
+class HeaderPopin {
+  constructor (id, icon, title, popin, navbar) {
+    this.id = id;
+    this.button = this.create(icon, title);
+    this.popin = popin;
+    this.navbar = navbar;
 
-//     return button;
-//   }
+    this.button.addEventListener('click', this.toggle.bind(this));
 
-//   change (isMedium) {
-//     if (isMedium) {
-//       if (this.navbar.contains(this.button)) this.navbar.removeChild(this.button);
-//       if (this.popin.contains(this.close)) this.popin.removeChild(this.close);
-//       this.popin.removeAttribute('id');
-//       removeClass(this.popin, 'fr-header__popin');
-//       removeClass(this.popin, 'fr-header__popin--expanded');
-//     } else {
-//       if (!this.navbar.contains(this.button)) this.navbar.appendChild(this.button);
-//       if (!this.popin.contains(this.close)) this.popin.appendChild(this.close);
+    this.close = this.create('close-line', 'Fermer', true, 'sm');
+    this.close.addEventListener('click', this.exit.bind(this));
 
-//       this.popin.setAttribute('id', this.id);
-//       addClass(this.popin, 'fr-header__popin');
-//       this.handle();
-//     }
-//   }
+    this.isExpanded = false;
+  }
 
-//   toggle () {
-//     this.isExpanded = !this.isExpanded;
-//     this.handle();
-//   }
+  create (icon, title, hasLabel, size) {
+    const button = document.createElement('button');
+    button.setAttribute('class', 'fr-btn fr-fi-' + icon + ' fr-btn--icon' + (hasLabel ? '-right' : '') + ' ' + (size !== undefined ? 'fr-btn--' + size : ''));
+    button.setAttribute('title', title);
+    button.setAttribute('aria-controls', this.id);
+    button.innerHTML = title;
 
-//   exit () {
-//     this.isExpanded = false;
-//     this.handle();
-//   }
+    return button;
+  }
 
-//   handle () {
-//     if (this.isExpanded) {
-//       addClass(this.popin, 'fr-header__popin--expanded');
-//     } else {
-//       removeClass(this.popin, 'fr-header__popin--expanded');
-//     }
-//   }
-// }
+  change (isMedium) {
+    if (isMedium) {
+      if (this.navbar.contains(this.button)) this.navbar.removeChild(this.button);
+      if (this.popin.contains(this.close)) this.popin.removeChild(this.close);
+      this.popin.removeAttribute('id');
+      removeClass(this.popin, 'fr-header__popin');
+      removeClass(this.popin, 'fr-header__popin--expanded');
+    } else {
+      if (!this.navbar.contains(this.button)) this.navbar.appendChild(this.button);
+      if (!this.popin.contains(this.close)) this.popin.appendChild(this.close);
 
-// export { Header };
+      this.popin.setAttribute('id', this.id);
+      addClass(this.popin, 'fr-header__popin');
+      this.handle();
+    }
+  }
+
+  toggle () {
+    this.isExpanded = !this.isExpanded;
+    this.handle();
+  }
+
+  exit () {
+    this.isExpanded = false;
+    this.handle();
+  }
+
+  handle () {
+    if (this.isExpanded) {
+      addClass(this.popin, 'fr-header__popin--expanded');
+    } else {
+      removeClass(this.popin, 'fr-header__popin--expanded');
+    }
+  }
+}
+
+export { Header };

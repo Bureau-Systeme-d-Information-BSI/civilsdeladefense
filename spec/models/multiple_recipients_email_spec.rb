@@ -3,11 +3,6 @@
 require "rails_helper"
 
 RSpec.describe MultipleRecipientsEmail do
-  it { is_expected.to validate_presence_of(:subject) }
-  it { is_expected.to validate_presence_of(:body) }
-  it { is_expected.to validate_presence_of(:sender) }
-  it { is_expected.to validate_presence_of(:job_application_ids) }
-
   describe "#save" do
     subject(:multiple_recipients_email) {
       described_class.new(

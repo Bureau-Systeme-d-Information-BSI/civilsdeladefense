@@ -1,23 +1,26 @@
 %header.rf-header{role: "banner"}
   .rf-container
     .rf-header__body
-      .rf-header__brand.d-flex
-        = link_to root_path, title: strip_tags(current_organization.brand_name), class: 'rf-logo' do
-          %span.rf-logo__title
+      .rf-header__brand.rf-enlarge-link
+        .rf-header__logo
+          %p.rf-logo
             = simple_format(current_organization.brand_name, nil, wrapper_tag: 'span')
-      - if current_organization.operator_logo.present?
-        .rf-header__operator
-          = image_tag(current_organization.operator_logo.url, alt: current_organization.operator_name, style: 'width:auto; height:3.5rem;')
-      .rf-header__navbar
-        .rf-service
-          =  link_to root_path, title: current_organization.service_name, class: 'rf-service__title' do
+        - if current_organization.operator_logo.present?
+          .rf-header__operator
+            = image_tag(current_organization.operator_logo.url, alt: current_organization.operator_name, style: 'width:auto; height:3.5rem;')
+        .rf-header__service
+          =  link_to root_path, title: "Retour à l’accueil", class: 'rf-header__service-title' do
             = current_organization.service_name
           - if (desc = current_organization.service_description_short).present?
-            %p.rf-service__tagline
+            %p.rf-header__service-tagline
               = desc
-      .rf-header__tools
+      .rf-header__navbar
+        %button.rf-btn--menu.rf-btn{"aria-controls" => "navigation-709", "aria-haspopup" => "menu", "data-rf-opened" => "false", title: "Ouvrir le menu"}
+          Ouvrir le menu
+      #tools-708.rf-header__tools.rf-modal
+        %button.rf-link--close.rf-link{"aria-controls" => "tools-708"} Fermer
         - if user_signed_in?
-          .d-flex.flex-row.align-items-center.rf-mb-1w
+          .d-flex.flex-row.align-items-center.justify-content-end.rf-mb-1w
             %small.rf-mr-1w Connecté en tant que #{ current_user.full_name }
             = image_user_tag current_user.photo, class: "avatar"
         .rf-shortcuts
@@ -30,18 +33,20 @@
             - else
               %li.rf-shortcuts__item
                 = link_to t(".account_root"), new_session_path(User), class: %w[rf-link rf-fi-account-line]
-  - unless controller.class.module_parent == Account
-    .rf-container
-      %nav.rf-nav{"aria-label" => "Menu principal", role: "navigation"}
+    %nav#navigation-709.rf-nav.rf-modal{"aria-label" => "Menu principal", role: "navigation"}
+      %button.rf-link--close.rf-link{"aria-controls" => "navigation-709"} Fermer
+      - unless controller.class.module_parent == Account
         %ul.rf-nav__list
-          - klass = current_page?(root_path) ? 'rf-nav__item--active' : nil
+          - klass = controller.controller_name == 'homepages' ? 'rf-nav__item--active' : nil
           %li.rf-nav__item{class: klass}
-            = link_to "Accueil", root_path, class: 'rf-link'
+            = link_to "Accueil", root_path, class: 'rf-nav__link'
+
           - klass = controller.controller_name == 'job_offers' && controller.action_name == 'index' ? 'rf-nav__item--active' : nil
           %li.rf-nav__item{class: klass}
-            = link_to "Nos offres", job_offers_path, class: 'rf-link'
+            = link_to "Nos offres", job_offers_path, class: 'rf-nav__link'
+
           - spontaneous = JobOffer.find_by(spontaneous: true)
           - if spontaneous
             - klass = controller.controller_name == 'job_offers' && controller.action_name == 'show' ? 'rf-nav__item--active' : nil
             %li.rf-nav__item{class: klass}
-              = link_to "Candidature spontanée", spontaneous, class: 'rf-link'
+              = link_to "Candidature spontanée", spontaneous, class: 'rf-nav__link'

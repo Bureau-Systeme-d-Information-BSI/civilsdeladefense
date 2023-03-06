@@ -419,6 +419,17 @@ a {
   bottom: 1.2rem;
   right: 1.5rem;
   z-index: 150 !important;
+
+  .scroll-icon {
+      height: 1.5rem;
+      width: auto;
+      display: inline-block;
+      font-size: inherit;
+      line-height: 1;
+      overflow: visible;
+      fill: currentColor;
+      position: relative;
+  }
 }
 
 .warning-snackbar {

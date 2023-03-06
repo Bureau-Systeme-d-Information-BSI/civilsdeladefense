@@ -3,7 +3,7 @@
   - cache [job_offer] do
     .rf-pb-2w.rf-pt-2w
       = link_to job_offer, target: "_top" do
-        .d-flex.align-items-center
+        .d-flex.align-items-center.justify-space-between
           .d-flex.flex-column
             %small= job_offer.category.name
             %strong.rf-text--lg.rf-mb-1w= job_offer.title

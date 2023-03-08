@@ -9,42 +9,39 @@ RSpec.describe ProcessInboundMessage do
 
   let(:message) do
     message = Mail.new(
-      from: from, to: to, subject: "A quote from Matz", body: Faker::Quote.matz
+      from: from,
+      to: to,
+      subject: "A quote from Matz",
+      body: Faker::Quote.matz
     )
     message.add_file(Rails.root.join("spec/fixtures/files/document.pdf").to_s)
     message
   end
 
-  before do
-    Organization.first.update(inbound_email_config: :catch_all)
-  end
+  before { Organization.first.update(inbound_email_config: :catch_all) }
 
   describe "call" do
-    let(:result) { described_class.new(message).call }
+    subject(:call) { described_class.new(message).call }
 
     context "when all data are good" do
-      it("true") do
-        expect(result).to be_truthy
-      end
+      it { is_expected.to be_truthy }
 
       it "create new email" do
-        expect { result }.to(change(Email, :count))
+        expect { call }.to(change(Email, :count))
       end
 
       it "create new email attachments" do
-        expect { result }.to(change(EmailAttachment, :count))
+        expect { call }.to(change(EmailAttachment, :count))
       end
     end
 
     context "when from is not a user email" do
       let(:from) { "not_a_user@test.com" }
 
-      it("true") do
-        expect(result).to be_truthy
-      end
+      it { is_expected.to be_truthy }
 
       it "create new email without sender" do
-        expect { result }.to(change(Email, :count))
+        expect { call }.to(change(Email, :count))
         expect(Email.order(:created_at).last.sender).to be_nil
       end
     end
@@ -52,24 +49,20 @@ RSpec.describe ProcessInboundMessage do
     context "when to doesnt link to an existing email" do
       let(:to) { "rejoindre+wrong_email_id@test.com" }
 
-      it("false") do
-        expect(result).to be_falsy
-      end
+      it { is_expected.to be_falsy }
 
       it "dont create new email for user" do
-        expect { result }.not_to(change(Email, :count))
+        expect { call }.not_to(change(Email, :count))
       end
     end
 
     context "when to has a weird formating" do
       let(:to) { "\"rejoindre+#{email.id}@test.com\" <rejoindre+#{email.id}@test.com>" }
 
-      it("true") do
-        expect(result).to be_truthy
-      end
+      it { is_expected.to be_truthy }
 
       it "create new email for user" do
-        expect { result }.to(change(Email, :count))
+        expect { call }.to(change(Email, :count))
       end
     end
 
@@ -81,12 +74,10 @@ RSpec.describe ProcessInboundMessage do
         ]
       end
 
-      it("true") do
-        expect(result).to be_truthy
-      end
+      it { is_expected.to be_truthy }
 
       it "create new email for user" do
-        expect { result }.to(change(Email, :count))
+        expect { call }.to(change(Email, :count))
       end
     end
   end

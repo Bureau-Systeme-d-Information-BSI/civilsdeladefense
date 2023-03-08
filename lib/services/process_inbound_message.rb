@@ -51,7 +51,6 @@ class ProcessInboundMessage
 
   def sanitize_and_encode(body)
     body = Rails::Html::WhiteListSanitizer.new.sanitize(body)
-
     unless body.valid_encoding?
       detection = CharlockHolmes::EncodingDetector.detect(body)
       body = body.encode("UTF-8", detection[:ruby_encoding])
@@ -77,8 +76,11 @@ class ProcessInboundMessage
   def create_email(user, job_application, body, subject)
     Audited.audit_class.as_user(user) do
       job_application.emails.create!(
-        subject: subject, body: body, sender: user,
-        created_at: message.date, updated_at: message.date
+        subject: subject,
+        body: body, 
+        sender: user,
+        created_at: message.date, 
+        updated_at: message.date
       )
     end
   end

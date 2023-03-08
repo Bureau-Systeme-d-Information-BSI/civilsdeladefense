@@ -18,7 +18,7 @@ module Turbo
 
     def visit_location_with_turbo(location, action)
       visit_options = {
-        action: action.to_s == "advance" ? action : "replace"
+        action: (action.to_s == "advance") ? action : "replace"
       }
 
       script = []

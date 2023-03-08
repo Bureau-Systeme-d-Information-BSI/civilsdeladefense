@@ -7,12 +7,12 @@ class MultipleRecipientsEmail
 
   validates :subject, :body, :sender, :job_application_ids, presence: true
 
-  def initialize(subject: nil, body: nil, job_application_ids: nil, sender: nil, attachments: nil)
-    @subject = subject
-    @body = body
-    @job_application_ids = job_application_ids
-    @sender = sender
-    @attachments = attachments
+  def initialize(params)
+    @subject = params[:subject]
+    @body = params[:body]
+    @job_application_ids = params[:job_application_ids]
+    @sender = params[:sender]
+    @attachments = params[:attachments]
   end
 
   def save(params = {})

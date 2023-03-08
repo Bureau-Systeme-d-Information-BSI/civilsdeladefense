@@ -6,8 +6,8 @@ class Recipient
   attr_accessor :id
   attr_reader :user
 
-  def initialize(id: nil)
-    @id = id
+  def initialize(params)
+    @id = params[:id]
     @user = JobApplication.find(@id).user if @id.present?
   end
 end

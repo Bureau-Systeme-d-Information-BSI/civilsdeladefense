@@ -6,17 +6,18 @@
     %meta{name: "viewport", content: "width=device-width, initial-scale=1, shrink-to-fit=no"}
     - if controller.action_name == 'apply'
       %meta{name: :robots, content: 'noindex nofollow'}
-    = stylesheet_pack_tag 'style', media: nil
+    = javascript_pack_tag 'bundle'
+    = stylesheet_pack_tag 'style', media: nil, 'data-turbo-track': 'reload'
     = csrf_meta_tags
     = csp_meta_tag
     = favicon_pack_tag 'favicon-16x16.png', rel: 'icon', type: 'image/png', sizes: '16x16'
     = favicon_pack_tag 'favicon-32x32.png', rel: 'icon', type: 'image/png', sizes: '32x32'
-    = javascript_pack_tag 'bundle'
   %body{data: { controller: "timeoutable", timeoutable_timeout_in_value: @timeout_in }}
     #__SVG_SPRITE_NODE__{'data-turbo-permanent': true}
     = render partial: '/shared/header'
     = render partial: '/shared/timeout'
-    %button.scroll.rf-btn{data: { controller: "scroll", action: "scroll#top"}} ▲
+    %button.scroll.rf-btn.d-flex.justify-content-center.align-items-center{data: { controller: "scroll", action: "scroll#top"}}
+      = fa_icon 'chevron-up', class: 'rf-icon-xl scroll-icon'
     - if flash[:notice] || flash[:alert] || flash[:error] || flash[:success]
       .rf-container
         .rf-grid-row

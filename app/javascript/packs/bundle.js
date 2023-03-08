@@ -7,6 +7,8 @@
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
 
+require("@gouvfr/dsfr/dist/js/dsfr.module.min.js")
+
 function importAll(r) {
   return r.keys().map(r)
 }
@@ -24,10 +26,3 @@ import { definitionsFromContext } from "@hotwired/stimulus-webpack-helpers"
 window.Stimulus = Application.start()
 const context = require.context("../controllers", true, /\.js$/)
 Stimulus.load(definitionsFromContext(context))
-
-// import '@gouvfr/core/dist/js/core.js'
-import { Header } from 'js/rf-header.js'
-
-document.addEventListener('turbo:load', function() {
-  new Header
-})

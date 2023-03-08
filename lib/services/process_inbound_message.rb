@@ -76,10 +76,10 @@ class ProcessInboundMessage
   def create_email(user, job_application, body, subject)
     Audited.audit_class.as_user(user) do
       job_application.emails.create!(
-        subject: subject,
-        body: body, 
+        subject: subject.presence || "No subject",
+        body: body,
         sender: user,
-        created_at: message.date, 
+        created_at: message.date,
         updated_at: message.date
       )
     end

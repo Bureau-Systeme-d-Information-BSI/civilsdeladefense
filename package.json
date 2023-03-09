@@ -25,11 +25,11 @@
     "svgo": "^1.0.5",
     "svgo-loader": "^2.1.0",
     "trix": "^1.2.3",
-    "webpack": "^4.46.0"
+    "webpack": "^5.76.0"
   },
   "devDependencies": {
-    "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.2"
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.11.1"
   },
   "engines": {
     "node": "16",

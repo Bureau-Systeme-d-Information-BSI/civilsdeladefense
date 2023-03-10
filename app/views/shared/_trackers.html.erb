@@ -13,10 +13,3 @@
   })();
 </script>
 <%- end %>
-<%- if current_organization.atinternet_site_id.present? %>
-  <script type="text/javascript" src="https://tag.aticdn.net/<%= current_organization.atinternet_site_id %>/smarttag.js"></script>
-  <script type="text/javascript">
-    var ATTag = new ATInternet.Tracker.Tag();
-    ATTag.page.send({name: '<%= @page_title || "CVD" %>' });
-  </script>
-<%- end %>

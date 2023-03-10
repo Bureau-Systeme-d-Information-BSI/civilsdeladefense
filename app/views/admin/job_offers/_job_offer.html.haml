@@ -19,7 +19,7 @@
           .col-1.text-truncate.font-weight-bold.text-primary.text-dark
             %span{title: job_offer.location}= job_offer.location.split(',').first
           .col-1.text-truncate.font-weight-bold.text-primary.text-dark
-            = job_offer.contract_type.name
+            = job_offer.contract_type&.name
           .col-1.text-truncate.font-weight-bold.text-primary.text-dark.text-center
             - count = job_offer.job_applications_count
             - title = JobOffer.human_attribute_name('job_applications_count', count: count)

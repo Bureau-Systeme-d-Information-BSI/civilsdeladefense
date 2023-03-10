@@ -9,7 +9,7 @@
     .rf-card__desc
       .d-flex.flex-row
         .d-flex.flex-column
-          %span= [job_offer.contract_type.name, job_offer.duration_contract].join(' ')
+          %span= job_offer_contract_type_display(job_offer)
           %em= job_offer.location
         .d-flex.flex-column.justify-content-center.align-items-center.text-center.ml-auto
           %span= "Étape #{job_application.end_user_state_number}/#{JobApplication.end_user_states_regrouping.size}"

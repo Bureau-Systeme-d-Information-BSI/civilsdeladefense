@@ -9,7 +9,7 @@
             %strong.rf-text--lg.rf-mb-1w= job_offer.title
             .d-flex
               .rf-mr-1w
-                = [job_offer.contract_type.name, job_offer.duration_contract].join(' ')
+                = job_offer_contract_type_display(job_offer)
                 %br
                 = job_offer.location
             - if job_offer.published_at.present?

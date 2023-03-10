@@ -30,7 +30,7 @@ class Exporter::JobOffers < Exporter::Base
       job_offer.title,
       job_offer.employer.name,
       job_offer.sector.name,
-      job_offer.contract_type.name,
+      job_offer.contract_type&.name&.presence || "",
       job_offer.duration_contract,
       job_offer.job_applications_count,
       JobOffer.human_attribute_name("state/#{job_offer.state}"),

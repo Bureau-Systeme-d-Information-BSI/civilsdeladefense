@@ -35,7 +35,7 @@ module JobOffersHelper
   end
 
   def job_offer_contract_type_display(job_offer)
-    [job_offer.contract_type.name, job_offer.duration_contract].join(" ")
+    [job_offer.contract_type&.name, job_offer.duration_contract].compact.join(" ")
   end
 
   def job_offer_start_display(job_offer)

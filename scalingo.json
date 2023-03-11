@@ -10,6 +10,5 @@
   },
   "scripts": {
     "first-deploy": "rails db:schema:load && rails db:seed"
-  },
-  "stack": "scalingo-22"
+  }
 }

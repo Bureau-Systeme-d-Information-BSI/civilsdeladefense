@@ -3,13 +3,13 @@
   - cache [job_offer] do
     .rf-pb-2w.rf-pt-2w
       = link_to job_offer, target: "_top" do
-        .d-flex.align-items-center
+        .d-flex.align-items-center.justify-space-between
           .d-flex.flex-column
             %small= job_offer.category.name
             %strong.rf-text--lg.rf-mb-1w= job_offer.title
             .d-flex
               .rf-mr-1w
-                = [job_offer.contract_type.name, job_offer.duration_contract].join(' ')
+                = job_offer_contract_type_display(job_offer)
                 %br
                 = job_offer.location
             - if job_offer.published_at.present?

@@ -2,5 +2,5 @@
   - for job_application in job_applications
     = render partial: "recipient", locals: {job_application: job_application}
 .autocomplete{data: {add_recipient_target: "autocomplete"}}
-= simple_form_for([:admin, job_offer, Recipient.new], remote: true, data: {add_recipient_target: "newRecipientForm"}, html: {class: "d-none"}) do |f|
+= simple_form_for([:admin, job_offer, Recipient.new({})], remote: true, data: {add_recipient_target: "newRecipientForm"}, html: {class: "d-none"}) do |f|
   = f.input :id, input_html: {data: {add_recipient_target: "newRecipientId"}}

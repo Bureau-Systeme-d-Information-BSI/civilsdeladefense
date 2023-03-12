@@ -3,7 +3,7 @@
   "private": true,
   "dependencies": {
     "@algolia/autocomplete-js": "^1.7.1",
-    "@gouvfr/all": "^0.5.3",
+    "@gouvfr/dsfr": "^0.6.0",
     "@hotwired/stimulus": "^3.0.1",
     "@hotwired/stimulus-webpack-helpers": "^1.0.1",
     "@hotwired/turbo-rails": "^7.0.0-beta.5",
@@ -11,7 +11,7 @@
     "@rails/webpacker": "^5.2.1",
     "bootstrap": "^4.3.1",
     "bootstrap-material-design": "^4.1.2",
-    "bootstrap.native": "=4.2.0",
+    "bootstrap.native": "=3.0.14",
     "domurl": "^2.1.9",
     "flatpickr": "^4.6.2",
     "highcharts": "^9.0.0",

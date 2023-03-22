@@ -46,7 +46,7 @@ class ProcessInboundMessage
   end
 
   def multipart_body
-    message.html_part&.body&.decoded || message.text_part&.body&.decoded
+    message.parts.first&.body&.decoded || message.parts.last&.body&.decoded
   end
 
   def sanitize_and_encode(body)

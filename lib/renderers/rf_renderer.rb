@@ -72,6 +72,6 @@ class RfRenderer < WillPaginate::ActionView::LinkRenderer
 
   def link_in_li_tag(text, url, options = {})
     options[:class] = "rf-pagination__link #{options[:class]}"
-    tag(:li, link(text, url, options))
+    tag(:li, link(text, url, options)) # rubocop:disable Rails/ContentTag
   end
 end

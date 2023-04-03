@@ -26,8 +26,26 @@ class RfRenderer < WillPaginate::ActionView::LinkRenderer
   end
 
   def page_number(page)
-    link_status = "rf-pagination__item--active" if page == current_page
-    page_item(page, page, link_status)
+    if page == current_page
+      tag(
+        :li,
+        link(
+          page,
+          nil,
+          class: "rf-pagination__link",
+          "aria-current": "page"
+        )
+      )
+    else
+      tag(
+        :li,
+        link(
+          page,
+          page,
+          class: "rf-pagination__link"
+        )
+      )
+    end
   end
 
   def gap

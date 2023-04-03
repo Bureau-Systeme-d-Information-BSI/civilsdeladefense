@@ -23,14 +23,12 @@ class RfRenderer < WillPaginate::ActionView::LinkRenderer
       link_in_li_tag(
         page,
         nil,
-        class: "rf-pagination__link",
         "aria-current": "page"
       )
     else
       link_in_li_tag(
         page,
         page,
-        class: "rf-pagination__link",
         rel: page,
         title: "Page #{page}",
         "aria-label": "Page #{page}",
@@ -41,11 +39,7 @@ class RfRenderer < WillPaginate::ActionView::LinkRenderer
   end
 
   def gap
-    link_in_li_tag(
-      @template.will_paginate_translate(:page_gap) { "&hellip;" },
-      nil,
-      class: "rf-pagination__link rf-displayed-lg"
-    )
+    link_in_li_tag(@template.will_paginate_translate(:page_gap) { "&hellip;" }, nil)
   end
 
   def previous_page
@@ -55,16 +49,11 @@ class RfRenderer < WillPaginate::ActionView::LinkRenderer
       link_in_li_tag(
         @options[:previous_label],
         page,
-        class: "rf-pagination__link",
         "data-controller": "scroll",
         "data-action": "scroll#top"
       )
     else
-      link_in_li_tag(
-        @options[:previous_label],
-        nil,
-        class: "rf-pagination__link rf-pagination__link--lg-label"
-      )
+      link_in_li_tag(@options[:previous_label], nil)
     end
   end
 
@@ -75,26 +64,18 @@ class RfRenderer < WillPaginate::ActionView::LinkRenderer
       link_in_li_tag(
         @options[:next_label],
         page,
-        class: "rf-pagination__link",
         "data-controller": "scroll",
         "data-action": "scroll#top"
       )
     else
-      link_in_li_tag(
-        @options[:next_label],
-        nil,
-        class: "rf-pagination__link rf-pagination__link--lg-label"
-      )
+      link_in_li_tag(@options[:next_label], nil)
     end
   end
 
   private
 
-  def link_in_li_tag(*options)
-    tag_li(link(*options))
-  end
-
-  def tag_li(link)
-    tag(:li, link)
+  def link_in_li_tag(text, url, options = {})
+    options[:class] = "rf-pagination__link #{options[:class]}"
+    tag(:li, link(text, url, options))
   end
 end

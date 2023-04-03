@@ -20,40 +20,31 @@ class RfRenderer < WillPaginate::ActionView::LinkRenderer
 
   def page_number(page)
     if page == current_page
-      tag(
-        :li,
-        link(
-          page,
-          nil,
-          class: "rf-pagination__link",
-          "aria-current": "page"
-        )
+      link_in_li_tag(
+        page,
+        nil,
+        class: "rf-pagination__link",
+        "aria-current": "page"
       )
     else
-      tag(
-        :li,
-        link(
-          page,
-          page,
-          class: "rf-pagination__link",
-          rel: page,
-          title: "Page #{page}",
-          "aria-label": "Page #{page}",
-          "data-controller": "scroll",
-          "data-action": "scroll#top"
-        )
+      link_in_li_tag(
+        page,
+        page,
+        class: "rf-pagination__link",
+        rel: page,
+        title: "Page #{page}",
+        "aria-label": "Page #{page}",
+        "data-controller": "scroll",
+        "data-action": "scroll#top"
       )
     end
   end
 
   def gap
-    tag(
-      :li,
-      link(
-        @template.will_paginate_translate(:page_gap) { "&hellip;" },
-        nil,
-        class: "rf-pagination__link rf-displayed-lg"
-      )
+    link_in_li_tag(
+      @template.will_paginate_translate(:page_gap) { "&hellip;" },
+      nil,
+      class: "rf-pagination__link rf-displayed-lg"
     )
   end
 
@@ -61,24 +52,18 @@ class RfRenderer < WillPaginate::ActionView::LinkRenderer
     page = @collection.current_page > 1 && @collection.current_page - 1
 
     if page
-      tag(
-        :li,
-        link(
-          @options[:previous_label],
-          page,
-          class: "rf-pagination__link",
-          "data-controller": "scroll",
-          "data-action": "scroll#top"
-        )
+      link_in_li_tag(
+        @options[:previous_label],
+        page,
+        class: "rf-pagination__link",
+        "data-controller": "scroll",
+        "data-action": "scroll#top"
       )
     else
-      tag(
-        :li,
-        link(
-          @options[:previous_label],
-          nil,
-          class: "rf-pagination__link rf-pagination__link--lg-label"
-        )
+      link_in_li_tag(
+        @options[:previous_label],
+        nil,
+        class: "rf-pagination__link rf-pagination__link--lg-label"
       )
     end
   end
@@ -87,25 +72,29 @@ class RfRenderer < WillPaginate::ActionView::LinkRenderer
     page = @collection.current_page < total_pages && @collection.current_page + 1
 
     if page
-      tag(
-        :li,
-        link(
-          @options[:next_label],
-          page,
-          class: "rf-pagination__link",
-          "data-controller": "scroll",
-          "data-action": "scroll#top"
-        )
+      link_in_li_tag(
+        @options[:next_label],
+        page,
+        class: "rf-pagination__link",
+        "data-controller": "scroll",
+        "data-action": "scroll#top"
       )
     else
-      tag(
-        :li,
-        link(
-          @options[:next_label],
-          nil,
-          class: "rf-pagination__link rf-pagination__link--lg-label"
-        )
+      link_in_li_tag(
+        @options[:next_label],
+        nil,
+        class: "rf-pagination__link rf-pagination__link--lg-label"
       )
     end
+  end
+
+  private
+
+  def link_in_li_tag(*options)
+    tag_li(link(*options))
+  end
+
+  def tag_li(link)
+    tag(:li, link)
   end
 end

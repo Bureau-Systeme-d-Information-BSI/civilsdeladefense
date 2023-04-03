@@ -43,9 +43,7 @@ class RfRenderer < WillPaginate::ActionView::LinkRenderer
   end
 
   def previous_page
-    page = @collection.current_page > 1 && @collection.current_page - 1
-
-    if page
+    if (page = @collection.current_page > 1 && @collection.current_page - 1)
       link_in_li_tag(
         @options[:previous_label],
         page,
@@ -58,9 +56,7 @@ class RfRenderer < WillPaginate::ActionView::LinkRenderer
   end
 
   def next_page
-    page = @collection.current_page < total_pages && @collection.current_page + 1
-
-    if page
+    if (page = @collection.current_page < total_pages && @collection.current_page + 1)
       link_in_li_tag(
         @options[:next_label],
         page,

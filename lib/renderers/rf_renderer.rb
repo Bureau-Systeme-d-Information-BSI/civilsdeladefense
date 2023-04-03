@@ -35,7 +35,12 @@ class RfRenderer < WillPaginate::ActionView::LinkRenderer
         link(
           page,
           page,
-          class: "rf-pagination__link"
+          class: "rf-pagination__link",
+          rel: page,
+          title: "Page #{page}",
+          "aria-label": "Page #{page}",
+          "data-controller": "scroll",
+          "data-action": "scroll#top"
         )
       )
     end
@@ -61,7 +66,9 @@ class RfRenderer < WillPaginate::ActionView::LinkRenderer
         link(
           @options[:previous_label],
           page,
-          class: "rf-pagination__link"
+          class: "rf-pagination__link",
+          "data-controller": "scroll",
+          "data-action": "scroll#top"
         )
       )
     else
@@ -76,33 +83,29 @@ class RfRenderer < WillPaginate::ActionView::LinkRenderer
     end
   end
 
-  def page_item(text, url, link_status = nil)
-    link_tag = generate_link(text, url) if link_status.nil?
-    link_tag ||= tag(:span, text, class: "rf-pagination__label", "aria-current": "page")
-
-    tag(:li, link_tag, class: "rf-pagination__item #{link_status}")
-  end
-
   def next_page
-    num = @collection.current_page < total_pages && @collection.current_page + 1
-    previous_or_next_page(num, @options[:next_label], "Next")
-  end
+    page = @collection.current_page < total_pages && @collection.current_page + 1
 
-  def previous_or_next_page(page, text, _aria_label)
-    link_status = "rf-pagination__item--disabled" unless page
-    page_item(text, page, link_status)
-  end
-
-  def generate_link(text, url)
-    link(
-      text,
-      url,
-      class: "rf-pagination__link",
-      rel: text,
-      title: "Page #{text}",
-      "aria-label": "Page #{text}",
-      "data-controller": "scroll",
-      "data-action": "scroll#top"
-    )
+    if page
+      tag(
+        :li,
+        link(
+          @options[:next_label],
+          page,
+          class: "rf-pagination__link",
+          "data-controller": "scroll",
+          "data-action": "scroll#top"
+        )
+      )
+    else
+      tag(
+        :li,
+        link(
+          @options[:next_label],
+          nil,
+          class: "rf-pagination__link rf-pagination__link--lg-label"
+        )
+      )
+    end
   end
 end

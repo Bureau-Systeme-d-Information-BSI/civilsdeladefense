@@ -18,13 +18,6 @@ class RfRenderer < WillPaginate::ActionView::LinkRenderer
 
   protected
 
-  def page_item(text, url, link_status = nil)
-    link_tag = generate_link(text, url) if link_status.nil?
-    link_tag ||= tag(:span, text, class: "rf-pagination__label", "aria-current": "page")
-
-    tag(:li, link_tag, class: "rf-pagination__item #{link_status}")
-  end
-
   def page_number(page)
     if page == current_page
       tag(
@@ -60,8 +53,34 @@ class RfRenderer < WillPaginate::ActionView::LinkRenderer
   end
 
   def previous_page
-    num = @collection.current_page > 1 && @collection.current_page - 1
-    previous_or_next_page(num, @options[:previous_label], "Previous")
+    page = @collection.current_page > 1 && @collection.current_page - 1
+
+    if page
+      tag(
+        :li,
+        link(
+          @options[:previous_label],
+          page,
+          class: "rf-pagination__link"
+        )
+      )
+    else
+      tag(
+        :li,
+        link(
+          @options[:previous_label],
+          nil,
+          class: "rf-pagination__link rf-pagination__link--lg-label"
+        )
+      )
+    end
+  end
+
+  def page_item(text, url, link_status = nil)
+    link_tag = generate_link(text, url) if link_status.nil?
+    link_tag ||= tag(:span, text, class: "rf-pagination__label", "aria-current": "page")
+
+    tag(:li, link_tag, class: "rf-pagination__item #{link_status}")
   end
 
   def next_page

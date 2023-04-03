@@ -13,7 +13,7 @@ class RfRenderer < WillPaginate::ActionView::LinkRenderer
     @options[:class] += " rf-pagination__list"
 
     ul = tag("ul", html, class: @options[:class])
-    tag("nav", ul, class: "rf-pagination", "aria-label": "Pagination navigation")
+    tag("nav", ul, class: "rf-pagination", role: "navigation", "aria-label": "Pagination")
   end
 
   protected

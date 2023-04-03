@@ -31,8 +31,14 @@ class RfRenderer < WillPaginate::ActionView::LinkRenderer
   end
 
   def gap
-    text = @template.will_paginate_translate(:page_gap) { "&hellip;" }
-    page_item(text, nil, "rf-pagination__item--disabled")
+    tag(
+      :li,
+      link(
+        @template.will_paginate_translate(:page_gap) { "&hellip;" },
+        nil,
+        class: "rf-pagination__link rf-displayed-lg"
+      )
+    )
   end
 
   def previous_page

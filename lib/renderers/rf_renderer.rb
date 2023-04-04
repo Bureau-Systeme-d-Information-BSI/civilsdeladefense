@@ -13,53 +13,65 @@ class RfRenderer < WillPaginate::ActionView::LinkRenderer
     @options[:class] += " rf-pagination__list"
 
     ul = tag("ul", html, class: @options[:class])
-    tag("nav", ul, class: "rf-pagination", "aria-label": "Pagination navigation")
+    tag("nav", ul, class: "rf-pagination", role: "navigation", "aria-label": "Pagination")
   end
 
   protected
 
-  def page_item(text, url, link_status = nil)
-    link_tag = generate_link(text, url) if link_status.nil?
-    link_tag ||= tag(:span, text, class: "rf-pagination__label", "aria-current": "page")
-
-    tag(:li, link_tag, class: "rf-pagination__item #{link_status}")
-  end
-
   def page_number(page)
-    link_status = "rf-pagination__item--active" if page == current_page
-    page_item(page, page, link_status)
+    if page == current_page
+      link_in_li_tag(
+        page,
+        nil,
+        "aria-current": "page"
+      )
+    else
+      link_in_li_tag(
+        page,
+        page,
+        rel: page,
+        title: "Page #{page}",
+        "aria-label": "Page #{page}",
+        "data-controller": "scroll",
+        "data-action": "scroll#top"
+      )
+    end
   end
 
   def gap
-    text = @template.will_paginate_translate(:page_gap) { "&hellip;" }
-    page_item(text, nil, "rf-pagination__item--disabled")
+    link_in_li_tag(@template.will_paginate_translate(:page_gap) { "&hellip;" }, nil)
   end
 
   def previous_page
-    num = @collection.current_page > 1 && @collection.current_page - 1
-    previous_or_next_page(num, @options[:previous_label], "Previous")
+    if (page = @collection.current_page > 1 && @collection.current_page - 1)
+      link_in_li_tag(
+        @options[:previous_label],
+        page,
+        "data-controller": "scroll",
+        "data-action": "scroll#top"
+      )
+    else
+      link_in_li_tag(@options[:previous_label], nil)
+    end
   end
 
   def next_page
-    num = @collection.current_page < total_pages && @collection.current_page + 1
-    previous_or_next_page(num, @options[:next_label], "Next")
+    if (page = @collection.current_page < total_pages && @collection.current_page + 1)
+      link_in_li_tag(
+        @options[:next_label],
+        page,
+        "data-controller": "scroll",
+        "data-action": "scroll#top"
+      )
+    else
+      link_in_li_tag(@options[:next_label], nil)
+    end
   end
 
-  def previous_or_next_page(page, text, _aria_label)
-    link_status = "rf-pagination__item--disabled" unless page
-    page_item(text, page, link_status)
-  end
+  private
 
-  def generate_link(text, url)
-    link(
-      text,
-      url,
-      class: "rf-pagination__link",
-      rel: text,
-      title: "Page #{text}",
-      "aria-label": "Page #{text}",
-      "data-controller": "scroll",
-      "data-action": "scroll#top"
-    )
+  def link_in_li_tag(text, url, options = {})
+    options[:class] = "rf-pagination__link #{options[:class]}"
+    tag(:li, link(text, url, options)) # rubocop:disable Rails/ContentTag
   end
 end

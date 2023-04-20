@@ -38,6 +38,7 @@ class DailySummary
     @concerned_administrators.each do |concerned_administrator|
       administrator = administrators.detect { |x| x.id == concerned_administrator.uuid }
       data = concerned_administrator.summary_infos
+      AdminEmail.create!(email: administrator.email, data: data, service_name: service_name)
       NotificationsMailer.daily_summary(administrator, data, service_name).deliver
     end
   end

@@ -38,10 +38,8 @@ module Clockwork
     end
   end
 
-  if (ENV["SEND_DAILY_SUMMARY"] || ENV["CRON_DAILY_SUMMARY"]).present?
-    every 1.day, "daily_summary", at: "08:00" do
-      DailySummary.new(day: 1.day.ago).prepare_and_send
-    end
+  every 1.day, "daily_summary", at: "08:00" do
+    DailySummary.new(day: 1.day.ago).prepare_and_send
   end
 
   every 30.minutes, "warm_up_job_applications_stats_cache" do

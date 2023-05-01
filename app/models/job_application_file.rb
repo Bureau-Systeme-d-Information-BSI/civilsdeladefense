@@ -2,6 +2,7 @@
 
 # Container for real file mandatory to fullfill a job application
 class JobApplicationFile < ApplicationRecord
+  include Securable
   attr_accessor :job_application_file_existing_id, :do_not_provide_immediately
 
   belongs_to :job_application
@@ -49,6 +50,7 @@ end
 #  content_file_name                :string
 #  encrypted_file_transfer_in_error :boolean          default(FALSE)
 #  is_validated                     :integer          default(0)
+#  secured_content_file_name        :string
 #  created_at                       :datetime         not null
 #  updated_at                       :datetime         not null
 #  job_application_file_type_id     :uuid

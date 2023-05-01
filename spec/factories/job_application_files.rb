@@ -10,6 +10,15 @@ FactoryBot.define do
     end
     job_application_file_type
     job_application
+
+    trait :secured do
+      secured_content do
+        Rack::Test::UploadedFile.new(
+          Rails.root.join("spec/fixtures/files/document.pdf"),
+          "application/pdf"
+        )
+      end
+    end
   end
 end
 
@@ -21,6 +30,7 @@ end
 #  content_file_name                :string
 #  encrypted_file_transfer_in_error :boolean          default(FALSE)
 #  is_validated                     :integer          default(0)
+#  secured_content_file_name        :string
 #  created_at                       :datetime         not null
 #  updated_at                       :datetime         not null
 #  job_application_file_type_id     :uuid

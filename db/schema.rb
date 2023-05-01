@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_28_082102) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_01_193755) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -334,6 +334,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_28_082102) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.boolean "encrypted_file_transfer_in_error", default: false
+    t.string "secured_content_file_name"
     t.index ["job_application_file_type_id"], name: "index_job_application_files_on_job_application_file_type_id"
     t.index ["job_application_id"], name: "index_job_application_files_on_job_application_id"
   end

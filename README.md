@@ -19,6 +19,7 @@ ou
 - Yarn
 - Redis
 - ImageMagick
+- poppler-utils
 
 ### Installation
 

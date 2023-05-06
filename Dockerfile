@@ -11,6 +11,7 @@ RUN apt-get install -y yarn
 RUN apt-get install -y imagemagick
 RUN apt-get install -y locales
 RUN apt-get install -y postgresql-client
+RUN apt-get install -y poppler-utils
 
 ENV NODE_VERSION 12.16.1
 

@@ -75,6 +75,12 @@ jobs:
       - run: bundle exec rake db:schema:load
       # Fix error with icu4c
       - run: bundle pristine charlock_holmes
+      - run:
+          name: install dependencies to convert pdf to images
+          command: |
+            wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+            sudo apt-get update --fix-missing
+            sudo apt-get install -y poppler-utils
       # run tests!
       - run:
           name: run tests

@@ -20,6 +20,7 @@ ou
 - Redis
 - ImageMagick
 - poppler-utils
+- img2pdf
 
 ### Installation
 

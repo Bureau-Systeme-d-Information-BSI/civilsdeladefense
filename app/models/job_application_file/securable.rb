@@ -7,6 +7,11 @@ module JobApplicationFile::Securable
     after_commit -> { SecureContentJob.perform_later(id: id) }, unless: -> { secured? }
   end
 
+  def document_content
+    return secured_content if secured_content.present?
+    return content if content.present?
+  end
+
   def secured?
     secured_content.present?
   end

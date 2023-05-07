@@ -48,7 +48,7 @@ module UsersHelper
       "<span class=\"valid-text\">Ce #{fichier_text} a été validé !</span>".html_safe # rubocop:disable Rails/OutputSafety
     elsif job_application_file.is_validated == 2
       "<span class=\"error-text\">Votre #{fichier_text} n'est pas valide, veuillez en téléverser un nouveau.</span>".html_safe # rubocop:disable Rails/OutputSafety
-    elsif job_application_file.content.present?
+    elsif job_application_file.document_content.present?
       "<span class=\"font-weight-bold\">Vous avez déjà téléversé ce #{fichier_text}</span>, il est en attente de validation.<br/>Pour téléverser une nouvelle version,
               vous pouvez utiliser la zone ci-dessous.".html_safe # rubocop:disable Rails/OutputSafety
     end

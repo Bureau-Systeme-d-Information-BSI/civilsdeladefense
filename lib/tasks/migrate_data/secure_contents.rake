@@ -1,12 +1,21 @@
 namespace :migrate_data do
-  task secure_contents: :environment do
-    job_application_files = JobApplicationFile.where(secured_content_file_name: nil)
+  task secure_job_application_files: :environment do
+    secure_contents(JobApplicationFile)
+  end
 
-    Rails.logger.info("Migration start for #{job_application_files.count} job application files")
+  task secure_email_attachments: :environment do
+    secure_contents(EmailAttachment)
+  end
 
-    job_application_files.find_each do |job_application_file|
-      Rails.logger.info("Securing job application file #{job_application_file.id}")
-      job_application_file.secure_content!
+  private
+
+  def secure_contents(model)
+    entries = model.where(secured_content_file_name: nil)
+    Rails.logger.info("Migration start for #{entries.count} entries")
+
+    entries.find_each do |securable|
+      Rails.logger.info("Securing #{securable.id}")
+      securable.secure_content!
     end
 
     Rails.logger.info("All done!")

@@ -1,4 +1,6 @@
 class EmailAttachment < ApplicationRecord
+  include Securable
+
   belongs_to :email
 
   mount_uploader :content, AttachmentUploader
@@ -8,11 +10,12 @@ end
 #
 # Table name: email_attachments
 #
-#  id         :uuid             not null, primary key
-#  content    :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  email_id   :uuid             not null
+#  id                        :uuid             not null, primary key
+#  content                   :string
+#  secured_content_file_name :string
+#  created_at                :datetime         not null
+#  updated_at                :datetime         not null
+#  email_id                  :uuid             not null
 #
 # Indexes
 #

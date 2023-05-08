@@ -5,7 +5,7 @@ require "rails_helper"
 RSpec.describe SecureContentJob, type: :job do
   subject(:perform) { described_class.new.perform(id: job_application_file.id) }
 
-  context "when the job application file is not found" do
+  context "when the securable file is not found" do
     let(:job_application_file) { instance_double(JobApplicationFile, id: -1) }
 
     it "does nothing" do
@@ -14,10 +14,10 @@ RSpec.describe SecureContentJob, type: :job do
     end
   end
 
-  context "when the job application file is found" do
+  context "when the securable file is found" do
     let(:job_application_file) { create(:job_application_file) }
 
-    it "secures the job application file's content" do
+    it "secures the securable file's content" do
       expect_any_instance_of(JobApplicationFile).to receive(:secure_content!)
       perform
     end

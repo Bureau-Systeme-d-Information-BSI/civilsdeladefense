@@ -4,6 +4,12 @@ class SecureContentJob < ApplicationJob
   queue_as :default
 
   def perform(id:)
-    JobApplicationFile.find_by(id: id)&.secure_content!
+    securable(id)&.secure_content!
+  end
+
+  private
+
+  def securable(id)
+    JobApplicationFile.find_by(id: id).presence || EmailAttachment.find_by(id: id)
   end
 end

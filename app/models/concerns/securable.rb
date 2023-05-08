@@ -1,4 +1,4 @@
-module JobApplicationFile::Securable
+module Securable
   extend ActiveSupport::Concern
 
   included do
@@ -31,7 +31,7 @@ module JobApplicationFile::Securable
   private
 
   def original_file_path
-    content_file_name
+    content.filename
   end
 
   def secured_file_path

@@ -19,23 +19,21 @@ module Securable
   def secure_content!
     return if secured? || content.blank?
 
-    image_file_names = convert_to_images(download(original_file_path, content.read))
-
-    convert_to_pdf(image_file_names, secured_file_path)
-
-    update(secured_content: File.open(secured_file_path))
-
-    delete_files(image_file_names + [original_file_path, secured_file_path])
+    secured = convert_images_to_pdf(convert_original_content_to_images)
+    update!(secured_content: secured)
+    secured.close
+    File.delete(secured.path)
   end
 
   private
 
-  def original_file_path
-    content.filename
-  end
-
-  def secured_file_path
-    "secured-#{id}.pdf"
+  def convert_original_content_to_images
+    original_filename = content.filename
+    original_file = download(original_filename, content.read)
+    image_filenames = convert_to_images(original_file)
+    original_file.close
+    File.delete(original_filename)
+    image_filenames
   end
 
   def download(file_path, content)
@@ -59,14 +57,17 @@ module Securable
     Dir.entries(".").select { _1.start_with?("secured-image-") }.sort
   end
 
-  def convert_to_pdf(image_file_names, file_path)
+  def convert_images_to_pdf(image_filenames)
+    secured_filename = content.filename
     MiniMagick::Tool::Convert.new do |convert|
-      image_file_names.each { convert << _1 }
-      convert << file_path
+      image_filenames.each { convert << _1 }
+      convert << secured_filename
     end
+    delete_files(image_filenames)
+    File.open(secured_filename)
   end
 
-  def delete_files(file_names)
-    file_names.select { File.exist?(_1) }.each { File.delete(_1) }
+  def delete_files(filenames)
+    filenames.select { File.exist?(_1) }.each { File.delete(_1) }
   end
 end

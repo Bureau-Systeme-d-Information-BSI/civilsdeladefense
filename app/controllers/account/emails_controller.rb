@@ -42,7 +42,7 @@ class Account::EmailsController < Account::BaseController
   def attachment
     job_application = current_user.job_applications.find(params[:job_application_id])
     email = job_application.emails.find(params[:id])
-    content = email.email_attachments.find(params[:email_attachment_id]).content
+    content = email.email_attachments.find(params[:email_attachment_id]).document_content
 
     send_data(
       content.read,

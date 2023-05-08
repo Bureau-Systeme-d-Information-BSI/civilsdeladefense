@@ -74,7 +74,7 @@ class Admin::EmailsController < Admin::BaseController
   end
 
   def attachment
-    content = @email.email_attachments.find(params[:email_attachment_id]).content
+    content = @email.email_attachments.find(params[:email_attachment_id]).document_content
     send_data(
       content.read,
       filename: content.filename,

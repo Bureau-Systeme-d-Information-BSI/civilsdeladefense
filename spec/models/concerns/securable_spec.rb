@@ -53,9 +53,23 @@ RSpec.describe Securable, type: :model do
     end
 
     context "when the securable file is not secured" do
-      let!(:securable) { build(:job_application_file) }
+      let!(:securable) { build(:email_attachment, content: content) }
 
-      it { expect { commit }.to have_enqueued_job { SecureContentJob }.with(securable.id) }
+      context "when the content type is pdf" do
+        let(:content) {
+          Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/files/document.pdf"), "application/pdf")
+        }
+
+        it { expect { commit }.to have_enqueued_job { SecureContentJob }.with(securable.id) }
+      end
+
+      context "when the content type is not pdf" do
+        let(:content) {
+          Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/files/avatar.jpg"), "image/jpeg")
+        }
+
+        it { expect { commit }.not_to have_enqueued_job { SecureContentJob } }
+      end
     end
   end
 end

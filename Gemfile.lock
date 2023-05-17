@@ -108,7 +108,7 @@ GEM
       marcel (~> 1.0.0)
       mini_mime (>= 0.1.3)
       ssrf_filter (~> 1.0)
-    caxlsx (3.2.0)
+    caxlsx (3.4.1)
       htmlentities (~> 4.3, >= 4.3.4)
       marcel (~> 1.0)
       nokogiri (~> 1.10, >= 1.10.4)
@@ -540,7 +540,7 @@ DEPENDENCIES
   cancancan
   capybara (>= 2.15, < 4.0)
   carrierwave
-  caxlsx (~> 3.2.0)
+  caxlsx (~> 3.4.1)
   charlock_holmes
   clockwork
   counter_culture

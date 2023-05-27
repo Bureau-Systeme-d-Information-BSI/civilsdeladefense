@@ -14,15 +14,6 @@ environment.loaders.append('svg-no-sprite', {
         name: '[path][name]-[hash].[ext]',
         context: source_path
       }
-    },
-    {
-      loader: 'svgo-loader', options: {
-        plugins: [
-          {cleanupIDs: false},
-          {removeViewBox: false},
-          {removeDimensions: false}
-        ]
-      }
     }
   ]
 })
@@ -30,17 +21,7 @@ environment.loaders.append('svg-no-sprite', {
 environment.loaders.append('svg-sprite', {
   test: /(icons)\/(.*)\.svg$/,
   use: [
-    { loader: 'svg-sprite-loader' },
-    {
-      loader: 'svgo-loader', options: {
-        plugins: [
-          {cleanupIDs: false},
-          {removeViewBox: false},
-          {removeDimensions: true},
-          {removeAttrs: {attrs: '(stroke|fill)'}}
-        ]
-      }
-    }
+    { loader: 'svg-sprite-loader' }
   ]
 })
 

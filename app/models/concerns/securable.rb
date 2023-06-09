@@ -56,7 +56,7 @@ module Securable
   def convert_page_with_mini_magick(page_path, index)
     MiniMagick::Tool::Convert.new do |convert|
       convert << "-quality" << "100"
-      convert << "-density" << "150"
+      convert << "-density" << "300"
       convert << page_path
       convert << "secured-image-#{id}-#{index}.jpg"
     end

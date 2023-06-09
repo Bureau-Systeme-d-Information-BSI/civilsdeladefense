@@ -20,8 +20,9 @@ module Securable
 
   def secure_content!
     return if secured? || content.blank? || !pdf?
+    return if (images = convert_original_content_to_images).empty?
 
-    secured = convert_images_to_pdf(convert_original_content_to_images)
+    secured = convert_images_to_pdf(images)
     update!(secured_content: secured)
     secured.close
     File.delete(secured.path)
@@ -48,15 +49,19 @@ module Securable
 
   def convert_to_images(pdf_file)
     image = MiniMagick::Image.open(pdf_file.path)
-    image.pages.each_with_index do |page, index|
-      MiniMagick::Tool::Convert.new do |convert|
-        convert << "-quality" << "100"
-        convert << "-density" << "150"
-        convert << page.path
-        convert << "secured-image-#{id}-#{index}.jpg"
-      end
-    end
+    image.pages.each_with_index { |page, index| convert_page_with_mini_magick(page.path, index) }
     Dir.entries(".").select { _1.start_with?("secured-image-") }.sort
+  end
+
+  def convert_page_with_mini_magick(page_path, index)
+    MiniMagick::Tool::Convert.new do |convert|
+      convert << "-quality" << "100"
+      convert << "-density" << "150"
+      convert << page_path
+      convert << "secured-image-#{id}-#{index}.jpg"
+    end
+  rescue # sometimes the page is not convertable
+    nil
   end
 
   def convert_images_to_pdf(image_filenames)

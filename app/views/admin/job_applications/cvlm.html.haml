@@ -3,7 +3,7 @@
 - job_application_files = job_application.job_application_files.where(job_application_file_type: target_file_type).joins(:job_application_file_type).order('job_application_file_types.position')
 - job_application_files = job_application_files.limit(1) if defined?(only_first) && only_first
 - job_application_files.each do |job_application_file|
-  - if job_application_file.content.present?
+  - if job_application_file.document_content.present?
     - file_type = job_application_file.job_application_file_type
     .card
       .card-header.with-subheader.bg-white.font-weight-bold.text-secondary

@@ -6,7 +6,7 @@
 - # binding.pry if type.name == "Pièce facultatif"
 - # binding.pry if type.name == "Bulletins paie "
 .d-flex.align-items-center.border.py-1.px-2.file{id: dom_id(file)}
-  - if file.content.present?
+  - if file.document_content.present?
     .text-truncate= type.name
   - else
     .text-truncate.text-muted= type.name
@@ -30,7 +30,7 @@
         - klasses << 'opaque' unless file.rejected?
         = link_to [:uncheck, :admin, @job_application, file], class: klasses, title: t('.uncheck'), remote: true, method: :post do
           = fa_icon "close"
-    - elsif file.content.present?
+    - elsif file.document_content.present?
       - klasses = %w(btn btn-success btn-raised btn-sm mb-0 mr-1)
       - klasses << 'opaque' unless file.validated?
       = link_to [:check, :admin, @job_application, file], class: klasses, title: t('.check'), remote: true, method: :post do

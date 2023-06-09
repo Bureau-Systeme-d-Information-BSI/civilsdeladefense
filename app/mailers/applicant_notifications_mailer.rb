@@ -16,7 +16,7 @@ class ApplicantNotificationsMailer < ApplicationMailer
     @service_name = @organization.service_name
 
     @email.email_attachments.each do |attachment|
-      attachments[attachment.content.filename.to_s] = attachment.content.read
+      attachments[attachment.document_content.filename.to_s] = attachment.document_content.read
     end
 
     reply_to = nil

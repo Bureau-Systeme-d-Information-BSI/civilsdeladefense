@@ -19,7 +19,7 @@ module Securable
   end
 
   def secure_content!
-    return if secured? || content.blank? || content.content_type != "application/pdf"
+    return if secured? || content.blank? || !pdf?
 
     secured = convert_images_to_pdf(convert_original_content_to_images)
     update!(secured_content: secured)
@@ -71,5 +71,11 @@ module Securable
 
   def delete_files(filenames)
     filenames.select { File.exist?(_1) }.each { File.delete(_1) }
+  end
+
+  def pdf?
+    content.content_type == "application/pdf"
+  rescue # sometimes getting the content_type throws an error, because the file is not there
+    false
   end
 end

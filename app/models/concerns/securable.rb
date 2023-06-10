@@ -58,7 +58,7 @@ module Securable
       convert << "-quality" << "100"
       convert << "-density" << density.to_s
       convert << page_path
-      convert << "secured-image-#{id}-#{index}.jpg"
+      convert << "secured-image-#{id}-#{index.to_s.rjust(5, "0")}.jpg"
     end
   rescue # sometimes the page is not convertable
     nil

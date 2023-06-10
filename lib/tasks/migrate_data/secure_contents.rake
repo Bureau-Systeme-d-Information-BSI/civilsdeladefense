@@ -16,6 +16,8 @@ namespace :migrate_data do
     entries.find_each do |securable|
       Rails.logger.info("Securing #{securable.id}")
       securable.secure_content!
+    rescue # if image magick fails because the image quality is to high, try again with lower density
+      securable.secure_content!(density: 150)
     end
 
     Rails.logger.info("All done!")

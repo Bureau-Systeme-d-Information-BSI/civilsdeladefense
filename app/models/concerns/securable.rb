@@ -4,9 +4,9 @@ module Securable
   included do
     mount_uploader :secured_content, DocumentUploader, mount_on: :secured_content_file_name
 
-    after_commit -> { SecureContentJob.perform_later(id: id) },
+    after_commit -> { SecureContentJob.set(wait: 1.minute).perform_later(id: id) },
       unless: -> { secured? },
-      if: -> { content.present? && content.content_type == "application/pdf" }
+      if: -> { content.present? && pdf? }
   end
 
   def document_content

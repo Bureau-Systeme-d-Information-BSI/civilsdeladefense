@@ -18,9 +18,9 @@ module Securable
     secured_content.present?
   end
 
-  def secure_content!
+  def secure_content!(density: 300)
     return if secured? || content.blank? || !pdf?
-    return if (images = convert_original_content_to_images).empty?
+    return if (images = convert_original_content_to_images(density)).empty?
 
     secured = convert_images_to_pdf(images)
     update!(secured_content: secured)
@@ -30,10 +30,10 @@ module Securable
 
   private
 
-  def convert_original_content_to_images
+  def convert_original_content_to_images(density)
     original_filename = content.filename
     original_file = download(original_filename, content.read)
-    image_filenames = convert_to_images(original_file)
+    image_filenames = convert_to_images(original_file, density)
     original_file.close
     File.delete(original_filename)
     image_filenames
@@ -47,16 +47,16 @@ module Securable
     file
   end
 
-  def convert_to_images(pdf_file)
+  def convert_to_images(pdf_file, density)
     image = MiniMagick::Image.open(pdf_file.path)
-    image.pages.each_with_index { |page, index| convert_page_with_mini_magick(page.path, index) }
+    image.pages.each_with_index { |page, index| convert_page_with_mini_magick(page.path, index, density) }
     Dir.entries(".").select { _1.start_with?("secured-image-") }.sort
   end
 
-  def convert_page_with_mini_magick(page_path, index)
+  def convert_page_with_mini_magick(page_path, index, density)
     MiniMagick::Tool::Convert.new do |convert|
       convert << "-quality" << "100"
-      convert << "-density" << "300"
+      convert << "-density" << density.to_s
       convert << page_path
       convert << "secured-image-#{id}-#{index}.jpg"
     end

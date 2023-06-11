@@ -15,8 +15,10 @@ class ZipJobApplicationFilesJob < ApplicationJob
     File.open("tmp/#{zip_id}_e-recrutement_viviers.zip", "wb") { |f|
       compressed_filestream = Zip::OutputStream.write_buffer(f) { |zos|
         job_application_files.each do |job_application_file|
+          next if job_application_file.document_content.blank?
+
           zos.put_next_entry(document_name(job_application_file))
-          zos << job_application_file.content.read
+          zos << job_application_file.document_content.read
         end
       }
       compressed_filestream.flush
@@ -44,7 +46,7 @@ class ZipJobApplicationFilesJob < ApplicationJob
   end
 
   def readable?(job_application_file)
-    job_application_file.content.present? && job_application_file.content.read
+    job_application_file.document_content.present? && job_application_file.document_content.read
   rescue NoMethodError
     false
   end

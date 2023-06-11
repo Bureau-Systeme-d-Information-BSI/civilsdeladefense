@@ -6,7 +6,7 @@ module SendFileContent
 
   def send_job_application_file_content
     send_data(
-      @job_application_file.content.read,
+      @job_application_file.document_content.read,
       filename: "#{action_name}.pdf",
       type: "application/pdf",
       disposition: "inline"

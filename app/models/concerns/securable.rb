@@ -51,6 +51,8 @@ module Securable
     image = MiniMagick::Image.open(pdf_file.path)
     image.pages.each_with_index { |page, index| convert_page_with_mini_magick(page.path, index, density) }
     Dir.entries(".").select { _1.start_with?("secured-image-") }.sort
+  rescue # ImageMagick failure: sometimes the pdf can't be opened
+    []
   end
 
   def convert_page_with_mini_magick(page_path, index, density)
@@ -60,7 +62,7 @@ module Securable
       convert << page_path
       convert << "secured-image-#{id}-#{index.to_s.rjust(5, "0")}.jpg"
     end
-  rescue # sometimes the page is not convertable
+  rescue # ImageMagick failure: sometimes the page is not convertable
     nil
   end
 
@@ -80,7 +82,7 @@ module Securable
 
   def pdf?
     content.content_type == "application/pdf"
-  rescue # sometimes getting the content_type throws an error, because the file is not there
+  rescue # Outscale failure: sometimes getting the content_type throws an error, because the file is not there
     false
   end
 end

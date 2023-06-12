@@ -50,7 +50,7 @@ module Securable
   def convert_to_images(pdf_file, density)
     image = MiniMagick::Image.open(pdf_file.path)
     image.pages.each_with_index { |page, index| convert_page_with_mini_magick(page.path, index, density) }
-    Dir.entries(".").select { _1.start_with?("secured-image-") }.sort
+    Dir.entries(".").select { _1.start_with?("secured-image-#{id}-") }.sort
   rescue # ImageMagick failure: sometimes the pdf can't be opened
     []
   end

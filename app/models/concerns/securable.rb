@@ -31,11 +31,11 @@ module Securable
   private
 
   def convert_original_content_to_images(density)
-    original_filename = content.filename
+    original_filename = content.filename.parameterize
     original_file = download(original_filename, content.read)
     image_filenames = convert_to_images(original_file, density)
     original_file.close
-    File.delete(original_filename)
+    File.delete(original_filename) if File.exist?(original_filename)
     image_filenames
   end
 

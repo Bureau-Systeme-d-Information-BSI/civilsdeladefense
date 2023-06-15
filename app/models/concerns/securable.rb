@@ -25,7 +25,7 @@ module Securable
     secured = convert_images_to_pdf(images)
     update!(secured_content: secured)
     secured.close
-    File.delete(secured.path)
+    delete_files([secured.path])
   end
 
   private
@@ -35,7 +35,7 @@ module Securable
     original_file = download(original_filename, content.read)
     image_filenames = convert_to_images(original_file, density)
     original_file.close
-    File.delete(original_filename) if File.exist?(original_filename)
+    delete_files([original_filename])
     image_filenames
   end
 

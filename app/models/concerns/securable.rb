@@ -1,7 +1,10 @@
 module Securable
   extend ActiveSupport::Concern
 
+  DELIVER_SECURED_CONTENT = ENV["DELIVER_SECURED_CONTENT"]
+
   included do
+
     mount_uploader :secured_content, DocumentUploader, mount_on: :secured_content_file_name
 
     after_commit -> { SecureContentJob.set(wait: 1.minute).perform_later(id: id) },
@@ -10,7 +13,7 @@ module Securable
   end
 
   def document_content
-    return secured_content if secured_content.present?
+    return secured_content if DELIVER_SECURED_CONTENT && secured_content.present?
     return content if content.present?
   end
 

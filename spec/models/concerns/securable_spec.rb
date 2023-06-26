@@ -9,7 +9,17 @@ RSpec.describe Securable, type: :model do
     context "when the secured_content exists" do
       let(:securable) { build(:job_application_file, :secured) }
 
-      it { is_expected.to eq(securable.secured_content) }
+      context "when DELIVER_SECURED_CONTENT is set" do
+        before { stub_const "Securable::DELIVER_SECURED_CONTENT", "1" }
+
+        it { is_expected.to eq(securable.secured_content) }
+      end
+
+      context "when DELIVER_SECURED_CONTENT is unset" do
+        before { stub_const "Securable::DELIVER_SECURED_CONTENT", nil }
+
+        it { is_expected.to eq(securable.content) }
+      end
     end
 
     context "when the secured content doesn't exist" do

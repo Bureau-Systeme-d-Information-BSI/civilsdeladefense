@@ -5,8 +5,6 @@ class SecureContentJob < ApplicationJob
 
   def perform(id:)
     securable(id)&.secure_content!
-  rescue # if image magick fails because the image quality is to high, try again with lower density
-    securable(id)&.secure_content!(density: 150)
   end
 
   private

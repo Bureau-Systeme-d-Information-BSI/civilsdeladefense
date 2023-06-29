@@ -20,9 +20,9 @@ module Securable
     secured_content.present?
   end
 
-  def secure_content!(density: 300)
+  def secure_content!
     return if secured? || content.blank? || !pdf?
-    return if (images = convert_original_content_to_images(density)).empty?
+    return if (images = convert_original_content_to_images).empty?
 
     secured_filename = content.filename
     PdfUtils.convert_images_to_pdf(images, secured_filename)
@@ -33,10 +33,10 @@ module Securable
 
   private
 
-  def convert_original_content_to_images(density)
+  def convert_original_content_to_images
     original_filename = content.filename.parameterize
     original_file = download(original_filename, content.read)
-    image_filenames = PdfUtils.convert_pdf_file_to_images(original_file, density)
+    image_filenames = PdfUtils.convert_pdf_file_to_images(original_file)
     original_file.close
     PdfUtils.delete_files([original_filename])
     image_filenames
@@ -49,7 +49,6 @@ module Securable
     file.close
     file
   end
-
 
   def pdf?
     content.content_type == "application/pdf"

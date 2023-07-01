@@ -90,7 +90,7 @@ GEM
       msgpack (~> 1.2)
     brakeman (6.0.0)
     builder (3.2.4)
-    cancancan (3.4.0)
+    cancancan (3.5.0)
     capybara (3.37.1)
       addressable
       matrix

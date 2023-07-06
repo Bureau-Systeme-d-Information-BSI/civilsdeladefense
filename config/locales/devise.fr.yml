@@ -45,6 +45,7 @@ fr:
     failure:
       already_authenticated: Vous êtes déjà connecté(e).
       inactive: Votre compte n’est pas encore activé.
+      suspended: Connexion impossible, veuillez réessayer ultérieurement.
       invalid: "%{authentication_keys} ou mot de passe incorrect."
       last_attempt: Il vous reste une chance avant que votre compte soit bloqué.
       locked: Votre compte est verrouillé.

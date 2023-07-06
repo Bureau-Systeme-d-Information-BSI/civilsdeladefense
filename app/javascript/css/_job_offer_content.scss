@@ -1,0 +1,17 @@
+.job-offer-content {
+  ul, ol { 
+    display: block;
+    list-style: disc outside none;
+    margin: 1em 0;
+    padding: 0 0 0 40px;
+  }
+
+  ol { 
+    list-style-type: decimal;
+    counter-reset: revert;
+  }
+
+  li { 
+    display: list-item;
+  }
+}

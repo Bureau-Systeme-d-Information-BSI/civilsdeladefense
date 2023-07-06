@@ -32,6 +32,10 @@ module Suspendable
     super && !suspended?
   end
 
+  def inactive_message
+    suspended? ? :suspended : super
+  end
+
   private
 
   def prevent_deletion_when_suspended

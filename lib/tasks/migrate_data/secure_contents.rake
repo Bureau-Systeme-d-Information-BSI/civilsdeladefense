@@ -7,6 +7,16 @@ namespace :migrate_data do
     secure_contents(EmailAttachment)
   end
 
+  desc "Convert all PDF files (in the current directory) to images and back to PDF to secure them"
+  task convert: :environment do
+    Dir.entries(".").select { _1.end_with?(".pdf") }.map { File.open(_1) }.each do |pdf|
+      puts "Converting #{pdf.path}"
+      images = PdfUtils.convert_pdf_file_to_images(pdf)
+      PdfUtils.convert_images_to_pdf(images, "converted_#{pdf.path}")
+      PdfUtils.delete_files(images)
+    end
+  end
+
   private
 
   def secure_contents(model)
@@ -16,8 +26,6 @@ namespace :migrate_data do
     entries.find_each do |securable|
       Rails.logger.info("Securing #{securable.id}")
       securable.secure_content!
-    rescue # if image magick fails because the image quality is to high, try again with lower density
-      securable.secure_content!(density: 150)
     end
 
     Rails.logger.info("All done!")

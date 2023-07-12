@@ -26,7 +26,8 @@ module Securable
 
     secured_filename = content.filename
     PdfUtils.convert_images_to_pdf(images, secured_filename)
-    update!(secured_content: File.open(secured_filename))
+    self.secured_content = File.open(secured_filename)
+    save(validate: false)
 
     PdfUtils.delete_files([secured_filename] + images)
   end

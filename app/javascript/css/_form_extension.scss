@@ -89,6 +89,10 @@ trix-editor {
   border-bottom: solid 1px $disabled-gray;
   background-color: $disabled-gray;
   cursor: not-allowed;
+
+  &.default-cursor {
+    cursor: default !important;
+  }
 }
 
 .filter {

@@ -71,17 +71,17 @@
                       .col-12.col-md-3
                         = f.association :contract_duration
                       .col-12.col-md-3
-                        = f.input :contract_start_on, as: :string
+                        = f.input :contract_start_on, as: :string, input_html: {class: 'default-cursor'}
                     .row
                       .col-12.col-md-3
                         = f.input :pep_value
                       .col-12.col-md-6
-                        = f.input :pep_date, as: :string
+                        = f.input :pep_date, as: :string, input_html: {class: 'default-cursor'}
                     .row
                       .col-12.col-md-3
                         = f.input :bne_value
                       .col-12.col-md-6
-                        = f.input :bne_date, as: :string
+                        = f.input :bne_date, as: :string, input_html: {class: 'default-cursor'}
                     .row
                       .col-12.col-md-3
                         = f.association :benefits, as: :check_boxes

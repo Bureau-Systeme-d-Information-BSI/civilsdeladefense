@@ -1,21 +1,24 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static values = { limit: Number }
-  static targets = [ "counter", "editor" ]
+  static values = { maximum: Number }
+  static targets = [ "counter", "editor", "limit" ]
 
-  connect() {
+  updateCounter() {
+    this.showLimit()
     this.setLength()
   }
 
-  limit(event) {
-    this.setLength()
+  // private
+
+  showLimit() {
+    this.limitTarget.classList.remove("d-none")
   }
 
   setLength() {
     const textLength = this.length()
     this.counterTarget.innerHTML = textLength
-    if(textLength > this.limitValue) {
+    if(textLength > this.maximumValue) {
       this.counterTarget.classList.add("font-weight-bold")
       this.counterTarget.classList.add("text-danger")
     } else {
@@ -25,12 +28,7 @@ export default class extends Controller {
   }
 
   length() {
-    const string = this.editorTest().getDocument().toString()
-    return string.length - 1
-  }
-
-  editorTest() {
     const { editor } = this.editorTarget
-    return editor
+    return editor.getDocument().toString().length - 1
   }
 }

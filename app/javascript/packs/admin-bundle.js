@@ -21,7 +21,7 @@ import Rails from '@rails/ujs'
 Rails.start()
 
 // Import Trix
-const Trix = require('trix')
+import Trix from 'trix'
 Trix.config.blockAttributes.default.tagName = "p"
 Trix.config.blockAttributes.default.breakOnReturn = true
 

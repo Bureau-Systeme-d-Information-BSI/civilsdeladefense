@@ -11,7 +11,6 @@
   }
 }
 
-
 .trix-editor-wrapper {
   @extend .form-control;
   height: auto;
@@ -50,26 +49,6 @@ trix-editor {
   border: 0;
   border-radius: 0;
   padding: 0.75rem;
-}
-
-.trix-button.trix-button--icon {
-  &.trix-button--icon-strike, &.trix-button--icon-quote, &.trix-button--icon-decrease-nesting-level, &.trix-button--icon-increase-nesting-level  {
-    display: none;
-  }
-}
-
-.new_job_offer, .edit_job_offer {
-  .trix-button.trix-button--icon {
-    &.trix-button--icon-link, &.trix-button--icon-heading-1 {
-      display: none;
-    }
-  }
-}
-
-.trix-button-group {
-  &.trix-button-group--file-tools {
-    display: none;
-  }
 }
 
 .form-control.is-invalid, .custom-select.is-invalid {

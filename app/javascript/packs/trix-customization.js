@@ -57,7 +57,7 @@ window.customElements.define('align-right', AlignRightElement)
 window.customElements.define('align-justify', AlignJustifyElement)
 
 import Trix from 'trix'
-Trix.config.blockAttributes.default.tagName = "p"
+Trix.config.blockAttributes.default.tagName = "align-justify"
 Trix.config.blockAttributes.default.breakOnReturn = true
 Trix.config.lang.bold = "Gras"
 Trix.config.lang.italic = "Italique"

@@ -2,43 +2,43 @@
 # yarn lockfile v1
 
 
-"@algolia/autocomplete-core@1.9.4":
-  version "1.9.4"
-  resolved "https://registry.yarnpkg.com/@algolia/autocomplete-core/-/autocomplete-core-1.9.4.tgz#4dfea22c8558c90f4ff107633efb298df382aef3"
-  integrity sha512-sakE1Lks15UXKHkjDyxZ7yT/fGrHrmvlfQ1Fz3m/cqXxBUhBtD5AKuuSpPUW0M/SaTnGSOf/8jJnOcyjznZ1UA==
+"@algolia/autocomplete-core@1.10.0":
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/@algolia/autocomplete-core/-/autocomplete-core-1.10.0.tgz#d9c7435e90993852e9aa159df7ed84d4342656cc"
+  integrity sha512-zaQ4ZOtGkeUvDGObZvaULuZmU4kAcVu/Wm9EP6Vzij5wQ98FAKz1uHn2EPiCI0aFIoUfZi/WhJvn5l6qVBdYEA==
   dependencies:
-    "@algolia/autocomplete-plugin-algolia-insights" "1.9.4"
-    "@algolia/autocomplete-shared" "1.9.4"
+    "@algolia/autocomplete-plugin-algolia-insights" "1.10.0"
+    "@algolia/autocomplete-shared" "1.10.0"
 
 "@algolia/autocomplete-js@^1.7.1":
-  version "1.9.4"
-  resolved "https://registry.yarnpkg.com/@algolia/autocomplete-js/-/autocomplete-js-1.9.4.tgz#bbc2476d9be905c5a413eac1c590a578393bd7b1"
-  integrity sha512-jyGHMpKrHpFqk6zrQQKTUEDHHSfOpNqiOJEZKXidnbOnTjlvuN+b0kLj5trSjXn2eqy7uQttl0nI81iQZsZX0g==
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/@algolia/autocomplete-js/-/autocomplete-js-1.10.0.tgz#25fb429ee0883e525e19f7d116ce6a609a330265"
+  integrity sha512-PpDNZs6/H5u9yOvpZ1HWb5Uf40zXOGCmhjDEfODQ6Q506hxAKhquxNLI+o8Chgda4bvRai1gGfFdZ5RSr0oHbA==
   dependencies:
-    "@algolia/autocomplete-core" "1.9.4"
-    "@algolia/autocomplete-preset-algolia" "1.9.4"
-    "@algolia/autocomplete-shared" "1.9.4"
+    "@algolia/autocomplete-core" "1.10.0"
+    "@algolia/autocomplete-preset-algolia" "1.10.0"
+    "@algolia/autocomplete-shared" "1.10.0"
     htm "^3.1.1"
     preact "^10.13.2"
 
-"@algolia/autocomplete-plugin-algolia-insights@1.9.4":
-  version "1.9.4"
-  resolved "https://registry.yarnpkg.com/@algolia/autocomplete-plugin-algolia-insights/-/autocomplete-plugin-algolia-insights-1.9.4.tgz#57181d5b88ea750826b74e1f58d17a826c9d12a2"
-  integrity sha512-1ZzFX3wDYWUPPwEWmjEjBlYa4oWaI57ntPIEMVNB+vdPYLy9QCroRsKruCHgmD1+GekAdEj7ayYkDlbB//kdiw==
+"@algolia/autocomplete-plugin-algolia-insights@1.10.0":
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/@algolia/autocomplete-plugin-algolia-insights/-/autocomplete-plugin-algolia-insights-1.10.0.tgz#1c5ba934c166cba1de9a04c5777f8346dd929379"
+  integrity sha512-mXKrO9gBIgjLHKfIN9aGqdMfWEXlk+ttiR1mgXrUtyMp6IKhZiXoNpvG2Xg2SiQakmZOtxagut3Wq1DpdwCq6Q==
   dependencies:
-    "@algolia/autocomplete-shared" "1.9.4"
+    "@algolia/autocomplete-shared" "1.10.0"
 
-"@algolia/autocomplete-preset-algolia@1.9.4":
-  version "1.9.4"
-  resolved "https://registry.yarnpkg.com/@algolia/autocomplete-preset-algolia/-/autocomplete-preset-algolia-1.9.4.tgz#c51a01b468e406a924061b770908f62d84275312"
-  integrity sha512-YsLWhQBAFj9mSo84jj4ggkT4fsR5kOsqu18wKyAHbJtYW52lFyaMnRB2ohK4DznGEhjSD74kjy1hYuoDd/KeXg==
+"@algolia/autocomplete-preset-algolia@1.10.0":
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/@algolia/autocomplete-preset-algolia/-/autocomplete-preset-algolia-1.10.0.tgz#3ffd96441f3153d59e7aaaa52dbb6e78765cac0e"
+  integrity sha512-CABQm+VJvuwl5XeVYbPISc8OAac7+nX+yDzG0nJRsSd64IeI6e/Jxrg13quxpTvOe7JZXYdW1y1kV7srPuFpmA==
   dependencies:
-    "@algolia/autocomplete-shared" "1.9.4"
+    "@algolia/autocomplete-shared" "1.10.0"
 
-"@algolia/autocomplete-shared@1.9.4":
-  version "1.9.4"
-  resolved "https://registry.yarnpkg.com/@algolia/autocomplete-shared/-/autocomplete-shared-1.9.4.tgz#7b008675d6fd26e31e35629a78b531faa8cba672"
-  integrity sha512-4iEdI9K2BXEATYeptL2ZVJPNQ5Zd42WTqjnLPsuJCUwPTnrnpHZEJcmUQYktnMnbgvvVzIByRrRJ1NSLQOno3w==
+"@algolia/autocomplete-shared@1.10.0":
+  version "1.10.0"
+  resolved "https://registry.yarnpkg.com/@algolia/autocomplete-shared/-/autocomplete-shared-1.10.0.tgz#3f068563c8e7c3ac369893da48a77a79408ca889"
+  integrity sha512-JKZGomjcUeKKtkymeZuWjKNIJU7UzuaCN3/eKlpOXxmvWCd5aJrVTDgbOm0pOjv0Ef9xVzIZx9cS/GL1Snxo1g==
 
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.14.5":
   version "7.14.5"

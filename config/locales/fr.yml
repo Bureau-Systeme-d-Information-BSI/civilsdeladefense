@@ -1090,7 +1090,7 @@ fr:
         job_offer:
           attributes:
             base:
-              pep_or_bne: "PEP et/ou BNE doit être remplis"
+              pep_or_bne: "PEP et/ou BNE doit être rempli(e)"
             title:
               brackets: "ne doit pas contenir de parenthèse"
               f_h: "doit finir par F/H"

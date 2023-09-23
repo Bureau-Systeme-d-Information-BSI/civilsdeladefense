@@ -73,12 +73,12 @@
                         = f.input :contract_start_on, as: :string
                     .row
                       .col-12.col-md-3
-                        = f.input :pep_value
+                        = f.input :pep_value, input_html: { class: @job_offer.errors[:base].any? { _1.include?("PEP") } ? "is-invalid" : "" }
                       .col-12.col-md-6
                         = f.input :pep_date, as: :string
                     .row
                       .col-12.col-md-3
-                        = f.input :bne_value
+                        = f.input :bne_value, input_html: { class: @job_offer.errors[:base].any? { _1.include?("BNE") } ? "is-invalid" : "" }
                       .col-12.col-md-6
                         = f.input :bne_date, as: :string
                     .row

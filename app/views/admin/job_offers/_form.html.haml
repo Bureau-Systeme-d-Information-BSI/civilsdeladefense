@@ -4,7 +4,7 @@
 .container-fluid{data: { controller: "job-offer-management"}}
   .row
     .col-12.px-0
-      = simple_form_for([:admin, @job_offer], data: {controller: "form-save", form_save_target: "form", action: "change->form-save#saveFormData submit->form-save#clearFormData"}) do |f|
+      = simple_form_for([:admin, @job_offer], data: {controller: "form-save trix-errors", trix_errors_model_name_value: "job_offer", trix_errors_inputs_value: @job_offer.errors.attribute_names, form_save_target: "form", action: "change->form-save#saveFormData submit->form-save#clearFormData"}) do |f|
         = f.error_notification
         - if @job_offer.errors.any?
           .alert.alert-danger.pt-0

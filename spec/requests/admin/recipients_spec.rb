@@ -19,17 +19,17 @@ RSpec.describe "Admin::Recipients", type: :request do
 
     it "returns an empty array when the search string is missing" do
       get admin_job_offer_recipients_path(job_offer, format: :json)
-      expect(JSON.parse(response.body)).to eq([])
+      expect(response.parsed_body).to eq([])
     end
 
     it "returns no results when the search string doesn't match any recipients" do
       get admin_job_offer_recipients_path(job_offer, format: :json, s: "aaa")
-      expect(JSON.parse(response.body)).to eq([])
+      expect(response.parsed_body).to eq([])
     end
 
     it "searches for matching recipients (aka job applications which user name matches the query)" do
       get admin_job_offer_recipients_path(job_offer, format: :json, s: "Grant")
-      expect(JSON.parse(response.body)).to match([
+      expect(response.parsed_body).to match([
         {
           id: job_application_b.id,
           user: {first_name: job_application_b.user.first_name, last_name: job_application_b.user.last_name, email: job_application_b.user.email}
@@ -43,7 +43,7 @@ RSpec.describe "Admin::Recipients", type: :request do
 
     it "searches for a given recipient, by name (aka job applications which user name matches the query)" do
       get admin_job_offer_recipients_path(job_offer, format: :json, s: "Hugh")
-      expect(JSON.parse(response.body)).to match([
+      expect(response.parsed_body).to match([
         {
           id: job_application_b.id,
           user: {first_name: job_application_b.user.first_name, last_name: job_application_b.user.last_name, email: job_application_b.user.email}
@@ -53,7 +53,7 @@ RSpec.describe "Admin::Recipients", type: :request do
 
     it "searches for a given recipient, by email (aka job applications which user name matches the query)" do
       get admin_job_offer_recipients_path(job_offer, format: :json, s: "totoro")
-      expect(JSON.parse(response.body)).to match([
+      expect(response.parsed_body).to match([
         {
           id: job_application_c.id,
           user: {first_name: job_application_c.user.first_name, last_name: job_application_c.user.last_name, email: job_application_c.user.email}

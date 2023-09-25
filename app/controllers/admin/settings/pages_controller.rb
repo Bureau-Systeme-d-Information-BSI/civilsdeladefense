@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 class Admin::Settings::PagesController < Admin::Settings::InheritedResourcesController
+  def update
+    resource.slug = nil
+    super
+  end
+
   def destroy
     key = "admin.#{resource_class.to_s.tableize}.destroy.success"
     begin
@@ -9,11 +14,6 @@ class Admin::Settings::PagesController < Admin::Settings::InheritedResourcesCont
       resource.reinsert_children_branch
       retry
     end
-  end
-
-  def update
-    resource.slug = nil
-    super
   end
 
   def move_higher

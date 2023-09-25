@@ -25,14 +25,14 @@ RSpec.describe "Admin::ZipFiles", type: :request do
         get admin_zip_file_path(-1, format: :json)
 
         expect(response).to be_successful
-        expect(JSON.parse(response.body)["download_url"]).to be_nil
+        expect(response.parsed_body["download_url"]).to be_nil
       end
 
       it "returns a valid download url when the zip file is present" do
         get admin_zip_file_path(zip_file, format: :json)
 
         expect(response).to be_successful
-        expect(JSON.parse(response.body)["download_url"]).to eq(zip_file.zip.url)
+        expect(response.parsed_body["download_url"]).to eq(zip_file.zip.url)
       end
     end
   end

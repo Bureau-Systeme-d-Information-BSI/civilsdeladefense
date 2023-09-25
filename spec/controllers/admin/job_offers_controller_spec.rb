@@ -225,7 +225,7 @@ RSpec.describe Admin::JobOffersController, type: :controller do
 
           post :add_actor, params: invalid_attributes
 
-          parsed_body = JSON.parse(response.body)
+          parsed_body = response.parsed_body
 
           expect(parsed_body.keys).to eq(["email"])
         end

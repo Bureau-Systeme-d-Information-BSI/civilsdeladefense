@@ -13,6 +13,14 @@ class Account::JobApplicationFilesController < Account::BaseController
   def index
   end
 
+  def show
+    if @job_application_file.document_content.blank?
+      return render json: {error: "not found"}, status: :not_found
+    end
+
+    send_job_application_file_content
+  end
+
   # POST /account/job_application_files
   # POST /account/job_application_files.json
   def create
@@ -59,14 +67,6 @@ class Account::JobApplicationFilesController < Account::BaseController
         format.html { redirect_to redirect_back_location, notice: t(".error") }
       end
     end
-  end
-
-  def show
-    if @job_application_file.document_content.blank?
-      return render json: {error: "not found"}, status: :not_found
-    end
-
-    send_job_application_file_content
   end
 
   private

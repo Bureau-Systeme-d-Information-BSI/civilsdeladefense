@@ -35,7 +35,7 @@ RSpec.describe "Admin::Emails", type: :request do
 
       it "renders the email" do
         mark_as_read_request
-        expect(JSON.parse(response.body)).to match(JSON.parse(email.reload.to_json))
+        expect(response.parsed_body).to match(JSON.parse(email.reload.to_json))
       end
     end
 
@@ -80,7 +80,7 @@ RSpec.describe "Admin::Emails", type: :request do
 
       it "renders the email" do
         mark_as_unread_request
-        expect(JSON.parse(response.body)).to match(JSON.parse(email.reload.to_json))
+        expect(response.parsed_body).to match(JSON.parse(email.reload.to_json))
       end
     end
 

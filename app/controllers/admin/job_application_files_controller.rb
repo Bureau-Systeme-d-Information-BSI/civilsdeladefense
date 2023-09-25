@@ -6,6 +6,14 @@ class Admin::JobApplicationFilesController < Admin::BaseController
   load_and_authorize_resource :job_application, except: :show
   load_and_authorize_resource :job_application_file
 
+  def show
+    if @job_application_file.document_content.blank?
+      return render json: {error: "not found"}, status: :not_found
+    end
+
+    send_job_application_file_content
+  end
+
   def create
     @job_application_file.do_not_provide_immediately = true
     @job_application_file.job_application = @job_application
@@ -70,14 +78,6 @@ class Admin::JobApplicationFilesController < Admin::BaseController
       end
       format.json { head :no_content, location: [:admin, @job_application] }
     end
-  end
-
-  def show
-    if @job_application_file.document_content.blank?
-      return render json: {error: "not found"}, status: :not_found
-    end
-
-    send_job_application_file_content
   end
 
   def check

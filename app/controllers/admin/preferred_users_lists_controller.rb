@@ -6,6 +6,22 @@ class Admin::PreferredUsersListsController < Admin::InheritedResourcesController
   def index
   end
 
+  def show
+    @preferred_users = @preferred_users_list.users.includes(:job_applications)
+    @q = @preferred_users.ransack(params[:q])
+    @preferred_users_filtered = @q.result.yield_self { |relation|
+      if params[:s].present?
+        relation.search_full_text(params[:s])
+      else
+        relation
+      end
+    }.yield_self { |relation|
+      relation.paginate(page: params[:page])
+    }
+
+    render action: :show, layout: "admin/pool"
+  end
+
   def new
     render layout: request.xhr? ? false : "admin/pool"
   end
@@ -40,22 +56,6 @@ class Admin::PreferredUsersListsController < Admin::InheritedResourcesController
         end
       end
     end
-  end
-
-  def show
-    @preferred_users = @preferred_users_list.users.includes(:job_applications)
-    @q = @preferred_users.ransack(params[:q])
-    @preferred_users_filtered = @q.result.yield_self { |relation|
-      if params[:s].present?
-        relation.search_full_text(params[:s])
-      else
-        relation
-      end
-    }.yield_self { |relation|
-      relation.paginate(page: params[:page])
-    }
-
-    render action: :show, layout: "admin/pool"
   end
 
   def export

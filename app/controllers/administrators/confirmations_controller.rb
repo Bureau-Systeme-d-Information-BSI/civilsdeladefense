@@ -2,6 +2,26 @@
 
 # app/controllers/confirmations_controller.rb
 class Administrators::ConfirmationsController < Devise::ConfirmationsController
+  # GET /resource/confirmation?confirmation_token=abcdef
+  def show
+    with_unconfirmed_confirmable do
+      unless @confirmable.confirmation_token_still_valid?
+        self.resource = @confirmable
+        render "devise/confirmations/token_expired"
+        return
+      end
+
+      if @confirmable.no_password?
+        do_show
+      else
+        do_confirm
+      end
+    end
+
+    return if @confirmable.errors.empty?
+
+    self.resource = @confirmable
+  end
   # Remove the first skip_before_filter (:require_no_authentication) if you
   # don't want to enable logged users to access the confirmation page.
   # If you are using rails 5.1+ use: skip_before_action
@@ -27,27 +47,6 @@ class Administrators::ConfirmationsController < Devise::ConfirmationsController
 
     self.resource = @confirmable
     render "devise/confirmations/new" # Change this if you don't have the views on default path
-  end
-
-  # GET /resource/confirmation?confirmation_token=abcdef
-  def show
-    with_unconfirmed_confirmable do
-      unless @confirmable.confirmation_token_still_valid?
-        self.resource = @confirmable
-        render "devise/confirmations/token_expired"
-        return
-      end
-
-      if @confirmable.no_password?
-        do_show
-      else
-        do_confirm
-      end
-    end
-
-    return if @confirmable.errors.empty?
-
-    self.resource = @confirmable
   end
 
   protected

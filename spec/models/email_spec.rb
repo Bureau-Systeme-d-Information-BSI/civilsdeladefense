@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Email, type: :model do
+RSpec.describe Email do
   it { is_expected.to validate_presence_of(:subject) }
   it { is_expected.to validate_presence_of(:body) }
 

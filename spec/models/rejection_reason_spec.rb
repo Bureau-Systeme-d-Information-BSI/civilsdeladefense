@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe RejectionReason, type: :model do
+RSpec.describe RejectionReason do
   it { is_expected.to validate_presence_of(:name) }
 
   it "cleanups rejection reason" do

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe OrganizationDefault, type: :model do
+RSpec.describe OrganizationDefault do
   it { is_expected.to validate_presence_of(:kind) }
   it { is_expected.to validate_presence_of(:value) }
 

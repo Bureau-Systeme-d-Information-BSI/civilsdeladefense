@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Admin::ZipFiles", type: :request do
+RSpec.describe "Admin::ZipFiles" do
   before { sign_in create(:administrator) }
 
   describe "GET /show" do

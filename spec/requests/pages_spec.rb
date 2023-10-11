@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Pages", type: :request do
+RSpec.describe "Pages" do
   describe "GET /pages/:id" do
     it "renders the template" do
       get page_path(create(:page))

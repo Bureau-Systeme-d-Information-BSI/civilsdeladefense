@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe User, type: :model do
+RSpec.describe User do
   let(:user) { create(:confirmed_user) }
   let(:another_user) { create(:confirmed_user) }
 
@@ -134,7 +134,7 @@ RSpec.describe User, type: :model do
       end
 
       it "is required" do
-        expect(user).to be_invalid
+        expect(user).not_to be_valid
       end
     end
   end

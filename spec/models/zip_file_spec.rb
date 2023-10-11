@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ZipFile, type: :model do
+RSpec.describe ZipFile do
   it "is valid without the zip" do
     expect(build(:zip_file, zip: nil)).to be_valid
   end

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe NotificationsMailer, type: :mailer do
+RSpec.describe NotificationsMailer do
   describe "daily_summary" do
     let(:organization) do
       Organization.first

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Profile, type: :model do
+RSpec.describe Profile do
   let(:profile) { create(:job_application).profile }
 
   it "is valid with valid attributes" do

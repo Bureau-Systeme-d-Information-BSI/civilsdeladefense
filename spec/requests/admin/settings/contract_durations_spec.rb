@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Admin::Settings::ContractDurations", type: :request do
+RSpec.describe "Admin::Settings::ContractDurations" do
   it_behaves_like "an admin setting", :contract_duration, :name, "a new name"
   it_behaves_like "a movable admin setting", :contract_duration
 end

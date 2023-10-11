@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "MultipleRecipientsEmails", type: :request do
+RSpec.describe "MultipleRecipientsEmails" do
   let(:job_offer) { create(:job_offer, :with_job_applications) }
   let(:job_applications) { job_offer.job_applications }
 

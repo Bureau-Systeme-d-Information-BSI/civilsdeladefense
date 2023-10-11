@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ApplicantNotificationsMailer, type: :mailer do
+RSpec.describe ApplicantNotificationsMailer do
   let(:job_offer) { create(:job_offer) }
   let(:organization) { job_offer.organization }
   let(:job_application) { create(:job_application, job_offer: job_offer) }

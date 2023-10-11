@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Employer, type: :model do
+RSpec.describe Employer do
   it { is_expected.to validate_presence_of(:name) }
 end
 

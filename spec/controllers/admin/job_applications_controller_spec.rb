@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Admin::JobApplicationsController, type: :controller do
+RSpec.describe Admin::JobApplicationsController do
   # This should return the minimal set of attributes required to create a valid
   # JobApplication. As you add validations to JobApplication, be sure to
   # adjust the attributes here as well.
@@ -75,7 +75,7 @@ RSpec.describe Admin::JobApplicationsController, type: :controller do
       context "with invalid params" do
         it "returns an error page" do
           put :change_state, params: {id: job_application.to_param, state: "non_existing_state"}
-          expect(response.status).to eq(400)
+          expect(response).to have_http_status(:bad_request)
         end
       end
     end
@@ -149,7 +149,7 @@ RSpec.describe Admin::JobApplicationsController, type: :controller do
       context "with invalid params" do
         it "returns an error page" do
           put :change_state, params: {id: job_application.to_param, state: "non_existing_state"}
-          expect(response.status).to eq(400)
+          expect(response).to have_http_status(:bad_request)
         end
       end
     end

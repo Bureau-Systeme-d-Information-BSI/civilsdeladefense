@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe SecureContentJob, type: :job do
+RSpec.describe SecureContentJob do
   subject(:perform) { described_class.new.perform(id: job_application_file.id) }
 
   context "when the securable file is not found" do

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe EmailTemplate, type: :model do
+RSpec.describe EmailTemplate do
   it { is_expected.to validate_presence_of(:title) }
   it { is_expected.to validate_presence_of(:subject) }
   it { is_expected.to validate_presence_of(:body) }

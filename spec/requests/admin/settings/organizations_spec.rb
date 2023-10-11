@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Admin::Settings::Organizations", type: :request do
+RSpec.describe "Admin::Settings::Organizations" do
   let(:organization) { Organization.first }
 
   before { sign_in create(:administrator) }

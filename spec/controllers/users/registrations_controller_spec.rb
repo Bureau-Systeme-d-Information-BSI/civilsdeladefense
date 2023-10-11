@@ -25,7 +25,7 @@ require "rails_helper"
 # removed from Rails core in Rails 5, but can be added back in via the
 # `rails-controller-testing` gem.
 
-RSpec.describe Users::RegistrationsController, type: :controller do
+RSpec.describe Users::RegistrationsController do
   describe "POST /resource" do
     it "correctly creates a valid account linked to an organization" do
       user_attrs = attributes_for(:user).slice(:first_name,

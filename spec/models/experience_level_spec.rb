@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ExperienceLevel, type: :model do
+RSpec.describe ExperienceLevel do
   it { is_expected.to validate_presence_of(:name) }
 end
 

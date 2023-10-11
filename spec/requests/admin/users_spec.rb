@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Admin::Users", type: :request do
+RSpec.describe "Admin::Users" do
   let(:admin) { create(:administrator) }
   let(:user) { create(:confirmed_user) }
 

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Administrator, type: :model do
+RSpec.describe Administrator do
   let(:administrator) { create(:administrator) }
 
   it { is_expected.to have_many(:invitees).inverse_of(:inviter) }
@@ -147,12 +147,12 @@ RSpec.describe Administrator, type: :model do
       expect(administrator_valid).to be_valid
 
       organization.update(administrator_email_suffix: "@laposte.net")
-      expect(administrator_valid.reload).to be_invalid
+      expect(administrator_valid.reload).not_to be_valid
     end
 
     it "is invalid with invalid attributes" do
       administrator_invalid = build(:administrator, email: "admin@laposte.net")
-      expect(administrator_invalid).to be_invalid
+      expect(administrator_invalid).not_to be_valid
 
       organization.update(administrator_email_suffix: "@laposte.net")
       administrator_invalid = build(:administrator, email: "admin@laposte.net")

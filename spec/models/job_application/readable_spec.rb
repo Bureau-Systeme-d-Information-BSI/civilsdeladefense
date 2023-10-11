@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe JobApplication::Readable, type: :model do
+RSpec.describe JobApplication::Readable do
   describe "#mark_all_as_read!" do
     it "mark all emails as read" do
       email = create(:email, is_unread: true)

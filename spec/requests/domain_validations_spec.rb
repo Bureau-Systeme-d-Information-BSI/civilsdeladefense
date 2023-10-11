@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe DomainValidationsController, type: :request do
+RSpec.describe DomainValidationsController do
   describe "GET /.well-known/pki-validation/:file_name" do
     context "when there is a matching environment variable prefixed with DOMAIN_VALIDATION_" do
       let(:file_name) { "a_file" }

@@ -25,7 +25,7 @@ require "rails_helper"
 # removed from Rails core in Rails 5, but can be added back in via the
 # `rails-controller-testing` gem.
 
-RSpec.describe Admin::Settings::EmployersController, type: :controller do
+RSpec.describe Admin::Settings::EmployersController do
   login_admin
 
   let(:valid_attributes) do

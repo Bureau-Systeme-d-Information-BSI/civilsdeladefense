@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Admin::JobApplicationsController, type: :routing do
+RSpec.describe Admin::JobApplicationsController do
   describe "routing" do
     it "routes to #index" do
       expect(get: "/admin/candidatures").to route_to("admin/job_applications#index")

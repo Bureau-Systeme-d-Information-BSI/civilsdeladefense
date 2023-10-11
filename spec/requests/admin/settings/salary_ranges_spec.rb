@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Admin::Settings::SalaryRanges", type: :request do
+RSpec.describe "Admin::Settings::SalaryRanges" do
   let(:create_attributes) {
     {
       professional_category_id: professional_categories(:cadre).id,

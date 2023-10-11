@@ -25,7 +25,7 @@ require "rails_helper"
 # removed from Rails core in Rails 5, but can be added back in via the
 # `rails-controller-testing` gem.
 
-RSpec.describe JobOffersController, type: :controller do
+RSpec.describe JobOffersController do
   describe "GET #index" do
     it "returns a success response" do
       get :index, params: {}
@@ -37,15 +37,15 @@ RSpec.describe JobOffersController, type: :controller do
     it "returns a 404 response when not published" do
       job_offer = create(:job_offer)
       get :show, params: {id: job_offer.to_param}
-      expect(response.status).to eq(404)
+      expect(response).to have_http_status(:not_found)
 
       job_offer = create(:job_offer, state: :suspended)
       get :show, params: {id: job_offer.to_param}
-      expect(response.status).to eq(404)
+      expect(response).to have_http_status(:not_found)
 
       job_offer = create(:job_offer, state: :archived)
       get :show, params: {id: job_offer.to_param}
-      expect(response.status).to eq(404)
+      expect(response).to have_http_status(:not_found)
     end
 
     it "returns a success response" do

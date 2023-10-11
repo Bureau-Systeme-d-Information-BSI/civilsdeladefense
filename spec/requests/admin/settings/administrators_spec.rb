@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Admin::Settings::Administrators", type: :request do
+RSpec.describe "Admin::Settings::Administrators" do
   before { sign_in create(:administrator) }
 
   describe "GET /admin/parametres/administrateurs" do

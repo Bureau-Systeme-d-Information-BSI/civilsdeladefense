@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Securable, type: :model do
+RSpec.describe Securable do
   describe "#document_content" do
     subject(:document_content) { securable.document_content }
 

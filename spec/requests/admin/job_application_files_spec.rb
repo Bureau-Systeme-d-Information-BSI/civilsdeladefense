@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Admin::JobApplicationFiles", type: :request do
+RSpec.describe "Admin::JobApplicationFiles" do
   let(:job_application) { create(:job_application) }
   let(:job_application_file) { create(:job_application_file, job_application: job_application) }
 

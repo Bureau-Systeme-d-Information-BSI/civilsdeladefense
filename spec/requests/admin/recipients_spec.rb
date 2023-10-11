@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Admin::Recipients", type: :request do
+RSpec.describe "Admin::Recipients" do
   let(:job_offer) { create(:job_offer) }
 
   before { sign_in create(:administrator) }

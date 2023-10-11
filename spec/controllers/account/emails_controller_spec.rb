@@ -25,7 +25,7 @@ require "rails_helper"
 # removed from Rails core in Rails 5, but can be added back in via the
 # `rails-controller-testing` gem.
 
-RSpec.describe Account::EmailsController, type: :controller do
+RSpec.describe Account::EmailsController do
   let(:user) { create(:confirmed_user) }
   let(:job_application) { create(:job_application, user: user) }
   let(:valid_attributes) do

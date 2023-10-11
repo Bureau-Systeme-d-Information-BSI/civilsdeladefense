@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe ZipJobApplicationFilesJob, type: :job do
+RSpec.describe ZipJobApplicationFilesJob do
   let(:job_application_file) { create(:job_application_file) }
   let(:user) { job_application_file.job_application.user }
   let(:id) { SecureRandom.uuid }

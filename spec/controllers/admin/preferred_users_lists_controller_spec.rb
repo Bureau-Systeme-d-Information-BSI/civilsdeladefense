@@ -25,7 +25,7 @@ require "rails_helper"
 # removed from Rails core in Rails 5, but can be added back in via the
 # `rails-controller-testing` gem.
 
-RSpec.describe Admin::PreferredUsersListsController, type: :controller do
+RSpec.describe Admin::PreferredUsersListsController do
   context "when logged in as BANT administrator" do
     login_admin
 
@@ -50,7 +50,7 @@ RSpec.describe Admin::PreferredUsersListsController, type: :controller do
 
         it "redirects to the created preferred_users_list" do
           post :create, params: {preferred_users_list: valid_attributes}
-          expect(response.status).to eq(302)
+          expect(response).to have_http_status(:found)
         end
       end
 

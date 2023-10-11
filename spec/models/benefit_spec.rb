@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Benefit, type: :model do
+RSpec.describe Benefit do
   it { is_expected.to validate_presence_of(:name) }
 end
 

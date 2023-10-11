@@ -6,7 +6,7 @@ FactoryBot.define do
 
     body { "MyText" }
     job_application
-    association :sender, factory: :administrator
+    sender factory: %i[administrator]
   end
 end
 

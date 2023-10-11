@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Admin::JobOffers::ReadingsController, type: :request do
+RSpec.describe Admin::JobOffers::ReadingsController do
   before { sign_in create(:administrator) }
 
   describe "POST /create" do

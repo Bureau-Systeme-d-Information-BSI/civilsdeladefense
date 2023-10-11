@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Suspendable, type: :model do
+RSpec.describe Suspendable do
   describe "#suspended" do
     subject { user.suspended? }
 

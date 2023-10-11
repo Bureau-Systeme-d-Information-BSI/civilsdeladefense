@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe OmniauthInformation, type: :model do
+RSpec.describe OmniauthInformation do
   describe "unique uid" do
     context "with twice the same uid/provider" do
       let(:fci) { create(:omniauth_information) }
@@ -11,7 +11,7 @@ RSpec.describe OmniauthInformation, type: :model do
       end
 
       it "is unvalid" do
-        expect(fci_second).to be_invalid
+        expect(fci_second).not_to be_valid
       end
     end
   end

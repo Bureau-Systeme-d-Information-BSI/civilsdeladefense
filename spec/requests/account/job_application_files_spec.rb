@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Account::JobApplicationFiles", type: :request do
+RSpec.describe "Account::JobApplicationFiles" do
   let(:user) { create(:confirmed_user) }
   let(:job_application) { create(:job_application, user: user) }
   let(:job_application_file) { create(:job_application_file, job_application: job_application) }

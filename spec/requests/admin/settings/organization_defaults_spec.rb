@@ -2,6 +2,6 @@
 
 require "rails_helper"
 
-RSpec.describe "Admin::Settings::OrganizationDefaults", type: :request do
+RSpec.describe "Admin::Settings::OrganizationDefaults" do
   it_behaves_like "an admin setting", :organization_default, :value, "a new value"
 end

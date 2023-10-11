@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Account::JobApplications", type: :request do
+RSpec.describe "Account::JobApplications" do
   let(:user) { create(:confirmed_user) }
 
   before { sign_in user }

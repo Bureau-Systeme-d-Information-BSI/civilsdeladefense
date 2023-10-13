@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Admin::PreferredUsersLists", type: :request do
+RSpec.describe "Admin::PreferredUsersLists" do
   let(:administrator) { create(:administrator) }
   let(:preferred_users_list) { create(:preferred_users_list, :with_users, administrator: administrator) }
 

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Admin::ArchivesController, type: :request do
+RSpec.describe Admin::ArchivesController do
   let(:job_offer) { create(:job_offer) }
 
   before { sign_in create(:administrator) }

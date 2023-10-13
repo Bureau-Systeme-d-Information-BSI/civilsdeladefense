@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Organization, type: :model do
+RSpec.describe Organization do
   it "is valid with valid attributes" do
     organization = organizations(:cvd)
     expect(organization).to be_valid

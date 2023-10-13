@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Bop, type: :model do
+RSpec.describe Bop do
   it { is_expected.to validate_presence_of(:name) }
 end
 

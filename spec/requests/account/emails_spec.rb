@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Account::Emails", type: :request do
+RSpec.describe "Account::Emails" do
   describe "GET /mon-compte/candidatures/XXX/emails" do
     it "works! (now write some real specs)" do
       user = create(:user)

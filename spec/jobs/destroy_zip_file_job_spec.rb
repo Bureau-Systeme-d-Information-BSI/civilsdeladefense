@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe DestroyZipFileJob, type: :job do
+RSpec.describe DestroyZipFileJob do
   it "destroys the zip file" do
     zip_file = create(:zip_file)
     expect {

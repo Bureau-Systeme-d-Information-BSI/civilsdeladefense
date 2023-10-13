@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Admin::JobOffersController, type: :controller do
+RSpec.describe Admin::JobOffersController do
   context "when logged in as BANT administrator" do
     login_admin
 
@@ -20,7 +20,7 @@ RSpec.describe Admin::JobOffersController, type: :controller do
     describe "GET #index" do
       it "returns a success response" do
         JobOffer.destroy_all
-        create_list :job_offer, 5
+        create_list(:job_offer, 5)
         get :index, params: {}
         expect(response).to be_successful
         expect(assigns(:job_offers_active).size).to eq(5)
@@ -29,8 +29,8 @@ RSpec.describe Admin::JobOffersController, type: :controller do
 
     describe "GET #archived" do
       it "returns a success response" do
-        create_list :job_offer, 5
-        create_list :job_offer, 3, state: :archived
+        create_list(:job_offer, 5)
+        create_list(:job_offer, 3, state: :archived)
         get :archived, params: {}
         expect(response).to be_successful
         expect(assigns(:job_offers_archived).size).to eq(3)
@@ -39,7 +39,7 @@ RSpec.describe Admin::JobOffersController, type: :controller do
 
     describe "GET #show" do
       it "returns a success response" do
-        job_offer = create :job_offer
+        job_offer = create(:job_offer)
         get :show, params: {id: job_offer.to_param}
         expect(response).to be_successful
       end
@@ -47,7 +47,7 @@ RSpec.describe Admin::JobOffersController, type: :controller do
 
     describe "GET #board" do
       it "returns a success response" do
-        job_offer = create :job_offer
+        job_offer = create(:job_offer)
         get :board, params: {id: job_offer.to_param}
         expect(response).to be_successful
       end
@@ -55,7 +55,7 @@ RSpec.describe Admin::JobOffersController, type: :controller do
 
     describe "GET #stats" do
       it "returns a success response" do
-        job_offer = create :job_offer
+        job_offer = create(:job_offer)
         get :stats, params: {id: job_offer.to_param}
         expect(response).to be_successful
       end
@@ -70,7 +70,7 @@ RSpec.describe Admin::JobOffersController, type: :controller do
 
     describe "GET #edit" do
       it "returns a success response" do
-        job_offer = create :job_offer
+        job_offer = create(:job_offer)
         get :edit, params: {id: job_offer.to_param}
         expect(response).to be_successful
       end
@@ -128,8 +128,8 @@ RSpec.describe Admin::JobOffersController, type: :controller do
     describe "POST #add_actor" do
       context "with valid params" do
         it "returns a successful response" do
-          job_offer = create :job_offer
-          administrator = create :administrator
+          job_offer = create(:job_offer)
+          administrator = create(:administrator)
 
           valid_attributes = {
             id: job_offer.to_param,
@@ -143,8 +143,8 @@ RSpec.describe Admin::JobOffersController, type: :controller do
         end
 
         it "returns a successful response even with upcase char" do
-          job_offer = create :job_offer
-          administrator = create :administrator
+          job_offer = create(:job_offer)
+          administrator = create(:administrator)
 
           valid_attributes = {
             id: job_offer.to_param,
@@ -158,8 +158,8 @@ RSpec.describe Admin::JobOffersController, type: :controller do
         end
 
         it "renders the actor widget with an existing user" do
-          job_offer = create :job_offer
-          administrator = create :administrator
+          job_offer = create(:job_offer)
+          administrator = create(:administrator)
 
           valid_attributes = {
             id: job_offer.to_param,
@@ -173,7 +173,7 @@ RSpec.describe Admin::JobOffersController, type: :controller do
         end
 
         it "returns a successful response with a non existing user" do
-          job_offer = create :job_offer
+          job_offer = create(:job_offer)
 
           valid_attributes = {
             id: job_offer.to_param,
@@ -187,7 +187,7 @@ RSpec.describe Admin::JobOffersController, type: :controller do
         end
 
         it "renders the actor widget with a non existing user" do
-          job_offer = create :job_offer
+          job_offer = create(:job_offer)
 
           valid_attributes = {
             id: job_offer.to_param,
@@ -203,7 +203,7 @@ RSpec.describe Admin::JobOffersController, type: :controller do
 
       context "with invalid params" do
         it "returns a non successful response" do
-          job_offer = create :job_offer
+          job_offer = create(:job_offer)
 
           invalid_attributes = {
             id: job_offer.to_param,
@@ -216,7 +216,7 @@ RSpec.describe Admin::JobOffersController, type: :controller do
         end
 
         it "returns a json filled with errors" do
-          job_offer = create :job_offer
+          job_offer = create(:job_offer)
 
           invalid_attributes = {
             id: job_offer.to_param,
@@ -239,14 +239,14 @@ RSpec.describe Admin::JobOffersController, type: :controller do
         end
 
         it "updates the requested job_offer" do
-          job_offer = create :job_offer
+          job_offer = create(:job_offer)
           put :update, params: {id: job_offer.to_param, job_offer: new_attributes}
           job_offer.reload
           expect(job_offer.title).to eq("PIPO F/H")
         end
 
         it "redirects to job offers listing" do
-          job_offer = create :job_offer
+          job_offer = create(:job_offer)
           put :update, params: {id: job_offer.to_param, job_offer: valid_attributes}
           expect(response).to redirect_to(%i[admin job_offers])
         end
@@ -254,7 +254,7 @@ RSpec.describe Admin::JobOffersController, type: :controller do
 
       context "with invalid params" do
         it "returns a success response (i.e. to display the 'edit' template)" do
-          job_offer = create :job_offer
+          job_offer = create(:job_offer)
           put :update, params: {id: job_offer.to_param, job_offer: invalid_attributes}
           expect(response).to be_successful
         end
@@ -263,14 +263,14 @@ RSpec.describe Admin::JobOffersController, type: :controller do
 
     describe "DELETE #destroy" do
       it "destroys the requested job_offer" do
-        job_offer = create :job_offer
+        job_offer = create(:job_offer)
         expect {
           delete :destroy, params: {id: job_offer.to_param}
         }.to change(JobOffer, :count).by(-1)
       end
 
       it "redirects to the job_offers list" do
-        job_offer = create :job_offer
+        job_offer = create(:job_offer)
         delete :destroy, params: {id: job_offer.to_param}
         expect(response).to redirect_to(job_offers_url)
       end
@@ -282,7 +282,7 @@ RSpec.describe Admin::JobOffersController, type: :controller do
 
     describe "GET #index" do
       it "returns a success response" do
-        create_list :job_offer, 5
+        create_list(:job_offer, 5)
         get :index, params: {}
         expect(response).to be_successful
       end
@@ -290,7 +290,7 @@ RSpec.describe Admin::JobOffersController, type: :controller do
 
     describe "GET #archived" do
       it "returns a success response" do
-        create_list :job_offer, 5
+        create_list(:job_offer, 5)
         get :archived, params: {}
         expect(response).to be_successful
         expect(assigns(:job_offers_archived).size).to eq(0)
@@ -314,7 +314,7 @@ RSpec.describe Admin::JobOffersController, type: :controller do
           administrator_id: subject.current_administrator.id, # rubocop:disable RSpec/NamedSubject
           role: :grand_employer
         }]
-        job_offer = create :job_offer, job_offer_actors_attributes: attrs
+        job_offer = create(:job_offer, job_offer_actors_attributes: attrs)
         get :board, params: {id: job_offer.to_param}
         expect(response).to be_successful
       end
@@ -326,7 +326,7 @@ RSpec.describe Admin::JobOffersController, type: :controller do
           administrator_id: subject.current_administrator.id, # rubocop:disable RSpec/NamedSubject
           role: :grand_employer
         }]
-        job_offer = create :job_offer, job_offer_actors_attributes: attrs
+        job_offer = create(:job_offer, job_offer_actors_attributes: attrs)
         get :stats, params: {id: job_offer.to_param}
         expect(response).to be_successful
       end

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe PreferredUsersList, type: :model do
+RSpec.describe PreferredUsersList do
   it { is_expected.to validate_presence_of(:name) }
 end
 

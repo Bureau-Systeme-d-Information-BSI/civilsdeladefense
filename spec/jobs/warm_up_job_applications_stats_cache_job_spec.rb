@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe WarmUpJobApplicationsStatsCacheJob, type: :job do
+RSpec.describe WarmUpJobApplicationsStatsCacheJob do
   let(:memory_store) { ActiveSupport::Cache.lookup_store(:memory_store) }
   let(:cache) { Rails.cache }
 

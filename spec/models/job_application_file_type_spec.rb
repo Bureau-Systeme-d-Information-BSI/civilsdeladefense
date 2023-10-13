@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe JobApplicationFileType, type: :model do
+RSpec.describe JobApplicationFileType do
   it { is_expected.to validate_presence_of(:name) }
 end
 

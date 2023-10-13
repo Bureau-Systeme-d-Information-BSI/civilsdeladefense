@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Account::EmailsController, type: :routing do
+RSpec.describe Account::EmailsController do
   describe "routing" do
     it "routes to #index" do
       expect(get: "/espace-candidat/mes-candidatures/1/emails").to route_to("account/emails#index", job_application_id: "1")

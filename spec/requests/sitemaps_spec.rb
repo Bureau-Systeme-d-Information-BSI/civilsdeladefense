@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Sitemaps", type: :request do
+RSpec.describe "Sitemaps" do
   describe "GET /sitemaps" do
     it "renders the template" do
       create(:published_job_offer)

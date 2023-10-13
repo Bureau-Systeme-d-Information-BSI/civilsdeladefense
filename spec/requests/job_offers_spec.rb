@@ -3,7 +3,7 @@
 require "rails_helper"
 require "rack/test"
 
-RSpec.describe "JobOffers", type: :request do
+RSpec.describe "JobOffers" do
   describe "GET /job_offers" do
     it "returns 200 when fetching the job offers page" do
       get job_offers_path

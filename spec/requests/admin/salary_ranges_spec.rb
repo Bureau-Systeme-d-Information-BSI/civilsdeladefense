@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Admin::SalaryRanges", type: :request do
+RSpec.describe "Admin::SalaryRanges" do
   before { sign_in create(:administrator) }
 
   describe "GET /admin/salary_ranges" do

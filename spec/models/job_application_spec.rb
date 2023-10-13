@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe JobApplication, type: :model do
+RSpec.describe JobApplication do
   let(:job_offer) { create(:job_offer) }
   let(:job_application) { create(:job_application, job_offer: job_offer) }
 

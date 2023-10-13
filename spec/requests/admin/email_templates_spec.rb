@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Admin::EmailTemplates", type: :request do
+RSpec.describe "Admin::EmailTemplates" do
   describe "GET /admin/email_templates" do
     it "renders the requested email template" do
       email_template = create(:email_template)

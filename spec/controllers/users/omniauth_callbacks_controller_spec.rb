@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Users::OmniauthCallbacksController, type: :controller do
+RSpec.describe Users::OmniauthCallbacksController do
   let(:uid) { SecureRandom.uuid }
   let(:email) { Faker::Internet.safe_email }
   let(:last_name) { Faker::Name.last_name }

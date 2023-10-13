@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Admin::Stats::JobApplications", type: :request do
+RSpec.describe "Admin::Stats::JobApplications" do
   before { sign_in create(:administrator) }
 
   describe "GET /admin/stats/job_applications" do

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "admin/job_applications/edit", type: :view do
+RSpec.describe "admin/job_applications/edit" do
   it "renders the edit job_application form" do
     job_application = assign(:job_application, create(:job_application))
 

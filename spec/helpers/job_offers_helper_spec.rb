@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe JobOffersHelper, type: :helper do
+RSpec.describe JobOffersHelper do
   describe ".job_offer_contract_type_display" do
     subject { job_offer_contract_type_display(job_offer.reload) }
 

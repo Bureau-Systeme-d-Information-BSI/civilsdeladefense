@@ -25,7 +25,7 @@ require "rails_helper"
 # removed from Rails core in Rails 5, but can be added back in via the
 # `rails-controller-testing` gem.
 
-RSpec.describe Account::UsersController, type: :controller do
+RSpec.describe Account::UsersController do
   describe "PATCH #update_password" do
     context "with valid params" do
       it "updates the password" do

@@ -91,7 +91,7 @@ class Admin::JobApplicationFilesController < Admin::BaseController
   protected
 
   def check_and_uncheck
-    @job_application_file.send("#{action_name}!") if %w[check uncheck].include?(action_name)
+    @job_application_file.send(:"#{action_name}!") if %w[check uncheck].include?(action_name)
     @job_application.compute_notifications_counter!
     location = [:admin, @job_application, @job_application_file]
     @notification = t(".success")

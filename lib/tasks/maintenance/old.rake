@@ -117,7 +117,7 @@ namespace :maintenance do
         group.each do |item|
           legacy = "LegacyUploader::#{klass}".constantize.find(item.id)
           if !item.send(attachment).file.exists? && legacy.send(attachment).file.exists?
-            item.send("#{attachment}=", legacy.send(attachment))
+            item.send(:"#{attachment}=", legacy.send(attachment))
             if !item.save
               item.update_column :encrypted_file_transfer_in_error, true
             end

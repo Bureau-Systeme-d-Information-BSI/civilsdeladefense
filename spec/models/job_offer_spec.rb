@@ -10,7 +10,7 @@ RSpec.describe JobOffer do
   it { is_expected.to belong_to(:archiving_reason).optional(true) }
 
   %i[employer grand_employer supervisor_employer brh].each do |role|
-    it { is_expected.to have_many("job_offer_#{role}_actors".to_sym).inverse_of(:job_offer) }
+    it { is_expected.to have_many(:"job_offer_#{role}_actors").inverse_of(:job_offer) }
   end
 
   describe "pep or bne" do
@@ -160,7 +160,7 @@ RSpec.describe JobOffer do
     job_applications = create_list(:job_application, 10, job_offer: job_offer)
     expect(job_offer.current_most_advanced_job_applications_state).to eq(0)
     last_state_name, last_state_enum = JobApplication.states.to_a.last
-    job_applications.last.send("#{last_state_name}!")
+    job_applications.last.send(:"#{last_state_name}!")
     expect(job_offer.current_most_advanced_job_applications_state).to eq(last_state_enum)
   end
 

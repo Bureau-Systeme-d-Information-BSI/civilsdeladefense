@@ -51,7 +51,7 @@ class Exporter::StatJobApplications < Exporter::Base
       add_row(
         "",
         I18n.t("#{i18n_key}.title_job_applications_#{set_name}_number_html"),
-        stat_data[:per_state].values_at(*JobApplication.send("#{set_name}_states".to_sym)).compact.sum
+        stat_data[:per_state].values_at(*JobApplication.send(:"#{set_name}_states")).compact.sum
       )
     end
 

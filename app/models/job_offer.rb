@@ -52,8 +52,8 @@ class JobOffer < ApplicationRecord
   accepts_nested_attributes_for :job_offer_actors
 
   %i[employer grand_employer supervisor_employer brh].each do |actor_role|
-    relationship1 = "job_offer_#{actor_role}_actors".to_sym
-    relationship2 = "#{actor_role}_actors".to_sym
+    relationship1 = :"job_offer_#{actor_role}_actors"
+    relationship2 = :"#{actor_role}_actors"
     has_many relationship1,
       -> { where(role: JobOfferActor.roles[actor_role]) },
       class_name: "JobOfferActor",
@@ -179,14 +179,14 @@ class JobOffer < ApplicationRecord
   end
 
   def state_date
-    send("#{state}_at") if respond_to?("#{state}_at")
+    send(:"#{state}_at") if respond_to?(:"#{state}_at")
   end
 
   def set_timestamp
     to = aasm.to_state
-    return unless respond_to?("#{to}_at=")
+    return unless respond_to?(:"#{to}_at=")
 
-    send("#{to}_at=", Time.zone.now)
+    send(:"#{to}_at=", Time.zone.now)
   end
 
   def clean_archiving_reason
@@ -200,7 +200,7 @@ class JobOffer < ApplicationRecord
     organization.organization_defaults.each do |organization_default|
       field = organization_default.kind.gsub("job_offer_", "")
       value = organization_default.value
-      j.send("#{field}=", value)
+      j.send(:"#{field}=", value)
     end
     j.job_offer_actors.build(role: :employer).administrator = reference_administrator
     grand_employer_administrator = reference_administrator.grand_employer_administrator

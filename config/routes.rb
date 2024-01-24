@@ -66,7 +66,7 @@ Rails.application.routes.draw do
         get :init, to: "job_offer_terms#index"
         get :add_actor, :featured, :archived
         JobOffer.aasm.events.map(&:name).each do |event_name|
-          action_name = "create_and_#{event_name}".to_sym
+          action_name = :"create_and_#{event_name}"
           post :create, constraints: CommitParamConstraint.new(action_name), action: action_name
         end
       end
@@ -75,7 +75,7 @@ Rails.application.routes.draw do
         post :transfer, :feature, :unfeature, :send_to_list
         JobOffer.aasm.events.map(&:name).each do |event_name|
           patch(event_name.to_sym)
-          action_name = "update_and_#{event_name}".to_sym
+          action_name = :"update_and_#{event_name}"
           patch :update, constraints: CommitParamConstraint.new(action_name), action: action_name
         end
         namespace :job_offers do

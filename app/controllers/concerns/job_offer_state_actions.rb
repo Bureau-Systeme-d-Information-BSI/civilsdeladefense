@@ -27,7 +27,7 @@ module JobOfferStateActions
       state_action(event_name)
     end
 
-    define_method("update_and_#{event_name}".to_sym) do
+    define_method(:"update_and_#{event_name}") do
       update_and_state_action(event_name)
     end
   end
@@ -35,7 +35,7 @@ module JobOfferStateActions
   protected
 
   def state_action(event_name)
-    if @job_offer.send("#{event_name}!")
+    if @job_offer.send(:"#{event_name}!")
       respond_to do |format|
         format.html { redirect_back(fallback_location: %i[admin job_offers], notice: t(".success")) }
         format.js do
@@ -60,7 +60,7 @@ module JobOfferStateActions
     @job_offer.assign_attributes(job_offer_params)
     @job_offer.cleanup_actor_administrator_dep(current_administrator, current_organization)
 
-    if @job_offer.send("#{event_name}!") && @job_offer.save
+    if @job_offer.send(:"#{event_name}!") && @job_offer.save
       redirect_to %i[admin job_offers], notice: t(".success")
     else
       render :edit

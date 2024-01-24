@@ -4,7 +4,7 @@ RSpec.shared_examples "an admin setting" do |class_name, attribute, new_value|
   let(:setting) { create(class_name) }
   let(:klass) { class_name.to_s.classify.constantize }
   let(:plural) { class_name.to_s.pluralize }
-  let(:index_path) { send("admin_settings_#{plural}_path") }
+  let(:index_path) { send(:"admin_settings_#{plural}_path") }
   before { sign_in create(:administrator) }
 
   describe "listing the #{class_name} settings" do
@@ -41,7 +41,7 @@ RSpec.shared_examples "an admin setting" do |class_name, attribute, new_value|
 
   describe "updating a #{class_name} setting" do
     subject(:update_request) {
-      patch send("admin_settings_#{class_name}_path", setting), params: {class_name => {attribute => new_value}}
+      patch send(:"admin_settings_#{class_name}_path", setting), params: {class_name => {attribute => new_value}}
     }
 
     it "redirects to the index page" do
@@ -55,7 +55,7 @@ RSpec.shared_examples "an admin setting" do |class_name, attribute, new_value|
 
   describe "destroying a #{class_name} setting" do
     subject(:destroy_request) {
-      delete send("admin_settings_#{class_name}_path", setting)
+      delete send(:"admin_settings_#{class_name}_path", setting)
     }
 
     it "redirects to the index page" do

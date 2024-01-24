@@ -63,7 +63,7 @@ class Admin::JobApplicationsController < Admin::BaseController
     known_aasm_state = @job_application.aasm.states.detect { |s| s.name.to_s == @state }
     raise ForbiddenState.new(state: @state) if known_aasm_state.nil?
 
-    @job_application.send("#{known_aasm_state.name}!")
+    @job_application.send(:"#{known_aasm_state.name}!")
     @job_offer = @job_application.job_offer
     state_i18n = JobApplication.human_attribute_name("state/#{@state}")
 

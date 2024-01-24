@@ -75,7 +75,7 @@ class Administrator < ApplicationRecord
       if a.very_first_account
         a.class.roles.keys
       else
-        (a.inviter&.authorized_roles_to_confer || a.class.roles.keys.last)
+        a.inviter&.authorized_roles_to_confer || a.class.roles.keys.last
       end
     },
                 allow_blank: true,

@@ -38,11 +38,11 @@ class Admin::InheritedResourcesController < Admin::BaseController
   end
 
   def resource
-    instance_variable_get("@#{controller_name.singularize}")
+    instance_variable_get(:"@#{controller_name.singularize}")
   end
 
   def collection
-    instance_variable_get("@#{controller_name}")
+    instance_variable_get(:"@#{controller_name}")
   end
 
   def collection_url

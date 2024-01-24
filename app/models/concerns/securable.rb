@@ -13,7 +13,7 @@ module Securable
 
   def document_content
     return secured_content if DELIVER_SECURED_CONTENT && secured_content.present?
-    return content if content.present?
+    content.presence
   end
 
   def secured?

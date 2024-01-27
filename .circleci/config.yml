@@ -61,6 +61,10 @@ jobs:
           DATABASE_URL_TEST: postgresql://circleci:@127.0.0.1:5432/civilsdeladefense_test
           SMTP_URL: smtp://hello%40localhost@localhost
           LOCKBOX_MASTER_KEY: 0000000000000000000000000000000000000000000000000000000000000000
+          DEFAULT_FROM: hello@localhost
+          DEFAULT_HOST: http://localhost:3000
+          CI: true
+          FRANCE_CONNECT_HOST: not.a.real.host.test-franceconnect.fr
       - image: circleci/postgres:11.5-alpine-ram
         environment:
           POSTGRES_USER: circleci

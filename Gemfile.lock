@@ -616,7 +616,7 @@ DEPENDENCIES
   working_hours (~> 1.4)
 
 RUBY VERSION
-   ruby 3.0.3p157
+   ruby 3.1.4p223
 
 BUNDLED WITH
    2.4.8

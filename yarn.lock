@@ -2,43 +2,43 @@
 # yarn lockfile v1
 
 
-"@algolia/autocomplete-core@1.12.1":
-  version "1.12.1"
-  resolved "https://registry.yarnpkg.com/@algolia/autocomplete-core/-/autocomplete-core-1.12.1.tgz#c36ce91f10c978341d89a2dc738b3fae7044e3b2"
-  integrity sha512-Paf1MEdsU8EA5eApJlp6yNJGn6IfWec6UoJyv6fzI+T2v9nU4ynH4nkq07hzOilImVy33vFlzh1+D7jcU2lMFg==
+"@algolia/autocomplete-core@1.15.1":
+  version "1.15.1"
+  resolved "https://registry.yarnpkg.com/@algolia/autocomplete-core/-/autocomplete-core-1.15.1.tgz#2e8efdf2db47aa86d831c276b09ab2ec1f3085c2"
+  integrity sha512-EQSjGdHOch5xEAU6Ek0Te/ESIgHE5rfTh1ThIzTQFDZy2jyQ86kMjjLfyZOcnnimf3KjEyFhGOFytOlVQrpVHQ==
   dependencies:
-    "@algolia/autocomplete-plugin-algolia-insights" "1.12.1"
-    "@algolia/autocomplete-shared" "1.12.1"
+    "@algolia/autocomplete-plugin-algolia-insights" "1.15.1"
+    "@algolia/autocomplete-shared" "1.15.1"
 
 "@algolia/autocomplete-js@^1.7.1":
-  version "1.12.1"
-  resolved "https://registry.yarnpkg.com/@algolia/autocomplete-js/-/autocomplete-js-1.12.1.tgz#30c8e0ae474125d411539c01de0c4a1f136bf121"
-  integrity sha512-o8OVeyTSCJ1n5xnULBqlJ3gcimlyevUeNUmGXuHgd6K2TeHmZ8EgaxHWuyzOdgWNjcJpCpjDh4Q/hEvQq3svDQ==
+  version "1.15.1"
+  resolved "https://registry.yarnpkg.com/@algolia/autocomplete-js/-/autocomplete-js-1.15.1.tgz#bf2e8f3a9f8a3a0cdd5403595f1205e9f5644ed3"
+  integrity sha512-r12RrxZBP6rGVoadTzUFnd15GBop56EyGsT4CXbOxAdRpy+3Jut7E8etuf6CJETOWCgeKkllA6FkJE6B87JP/g==
   dependencies:
-    "@algolia/autocomplete-core" "1.12.1"
-    "@algolia/autocomplete-preset-algolia" "1.12.1"
-    "@algolia/autocomplete-shared" "1.12.1"
+    "@algolia/autocomplete-core" "1.15.1"
+    "@algolia/autocomplete-preset-algolia" "1.15.1"
+    "@algolia/autocomplete-shared" "1.15.1"
     htm "^3.1.1"
     preact "^10.13.2"
 
-"@algolia/autocomplete-plugin-algolia-insights@1.12.1":
-  version "1.12.1"
-  resolved "https://registry.yarnpkg.com/@algolia/autocomplete-plugin-algolia-insights/-/autocomplete-plugin-algolia-insights-1.12.1.tgz#9bafc4f0aa24ba9bcb8abc92a2057ba8132a69dc"
-  integrity sha512-wZnfgmJA+g+WWkyXRZqv9NvRtOrZCnsZMpSvGe4QdQatEWRTAn2hry1cHMj8+sxwpqQQE7Kt/GAZhElrmErPkw==
+"@algolia/autocomplete-plugin-algolia-insights@1.15.1":
+  version "1.15.1"
+  resolved "https://registry.yarnpkg.com/@algolia/autocomplete-plugin-algolia-insights/-/autocomplete-plugin-algolia-insights-1.15.1.tgz#890bc4c1d513ac54503434fab1adaaff277fcb34"
+  integrity sha512-yaqqVunlKXjaiHzPHz30bEYZRy08XzUI3E7fGpQeErMlydeqaI356bu+uZJhA+Idg/A29kTOtS3QYg2mPk0V3g==
   dependencies:
-    "@algolia/autocomplete-shared" "1.12.1"
+    "@algolia/autocomplete-shared" "1.15.1"
 
-"@algolia/autocomplete-preset-algolia@1.12.1":
-  version "1.12.1"
-  resolved "https://registry.yarnpkg.com/@algolia/autocomplete-preset-algolia/-/autocomplete-preset-algolia-1.12.1.tgz#6438e195aea1eb537b436a2e4369af0444a0bd0e"
-  integrity sha512-fbciiuDZ6WsQOhf3Rdm4ctZpOGngg8hNtss4FCJz4FGnGSUxs+H0n38k+FbQ3vcfzQ0nsdAjXWwM4G0OLJE3Mw==
+"@algolia/autocomplete-preset-algolia@1.15.1":
+  version "1.15.1"
+  resolved "https://registry.yarnpkg.com/@algolia/autocomplete-preset-algolia/-/autocomplete-preset-algolia-1.15.1.tgz#585968f1a911921c421a400a7c6117421f288ab0"
+  integrity sha512-UBQljQwX7zQo6ARoKoQjszcQ/YtJ6T81dMDAOcEaSwcREe+Wsg0LCA22zq+fTcl1V+iLkNIfvLPcLeY3ccRh6A==
   dependencies:
-    "@algolia/autocomplete-shared" "1.12.1"
+    "@algolia/autocomplete-shared" "1.15.1"
 
-"@algolia/autocomplete-shared@1.12.1":
-  version "1.12.1"
-  resolved "https://registry.yarnpkg.com/@algolia/autocomplete-shared/-/autocomplete-shared-1.12.1.tgz#9609d4beccd56c4e7fa68cf376aff74d995bba77"
-  integrity sha512-Q2NQ9pxSpwi0WsLlGtrnE+nMo4ERgB4YlYi7eW7EIUtD0LSixLQeOqlNNYIhFUYbNYpfG5s9L3W8PMfS2M4qOg==
+"@algolia/autocomplete-shared@1.15.1":
+  version "1.15.1"
+  resolved "https://registry.yarnpkg.com/@algolia/autocomplete-shared/-/autocomplete-shared-1.15.1.tgz#3edca3f1a8871eec94e1ae1d5a6f02c07810aa26"
+  integrity sha512-BFwaysREVFKdp5NuUHZAGD3iZcuiyb8zrcEe8HEeQlw9iLSCYM+SMrZC/tyjRGx+EVgj2XVSHTEk43nCcLXK4Q==
 
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.14.5":
   version "7.14.5"

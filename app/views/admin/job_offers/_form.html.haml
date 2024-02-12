@@ -4,9 +4,8 @@
 .container-fluid{data: { controller: "job-offer-management"}}
   .row
     .col-12.px-0
-      = simple_form_for([:admin, @job_offer], data: {controller: "form-save", form_save_target: "form", action: "change->form-save#saveFormData submit->form-save#clearFormData"}) do |f|
+      = simple_form_for([:admin, @job_offer], data: {controller: "form-save trix-errors", trix_errors_model_name_value: "job_offer", trix_errors_inputs_value: @job_offer.errors.attribute_names, form_save_target: "form", action: "change->form-save#saveFormData submit->form-save#clearFormData"}) do |f|
         = f.error_notification
-        = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
         - if @job_offer.errors.any?
           .alert.alert-danger.pt-0
             %ul.mb-0
@@ -71,17 +70,17 @@
                       .col-12.col-md-3
                         = f.association :contract_duration
                       .col-12.col-md-3
-                        = f.input :contract_start_on, as: :string
+                        = f.input :contract_start_on, as: :string, input_html: {class: 'default-cursor'}
                     .row
                       .col-12.col-md-3
-                        = f.input :pep_value
+                        = f.input :pep_value, input_html: { class: @job_offer.errors[:base].any? { _1.include?("PEP") } ? "is-invalid" : "" }
                       .col-12.col-md-6
-                        = f.input :pep_date, as: :string
+                        = f.input :pep_date, as: :string, input_html: {class: 'default-cursor'}
                     .row
                       .col-12.col-md-3
-                        = f.input :bne_value
+                        = f.input :bne_value, input_html: { class: @job_offer.errors[:base].any? { _1.include?("BNE") } ? "is-invalid" : "" }
                       .col-12.col-md-6
-                        = f.input :bne_date, as: :string
+                        = f.input :bne_date, as: :string, input_html: {class: 'default-cursor'}
                     .row
                       .col-12.col-md-3
                         = f.association :benefits, as: :check_boxes

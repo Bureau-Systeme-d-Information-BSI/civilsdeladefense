@@ -1,13 +1,32 @@
 {
   "ignored_warnings": [
     {
+      "warning_type": "Unmaintained Dependency",
+      "warning_code": 123,
+      "fingerprint": "715ee6d743a8af33c7b930d728708ce19c765fb40e2ad9d2b974db04d92dc7d1",
+      "check_name": "EOLRuby",
+      "message": "Support for Ruby 3.0.3 ends on 2024-03-31",
+      "file": ".ruby-version",
+      "line": 1,
+      "link": "https://brakemanscanner.org/docs/warning_types/unmaintained_dependency/",
+      "code": null,
+      "render_path": null,
+      "location": null,
+      "user_input": null,
+      "confidence": "Weak",
+      "cwe_id": [
+        1104
+      ],
+      "note": "Waiting for a Ruby upgrade in the project (needs CircleCI upgrade, NodeJS upgrade, Webpacker upgrade)"
+    },
+    {
       "warning_type": "Cross-Site Scripting",
       "warning_code": 4,
       "fingerprint": "bee8ff4f4d06d5734fa78fa0fae35ee869c7849558615be896377936572abd85",
       "check_name": "LinkToHref",
       "message": "Potentially unsafe model attribute in `link_to` href",
       "file": "app/views/account/_navbar.html.haml",
-      "line": 16,
+      "line": 18,
       "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
       "code": "link_to(UserMenuLink.new.name, UserMenuLink.new.url, :class => \"rf-sidemenu__link\", :target => \"_blank\")",
       "render_path": [
@@ -15,7 +34,7 @@
           "type": "controller",
           "class": "Account::BaseController",
           "method": "show",
-          "line": 8,
+          "line": 7,
           "file": "app/controllers/account/base_controller.rb",
           "rendered": {
             "name": "layouts/account",
@@ -39,9 +58,12 @@
       },
       "user_input": "UserMenuLink.new.url",
       "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
       "note": ""
     }
   ],
-  "updated": "2021-07-28 12:55:09 +0200",
-  "brakeman_version": "5.1.1"
+  "updated": "2024-02-12 09:35:59 +0100",
+  "brakeman_version": "6.0.0"
 }

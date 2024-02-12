@@ -20,10 +20,8 @@ import "@hotwired/turbo-rails"
 import Rails from '@rails/ujs'
 Rails.start()
 
-// Import Trix
-const Trix = require('trix')
-Trix.config.blockAttributes.default.tagName = "p"
-Trix.config.blockAttributes.default.breakOnReturn = true
+import './trix-customization'
+
 
 import flatpickr from 'flatpickr'
 import { French } from 'flatpickr/dist/l10n/fr'

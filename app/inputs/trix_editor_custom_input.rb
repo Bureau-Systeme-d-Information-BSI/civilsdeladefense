@@ -8,7 +8,7 @@ class TrixEditorCustomInput < Trix::SimpleForm::TrixEditorInput
       class: "trix-editor-wrapper",
       data: {
         controller: "trix-editor",
-        "trix-editor-limit-value": maximum_length
+        "trix-editor-maximum-value": maximum_length
       }
     )
   end
@@ -20,7 +20,7 @@ class TrixEditorCustomInput < Trix::SimpleForm::TrixEditorInput
       input: input_class,
       class: "trix-content",
       data: {
-        action: "trix-change->trix-editor#limit trix-change->form-save#saveFormData",
+        action: "trix-change->trix-editor#updateCounter trix-change->form-save#saveFormData",
         "trix-editor-target": "editor"
       }
     }
@@ -38,7 +38,10 @@ class TrixEditorCustomInput < Trix::SimpleForm::TrixEditorInput
     template.content_tag(
       "div",
       counter + maximum,
-      class: "mx-3 mb-2 text-muted"
+      class: "mx-3 mb-2 text-muted d-none",
+      data: {
+        "trix-editor-target": "limit"
+      }
     )
   end
 

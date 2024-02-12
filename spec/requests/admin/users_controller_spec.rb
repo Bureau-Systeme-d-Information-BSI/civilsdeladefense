@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe Admin::UsersController, type: :request do
+RSpec.describe Admin::UsersController do
   describe "DELETE /admins/candidats/:id" do
     it "destroys the user and redirects to index" do
       sign_in create(:administrator)

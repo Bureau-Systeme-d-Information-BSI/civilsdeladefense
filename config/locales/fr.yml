@@ -1090,7 +1090,7 @@ fr:
         job_offer:
           attributes:
             base:
-              pep_or_bne: "PEP et/ou BNE doit être remplis"
+              pep_or_bne: "PEP et/ou BNE doit être rempli(e)"
             title:
               brackets: "ne doit pas contenir de parenthèse"
               f_h: "doit finir par F/H"
@@ -1157,6 +1157,7 @@ fr:
         state/archived: "Archivée"
         contract_type: "Type de contrat"
         contract_start_on: "Début du contrat"
+        contract_duration: "Durée du contrat"
         location: "Localisation"
         study_level: "Niveau d'études"
         category: "Domaine professionnel"
@@ -1166,6 +1167,7 @@ fr:
         benefits: "Avantages en nature"
         is_remote_possible: "Télétravail"
         organization_description: "Descriptif de l'organisation"
+        required_profile: "Profil recherché"
       job_offer_actor/role:
         employer: "Employeur"
         grand_employer: "Grand Employeur"

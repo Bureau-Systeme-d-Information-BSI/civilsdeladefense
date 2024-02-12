@@ -31,14 +31,7 @@ export default class extends Controller {
       let input = form.querySelector(`[name='${name}']`)
 
       if (input) {
-        // Usual case
         input.value = value
-
-        // If input is a trix editor, let's populate it as well
-        let trixEditor = input.parentElement.querySelector("trix-editor")
-        if (trixEditor != null) {
-          trixEditor.editor.insertHTML(value)
-        }
       }
     })
   }

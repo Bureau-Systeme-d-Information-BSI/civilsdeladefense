@@ -20,6 +20,14 @@ module Civilsdeladefense
 
     config.autoload_paths << "#{Rails.root}/lib" # rubocop:disable Rails/FilePath
 
+    # Sanitizer
+    config.action_view.sanitized_allowed_tags = ActionView::Base.sanitized_allowed_tags + [
+      "align-left",
+      "align-center",
+      "align-right",
+      "align-justify"
+    ]
+
     if Rails.env.production?
       # Cache assets for 1 year
       config.public_file_server.headers = {

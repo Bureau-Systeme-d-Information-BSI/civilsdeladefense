@@ -8,10 +8,12 @@
     %h1.h4 Connexion espace recruteur
 - if resource.is_a?(User)
   = render "devise/shared/france_connect"
-= simple_form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+= simple_form_for(resource, as: resource_name, url: session_path(resource_name), data: { controller: "password-visibility"}) do |f|
   = f.error_notification
   = f.input :email, required: false, autofocus: true
-  = f.input :password, required: false, hint: false
+  = f.input :password, required: false, hint: false, input_html: { data: { password_visibility_target: "passwordInput" } }
+  = fa_icon("eye", class: "password-visibility-toggle", data: { password_visibility_target: "showButton", action: "click->password-visibility#toggle" })
+  = fa_icon("eye-slash", class: "password-visibility-toggle d-none", data: { password_visibility_target: "hideButton", action: "click->password-visibility#toggle" })
   = f.input :remember_me, as: :boolean if devise_mapping.rememberable?
   .rf-input-group
     = f.button :submit, t(".sign_in.#{ resource.class.to_s.downcase }"), class: 'rf-btn btn btn-primary btn-raised'

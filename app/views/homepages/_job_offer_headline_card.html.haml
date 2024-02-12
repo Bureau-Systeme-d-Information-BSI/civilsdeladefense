@@ -1,12 +1,13 @@
 .rf-col-12.rf-col-md-6.rf-col-lg-4
   .rf-card.rounded-lg
-    .rf-card__body
-      %h4.rf-card__title
-        = link_to job_offer.title, job_offer, class: "rf-card__link"
-      %p.rf-card__desc
-        = job_offer_contract_type_display(job_offer)
-        %br
-        = job_offer.location
-      - if job_offer.published_at.present?
-        .rf-card__detail
-          = t('job_offers.job_offer.published_date', time_ago_in_words: time_ago_in_words(job_offer.published_at))
+    = link_to job_offer do
+      .rf-card__body
+        %h4.rf-card__title
+          = job_offer.title
+        %p.rf-card__desc
+          = job_offer_contract_type_display(job_offer)
+          %br
+          = job_offer.location
+        - if job_offer.published_at.present?
+          .rf-card__detail
+            = t('job_offers.job_offer.published_date', time_ago_in_words: time_ago_in_words(job_offer.published_at))

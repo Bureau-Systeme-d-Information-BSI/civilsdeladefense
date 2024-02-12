@@ -480,8 +480,7 @@ fr:
         success: "Les emails ont été envoyés !"
     messages:
       create:
-        success: "Message envoyé !"
-      create:
+        success: "Message enregistré !"
         failure: "Une erreur est survenue, veuillez réessayer."
     shared:
       navbar:

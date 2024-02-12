@@ -67,10 +67,6 @@ gem "faker", require: false
 gem "omniauth_openid_connect", "~> 0.4.0"
 gem "omniauth-rails_csrf_protection"
 
-group :development do
-  gem "letter_opener"
-end
-
 group :development, :test do
   gem "brakeman", require: false
 
@@ -94,6 +90,8 @@ group :development, :test do
 end
 
 group :development do
+  gem "debug"
+  gem "letter_opener"
   gem "annotate"
 
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.

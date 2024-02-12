@@ -17,7 +17,7 @@
       "cwe_id": [
         1104
       ],
-      "note": "Must fix later by upgrading to a newer Ruby version"
+      "note": "Waiting for a Ruby upgrade in the project (needs CircleCI upgrade, NodeJS upgrade, Webpacker upgrade)"
     },
     {
       "warning_type": "Cross-Site Scripting",

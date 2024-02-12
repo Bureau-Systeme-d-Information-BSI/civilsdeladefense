@@ -5,6 +5,10 @@
   var html = '<%= j render(partial: '/admin/job_offers/job_offer', locals: { job_offer: @job_offer }) %>'
   var frag = document.createRange().createContextualFragment(html)
   jobOffer.replaceWith(frag)
+
+  window.BSN.initCallback()
+
   Snackbar.show({showAction: false, text: '<%= @notification %>'})
+
   new window.BSN.Modal('#modal').hide()
 <% end %>

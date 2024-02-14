@@ -448,11 +448,6 @@ GEM
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
     semantic_range (3.0.0)
-    sentry-rails (5.4.1)
-      railties (>= 5.0)
-      sentry-ruby (~> 5.4.1)
-    sentry-ruby (5.4.1)
-      concurrent-ruby (~> 1.0, >= 1.0.2)
     sequenced (4.0.0)
       activerecord (>= 3.0)
       activesupport (>= 3.0)
@@ -602,8 +597,6 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   selenium-webdriver
-  sentry-rails
-  sentry-ruby
   sequenced
   shoulda-matchers
   sidekiq

@@ -50,8 +50,6 @@ gem "rack-rewrite"
 gem "ransack"
 gem "redis"
 gem "caxlsx", "~> 3.4.1"
-gem "sentry-ruby" # Errors tracking
-gem "sentry-rails" # Performance tracking
 gem "sequenced"
 gem "simple_form"
 gem "trix-rails", require: "trix"

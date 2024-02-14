@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe ApplicationController do
-  it "includes SentryIdentifier" do
-    expect(described_class.ancestors.include?(SentryIdentifier)).to be(true)
+  it "includes ErrorContextable" do
+    expect(described_class.ancestors.include?(ErrorContextable)).to be(true)
   end
 end

@@ -6,7 +6,7 @@ class ApplicationController < ActionController::Base
   layout :layout_by_resource
 
   include ErrorResponseActions
-  include SentryIdentifier
+  include ErrorContextable
   include Timeoutable
   include Turbo::Redirection
 

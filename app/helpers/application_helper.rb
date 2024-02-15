@@ -46,4 +46,12 @@ module ApplicationHelper
     end
     super(object, *(args << options), &block)
   end
+
+  def header_offers_active?(controller_name, action_name, job_offer: nil)
+    controller_name == "job_offers" && (action_name == "index" || (action_name == "show" && !job_offer.spontaneous?))
+  end
+
+  def header_spontaneous_active?(controller_name, action_name, job_offer: nil)
+    controller_name == "job_offers" && action_name == "show" && job_offer&.spontaneous?
+  end
 end

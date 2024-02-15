@@ -39,11 +39,14 @@ class User < ApplicationRecord
 
   accepts_nested_attributes_for :department_users, reject_if: :all_blank
 
+  phony_normalize :phone, default_country_code: "FR"
+
   mount_uploader :photo, PhotoUploader, mount_on: :photo_file_name
   validates :photo,
     file_size: {less_than: 1.megabytes}
 
   validates :first_name, :last_name, presence: true
+  validates_plausible_phone :phone
   validates :phone, :current_position, presence: true, allow_nil: true
   validates :terms_of_service, :certify_majority, acceptance: true
   validate :password_complexity

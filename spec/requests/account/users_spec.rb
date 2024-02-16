@@ -37,8 +37,9 @@ RSpec.describe "Account::Users" do
   end
 
   describe "PATCH /espace-candidat/mon-compte" do
-    subject(:update_request) { patch account_user_path, params: {user: {first_name: new_first_name}} }
+    subject(:update_request) { patch account_user_path, params: params }
 
+    let(:params) { {user: {first_name: new_first_name}} }
     let(:new_first_name) { "Sebastien" }
 
     it "redirects to edit_account_user_path" do
@@ -53,6 +54,39 @@ RSpec.describe "Account::Users" do
       allow_any_instance_of(User).to receive(:update).and_return(false)
 
       expect(update_request).to render_template(:edit)
+    end
+
+    context "when the user has a photo" do
+      let(:user) { create(:confirmed_user, :with_photo) }
+
+      context "when updating the photo" do
+        let(:params) {
+          {
+            user: {
+              first_name: new_first_name,
+              photo: Rack::Test::UploadedFile.new(
+                Rails.root.join("spec/fixtures/files/avatar2.jpg"),
+                "image/jpg"
+              ),
+              delete_photo: "0"
+            }
+          }
+        }
+
+        it { expect { update_request }.to change { user.reload.photo.filename }.from("avatar.jpg").to("avatar2.jpg") }
+      end
+
+      context "when not deleting the photo" do
+        let(:params) { {user: {first_name: new_first_name, delete_photo: "0"}} }
+
+        it { expect { update_request }.not_to change { user.reload.photo.present? } }
+      end
+
+      context "when deleting the photo" do
+        let(:params) { {first_name: new_first_name, user: {delete_photo: "1"}} }
+
+        it { expect { update_request }.to change { user.reload.photo.present? }.from(true).to(false) }
+      end
     end
   end
 

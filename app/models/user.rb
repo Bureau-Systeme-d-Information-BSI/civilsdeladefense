@@ -40,8 +40,7 @@ class User < ApplicationRecord
   accepts_nested_attributes_for :department_users, reject_if: :all_blank
 
   mount_uploader :photo, PhotoUploader, mount_on: :photo_file_name
-  validates :photo,
-    file_size: {less_than: 1.megabytes}
+  validates :photo, file_size: {less_than: 1.megabytes}
 
   validates :first_name, :last_name, presence: true
   validates :phone, :current_position, presence: true, allow_nil: true

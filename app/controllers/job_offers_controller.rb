@@ -52,7 +52,6 @@ class JobOffersController < ApplicationController
     else
       @job_application = JobApplication.new
       @job_application.user = user_signed_in? ? current_user : User.new
-      @job_application.user.department_users.build
       @job_application.build_profile
     end
   end

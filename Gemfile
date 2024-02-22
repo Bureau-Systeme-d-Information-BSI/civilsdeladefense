@@ -84,8 +84,6 @@ group :development, :test do
   gem "rubocop-rspec"
   gem "rubocop-performance"
   gem "standard"
-
-  gem "pry-rails"
 end
 
 group :development do

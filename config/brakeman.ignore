@@ -1,6 +1,75 @@
 {
   "ignored_warnings": [
     {
+      "warning_type": "Missing Authorization",
+      "warning_code": 129,
+      "fingerprint": "1761fb2857cf939128f1a474949912cbaacee5d3469b245a5c622b0fdb80e588",
+      "check_name": "Ransack",
+      "message": "Unrestricted search using `ransack` library called with parameter value. Limit search by defining `ransackable_attributes` and `ransackable_associations` methods in class or upgrade Ransack to version 4.0.0 or newer",
+      "file": "app/controllers/admin/settings/salary_ranges_controller.rb",
+      "line": 8,
+      "link": "https://positive.security/blog/ransack-data-exfiltration",
+      "code": "SalaryRange.ransack(params[:q])",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Admin::Settings::SalaryRangesController",
+        "method": "index"
+      },
+      "user_input": "params[:q]",
+      "confidence": "Medium",
+      "cwe_id": [
+        862
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Missing Authorization",
+      "warning_code": 129,
+      "fingerprint": "32133637917776f5023c7f2a8926810799d5921159c79311a9bd989919a016af",
+      "check_name": "Ransack",
+      "message": "Unrestricted search using `ransack` library called with parameter value. Limit search by defining `ransackable_attributes` and `ransackable_associations` methods in class or upgrade Ransack to version 4.0.0 or newer",
+      "file": "app/controllers/admin/preferred_users_lists_controller.rb",
+      "line": 11,
+      "link": "https://positive.security/blog/ransack-data-exfiltration",
+      "code": "@preferred_users_list.users.includes(:job_applications).ransack(params[:q])",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Admin::PreferredUsersListsController",
+        "method": "show"
+      },
+      "user_input": "params[:q]",
+      "confidence": "Weak",
+      "cwe_id": [
+        862
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Missing Authorization",
+      "warning_code": 129,
+      "fingerprint": "36eca42deee0427098a82b8d3b1fbb6e066f9d37ceb1fb23108f701ce0e06f12",
+      "check_name": "Ransack",
+      "message": "Unrestricted search using `ransack` library called with parameter value. Limit search by defining `ransackable_attributes` and `ransackable_associations` methods in class or upgrade Ransack to version 4.0.0 or newer",
+      "file": "app/controllers/admin/job_applications_controller.rb",
+      "line": 12,
+      "link": "https://positive.security/blog/ransack-data-exfiltration",
+      "code": "@job_applications.includes(:job_offer, :user).ransack(params[:q])",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Admin::JobApplicationsController",
+        "method": "index"
+      },
+      "user_input": "params[:q]",
+      "confidence": "Weak",
+      "cwe_id": [
+        862
+      ],
+      "note": ""
+    },
+    {
       "warning_type": "Unmaintained Dependency",
       "warning_code": 123,
       "fingerprint": "715ee6d743a8af33c7b930d728708ce19c765fb40e2ad9d2b974db04d92dc7d1",
@@ -62,8 +131,54 @@
         79
       ],
       "note": ""
+    },
+    {
+      "warning_type": "Missing Authorization",
+      "warning_code": 129,
+      "fingerprint": "cd8f3a887b66fa1f962d31def4b2b1c212edd8c1f7650e2bd8c376fa615f95be",
+      "check_name": "Ransack",
+      "message": "Unrestricted search using `ransack` library called with parameter value. Limit search by defining `ransackable_attributes` and `ransackable_associations` methods in class or upgrade Ransack to version 4.0.0 or newer",
+      "file": "app/controllers/admin/job_offers_controller.rb",
+      "line": 214,
+      "link": "https://positive.security/blog/ransack-data-exfiltration",
+      "code": "(@job_offers.admin_index_featured or if (action_name == \"archived\") then\n  @job_offers.admin_index_archived\nelse\n  @job_offers.admin_index_active\nend).search_full_text(params[:s]).unscope(:order).ransack(params[:q])",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Admin::JobOffersController",
+        "method": "set_job_offers"
+      },
+      "user_input": "params[:q]",
+      "confidence": "Weak",
+      "cwe_id": [
+        862
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Missing Authorization",
+      "warning_code": 129,
+      "fingerprint": "f223c687859ca3bc99281cc996ed99233ab6d586f7390a322779ee05270009b5",
+      "check_name": "Ransack",
+      "message": "Unrestricted search using `ransack` library called with parameter value. Limit search by defining `ransackable_attributes` and `ransackable_associations` methods in class or upgrade Ransack to version 4.0.0 or newer",
+      "file": "app/controllers/admin/users_controller.rb",
+      "line": 9,
+      "link": "https://positive.security/blog/ransack-data-exfiltration",
+      "code": "@users.ransack((params[:q] or {}))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Admin::UsersController",
+        "method": "index"
+      },
+      "user_input": "params[:q]",
+      "confidence": "Weak",
+      "cwe_id": [
+        862
+      ],
+      "note": ""
     }
   ],
-  "updated": "2024-02-12 09:35:59 +0100",
-  "brakeman_version": "6.0.0"
+  "updated": "2024-02-22 15:53:45 +0100",
+  "brakeman_version": "6.1.1"
 }

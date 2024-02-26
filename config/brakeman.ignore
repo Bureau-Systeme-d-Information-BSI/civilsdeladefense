@@ -70,25 +70,6 @@
       "note": ""
     },
     {
-      "warning_type": "Unmaintained Dependency",
-      "warning_code": 123,
-      "fingerprint": "715ee6d743a8af33c7b930d728708ce19c765fb40e2ad9d2b974db04d92dc7d1",
-      "check_name": "EOLRuby",
-      "message": "Support for Ruby 3.0.3 ends on 2024-03-31",
-      "file": ".ruby-version",
-      "line": 1,
-      "link": "https://brakemanscanner.org/docs/warning_types/unmaintained_dependency/",
-      "code": null,
-      "render_path": null,
-      "location": null,
-      "user_input": null,
-      "confidence": "Weak",
-      "cwe_id": [
-        1104
-      ],
-      "note": "Waiting for a Ruby upgrade in the project (needs CircleCI upgrade, NodeJS upgrade, Webpacker upgrade)"
-    },
-    {
       "warning_type": "Cross-Site Scripting",
       "warning_code": 4,
       "fingerprint": "bee8ff4f4d06d5734fa78fa0fae35ee869c7849558615be896377936572abd85",
@@ -179,6 +160,6 @@
       "note": ""
     }
   ],
-  "updated": "2024-02-22 15:53:45 +0100",
+  "updated": "2024-02-22 20:16:44 +0100",
   "brakeman_version": "6.1.1"
 }

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
-  before_action :filter_by_full_text, only: %i[index], if: -> { permitted_params[:s].present? }
+  before_action :filter_by_full_text, only: %i[index], if: :has_search_query?
   before_action :fetch_base_ressources, only: %i[index]
 
   # GET /admin/stats/candidatures
@@ -39,12 +39,9 @@ class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
   def build_stats
     @per_day = root_rel.group_by_day(:created_at, range: date_range).count
     @per_experiences_fit_job_offer = root_rel.group(:experiences_fit_job_offer).count
-    @per_rejection_reason = root_rel.where.not(rejection_reason_id: nil)
-      .group(:rejection_reason_id).count
+    @per_rejection_reason = root_rel.where.not(rejection_reason_id: nil).group(:rejection_reason_id).count
     @per_state = root_rel.group(:state).count
-    @in_department_count = root_rel.joins(:job_offer, user: :departments).where(
-      "departments.code = job_offers.county_code::text"
-    ).count
+    @in_department_count = root_rel.joins(:job_offer, user: :departments).where(department_code_where_clause).count
   end
 
   def build_stats_per_profile
@@ -55,7 +52,7 @@ class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
   end
 
   def filter_by_full_text
-    @job_applications = @job_applications.search_full_text(permitted_params[:s]).unscope(:order)
+    @job_applications = @job_applications.search_full_text(search_query).unscope(:order)
   end
 
   def build_state_duration
@@ -119,5 +116,17 @@ class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
       age_ranges: @age_ranges,
       q: permitted_params[:q] || {}
     }
+  end
+
+  def search_query = permitted_params[:s]
+
+  def has_search_query? = search_query.present?
+
+  def department_code_where_clause
+    if has_search_query?
+      "departments.code = job_offers_job_applications.county_code::text"
+    else
+      "departments.code = job_offers.county_code::text"
+    end
   end
 end

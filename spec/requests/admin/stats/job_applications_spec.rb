@@ -7,10 +7,22 @@ RSpec.describe "Admin::Stats::JobApplications" do
 
   describe "GET /admin/stats/job_applications" do
     context "when the format is html" do
-      subject(:index_request) { get admin_stats_job_applications_path }
+      subject(:index_request) { get admin_stats_job_applications_path, params: params }
 
-      it "renders the template" do
-        expect(index_request).to render_template(:index)
+      shared_examples "a successful request" do |prms|
+        let(:params) { prms }
+
+        it { expect { index_request }.not_to raise_error }
+
+        it { expect(index_request).to render_template(:index) }
+      end
+
+      context "when there is no search query" do
+        it_behaves_like "a successful request", nil
+      end
+
+      context "when there is a search query" do
+        it_behaves_like "a successful request", {s: "hello"}
       end
     end
 

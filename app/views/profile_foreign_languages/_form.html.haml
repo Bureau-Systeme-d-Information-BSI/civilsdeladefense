@@ -5,11 +5,11 @@
         .rf-col-6
           - name = "job_application[profile_attributes][profile_foreign_languages_attributes][index][foreign_language_id]"
           = label_tag name, t("simple_form.labels.defaults.foreign_language")
-          = select_tag name, options_from_collection_for_select(ForeignLanguage.all, "id", "name"), class: "rf-select"
+          = select_tag name, options_from_collection_for_select(ForeignLanguage.all, "id", "name"), class: "rf-select", include_blank: true
         .rf-col-6
           - name = "job_application[profile_attributes][profile_foreign_languages_attributes][index][foreign_language_level_id]"
           = label_tag name, t("simple_form.labels.defaults.foreign_language_level")
-          = select_tag name, options_from_collection_for_select(ForeignLanguageLevel.all, "id", "name"), class: "rf-select"
+          = select_tag name, options_from_collection_for_select(ForeignLanguageLevel.all, "id", "name"), class: "rf-select", include_blank: true
     .rf-col-1.text-center.rf-mt-4w
       %button.blank_button.rf-fi-delete-line{data: { action: 'click->duplicator#remove' }}
   %div{ data: { duplicator: { target: :root }}}
@@ -20,11 +20,11 @@
             .rf-col-6
               - name = "job_application[profile_attributes][profile_foreign_languages_attributes][#{index}][foreign_language_id]"
               = label_tag name, t("simple_form.labels.defaults.foreign_language")
-              = select_tag name, options_from_collection_for_select(ForeignLanguage.all, "id", "name", selected: profile_foreign_language.foreign_language_id), class: "rf-select"
+              = select_tag name, options_from_collection_for_select(ForeignLanguage.all, "id", "name", selected: profile_foreign_language.foreign_language_id), class: "rf-select", include_blank: true
             .rf-col-6
               - name = "job_application[profile_attributes][profile_foreign_languages_attributes][#{index}][foreign_language_level_id]"
               = label_tag name, t("simple_form.labels.defaults.foreign_language_level")
-              = select_tag name, options_from_collection_for_select(ForeignLanguageLevel.all, "id", "name", selected: profile_foreign_language.foreign_language_level_id), class: "rf-select"
+              = select_tag name, options_from_collection_for_select(ForeignLanguageLevel.all, "id", "name", selected: profile_foreign_language.foreign_language_level_id), class: "rf-select", include_blank: true
         .rf-col-1.text-center.rf-mt-4w
           %button.blank_button.rf-fi-delete-line{data: { action: 'click->duplicator#remove' }}
 

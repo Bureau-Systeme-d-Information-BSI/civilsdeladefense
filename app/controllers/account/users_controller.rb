@@ -124,9 +124,22 @@ class Account::UsersController < Account::BaseController
   end
 
   def user_params
-    params.require(:user).permit(
-      :first_name, :last_name, :phone, :website_url, :current_position, :photo, :delete_photo, department_users_attributes: %i[department_id]
+    filtered_params = params.require(:user).permit(
+      :first_name,
+      :last_name,
+      :phone,
+      :website_url,
+      :current_position,
+      :photo,
+      :delete_photo,
+      department_users_attributes: %i[department_id]
     )
+
+    if filtered_params[:photo].present? || filtered_params[:delete_photo] == "0"
+      filtered_params.except(:delete_photo)
+    else
+      filtered_params.except(:photo)
+    end
   end
 
   def user_password_params

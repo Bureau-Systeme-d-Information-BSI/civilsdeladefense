@@ -40,12 +40,12 @@
         %li.rf-nav__item{class: klass}
           = link_to "Accueil", root_path, class: 'rf-nav__link'
 
-        - klass = controller.controller_name == 'job_offers' && controller.action_name == 'index' ? 'rf-nav__item--active' : nil
+        - klass = header_offers_active?(controller.controller_name, controller.action_name, job_offer: @job_offer) ? 'rf-nav__item--active' : nil
         %li.rf-nav__item{class: klass}
           = link_to "Nos offres", job_offers_path, class: 'rf-nav__link'
 
         - spontaneous = JobOffer.find_by(spontaneous: true)
         - if spontaneous
-          - klass = controller.controller_name == 'job_offers' && controller.action_name == 'show' ? 'rf-nav__item--active' : nil
+          - klass = header_spontaneous_active?(controller.controller_name, controller.action_name, job_offer: @job_offer) ? 'rf-nav__item--active' : nil
           %li.rf-nav__item{class: klass}
             = link_to "Candidature spontanée", spontaneous, class: 'rf-nav__link'

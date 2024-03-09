@@ -77,7 +77,6 @@ group :development, :test do
   gem "rspec_junit_formatter"
   gem "rspec-rails", "~> 5.1.2"
   gem "shoulda-matchers"
-  gem "simplecov", require: false
 
   ## Linting
   gem "rubocop"

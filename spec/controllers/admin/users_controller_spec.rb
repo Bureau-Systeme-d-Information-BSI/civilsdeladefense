@@ -20,7 +20,7 @@ RSpec.describe Admin::UsersController do
     }
 
     context "with valid params" do
-      let(:user_params) { {phone: "07"} }
+      let(:user_params) { {phone: "0712345678"} }
 
       context "when format is HTML" do
         let(:format) { :html }
@@ -28,7 +28,7 @@ RSpec.describe Admin::UsersController do
         it "updates the requested user" do
           update
           user.reload
-          expect(user.phone).to eq("07")
+          expect(user.phone).to eq("+33712345678")
         end
       end
 
@@ -38,7 +38,7 @@ RSpec.describe Admin::UsersController do
         it "updates the requested user" do
           update
           user.reload
-          expect(user.phone).to eq("07")
+          expect(user.phone).to eq("+33712345678")
         end
       end
     end

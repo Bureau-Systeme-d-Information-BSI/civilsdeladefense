@@ -58,6 +58,7 @@ gem "will_paginate"
 gem "working_hours", "~> 1.4"
 gem "sidekiq" # Async jobs
 gem "rorvswild" # Errors tracking
+gem "phony_rails" # Normalize phone numbers
 
 gem "clockwork" # simulate cron on Scalingo
 

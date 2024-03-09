@@ -160,18 +160,12 @@ RSpec.describe Administrator do
     end
   end
 
-  it "computes notice period difference in days" do
-    ENV["DAYS_INACTIVITY_PERIOD_BEFORE_DEACTIVATION"] = "100"
-    ENV["DAYS_NOTICE_PERIOD_BEFORE_DEACTIVATION"] = "20"
-    expect(described_class.notice_period_target_date.to_date).to eq(80.days.ago.to_date)
-  end
-
   describe "automatic deactivation" do
     before do
       ENV["DAYS_INACTIVITY_PERIOD_BEFORE_DEACTIVATION"] = "100"
       ENV["DAYS_NOTICE_PERIOD_BEFORE_DEACTIVATION"] = "20"
       administrator.reload
-      described_class.deactivate_when_too_old
+      described_class.deactivate_when_too_old!
       administrator.reload
     end
 

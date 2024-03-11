@@ -18,12 +18,21 @@ module Civilsdeladefense
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w[assets tasks])
 
+    # No longer add autoloaded paths into `$LOAD_PATH`. This means that you won't be able
+    # to manually require files that are managed by the autoloader, which you shouldn't do anyway.
+    #
+    # This will reduce the size of the load path, making `require` faster if you don't use bootsnap, or reduce the size
+    # of the bootsnap cache if you use it.
+    config.add_autoload_paths_to_load_path = false
+
+    config.eager_load_paths << Rails.root.join("lib/services")
+    config.eager_load_paths << Rails.root.join("lib/renderers")
+    config.autoload_paths << Rails.root.join("extras")
+
     config.time_zone = "Paris"
 
     config.i18n.available_locales = [:fr]
     config.i18n.default_locale = :fr
-
-    config.autoload_paths << "#{Rails.root}/lib" # rubocop:disable Rails/FilePath
 
     # Sanitizer
     config.action_view.sanitized_allowed_tags = ActionView::Base.sanitized_allowed_tags + [
@@ -63,10 +72,5 @@ module Civilsdeladefense
     config.to_prepare do
       Devise::Mailer.layout "mailer"
     end
-
-    config.eager_load_paths << Rails.root.join("lib/services")
-    config.eager_load_paths << Rails.root.join("lib/renderers")
-    config.autoload_paths << Rails.root.join("lib/services")
-    config.autoload_paths << Rails.root.join("extras")
   end
 end

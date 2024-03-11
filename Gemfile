@@ -72,7 +72,7 @@ group :development, :test do
 
   gem "dotenv-rails"
 
-  gem "factory_bot_rails"
+  gem "factory_bot_rails", "~> 6.4.3"
   gem "rails-controller-testing"
   gem "rspec_junit_formatter"
   gem "rspec-rails", "~> 6.1.1"

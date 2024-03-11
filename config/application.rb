@@ -27,6 +27,7 @@ module Civilsdeladefense
 
     config.eager_load_paths << Rails.root.join("lib/services")
     config.eager_load_paths << Rails.root.join("lib/renderers")
+    config.autoload_paths << Rails.root.join("lib")
     config.autoload_paths << Rails.root.join("extras")
 
     config.time_zone = "Paris"

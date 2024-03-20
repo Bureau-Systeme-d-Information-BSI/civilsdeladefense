@@ -1,11 +1,5 @@
 # frozen_string_literal: true
 
-require "simplecov"
-SimpleCov.start "rails" do
-  add_filter %r{^/test/}
-  add_filter %r{^/vendor/.bundle/}
-end
-
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require "spec_helper"
 ENV["RAILS_ENV"] ||= "test"
@@ -72,7 +66,7 @@ end
 
 RSpec.configure do |config|
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  config.fixture_path = Rails.root.join("spec/fixtures").to_s
+  config.fixture_paths = [Rails.root.join("spec/fixtures").to_s]
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false

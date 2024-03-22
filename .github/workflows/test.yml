@@ -56,6 +56,7 @@ jobs:
           DEFAULT_FROM: hello@localhost
           DEFAULT_HOST: http://localhost:3000
           FRANCE_CONNECT_HOST: not.a.real.host.test-franceconnect.fr
+          SECURE_CONTENT: true
 
       - name: Upload Capybara screenshots
         if: failure()

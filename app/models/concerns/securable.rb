@@ -8,7 +8,7 @@ module Securable
 
     after_commit -> { SecureContentJob.set(wait: 15.seconds).perform_later(id: id) },
       unless: -> { secured? },
-      if: -> { content.present? && pdf? }
+      if: -> { content.present? && pdf? && ENV.fetch("SECURE_CONTENT", false) }
   end
 
   def document_content

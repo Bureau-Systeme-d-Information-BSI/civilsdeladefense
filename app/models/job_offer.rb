@@ -151,6 +151,10 @@ class JobOffer < ApplicationRecord
     end
   end
 
+  def self.spontaneous? = spontaneous_job_offer.present?
+
+  def self.spontaneous_job_offer = published.where(spontaneous: true).first
+
   # Return an hash where keys are regions and values are counties inside it
   # All regions and counties got job_offers associated
   def self.regions

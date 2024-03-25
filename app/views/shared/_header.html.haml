@@ -32,6 +32,8 @@
                 = button_to t('.logout'), destroy_user_session_path, method: :delete, class: 'rf-link rf-border-0'
             - else
               %li.rf-shortcuts__item
+                = link_to t(".admin_root"), new_session_path(Administrator), class: %w[rf-link rf-fi-lock-line]
+              %li.rf-shortcuts__item
                 = link_to t(".account_root"), new_session_path(User), class: %w[rf-link rf-fi-account-line]
     %nav#navigation-709.rf-nav.rf-modal{"aria-label" => "Menu principal", role: "navigation"}
       %button.rf-link--close.rf-link{"aria-controls" => "navigation-709"} Fermer

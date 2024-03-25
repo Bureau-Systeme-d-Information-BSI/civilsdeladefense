@@ -183,6 +183,7 @@ fr:
       privacy: "Politique de confidentialité"
       tracking: "Suivi d'audience et vie privée"
     header:
+      admin_root: "Espace recruteurs"
       account: "Mon compte"
       account_root: "Mon espace candidat"
       home_link: "Accueil"

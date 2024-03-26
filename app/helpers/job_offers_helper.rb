@@ -24,7 +24,7 @@ module JobOffersHelper
     when :location
       job_offer.location
     when :study_level, :category, :experience_level
-      job_offer.send(attribute).name
+      job_offer.send(attribute)&.name.presence || "-"
     when :salary
       job_offer_salary_display(job_offer)
     when :benefits

@@ -15,3 +15,8 @@ end
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
+# Indexes
+#
+#  index_foreign_language_levels_on_name      (name) UNIQUE
+#  index_foreign_language_levels_on_position  (position)
+#

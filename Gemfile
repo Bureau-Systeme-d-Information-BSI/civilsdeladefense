@@ -9,11 +9,17 @@ ruby "3.3.0"
 gem "rails", "~> 7.1.3.2"
 gem "rails-i18n"
 
+gem "sprockets-rails"
+
+gem "cssbundling-rails", "~> 1.4" # Bundles CSS files
+gem "jsbundling-rails", "~> 1.3" # Bundles JS files
+
+gem "stimulus-rails", "~> 1.3"
+
 # Use postgresql as the database for Active Record
 gem "pg", ">= 0.18", "< 2.0"
 gem "puma"
-# Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-gem "webpacker", "~> 5.4"
+
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem "jbuilder", "~> 2.11"
 # Use ActiveModel has_secure_password

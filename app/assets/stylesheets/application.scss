@@ -1,9 +1,11 @@
-@import "flex-utilities";
-@import "stepper";
-@import "alert";
-@import "france-connect";
-@import "job_offer_content";
-@import "new_user";
+@import "bootstrap/scss/bootstrap";
+@import "@gouvfr/dsfr/dist/css/dsfr.min";
+@import "./flex-utilities";
+@import "./stepper";
+@import "./alert";
+@import "./france-connect";
+@import "./job_offer_content";
+@import "./new_user";
 
 // Design System overflow fix
 @media (min-width: 48em) {

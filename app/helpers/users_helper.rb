@@ -38,7 +38,7 @@ module UsersHelper
   end
 
   def blank_photo
-    asset_pack_path("images/default_user_avatar.svg")
+    asset_path("default_user_avatar.svg")
   end
 
   def hint_text_for_file(job_application, job_application_file)

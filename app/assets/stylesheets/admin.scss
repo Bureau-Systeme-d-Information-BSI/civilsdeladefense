@@ -1,9 +1,15 @@
-@import 'common';
-@import 'devise';
-@import 'board';
+@import "bootstrap/scss/bootstrap";
+@import 'flatpickr/dist/flatpickr.css';
+@import 'lightpick/css/lightpick.css';
+@import 'trix/dist/trix.css';
+@import 'node-snackbar/dist/snackbar.css';
+@import './autocomplete';
+@import './common';
+@import './devise';
+@import './board';
 
 $colors: $secondary $primary $tertiary $quaternary $quinary $dark-gray;
-@import '~highcharts/css/highcharts.scss';
+@import 'highcharts/css/highcharts.scss';
 
 @supports (position: sticky) {
   [role="main"] .card {
@@ -52,7 +58,7 @@ body {
       @extend .px-3, .py-1;
       border-left: 4px solid transparent;
       color: #393939;
-      transition: color 0.2s $bmd-animation-curve-default;
+      // TODO transition: color 0.2s $bmd-animation-curve-default;
       will-change: color, transform;
       outline: 0;
       color: black;

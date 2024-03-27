@@ -1,5 +1,7 @@
+@use "sass:math";
+
 .rf-stepper .rf-stepper-step {
-  width: (100% / 11);
+  width: math.div(100%, 11);
   /* 100 / no_of_steps */
 }
 

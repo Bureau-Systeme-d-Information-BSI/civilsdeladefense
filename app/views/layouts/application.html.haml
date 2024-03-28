@@ -16,8 +16,8 @@
     #__SVG_SPRITE_NODE__{'data-turbo-permanent': true}
     = render partial: '/shared/header'
     = render partial: '/shared/timeout'
-    %button.scroll.rf-btn.d-flex.justify-content-center.align-items-center{data: { controller: "scroll", action: "scroll#top"}}
-      = fa_icon 'chevron-up', class: 'rf-icon-xl scroll-icon'
+    %button.scroll.rf-btn.rf-fi-arrow-up-s-line{data: { controller: "scroll", action: "scroll#top"}}
+      
     - if flash[:notice] || flash[:alert] || flash[:error] || flash[:success]
       .rf-container
         .rf-grid-row

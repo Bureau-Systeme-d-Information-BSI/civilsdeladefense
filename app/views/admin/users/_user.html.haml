@@ -16,7 +16,7 @@
                 = user.full_name
                 - if last_job_application_resume_url
                   %div{data: {controller: "rich-tooltip", bs_custom_class: "tooltip-rich", bs_placement: "right"}, title: "<object data='#{last_job_application_resume_url}' style='margin-left: 10px; bottom: 0;' class='position-fixed' height='600px' width='800px' type='application/pdf'></object>"}
-                    = fa_icon "file-document", class: "ml-2"
+                    = fa_icon "file-lines", class: "ml-2"
             .col-12.personal-profile-current-position
               - current_position = user&.current_position
               - if current_position
@@ -39,10 +39,10 @@
           %ul.list-inline.mb-0.actions.mt-2.mt-md-0
             %li.list-inline-item
               = link_to listing_admin_user_path(user), role: :button do
-                = fa_icon 'menu'
+                = fa_icon 'bars'
                 = t('.my_preferred_user_lists')
             - if preferred_user
               %li.list-inline-item
                 = link_to [:admin, preferred_user], role: :button, method: :delete, data: {confirm: t('buttons.confirm')} do
-                  = fa_icon 'delete'
+                  = fa_icon 'trash-can'
                   = t('.remove_user')

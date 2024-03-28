@@ -20,7 +20,7 @@
         - klasses = %w(btn btn-danger btn-raised btn-sm mb-0 mr-1)
         - klasses << 'opaque' unless file.rejected?
         = link_to [:admin, @job_application, :job_application_files, {job_application_file: {job_application_file_type_id: type.id, is_validated: 2}}], class: klasses, title: t('.uncheck'), remote: true, method: :post do
-          = fa_icon "close"
+          = fa_icon "xmark"
       - else
         - klasses = %w(btn btn-success btn-raised btn-sm mb-0 mr-1)
         - klasses << 'opaque' unless file.validated?
@@ -29,7 +29,7 @@
         - klasses = %w(btn btn-danger btn-raised btn-sm mb-0 mr-1)
         - klasses << 'opaque' unless file.rejected?
         = link_to [:uncheck, :admin, @job_application, file], class: klasses, title: t('.uncheck'), remote: true, method: :post do
-          = fa_icon "close"
+          = fa_icon "xmark"
     - elsif file.document_content.present?
       - klasses = %w(btn btn-success btn-raised btn-sm mb-0 mr-1)
       - klasses << 'opaque' unless file.validated?
@@ -38,7 +38,7 @@
       - klasses = %w(btn btn-danger btn-raised btn-sm mb-0 mr-1)
       - klasses << 'opaque' unless file.rejected?
       = link_to [:uncheck, :admin, @job_application, file], class: klasses, title: t('.uncheck'), remote: true, method: :post do
-        = fa_icon "close"
+        = fa_icon "xmark"
       = render partial: "/admin/job_application_files/job_application_file_upload", locals: {job_application: job_application, job_application_file: file, file_type: type}
       - url = [:admin, job_application, file, {format: :pdf}]
       = link_to t('.download'), url, target: "_blank", class: "btn btn-primary btn-raised btn-sm mb-0"

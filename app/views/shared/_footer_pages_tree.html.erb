@@ -8,7 +8,7 @@
     <% if page.only_link? %>
       <%= link_to page.url, target: '_blank', rel: 'noopener noreferrer' do %>
         <%= page.title %>
-        <%= fa_icon("open-in-new") %>
+        <%= fa_icon("arrow-up-right-from-square") %>
       <% end %>
     <% else %>
     <%= link_to page.title, page_path(page) %></li>

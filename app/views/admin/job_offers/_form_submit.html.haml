@@ -9,13 +9,13 @@
           %li.list-inline-item
             = button_tag(type: 'submit', class: 'btn btn-primary btn-raised mb-0') do
               = t('helpers.submit.job_offer.save')
-              = fa_icon('save', class: 'ml-1')
+              = fa_icon('floppy-disk', class: 'ml-1')
           - events.each do |event_name|
             %li.list-inline-item
               - action_prefix = @job_offer.new_record? ? "create" : "update"
               - action_name = [action_prefix, "and", event_name].join("_")
               = button_tag(type: 'submit', class: 'btn btn-primary btn-raised mb-0', name: :commit, value: action_name) do
                 = t("buttons.#{ event_name }")
-                = fa_icon('send', class: 'ml-1')
+                = fa_icon('paper-plane', class: 'ml-1')
         - if !@job_offer.new_record? && !events.include?(:publish) && @job_offer.published_at.blank?
           %em Publication possible à partir du #{ I18n.l(@job_offer.publishing_possible_at, format: :short) }

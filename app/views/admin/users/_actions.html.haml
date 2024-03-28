@@ -1,5 +1,5 @@
 .font-weight-bold.text-secondary.mb-3
-  = fa_icon('settings', class: 'text-secondary')
+  = fa_icon('gear', class: 'text-secondary')
   = t('.title')
 - if user.receive_job_offer_mails
   = form_tag [:send_job_offer, :admin, user] do
@@ -24,18 +24,18 @@
     - if can?(:suspend, user)
       = link_to [:unsuspend, :admin, user], method: :post, data: {confirm: t('buttons.confirm')}, class: 'btn btn-primary mb-0' do
         = t('buttons.unsuspend_user')
-        = fa_icon('send', class: 'ml-1')
+        = fa_icon('paper-plane', class: 'ml-1')
   - else
     - if can?(:suspend, user)
       = link_to "#", class: 'btn btn-primary mb-0', data: { toggle: :modal, target: '#suspendContentModal' } do
         = t('buttons.suspend_user')
-        = fa_icon('send', class: 'ml-1')
+        = fa_icon('paper-plane', class: 'ml-1')
       .mb-3
 
   - if can?(:destroy, user)
     = link_to [:admin, user], method: :delete, data: {confirm: t('buttons.confirm')}, class: 'btn btn-primary mb-0' do
       = t('buttons.delete_user')
-      = fa_icon('send', class: 'ml-1')
+      = fa_icon('paper-plane', class: 'ml-1')
 
     .mb-4
 
@@ -51,4 +51,4 @@
               .ml-auto
                 = button_tag(type: 'submit', class: 'btn btn-primary btn-raised mb-0') do
                   = t('buttons.suspend_user')
-                  = fa_icon('send', class: 'ml-1')
+                  = fa_icon('paper-plane', class: 'ml-1')

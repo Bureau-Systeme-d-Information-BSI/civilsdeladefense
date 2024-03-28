@@ -7,6 +7,13 @@
 @import './devise';
 @import './board';
 
+$fa-font-path: ".";
+@import "@fortawesome/fontawesome-free/scss/fontawesome";
+@import "@fortawesome/fontawesome-free/scss/brands";
+@import "@fortawesome/fontawesome-free/scss/solid";
+@import "@fortawesome/fontawesome-free/scss/regular";
+@import "@fortawesome/fontawesome-free/scss/v4-shims";
+
 $colors: $secondary $primary $tertiary $quaternary $quinary $dark-gray;
 @import 'highcharts/css/highcharts.scss';
 
@@ -424,17 +431,6 @@ a {
   bottom: 1.2rem;
   right: 1.5rem;
   z-index: 150 !important;
-
-  .scroll-icon {
-      height: 1.5rem;
-      width: auto;
-      display: inline-block;
-      font-size: inherit;
-      line-height: 1;
-      overflow: visible;
-      fill: currentColor;
-      position: relative;
-  }
 }
 
 .warning-snackbar {

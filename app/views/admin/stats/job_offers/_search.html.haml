@@ -6,8 +6,8 @@
         .form-group.input-group.input-search
           .input-group-prepend
             %span.input-group-text.bg-white
-              = fa_icon('magnify')
-          = text_field_tag :s, params[:s]
+              = fa_icon('magnifying-glass')
+          = text_field_tag :s, params[:s], placeholder: 'Mots-clés'
         .row.mt-5
           .col-12.col-sm-3
             = render partial: 'filter_employer'

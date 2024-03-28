@@ -17,7 +17,7 @@
   %body{class: klasses, style: style}
     #__SVG_SPRITE_NODE__{'data-turbo-permanent': true}
     %button.scroll.btn.btn-primary.btn-raised.d-flex.justify-content-center.align-items-center{data: { controller: "scroll", action: "scroll#top"}}
-      = fa_icon 'chevron-up', class: 'scroll-icon'
+      = fa_icon 'chevron-up'
     - if administrator_signed_in?
       = render partial: '/admin/shared/navbar'
       - if flash[:notice]

@@ -51,7 +51,7 @@
     %td
       - if level != 0
         - url = element.only_link? ? element.url : element
-        = link_to fa_icon('link-variant'), url, title: t('buttons.show'), target: :_blank
+        = link_to fa_icon('arrow-up-right-from-square'), url, title: t('buttons.show'), target: :_blank
   %td.text-right
     .d-flex.flex-row.actions
       - if resource_class == Category
@@ -67,4 +67,4 @@
           = link_to fa_icon('arrow-down'), [:move_lower, :admin, :settings, element], method: :post, title: t('buttons.move_lower'), data: {confirm: t('buttons.confirm')}
       = link_to fa_icon('pencil'), [:edit, :admin, :settings, element], title: t('buttons.edit')
       - unless resource_class == Page && level == 0
-        = link_to fa_icon('delete'), [:admin, :settings, element], method: :delete, title: t('buttons.delete'), data: {confirm: t('buttons.confirm')}
+        = link_to fa_icon('trash-can'), [:admin, :settings, element], method: :delete, title: t('buttons.delete'), data: {confirm: t('buttons.confirm')}

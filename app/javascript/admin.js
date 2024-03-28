@@ -5,6 +5,8 @@ Rails.start()
 
 import './trix-customization'
 
+import "@fortawesome/fontawesome-free"
+
 import flatpickr from 'flatpickr'
 import { French } from 'flatpickr/dist/l10n/fr'
 

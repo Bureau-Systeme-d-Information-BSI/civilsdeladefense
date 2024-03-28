@@ -3,7 +3,7 @@
   - if user
     - full_name = user.full_name
     .font-weight-bold.text-secondary.mb-3
-      = fa_icon('forum', class: 'text-secondary')
+      = fa_icon('comments', class: 'text-secondary')
       = t('.title_state')
 
     - if can? :manage, @job_application
@@ -21,7 +21,7 @@
         = f.input :rejection_reason_id, collection: RejectionReason.all, label: false, prompt: :translate, wrapper: :custom_multi_select_full_wide
 
     .font-weight-bold.text-secondary.mb-3.mt-4
-      = fa_icon('forum', class: 'text-secondary')
+      = fa_icon('comments', class: 'text-secondary')
       = t('.title')
 
     - if can? :manage, Message

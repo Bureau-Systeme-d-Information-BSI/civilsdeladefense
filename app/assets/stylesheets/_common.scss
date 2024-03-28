@@ -50,12 +50,11 @@ $theme-colors: (
   "danger": $danger
 );
 
-// TODO
 // variables borrowed from bootstrap-material-design
-// $bmd-animation-curve-fast-out-slow-in: cubic-bezier(0.4, 0, 0.2, 1) !default;
-// $bmd-animation-curve-linear-out-slow-in: cubic-bezier(0, 0, 0.2, 1) !default;
-// $bmd-animation-curve-fast-out-linear-in: cubic-bezier(0.4, 0, 1, 1) !default;
-// $bmd-animation-curve-default: $bmd-animation-curve-fast-out-slow-in !default;
+$bmd-animation-curve-fast-out-slow-in: cubic-bezier(0.4, 0, 0.2, 1) !default;
+$bmd-animation-curve-linear-out-slow-in: cubic-bezier(0, 0, 0.2, 1) !default;
+$bmd-animation-curve-fast-out-linear-in: cubic-bezier(0.4, 0, 1, 1) !default;
+$bmd-animation-curve-default: $bmd-animation-curve-fast-out-slow-in !default;
 
 $custom-file-text: (
   en: "Browse",
@@ -64,26 +63,25 @@ $custom-file-text: (
 
 @import 'bootstrap/scss/bootstrap';
 
-// TODO
-// @import 'bootstrap-material-design/scss/variables';
-// @import 'bootstrap-material-design/scss/variables/shadow';
-// @import 'bootstrap-material-design/scss/variables/bootstrap/buttons';
-// @import 'bootstrap-material-design/scss/mixins/utilities';
-// @import 'bootstrap-material-design/scss/mixins/forms';
-// @import 'bootstrap-material-design/scss/mixins/hover';
-// @import 'bootstrap-material-design/scss/mixins/buttons';
-// @import 'bootstrap-material-design/scss/buttons';
-// @import 'bootstrap-material-design/scss/dropdown';
-// @import 'bootstrap-material-design/scss/dropdown';
-// @import 'bootstrap-material-design/scss/extensions/snackbarjs';
-@import 'navbar';
-@import 'offcanvas';
-@import 'fontawesome';
-@import 'card_extension';
-@import 'form_extension';
-@import 'buttons_extension';
-@import 'progress';
-@import 'flash';
+@import './bootstrap_material_design_variables';
+@import 'bootstrap-material-design/scss/variables/shadow';
+@import 'bootstrap-material-design/scss/variables/bootstrap/buttons';
+@import 'bootstrap-material-design/scss/mixins/utilities';
+@import 'bootstrap-material-design/scss/mixins/forms';
+@import 'bootstrap-material-design/scss/mixins/hover';
+@import 'bootstrap-material-design/scss/mixins/buttons';
+@import 'bootstrap-material-design/scss/buttons';
+@import 'bootstrap-material-design/scss/dropdown';
+@import 'bootstrap-material-design/scss/dropdown';
+@import 'bootstrap-material-design/scss/extensions/snackbarjs';
+@import './navbar';
+@import './offcanvas';
+@import './fontawesome';
+@import './card_extension';
+@import './form_extension';
+@import './buttons_extension';
+@import './progress';
+@import './flash';
 
 svg {
   fill: currentColor !important;
@@ -246,7 +244,7 @@ ul {
 }
 
 .dropdown-menu {
-  // TODO @include box-shadow($bmd-shadow-2dp);
+  @include box-shadow($bmd-shadow-2dp);
   .dropdown-item {
     @include button-size($btn-padding-y, $btn-padding-x, $font-size-base, $btn-line-height, $btn-border-radius);
     padding-top: $btn-padding-y;

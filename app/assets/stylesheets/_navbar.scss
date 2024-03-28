@@ -13,7 +13,7 @@ nav.navbar {
 }
 
 body > .navbar.bg-white {
-  // TODO @include box-shadow($bmd-shadow-2dp);
+  @include box-shadow($bmd-shadow-2dp);
   .nav-item {
     @extend .d-flex;
     &:hover {
@@ -29,12 +29,12 @@ body > .navbar.bg-white {
     svg {
       margin-top: ($spacer * .85);
       margin-right: ($spacer * .50);
-      // TODO transition: fill 0.2s $bmd-animation-curve-default;
+      transition: fill 0.2s $bmd-animation-curve-default;
       will-change: fill, transform;
     }
     .nav-link {
-      // TODO transition: color 0.2s $bmd-animation-curve-default;
-      // TODO transition: box-shadow 0.2s $bmd-animation-curve-default;
+      transition: color 0.2s $bmd-animation-curve-default;
+      transition: box-shadow 0.2s $bmd-animation-curve-default;
       will-change: color, box-shadow, transform;
       @extend .py-0;
       font-weight: 500;
@@ -89,7 +89,7 @@ nav.navbar {
         color: rgba(255, 255, 255, 0.6);
         text-transform: uppercase;
         font-weight: 500;
-        // TODO transition: color 0.2s $bmd-animation-curve-default;
+        transition: color 0.2s $bmd-animation-curve-default;
         will-change: color, transform;
         line-height: 50px;
         @extend .px-4, .py-0;
@@ -113,8 +113,8 @@ nav.navbar {
 .nav.nav-tabs {
   .nav-item {
     .nav-link {
-      // TODO transition: color 0.2s $bmd-animation-curve-default;
-      // TODO transition: box-shadow 0.2s $bmd-animation-curve-default;
+      transition: color 0.2s $bmd-animation-curve-default;
+      transition: box-shadow 0.2s $bmd-animation-curve-default;
       will-change: color, box-shadow, transform;
       @extend .px-0, .py-0;
       font-weight: 500;

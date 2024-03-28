@@ -1,5 +1,5 @@
 .card {
-  // TODO @include box-shadow($bmd-shadow-2dp);
+  @include box-shadow($bmd-shadow-2dp);
   .card-subheader {
     padding: $card-spacer-y $card-spacer-x;
     background-color: white;

@@ -1,8 +1,7 @@
-@import "bootstrap/scss/bootstrap";
-@import 'flatpickr/dist/flatpickr.css';
-@import 'lightpick/css/lightpick.css';
-@import 'trix/dist/trix.css';
-@import 'node-snackbar/dist/snackbar.css';
+@import 'flatpickr/dist/flatpickr';
+@import 'lightpick/css/lightpick';
+@import 'trix/dist/trix';
+@import 'node-snackbar/dist/snackbar';
 @import './autocomplete';
 @import './common';
 @import './devise';

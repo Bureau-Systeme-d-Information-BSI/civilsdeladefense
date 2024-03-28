@@ -2,12 +2,12 @@
   outline: none !important;
   border: solid 0px white;
   border-bottom: solid 1px white;
-  // TODO @include box-shadow($bmd-shadow-2dp);
+  @include box-shadow($bmd-shadow-2dp);
   &:focus {
     outline: none !important;
     border: solid 0px white;
     border-bottom: solid 1px $primary;
-    // TODO @include box-shadow($bmd-shadow-3dp);
+    @include box-shadow($bmd-shadow-3dp);
   }
 }
 
@@ -69,12 +69,12 @@ trix-editor {
   outline: none !important;
   border: solid 0px white;
   border-bottom: solid 1px $danger;
-  // TODO @include box-shadow($bmd-shadow-2dp);
+  @include box-shadow($bmd-shadow-2dp);
   &:focus {
     outline: none !important;
     border: solid 0px white;
     border-bottom: solid 1px $danger;
-    // TODO @include box-shadow($bmd-shadow-3dp);
+    @include box-shadow($bmd-shadow-3dp);
   }
 }
 
@@ -109,7 +109,7 @@ trix-editor {
 
 .input-search {
   @extend .filter;
-  // TODO @include box-shadow($bmd-shadow-2dp);
+  @include box-shadow($bmd-shadow-2dp);
   border-bottom: solid 1px transparent;
   &.is-focused {
     outline: none !important;
@@ -122,7 +122,7 @@ trix-editor {
 
 form {
   &.filters {
-    // TODO @include box-shadow($bmd-shadow-2dp);
+    @include box-shadow($bmd-shadow-2dp);
     .input-search {
       box-shadow: none;
     }

@@ -433,6 +433,15 @@ a {
   z-index: 150 !important;
 }
 
+.password-visibility-toggle {
+  float: right;
+  margin-right: 10px;
+  margin-top: -42px;
+  position: relative;
+  z-index: 2;
+  color: var(--g500);
+}
+
 .warning-snackbar {
   background-color: $orange !important;
 

@@ -45,6 +45,5 @@
             - elsif flash[:success]
               .alert.alert-success= flash[:success]
             = yield
-    = javascript_include_tag 'devise-bundle', 'data-turbo-track': 'reload', defer: true
 
     = render partial: '/shared/modal'

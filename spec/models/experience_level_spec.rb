@@ -3,9 +3,16 @@
 require "rails_helper"
 
 RSpec.describe ExperienceLevel do
-  it { is_expected.to validate_presence_of(:name) }
-end
+  describe "validations" do
+    it { is_expected.to validate_presence_of(:name) }
+  end
 
+  describe "associations" do
+    it { is_expected.to have_many(:job_offers).dependent(:nullify) }
+    it { is_expected.to have_many(:salary_ranges).dependent(:destroy) }
+    it { is_expected.to have_many(:profiles).dependent(:nullify) }
+  end
+end
 # == Schema Information
 #
 # Table name: experience_levels

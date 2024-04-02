@@ -1,7 +1,12 @@
-FactoryBot.define do
-  factory :foreign_language_level do
-    name { "MyString" }
-    position { 1 }
+require "rails_helper"
+
+RSpec.describe ForeignLanguageLevel do
+  describe "associations" do
+    it { is_expected.to have_many(:profile_foreign_languages).dependent(:destroy) }
+  end
+
+  describe "validations" do
+    it { is_expected.to validate_presence_of(:name) }
   end
 end
 

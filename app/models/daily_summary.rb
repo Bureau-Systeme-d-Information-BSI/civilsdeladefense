@@ -18,8 +18,8 @@ class DailySummary
     end
   end
 
-  def all_bants
-    @all_bants ||= Administrator.where(role: :bant).all
+  def all_admins
+    @all_admins ||= Administrator.where(role: :admin).all
   end
 
   def prepare(organization)
@@ -147,7 +147,7 @@ class DailySummary
       administrators = job_offer.grand_employer_actors
       administrators += job_offer.supervisor_employer_actors
       administrators += job_offer.brh_actors
-      administrators += all_bants
+      administrators += all_admins
     end
     administrators.uniq
   end
@@ -157,7 +157,7 @@ class DailySummary
     administrators += job_offer.grand_employer_actors
     administrators += job_offer.supervisor_employer_actors
     administrators += job_offer.brh_actors
-    administrators += all_bants
+    administrators += all_admins
     administrators.uniq
   end
 end

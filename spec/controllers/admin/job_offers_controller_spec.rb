@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe Admin::JobOffersController do
-  context "when logged in as BANT administrator" do
+  context "when logged in as 'admin' administrator" do
     login_admin
 
     let(:valid_attributes) do

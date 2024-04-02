@@ -1109,7 +1109,7 @@ fr:
         confirmed: "Confirmé"
         unconfirmed: "Non confirmé"
       administrator/role:
-        bant: "BANT"
+        admin: "Administrateur"
         employer: "Employeur"
         grand_employer: "Grand Employeur"
         brh: "RH"

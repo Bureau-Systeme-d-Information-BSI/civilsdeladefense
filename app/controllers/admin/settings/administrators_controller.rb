@@ -146,13 +146,13 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
 
   def permitted_fields
     ary = %i[title first_name last_name email]
-    ary += %i[employer_id] if current_administrator.bant?
-    ary += %i[role] if current_administrator.bant? || current_administrator.employer?
+    ary += %i[employer_id] if current_administrator.admin?
+    ary += %i[role] if current_administrator.admin? || current_administrator.employer?
     ary
   end
 
   def set_role_and_employer
-    @administrator.employer = current_administrator.employer unless current_administrator.bant?
+    @administrator.employer = current_administrator.employer unless current_administrator.admin?
   end
 
   def permitted_params

@@ -9,6 +9,7 @@ class ExperienceLevel < ApplicationRecord
 
   has_many :job_offers, dependent: :nullify
   has_many :salary_ranges, dependent: :destroy
+  has_many :profiles, dependent: :nullify
 end
 
 # == Schema Information

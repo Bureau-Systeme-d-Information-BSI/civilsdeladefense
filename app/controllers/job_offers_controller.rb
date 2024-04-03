@@ -128,7 +128,7 @@ class JobOffersController < ApplicationController
     profile_attributes << {
       profile_foreign_languages_attributes: %i[foreign_language_id foreign_language_level_id]
     }
-    user_attributes = %i[first_name last_name current_position phone website_url]
+    user_attributes = %i[first_name last_name phone website_url]
     base_user_attributes = %i[
       photo email password password_confirmation terms_of_service certify_majority
       receive_job_offer_mails

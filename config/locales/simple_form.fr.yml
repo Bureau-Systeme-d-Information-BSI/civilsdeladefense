@@ -241,3 +241,4 @@ fr:
         prefix_article: "Utilisé dans les phrases incluant le nom de l'entité. Ex: le, la, l'."
       user:
         password: "8 caractères minimum, dont au moins 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial parmi #?!@$%^&*-'"
+        password_confirmation: "doit correspondre au mot de passe"

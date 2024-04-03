@@ -7,8 +7,14 @@
 = simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
   = f.error_notification
   = f.input :email, required: true, autofocus: true
-  = f.input :password, required: true
-  = f.input :password_confirmation, required: true
+  %div{data: {controller: "password-visibility"}}
+    = f.input :password, required: true, input_html: { data: { password_visibility_target: "passwordInput" } }
+    = fa_icon("eye", class: "password-visibility-toggle", data: { password_visibility_target: "showButton", action: "click->password-visibility#toggle" })
+    = fa_icon("eye-slash", class: "password-visibility-toggle d-none", data: { password_visibility_target: "hideButton", action: "click->password-visibility#toggle" })
+  %div{data: {controller: "password-visibility"}}
+    = f.input :password_confirmation, required: true, input_html: { data: { password_visibility_target: "passwordInput" } }
+    = fa_icon("eye", class: "password-visibility-toggle", data: { password_visibility_target: "showButton", action: "click->password-visibility#toggle" })
+    = fa_icon("eye-slash", class: "password-visibility-toggle d-none", data: { password_visibility_target: "hideButton", action: "click->password-visibility#toggle" })
   - if resource.is_a?(User)
     = f.input :first_name
     = f.input :last_name

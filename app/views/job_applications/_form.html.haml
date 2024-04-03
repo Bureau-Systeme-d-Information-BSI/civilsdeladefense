@@ -51,8 +51,14 @@
       %h2.rf-h3= t('.your_account_creation')
       = f.simple_fields_for :user, input_html: {placeholder: false, required: true} do |user_form|
         = user_form.input :email, required: true
-        = user_form.input :password, required: true
-        = user_form.input :password_confirmation, required: true
+        %div{data: {controller: "password-visibility"}}
+          = user_form.input :password, required: true, input_html: { data: { password_visibility_target: "passwordInput" } }
+          = fa_icon("eye", class: "password-visibility-toggle", data: { password_visibility_target: "showButton", action: "click->password-visibility#toggle" })
+          = fa_icon("eye-slash", class: "password-visibility-toggle d-none", data: { password_visibility_target: "hideButton", action: "click->password-visibility#toggle" })
+        %div{data: {controller: "password-visibility"}}
+          = user_form.input :password_confirmation, required: true, input_html: { data: { password_visibility_target: "passwordInput" } }
+          = fa_icon("eye", class: "password-visibility-toggle", data: { password_visibility_target: "showButton", action: "click->password-visibility#toggle" })
+          = fa_icon("eye-slash", class: "password-visibility-toggle d-none", data: { password_visibility_target: "hideButton", action: "click->password-visibility#toggle" })
         = user_form.input :receive_job_offer_mails
         = user_form.input :terms_of_service, as: :boolean, label: tos_acceptance_text
         = user_form.input :certify_majority, as: :boolean, label: t('simple_form.labels.user.certify_majority_html')

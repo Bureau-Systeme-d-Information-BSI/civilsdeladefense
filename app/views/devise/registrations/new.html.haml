@@ -16,7 +16,7 @@
     = f.input :phone
     = f.input :receive_job_offer_mails
     = f.input :terms_of_service, as: :boolean, label: tos_acceptance_text
-    = f.input :certify_majority, as: :boolean
+    = f.input :certify_majority, as: :boolean, label: t('simple_form.labels.user.certify_majority_html')
   .rf-input-group.rf-grid-row
     = f.button :submit, t(".sign_up"), class: 'rf-btn btn btn-primary btn-raised'
   = render "devise/shared/links"

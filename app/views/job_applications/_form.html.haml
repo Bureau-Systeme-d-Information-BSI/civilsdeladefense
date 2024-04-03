@@ -56,7 +56,7 @@
         = user_form.input :password_confirmation, required: true
         = user_form.input :receive_job_offer_mails
         = user_form.input :terms_of_service, as: :boolean, label: tos_acceptance_text
-        = user_form.input :certify_majority, as: :boolean
+        = user_form.input :certify_majority, as: :boolean, label: t('simple_form.labels.user.certify_majority_html')
     = f.invisible_captcha :subtitle, data: { form_save_target: "ignored" }
   %div
     .rf-input-group.rf-grid-row.rf-grid-row--center.rf-mt-6w

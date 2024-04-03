@@ -98,7 +98,7 @@ fr:
         required_profile: "Profil recherché"
         organization_description: "Descriptif de l'organisation"
         recruitment_process: "Process de recrutement"
-        benefits: "Avantages liés au poste"
+        benefits: "Avantages en nature"
         bop: "BOP"
         contract_type: "Type de contrat"
         contract_type_id: "Type de contrat"

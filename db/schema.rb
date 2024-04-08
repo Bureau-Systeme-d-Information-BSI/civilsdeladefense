@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_26_144904) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_08_152934) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -424,7 +424,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_26_144904) do
     t.integer "most_advanced_job_applications_state", default: -1
     t.integer "sequential_id"
     t.string "identifier"
-    t.string "duration_contract"
     t.integer "option_photo"
     t.integer "notifications_count", default: 0
     t.boolean "available_immediately", default: false

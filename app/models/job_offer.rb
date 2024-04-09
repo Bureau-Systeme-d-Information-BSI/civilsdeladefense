@@ -151,6 +151,15 @@ class JobOffer < ApplicationRecord
     end
   end
 
+  delegate :name, to: :contract_type, prefix: true, allow_nil: true
+
+  def contract_duration_name
+    return nil unless contract_type&.duration
+    return nil unless contract_duration
+
+    contract_duration.name
+  end
+
   def self.spontaneous? = spontaneous_job_offer.present?
 
   def self.spontaneous_job_offer = published.where(spontaneous: true).first

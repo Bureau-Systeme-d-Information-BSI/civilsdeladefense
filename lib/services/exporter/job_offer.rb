@@ -21,7 +21,7 @@ class Exporter::JobOffer < Exporter::StatJobApplications
       job_offer.employer.name,
       job_offer.sector.name,
       job_offer.contract_type&.name&.presence || "",
-      job_offer.duration_contract, # TODO: SEB replace by job_offer.contract_duration&.name
+      job_offer.contract_duration_name,
       job_offer.job_applications_count,
       JobOffer.human_attribute_name("state/#{job_offer.state}"),
       JobApplication.human_attribute_name("state/#{job_offer.most_advanced_job_applications_state}"),

@@ -41,6 +41,11 @@ FactoryBot.define do
       3.times { job_offer.job_applications << create(:job_application) }
     end
   end
+
+  trait :with_contract_duration do
+    contract_type { association :contract_type, duration: true }
+    contract_duration { association :contract_duration }
+  end
 end
 
 # == Schema Information

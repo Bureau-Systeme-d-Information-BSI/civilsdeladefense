@@ -75,6 +75,7 @@ gem "omniauth-rails_csrf_protection"
 
 group :development, :test do
   gem "brakeman", require: false
+  gem "debug"
 
   gem "dotenv-rails"
 
@@ -93,7 +94,6 @@ group :development, :test do
 end
 
 group :development do
-  gem "debug"
   gem "letter_opener"
   gem "annotate"
 

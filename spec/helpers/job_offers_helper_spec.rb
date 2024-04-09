@@ -6,16 +6,20 @@ RSpec.describe JobOffersHelper do
   describe ".job_offer_contract_type_display" do
     subject { job_offer_contract_type_display(job_offer.reload) }
 
-    let!(:job_offer) { create(:job_offer) }
+    let!(:job_offer) { create(:job_offer, :with_contract_duration) }
 
-    context "when the job offer has a contract type" do
-      it { is_expected.to eq("CDI duration") }
-    end
+    it { is_expected.to eq("#{job_offer.contract_type_name} #{job_offer.contract_duration_name}") }
 
     context "when the job offer doesn't have a contract type" do
-      before { ContractType.find_by(name: "CDI").destroy! }
+      before { job_offer.contract_type.destroy! }
 
-      it { is_expected.to eq("duration") }
+      it { is_expected.to eq("") }
+    end
+
+    context "when the job offer doesn't have a contract duration" do
+      before { job_offer.contract_duration.destroy! }
+
+      it { is_expected.to eq(job_offer.contract_type_name) }
     end
   end
 
@@ -27,7 +31,7 @@ RSpec.describe JobOffersHelper do
     context "when the attribute is :contract_type" do
       let(:attribute) { :contract_type }
 
-      it { is_expected.to eq("CDI duration") }
+      it { is_expected.to eq(job_offer_contract_type_display(job_offer)) }
     end
 
     context "when the attribute is :contract_start_on" do

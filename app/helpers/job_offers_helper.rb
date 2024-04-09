@@ -35,8 +35,7 @@ module JobOffersHelper
   end
 
   def job_offer_contract_type_display(job_offer)
-    # TODO: SEB replace by job_offer.contract_duration&.name
-    [job_offer.contract_type&.name, job_offer.duration_contract].compact.join(" ")
+    [job_offer.contract_type_name, job_offer.contract_duration_name].compact.join(" ")
   end
 
   def job_offer_start_display(job_offer)

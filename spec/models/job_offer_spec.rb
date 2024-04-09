@@ -13,6 +13,40 @@ RSpec.describe JobOffer do
     it { is_expected.to have_many(:"job_offer_#{role}_actors").inverse_of(:job_offer) }
   end
 
+  describe "delegations" do
+    it { is_expected.to delegate_method(:name).to(:contract_type).with_prefix(true).with_arguments(allow_nil: true) }
+  end
+
+  describe "#contract_duration_name" do
+    subject { job_offer.contract_duration_name }
+
+    context "when contract_type is nil" do
+      before { allow(job_offer).to receive(:contract_type).and_return(nil) }
+
+      it { is_expected.to be_nil }
+    end
+
+    context "when contract_type duration is false" do
+      before { job_offer.contract_type.update!(duration: false) }
+
+      it { is_expected.to be_nil }
+    end
+
+    context "when contract_duration is nil" do
+      before { job_offer.update!(contract_duration: nil) }
+
+      it { is_expected.to be_nil }
+    end
+
+    context "when otherwise" do
+      before { job_offer.update!(contract_type: create(:contract_type, duration: true), contract_duration:) }
+
+      let(:contract_duration) { create(:contract_duration) }
+
+      it { is_expected.to eq contract_duration.name }
+    end
+  end
+
   describe "pep or bne" do
     let(:job_offer) do
       build(

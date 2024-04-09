@@ -151,6 +151,15 @@ class JobOffer < ApplicationRecord
     end
   end
 
+  delegate :name, to: :contract_type, prefix: true, allow_nil: true
+
+  def contract_duration_name
+    return nil unless contract_type&.duration
+    return nil unless contract_duration
+
+    contract_duration.name
+  end
+
   # Return an hash where keys are regions and values are counties inside it
   # All regions and counties got job_offers associated
   def self.regions

@@ -43,9 +43,9 @@ class JobOffer < ApplicationRecord
   belongs_to :bop, optional: true
   belongs_to :archiving_reason, optional: true
 
+  has_many :bookmarks, dependent: :destroy
   has_many :benefit_job_offers, dependent: :destroy
   has_many :benefits, through: :benefit_job_offers
-
   has_many :job_applications, dependent: :destroy
   has_many :job_offer_actors, inverse_of: :job_offer, dependent: :destroy
   has_many :administrators, through: :job_offer_actors

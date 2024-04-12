@@ -73,6 +73,8 @@ gem "faker", require: false
 gem "omniauth_openid_connect", "~> 0.4.0"
 gem "omniauth-rails_csrf_protection"
 
+gem "strong_migrations" # Secured migrations
+
 group :development, :test do
   gem "brakeman", require: false
   gem "debug"

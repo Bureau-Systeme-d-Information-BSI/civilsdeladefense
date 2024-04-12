@@ -13,6 +13,10 @@ RSpec.describe JobOffer do
     it { is_expected.to have_many(:"job_offer_#{role}_actors").inverse_of(:job_offer) }
   end
 
+  describe "associations" do
+    it { is_expected.to have_many(:bookmarks).dependent(:destroy) }
+  end
+
   describe "delegations" do
     it { is_expected.to delegate_method(:name).to(:contract_type).with_prefix(true).with_arguments(allow_nil: true) }
   end

@@ -185,6 +185,23 @@ RSpec.describe User do
       end
     end
   end
+
+  describe "#bookmarked?" do
+    subject { user.bookmarked?(job_offer) }
+
+    let(:job_offer) { create(:job_offer) }
+    let(:user) { create(:confirmed_user) }
+
+    context "when user has bookmarked the job offer" do
+      before { create(:bookmark, user: user, job_offer: job_offer) }
+
+      it { is_expected.to be_truthy }
+    end
+
+    context "when user has not bookmarked the job offer" do
+      it { is_expected.to be_falsey }
+    end
+  end
 end
 
 # == Schema Information

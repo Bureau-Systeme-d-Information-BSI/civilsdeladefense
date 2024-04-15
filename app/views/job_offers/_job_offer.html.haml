@@ -2,21 +2,21 @@
 %div{class: container_class}
   - cache [job_offer] do
     .rf-pb-2w.rf-pt-2w
-      = link_to job_offer, target: "_top" do  
-        .d-flex.flex-column
-          %strong.rf-text--lg.rf-mb-1w= job_offer.title
-          .d-flex.align-items-center.justify-space-between
-            .d-flex.flex-column
-              .d-flex.rf-mr-1w
-                = fa_icon('file-document', class: 'text-secondary')
-                = job_offer_contract_type_display(job_offer)
-              .d-flex.rf-mr-1w
-                = fa_icon('map-pin-line', class: 'text-secondary')
-                = job_offer.location
-            .d-flex.align-items-center
-              .rf-tag.rf-mr-5w= job_offer.category.name
-              %button.rf-btn.rf-fi-arrow-right-line.ml-auto{title: t('.show')}
-                %sr-only=t('.show')
-          - if job_offer.published_at.present?
-            %small.rf-mt-1w= t('.published_date', time_ago_in_words: time_ago_in_words(job_offer.published_at))
+      = link_to job_offer, target: "_top", class: 'rf-raw-link' do
+        %strong.rf-text--lg.rf-mb-1w= job_offer.title
+        .d-flex.align-items-center.justify-space-between
+          .d-flex.flex-column
+            .d-flex.rf-mr-1w
+              = fa_icon('file-document', class: 'text-secondary')
+              = job_offer_contract_type_display(job_offer)
+            .d-flex.rf-mr-1w
+              = fa_icon('map-pin-line', class: 'text-secondary')
+              = job_offer.location
+          .d-flex.align-items-center
+            .rf-tag.rf-mr-5w= job_offer.category.name
+            %button.rf-btn.rf-fi-arrow-right-line.ml-auto{title: t('.show')}
+              %sr-only=t('.show')
+      .d-flex.align-items-center.justify-space-between.rf-mt-1w
+        %small= job_offer.published_at.present? ? t('.published_date', time_ago_in_words: time_ago_in_words(job_offer.published_at)) : ""
+        = render 'job_offers/bookmark', job_offer: job_offer
     %hr.rf-b--g100.rf-my-0

@@ -1,0 +1,11 @@
+=turbo_frame_tag job_offer do
+  - if current_user&.bookmarked?(job_offer)
+    = button_to bookmark_path(job_offer.id), method: :delete, class: 'rf-link rf-border-0' do
+      .d-flex.flex-row.align-items-center
+        %small= t('.remove_bookmark')
+        = fa_icon('star', flavor: 'solid', class: 'rf-ml-1w')
+  - else
+    = button_to bookmarks_path(job_offer.id), method: :post, class: 'rf-link rf-border-0' do
+      .d-flex.flex-row.align-items-center
+        %small= t('.add_bookmark')
+        = fa_icon('star', flavor: 'regular', class: 'rf-ml-1w')

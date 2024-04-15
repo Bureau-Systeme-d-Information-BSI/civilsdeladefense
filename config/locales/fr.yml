@@ -115,6 +115,9 @@ fr:
       your_internet_presence: "Votre présence sur internet"
       your_account_creation: "Votre création de compte"
   job_offers:
+    bookmark:
+      add_bookmark: Ajouter aux favoris
+      remove_bookmark: Retirer des favoris
     index:
       title: "Nos offres"
       job_offers_count:

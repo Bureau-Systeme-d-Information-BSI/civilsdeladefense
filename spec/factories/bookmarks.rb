@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :bookmark do
     job_offer
-    user
+    user { association :confirmed_user }
   end
 end
 

@@ -6,6 +6,7 @@
     %meta{name: "viewport", content: "width=device-width, initial-scale=1, shrink-to-fit=no"}
     - if controller.action_name == 'apply'
       %meta{name: :robots, content: 'noindex nofollow'}
+    = yield :meta if content_for?(:meta)
     = javascript_include_tag 'application', 'data-turbo-track': 'reload', defer: true
     = stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload', defer: true
     = csrf_meta_tags
@@ -17,7 +18,7 @@
     = render partial: '/shared/header'
     = render partial: '/shared/timeout'
     %button.scroll.rf-btn.rf-fi-arrow-up-s-line{data: { controller: "scroll", action: "scroll#top"}}
-      
+
     - if flash[:notice] || flash[:alert] || flash[:error] || flash[:success]
       .rf-container
         .rf-grid-row

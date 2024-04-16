@@ -96,6 +96,7 @@ class JobOffer < ApplicationRecord
   scope :admin_index_featured, -> { admin_index.where(featured: true) }
   scope :publicly_visible, -> { where(state: :published) }
   scope :search_import, -> { includes(*SETTINGS) }
+  scope :bookmarked, ->(user) { joins(:bookmarks).where(bookmarks: {user: user}) }
 
   enum most_advanced_job_applications_state: {
     start: -1,

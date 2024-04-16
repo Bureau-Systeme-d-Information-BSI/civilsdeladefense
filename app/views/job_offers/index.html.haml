@@ -4,6 +4,9 @@
     .rf-col-12.rf-col-md-4
       = render partial: 'filters'
     %turbo-frame#job-offers.rf-col-12.rf-col-md-8
-      = t('.job_offers_count', count: @job_offers.total_entries)
-      = render partial: 'job_offer', collection: @job_offers
-      = will_paginate @job_offers, class: 'justify-content-center rf-mt-3w', renderer: RfRenderer
+      - if params[:bookmarked].present? && @job_offers.empty?
+        = render "job_offers/no_bookmarks"
+      - else
+        = t('.job_offers_count', count: @job_offers.total_entries)
+        = render partial: 'job_offer', collection: @job_offers
+        = will_paginate @job_offers, class: 'justify-content-center rf-mt-3w', renderer: RfRenderer

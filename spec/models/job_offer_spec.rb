@@ -13,6 +13,20 @@ RSpec.describe JobOffer do
     it { is_expected.to have_many(:"job_offer_#{role}_actors").inverse_of(:job_offer) }
   end
 
+  describe "scopes" do
+    describe ".bookmarked" do
+      subject { described_class.bookmarked(user) }
+
+      let(:user) { create(:user) }
+      let(:matching_job_offer) { create(:bookmark, user:).job_offer }
+      let(:non_matching_job_offer) { create(:job_offer) }
+
+      it { is_expected.to include(matching_job_offer) }
+
+      it { is_expected.not_to include(non_matching_job_offer) }
+    end
+  end
+
   describe "associations" do
     it { is_expected.to have_many(:bookmarks).dependent(:destroy) }
   end

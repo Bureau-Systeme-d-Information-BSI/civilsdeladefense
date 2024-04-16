@@ -50,3 +50,8 @@
           - klass = header_spontaneous_active?(controller.controller_name, controller.action_name, job_offer: @job_offer) ? 'rf-nav__item--active' : nil
           %li.rf-nav__item{class: klass}
             = link_to "Candidature spontanée", JobOffer.spontaneous_job_offer, class: 'rf-nav__link'
+
+        - if user_signed_in?
+          - klass = header_bookmarks_active?(controller.controller_name, controller.action_name) ? 'rf-nav__item--active' : nil
+          %li.rf-nav__item{class: klass}
+            = link_to "Mes offres favorites", job_offers_path(bookmarked: true), class: 'rf-nav__link'

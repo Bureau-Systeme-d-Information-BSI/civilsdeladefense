@@ -37,3 +37,7 @@ RSpec/IndexedLet:
 
 RSpec/SpecFilePathFormat:
   Enabled: false
+
+RSpec/MultipleMemoizedHelpers:
+  AllowSubject: true
+  Max: 6

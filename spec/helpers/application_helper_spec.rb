@@ -64,4 +64,24 @@ RSpec.describe ApplicationHelper do
       it { is_expected.to be_falsey }
     end
   end
+
+  describe "#header_bookmarks_active?" do
+    subject { helper.header_bookmarks_active?("job_offers", "index") }
+
+    let(:request) { instance_double(ActionDispatch::Request, params: {bookmarked:}) }
+
+    before { allow(helper).to receive(:request).and_return(request) }
+
+    context "when controller_name is job_offers and action_name is index and request.params[:bookmarked] is present" do
+      let(:bookmarked) { true }
+
+      it { is_expected.to be_truthy }
+    end
+
+    context "when controller_name is job_offers and action_name is index and request.params[:bookmarked] is blank" do
+      let(:bookmarked) { nil }
+
+      it { is_expected.to be_falsey }
+    end
+  end
 end

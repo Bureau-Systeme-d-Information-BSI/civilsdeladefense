@@ -115,6 +115,9 @@ fr:
       your_internet_presence: "Votre présence sur internet"
       your_account_creation: "Votre création de compte"
   job_offers:
+    no_bookmarks:
+      title: Vous n'avez pas encore d'offres favorites
+      description: Parcourez les offres d'emploi disponibles et ajoutez dans vos favoris celles qui vous intéressent.
     bookmark:
       add_bookmark: Ajouter aux favoris
       remove_bookmark: Retirer des favoris

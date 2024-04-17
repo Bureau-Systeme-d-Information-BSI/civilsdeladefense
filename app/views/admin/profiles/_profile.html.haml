@@ -2,7 +2,7 @@
 - is_archived = defined?(is_archived) ? is_archived : nil
 .card{id: dom_id(profile, 'profile')}
   .card-header.bg-white.font-weight-bold.text-secondary
-    = fa_icon('file-document', class: 'text-secondary')
+    = fa_icon('file-lines', class: 'text-secondary')
     Données Professionnelles et Statistiques
   .card-body.bg-white
     - %i[gender is_currently_employed age_range availability_range study_level experience_level has_corporate_experience].each do |field|

@@ -51,20 +51,20 @@
     %td
       - if level != 0
         - url = element.only_link? ? element.url : element
-        = link_to fa_icon('link-variant'), url, title: t('buttons.show'), target: :_blank
+        = link_to fa_icon('arrow-up-right-from-square'), url, title: t('buttons.show'), target: :_blank
   %td.text-right
     .d-flex.flex-row.actions
       - if resource_class == Category
-        = link_to fa_icon('plus'), [:new, :admin, :settings, :category, {parent_id: element.id}], title: t('buttons.add_child')
-        = link_to fa_icon('arrow-up'), [:move_left, :admin, :settings, element], method: :post, title: t('buttons.move_higher'), data: {confirm: t('buttons.confirm')}
-        = link_to fa_icon('arrow-down'), [:move_right, :admin, :settings, element], method: :post, title: t('buttons.move_lower'), data: {confirm: t('buttons.confirm')}
+        = link_to fa_icon('plus', class: 'ml-1'), [:new, :admin, :settings, :category, {parent_id: element.id}], title: t('buttons.add_child')
+        = link_to fa_icon('arrow-up', class: 'ml-1'), [:move_left, :admin, :settings, element], method: :post, title: t('buttons.move_higher'), data: {confirm: t('buttons.confirm')}
+        = link_to fa_icon('arrow-down', class: 'ml-1'), [:move_right, :admin, :settings, element], method: :post, title: t('buttons.move_lower'), data: {confirm: t('buttons.confirm')}
       - elsif resource_class == Page
-        = link_to fa_icon('plus'), [:new, :admin, :settings, :page, {parent_id: element.id}], title: t('buttons.add_page_child')
+        = link_to fa_icon('plus', class: 'ml-1'), [:new, :admin, :settings, :page, {parent_id: element.id}], title: t('buttons.add_page_child')
       - if (resource_class == Page && level != 0) || element.has_attribute?(:position)
         - if (resource_class != Page) || (level == 1 && element.left_sibling) || (level > 1)
-          = link_to fa_icon('arrow-up'), [:move_higher, :admin, :settings, element], method: :post, title: t('buttons.move_higher'), data: {confirm: t('buttons.confirm')}
+          = link_to fa_icon('arrow-up', class: 'ml-1'), [:move_higher, :admin, :settings, element], method: :post, title: t('buttons.move_higher'), data: {confirm: t('buttons.confirm')}
         - if (resource_class != Page) || (level == 1 && element.right_sibling) || (level > 1 && !element.leaf?)
-          = link_to fa_icon('arrow-down'), [:move_lower, :admin, :settings, element], method: :post, title: t('buttons.move_lower'), data: {confirm: t('buttons.confirm')}
-      = link_to fa_icon('pencil'), [:edit, :admin, :settings, element], title: t('buttons.edit')
+          = link_to fa_icon('arrow-down', class: 'ml-1'), [:move_lower, :admin, :settings, element], method: :post, title: t('buttons.move_lower'), data: {confirm: t('buttons.confirm')}
+      = link_to fa_icon('pencil', class: 'ml-1'), [:edit, :admin, :settings, element], title: t('buttons.edit')
       - unless resource_class == Page && level == 0
-        = link_to fa_icon('delete'), [:admin, :settings, element], method: :delete, title: t('buttons.delete'), data: {confirm: t('buttons.confirm')}
+        = link_to fa_icon('trash-can', class: 'ml-1'), [:admin, :settings, element], method: :delete, title: t('buttons.delete'), data: {confirm: t('buttons.confirm')}

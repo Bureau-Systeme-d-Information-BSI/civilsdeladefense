@@ -62,7 +62,7 @@
             %li.list-inline-item
               .dropdown
                 = button_tag type: 'button', data: { toggle: "dropdown" }, aria: { haspopup: true, expanded: false }, class: "btn btn-link btn-sm mb-0 px-0 py-0" do
-                  = fa_icon 'dots-horizontal'
+                  = fa_icon 'ellipsis'
                 .dropdown-menu.dropdown-menu-right{"aria-labelledby" => "dropdownMenuLink"}
                   - job_offer.possible_events.each do |event_name|
                     - if event_name == "archive"
@@ -75,11 +75,11 @@
                         = t("buttons.#{ event_name }")
                   - if current_organization.job_offer_term?
                     = link_to [:admin, :job_offer_terms, {job_offer_id: job_offer.to_param}], class: "dropdown-item" do
-                      = fa_icon('content-copy', class: 'mr-1')
+                      = fa_icon('copy', class: 'mr-1')
                       = t("buttons.copy")
                   - else
                     = button_to [:init, :admin, :job_offers, {job_offer_id: job_offer.to_param}], method: :post, data: {turbo: false}, class: "dropdown-item" do
-                      = fa_icon('content-copy', class: 'mr-1')
+                      = fa_icon('copy', class: 'mr-1')
                       = t("buttons.copy")
                   - if can? :feature, :job_offer
                     - if job_offer.featured
@@ -96,5 +96,5 @@
                       = t("buttons.transfer")
                   - if notifications_count > 0
                     = link_to admin_job_offers_readings_path(job_offer), class: "dropdown-item", method: :post do
-                      = fa_icon('email', class: 'mr-1')
+                      = fa_icon('envelope', class: 'mr-1')
                       = t("buttons.mark_as_read")

@@ -22,9 +22,9 @@
     .mr-auto= t('admin.job_applications.job_application.applied_on', date: I18n.l(job_application.created_at.to_date))
     - klasses = %w(emails-count badge job-application-modal-link mr-2)
     = link_to emails_admin_job_offer_job_application_url(job_offer, job_application), class: klasses do
-      = fa_icon "email", style: "width: 0.8rem; height: auto; vertical-align: -0.15rem;"
+      = fa_icon 'envelope', style: "width: 0.8rem; height: auto; vertical-align: -0.15rem;"
       = job_application.emails_count
     - klasses = %w(emails-count badge job-application-modal-link mr-0)
     = link_to files_admin_job_offer_job_application_url(job_offer, job_application), class: klasses do
-      = fa_icon "link-variant", style: "width: 0.8rem; height: auto; vertical-align: -0.15rem;"
+      = fa_icon "link", style: "width: 0.8rem; height: auto; vertical-align: -0.15rem;"
       = job_application.files_count

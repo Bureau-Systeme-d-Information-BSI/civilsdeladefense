@@ -26,9 +26,9 @@
                   = link_to fa_icon('pencil'), [:edit, :admin, :settings, grand_employer], title: t('buttons.edit')
           %td.text-left
             .d-flex.flex-row.actions
-              = link_to fa_icon('arrow-up'), [:move_left, :admin, :settings, grand_employer], method: :post, title: t('buttons.move_higher'), data: {confirm: t('buttons.confirm')}
-              = link_to fa_icon('arrow-down'), [:move_right, :admin, :settings, grand_employer], method: :post, title: t('buttons.move_lower'), data: {confirm: t('buttons.confirm')}
-              = link_to fa_icon('delete'), [:admin, :settings, grand_employer], method: :delete, title: t('buttons.delete'), data: {confirm: t('buttons.confirm')}
+              = link_to fa_icon('arrow-up', class: 'ml-1'), [:move_left, :admin, :settings, grand_employer], method: :post, title: t('buttons.move_higher'), data: {confirm: t('buttons.confirm')}
+              = link_to fa_icon('arrow-down', class: 'ml-1'), [:move_right, :admin, :settings, grand_employer], method: :post, title: t('buttons.move_lower'), data: {confirm: t('buttons.confirm')}
+              = link_to fa_icon('trash-can', class: 'ml-1'), [:admin, :settings, grand_employer], method: :delete, title: t('buttons.delete'), data: {confirm: t('buttons.confirm')}
           %td
             = link_to [:new, :admin, :settings, :employer, {parent_id: grand_employer.id}], title: t('.add_employer'), class: 'btn btn-primary btn-raised' do
               = fa_icon('plus')
@@ -49,4 +49,4 @@
                 %li.list-inline-item
                   = link_to fa_icon('arrow-up'), [:move_left, :admin, :settings, employer], method: :post, title: t('buttons.move_higher'), data: {confirm: t('buttons.confirm')}
                   = link_to fa_icon('arrow-down'), [:move_right, :admin, :settings, employer], method: :post, title: t('buttons.move_lower'), data: {confirm: t('buttons.confirm')}
-                  = link_to fa_icon('delete'), [:admin, :settings, employer], method: :delete, title: t('buttons.delete'), data: {confirm: t('buttons.confirm')}
+                  = link_to fa_icon('trash-can'), [:admin, :settings, employer], method: :delete, title: t('buttons.delete'), data: {confirm: t('buttons.confirm')}

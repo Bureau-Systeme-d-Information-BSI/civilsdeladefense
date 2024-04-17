@@ -6,18 +6,18 @@
     %meta{name: "viewport", content: "width=device-width, initial-scale=1, shrink-to-fit=no"}
     - if controller.action_name == 'apply'
       %meta{name: :robots, content: 'noindex nofollow'}
-    = javascript_pack_tag 'bundle'
-    = stylesheet_pack_tag 'style', media: nil, 'data-turbo-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbo-track': 'reload', defer: true
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbo-track': 'reload', defer: true
     = csrf_meta_tags
     = csp_meta_tag
-    = favicon_pack_tag 'favicon-16x16.png', rel: 'icon', type: 'image/png', sizes: '16x16'
-    = favicon_pack_tag 'favicon-32x32.png', rel: 'icon', type: 'image/png', sizes: '32x32'
+    = favicon_link_tag asset_path('favicon-16x16.png'), rel: 'icon', type: 'image/png', sizes: '16x16'
+    = favicon_link_tag asset_path('favicon-32x32.png'), rel: 'icon', type: 'image/png', sizes: '32x32'
   %body{data: { controller: "timeoutable", timeoutable_timeout_in_value: @timeout_in }}
     #__SVG_SPRITE_NODE__{'data-turbo-permanent': true}
     = render partial: '/shared/header'
     = render partial: '/shared/timeout'
-    %button.scroll.rf-btn.d-flex.justify-content-center.align-items-center{data: { controller: "scroll", action: "scroll#top"}}
-      = fa_icon 'chevron-up', class: 'rf-icon-xl scroll-icon'
+    %button.scroll.rf-btn.rf-fi-arrow-up-s-line{data: { controller: "scroll", action: "scroll#top"}}
+      
     - if flash[:notice] || flash[:alert] || flash[:error] || flash[:success]
       .rf-container
         .rf-grid-row

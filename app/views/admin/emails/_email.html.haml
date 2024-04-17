@@ -6,7 +6,7 @@
       .notification 1
     .card-header.with-subheader.bg-white.font-weight-bold.text-secondary.d-flex.align-items-center
       .mr-auto
-        = fa_icon('forum', class: 'text-secondary')
+        = fa_icon('comments', class: 'text-secondary')
         - if email.automatic_email?
           %em Courriel automatique
         - else
@@ -23,11 +23,11 @@
           - klasses << 'opaque'
           - url = [:mark_as_read, :admin, @job_application, email]
           - title = t('.mark_as_read')
-          - icon = 'email'
+          - icon = 'envelope'
         - else
           - url = [:mark_as_unread, :admin, @job_application, email]
           - title = t('.mark_as_unread')
-          - icon = 'email-open'
+          - icon = 'envelope-open'
         = link_to url, method: :post, remote: true, class: klasses, title: title do
           = fa_icon icon
     .card-subheader.bg-card-bg.font-weight-bold.text-muted
@@ -40,5 +40,5 @@
             - next if attachment.document_content.blank?
             %li
               = link_to attachment_admin_job_application_email_path(email, email_attachment_id: attachment, job_application_id: email.job_application_id), target: "_blank" do
-                = fa_icon('file-document')
+                = fa_icon('file-lines')
                 = attachment.document_content.filename

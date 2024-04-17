@@ -12,7 +12,7 @@ require:
 AllCops:
   NewCops: enable
   Exclude:
-    - 'bin/{bundle,rails,rake,setup,spring,update,webpack,webpack-dev-server}'
+    - 'bin/{bundle,rails,rake,setup,spring,update}'
     - "db/**/*"
     - 'node_modules/**/*'
     - 'vendor/bundle/**/*'

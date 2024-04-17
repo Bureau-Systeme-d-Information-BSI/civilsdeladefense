@@ -31,7 +31,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version: 18
           cache: yarn
 
       - name: Install dependencies
@@ -44,9 +44,11 @@ jobs:
           DATABASE_URL_TEST: postgresql://cvd:postgres@localhost/cvd_test
         run: bundle exec rails db:schema:load
 
-      - name: Build assets with Webpack
-        run: bundle exec rails webpacker:compile
-
+      - name: Compile assets
+        run: |
+          bundle exec rails tmp:clear
+          bundle exec rails assets:precompile
+          
       - name: RSpec
         run: bundle exec rspec --fail-fast --format documentation
         env:

@@ -32,7 +32,7 @@ export default class extends Controller {
       }
     ]
   }
-  
+
   check(e) {
     this.rules.forEach(rule => {
       this.setRuleStatus(rule, rule.positive(e.target.value))
@@ -46,7 +46,7 @@ export default class extends Controller {
     if (valid) {
       element.classList.remove("invalid-rule")
       element.classList.add("valid-rule")
-    } else { 
+    } else {
       element.classList.remove("valid-rule")
       element.classList.add("invalid-rule")
     }

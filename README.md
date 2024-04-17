@@ -2,11 +2,12 @@
 
 Application de gestion de recrutements.
 
-Application Ruby on Rails avec base de données PostgreSQL, assets compilés via webpack et suite de tests utilisant RSpec.
+Application Ruby on Rails avec base de données PostgreSQL, assets compilés via esbuild et suite de tests utilisant RSpec.
 
 ## Pour commencer
 
-Ces instructions vous permettront de mettre en place une copie du projet sur votre machine locale à des fins de développement et de test. Voir Déploiement pour des notes sur la façon de déployer le projet sur un système réel.
+Ces instructions vous permettront de mettre en place une copie du projet sur votre machine locale à des fins de développement et de test. 
+Voir Déploiement pour des notes sur la façon de déployer le projet sur un système réel.
 
 ### Prérequis
 

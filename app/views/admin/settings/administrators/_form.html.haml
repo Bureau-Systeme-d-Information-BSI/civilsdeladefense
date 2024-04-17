@@ -42,7 +42,7 @@
             = button_tag(type: 'submit', class: 'btn btn-primary btn-raised mb-0') do
               - if @administrator.new_record?
                 = t('buttons.invite')
-                = fa_icon('send', class: 'ml-1')
+                = fa_icon('paper-plane', class: 'ml-1')
               - else
                 = t('buttons.update')
-                = fa_icon('content-save', class: 'ml-1')
+                = fa_icon('floppy-disk', class: 'ml-1')

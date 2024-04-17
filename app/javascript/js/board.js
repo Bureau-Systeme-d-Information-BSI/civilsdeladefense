@@ -1,10 +1,10 @@
 import Sortable from 'sortablejs'
 import Rails from '@rails/ujs'
 import BSN from 'bootstrap.native/dist/bootstrap-native.js'
-import formAutoSubmit from 'js/form-auto-submit'
-import dependentFields from 'js/dependent-fields'
-import displaySnackbars from 'js/display-snackbars'
-import emailTemplateSelectHandling from 'js/email-template-select-handling'
+import formAutoSubmit from './form-auto-submit'
+import dependentFields from './dependent-fields'
+import displaySnackbars from './display-snackbars'
+import emailTemplateSelectHandling from './email-template-select-handling'
 
 export function boardRedraw() {
   var url = window.location.href

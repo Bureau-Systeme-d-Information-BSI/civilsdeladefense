@@ -6,8 +6,8 @@
     %meta{name: "viewport", content: "width=device-width, initial-scale=1, shrink-to-fit=no"}
     %meta{name: 'turbo-cache-control', content: 'no-preview'}
     = stylesheet_link_tag 'https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500|Roboto+Mono:400,500', 'data-turbo-track': 'reload'
-    = javascript_pack_tag 'admin-bundle', 'data-turbo-track': 'reload', defer: true
-    = stylesheet_pack_tag 'admin-style', 'data-turbo-track': 'reload'
+    = javascript_include_tag 'admin', 'data-turbo-track': 'reload', defer: true
+    = stylesheet_link_tag 'admin', media: 'all', 'data-turbo-track': 'reload', defer: true
     = csrf_meta_tags
     = csp_meta_tag
   - style = 'overflow: hidden;' if controller.controller_name == 'job_offers' && controller.action_name == 'board'
@@ -17,7 +17,7 @@
   %body{class: klasses, style: style}
     #__SVG_SPRITE_NODE__{'data-turbo-permanent': true}
     %button.scroll.btn.btn-primary.btn-raised.d-flex.justify-content-center.align-items-center{data: { controller: "scroll", action: "scroll#top"}}
-      = fa_icon 'chevron-up', class: 'scroll-icon'
+      = fa_icon 'chevron-up'
     - if administrator_signed_in?
       = render partial: '/admin/shared/navbar'
       - if flash[:notice]
@@ -45,5 +45,5 @@
             - elsif flash[:success]
               .alert.alert-success= flash[:success]
             = yield
-      = javascript_pack_tag 'devise-bundle'
+
     = render partial: '/shared/modal'

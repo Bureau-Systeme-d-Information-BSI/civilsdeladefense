@@ -3,7 +3,7 @@
     .col-12.col-md-10.mx-md-auto
       .card{data: {controller: "remove-recipient add-recipient", add_recipient_search_url_value: admin_job_offer_recipients_path(@job_offer, format: :json)}}
         .card-header.bg-white.font-weight-bold.text-secondary
-          = fa_icon('file-document', class: 'text-secondary')
+          = fa_icon('file-lines', class: 'text-secondary')
           = t('.title')
         .card-subheader.bg-card-bg
           = render partial: "recipients", locals: { job_offer: @job_offer, job_applications: @job_applications}
@@ -28,4 +28,4 @@
             .form-actions.text-right
               = button_tag(type: 'submit', class: 'btn btn-primary', disabled: is_form_disabled?, data: {action: "click->files-upload#setFilesToUpload"}) do
                 = t('buttons.send_to_candidates')
-                = fa_icon('send', class: 'ml-1')
+                = fa_icon('paper-plane', class: 'ml-1')

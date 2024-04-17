@@ -1,0 +1,34 @@
+.devise {
+  .logos {
+    @extend .mb-3;
+    .logo {
+      height: 60px;
+    }
+  }
+  .form-inputs {
+    > .form-group {
+      @extend .mb-3;
+    }
+  }
+  .form-actions {
+    @extend .d-flex, .justify-content-end, .mt-4;
+  }
+  .form-links {
+    @extend .d-flex, .justify-content-end, .mt-4;
+    a {
+      @extend .mb-1;
+      color: inherit;
+    }
+  }
+  .alert {
+    @extend .mb-3;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  .devise {
+    .sidebar {
+      height: 100vh;
+    }
+  }
+}

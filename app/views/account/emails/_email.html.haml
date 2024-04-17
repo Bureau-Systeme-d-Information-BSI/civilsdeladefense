@@ -15,6 +15,6 @@
     - email.email_attachments.each do |attachment|
       - next if attachment.document_content.blank?
       = link_to attachment_account_job_application_email_path(email, email_attachment_id: attachment, job_application_id: email.job_application_id), target: "_blank" do
-        = fa_icon('file-document')
+        = fa_icon('file-lines')
         = attachment.document_content.filename
       %br

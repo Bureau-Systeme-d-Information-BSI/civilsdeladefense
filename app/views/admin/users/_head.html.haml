@@ -10,16 +10,16 @@
         .my-1= user.current_position
         - if (phone = user.phone).present?
           .d-flex.flex-row.align-items-center
-            = fa_icon('phone', class: 'fa-w-15 mr-1')
+            = fa_icon('phone', class: 'mr-1')
             = phone
         - if (email = user.email).present?
           .d-flex.flex-row.align-items-center
-            = fa_icon('email', class: 'fa-w-15 mr-1')
+            = fa_icon('envelope', class: 'mr-1')
             = email
         - if website_url.present?
           .d-flex.flex-row.align-items-center
-            - icon_name = website_url =~ /linkedin/ ? 'linkedin' : 'web'
-            = fa_icon(icon_name, class: 'fa-w-15 mr-1')
+            - icon_name = website_url =~ /linkedin/ ? 'linkedin' : 'globe'
+            = fa_icon(icon_name, class: 'mr-1')
             = link_to website_url, website_url, target: :_blank, class: 'text-body-color'
 
     - if defined?(job_application) && !user.new_record?

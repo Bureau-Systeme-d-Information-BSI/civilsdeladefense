@@ -58,7 +58,7 @@
             = f.input :estimate_monthly_salary_net, label: false, wrapper_html: { class: 'mb-0' }
         .td
           = link_to [:admin, :settings, salary_range], class: 'btn btn-primary btn-raised mb-0 d-block', method: :delete, title: t('buttons.delete'), data: { confirm: t('buttons.confirm') } do
-            = fa_icon('delete')
+            = fa_icon('trash-can')
             Suppr.
     = simple_form_for([:admin, :settings, SalaryRange.new], html: { class: 'form-inline tr thead' }) do |f|
       .td= f.association :professional_category, label: false, include_blank: false, collection: @professional_categories

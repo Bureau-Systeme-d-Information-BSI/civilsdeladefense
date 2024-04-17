@@ -1,0 +1,334 @@
+$primary: #0084f8;
+$secondary: #003a9b;
+$tertiary: #344374;
+$quaternary: #003285;
+$quinary: #2d3b66;
+$dark-gray: #585858;
+$light-gray: #c4c4c4;
+$disabled-gray: #fbfbfb;
+$text-muted: $light-gray;
+$success: #00d893;
+$cyan: #6cbeff;
+$danger: #f60e0e;
+$purple: #a462ff;
+$orange: #ff8800;
+$body-color: #818181;
+$body-color-variation: #848484;
+$body-bg: #e6e6e6;
+$font-family-sans-serif: Roboto, sans-serif;
+$enable-rounded: false !default;
+$enable-shadows: true !default;
+$btn-box-shadow: none;
+$btn-active-box-shadow: none;
+$card-bg: #f5f5f5 !default;
+$card-cap-bg: $card-bg;
+$card-border-width: 0;
+$card-border-color: #e0e0e0;
+$card-spacer-x: 2rem;
+$table-border-width: 1px;
+$border-width: 0;
+$border-width-normal: 1px;
+$font-weight-normal: 400 !default;
+$font-weight-bold: 500 !default;
+$headings-color: $secondary !default;
+$hr-border-color: #eee !default;
+$hr-border-width: 1px !default;
+$modal-lg: 1100px !default;
+$navbar-light-active-color: $primary;
+
+$theme-colors: (
+  "tertiary": $tertiary,
+  "quaternary": $quaternary,
+  "quinary": $quinary,
+  "dark-gray": $dark-gray,
+  "light-gray": $light-gray,
+  "purple": $purple,
+  "body-color": $body-color,
+  "card-bg": $card-bg,
+  "cyan": $cyan,
+  "orange": $orange,
+  "danger": $danger
+);
+
+// variables borrowed from bootstrap-material-design
+$bmd-animation-curve-fast-out-slow-in: cubic-bezier(0.4, 0, 0.2, 1) !default;
+$bmd-animation-curve-linear-out-slow-in: cubic-bezier(0, 0, 0.2, 1) !default;
+$bmd-animation-curve-fast-out-linear-in: cubic-bezier(0.4, 0, 1, 1) !default;
+$bmd-animation-curve-default: $bmd-animation-curve-fast-out-slow-in !default;
+
+$custom-file-text: (
+  en: "Browse",
+  fr: "Parcourir"
+);
+
+@import 'bootstrap/scss/bootstrap';
+
+@import './bootstrap_material_design_variables';
+@import 'bootstrap-material-design/scss/variables/shadow';
+@import 'bootstrap-material-design/scss/variables/bootstrap/buttons';
+@import 'bootstrap-material-design/scss/mixins/utilities';
+@import 'bootstrap-material-design/scss/mixins/forms';
+@import 'bootstrap-material-design/scss/mixins/hover';
+@import 'bootstrap-material-design/scss/mixins/buttons';
+@import 'bootstrap-material-design/scss/buttons';
+@import 'bootstrap-material-design/scss/dropdown';
+@import 'bootstrap-material-design/scss/dropdown';
+@import 'bootstrap-material-design/scss/extensions/snackbarjs';
+@import './navbar';
+@import './offcanvas';
+@import './card_extension';
+@import './form_extension';
+@import './buttons_extension';
+@import './progress';
+@import './flash';
+
+svg {
+  fill: currentColor !important;
+  &.fa-linkedin {
+    color: #0077b5;
+  }
+}
+
+.border         { border: $border-width-normal solid $border-color !important; }
+.border-top     { border-top: $border-width-normal solid $border-color !important; }
+.border-right   { border-right: $border-width-normal solid $border-color !important; }
+.border-bottom  { border-bottom: $border-width-normal solid $border-color !important; }
+.border-left    { border-left: $border-width-normal solid $border-color !important; }
+
+.border-0        { border: 0 !important; }
+.border-top-0    { border-top: 0 !important; }
+.border-right-0  { border-right: 0 !important; }
+.border-bottom-0 { border-bottom: 0 !important; }
+.border-left-0   { border-left: 0 !important; }
+
+.border-bottom-3 {
+  @extend .border-bottom;
+  border-bottom-width: 3px !important;
+}
+
+@each $color, $value in $theme-colors {
+  .border-#{$color} {
+    border-color: $value !important;
+  }
+}
+
+svg {
+  fill: $body-color;
+}
+
+[role="main"] {
+  @extend .px-0;
+  nav.navbar {
+    @supports (position: sticky) {
+      z-index: 3;
+      position: sticky;
+      top: 50px;
+    }
+  }
+  .card {
+    @supports (position: sticky) {
+      z-index: 2;
+    }
+  }
+}
+
+.alert {
+  @extend .mb-0;
+}
+
+aside.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  padding: 48px 0 0;
+  box-shadow: 0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12);
+}
+
+.sidebar-sticky {
+  @extend .position-sticky;
+  top: 50px;
+  height: calc(100vh - 50px);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.w-32 {
+  width: 32px;
+}
+
+.h-32 {
+  height: 32px;
+}
+
+.w-40 {
+  width: 40px;
+}
+
+.h-40 {
+  height: 40px;
+}
+
+.w-80 {
+  width: 80px;
+}
+
+.h-80 {
+  height: 80px;
+}
+
+ul {
+  &.actions {
+    > li {
+      @extend .mr-0;
+      &:last-child {
+        @extend .mr-0;
+      }
+    }
+  }
+}
+
+.actions {
+  > li > a {
+    @extend .mr-2;
+    svg {
+      @extend .mr-0;
+    }
+  }
+  > a, > .dropdown > a, > li > a {
+    color: $body-color;
+    outline: 0;
+    svg {
+      fill: $body-color;
+      @extend .mr-1;
+    }
+    &:hover, &:focus, &.active {
+      text-decoration: none;
+      color: $primary;
+      svg {
+        fill: $primary;
+      }
+    }
+  }
+}
+
+.nav.nav-tabs {
+  .nav-item {
+    @extend .mr-0;
+    .nav-link {
+      @extend .text-uppercase, .mr-4;
+      line-height: 2.5rem;
+    }
+    &:last-child {
+      .nav-link {
+        @extend .mr-0;
+      }
+    }
+  }
+}
+
+.modal-l {
+  max-width: 800px;
+}
+
+.show {
+  .dropdown-toggle {
+    &.btn {
+      &.btn-primary {
+        background-color: $primary !important;
+      }
+    }
+  }
+}
+
+.dropdown-menu {
+  @include box-shadow($bmd-shadow-2dp);
+  .dropdown-item {
+    @include button-size($btn-padding-y, $btn-padding-x, $font-size-base, $btn-line-height, $btn-border-radius);
+    padding-top: $btn-padding-y;
+    padding-bottom: $btn-padding-y;
+    padding-left: $btn-padding-x;
+    padding-right: $btn-padding-x;
+    min-height: unset;
+  }
+}
+
+.dropdown-item {
+  &.disabled, &:disabled {
+    color: $text-muted;
+    cursor: not-allowed;
+    background-color: transparent;
+  }
+}
+
+.opaque {
+  opacity: 0.25;
+}
+
+b, strong {
+  font-weight: 500;
+}
+
+.lists .card, .job-offer.card, .email.card {
+  .notification {
+    @extend .font-weight-bold;
+    position: absolute;
+    top: -6px;
+    right: -10px;
+    font-size: 12px;
+    background: $danger;
+    color: #FFF;
+    min-width: 22px;
+    height: 22px;
+    border-radius: 11px;
+    text-align: center;
+    line-height: 22px;
+    vertical-align: middle;
+    display: block;
+  }
+}
+
+.email.card {
+  .datetime {
+    font-weight: normal;
+  }
+}
+
+.nav-link {
+  .notification {
+    position: absolute;
+    top: 3px;
+    right: -19px;
+    border: 1px solid #FFF;
+    font-size: 9px;
+    background: $danger;
+    color: #FFF;
+    min-width: 20px;
+    padding: 0 5px;
+    height: 20px;
+    border-radius: 10px;
+    text-align: center;
+    line-height: 19px;
+    vertical-align: middle;
+    display: block;
+  }
+}
+
+.text-tall {
+  font-size: 150%;
+}
+
+.text-underline {
+  text-decoration: underline;
+}
+
+.text-grey, .text-gray {
+  color: $body-color;
+}
+
+a.text-grey, a.text-gray {
+  &:hover {
+    color: darken($body-color, 10%);
+  }
+}

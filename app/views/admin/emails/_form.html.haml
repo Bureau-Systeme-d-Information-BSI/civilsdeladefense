@@ -2,7 +2,7 @@
 - @email ||= Email.new(job_application: @job_application)
 .card
   .card-header.bg-white.font-weight-bold.text-secondary
-    = fa_icon('file-document', class: 'text-secondary')
+    = fa_icon('file-lines', class: 'text-secondary')
     = t('.title')
   .card-body.bg-white
     = simple_form_for(:email, url: [:admin, :email_templates], method: :get, remote: true, html: {id: :email_template_selector, class: 'auto-submit'}, defaults: { disabled: is_archived_or_is_deleted }) do |f|
@@ -23,4 +23,4 @@
       .form-actions.text-right
         = button_tag(type: 'submit', class: 'btn btn-primary', data: {action: "click->files-upload#setFilesToUpload"}) do
           = t('buttons.send_to_candidate')
-          = fa_icon('send', class: 'ml-1')
+          = fa_icon('paper-plane', class: 'ml-1')

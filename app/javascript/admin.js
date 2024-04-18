@@ -31,8 +31,6 @@ window.formAutoSubmit = formAutoSubmit
 import inPlaceEdit from './js/in-place-edit'
 window.inPlaceEdit = inPlaceEdit
 
-import timeoutAlert from './js/timeout-alert'
-
 import displayCharts from './js/display-charts'
 
 import displaySnackbars from './js/display-snackbars'
@@ -62,7 +60,6 @@ document.addEventListener('turbo:load', function () {
   displayCharts()
   displaySnackbars()
   boardManagement()
-  timeoutAlert()
 
   flatpickr('#job_offer_contract_start_on', {
     locale: French,

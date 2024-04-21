@@ -1,15 +1,16 @@
 - @page_title = 'Offre d\'emploi ' + @job_offer.title + ' ' + @job_offer.location
 - encoded_url = url_encode(request.original_url)
 
-%h1.rf-mt-0.rf-h2
-  .social-links
-    %a{onclick: "window.print(); return false", href: "#"}
-      = fa_icon 'print', class: 'rf-text--lg'
-    %a{href:"https://www.facebook.com/sharer/sharer.php?u=#{encoded_url}", target: "_blank"}
-      = fa_icon 'facebook', flavor: 'brands', class: 'rf-text--lg'
-    %a{href: "https://www.linkedin.com/shareArticle?url=#{encoded_url}", target: "_blank"}
-      = fa_icon 'linkedin', flavor: 'brands', class: 'rf-text--lg'
-    %a{href: "https://twitter.com/intent/tweet?url=#{encoded_url}", target: "_blank"}
-      = fa_icon 'twitter', flavor: 'brands', class: 'rf-text--lg'
-  = @job_offer.title
+.d-flex.justify-space-between.rf-mt-0
+  %h1.rf-h2= @job_offer.title
+  .d-flex.flex-column
+    .social-links.rf-mr-2w
+      %a{href: "https://twitter.com/intent/tweet?url=#{encoded_url}", target: "_blank"}
+        = fa_icon 'twitter', flavor: 'brands', class: 'rf-ml-1w'
+      %a{href: "https://www.linkedin.com/shareArticle?url=#{encoded_url}", target: "_blank"}
+        = fa_icon 'linkedin', flavor: 'brands', class: 'rf-ml-1w'
+      %a{href:"https://www.facebook.com/sharer/sharer.php?u=#{encoded_url}", target: "_blank"}
+        = fa_icon 'facebook', flavor: 'brands', class: ''
+    = render partial: 'job_offers/bookmark', locals: {job_offer: @job_offer}
+
 = render partial: 'job_offer_content', locals: {job_offer: @job_offer}

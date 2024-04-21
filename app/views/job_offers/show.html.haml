@@ -12,5 +12,9 @@
       %a{href:"https://www.facebook.com/sharer/sharer.php?u=#{encoded_url}", target: "_blank"}
         = fa_icon 'facebook', flavor: 'brands', class: ''
     = render partial: 'job_offers/bookmark', locals: {job_offer: @job_offer}
+    = link_to job_offer_path(@job_offer.slug, format: :pdf), class: 'rf-link rf-border-0', target: "_blank" do
+      .d-flex.flex-row.align-items-center
+        %small.max-content= t('.pdf_download')
+        = fa_icon('download', class: 'rf-ml-1w')
 
 = render partial: 'job_offer_content', locals: {job_offer: @job_offer}

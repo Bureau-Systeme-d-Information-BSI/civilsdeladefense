@@ -162,6 +162,8 @@ fr:
       title: "Merci d'avoir soumis votre candidature !"
       subtitle_html: "Votre demande est prise en compte.\n\nVeuillez confirmer votre accès à l'aide du lien sur votre boîte courriel."
       link: "Retour à l'accueil"
+    show:
+      pdf_download: Télécharger en PDF
   layouts:
     account:
       job_application_display:

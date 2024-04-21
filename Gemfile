@@ -75,6 +75,9 @@ gem "omniauth-rails_csrf_protection"
 
 gem "strong_migrations" # Secured migrations
 
+gem "prawn" # PDF generation
+gem "prawn-table" # Add tables to PDFs
+
 group :development, :test do
   gem "brakeman", require: false
   gem "debug"

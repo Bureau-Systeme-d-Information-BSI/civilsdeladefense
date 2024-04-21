@@ -25,9 +25,11 @@ class JobOffersController < ApplicationController
     end
   end
 
-  # GET /job_offers/1
-  # GET /job_offers/1.json
   def show
+    respond_to do |format|
+      format.html {}
+      format.pdf { render_job_offer_as_pdf }
+    end
   end
 
   # GET /job_offers/1/apply
@@ -202,4 +204,10 @@ class JobOffersController < ApplicationController
   rescue ArgumentError, TypeError
     1
   end
+
+  def render_job_offer_as_pdf
+    send_data pdf_job_offer.render, filename: pdf_job_offer.filename, type: "application/pdf", disposition: "inline"
+  end
+
+  def pdf_job_offer = @pdf_job_offer ||= PdfJobOffer.new(@job_offer)
 end

@@ -6,11 +6,11 @@
         %strong.rf-text--lg.rf-mb-1w= job_offer.title
         .d-flex.align-items-center.justify-space-between
           .d-flex.flex-column
-            .d-flex.rf-mr-1w
-              = fa_icon('file-document', class: 'text-secondary')
+            .d-flex.flex-row.align-items-center
+              = fa_icon('file', class: 'rf-mr-1w')
               = job_offer_contract_type_display(job_offer)
-            .d-flex.rf-mr-1w
-              = fa_icon('map-pin-line', class: 'text-secondary')
+            .d-flex.flex-row.align-items-center
+              = fa_icon('location-dot', class: 'rf-mr-1w')
               = job_offer.location
           .d-flex.align-items-center
             .rf-tag.rf-mr-5w= job_offer.category.name

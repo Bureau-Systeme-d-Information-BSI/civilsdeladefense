@@ -18,5 +18,5 @@
               %sr-only=t('.show')
       .d-flex.align-items-center.justify-space-between.rf-mt-1w
         %small= job_offer.published_at.present? ? t('.published_date', time_ago_in_words: time_ago_in_words(job_offer.published_at)) : ""
-        = render 'job_offers/bookmark', job_offer: job_offer
+        = render 'job_offers/bookmark', job_offer: job_offer, user: current_user
     %hr.rf-b--g100.rf-my-0

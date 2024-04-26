@@ -308,6 +308,8 @@ class JobOffer < ApplicationRecord
       ApplicantNotificationsMailer.send_job_offer(user, self).deliver_now
     end
   end
+
+  def bookmarked_by?(user) = bookmarks.exists?(user:)
 end
 
 # == Schema Information

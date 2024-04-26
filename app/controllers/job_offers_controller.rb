@@ -95,7 +95,10 @@ class JobOffersController < ApplicationController
   private
 
   def set_job_offers
-    @job_offers = JobOffer.publicly_visible.includes(:contract_type, :category).order(published_at: :desc)
+    @job_offers = JobOffer
+      .publicly_visible
+      .includes(:contract_type, :category, :study_level, :experience_level, :organization, :bookmarks)
+      .order(published_at: :desc)
 
     @job_offers = @job_offers.includes(:study_level) if request.format.json?
 

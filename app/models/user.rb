@@ -119,8 +119,6 @@ class User < ApplicationRecord
     job_applications.order(created_at: :desc).first
   end
 
-  def bookmarked?(job_offer) = bookmarks.where(job_offer: job_offer).any?
-
   private
 
   def password_required?

@@ -353,6 +353,32 @@ RSpec.describe JobOffer do
       expect { job_offer.unarchive! }.to change { job_offer.reload.archiving_reason }.to(nil)
     end
   end
+
+  describe "#bookmarked_by?" do
+    subject { job_offer.bookmarked_by?(user) }
+
+    let(:job_offer) { create(:job_offer) }
+
+    context "when user is nil" do
+      let(:user) { nil }
+
+      it { is_expected.to be false }
+    end
+
+    context "when user is not nil" do
+      let(:user) { create(:user) }
+
+      context "when user has bookmarked the job offer" do
+        before { create(:bookmark, user: user, job_offer: job_offer) }
+
+        it { is_expected.to be true }
+      end
+
+      context "when user has not bookmarked the job offer" do
+        it { is_expected.to be false }
+      end
+    end
+  end
 end
 
 # == Schema Information

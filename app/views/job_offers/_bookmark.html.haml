@@ -1,4 +1,5 @@
 =turbo_frame_tag job_offer do
+  %p= "current user: #{current_user.inspect}"
   - if current_user&.bookmarked?(job_offer)
     = button_to bookmark_path(job_offer.id), method: :delete, class: 'rf-link rf-border-0' do
       .d-flex.flex-row.align-items-center

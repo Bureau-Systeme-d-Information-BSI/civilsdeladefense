@@ -84,9 +84,6 @@ Rails.application.configure do
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
 
-  # Allow tunneling with ngrok
-  config.hosts << "79f5-2a01-cb08-8dd5-3900-d5f7-b716-e3dd-b596.ngrok-free.app"
-
   config.i18n.available_locales += %w[en]
   require "faker"
   Faker::Config.locale = :fr

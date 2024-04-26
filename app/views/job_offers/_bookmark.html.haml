@@ -1,6 +1,9 @@
 =turbo_frame_tag job_offer do
   %p= "current user email: #{user&.email}"
+  %p= "user bookmarks: #{user&.bookmarks&.map(&:job_offer_id)}"
+  %p= "job offer id: #{job_offer.id}"
   %p= "is this offer bookmarked: #{user&.bookmarked?(job_offer)}"
+  %p= "is job offer id in bookmark ids? #{user&.bookmarks&.map(&:job_offer_id)&.include?(job_offer.id)}"
   - if current_user&.bookmarked?(job_offer)
     = button_to bookmark_path(job_offer.id), method: :delete, class: 'rf-link rf-border-0' do
       .d-flex.flex-row.align-items-center

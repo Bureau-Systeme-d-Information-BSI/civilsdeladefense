@@ -23,7 +23,6 @@ FactoryBot.define do
     estimate_annual_salary_gross { "36k€" }
     bne_value { "inconnue" }
     bne_date { 1.day.ago }
-    duration_contract { "duration" }
 
     factory :published_job_offer do
       published_at { 40.days.before }
@@ -41,6 +40,11 @@ FactoryBot.define do
     after(:create) do |job_offer|
       3.times { job_offer.job_applications << create(:job_application) }
     end
+  end
+
+  trait :with_contract_duration do
+    contract_type { association :contract_type, duration: true }
+    contract_duration { association :contract_duration }
   end
 end
 
@@ -66,7 +70,6 @@ end
 #  county_code                                      :integer
 #  description                                      :text
 #  draft_at                                         :datetime
-#  duration_contract                                :string
 #  estimate_annual_salary_gross                     :string
 #  estimate_monthly_salary_net                      :string
 #  featured                                         :boolean          default(FALSE)

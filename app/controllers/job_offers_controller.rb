@@ -25,9 +25,11 @@ class JobOffersController < ApplicationController
     end
   end
 
-  # GET /job_offers/1
-  # GET /job_offers/1.json
   def show
+    respond_to do |format|
+      format.html {}
+      format.pdf { render_job_offer_as_pdf }
+    end
   end
 
   # GET /job_offers/1/apply
@@ -93,7 +95,10 @@ class JobOffersController < ApplicationController
   private
 
   def set_job_offers
-    @job_offers = JobOffer.publicly_visible.includes(:contract_type, :category).order(published_at: :desc)
+    @job_offers = JobOffer
+      .publicly_visible
+      .includes(:contract_type, :category, :study_level, :experience_level, :organization, :bookmarks)
+      .order(published_at: :desc)
 
     @job_offers = @job_offers.includes(:study_level) if request.format.json?
 
@@ -103,6 +108,8 @@ class JobOffersController < ApplicationController
 
     @job_offers = @job_offers.where("contract_start_on <= ?", contract_start_on) if contract_start_on.present?
     @job_offers = @job_offers.where("published_at >= ?", published_at) if published_at.present?
+
+    @job_offers = @job_offers.bookmarked(current_user) if params[:bookmarked].present? && user_signed_in?
 
     @job_offers = @job_offers.search_full_text(params[:q]) if params[:q].present?
     @job_offers = @job_offers.paginate(page: page, per_page: 15) unless params[:no_pagination]
@@ -200,4 +207,10 @@ class JobOffersController < ApplicationController
   rescue ArgumentError, TypeError
     1
   end
+
+  def render_job_offer_as_pdf
+    send_data pdf_job_offer.render, filename: pdf_job_offer.filename, type: "application/pdf", disposition: "inline"
+  end
+
+  def pdf_job_offer = @pdf_job_offer ||= PdfJobOffer.new(@job_offer)
 end

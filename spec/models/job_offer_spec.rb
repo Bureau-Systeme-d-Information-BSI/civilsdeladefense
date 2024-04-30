@@ -13,6 +13,58 @@ RSpec.describe JobOffer do
     it { is_expected.to have_many(:"job_offer_#{role}_actors").inverse_of(:job_offer) }
   end
 
+  describe "scopes" do
+    describe ".bookmarked" do
+      subject { described_class.bookmarked(user) }
+
+      let(:user) { create(:user) }
+      let(:matching_job_offer) { create(:bookmark, user:).job_offer }
+      let(:non_matching_job_offer) { create(:job_offer) }
+
+      it { is_expected.to include(matching_job_offer) }
+
+      it { is_expected.not_to include(non_matching_job_offer) }
+    end
+  end
+
+  describe "associations" do
+    it { is_expected.to have_many(:bookmarks).dependent(:destroy) }
+  end
+
+  describe "delegations" do
+    it { is_expected.to delegate_method(:name).to(:contract_type).with_prefix(true).with_arguments(allow_nil: true) }
+  end
+
+  describe "#contract_duration_name" do
+    subject { job_offer.contract_duration_name }
+
+    context "when contract_type is nil" do
+      before { allow(job_offer).to receive(:contract_type).and_return(nil) }
+
+      it { is_expected.to be_nil }
+    end
+
+    context "when contract_type duration is false" do
+      before { job_offer.contract_type.update!(duration: false) }
+
+      it { is_expected.to be_nil }
+    end
+
+    context "when contract_duration is nil" do
+      before { job_offer.update!(contract_duration: nil) }
+
+      it { is_expected.to be_nil }
+    end
+
+    context "when otherwise" do
+      before { job_offer.update!(contract_type: create(:contract_type, duration: true), contract_duration:) }
+
+      let(:contract_duration) { create(:contract_duration) }
+
+      it { is_expected.to eq contract_duration.name }
+    end
+  end
+
   describe ".spontaneous?" do
     subject { described_class.spontaneous? }
 
@@ -301,6 +353,32 @@ RSpec.describe JobOffer do
       expect { job_offer.unarchive! }.to change { job_offer.reload.archiving_reason }.to(nil)
     end
   end
+
+  describe "#bookmarked_by?" do
+    subject { job_offer.bookmarked_by?(user) }
+
+    let(:job_offer) { create(:job_offer) }
+
+    context "when user is nil" do
+      let(:user) { nil }
+
+      it { is_expected.to be false }
+    end
+
+    context "when user is not nil" do
+      let(:user) { create(:user) }
+
+      context "when user has bookmarked the job offer" do
+        before { create(:bookmark, user: user, job_offer: job_offer) }
+
+        it { is_expected.to be true }
+      end
+
+      context "when user has not bookmarked the job offer" do
+        it { is_expected.to be false }
+      end
+    end
+  end
 end
 
 # == Schema Information
@@ -325,7 +403,6 @@ end
 #  county_code                                      :integer
 #  description                                      :text
 #  draft_at                                         :datetime
-#  duration_contract                                :string
 #  estimate_annual_salary_gross                     :string
 #  estimate_monthly_salary_net                      :string
 #  featured                                         :boolean          default(FALSE)

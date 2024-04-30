@@ -115,6 +115,12 @@ fr:
       your_internet_presence: "Votre présence sur internet"
       your_account_creation: "Votre création de compte"
   job_offers:
+    no_bookmarks:
+      title: Vous n'avez pas encore d'offres favorites
+      description: Parcourez les offres d'emploi disponibles et ajoutez dans vos favoris celles qui vous intéressent.
+    bookmark:
+      add_bookmark: Ajouter aux favoris
+      remove_bookmark: Retirer des favoris
     index:
       title: "Nos offres"
       job_offers_count:
@@ -156,6 +162,8 @@ fr:
       title: "Merci d'avoir soumis votre candidature !"
       subtitle_html: "Votre demande est prise en compte.\n\nVeuillez confirmer votre accès à l'aide du lien sur votre boîte courriel."
       link: "Retour à l'accueil"
+    show:
+      pdf_download: Télécharger en PDF
   layouts:
     account:
       job_application_display:

@@ -1,0 +1,6 @@
+.rf-card.rounded-lg
+  = link_to job_offers_path, data: { turbo_frame: '_top' } do
+    .rf-card__body
+      %h4.rf-card__title= t('.title')
+      %p.rf-card__desc= t('.description')
+

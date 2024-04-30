@@ -27,7 +27,6 @@
 /config/master.key
 
 .env*
-docker
 vendor/.bundle/
 /public/packs
 /public/packs-test

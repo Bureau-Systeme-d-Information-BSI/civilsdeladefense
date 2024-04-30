@@ -7,16 +7,25 @@
 = simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
   = f.error_notification
   = f.input :email, required: true, autofocus: true
-  = f.input :password, required: true
-  = f.input :password_confirmation, required: true
+  %div{data: {controller: "password-visibility password-rules"}}
+    = f.input :password, required: true, input_html: { data: { password_visibility_target: "passwordInput", action: "keyup->password-rules#check" } }
+    = fa_icon("eye", class: "password-visibility-toggle", data: { password_visibility_target: "showButton", action: "click->password-visibility#toggle" })
+    = fa_icon("eye-slash", class: "password-visibility-toggle d-none", data: { password_visibility_target: "hideButton", action: "click->password-visibility#toggle" })
+    %div.rules{data: {password_rules_target: "rules"}}
+      - %w[length uppercase lowercase number special].each do |rule|
+        %div{data: {rule: rule}}
+  %div{data: {controller: "password-visibility"}}
+    = f.input :password_confirmation, required: true, input_html: { data: { password_visibility_target: "passwordInput" }}
+    = fa_icon("eye", class: "password-visibility-toggle", data: { password_visibility_target: "showButton", action: "click->password-visibility#toggle" })
+    = fa_icon("eye-slash", class: "password-visibility-toggle d-none", data: { password_visibility_target: "hideButton", action: "click->password-visibility#toggle" })
+    %div
   - if resource.is_a?(User)
     = f.input :first_name
     = f.input :last_name
-    = f.input :current_position
     = f.input :phone
     = f.input :receive_job_offer_mails
     = f.input :terms_of_service, as: :boolean, label: tos_acceptance_text
-    = f.input :certify_majority, as: :boolean
+    = f.input :certify_majority, as: :boolean, label: t('simple_form.labels.user.certify_majority_html')
   .rf-input-group.rf-grid-row
     = f.button :submit, t(".sign_up"), class: 'rf-btn btn btn-primary btn-raised'
   = render "devise/shared/links"

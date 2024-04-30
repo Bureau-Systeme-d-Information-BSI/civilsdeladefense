@@ -25,14 +25,14 @@ application.register("files-upload", FilesUploadController)
 import FormSaveController from "./form_save_controller"
 application.register("form-save", FormSaveController)
 
-import HelloController from "./hello_controller"
-application.register("hello", HelloController)
-
 import JobOfferManagementController from "./job_offer_management_controller"
 application.register("job-offer-management", JobOfferManagementController)
 
 import JobOfferTermController from "./job_offer_term_controller"
 application.register("job-offer-term", JobOfferTermController)
+
+import PasswordRulesController from "./password_rules_controller"
+application.register("password-rules", PasswordRulesController)
 
 import PasswordVisibilityController from "./password_visibility_controller"
 application.register("password-visibility", PasswordVisibilityController)

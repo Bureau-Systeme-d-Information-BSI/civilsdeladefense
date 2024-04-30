@@ -64,30 +64,30 @@
                 .card-body
                   .form-inputs
                     .row
-                      .col-12.col-md-3
+                      .col-12.col-md-4
                         - options = ContractType.all.map { |ct| [ct.name, ct.id, {data: {duration: ct.duration}}] }
                         = f.input :contract_type_id, collection: options, required: true
-                      .col-12.col-md-3
+                      .col-12.col-md-4
                         = f.association :contract_duration
-                      .col-12.col-md-3
+                      .col-12.col-md-4
                         = f.input :contract_start_on, as: :string, input_html: {class: 'default-cursor'}
                     .row
-                      .col-12.col-md-3
+                      .col-12.col-md-4
                         = f.input :pep_value, input_html: { class: @job_offer.errors[:base].any? { _1.include?("PEP") } ? "is-invalid" : "" }
-                      .col-12.col-md-6
+                      .col-12.col-md-4
                         = f.input :pep_date, as: :string, input_html: {class: 'default-cursor'}
                     .row
-                      .col-12.col-md-3
+                      .col-12.col-md-4
                         = f.input :bne_value, input_html: { class: @job_offer.errors[:base].any? { _1.include?("BNE") } ? "is-invalid" : "" }
-                      .col-12.col-md-6
+                      .col-12.col-md-4
                         = f.input :bne_date, as: :string, input_html: {class: 'default-cursor'}
                     .row
-                      .col-12.col-md-3
+                      .col-12.col-md-4
                         = f.association :benefits, as: :check_boxes
                     .row
-                      .col-12.col-md-3
+                      .col-12.col-md-4
                         = f.input :is_remote_possible, as: :radio_buttons
-                      .col-12.col-md-6
+                      .col-12.col-md-4
                         = f.input :available_immediately, as: :radio_buttons
               .card.mt-5
                 .card-header

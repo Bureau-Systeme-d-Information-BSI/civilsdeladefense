@@ -43,9 +43,9 @@ class JobOffer < ApplicationRecord
   belongs_to :bop, optional: true
   belongs_to :archiving_reason, optional: true
 
+  has_many :bookmarks, dependent: :destroy
   has_many :benefit_job_offers, dependent: :destroy
   has_many :benefits, through: :benefit_job_offers
-
   has_many :job_applications, dependent: :destroy
   has_many :job_offer_actors, inverse_of: :job_offer, dependent: :destroy
   has_many :administrators, through: :job_offer_actors
@@ -96,6 +96,7 @@ class JobOffer < ApplicationRecord
   scope :admin_index_featured, -> { admin_index.where(featured: true) }
   scope :publicly_visible, -> { where(state: :published) }
   scope :search_import, -> { includes(*SETTINGS) }
+  scope :bookmarked, ->(user) { joins(:bookmarks).where(bookmarks: {user: user}) }
 
   enum most_advanced_job_applications_state: {
     start: -1,
@@ -150,6 +151,19 @@ class JobOffer < ApplicationRecord
       transitions from: %i[archived], to: :draft
     end
   end
+
+  delegate :name, to: :contract_type, prefix: true, allow_nil: true
+
+  def contract_duration_name
+    return nil unless contract_type&.duration
+    return nil unless contract_duration
+
+    contract_duration.name
+  end
+
+  def self.spontaneous? = spontaneous_job_offer.present?
+
+  def self.spontaneous_job_offer = published.where(spontaneous: true).first
 
   # Return an hash where keys are regions and values are counties inside it
   # All regions and counties got job_offers associated
@@ -294,6 +308,8 @@ class JobOffer < ApplicationRecord
       ApplicantNotificationsMailer.send_job_offer(user, self).deliver_now
     end
   end
+
+  def bookmarked_by?(user) = bookmarks.exists?(user:)
 end
 
 # == Schema Information
@@ -318,7 +334,6 @@ end
 #  county_code                                      :integer
 #  description                                      :text
 #  draft_at                                         :datetime
-#  duration_contract                                :string
 #  estimate_annual_salary_gross                     :string
 #  estimate_monthly_salary_net                      :string
 #  featured                                         :boolean          default(FALSE)

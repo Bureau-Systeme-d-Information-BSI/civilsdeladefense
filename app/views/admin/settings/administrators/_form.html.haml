@@ -17,7 +17,7 @@
           .col-12.col-md-6
             = f.input :title, required: false
           .col-12.col-md-6
-            - if current_administrator.bant?
+            - if current_administrator.admin?
               - grouped_options = Employer.roots.map{|x| [x.name, x.children]}
               = f.association :employer, collection: grouped_options, as: :grouped_select, group_method: :last, input_html: {class: 'custom-select', id: :administrator_employer_id}
               = f.association :employer, collection: Employer.roots, label: t("simple_form.labels.administrator.grand_employer"), input_html: {class: 'custom-select', id: :administrator_grand_employer_id}

@@ -12,6 +12,10 @@ RSpec.describe User do
     expect(user).to be_valid
   end
 
+  describe "associations" do
+    it { is_expected.to have_many(:bookmarks).dependent(:destroy) }
+  end
+
   it "can be suspended" do
     text = "Bad guy"
     expect(user.suspended_at).to be_nil

@@ -1,6 +1,6 @@
 - nav_items = [[:job_offers], [:users]]
 - nav_items << [:stats, :root]
-- nav_items << [:settings, :root] if current_administrator.bant?
+- nav_items << [:settings, :root] if current_administrator.admin?
 %nav.navbar.navbar-expand-md.navbar-light.bg-white.fixed-top
   %button.navbar-toggler.p-0.border-0{type: :button, data: {toggle: 'offcanvas'}}
     %span.navbar-toggler-icon= fa_icon "bars", style: "width:1.5em;height:auto;"
@@ -32,7 +32,7 @@
         .d-flex.flex-column.justify-content-center.align-items-end
           %span.font-weight-bold= current_administrator.full_name
           - ary = current_administrator.role? ? [Administrator.human_attribute_name("role.#{current_administrator.role}")] : []
-          - ary.unshift(current_administrator.employer.code) if !current_administrator.bant? && current_administrator.employer?
+          - ary.unshift(current_administrator.employer.code) if !current_administrator.admin? && current_administrator.employer?
           %small.text-muted= ary.join(' - ')
       %li.nav-item.dropdown
         = button_tag(class: "nav-link dropdown-toggle py-0 btn mb-0", role: :button, data: {toggle: :dropdown}, aria: {haspopup: true, expanded: false}) do

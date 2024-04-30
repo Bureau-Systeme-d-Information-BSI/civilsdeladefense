@@ -231,6 +231,7 @@ Rails.application.routes.draw do
       get :apply, to: "job_offers#old_apply"
       post :send_application
       get :successful
+      resources :bookmarks, only: %i[create destroy], path: "favoris"
     end
   end
 

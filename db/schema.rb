@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_03_26_144904) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_12_143624) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -156,6 +156,16 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_26_144904) do
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_benefits_on_name", unique: true
     t.index ["position"], name: "index_benefits_on_position"
+  end
+
+  create_table "bookmarks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "job_offer_id", null: false
+    t.uuid "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["job_offer_id", "user_id"], name: "index_bookmarks_on_job_offer_id_and_user_id", unique: true
+    t.index ["job_offer_id"], name: "index_bookmarks_on_job_offer_id"
+    t.index ["user_id"], name: "index_bookmarks_on_user_id"
   end
 
   create_table "bops", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
@@ -424,7 +434,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_26_144904) do
     t.integer "most_advanced_job_applications_state", default: -1
     t.integer "sequential_id"
     t.string "identifier"
-    t.string "duration_contract"
     t.integer "option_photo"
     t.integer "notifications_count", default: 0
     t.boolean "available_immediately", default: false
@@ -756,6 +765,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_03_26_144904) do
   add_foreign_key "administrators", "employers"
   add_foreign_key "benefit_job_offers", "benefits"
   add_foreign_key "benefit_job_offers", "job_offers"
+  add_foreign_key "bookmarks", "job_offers"
+  add_foreign_key "bookmarks", "users"
   add_foreign_key "cmgs", "organizations"
   add_foreign_key "department_users", "departments"
   add_foreign_key "department_users", "users"

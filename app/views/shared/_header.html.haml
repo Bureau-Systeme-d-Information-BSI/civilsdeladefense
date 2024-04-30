@@ -32,6 +32,8 @@
                 = button_to t('.logout'), destroy_user_session_path, method: :delete, class: 'rf-link rf-border-0'
             - else
               %li.rf-shortcuts__item
+                = link_to t(".admin_root"), new_session_path(Administrator), class: %w[rf-link rf-fi-lock-line]
+              %li.rf-shortcuts__item
                 = link_to t(".account_root"), new_session_path(User), class: %w[rf-link rf-fi-account-line]
     %nav#navigation-709.rf-nav.rf-modal{"aria-label" => "Menu principal", role: "navigation"}
       %button.rf-link--close.rf-link{"aria-controls" => "navigation-709"} Fermer
@@ -44,8 +46,12 @@
         %li.rf-nav__item{class: klass}
           = link_to "Nos offres", job_offers_path, class: 'rf-nav__link'
 
-        - spontaneous = JobOffer.find_by(spontaneous: true)
-        - if spontaneous
+        - if JobOffer.spontaneous?
           - klass = header_spontaneous_active?(controller.controller_name, controller.action_name, job_offer: @job_offer) ? 'rf-nav__item--active' : nil
           %li.rf-nav__item{class: klass}
-            = link_to "Candidature spontanée", spontaneous, class: 'rf-nav__link'
+            = link_to "Candidature spontanée", JobOffer.spontaneous_job_offer, class: 'rf-nav__link'
+
+        - if user_signed_in?
+          - klass = header_bookmarks_active?(controller.controller_name, controller.action_name) ? 'rf-nav__item--active' : nil
+          %li.rf-nav__item{class: klass}
+            = link_to "Mes offres favorites", job_offers_path(bookmarked: true), class: 'rf-nav__link'

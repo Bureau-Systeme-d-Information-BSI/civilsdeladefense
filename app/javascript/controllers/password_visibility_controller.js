@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = [ "passwordInput", "showButton", "hideButton" ]
-  
+
   toggle() {
     if (this.isPasswordVisible()) {
       this.hidePassword()
@@ -10,9 +10,9 @@ export default class extends Controller {
       this.showPassword()
     }
   }
-  
+
   // private
-  
+
   isPasswordVisible() {
     return this.passwordInputTarget.type === "text"
   }

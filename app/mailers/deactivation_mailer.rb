@@ -5,7 +5,7 @@ class DeactivationMailer < ApplicationMailer
   def period_before(administrator)
     @administrator = administrator
     @service_name = administrator.organization.service_name
-    @days_notice_period_before_deletion = ENV["DAYS_INACTIVITY_PERIOD_BEFORE_DEACTIVATION"].to_i
+    @days_notice_period_before_deactivation = ENV["DAYS_NOTICE_PERIOD_BEFORE_DEACTIVATION"].to_i
 
     to = @administrator.email
     subject = "[#{@service_name}] Votre compte utilisateur : mise à jour nécessaire"

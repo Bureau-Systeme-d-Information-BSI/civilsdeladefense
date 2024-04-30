@@ -16,7 +16,7 @@ RSpec.describe Admin::JobApplicationsController do
 
   let!(:job_application) { create(:job_application) }
 
-  context "when logged in as BANT administrator" do
+  context "when logged in as 'admin' administrator" do
     login_admin
 
     describe "GET #index" do

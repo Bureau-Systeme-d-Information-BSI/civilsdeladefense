@@ -13,7 +13,7 @@
           = option.first
           %ul
             - for sub_option in option.last
-              - if current_administrator.bant? || @employer_ids.include?(sub_option.id)
+              - if current_administrator.admin? || @employer_ids.include?(sub_option.id)
                 - input_id = dom_id(sub_option)
                 %li
                   .form-check.form-check-inline.w-100

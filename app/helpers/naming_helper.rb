@@ -2,12 +2,12 @@
 
 module NamingHelper
   def tos_acceptance_text
-    opts = {
+    label = t(
+      "simple_form.labels.user.terms_of_service",
       link: current_organization.privacy_policy_url,
       service_name: current_organization.service_name,
-      legal_name: "#{current_organization.prefix_article}#{current_organization.legal_name}"
-    }
-    label = t("simple_form.labels.user.terms_of_service", **opts).html_safe # rubocop:disable Rails/OutputSafety
+      legal_name: "#{current_organization.prefix_article} #{current_organization.legal_name}"
+    ).html_safe
     content_tag("span", label, style: "display: inline;")
   end
 

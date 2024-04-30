@@ -34,6 +34,18 @@ RSpec.describe "JobOffers" do
       get job_offer_path(job_offer)
       expect(response).to have_http_status(:ok)
     end
+
+    context "when getting the job offer as PDF" do
+      subject(:get_request) { get job_offer_path(job_offer.slug, format: :pdf) }
+
+      let(:job_offer) { create(:published_job_offer) }
+
+      before { get_request }
+
+      it { expect(response).to have_http_status(:ok) }
+
+      it { expect(response.content_type).to eq("application/pdf") }
+    end
   end
 
   describe "GET /job_offers/apply?id=:id" do

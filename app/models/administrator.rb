@@ -90,7 +90,7 @@ class Administrator < ApplicationRecord
   #####################################
   # Enums
   enum role: {
-    bant: 0,
+    admin: 0,
     employer: 1
   }
 
@@ -170,7 +170,7 @@ class Administrator < ApplicationRecord
   end
 
   def authorized_roles_to_confer
-    if bant?
+    if admin?
       self.class.roles.map(&:first)
     elsif employer?
       %w[employer]

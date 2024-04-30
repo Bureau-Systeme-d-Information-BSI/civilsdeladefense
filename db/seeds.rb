@@ -96,24 +96,24 @@ organization.save!
 employer_parent = Employer.create!(name: "EMA", code: "EMA")
 employer = Employer.create!(name: "DIRISI", code: "DRI", parent: employer_parent)
 
-bant_admin = Administrator.new(
-  email: "cvd_bant@example.com",
-  first_name: "Pipo",
-  last_name: "Molo",
+super_admin = Administrator.new(
+  email: "admin@example.com",
+  first_name: "Admin",
+  last_name: "e-recrutement",
   password: ENV["SEED_PASSWORD"],
   password_confirmation: ENV["SEED_PASSWORD"],
   very_first_account: true,
-  role: "bant",
+  role: "admin",
   organization: organization
 )
-bant_admin.skip_confirmation_notification!
-bant_admin.save!
-bant_admin.confirm
+super_admin.skip_confirmation_notification!
+super_admin.save!
+super_admin.confirm
 
 employer_admin_1 = Administrator.new(
-  email: "cvd_employer1@example.com",
-  first_name: "employer",
-  last_name: "Molo",
+  email: "employeur1@example.com",
+  first_name: "Employeur 1",
+  last_name: "e-recrutement",
   password: ENV["SEED_PASSWORD"],
   password_confirmation: ENV["SEED_PASSWORD"],
   very_first_account: true,
@@ -126,9 +126,9 @@ employer_admin_1.save!
 employer_admin_1.confirm
 
 employer_admin_2 = Administrator.new(
-  email: "cvd_employer2@example.com",
-  first_name: "employer",
-  last_name: "Molo",
+  email: "employeur2@example.com",
+  first_name: "Employeur 2",
+  last_name: "e-recrutement",
   password: ENV["SEED_PASSWORD"],
   password_confirmation: ENV["SEED_PASSWORD"],
   very_first_account: true,
@@ -141,9 +141,9 @@ employer_admin_2.save!
 employer_admin_2.confirm
 
 brh_admin = Administrator.new(
-  email: "cvd_brh@example.com",
-  first_name: "brh",
-  last_name: "Molo",
+  email: "brh@example.com",
+  first_name: "BRH",
+  last_name: "e-recrutement",
   password: ENV["SEED_PASSWORD"],
   password_confirmation: ENV["SEED_PASSWORD"],
   very_first_account: true,
@@ -311,7 +311,7 @@ JobApplicationFileType.create!(
 
 job_offer = JobOffer.new { |j|
   j.organization = organization
-  j.owner = bant_admin
+  j.owner = super_admin
   j.title = "Ingénieur expert en systemes d’information - Chef de section F/H"
   j.category = sub_sub_informatique
   j.professional_category = ProfessionalCategory.first
@@ -461,13 +461,13 @@ job_application.job_application_files.build(
 )
 job_application.save!
 
-Audited.audit_class.as_user(bant_admin) do
+Audited.audit_class.as_user(super_admin) do
   4.times do
     Email.create!(
       subject: "subject",
       body: Faker::Lorem.paragraph(sentence_count: 2),
       job_application: job_application,
-      sender: bant_admin
+      sender: super_admin
     )
   end
 end
@@ -544,12 +544,12 @@ JobOffer.where.not(contract_duration_id: nil).where.not(id: [job_offer4.id, job_
     job_application.save!
 
     3.times do
-      Audited.audit_class.as_user(bant_admin) do
+      Audited.audit_class.as_user(super_admin) do
         Email.create!(
           subject: "About your application",
           body: Faker::Lorem.paragraph(sentence_count: 2),
           job_application: job_application,
-          sender: bant_admin
+          sender: super_admin
         )
       end
       Audited.audit_class.as_user(user) do
@@ -581,12 +581,12 @@ JobOffer.where.not(contract_duration_id: nil).where.not(id: [job_offer4.id, job_
   job_application.save!
 
   3.times do
-    Audited.audit_class.as_user(bant_admin) do
+    Audited.audit_class.as_user(super_admin) do
       Email.create!(
         subject: "About your application",
         body: Faker::Lorem.paragraph(sentence_count: 2),
         job_application: job_application,
-        sender: bant_admin
+        sender: super_admin
       )
     end
     Audited.audit_class.as_user(user_candidate_of_all) do

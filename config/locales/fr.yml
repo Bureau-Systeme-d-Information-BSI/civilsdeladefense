@@ -115,6 +115,12 @@ fr:
       your_internet_presence: "Votre présence sur internet"
       your_account_creation: "Votre création de compte"
   job_offers:
+    no_bookmarks:
+      title: Vous n'avez pas encore d'offres favorites
+      description: Parcourez les offres d'emploi disponibles et ajoutez dans vos favoris celles qui vous intéressent.
+    bookmark:
+      add_bookmark: Ajouter aux favoris
+      remove_bookmark: Retirer des favoris
     index:
       title: "Nos offres"
       job_offers_count:
@@ -131,7 +137,7 @@ fr:
       select_experience_level: "Niveau d'expérience"
     filters:
       search: "Rechercher"
-      contract_start_on_filter: Début du contrat
+      contract_start_on_filter: Prise de fonction souhaitée
       published_at_filter: Publication
       select_region: Région
     job_offer:
@@ -156,6 +162,8 @@ fr:
       title: "Merci d'avoir soumis votre candidature !"
       subtitle_html: "Votre demande est prise en compte.\n\nVeuillez confirmer votre accès à l'aide du lien sur votre boîte courriel."
       link: "Retour à l'accueil"
+    show:
+      pdf_download: Télécharger en PDF
   layouts:
     account:
       job_application_display:
@@ -176,6 +184,14 @@ fr:
         title: "Nouvelles candidatures"
       published_job_offers:
         title: "Offres publiées récemment"
+  platform_mailer:
+    confirmation_instructions_admin:
+      greeting: Bonjour,
+      instruction: "Vous avez été notifié comme « %{roles} » dans une offre d’emploi sur le site de recrutement %{site}. Pour y accéder, veuillez confirmer votre compte en cliquant sur le lien suivant :"
+      instruction_no_roles: "Vous avez été ajouté sur le site de recrutement %{site}. Pour y accéder, veuillez confirmer votre compte en cliquant sur le lien suivant :"
+      instruction_1: Votre compte ne sera pas activé tant que toutes les étapes de création de votre compte ou de confirmation de votre compte ne seront pas finalisées dans l’application.
+      team: L'équipe de recrutement de %{service_name}
+      action: Je confirme mon courriel
   shared:
     footer:
       legal_notice: "Mentions légales"
@@ -183,6 +199,7 @@ fr:
       privacy: "Politique de confidentialité"
       tracking: "Suivi d'audience et vie privée"
     header:
+      admin_root: "Espace recruteurs"
       account: "Mon compte"
       account_root: "Mon espace candidat"
       home_link: "Accueil"
@@ -1109,7 +1126,7 @@ fr:
         confirmed: "Confirmé"
         unconfirmed: "Non confirmé"
       administrator/role:
-        bant: "BANT"
+        admin: "Administrateur"
         employer: "Employeur"
         grand_employer: "Grand Employeur"
         brh: "RH"
@@ -1157,7 +1174,7 @@ fr:
         state/suspended: "En pause"
         state/archived: "Archivée"
         contract_type: "Type de contrat"
-        contract_start_on: "Début du contrat"
+        contract_start_on: "Prise de fonction souhaitée"
         contract_duration: "Durée du contrat"
         location: "Localisation"
         study_level: "Niveau d'études"
@@ -1165,7 +1182,7 @@ fr:
         experience_level: "Niveau d'expérience"
         salary: "Rémunération"
         recruitment_process: Process de recrutement
-        benefits: "Avantages en nature"
+        benefits: "Avantages liés au poste"
         is_remote_possible: "Télétravail"
         organization_description: "Descriptif de l'organisation"
         required_profile: "Profil recherché"

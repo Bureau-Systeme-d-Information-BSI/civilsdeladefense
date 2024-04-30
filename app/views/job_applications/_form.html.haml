@@ -10,7 +10,6 @@
     = f.simple_fields_for :user do |user_form|
       = user_form.input :first_name, readonly: user_signed_in?
       = user_form.input :last_name, readonly: user_signed_in?
-      = user_form.input :current_position, required: true
       = user_form.input :phone, required: true
       = render partial: '/department_users/form', locals: { user_form: user_form, kind: :job_application }
     - unless user_signed_in?
@@ -52,11 +51,20 @@
       %h2.rf-h3= t('.your_account_creation')
       = f.simple_fields_for :user, input_html: {placeholder: false, required: true} do |user_form|
         = user_form.input :email, required: true
-        = user_form.input :password, required: true
-        = user_form.input :password_confirmation, required: true
+        %div{data: {controller: "password-visibility password-rules"}}
+          = user_form.input :password, required: true, input_html: {data: { password_visibility_target: "passwordInput", action: "keyup->password-rules#check" }}  
+          = fa_icon("eye", class: "password-visibility-toggle", data: { password_visibility_target: "showButton", action: "click->password-visibility#toggle" })
+          = fa_icon("eye-slash", class: "password-visibility-toggle d-none", data: { password_visibility_target: "hideButton", action: "click->password-visibility#toggle" })
+          %div.rules{data: {password_rules_target: "rules"}}
+            - %w[length uppercase lowercase number special].each do |rule|
+              %div{data: {rule: rule}}
+        %div{data: {controller: "password-visibility"}}
+          = user_form.input :password_confirmation, required: true, input_html: {data: { password_visibility_target: "passwordInput" }}
+          = fa_icon("eye", class: "password-visibility-toggle", data: { password_visibility_target: "showButton", action: "click->password-visibility#toggle" })
+          = fa_icon("eye-slash", class: "password-visibility-toggle d-none", data: { password_visibility_target: "hideButton", action: "click->password-visibility#toggle" })
         = user_form.input :receive_job_offer_mails
         = user_form.input :terms_of_service, as: :boolean, label: tos_acceptance_text
-        = user_form.input :certify_majority, as: :boolean
+        = user_form.input :certify_majority, as: :boolean, label: t('simple_form.labels.user.certify_majority_html')
     = f.invisible_captcha :subtitle, data: { form_save_target: "ignored" }
   %div
     .rf-input-group.rf-grid-row.rf-grid-row--center.rf-mt-6w

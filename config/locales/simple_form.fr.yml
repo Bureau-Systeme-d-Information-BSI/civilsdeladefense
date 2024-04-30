@@ -56,7 +56,7 @@ fr:
         study_level: "Niveau d'études"
         subject: "Sujet"
         title: "Fonction"
-        website_url: "Site web"
+        website_url: "LinkedIn, autre CV en ligne ou site Web"
         foreign_language: Langue étrangère
         foreign_language_level: Niveau de langue étrangère
         category: "Domaine professionnel"
@@ -98,12 +98,12 @@ fr:
         required_profile: "Profil recherché"
         organization_description: "Descriptif de l'organisation"
         recruitment_process: "Process de recrutement"
-        benefits: "Avantages en nature"
+        benefits: "Avantages liés au poste"
         bop: "BOP"
         contract_type: "Type de contrat"
         contract_type_id: "Type de contrat"
         contract_duration: "Durée du contrat"
-        contract_start_on: "Début du contrat"
+        contract_start_on: "Prise de fonction souhaitée"
         is_remote_possible: "Télétravail possible ?"
         available_immediately: "Disponible immédiatement ?"
         sector: "Secteur / Filière"
@@ -176,13 +176,13 @@ fr:
       study_level:
         official_level: "Niveau officiel"
       user:
-        certify_majority: "Je certifie être majeur(e) et disposer de mes droits civiques"
+        certify_majority_html: "<span>Je certifie être majeur(e) et disposer de mes droits civiques <abbr title='obligatoire'>*</abbr></span>"
         password: 'Mot de passe'
         password_confirmation: 'Confirmation du mot de passe'
         preferred_users_list_ids: "Mes listes de candidats"
         receive_job_offer_mails: "J'accepte de recevoir de nouvelles offres d'emploi par email"
         suspension_reason: "Raison"
-        terms_of_service: "En soumettant ce formulaire, j'accepte que les informations saisies sur le site %{service_name} soient exploitées pour l'instruction de ma candidature par %{legal_name}. Les informations personnelles portées sur ce formulaire et celles communiquées aux étapes ultérieures du processus de recrutement sont enregistrées dans un fichier informatisé administré par %{legal_name} conformément à la <a href='%{link}' target='_blank'>déclaration de confidentialité</a> du portail %{service_name}, dont j'ai pris connaissance"
+        terms_of_service: "En soumettant ce formulaire, j'accepte que les informations saisies sur le site %{service_name} soient exploitées pour l'instruction de ma candidature par %{legal_name}. Les informations personnelles portées sur ce formulaire et celles communiquées aux étapes ultérieures du processus de recrutement sont enregistrées dans un fichier informatisé administré par %{legal_name} conformément à la <a href='%{link}' target='_blank'>déclaration de confidentialité</a> du portail %{service_name}, dont j'ai pris connaissance <abbr title='obligatoire'>*</abbr>"
       frequently_asked_question:
         name: Question
         value: Réponse
@@ -239,5 +239,3 @@ fr:
         days_before_publishing: "Indiquez un nombre de jours ouvrés. Laissez à 0 ou vide pour supprimer complètement le délai avant publication"
         brand_name: "À mettre sur plusieurs lignes pour être conforme au bloc marque avec la Marianne. Ex: République Française, Ministère des Armées, etc."
         prefix_article: "Utilisé dans les phrases incluant le nom de l'entité. Ex: le, la, l'."
-      user:
-        password: "8 caractères minimum, dont au moins 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial parmi #?!@$%^&*-'"

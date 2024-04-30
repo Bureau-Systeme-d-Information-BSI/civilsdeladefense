@@ -13,6 +13,50 @@ RSpec.describe JobOffer do
     it { is_expected.to have_many(:"job_offer_#{role}_actors").inverse_of(:job_offer) }
   end
 
+  describe ".spontaneous?" do
+    subject { described_class.spontaneous? }
+
+    context "when there is at least one published spontaneous job offer" do
+      before { create(:job_offer, spontaneous: true, state: :published) }
+
+      it { is_expected.to be true }
+    end
+
+    context "when there is no spontaneous job offer" do
+      before { create(:job_offer, spontaneous: false, state: :published) }
+
+      it { is_expected.to be false }
+    end
+
+    context "when there is a spontaneous job offer but it's not published" do
+      before { create(:job_offer, spontaneous: true, state: :draft) }
+
+      it { is_expected.to be false }
+    end
+  end
+
+  describe ".spontaneous_job_offer" do
+    subject { described_class.spontaneous_job_offer }
+
+    context "when there is at least one published spontaneous job offer" do
+      let!(:job_offer) { create(:job_offer, spontaneous: true, state: :published) }
+
+      it { is_expected.to eq(job_offer) }
+    end
+
+    context "when there is no spontaneous job offer" do
+      before { create(:job_offer, spontaneous: false, state: :published) }
+
+      it { is_expected.to be_nil }
+    end
+
+    context "when there is a spontaneous job offer but it's not published" do
+      before { create(:job_offer, spontaneous: true, state: :draft) }
+
+      it { is_expected.to be_nil }
+    end
+  end
+
   describe "pep or bne" do
     let(:job_offer) do
       build(

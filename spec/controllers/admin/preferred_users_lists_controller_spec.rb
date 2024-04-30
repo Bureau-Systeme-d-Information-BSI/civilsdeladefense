@@ -26,7 +26,7 @@ require "rails_helper"
 # `rails-controller-testing` gem.
 
 RSpec.describe Admin::PreferredUsersListsController do
-  context "when logged in as BANT administrator" do
+  context "when logged in as 'admin' administrator" do
     login_admin
 
     # This should return the minimal set of attributes required to create a valid

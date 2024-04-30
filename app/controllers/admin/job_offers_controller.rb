@@ -94,7 +94,7 @@ class Admin::JobOffersController < Admin::BaseController
 
     @job_offer = JobOffer.new_from_source(params[:job_offer_id])
     @job_offer ||= JobOffer.new_from_scratch(current_administrator)
-    @job_offer.employer = current_administrator.employer unless current_administrator.bant?
+    @job_offer.employer = current_administrator.employer unless current_administrator.admin?
     @job_offer.organization = current_organization
   end
 
@@ -107,7 +107,7 @@ class Admin::JobOffersController < Admin::BaseController
   def create
     @job_offer.owner = current_administrator
     @job_offer.organization = current_organization
-    @job_offer.employer = current_administrator.employer unless current_administrator.bant?
+    @job_offer.employer = current_administrator.employer unless current_administrator.admin?
     @job_offer.cleanup_actor_administrator_dep(current_administrator, current_organization)
 
     respond_to do |format|

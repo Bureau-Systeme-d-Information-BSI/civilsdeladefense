@@ -32,7 +32,7 @@
                         - grouped_options = nested_set_options(Category, @category) {|i| "#{'-' * i.level} #{i.name}" }
                         = f.association :category, collection: grouped_options, disabled: Category.all.select{|x| x.children.count != 0}.map(&:id), input_html: {class: 'custom-select'}
                       .col-12.col-md-3
-                        - if current_administrator.bant?
+                        - if current_administrator.admin?
                           - grouped_options = Employer.roots.map{|x| [x.name, x.children]}
                           = f.association :employer, collection: grouped_options, as: :grouped_select, group_method: :last, input_html: {class: 'custom-select'}
                         - else
@@ -51,7 +51,7 @@
                         = f.input :region, as: :hidden, input_html: { 'data-autocomplete-city-target' => :region }
                         .d-none
                           .autocomplete{ 'data-autocomplete-city-target' => :query }
-                      - if current_administrator.bant?
+                      - if current_administrator.admin?
                         .col-12.col-md-6
                           = f.input :spontaneous
                     = f.input :organization_description, as: :trix_editor_custom
@@ -111,10 +111,10 @@
                           .col-12
                             - estimate_monthly_salary_net = salary_range.try(:estimate_monthly_salary_net)
                             - hint = estimate_monthly_salary_net ? t('.estimate_monthly_salary_net_html', value: estimate_monthly_salary_net) : t('.estimate_monthly_salary_net_none_html')
-                            = f.input :estimate_monthly_salary_net, readonly: !current_administrator.bant?, hint: hint
+                            = f.input :estimate_monthly_salary_net, readonly: !current_administrator.admin?, hint: hint
                           .col-12
                             - estimate_annual_salary_gross = salary_range.try(:estimate_annual_salary_gross)
                             - hint = estimate_annual_salary_gross ? t('.estimate_annual_salary_gross_html', value: estimate_annual_salary_gross) : t('.estimate_annual_salary_gross_none_html')
-                            = f.input :estimate_annual_salary_gross, readonly: !current_administrator.bant?, hint: hint
+                            = f.input :estimate_annual_salary_gross, readonly: !current_administrator.admin?, hint: hint
         = render partial: "form_actors", locals: {f: f}
         = render partial: "form_submit", locals: {f: f}

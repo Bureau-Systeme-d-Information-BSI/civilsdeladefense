@@ -144,7 +144,7 @@ admin = Administrator.new(
   last_name: 'Nom',
   password: '8 caractères minimum (1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial)',
   very_first_account: true,
-  role: 'bant', # superadmin
+  role: 'admin',
   organization: organization
 )
 admin.skip_confirmation_notification!

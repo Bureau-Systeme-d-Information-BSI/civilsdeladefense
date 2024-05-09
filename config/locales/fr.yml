@@ -386,10 +386,6 @@ fr:
         card_1_1_title: "1.1 Description de l'offre"
         card_1_2_title: "1.2 Paramètres de l'offre"
         card_1_3_title: "1.3. Estimation rémunération salariale"
-        estimate_monthly_salary_net_html: "Fourchette de référence : <span class='estimate_monthly_salary_net_reference'>%{value}</span>"
-        estimate_monthly_salary_net_none_html: "Fourchette de référence : <span class='estimate_monthly_salary_net_reference'>aucune</span>"
-        estimate_annual_salary_gross_html: "Fourchette de référence : <span class='estimate_annual_salary_gross_reference'>%{value}</span>"
-        estimate_annual_salary_gross_none_html: "Fourchette de référence : <span class='estimate_annual_salary_gross_reference'>aucune</span>"
       form_actors:
         card_title: "3. Notifications"
         card_subtitle: "3.1 Acteurs du processus notifiés"

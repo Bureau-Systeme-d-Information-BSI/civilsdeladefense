@@ -247,7 +247,7 @@ fr:
       destroy:
         success: "Votre compte a bien été supprimé"
       edit:
-        title: "Mes informations"
+        title: "Mes informations personnelles"
       update_email:
         success: "Votre adresse de courriel a bien été modifié"
       update:

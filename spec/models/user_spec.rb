@@ -6,14 +6,14 @@ RSpec.describe User do
   let(:user) { create(:confirmed_user) }
   let(:another_user) { create(:confirmed_user) }
 
-  it { is_expected.to have_many(:job_applications).inverse_of(:user) }
-
-  it "is valid with valid attributes" do
-    expect(user).to be_valid
+  describe "validations" do
+    it { expect(user).to be_valid }
   end
 
   describe "associations" do
     it { is_expected.to have_many(:bookmarks).dependent(:destroy) }
+
+    it { is_expected.to have_many(:job_applications).inverse_of(:user) }
   end
 
   it "can be suspended" do
@@ -203,6 +203,7 @@ end
 #  encrypted_password               :string           default(""), not null
 #  failed_attempts                  :integer          default(0), not null
 #  first_name                       :string
+#  gender                           :integer          default("other")
 #  job_applications_count           :integer          default(0), not null
 #  last_name                        :string
 #  last_sign_in_at                  :datetime

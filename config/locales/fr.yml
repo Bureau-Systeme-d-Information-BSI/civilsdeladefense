@@ -1239,6 +1239,10 @@ fr:
         official_level: "Niveau officiel"
       contract_type:
         duration: Durée
+      user:
+        gender/female: "Femme"
+        gender/male: "Homme"
+        gender/other: "Autre"
   helpers:
     submit:
       job_application:

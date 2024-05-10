@@ -45,8 +45,10 @@ class User < ApplicationRecord
   phony_normalize :phone, default_country_code: "FR"
 
   mount_uploader :photo, PhotoUploader, mount_on: :photo_file_name
-  validates :photo, file_size: {less_than: 1.megabytes}
 
+  enum gender: {female: 1, male: 2, other: 3}
+
+  validates :photo, file_size: {less_than: 1.megabytes}
   validates :first_name, :last_name, presence: true
   validates_plausible_phone :phone
   validates :phone, :current_position, presence: true, allow_nil: true
@@ -154,6 +156,7 @@ end
 #  encrypted_password               :string           default(""), not null
 #  failed_attempts                  :integer          default(0), not null
 #  first_name                       :string
+#  gender                           :integer          default("other")
 #  job_applications_count           :integer          default(0), not null
 #  last_name                        :string
 #  last_sign_in_at                  :datetime

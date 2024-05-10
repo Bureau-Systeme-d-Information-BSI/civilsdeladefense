@@ -6,6 +6,7 @@
         = simple_form_for(@user, url: [:account, :user], method: :patch) do |f|
           = f.error_notification
           .form-inputs
+            = f.input :gender, collection: enum_options_for_select(User, :gender), input_html: { class: "rf-select" }, label_required: true, include_blank: false
             = f.input :first_name
             = f.input :last_name
             = f.input :current_position

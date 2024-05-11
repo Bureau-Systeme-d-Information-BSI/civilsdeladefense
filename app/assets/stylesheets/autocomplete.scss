@@ -532,6 +532,10 @@ body {
     }
   }
 
+  &::before {
+    content: '';
+  }
+
   // The result type icon inlined SVG or image
   @at-root .aa-ItemIcon {
     align-items: center;

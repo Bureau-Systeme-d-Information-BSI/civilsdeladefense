@@ -9,7 +9,6 @@
             = f.input :gender, collection: enum_options_for_select(User, :gender), input_html: { class: "rf-select" }, label_required: true, include_blank: false
             = f.input :first_name
             = f.input :last_name
-            = f.input :current_position
             = f.input :phone
             = f.input :website_url
             = render partial: '/department_users/form', locals: { user_form: f, kind: :user }

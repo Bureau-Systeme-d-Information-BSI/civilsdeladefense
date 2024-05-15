@@ -226,7 +226,7 @@ fr:
         first_name: "Facultatif"
         last_name: "Facultatif"
         employer_id: "Actif seulement si le rôle est \"Employeur\""
-        password: "8 caractères minimum, dont au moins 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial parmi #?!@$%^&*-'"
+        password: "12 caractères minimum, dont au moins 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial"
       employer:
         code: "Ce champ est utilisé pour construire l'identifiant unique d'une annonce."
       job_application:

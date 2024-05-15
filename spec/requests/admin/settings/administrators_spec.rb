@@ -201,4 +201,19 @@ RSpec.describe "Admin::Settings::Administrators" do
       end
     end
   end
+
+  describe "DELETE /admin/parametres/administrateurs/:id" do
+    subject(:destroy_request) { delete admin_settings_administrator_path(administrator), xhr: true }
+
+    let!(:administrator) { create(:administrator) }
+
+    it { expect { destroy_request }.to change(Administrator, :count).by(-1) }
+
+    describe "response" do
+      before { destroy_request }
+
+      it { expect(response).to be_successful }
+      it { expect(response).to render_template(:destroy) }
+    end
+  end
 end

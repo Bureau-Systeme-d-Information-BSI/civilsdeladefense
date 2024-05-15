@@ -1,4 +1,4 @@
-%tr
+%tr{id: dom_id(administrator)}
   %td
     / = image_user_tag administrator.photo, width: 40, class: 'mr-2'
   %td
@@ -50,3 +50,7 @@
       - if can?(:reactivate, administrator) && administrator.inactive?
         %li.list-inline-item
           = link_to fa_icon('check'), [:reactivate, :admin, :settings, administrator], method: :post, title: t('buttons.reactivate'), data: {confirm: t('buttons.confirm')}
+      - if can?(:destroy, administrator) && administrator.inactive?
+        %li.list-inline-item
+          = link_to fa_icon('trash'), [:admin, :settings, administrator], method: :delete, remote: true, title: t('buttons.destroy'), data: {confirm: t('buttons.confirm')}
+

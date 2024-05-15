@@ -68,7 +68,7 @@ fr:
     choose_file_validated_html: "Ce fichier a été validé !"
     click_to_edit: "Cliquer pour éditer"
     close: "Fermer"
-    confirm: "Êtes-vous sûr ?"
+    confirm: "Êtes-vous sûr(e) ?"
     copy: "Dupliquer"
     deactivate: "Désactiver"
     delete: "Supprimer"
@@ -99,6 +99,7 @@ fr:
     transfer: "Transférer"
     mark_as_read: "Marquer comme lu"
     email: "Courriel"
+    destroy: "Supprimer"
   homepages:
     stepper:
       step_1: "Dépôt de la candidature"

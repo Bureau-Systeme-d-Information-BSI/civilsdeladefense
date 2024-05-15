@@ -18,7 +18,7 @@ class Administrator < ApplicationRecord
   has_many :invitees, class_name: "Administrator", foreign_key: "inviter_id", inverse_of: :inviter, dependent: :nullify
 
   has_many :owned_job_offers, class_name: "JobOffer", foreign_key: "owner_id", inverse_of: :owner, dependent: :nullify
-  has_many :job_offer_actors, dependent: :nullify
+  has_many :job_offer_actors, dependent: :destroy
   has_many :job_offers, through: :job_offer_actors
 
   belongs_to :supervisor_administrator, optional: true, class_name: "Administrator"

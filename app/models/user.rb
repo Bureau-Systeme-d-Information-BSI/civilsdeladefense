@@ -121,6 +121,10 @@ class User < ApplicationRecord
     job_applications.order(created_at: :desc).first
   end
 
+  def full_address
+    [address, postal_code, city].compact.join(" ")
+  end
+
   private
 
   def password_required?

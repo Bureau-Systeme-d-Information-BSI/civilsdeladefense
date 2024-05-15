@@ -185,6 +185,28 @@ RSpec.describe User do
       end
     end
   end
+
+  describe "#full_address" do
+    subject { user.full_address }
+
+    context "when all fields are filled" do
+      let(:user) { build(:user, address: "1 rue de la paix", postal_code: "75001", city: "Paris") }
+
+      it { is_expected.to eq("1 rue de la paix 75001 Paris") }
+    end
+
+    context "when some fields are missing" do
+      let(:user) { build(:user, address: "1 rue de la paix", postal_code: "75001") }
+
+      it { is_expected.to eq("1 rue de la paix 75001") }
+    end
+
+    context "when all fields are missing" do
+      let(:user) { build(:user) }
+
+      it { is_expected.to eq("") }
+    end
+  end
 end
 
 # == Schema Information

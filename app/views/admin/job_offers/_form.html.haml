@@ -85,6 +85,8 @@
                       .col-12.col-md-4
                         = f.association :benefits, as: :check_boxes
                       .col-12.col-md-4
+                        = f.association :drawbacks, as: :check_boxes
+                      .col-12.col-md-4
                         = f.input :is_remote_possible, as: :radio_buttons
               .card.mt-5
                 .card-header

@@ -29,6 +29,16 @@ RSpec.describe JobOffer do
 
   describe "associations" do
     it { is_expected.to have_many(:bookmarks).dependent(:destroy) }
+
+    it { is_expected.to have_many(:job_offer_actors).dependent(:destroy) }
+
+    it { is_expected.to have_many(:benefit_job_offers).dependent(:destroy) }
+
+    it { is_expected.to have_many(:benefits).through(:benefit_job_offers) }
+
+    it { is_expected.to have_many(:drawback_job_offers).dependent(:destroy) }
+
+    it { is_expected.to have_many(:drawbacks).through(:drawback_job_offers) }
   end
 
   describe "delegations" do

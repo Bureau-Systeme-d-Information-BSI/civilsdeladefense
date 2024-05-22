@@ -234,6 +234,7 @@ class Admin::JobOffersController < Admin::BaseController
       organization_description bne_date bne_value pep_date pep_value
     ]
     fields << {benefit_ids: []}
+    fields << {drawback_ids: []}
     job_offer_actors_attributes = %i[id role _destroy]
     job_offer_actors_attributes << {administrator_attributes: %i[id email _destroy]}
     fields << {job_offer_actors_attributes: job_offer_actors_attributes}

@@ -38,13 +38,7 @@ module JobOffersHelper
     [job_offer.contract_type_name, job_offer.contract_duration_name].compact.join(" ")
   end
 
-  def job_offer_start_display(job_offer)
-    if job_offer.available_immediately?
-      I18n.t("job_offers.job_offer_head.available_immediately")
-    else
-      I18n.l(job_offer.contract_start_on)
-    end
-  end
+  def job_offer_start_display(job_offer) = I18n.l(job_offer.contract_start_on)
 
   def job_offer_salary_display(job_offer)
     res = []

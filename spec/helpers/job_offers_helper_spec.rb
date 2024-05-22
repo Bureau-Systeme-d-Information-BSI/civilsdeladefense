@@ -113,18 +113,8 @@ RSpec.describe JobOffersHelper do
   describe ".job_offer_start_display" do
     subject { job_offer_start_display(job_offer) }
 
-    let(:job_offer) { create(:job_offer, available_immediately:) }
+    let(:job_offer) { create(:job_offer) }
 
-    context "when the job offer is available immediately" do
-      let(:available_immediately) { true }
-
-      it { is_expected.to eq(I18n.t("job_offers.job_offer_head.available_immediately")) }
-    end
-
-    context "when the job offer is not available immediately" do
-      let(:available_immediately) { false }
-
-      it { is_expected.to eq(I18n.l(job_offer.contract_start_on)) }
-    end
+    it { is_expected.to eq(I18n.l(job_offer.contract_start_on)) }
   end
 end

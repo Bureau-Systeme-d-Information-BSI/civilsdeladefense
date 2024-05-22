@@ -152,7 +152,6 @@ fr:
       organization_description: "Descriptif de l'organisation"
       recruitment_process: "Process de recrutement"
     job_offer_head:
-      available_immediately: "Poste à pourvoir immédiatement"
       benefit: "Avantage en nature"
     successful:
       subject: "Votre candidature à l'offre %{job_offer_identifier} sur %{service_name}"

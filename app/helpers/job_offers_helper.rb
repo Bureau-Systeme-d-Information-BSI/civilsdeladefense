@@ -29,6 +29,8 @@ module JobOffersHelper
       job_offer_salary_display(job_offer)
     when :benefits
       job_offer_benefits_display(job_offer)
+    when :drawbacks
+      job_offer_drawbacks_display(job_offer)
     when :is_remote_possible
       job_offer_remote_display(job_offer)
     end
@@ -50,6 +52,14 @@ module JobOffersHelper
   def job_offer_benefits_display(job_offer)
     if job_offer.benefits.present?
       job_offer.benefits.pluck(:name).join("<br/>").html_safe # rubocop:disable Rails/OutputSafety
+    else
+      "-"
+    end
+  end
+
+  def job_offer_drawbacks_display(job_offer)
+    if job_offer.drawbacks.present?
+      job_offer.drawbacks.pluck(:name).join("<br/>").html_safe # rubocop:disable Rails/OutputSafety
     else
       "-"
     end

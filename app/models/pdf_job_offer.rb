@@ -16,6 +16,7 @@ class PdfJobOffer < SimpleDelegator
     add_logo if logo?
     add_vertical_space
     add_title
+    add_location
     add_vertical_space
     add_attributes
     add_vertical_space
@@ -33,13 +34,15 @@ class PdfJobOffer < SimpleDelegator
 
   def add_title = text title, size: 20, style: :bold, align: :center
 
+  def add_location = text job_offer_value_for_attribute(self, :location), size: 12, align: :center
+
   def add_attributes = table attributes_tables, cell_style: attributes_style, width: bounds.width
 
   def attributes_tables
     [
-      [attribute_table(:contract_type), attribute_table(:contract_start_on), attribute_table(:location)],
-      [attribute_table(:study_level), attribute_table(:category), attribute_table(:experience_level)],
-      [attribute_table(:salary), attribute_table(:benefits), attribute_table(:is_remote_possible)]
+      [attribute_table(:contract_type), attribute_table(:contract_start_on), attribute_table(:study_level)],
+      [attribute_table(:category), attribute_table(:experience_level), attribute_table(:salary)],
+      [attribute_table(:benefits), attribute_table(:drawbacks), attribute_table(:is_remote_possible)]
     ]
   end
 
@@ -48,8 +51,10 @@ class PdfJobOffer < SimpleDelegator
   def attribute_table(attribute)
     make_table(attribute_data(attribute), cell_style: attribute_style, width: bounds.width / 3) do
       row(0).font_style = :bold
+      row(0).size = 10
       row(0).background_color = "F0F0F0"
       row(1).height = 50
+      row(1).size = 10
     end
   end
 

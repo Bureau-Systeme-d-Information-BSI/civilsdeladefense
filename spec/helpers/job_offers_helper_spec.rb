@@ -103,6 +103,12 @@ RSpec.describe JobOffersHelper do
       it { is_expected.to eq(job_offer_benefits_display(job_offer)) }
     end
 
+    context "when the attribute is :drawbacks" do
+      let(:attribute) { :drawbacks }
+
+      it { is_expected.to eq(job_offer_drawbacks_display(job_offer)) }
+    end
+
     context "when the attribute is :is_remote_possible" do
       let(:attribute) { :is_remote_possible }
 

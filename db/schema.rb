@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_22_120847) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_22_122640) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -233,6 +233,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_22_120847) do
     t.string "code"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "drawbacks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_drawbacks_on_name", unique: true
+    t.index ["position"], name: "index_drawbacks_on_position"
   end
 
   create_table "email_attachments", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|

@@ -547,7 +547,8 @@ fr:
         navbar:
           admin: "Administration"
           administrators: "Comptes admin"
-          benefits: "Avantage(s) en nature"
+          benefits: "Avantages"
+          drawbacks: "Contraintes"
           bops: "BOPs"
           categories: "Domaines professionnels"
           cmgs: "Liste des CMG"
@@ -741,6 +742,22 @@ fr:
           success: "Avantage en nature mis à jour !"
         destroy:
           success: "Avantage en nature supprimé !"
+      drawbacks:
+        index:
+          card_title:
+            zero: "Aucune contrainte particulière d'exercice"
+            one: "1 contrainte particulière d'exercice"
+            other: "%{count} contraintes particulières d'exercice"
+        new:
+          title: "Ajouter une contrainte particulière d'exercice"
+        edit:
+          title: "Modifier '%{name}'"
+        create:
+          success: "Contrainte particulière d'exercice créée !"
+        update:
+          success: "Contrainte particulière d'exercice mise à jour !"
+        destroy:
+          success: "Contrainte particulière d'exercice supprimée !"
       job_offer_terms:
         index:
           card_title:

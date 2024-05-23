@@ -37,11 +37,19 @@ class Exporter::Administrator < Exporter::Base
       administrator.email,
       administrator.employer&.code,
       administrator.deleted_at ? "Actif" : "Inactif",
-      Administrator.human_attribute_name("role.#{administrator.role}"),
+      role(administrator),
       localize(administrator.created_at),
       localize(administrator.last_sign_in_at),
       administrator.inviter&.full_name,
       administrator.owned_job_offers.map { |o| o.identifier }.join(", ")
     ]
+  end
+
+  def role(administrator)
+    if administrator.role.present?
+      Administrator.human_attribute_name("role.#{administrator.role}")
+    else
+      I18n.t("admin.settings.administrators.administrator.no_role")
+    end
   end
 end

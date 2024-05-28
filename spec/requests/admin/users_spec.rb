@@ -9,7 +9,9 @@ RSpec.describe "Admin::Users" do
   before { sign_in admin }
 
   describe "GET /admin/candidats" do
-    subject(:index_request) { get admin_users_path }
+    subject(:index_request) { get admin_users_path, params: }
+
+    let(:params) { {} }
 
     it "is successful" do
       index_request
@@ -19,6 +21,63 @@ RSpec.describe "Admin::Users" do
     it "renders the template" do
       expect(index_request).to render_template(:index)
     end
+
+    # rubocop:disable RSpec/MultipleMemoizedHelpers
+    describe "filtering users on departments" do
+      let!(:ain) { create(:department, name: "Ain") }
+      let!(:gironde) { create(:department, name: "Gironde") }
+
+      let!(:user_none) { create(:user) }
+      let!(:user_gironde) { create(:user) }
+      let!(:user_ain) { create(:user) }
+
+      before do
+        user_ain.departments << ain
+        user_gironde.departments << gironde
+        index_request
+      end
+
+      context "when filtering on a single department" do
+        let(:params) { {q: {departments_id_in: [ain.id]}} }
+
+        it { expect(response.body).to include(user_ain.full_name) }
+
+        it { expect(response.body).not_to include(user_gironde.full_name) }
+
+        it { expect(response.body).not_to include(user_none.full_name) }
+      end
+
+      context "when filtering on multiple departments" do
+        let(:params) { {q: {departments_id_in: [ain.id, gironde.id]}} }
+
+        it { expect(response.body).to include(user_ain.full_name) }
+
+        it { expect(response.body).to include(user_gironde.full_name) }
+
+        it { expect(response.body).not_to include(user_none.full_name) }
+      end
+
+      context "when filtering on 'none' department" do
+        let(:departments) { {departments_id_in: ["none"]} }
+
+        it { expect(response.body).not_to include(user_ain.full_name) }
+
+        it { expect(response.body).not_to include(user_gironde.full_name) }
+
+        it { expect(response.body).to include(user_none.full_name) }
+      end
+
+      context "when filtering on 'none' departments and an existing department" do
+        let(:departments) { {departments_id_in: ["none", ain.id]} }
+
+        it { expect(response.body).to include(user_ain.full_name) }
+
+        it { expect(response.body).not_to include(user_gironde.full_name) }
+
+        it { expect(response.body).to include(user_none.full_name) }
+      end
+    end
+    # rubocop:enable RSpec/MultipleMemoizedHelpers
   end
 
   describe "GET /admin/candidats/:id" do

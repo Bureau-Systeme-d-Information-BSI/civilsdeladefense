@@ -6,6 +6,13 @@
     - if ary.any?
       = "(#{ary.size})"
   .dropdown-menu.dropdown-menu-right.allow-focus{aria: {labelledby: 'dropdownContractType'}}
+    %ul.mb-0
+      %li
+        .form-check.form-check-inline.w-100
+          - input_id = "department_none"
+          - checked = ary.include?("none")
+          = check_box_tag "q[#{search_key}][]", "none", checked, class: 'form-check-input', id: input_id
+          %label.form-check-label.text-truncate.d-block{for: input_id, title: "Aucun"}= "Aucun"
     - Department.regions.each do |region, departments|
       %ul.mb-0
         %li

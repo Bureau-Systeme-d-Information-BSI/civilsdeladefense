@@ -570,6 +570,7 @@ user = User.new(
   photo: photo,
   current_position: "Développeur",
   phone: "0606060606",
+  website_url: "https://www.linkedin.com/in/coin_pan",
   departments: [Department.none]
 )
 user.skip_confirmation_notification!
@@ -626,6 +627,7 @@ user_candidate_of_all = User.new(
   certify_majority: true,
   current_position: "Développeur",
   phone: "0606060606",
+  website_url: "https://www.linkedin.com/in/nicolas_agoini",
   departments: Department.all.sample(2)
 )
 user_candidate_of_all.skip_confirmation_notification!
@@ -647,6 +649,7 @@ JobOffer.where.not(contract_duration_id: nil).where.not(id: [job_offer4.id, job_
       certify_majority: true,
       current_position: "Développeur",
       phone: "0606060606",
+      website_url: "https://www.linkedin.com/in/#{SecureRandom.hex(5)}",
       departments: Department.all.sample(2)
     )
     user.skip_confirmation_notification!

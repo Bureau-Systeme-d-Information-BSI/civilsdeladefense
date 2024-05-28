@@ -7,7 +7,13 @@
       = image_user_tag user.photo, width: 80, class: 'mr-4'
       .d-flex.flex-column
         .h5.secondary.mb-0= user.full_name
-        .my-1= user.current_position
+        - if website_url.present?
+          .d-flex.flex-row.align-items-center
+            - if website_url =~ /linkedin/
+              = fa_icon('linkedin', flavor: 'brands', class: 'mr-1')
+            - else
+              = fa_icon('globe', class: 'mr-1')
+            = link_to website_url, website_url, target: :_blank, class: 'text-body-color'
         - if (phone = user.phone).present?
           .d-flex.flex-row.align-items-center
             = fa_icon('phone', class: 'mr-1')
@@ -16,11 +22,6 @@
           .d-flex.flex-row.align-items-center
             = fa_icon('envelope', class: 'mr-1')
             = email
-        - if website_url.present?
-          .d-flex.flex-row.align-items-center
-            - icon_name = website_url =~ /linkedin/ ? 'linkedin' : 'globe'
-            = fa_icon(icon_name, class: 'mr-1')
-            = link_to website_url, website_url, target: :_blank, class: 'text-body-color'
         - if user.full_address.present?
           .d-flex.flex-row.align-items-center
             = fa_icon('map-marker-alt', class: 'mr-1')

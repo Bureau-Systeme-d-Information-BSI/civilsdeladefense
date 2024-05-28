@@ -6,7 +6,7 @@
         .rf-col-12
           - name = "#{form}[department_users_attributes][index][department_id]"
           = label_tag name, "Souhait(s) géographique(s) (département)"
-          = select_tag name, options_from_collection_for_select(Department.all, "id", "label"), class: "rf-select", include_blank: true
+          = select_tag name, options_from_collection_for_select(Department.all, "id", "label"), class: "rf-select", prompt: "Aucun"
     .rf-col-1.text-center.rf-mt-4w
       %button.blank_button.rf-fi-delete-line{data: { action: 'click->duplicator#remove' }}
   %div{ data: { duplicator: { target: :root }}}
@@ -17,7 +17,7 @@
             .rf-col-12
               - name = "#{form}[department_users_attributes][#{index}][department_id]"
               = label_tag name, "Souhait(s) géographique(s) (département)"
-              = select_tag name, options_from_collection_for_select(Department.all, "id", "label", selected: department_user.department_id), class: "rf-select", include_blank: true
+              = select_tag name, options_from_collection_for_select(Department.all, "id", "label", selected: department_user.department_id), class: "rf-select", prompt: "Aucun"
         .rf-col-1.text-center.rf-mt-4w
           %button.blank_button.rf-fi-delete-line{data: { action: 'click->duplicator#remove' }}
 

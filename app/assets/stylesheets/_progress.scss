@@ -69,7 +69,7 @@ $bezier-points: (0 0, 0.4 0, 0.2 1, 1 1);
   @for $iteration from 0 to 4 {
     $iterationRotation: -90 * $iteration;
     /* Ease-in 0-75%  */
-    @for $i from 0 to $detail +1 {
+    @for $i from 0 to $detail + 1 {
       $rotation: ($i / $detail) * 180;
       $keyframe: (($iteration * $detail * 2) + $i) * 100 / $totalFrames;
       $percent: nth(bezier-reduce($bezier-points, ($i / $detail)), 1) * 75;
@@ -85,7 +85,7 @@ $bezier-points: (0 0, 0.4 0, 0.2 1, 1 1);
       }
     }
     /* Ease-out 75-150%  */
-    @for $i from 1 to $detail +1 {
+    @for $i from 1 to $detail + 1 {
       $rotation: ($i / $detail) * 180 + 180;
       $keyframe: (($iteration * $detail * 2) + ($detail + $i)) * 100 / $totalFrames;
       $percent: nth(bezier-reduce($bezier-points, ($i / $detail)), 2) * 75 + 75;

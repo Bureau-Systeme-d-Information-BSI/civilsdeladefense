@@ -1,7 +1,7 @@
 - suffix = @job_offer.new_record? ? 'new' : 'edit'
 - card_1_title = t(".card_1_title_#{ suffix }", job_offer_identifier: @job_offer.identifier)
 - card_2_title = t('.card_2_title')
-.container-fluid{data: { controller: "job-offer-management"}}
+.container-fluid{data: { controller: "job-offer-management regulation"}}
   .row
     .col-12.px-0
       = simple_form_for([:admin, @job_offer], data: {controller: "form-save trix-errors", trix_errors_model_name_value: "job_offer", trix_errors_inputs_value: @job_offer.errors.attribute_names, form_save_target: "form", action: "change->form-save#saveFormData submit->form-save#clearFormData"}) do |f|
@@ -23,7 +23,7 @@
                   .form-inputs
                     .row
                       .col-12{class: f.object.new_record? ? nil : "col-md-9"}
-                        = f.input :title, disabled: @job_offer.archived?
+                        = f.input :title, disabled: @job_offer.archived?, input_html: {data: {action: "blur->regulation#correctTitle"}}
                       - if !f.object.new_record?
                         .col-12.col-md-3
                           = f.input :identifier, readonly: true
@@ -84,11 +84,10 @@
                     .row
                       .col-12.col-md-4
                         = f.association :benefits, as: :check_boxes
-                    .row
+                      .col-12.col-md-4
+                        = f.association :drawbacks, as: :check_boxes
                       .col-12.col-md-4
                         = f.input :is_remote_possible, as: :radio_buttons
-                      .col-12.col-md-4
-                        = f.input :available_immediately, as: :radio_buttons
               .card.mt-5
                 .card-header
                   .card-title= t('.card_1_3_title')
@@ -110,11 +109,9 @@
                           - salary_range = SalaryRange.where(professional_category_id: @job_offer.professional_category_id, experience_level_id: @job_offer.experience_level_id, sector_id: @job_offer.sector_id).first
                           .col-12
                             - estimate_monthly_salary_net = salary_range.try(:estimate_monthly_salary_net)
-                            - hint = estimate_monthly_salary_net ? t('.estimate_monthly_salary_net_html', value: estimate_monthly_salary_net) : t('.estimate_monthly_salary_net_none_html')
-                            = f.input :estimate_monthly_salary_net, readonly: !current_administrator.admin?, hint: hint
+                            = f.input :estimate_monthly_salary_net, disabled: true, input_html: {class: 'obviously-disabled'}
                           .col-12
                             - estimate_annual_salary_gross = salary_range.try(:estimate_annual_salary_gross)
-                            - hint = estimate_annual_salary_gross ? t('.estimate_annual_salary_gross_html', value: estimate_annual_salary_gross) : t('.estimate_annual_salary_gross_none_html')
-                            = f.input :estimate_annual_salary_gross, readonly: !current_administrator.admin?, hint: hint
+                            = f.input :estimate_annual_salary_gross, disabled: true, input_html: {class: 'obviously-disabled'}
         = render partial: "form_actors", locals: {f: f}
         = render partial: "form_submit", locals: {f: f}

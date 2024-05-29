@@ -27,7 +27,7 @@ RSpec.describe Users::OmniauthCallbacksController do
       end
 
       it "returns a success response" do
-        expect(response).to redirect_to(account_job_applications_path)
+        expect(response).to redirect_to(edit_account_user_path)
       end
 
       it "create a user with same email" do
@@ -56,7 +56,7 @@ RSpec.describe Users::OmniauthCallbacksController do
       end
 
       it "returns a success response" do
-        expect(response).to redirect_to(account_job_applications_path)
+        expect(response).to redirect_to(edit_account_user_path)
       end
 
       it "sign_in user" do
@@ -72,7 +72,7 @@ RSpec.describe Users::OmniauthCallbacksController do
       end
 
       it "returns a success response" do
-        expect(response).to redirect_to(account_job_applications_path)
+        expect(response).to redirect_to(edit_account_user_path)
       end
 
       it "sign_in user" do

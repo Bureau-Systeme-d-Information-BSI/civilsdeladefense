@@ -16,19 +16,12 @@ export default function salaryRangeInputsHandling() {
       let detail = event.detail
       let data = detail[0]
       let result = data[0]
-      let element = document.getElementById('job_offer_estimate_monthly_salary_net')
       if (result) {
-        var estimateMonthlySalaryNet = result.estimate_monthly_salary_net
-        element.value = estimateMonthlySalaryNet
-        let elementHint = document.querySelector('.estimate_monthly_salary_net_reference')
-        elementHint.innerHTML = estimateMonthlySalaryNet
-      }
-      element = document.getElementById('job_offer_estimate_annual_salary_gross')
-      if (result) {
-        var estimateAnnualSalaryGross = result.estimate_annual_salary_gross
-        element.value = estimateAnnualSalaryGross
-        let elementHint = document.querySelector('.estimate_annual_salary_gross_reference')
-        elementHint.innerHTML = estimateAnnualSalaryGross
+        const monthInput = document.getElementById('job_offer_estimate_monthly_salary_net')
+        monthInput.value = result.estimate_monthly_salary_net
+
+        const annualInput = document.getElementById('job_offer_estimate_annual_salary_gross')
+        annualInput.value = result.estimate_annual_salary_gross
       }
     })
   })

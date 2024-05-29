@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_12_143624) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_22_124756) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -235,6 +235,24 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_12_143624) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "drawback_job_offers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "drawback_id", null: false
+    t.uuid "job_offer_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["drawback_id"], name: "index_drawback_job_offers_on_drawback_id"
+    t.index ["job_offer_id"], name: "index_drawback_job_offers_on_job_offer_id"
+  end
+
+  create_table "drawbacks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_drawbacks_on_name", unique: true
+    t.index ["position"], name: "index_drawbacks_on_position"
+  end
+
   create_table "email_attachments", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "email_id", null: false
     t.string "content"
@@ -436,7 +454,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_12_143624) do
     t.string "identifier"
     t.integer "option_photo"
     t.integer "notifications_count", default: 0
-    t.boolean "available_immediately", default: false
     t.string "city"
     t.string "county"
     t.integer "county_code"
@@ -745,6 +762,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_12_143624) do
     t.datetime "suspended_at", precision: nil
     t.date "marked_for_deletion_on"
     t.boolean "receive_job_offer_mails", default: false
+    t.integer "gender", default: 3
+    t.string "address"
+    t.string "postal_code"
+    t.string "city"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["organization_id"], name: "index_users_on_organization_id"
@@ -770,6 +791,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_12_143624) do
   add_foreign_key "cmgs", "organizations"
   add_foreign_key "department_users", "departments"
   add_foreign_key "department_users", "users"
+  add_foreign_key "drawback_job_offers", "drawbacks"
+  add_foreign_key "drawback_job_offers", "job_offers"
   add_foreign_key "email_attachments", "emails"
   add_foreign_key "emails", "job_applications"
   add_foreign_key "job_application_files", "job_application_file_types"

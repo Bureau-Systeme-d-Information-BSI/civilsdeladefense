@@ -57,7 +57,6 @@ end
 #  affected_job_applications_count                  :integer          default(0), not null
 #  after_meeting_rejected_job_applications_count    :integer          default(0), not null
 #  archived_at                                      :datetime
-#  available_immediately                            :boolean          default(FALSE)
 #  bne_date                                         :date
 #  bne_value                                        :string
 #  city                                             :string

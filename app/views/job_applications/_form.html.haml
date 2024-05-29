@@ -6,7 +6,7 @@
     = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
     %h2.rf-h3= t('.general_informations')
     = f.simple_fields_for :profile do |profile_form|
-      = profile_form.input :gender, collection: enum_options_for_select(Profile, :gender), input_html: { class: "rf-select" }, required: true
+      = profile_form.input :gender, collection: enum_options_for_select(Profile, :gender), input_html: { class: "rf-select" }, required: true, selected: current_user&.gender
     = f.simple_fields_for :user do |user_form|
       = user_form.input :first_name, readonly: user_signed_in?
       = user_form.input :last_name, readonly: user_signed_in?
@@ -52,7 +52,7 @@
       = f.simple_fields_for :user, input_html: {placeholder: false, required: true} do |user_form|
         = user_form.input :email, required: true
         %div{data: {controller: "password-visibility password-rules"}}
-          = user_form.input :password, required: true, input_html: {data: { password_visibility_target: "passwordInput", action: "keyup->password-rules#check" }}  
+          = user_form.input :password, required: true, input_html: {data: { password_visibility_target: "passwordInput", action: "keyup->password-rules#check" }}
           = fa_icon("eye", class: "password-visibility-toggle", data: { password_visibility_target: "showButton", action: "click->password-visibility#toggle" })
           = fa_icon("eye-slash", class: "password-visibility-toggle d-none", data: { password_visibility_target: "hideButton", action: "click->password-visibility#toggle" })
           %div.rules{data: {password_rules_target: "rules"}}

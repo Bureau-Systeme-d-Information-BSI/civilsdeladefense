@@ -10,6 +10,9 @@ application.register("add-recipient", AddRecipientController)
 import AutoSubmitController from "./auto_submit_controller"
 application.register("auto-submit", AutoSubmitController)
 
+import AutocompleteAddressController from "./autocomplete_address_controller"
+application.register("autocomplete-address", AutocompleteAddressController)
+
 import AutocompleteCityController from "./autocomplete_city_controller"
 application.register("autocomplete-city", AutocompleteCityController)
 
@@ -36,6 +39,9 @@ application.register("password-rules", PasswordRulesController)
 
 import PasswordVisibilityController from "./password_visibility_controller"
 application.register("password-visibility", PasswordVisibilityController)
+
+import RegulationController from "./regulation_controller"
+application.register("regulation", RegulationController)
 
 import RemoveRecipientController from "./remove_recipient_controller"
 application.register("remove-recipient", RemoveRecipientController)

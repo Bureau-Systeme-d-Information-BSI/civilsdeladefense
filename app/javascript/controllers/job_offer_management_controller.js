@@ -22,7 +22,6 @@ export default class extends Controller {
   }
 
   addFields(event) {
-    debugger
     let node = event.currentTarget
     let emailField = node.previousElementSibling.querySelector('input[type=email]')
     if (emailField == null) {

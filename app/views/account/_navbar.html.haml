@@ -9,7 +9,7 @@
           = link_to "Mes candidatures", [:account, :job_applications], class: "rf-sidemenu__link"
         - klass = controller.controller_name == 'users' && controller.action_name == 'edit' ? 'rf-sidemenu__item--active' : nil
         %li.rf-sidemenu__item{class: klass}
-          = link_to "Mes informations", [:edit, :account, :user], class: "rf-sidemenu__link"
+          = link_to "Mes informations personnelles", [:edit, :account, :user], class: "rf-sidemenu__link"
         - klass = controller.controller_name == 'users' && controller.action_name == 'show' ? 'rf-sidemenu__item--active' : nil
         %li.rf-sidemenu__item{class: klass}
           = link_to "Mon compte", [:account, :user], class: "rf-sidemenu__link"

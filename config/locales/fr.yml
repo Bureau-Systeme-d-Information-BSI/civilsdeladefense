@@ -68,7 +68,7 @@ fr:
     choose_file_validated_html: "Ce fichier a été validé !"
     click_to_edit: "Cliquer pour éditer"
     close: "Fermer"
-    confirm: "Êtes-vous sûr ?"
+    confirm: "Êtes-vous sûr(e) ?"
     copy: "Dupliquer"
     deactivate: "Désactiver"
     delete: "Supprimer"
@@ -99,6 +99,7 @@ fr:
     transfer: "Transférer"
     mark_as_read: "Marquer comme lu"
     email: "Courriel"
+    destroy: "Supprimer"
   homepages:
     stepper:
       step_1: "Dépôt de la candidature"
@@ -152,7 +153,6 @@ fr:
       organization_description: "Descriptif de l'organisation"
       recruitment_process: "Process de recrutement"
     job_offer_head:
-      available_immediately: "Poste à pourvoir immédiatement"
       benefit: "Avantage en nature"
     successful:
       subject: "Votre candidature à l'offre %{job_offer_identifier} sur %{service_name}"
@@ -247,7 +247,7 @@ fr:
       destroy:
         success: "Votre compte a bien été supprimé"
       edit:
-        title: "Mes informations"
+        title: "Mes informations personnelles"
       update_email:
         success: "Votre adresse de courriel a bien été modifié"
       update:
@@ -386,10 +386,6 @@ fr:
         card_1_1_title: "1.1 Description de l'offre"
         card_1_2_title: "1.2 Paramètres de l'offre"
         card_1_3_title: "1.3. Estimation rémunération salariale"
-        estimate_monthly_salary_net_html: "Fourchette de référence : <span class='estimate_monthly_salary_net_reference'>%{value}</span>"
-        estimate_monthly_salary_net_none_html: "Fourchette de référence : <span class='estimate_monthly_salary_net_reference'>aucune</span>"
-        estimate_annual_salary_gross_html: "Fourchette de référence : <span class='estimate_annual_salary_gross_reference'>%{value}</span>"
-        estimate_annual_salary_gross_none_html: "Fourchette de référence : <span class='estimate_annual_salary_gross_reference'>aucune</span>"
       form_actors:
         card_title: "3. Notifications"
         card_subtitle: "3.1 Acteurs du processus notifiés"
@@ -548,7 +544,8 @@ fr:
         navbar:
           admin: "Administration"
           administrators: "Comptes admin"
-          benefits: "Avantage(s) en nature"
+          benefits: "Avantages"
+          drawbacks: "Contraintes"
           bops: "BOPs"
           categories: "Domaines professionnels"
           cmgs: "Liste des CMG"
@@ -606,7 +603,7 @@ fr:
             other: "Comptes actifs (%{count})"
           account_inactive:
             zero: 'Aucun compte admin désactivé'
-            one: 'Comte désactivé (1)'
+            one: 'Compte désactivé (1)'
             other: "Comptes désactivés (%{count})"
           card_title:
             zero: 'Aucun compte admin'
@@ -742,6 +739,22 @@ fr:
           success: "Avantage en nature mis à jour !"
         destroy:
           success: "Avantage en nature supprimé !"
+      drawbacks:
+        index:
+          card_title:
+            zero: "Aucune contrainte particulière d'exercice"
+            one: "1 contrainte particulière d'exercice"
+            other: "%{count} contraintes particulières d'exercice"
+        new:
+          title: "Ajouter une contrainte particulière d'exercice"
+        edit:
+          title: "Modifier '%{name}'"
+        create:
+          success: "Contrainte particulière d'exercice créée !"
+        update:
+          success: "Contrainte particulière d'exercice mise à jour !"
+        destroy:
+          success: "Contrainte particulière d'exercice supprimée !"
       job_offer_terms:
         index:
           card_title:
@@ -1086,7 +1099,7 @@ fr:
         mandatory_file: "est obligatoire"
         allowed_file_content_types: "au mauvais format (seuls ces formats sont acceptés: %{types})"
         invalid_suffix: "n'est pas conforme, doit se terminer par %{suffixes}"
-        not_strong_enough: "Pas assez complexe : doit avoir au moins 8 caractères, dont au moins 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial parmi #?!@$%^&*-'"
+        not_strong_enough: "Pas assez complexe : doit avoir au moins 12 caractères, dont au moins 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial"
         spoofed_media_type: "Type de fichier incorrect"
       models:
         job_application:
@@ -1183,6 +1196,7 @@ fr:
         salary: "Rémunération"
         recruitment_process: Process de recrutement
         benefits: "Avantages liés au poste"
+        drawbacks: "Contraintes particulières d'exercice"
         is_remote_possible: "Télétravail"
         organization_description: "Descriptif de l'organisation"
         required_profile: "Profil recherché"
@@ -1221,6 +1235,10 @@ fr:
         official_level: "Niveau officiel"
       contract_type:
         duration: Durée
+      user:
+        gender/female: "Femme"
+        gender/male: "Homme"
+        gender/other: "Autre"
   helpers:
     submit:
       job_application:

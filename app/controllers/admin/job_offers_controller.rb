@@ -228,12 +228,13 @@ class Admin::JobOffersController < Admin::BaseController
     fields = %i[
       title description category_id professional_category_id employer_id required_profile
       recruitment_process contract_type_id contract_duration_id contract_start_on
-      is_remote_possible available_immediately study_level_id experience_level_id bop_id
+      is_remote_possible study_level_id experience_level_id bop_id
       sector_id estimate_monthly_salary_net estimate_annual_salary_gross
       location city county county_code country_code postcode region spontaneous
       organization_description bne_date bne_value pep_date pep_value
     ]
     fields << {benefit_ids: []}
+    fields << {drawback_ids: []}
     job_offer_actors_attributes = %i[id role _destroy]
     job_offer_actors_attributes << {administrator_attributes: %i[id email _destroy]}
     fields << {job_offer_actors_attributes: job_offer_actors_attributes}

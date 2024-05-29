@@ -31,7 +31,8 @@ Rails.application.routes.draw do
     patch "/admin/confirmation" => "administrators/confirmations#update", :as => :update_administrator_confirmation
   end
   devise_for :administrators, path: "admin", controllers: {
-    confirmations: "administrators/confirmations"
+    confirmations: "administrators/confirmations",
+    sessions: "administrators/sessions"
   }
   devise_for :users, controllers: {
     registrations: "users/registrations",

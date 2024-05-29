@@ -7,8 +7,8 @@ export default class extends Controller {
     this.rules = [
       {
         key: "length",
-        message: "8 caractères minimum",
-        positive: (value) => value.length >= 8
+        message: "12 caractères minimum",
+        positive: (value) => value.length >= 12
       },
       {
         key: "uppercase",

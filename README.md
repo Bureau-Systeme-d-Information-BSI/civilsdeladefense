@@ -142,7 +142,7 @@ admin = Administrator.new(
   email: 'prenom.nom@domaine.com',
   first_name: 'Prénom',
   last_name: 'Nom',
-  password: '8 caractères minimum (1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial)',
+  password: '12 caractères minimum (1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial)',
   very_first_account: true,
   role: 'admin',
   organization: organization

@@ -44,7 +44,7 @@ class ApplicationController < ActionController::Base
     when Administrator
       stored_location_for(resource) || admin_root_path
     when User
-      stored_location_for(resource) || account_job_applications_path
+      stored_location_for(resource) || edit_account_user_path
     else
       stored_location_for(resource)
     end

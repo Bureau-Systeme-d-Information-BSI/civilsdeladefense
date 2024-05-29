@@ -125,7 +125,7 @@ fr:
         sign_in:
           user: Accéder à mon espace candidat
           administrator: Se connecter
-      signed_in: Connecté(e) avec succès.
+      signed_in: Connecté(e) avec succès. N'oubliez pas de compléter au maximum les informations de votre profil candidat pour favoriser votre visibilité auprès des recruteurs.
       signed_out: Déconnecté(e) avec succès.
     shared:
       links:

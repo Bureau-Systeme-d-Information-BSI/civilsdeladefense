@@ -56,9 +56,12 @@ fr:
     mailer:
       confirmation_instructions:
         action: "Je confirme mon courriel"
-        greeting: "Bienvenue sur %{service_name} %{recipient}"
-        instruction: "Vous pouvez confirmer votre courriel en cliquant sur le bouton ci-dessous :"
+        greeting: "Bonjour %{recipient},"
+        instruction_0: "Cliquez sur le lien ci dessous pour finaliser la configuration de votre compte :"
+        instruction_1: "Vous serez redirigé vers votre espace personnel, n'hésitez pas à compléter les informations de votre profil."
         subject: "[%{service_name}] Instructions de confirmation"
+        sincerely: Cordialement,
+        team: L'équipe de recrutement de %{service_name}
       email_changed:
         greeting: "Bonjour %{recipient},"
         message: Nous vous contactons pour vous notifier que votre adresse de courriel a été changée en %{email}.

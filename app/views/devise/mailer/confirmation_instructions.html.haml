@@ -1,7 +1,13 @@
 %p
-  = t('.greeting', recipient: (@resource.full_name.present? ? @resource.full_name : nil), service_name: @resource.organization.service_name)
+  = t('.greeting', recipient: (@resource.full_name.present? ? @resource.full_name : nil))
 %p
-  = t('.instruction')
+  = t('.instruction_0')
 - text = t('.action')
 - url = confirmation_url(@resource, confirmation_token: @token)
 = render partial: 'email_button', locals: {text: text, url: url}
+%p
+  = t('.instruction_1')
+%p
+  = t('.sincerely')
+  %br
+  = t('.team', service_name: @resource.organization.service_name)

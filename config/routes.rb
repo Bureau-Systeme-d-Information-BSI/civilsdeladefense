@@ -159,7 +159,7 @@ Rails.application.routes.draw do
           post :move_higher, :move_lower
         end
       end
-      resources :administrators, path: "administrateurs", except: %i[destroy] do
+      resources :administrators, path: "administrateurs" do
         collection do
           get :export
           get :inactive

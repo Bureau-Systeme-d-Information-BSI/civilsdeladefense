@@ -129,6 +129,8 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
     end
   end
 
+  def destroy = @administrator.destroy!
+
   private
 
   def set_administrators

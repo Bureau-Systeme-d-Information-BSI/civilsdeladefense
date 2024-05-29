@@ -1,4 +1,4 @@
-%tr
+%tr{id: dom_id(administrator)}
   %td
     / = image_user_tag administrator.photo, width: 40, class: 'mr-2'
   %td
@@ -41,7 +41,7 @@
         %li.list-inline-item
           = link_to fa_icon('pencil'), [:edit, :admin, :settings, administrator], title: t('buttons.edit')
       - unless administrator.confirmed_at.present?
-        - if can?(:manage, administrator)
+        - if can?(:manage, administrator) && administrator.active?
           %li.list-inline-item
             = link_to fa_icon('arrows-rotate'), [:resend_confirmation_instructions, :admin, :settings, administrator], method: :post, title: t('buttons.resend_confirmation_instructions'), data: {confirm: t('buttons.confirm')}
       - if can?(:deactivate, administrator) && administrator.active?
@@ -49,4 +49,8 @@
           = link_to fa_icon('close'), [:deactivate, :admin, :settings, administrator], method: :post, title: t('buttons.deactivate'), data: {confirm: t('buttons.confirm')}
       - if can?(:reactivate, administrator) && administrator.inactive?
         %li.list-inline-item
-          = link_to fa_icon('close'), [:reactivate, :admin, :settings, administrator], method: :post, title: t('buttons.reactivate'), data: {confirm: t('buttons.confirm')}
+          = link_to fa_icon('check'), [:reactivate, :admin, :settings, administrator], method: :post, title: t('buttons.reactivate'), data: {confirm: t('buttons.confirm')}
+      - if can?(:destroy, administrator) && administrator.inactive?
+        %li.list-inline-item
+          = link_to fa_icon('trash'), [:admin, :settings, administrator], method: :delete, remote: true, title: t('buttons.destroy'), data: {confirm: t('buttons.confirm')}
+

@@ -3,14 +3,28 @@
     .rf-col-12
       %h2.rf-h3= t('.title')
       .rf-box.rf-mb-5w.rf-pb-5w
-        = simple_form_for(@user, url: [:account, :user], method: :patch) do |f|
+        = simple_form_for(@user, url: [:account, :user], method: :patch, data: { controller: 'autocomplete-address' }) do |f|
+          .d-none
+            .autocomplete{ data: { autocomplete_address_target: :query } }
           = f.error_notification
           .form-inputs
+            = f.input :gender, collection: enum_options_for_select(User, :gender), input_html: { class: "rf-select" }, label_required: true, include_blank: false
             = f.input :first_name
             = f.input :last_name
-            = f.input :current_position
             = f.input :phone
             = f.input :website_url
+            .rf-grid-row
+              .rf-col-11
+                = f.input :address, input_html: { data: { autocomplete_address_target: :address } }, required: false
+              .rf-col-1.text-center.rf-mt-5w
+                %button.blank_button.rf-fi-search-line{ data: { action: 'click->autocomplete-address#search' }, type: :button }
+            .rf-grid-row.rf-mb-3w
+              .rf-col-12.rf-col-md-4.rf-mt-3w
+                = f.input :postal_code, input_html: { data: { autocomplete_address_target: :postalCode } }, required: false
+              .rf-col-md-1
+              .rf-col-12.rf-col-md-7.rf-mt-3w
+                = f.input :city, input_html: { data: { autocomplete_address_target: :city } }, required: false
+
             = render partial: '/department_users/form', locals: { user_form: f, kind: :user }
             = f.input :photo
             - if @user.photo.present?

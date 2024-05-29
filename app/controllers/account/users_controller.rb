@@ -125,6 +125,7 @@ class Account::UsersController < Account::BaseController
 
   def user_params
     filtered_params = params.require(:user).permit(
+      :gender,
       :first_name,
       :last_name,
       :phone,
@@ -132,6 +133,9 @@ class Account::UsersController < Account::BaseController
       :current_position,
       :photo,
       :delete_photo,
+      :address,
+      :postal_code,
+      :city,
       department_users_attributes: %i[department_id]
     )
 

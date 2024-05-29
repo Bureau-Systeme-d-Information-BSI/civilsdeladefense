@@ -6,14 +6,14 @@ RSpec.describe User do
   let(:user) { create(:confirmed_user) }
   let(:another_user) { create(:confirmed_user) }
 
-  it { is_expected.to have_many(:job_applications).inverse_of(:user) }
-
-  it "is valid with valid attributes" do
-    expect(user).to be_valid
+  describe "validations" do
+    it { expect(user).to be_valid }
   end
 
   describe "associations" do
     it { is_expected.to have_many(:bookmarks).dependent(:destroy) }
+
+    it { is_expected.to have_many(:job_applications).inverse_of(:user) }
   end
 
   it "can be suspended" do
@@ -185,6 +185,28 @@ RSpec.describe User do
       end
     end
   end
+
+  describe "#full_address" do
+    subject { user.full_address }
+
+    context "when all fields are filled" do
+      let(:user) { build(:user, address: "1 rue de la paix", postal_code: "75001", city: "Paris") }
+
+      it { is_expected.to eq("1 rue de la paix 75001 Paris") }
+    end
+
+    context "when some fields are missing" do
+      let(:user) { build(:user, address: "1 rue de la paix", postal_code: "75001") }
+
+      it { is_expected.to eq("1 rue de la paix 75001") }
+    end
+
+    context "when all fields are missing" do
+      let(:user) { build(:user) }
+
+      it { is_expected.to eq("") }
+    end
+  end
 end
 
 # == Schema Information
@@ -192,6 +214,8 @@ end
 # Table name: users
 #
 #  id                               :uuid             not null, primary key
+#  address                          :string
+#  city                             :string
 #  confirmation_sent_at             :datetime
 #  confirmation_token               :string
 #  confirmed_at                     :datetime
@@ -203,6 +227,7 @@ end
 #  encrypted_password               :string           default(""), not null
 #  failed_attempts                  :integer          default(0), not null
 #  first_name                       :string
+#  gender                           :integer          default("other")
 #  job_applications_count           :integer          default(0), not null
 #  last_name                        :string
 #  last_sign_in_at                  :datetime
@@ -215,6 +240,7 @@ end
 #  photo_file_size                  :bigint
 #  photo_is_validated               :integer          default(0)
 #  photo_updated_at                 :datetime
+#  postal_code                      :string
 #  receive_job_offer_mails          :boolean          default(FALSE)
 #  remember_created_at              :datetime
 #  reset_password_sent_at           :datetime

@@ -45,8 +45,10 @@ class User < ApplicationRecord
   phony_normalize :phone, default_country_code: "FR"
 
   mount_uploader :photo, PhotoUploader, mount_on: :photo_file_name
-  validates :photo, file_size: {less_than: 1.megabytes}
 
+  enum gender: {female: 1, male: 2, other: 3}
+
+  validates :photo, file_size: {less_than: 1.megabytes}
   validates :first_name, :last_name, presence: true
   validates_plausible_phone :phone
   validates :phone, :current_position, presence: true, allow_nil: true
@@ -119,6 +121,10 @@ class User < ApplicationRecord
     job_applications.order(created_at: :desc).first
   end
 
+  def full_address
+    [address, postal_code, city].compact.join(" ")
+  end
+
   private
 
   def password_required?
@@ -143,6 +149,8 @@ end
 # Table name: users
 #
 #  id                               :uuid             not null, primary key
+#  address                          :string
+#  city                             :string
 #  confirmation_sent_at             :datetime
 #  confirmation_token               :string
 #  confirmed_at                     :datetime
@@ -154,6 +162,7 @@ end
 #  encrypted_password               :string           default(""), not null
 #  failed_attempts                  :integer          default(0), not null
 #  first_name                       :string
+#  gender                           :integer          default("other")
 #  job_applications_count           :integer          default(0), not null
 #  last_name                        :string
 #  last_sign_in_at                  :datetime
@@ -166,6 +175,7 @@ end
 #  photo_file_size                  :bigint
 #  photo_is_validated               :integer          default(0)
 #  photo_updated_at                 :datetime
+#  postal_code                      :string
 #  receive_job_offer_mails          :boolean          default(FALSE)
 #  remember_created_at              :datetime
 #  reset_password_sent_at           :datetime

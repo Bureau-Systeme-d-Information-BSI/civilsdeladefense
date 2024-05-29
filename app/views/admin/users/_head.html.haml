@@ -21,6 +21,10 @@
             - icon_name = website_url =~ /linkedin/ ? 'linkedin' : 'globe'
             = fa_icon(icon_name, class: 'mr-1')
             = link_to website_url, website_url, target: :_blank, class: 'text-body-color'
+        - if user.full_address.present?
+          .d-flex.flex-row.align-items-center
+            = fa_icon('map-marker-alt', class: 'mr-1')
+            = user.full_address
 
     - if defined?(job_application) && !user.new_record?
       %ul.nav.nav-tabs{role: :tablist}

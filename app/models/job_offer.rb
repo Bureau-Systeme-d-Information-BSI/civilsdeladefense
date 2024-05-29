@@ -46,6 +46,8 @@ class JobOffer < ApplicationRecord
   has_many :bookmarks, dependent: :destroy
   has_many :benefit_job_offers, dependent: :destroy
   has_many :benefits, through: :benefit_job_offers
+  has_many :drawback_job_offers, dependent: :destroy
+  has_many :drawbacks, through: :drawback_job_offers
   has_many :job_applications, dependent: :destroy
   has_many :job_offer_actors, inverse_of: :job_offer, dependent: :destroy
   has_many :administrators, through: :job_offer_actors
@@ -321,7 +323,6 @@ end
 #  affected_job_applications_count                  :integer          default(0), not null
 #  after_meeting_rejected_job_applications_count    :integer          default(0), not null
 #  archived_at                                      :datetime
-#  available_immediately                            :boolean          default(FALSE)
 #  bne_date                                         :date
 #  bne_value                                        :string
 #  city                                             :string

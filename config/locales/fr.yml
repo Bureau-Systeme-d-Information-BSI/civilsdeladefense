@@ -152,7 +152,6 @@ fr:
       organization_description: "Descriptif de l'organisation"
       recruitment_process: "Process de recrutement"
     job_offer_head:
-      available_immediately: "Poste à pourvoir immédiatement"
       benefit: "Avantage en nature"
     successful:
       subject: "Votre candidature à l'offre %{job_offer_identifier} sur %{service_name}"
@@ -548,7 +547,8 @@ fr:
         navbar:
           admin: "Administration"
           administrators: "Comptes admin"
-          benefits: "Avantage(s) en nature"
+          benefits: "Avantages"
+          drawbacks: "Contraintes"
           bops: "BOPs"
           categories: "Domaines professionnels"
           cmgs: "Liste des CMG"
@@ -606,7 +606,7 @@ fr:
             other: "Comptes actifs (%{count})"
           account_inactive:
             zero: 'Aucun compte admin désactivé'
-            one: 'Comte désactivé (1)'
+            one: 'Compte désactivé (1)'
             other: "Comptes désactivés (%{count})"
           card_title:
             zero: 'Aucun compte admin'
@@ -742,6 +742,22 @@ fr:
           success: "Avantage en nature mis à jour !"
         destroy:
           success: "Avantage en nature supprimé !"
+      drawbacks:
+        index:
+          card_title:
+            zero: "Aucune contrainte particulière d'exercice"
+            one: "1 contrainte particulière d'exercice"
+            other: "%{count} contraintes particulières d'exercice"
+        new:
+          title: "Ajouter une contrainte particulière d'exercice"
+        edit:
+          title: "Modifier '%{name}'"
+        create:
+          success: "Contrainte particulière d'exercice créée !"
+        update:
+          success: "Contrainte particulière d'exercice mise à jour !"
+        destroy:
+          success: "Contrainte particulière d'exercice supprimée !"
       job_offer_terms:
         index:
           card_title:
@@ -1183,6 +1199,7 @@ fr:
         salary: "Rémunération"
         recruitment_process: Process de recrutement
         benefits: "Avantages liés au poste"
+        drawbacks: "Contraintes particulières d'exercice"
         is_remote_possible: "Télétravail"
         organization_description: "Descriptif de l'organisation"
         required_profile: "Profil recherché"

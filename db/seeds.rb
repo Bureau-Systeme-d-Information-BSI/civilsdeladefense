@@ -209,6 +209,10 @@ Benefit.create!(name: "Voiture")
 Benefit.create!(name: "Crèche")
 Benefit.create!(name: "Appartement de fonction")
 
+Drawback.create!(name: "Astreintes")
+Drawback.create!(name: "Travail de nuit")
+Drawback.create!(name: "Permis de conduire")
+
 AvailabilityRange.create!(name: "En poste")
 AvailabilityRange.create!(name: "Disponible immédiatement")
 AvailabilityRange.create!(name: "Disponible sous 1 mois")

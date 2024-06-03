@@ -10,7 +10,7 @@ class Department < ApplicationRecord
 
   def self.regions = Department.all.group_by(&:name_region)
 
-  def self.none = Department.find_by(code: "00")
+  def self.none = Department.find_or_create_by!(code: "00", name: "Aucun")
 
   private
 

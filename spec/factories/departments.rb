@@ -6,7 +6,7 @@ FactoryBot.define do
 
     trait :none do
       code { "00" }
-      name { "None" }
+      name { "Aucun" }
       code_region { nil }
       name_region { nil }
     end

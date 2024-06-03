@@ -7,7 +7,7 @@ RSpec.describe Department do
     context "when department is the None department" do
       let(:department) { build(:department, :none) }
 
-      it { is_expected.to eq("None") }
+      it { is_expected.to eq("Aucun") }
     end
 
     context "when department is not the None department" do
@@ -23,7 +23,7 @@ RSpec.describe Department do
     context "when department is the None department" do
       let(:department) { build(:department, :none) }
 
-      it { is_expected.to eq("None") }
+      it { is_expected.to eq("Aucun") }
     end
 
     context "when department is not the None department" do
@@ -34,10 +34,18 @@ RSpec.describe Department do
   end
 
   describe ".none" do
-    subject { described_class.none }
+    subject(:none) { described_class.none }
 
-    let!(:department) { create(:department, code: "00") }
+    context "when the None department exists" do
+      let!(:department) { create(:department, :none) }
 
-    it { is_expected.to eq(department) }
+      it { is_expected.to eq(department) }
+    end
+
+    context "when the None department does not exist" do
+      it { expect { none }.to change(described_class, :count).by(1) }
+
+      it { is_expected.to have_attributes(code: "00", name: "Aucun") }
+    end
   end
 end

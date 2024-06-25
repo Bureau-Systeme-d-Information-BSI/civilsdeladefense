@@ -31,6 +31,7 @@ fr:
           catch_all: "Avec signe + dans le champ reply_to"
     labels:
       defaults:
+        language: "Langues étrangères"
         age_range: "Tranche d'âge"
         availability_range: "Disponibilité"
         body: "Corps du courriel"

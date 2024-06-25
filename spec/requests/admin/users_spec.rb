@@ -9,7 +9,9 @@ RSpec.describe "Admin::Users" do
   before { sign_in admin }
 
   describe "GET /admin/candidats" do
-    subject(:index_request) { get admin_users_path }
+    subject(:index_request) { get admin_users_path, params: }
+
+    let(:params) { {} }
 
     it "is successful" do
       index_request
@@ -19,6 +21,63 @@ RSpec.describe "Admin::Users" do
     it "renders the template" do
       expect(index_request).to render_template(:index)
     end
+
+    # rubocop:disable RSpec/MultipleMemoizedHelpers
+    describe "filtering users on foreign language" do
+      let(:foreign_language_level) { create(:foreign_language_level) }
+
+      let!(:english) { create(:foreign_language) }
+      let!(:german) { create(:foreign_language) }
+
+      let!(:user_no_foreign_language) { create(:user) }
+      let!(:user_english) { create(:user) }
+      let!(:user_german) { create(:user) }
+
+      before do
+        create(:job_application, user: user_no_foreign_language)
+        create(:job_application, user: user_english)
+          .profile
+          .profile_foreign_languages
+          .create!(foreign_language: english, foreign_language_level:)
+        create(:job_application, user: user_german)
+          .profile
+          .profile_foreign_languages
+          .create!(foreign_language: german, foreign_language_level:)
+
+        index_request
+      end
+
+      context "when not filtering" do
+        it { expect(response.body).to include(user_no_foreign_language.full_name) }
+
+        it { expect(response.body).to include(user_english.full_name) }
+
+        it { expect(response.body).to include(user_german.full_name) }
+      end
+
+      context "when filtering on English" do
+        let(:params) { {q: {job_applications_profile_profile_foreign_languages_foreign_language_id_in: [english.id]}} }
+
+        it { expect(response.body).to include(user_english.full_name) }
+
+        it { expect(response.body).not_to include(user_german.full_name) }
+
+        it { expect(response.body).not_to include(user_no_foreign_language.full_name) }
+      end
+
+      context "when filtering on English and German" do
+        let(:params) do
+          {q: {job_applications_profile_profile_foreign_languages_foreign_language_id_in: [english.id, german.id]}}
+        end
+
+        it { expect(response.body).to include(user_english.full_name) }
+
+        it { expect(response.body).to include(user_german.full_name) }
+
+        it { expect(response.body).not_to include(user_no_foreign_language.full_name) }
+      end
+    end
+    # rubocop:enable RSpec/MultipleMemoizedHelpers
   end
 
   describe "GET /admin/candidats/:id" do

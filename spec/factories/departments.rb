@@ -3,6 +3,13 @@ FactoryBot.define do
     name { "MyString" }
     code_region { "MyString" }
     code { "MyString" }
+
+    trait :none do
+      code { "00" }
+      name { "Aucun" }
+      code_region { nil }
+      name_region { nil }
+    end
   end
 end
 

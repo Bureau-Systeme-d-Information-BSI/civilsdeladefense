@@ -8,6 +8,7 @@ class Category < ApplicationRecord
 
   has_many :job_offers, dependent: :nullify
   has_many :publicly_visible_job_offers, -> { publicly_visible }, class_name: "JobOffer", inverse_of: :category, dependent: :nullify
+  has_many :job_applications, dependent: :nullify
 
   def compute_published_job_offers_count!
     if leaf?

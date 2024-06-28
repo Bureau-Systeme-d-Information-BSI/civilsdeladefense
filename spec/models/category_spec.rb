@@ -4,6 +4,12 @@ require "rails_helper"
 
 RSpec.describe Category do
   it { is_expected.to validate_presence_of(:name) }
+
+  describe "associations" do
+    it { is_expected.to have_many(:job_offers).dependent(:nullify) }
+
+    it { is_expected.to have_many(:job_applications).dependent(:nullify) }
+  end
 end
 
 # == Schema Information

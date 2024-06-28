@@ -18,10 +18,20 @@ class Admin::Settings::InheritedResourcesController < Admin::Settings::BaseContr
 
   def destroy
     key = "admin.settings.#{resource_class.to_s.tableize}.destroy.success"
-    destroy!(notice: t(key))
+    if resource.respond_to?(:children)
+      recursive_destroy!(resource)
+      redirect_to({action: :index}, flash: {notice: t(key)})
+    else
+      destroy!(notice: t(key))
+    end
   rescue ActiveRecord::InvalidForeignKey
     key = "admin.settings.#{resource_class.to_s.tableize}.destroy.failure.foreign_key_violation"
     redirect_to({action: :index}, flash: {notice: t(key)})
+  end
+
+  def recursive_destroy!(resource)
+    resource.children.each { |child| recursive_destroy!(child) } if resource.children.any?
+    resource.destroy!
   end
 
   def move_higher

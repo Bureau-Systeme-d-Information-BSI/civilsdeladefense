@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_29_081611) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_29_083940) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -470,10 +470,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_29_081611) do
     t.boolean "spontaneous", default: false
     t.text "organization_description"
     t.datetime "draft_at", precision: nil
-    t.string "pep_value"
-    t.date "pep_date"
-    t.string "bne_value"
-    t.date "bne_date"
+    t.string "csp_value"
+    t.date "csp_date"
+    t.string "mobilia_value"
+    t.date "mobilia_date"
     t.uuid "archiving_reason_id"
     t.index ["archiving_reason_id"], name: "index_job_offers_on_archiving_reason_id"
     t.index ["bop_id"], name: "index_job_offers_on_bop_id"

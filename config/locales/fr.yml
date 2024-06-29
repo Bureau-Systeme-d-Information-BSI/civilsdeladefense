@@ -1105,7 +1105,7 @@ fr:
         job_application:
           attributes:
             state:
-              cant_accept_before_delay: "Un délai de 30 jours après la publication de l'offre sur la PEP doit être respecté avant d'accepter une candidature"
+              cant_accept_before_delay: "Un délai de 30 jours après la publication de l'offre sur CSP doit être respecté avant d'accepter une candidature"
               complete_files_before_draft_contract: "Tous les documents doivent être téléversés et validés avant la rédaction du contrat"
             cover_letter_content_type:
               invalid: "PDF uniquement, max 2Mo"
@@ -1121,7 +1121,7 @@ fr:
         job_offer:
           attributes:
             base:
-              pep_or_bne: "PEP et/ou BNE doit être rempli(e)"
+              csp_or_mobilia: "CSP et/ou MOBILIA doit être rempli"
             title:
               brackets: "ne doit pas contenir de parenthèse"
               f_h: "doit finir par F/H"
@@ -1200,6 +1200,8 @@ fr:
         is_remote_possible: "Télétravail"
         organization_description: "Descriptif de l'organisation"
         required_profile: "Profil recherché"
+        csp_date: Date de publication CSP
+        mobilia_date: Date de publication MOBILIA
       job_offer_actor/role:
         employer: "Employeur"
         grand_employer: "Grand Employeur"

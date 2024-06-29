@@ -80,14 +80,14 @@ class JobOffer < ApplicationRecord
     validates :recruitment_process, html_length: {maximum: 700}
   end
 
-  validate :pep_or_bne
-  validates :pep_date, presence: true, if: -> { pep_value.present? }
-  validates :bne_date, presence: true, if: -> { bne_value.present? }
+  validate :csp_or_mobilia
+  validates :csp_date, presence: true, if: -> { csp_value.present? }
+  validates :mobilia_date, presence: true, if: -> { mobilia_value.present? }
 
-  def pep_or_bne
-    return if pep_value.present? || bne_value.present?
+  def csp_or_mobilia
+    return if csp_value.present? || mobilia_value.present?
 
-    errors.add(:base, :pep_or_bne)
+    errors.add(:base, :csp_or_mobilia)
   end
 
   ## Scopes
@@ -323,8 +323,6 @@ end
 #  affected_job_applications_count                  :integer          default(0), not null
 #  after_meeting_rejected_job_applications_count    :integer          default(0), not null
 #  archived_at                                      :datetime
-#  bne_date                                         :date
-#  bne_value                                        :string
 #  city                                             :string
 #  contract_drafting_job_applications_count         :integer          default(0), not null
 #  contract_feedback_waiting_job_applications_count :integer          default(0), not null
@@ -333,6 +331,8 @@ end
 #  country_code                                     :string
 #  county                                           :string
 #  county_code                                      :integer
+#  csp_date                                         :date
+#  csp_value                                        :string
 #  description                                      :text
 #  draft_at                                         :datetime
 #  estimate_annual_salary_gross                     :string
@@ -343,12 +343,12 @@ end
 #  is_remote_possible                               :boolean
 #  job_applications_count                           :integer          default(0), not null
 #  location                                         :string
+#  mobilia_date                                     :date
+#  mobilia_value                                    :string
 #  most_advanced_job_applications_state             :integer          default("start")
 #  notifications_count                              :integer          default(0)
 #  option_photo                                     :integer
 #  organization_description                         :text
-#  pep_date                                         :date
-#  pep_value                                        :string
 #  phone_meeting_job_applications_count             :integer          default(0), not null
 #  phone_meeting_rejected_job_applications_count    :integer          default(0), not null
 #  postcode                                         :string

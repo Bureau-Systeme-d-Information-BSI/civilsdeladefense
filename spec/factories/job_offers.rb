@@ -21,8 +21,10 @@ FactoryBot.define do
     sector { Sector.all.sample }
     estimate_monthly_salary_net { "3k€" }
     estimate_annual_salary_gross { "36k€" }
-    bne_value { "inconnue" }
-    bne_date { 1.day.ago }
+    csp_value { "CSP#{rand(1000..9999)}" }
+    csp_date { 35.days.ago }
+    mobilia_value { "inconnue" }
+    mobilia_date { 1.day.ago }
 
     factory :published_job_offer do
       published_at { 40.days.before }
@@ -57,8 +59,6 @@ end
 #  affected_job_applications_count                  :integer          default(0), not null
 #  after_meeting_rejected_job_applications_count    :integer          default(0), not null
 #  archived_at                                      :datetime
-#  bne_date                                         :date
-#  bne_value                                        :string
 #  city                                             :string
 #  contract_drafting_job_applications_count         :integer          default(0), not null
 #  contract_feedback_waiting_job_applications_count :integer          default(0), not null
@@ -67,6 +67,8 @@ end
 #  country_code                                     :string
 #  county                                           :string
 #  county_code                                      :integer
+#  csp_date                                         :date
+#  csp_value                                        :string
 #  description                                      :text
 #  draft_at                                         :datetime
 #  estimate_annual_salary_gross                     :string
@@ -77,12 +79,12 @@ end
 #  is_remote_possible                               :boolean
 #  job_applications_count                           :integer          default(0), not null
 #  location                                         :string
+#  mobilia_date                                     :date
+#  mobilia_value                                    :string
 #  most_advanced_job_applications_state             :integer          default("start")
 #  notifications_count                              :integer          default(0)
 #  option_photo                                     :integer
 #  organization_description                         :text
-#  pep_date                                         :date
-#  pep_value                                        :string
 #  phone_meeting_job_applications_count             :integer          default(0), not null
 #  phone_meeting_rejected_job_applications_count    :integer          default(0), not null
 #  postcode                                         :string

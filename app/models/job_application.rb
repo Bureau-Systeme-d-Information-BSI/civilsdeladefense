@@ -279,8 +279,8 @@ class JobApplication < ApplicationRecord
   def cant_accept_before_delay
     return if state.to_s != "accepted"
     return if state_was.to_s == "accepted"
-    return if job_offer.pep_date.blank?
-    return if job_offer.pep_date + 30.days < Time.zone.now
+    return if job_offer.csp_date.blank?
+    return if job_offer.csp_date + 30.days < Time.zone.now
 
     errors.add(:state, :cant_accept_before_delay)
   end

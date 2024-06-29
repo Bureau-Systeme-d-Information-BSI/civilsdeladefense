@@ -18,7 +18,9 @@ organization = Organization.create!(
   job_offer_term_warning: "C'est impossible"
 )
 [
-  "Le poste fait appel à des compétences techniques spécialisées ou nouvelles (un encart en surbrillance en passant la souris sur la première les compétences sollicitées sont trop récentes ou trop spécialisées pour recourir dans l'immédiat à un fonctionnaire)", "Car l'emploi ne requiert pas d'être honoré par un fonctionnaire formé par une école de la fonction publique (poste d'attaché uniquement).", "Vous n'avez reçu aucune candidature de fonctionnaire suite à la publication de l'annonce sur la Bourse nationale de l'emploi (BNE) et à la Place de l'emploi public (РЕР)"
+  "Le poste fait appel à des compétences techniques spécialisées ou nouvelles (un encart en surbrillance en passant la souris sur la première les compétences sollicitées sont trop récentes ou trop spécialisées pour recourir dans l'immédiat à un fonctionnaire)",
+  "Car l'emploi ne requiert pas d'être honoré par un fonctionnaire formé par une école de la fonction publique (poste d'attaché uniquement).",
+  "Vous n'avez reçu aucune candidature de fonctionnaire suite à la publication de l'annonce sur CSP et sur MOBILIA."
 ].each do |str|
   JobOfferTerm.create(name: str)
 end
@@ -321,8 +323,8 @@ job_offer = JobOffer.new { |j|
   j.professional_category = ProfessionalCategory.first
   j.location = "Rennes, FR"
   j.employer = Employer.last
-  j.bne_date = 1.day.ago
-  j.bne_value = "inconnue"
+  j.mobilia_date = 1.day.ago
+  j.mobilia_value = "inconnue"
   j.organization_description = "Description de l'organisation"
   j.description = <<~HEREDOC
     Placé au sein du commandement des opérations cyber et rattaché à la direction interarmées

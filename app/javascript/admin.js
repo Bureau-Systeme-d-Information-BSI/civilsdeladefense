@@ -67,13 +67,13 @@ document.addEventListener('turbo:load', function () {
     altFormat: 'd/m/Y',
     dateFormat: 'Y-m-d'
   })
-  flatpickr('#job_offer_pep_date', {
+  flatpickr('#job_offer_csp_date', {
     locale: French,
     altInput: true,
     altFormat: 'd/m/Y',
     dateFormat: 'Y-m-d'
   })
-  flatpickr('#job_offer_bne_date', {
+  flatpickr('#job_offer_mobilia_date', {
     locale: French,
     altInput: true,
     altFormat: 'd/m/Y',

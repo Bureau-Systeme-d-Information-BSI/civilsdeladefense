@@ -119,16 +119,16 @@ RSpec.describe JobOffer do
     end
   end
 
-  describe "pep or bne" do
+  describe "CSP or Mobilia" do
     let(:job_offer) do
       build(
         :job_offer,
-        pep_value: pep_value, pep_date: 1.day.ago,
-        bne_value: bne_value, bne_date: 1.day.ago
+        csp_value: csp_value, csp_date: 1.day.ago,
+        mobilia_value: mobilia_value, mobilia_date: 1.day.ago
       )
     end
-    let(:pep_value) { "TEST" }
-    let(:bne_value) { "TEST" }
+    let(:csp_value) { "TEST" }
+    let(:mobilia_value) { "TEST" }
 
     context "when create" do
       context "with values" do
@@ -138,8 +138,8 @@ RSpec.describe JobOffer do
       end
 
       context "without values" do
-        let(:pep_value) { nil }
-        let(:bne_value) { nil }
+        let(:csp_value) { nil }
+        let(:mobilia_value) { nil }
 
         it "is unvalid" do
           expect(job_offer.save).to be(false)
@@ -400,8 +400,6 @@ end
 #  affected_job_applications_count                  :integer          default(0), not null
 #  after_meeting_rejected_job_applications_count    :integer          default(0), not null
 #  archived_at                                      :datetime
-#  bne_date                                         :date
-#  bne_value                                        :string
 #  city                                             :string
 #  contract_drafting_job_applications_count         :integer          default(0), not null
 #  contract_feedback_waiting_job_applications_count :integer          default(0), not null
@@ -410,6 +408,8 @@ end
 #  country_code                                     :string
 #  county                                           :string
 #  county_code                                      :integer
+#  csp_date                                         :date
+#  csp_value                                        :string
 #  description                                      :text
 #  draft_at                                         :datetime
 #  estimate_annual_salary_gross                     :string
@@ -420,12 +420,12 @@ end
 #  is_remote_possible                               :boolean
 #  job_applications_count                           :integer          default(0), not null
 #  location                                         :string
+#  mobilia_date                                     :date
+#  mobilia_value                                    :string
 #  most_advanced_job_applications_state             :integer          default("start")
 #  notifications_count                              :integer          default(0)
 #  option_photo                                     :integer
 #  organization_description                         :text
-#  pep_date                                         :date
-#  pep_value                                        :string
 #  phone_meeting_job_applications_count             :integer          default(0), not null
 #  phone_meeting_rejected_job_applications_count    :integer          default(0), not null
 #  postcode                                         :string

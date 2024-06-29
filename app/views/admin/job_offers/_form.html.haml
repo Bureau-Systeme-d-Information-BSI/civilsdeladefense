@@ -73,14 +73,14 @@
                         = f.input :contract_start_on, as: :string, input_html: {class: 'default-cursor'}
                     .row
                       .col-12.col-md-4
-                        = f.input :pep_value, input_html: { class: @job_offer.errors[:base].any? { _1.include?("PEP") } ? "is-invalid" : "" }
+                        = f.input :csp_value, input_html: { class: @job_offer.errors[:base].any? { _1.include?("CSP") } ? "is-invalid" : "" }
                       .col-12.col-md-4
-                        = f.input :pep_date, as: :string, input_html: {class: 'default-cursor'}
+                        = f.input :csp_date, as: :string, input_html: {class: 'default-cursor'}
                     .row
                       .col-12.col-md-4
-                        = f.input :bne_value, input_html: { class: @job_offer.errors[:base].any? { _1.include?("BNE") } ? "is-invalid" : "" }
+                        = f.input :mobilia_value, input_html: { class: @job_offer.errors[:base].any? { _1.include?("MOBILIA") } ? "is-invalid" : "" }
                       .col-12.col-md-4
-                        = f.input :bne_date, as: :string, input_html: {class: 'default-cursor'}
+                        = f.input :mobilia_date, as: :string, input_html: {class: 'default-cursor'}
                     .row
                       .col-12.col-md-4
                         = f.association :benefits, as: :check_boxes

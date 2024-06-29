@@ -119,35 +119,6 @@ RSpec.describe JobOffer do
     end
   end
 
-  describe "CSP or Mobilia" do
-    let(:job_offer) do
-      build(
-        :job_offer,
-        csp_value: csp_value, csp_date: 1.day.ago,
-        mobilia_value: mobilia_value, mobilia_date: 1.day.ago
-      )
-    end
-    let(:csp_value) { "TEST" }
-    let(:mobilia_value) { "TEST" }
-
-    context "when create" do
-      context "with values" do
-        it "is valid" do
-          expect(job_offer.save).to be(true)
-        end
-      end
-
-      context "without values" do
-        let(:csp_value) { nil }
-        let(:mobilia_value) { nil }
-
-        it "is unvalid" do
-          expect(job_offer.save).to be(false)
-        end
-      end
-    end
-  end
-
   describe "contract_duration" do
     let(:job_offer) do
       build(:job_offer, contract_type: contract_type, contract_duration: contract_duration)
@@ -306,7 +277,15 @@ RSpec.describe JobOffer do
     expect(job_offer3.identifier).to eq "#{job_offer1.employer.code}3"
   end
 
-  describe "validate" do
+  describe "validations" do
+    it { is_expected.to validate_presence_of(:csp_value) }
+
+    it { is_expected.to validate_presence_of(:csp_date) }
+
+    it { is_expected.to validate_presence_of(:mobilia_value) }
+
+    it { is_expected.to validate_presence_of(:mobilia_date) }
+
     describe "title" do
       it "is not valid with ( in title and no F/H at the end" do
         expect(build(:job_offer, title: "(")).not_to be_valid

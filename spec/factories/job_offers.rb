@@ -23,7 +23,7 @@ FactoryBot.define do
     estimate_annual_salary_gross { "36k€" }
     csp_value { "CSP#{rand(1000..9999)}" }
     csp_date { 35.days.ago }
-    mobilia_value { "inconnue" }
+    mobilia_value { "MOB#{rand(1000..9999)}" }
     mobilia_date { 1.day.ago }
 
     factory :published_job_offer do

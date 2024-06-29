@@ -80,15 +80,10 @@ class JobOffer < ApplicationRecord
     validates :recruitment_process, html_length: {maximum: 700}
   end
 
-  validate :csp_or_mobilia
-  validates :csp_date, presence: true, if: -> { csp_value.present? }
-  validates :mobilia_date, presence: true, if: -> { mobilia_value.present? }
-
-  def csp_or_mobilia
-    return if csp_value.present? || mobilia_value.present?
-
-    errors.add(:base, :csp_or_mobilia)
-  end
+  validates :csp_value, presence: true
+  validates :csp_date, presence: true
+  validates :mobilia_value, presence: true
+  validates :mobilia_date, presence: true
 
   ## Scopes
   default_scope { order(created_at: :desc) }

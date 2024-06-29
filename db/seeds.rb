@@ -324,7 +324,9 @@ job_offer = JobOffer.new { |j|
   j.location = "Rennes, FR"
   j.employer = Employer.last
   j.mobilia_date = 1.day.ago
-  j.mobilia_value = "inconnue"
+  j.mobilia_value = "MOB#{rand(1000..9999)}"
+  j.csp_date = 1.day.ago
+  j.csp_value = "CSP#{rand(1000..9999)}"
   j.organization_description = "Description de l'organisation"
   j.description = <<~HEREDOC
     Placé au sein du commandement des opérations cyber et rattaché à la direction interarmées

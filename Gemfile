@@ -67,8 +67,6 @@ gem "faker", require: false
 gem "omniauth_openid_connect", "~> 0.4.0"
 gem "omniauth-rails_csrf_protection"
 
-gem "strong_migrations" # Secured migrations
-
 gem "prawn" # PDF generation
 gem "prawn-table" # Add tables to PDFs
 

@@ -3,7 +3,7 @@
 # Represents a job proposed on the platform
 class JobOffer < ApplicationRecord
   SETTINGS = %i[
-    category contract_type experience_level professional_category sector study_level
+    category level contract_type experience_level professional_category sector study_level
   ].freeze
 
   include AASM
@@ -36,9 +36,13 @@ class JobOffer < ApplicationRecord
   belongs_to :owner, class_name: "Administrator"
   belongs_to :organization
   belongs_to :employer
-  SETTINGS.each do |setting|
-    belongs_to setting
-  end
+  belongs_to :category
+  belongs_to :level, optional: true
+  belongs_to :contract_type
+  belongs_to :experience_level
+  belongs_to :professional_category
+  belongs_to :sector
+  belongs_to :study_level
   belongs_to :contract_duration, optional: true
   belongs_to :bop, optional: true
   belongs_to :archiving_reason, optional: true
@@ -80,14 +84,12 @@ class JobOffer < ApplicationRecord
     validates :recruitment_process, html_length: {maximum: 700}
   end
 
-  validate :pep_or_bne
-  validates :pep_date, presence: true, if: -> { pep_value.present? }
-  validates :bne_date, presence: true, if: -> { bne_value.present? }
-
-  def pep_or_bne
-    return if pep_value.present? || bne_value.present?
-
-    errors.add(:base, :pep_or_bne)
+  validates :csp_value, presence: true
+  validates :csp_date, presence: true
+  validates :mobilia_value, presence: true
+  validates :mobilia_date, presence: true
+  validate :application_deadline_is_in_the_past, if: -> do
+    application_deadline.present? && application_deadline <= Date.current && application_deadline_changed?
   end
 
   ## Scopes
@@ -312,6 +314,10 @@ class JobOffer < ApplicationRecord
   end
 
   def bookmarked_by?(user) = bookmarks.exists?(user:)
+
+  private
+
+  def application_deadline_is_in_the_past = errors.add(:application_deadline, :in_the_past)
 end
 
 # == Schema Information
@@ -322,9 +328,8 @@ end
 #  accepted_job_applications_count                  :integer          default(0), not null
 #  affected_job_applications_count                  :integer          default(0), not null
 #  after_meeting_rejected_job_applications_count    :integer          default(0), not null
+#  application_deadline                             :date
 #  archived_at                                      :datetime
-#  bne_date                                         :date
-#  bne_value                                        :string
 #  city                                             :string
 #  contract_drafting_job_applications_count         :integer          default(0), not null
 #  contract_feedback_waiting_job_applications_count :integer          default(0), not null
@@ -333,6 +338,8 @@ end
 #  country_code                                     :string
 #  county                                           :string
 #  county_code                                      :integer
+#  csp_date                                         :date
+#  csp_value                                        :string
 #  description                                      :text
 #  draft_at                                         :datetime
 #  estimate_annual_salary_gross                     :string
@@ -343,12 +350,12 @@ end
 #  is_remote_possible                               :boolean
 #  job_applications_count                           :integer          default(0), not null
 #  location                                         :string
+#  mobilia_date                                     :date
+#  mobilia_value                                    :string
 #  most_advanced_job_applications_state             :integer          default("start")
 #  notifications_count                              :integer          default(0)
 #  option_photo                                     :integer
 #  organization_description                         :text
-#  pep_date                                         :date
-#  pep_value                                        :string
 #  phone_meeting_job_applications_count             :integer          default(0), not null
 #  phone_meeting_rejected_job_applications_count    :integer          default(0), not null
 #  postcode                                         :string
@@ -372,6 +379,7 @@ end
 #  contract_type_id                                 :uuid
 #  employer_id                                      :uuid
 #  experience_level_id                              :uuid
+#  level_id                                         :uuid
 #  organization_id                                  :uuid
 #  owner_id                                         :uuid
 #  professional_category_id                         :uuid
@@ -389,6 +397,7 @@ end
 #  index_job_offers_on_employer_id               (employer_id)
 #  index_job_offers_on_experience_level_id       (experience_level_id)
 #  index_job_offers_on_identifier                (identifier) UNIQUE
+#  index_job_offers_on_level_id                  (level_id)
 #  index_job_offers_on_organization_id           (organization_id)
 #  index_job_offers_on_owner_id                  (owner_id)
 #  index_job_offers_on_professional_category_id  (professional_category_id)
@@ -399,6 +408,7 @@ end
 #
 # Foreign Keys
 #
+#  fk_rails_0f37831741  (level_id => levels.id)
 #  fk_rails_1d6fc1ac2d  (professional_category_id => professional_categories.id)
 #  fk_rails_1db997256c  (experience_level_id => experience_levels.id)
 #  fk_rails_2e21ee1517  (study_level_id => study_levels.id)

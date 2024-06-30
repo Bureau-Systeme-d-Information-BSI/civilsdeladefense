@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_22_124756) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_30_165322) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -470,11 +470,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_22_124756) do
     t.boolean "spontaneous", default: false
     t.text "organization_description"
     t.datetime "draft_at", precision: nil
-    t.string "pep_value"
-    t.date "pep_date"
-    t.string "bne_value"
-    t.date "bne_date"
+    t.string "csp_value"
+    t.date "csp_date"
+    t.string "mobilia_value"
+    t.date "mobilia_date"
     t.uuid "archiving_reason_id"
+    t.uuid "level_id"
+    t.date "application_deadline"
     t.index ["archiving_reason_id"], name: "index_job_offers_on_archiving_reason_id"
     t.index ["bop_id"], name: "index_job_offers_on_bop_id"
     t.index ["category_id"], name: "index_job_offers_on_category_id"
@@ -483,6 +485,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_22_124756) do
     t.index ["employer_id"], name: "index_job_offers_on_employer_id"
     t.index ["experience_level_id"], name: "index_job_offers_on_experience_level_id"
     t.index ["identifier"], name: "index_job_offers_on_identifier", unique: true
+    t.index ["level_id"], name: "index_job_offers_on_level_id"
     t.index ["organization_id"], name: "index_job_offers_on_organization_id"
     t.index ["owner_id"], name: "index_job_offers_on_owner_id"
     t.index ["professional_category_id"], name: "index_job_offers_on_professional_category_id"
@@ -490,6 +493,36 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_22_124756) do
     t.index ["slug"], name: "index_job_offers_on_slug", unique: true
     t.index ["state"], name: "index_job_offers_on_state"
     t.index ["study_level_id"], name: "index_job_offers_on_study_level_id"
+  end
+
+  create_table "levels", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_levels_on_name", unique: true
+    t.index ["position"], name: "index_levels_on_position"
+  end
+
+  create_table "maintenance_tasks_runs", force: :cascade do |t|
+    t.string "task_name", null: false
+    t.datetime "started_at", precision: nil
+    t.datetime "ended_at", precision: nil
+    t.float "time_running", default: 0.0, null: false
+    t.bigint "tick_count", default: 0, null: false
+    t.bigint "tick_total"
+    t.string "job_id"
+    t.string "cursor"
+    t.string "status", default: "enqueued", null: false
+    t.string "error_class"
+    t.string "error_message"
+    t.text "backtrace"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "arguments"
+    t.integer "lock_version", default: 0, null: false
+    t.text "metadata"
+    t.index ["task_name", "status", "created_at"], name: "index_maintenance_tasks_runs", order: { created_at: :desc }
   end
 
   create_table "messages", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
@@ -811,6 +844,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_22_124756) do
   add_foreign_key "job_offers", "contract_types"
   add_foreign_key "job_offers", "employers"
   add_foreign_key "job_offers", "experience_levels"
+  add_foreign_key "job_offers", "levels"
   add_foreign_key "job_offers", "professional_categories"
   add_foreign_key "job_offers", "sectors"
   add_foreign_key "job_offers", "study_levels"

@@ -7,8 +7,6 @@ RSpec.describe JobOffer do
   let(:employer) { create(:employer) }
   let(:job_offer) { create(:job_offer) }
 
-  it { is_expected.to belong_to(:archiving_reason).optional(true) }
-
   %i[employer grand_employer supervisor_employer brh].each do |role|
     it { is_expected.to have_many(:"job_offer_#{role}_actors").inverse_of(:job_offer) }
   end
@@ -28,6 +26,10 @@ RSpec.describe JobOffer do
   end
 
   describe "associations" do
+    it { is_expected.to belong_to(:archiving_reason).optional(true) }
+
+    it { is_expected.to belong_to(:level).optional(true) }
+
     it { is_expected.to have_many(:bookmarks).dependent(:destroy) }
 
     it { is_expected.to have_many(:job_offer_actors).dependent(:destroy) }
@@ -116,35 +118,6 @@ RSpec.describe JobOffer do
       before { create(:job_offer, spontaneous: true, state: :draft) }
 
       it { is_expected.to be_nil }
-    end
-  end
-
-  describe "pep or bne" do
-    let(:job_offer) do
-      build(
-        :job_offer,
-        pep_value: pep_value, pep_date: 1.day.ago,
-        bne_value: bne_value, bne_date: 1.day.ago
-      )
-    end
-    let(:pep_value) { "TEST" }
-    let(:bne_value) { "TEST" }
-
-    context "when create" do
-      context "with values" do
-        it "is valid" do
-          expect(job_offer.save).to be(true)
-        end
-      end
-
-      context "without values" do
-        let(:pep_value) { nil }
-        let(:bne_value) { nil }
-
-        it "is unvalid" do
-          expect(job_offer.save).to be(false)
-        end
-      end
     end
   end
 
@@ -306,7 +279,15 @@ RSpec.describe JobOffer do
     expect(job_offer3.identifier).to eq "#{job_offer1.employer.code}3"
   end
 
-  describe "validate" do
+  describe "validations" do
+    it { is_expected.to validate_presence_of(:csp_value) }
+
+    it { is_expected.to validate_presence_of(:csp_date) }
+
+    it { is_expected.to validate_presence_of(:mobilia_value) }
+
+    it { is_expected.to validate_presence_of(:mobilia_date) }
+
     describe "title" do
       it "is not valid with ( in title and no F/H at the end" do
         expect(build(:job_offer, title: "(")).not_to be_valid
@@ -346,6 +327,34 @@ RSpec.describe JobOffer do
         it "is valid" do
           expect(job_offer).to be_valid
         end
+      end
+    end
+
+    describe "application_deadline" do
+      let(:job_offer) { build(:job_offer, state: :published, application_deadline:) }
+
+      context "with application_deadline is in the past" do
+        let(:application_deadline) { 1.day.ago }
+
+        it { expect(job_offer).not_to be_valid }
+      end
+
+      context "with application_deadline is today" do
+        let(:application_deadline) { Date.current }
+
+        it { expect(job_offer).not_to be_valid }
+      end
+
+      context "with application_deadline is in the future" do
+        let(:application_deadline) { 1.day.from_now }
+
+        it { expect(job_offer).to be_valid }
+      end
+
+      context "with application_deadline is nil" do
+        let(:application_deadline) { nil }
+
+        it { expect(job_offer).to be_valid }
       end
     end
   end
@@ -399,9 +408,8 @@ end
 #  accepted_job_applications_count                  :integer          default(0), not null
 #  affected_job_applications_count                  :integer          default(0), not null
 #  after_meeting_rejected_job_applications_count    :integer          default(0), not null
+#  application_deadline                             :date
 #  archived_at                                      :datetime
-#  bne_date                                         :date
-#  bne_value                                        :string
 #  city                                             :string
 #  contract_drafting_job_applications_count         :integer          default(0), not null
 #  contract_feedback_waiting_job_applications_count :integer          default(0), not null
@@ -410,6 +418,8 @@ end
 #  country_code                                     :string
 #  county                                           :string
 #  county_code                                      :integer
+#  csp_date                                         :date
+#  csp_value                                        :string
 #  description                                      :text
 #  draft_at                                         :datetime
 #  estimate_annual_salary_gross                     :string
@@ -420,12 +430,12 @@ end
 #  is_remote_possible                               :boolean
 #  job_applications_count                           :integer          default(0), not null
 #  location                                         :string
+#  mobilia_date                                     :date
+#  mobilia_value                                    :string
 #  most_advanced_job_applications_state             :integer          default("start")
 #  notifications_count                              :integer          default(0)
 #  option_photo                                     :integer
 #  organization_description                         :text
-#  pep_date                                         :date
-#  pep_value                                        :string
 #  phone_meeting_job_applications_count             :integer          default(0), not null
 #  phone_meeting_rejected_job_applications_count    :integer          default(0), not null
 #  postcode                                         :string
@@ -449,6 +459,7 @@ end
 #  contract_type_id                                 :uuid
 #  employer_id                                      :uuid
 #  experience_level_id                              :uuid
+#  level_id                                         :uuid
 #  organization_id                                  :uuid
 #  owner_id                                         :uuid
 #  professional_category_id                         :uuid
@@ -466,6 +477,7 @@ end
 #  index_job_offers_on_employer_id               (employer_id)
 #  index_job_offers_on_experience_level_id       (experience_level_id)
 #  index_job_offers_on_identifier                (identifier) UNIQUE
+#  index_job_offers_on_level_id                  (level_id)
 #  index_job_offers_on_organization_id           (organization_id)
 #  index_job_offers_on_owner_id                  (owner_id)
 #  index_job_offers_on_professional_category_id  (professional_category_id)
@@ -476,6 +488,7 @@ end
 #
 # Foreign Keys
 #
+#  fk_rails_0f37831741  (level_id => levels.id)
 #  fk_rails_1d6fc1ac2d  (professional_category_id => professional_categories.id)
 #  fk_rails_1db997256c  (experience_level_id => experience_levels.id)
 #  fk_rails_2e21ee1517  (study_level_id => study_levels.id)

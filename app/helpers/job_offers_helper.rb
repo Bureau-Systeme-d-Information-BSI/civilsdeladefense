@@ -21,6 +21,8 @@ module JobOffersHelper
       job_offer_contract_type_display(job_offer)
     when :contract_start_on
       job_offer_start_display(job_offer)
+    when :application_deadline
+      job_offer_application_deadline_display(job_offer)
     when :location
       job_offer.location
     when :study_level, :category, :experience_level
@@ -41,6 +43,14 @@ module JobOffersHelper
   end
 
   def job_offer_start_display(job_offer) = I18n.l(job_offer.contract_start_on)
+
+  def job_offer_application_deadline_display(job_offer)
+    if job_offer.application_deadline.present?
+      I18n.l(job_offer.application_deadline)
+    else
+      "-"
+    end
+  end
 
   def job_offer_salary_display(job_offer)
     res = []

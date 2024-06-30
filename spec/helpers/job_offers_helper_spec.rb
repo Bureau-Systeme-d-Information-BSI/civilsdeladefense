@@ -26,7 +26,8 @@ RSpec.describe JobOffersHelper do
   describe ".job_offer_value_for_attribute" do
     subject { job_offer_value_for_attribute(job_offer, attribute) }
 
-    let(:job_offer) { create(:job_offer) }
+    let(:job_offer) { create(:job_offer, application_deadline:) }
+    let(:application_deadline) { nil }
 
     context "when the attribute is :contract_type" do
       let(:attribute) { :contract_type }
@@ -38,6 +39,20 @@ RSpec.describe JobOffersHelper do
       let(:attribute) { :contract_start_on }
 
       it { is_expected.to eq(I18n.l(job_offer.contract_start_on)) }
+    end
+
+    context "when the attribute is :application_deadline" do
+      let(:attribute) { :application_deadline }
+
+      context "when the job offer doesn't have an application deadline" do
+        it { is_expected.to eq("-") }
+      end
+
+      context "when the job offer has an application deadline" do
+        let(:application_deadline) { 1.day.from_now }
+
+        it { is_expected.to eq(I18n.l(job_offer.application_deadline)) }
+      end
     end
 
     context "when the attribute is :location" do

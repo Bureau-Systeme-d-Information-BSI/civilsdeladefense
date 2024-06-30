@@ -9,9 +9,7 @@ RSpec.describe DailySummary do
   let(:job_application) { job_applications.first }
   let(:summary) { described_class.new(day: Time.zone.now) }
 
-  before do
-    job_application.accepted!
-  end
+  before { job_application.accepted! }
 
   it "sends valid summary with valid attributes" do
     expect(summary.prepare(Organization.first)).to be true

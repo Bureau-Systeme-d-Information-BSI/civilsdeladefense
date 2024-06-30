@@ -59,6 +59,7 @@ end
 #  accepted_job_applications_count                  :integer          default(0), not null
 #  affected_job_applications_count                  :integer          default(0), not null
 #  after_meeting_rejected_job_applications_count    :integer          default(0), not null
+#  application_deadline                             :date
 #  archived_at                                      :datetime
 #  city                                             :string
 #  contract_drafting_job_applications_count         :integer          default(0), not null

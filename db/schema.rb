@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_30_104724) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_30_165322) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -476,6 +476,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_30_104724) do
     t.date "mobilia_date"
     t.uuid "archiving_reason_id"
     t.uuid "level_id"
+    t.date "application_deadline"
     t.index ["archiving_reason_id"], name: "index_job_offers_on_archiving_reason_id"
     t.index ["bop_id"], name: "index_job_offers_on_bop_id"
     t.index ["category_id"], name: "index_job_offers_on_category_id"

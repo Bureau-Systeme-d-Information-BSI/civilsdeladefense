@@ -89,7 +89,7 @@ class JobOffer < ApplicationRecord
   validates :mobilia_value, presence: true
   validates :mobilia_date, presence: true
   validate :application_deadline_is_in_the_past, if: -> do
-    application_deadline.present? && application_deadline < Date.current && application_deadline_changed?
+    application_deadline.present? && application_deadline <= Date.current && application_deadline_changed?
   end
 
   ## Scopes

@@ -231,7 +231,7 @@ class Admin::JobOffersController < Admin::BaseController
       is_remote_possible study_level_id experience_level_id bop_id
       sector_id estimate_monthly_salary_net estimate_annual_salary_gross
       location city county county_code country_code postcode region spontaneous
-      organization_description mobilia_date mobilia_value csp_date csp_value
+      organization_description mobilia_date mobilia_value csp_date csp_value application_deadline
     ]
     fields << {benefit_ids: []}
     fields << {drawback_ids: []}

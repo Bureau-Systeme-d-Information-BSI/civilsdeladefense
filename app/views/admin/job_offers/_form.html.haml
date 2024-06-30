@@ -84,6 +84,8 @@
                     .row
                       .col-12.col-md-4
                         = f.association :level, required: true
+                      .col-12.col-md-4
+                        = f.input :application_deadline, as: :string, input_html: {class: 'default-cursor'}
                     .row
                       .col-12.col-md-4
                         = f.association :benefits, as: :check_boxes

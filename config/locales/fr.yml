@@ -1221,6 +1221,7 @@ fr:
         required_profile: "Profil recherché"
         csp_date: Date de publication CSP
         mobilia_date: Date de publication MOBILIA
+        application_deadline: "Date limite de candidature"
       job_offer_actor/role:
         employer: "Employeur"
         grand_employer: "Grand Employeur"

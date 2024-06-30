@@ -79,4 +79,10 @@ document.addEventListener('turbo:load', function () {
     altFormat: 'd/m/Y',
     dateFormat: 'Y-m-d'
   })
+  flatpickr('#job_offer_application_deadline', {
+    locale: French,
+    altInput: true,
+    altFormat: 'd/m/Y',
+    dateFormat: 'Y-m-d'
+  })
 })

@@ -342,7 +342,7 @@ RSpec.describe JobOffer do
       context "with application_deadline is today" do
         let(:application_deadline) { Date.current }
 
-        it { expect(job_offer).to be_valid }
+        it { expect(job_offer).not_to be_valid }
       end
 
       context "with application_deadline is in the future" do

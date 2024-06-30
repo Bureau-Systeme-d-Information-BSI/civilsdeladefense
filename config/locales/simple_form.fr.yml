@@ -117,6 +117,7 @@ fr:
         csp_date: "Date de publication"
         mobilia_value: "Référence MOBILIA"
         mobilia_date: "Date de publication"
+        application_deadline: "Date limite de candidature"
       organization:
         administrator_email_suffix: "Suffixes d'email obligatoire pour les comptes admin"
         brand_name: "Entité bloc marque"

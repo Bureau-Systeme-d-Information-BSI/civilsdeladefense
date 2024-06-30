@@ -329,6 +329,34 @@ RSpec.describe JobOffer do
         end
       end
     end
+
+    describe "application_deadline" do
+      let(:job_offer) { build(:job_offer, state: :published, application_deadline:) }
+
+      context "with application_deadline is in the past" do
+        let(:application_deadline) { 1.day.ago }
+
+        it { expect(job_offer).not_to be_valid }
+      end
+
+      context "with application_deadline is today" do
+        let(:application_deadline) { Date.current }
+
+        it { expect(job_offer).to be_valid }
+      end
+
+      context "with application_deadline is in the future" do
+        let(:application_deadline) { 1.day.from_now }
+
+        it { expect(job_offer).to be_valid }
+      end
+
+      context "with application_deadline is nil" do
+        let(:application_deadline) { nil }
+
+        it { expect(job_offer).to be_valid }
+      end
+    end
   end
 
   describe "publishing" do

@@ -1142,6 +1142,8 @@ fr:
             title:
               brackets: "ne doit pas contenir de parenthèse"
               f_h: "doit finir par F/H"
+            application_deadline:
+              in_the_past: "doit être dans le futur"
         user:
           attributes:
             base:

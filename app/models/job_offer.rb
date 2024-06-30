@@ -88,6 +88,9 @@ class JobOffer < ApplicationRecord
   validates :csp_date, presence: true
   validates :mobilia_value, presence: true
   validates :mobilia_date, presence: true
+  validate :application_deadline_is_in_the_past, if: -> do
+    application_deadline.present? && application_deadline < Date.current && application_deadline_changed?
+  end
 
   ## Scopes
   default_scope { order(created_at: :desc) }
@@ -311,6 +314,10 @@ class JobOffer < ApplicationRecord
   end
 
   def bookmarked_by?(user) = bookmarks.exists?(user:)
+
+  private
+
+  def application_deadline_is_in_the_past = errors.add(:application_deadline, :in_the_past)
 end
 
 # == Schema Information

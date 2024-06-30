@@ -3,7 +3,7 @@
 # Represents a job proposed on the platform
 class JobOffer < ApplicationRecord
   SETTINGS = %i[
-    category contract_type experience_level professional_category sector study_level
+    category level contract_type experience_level professional_category sector study_level
   ].freeze
 
   include AASM
@@ -36,9 +36,13 @@ class JobOffer < ApplicationRecord
   belongs_to :owner, class_name: "Administrator"
   belongs_to :organization
   belongs_to :employer
-  SETTINGS.each do |setting|
-    belongs_to setting
-  end
+  belongs_to :category
+  belongs_to :level, optional: true
+  belongs_to :contract_type
+  belongs_to :experience_level
+  belongs_to :professional_category
+  belongs_to :sector
+  belongs_to :study_level
   belongs_to :contract_duration, optional: true
   belongs_to :bop, optional: true
   belongs_to :archiving_reason, optional: true
@@ -367,6 +371,7 @@ end
 #  contract_type_id                                 :uuid
 #  employer_id                                      :uuid
 #  experience_level_id                              :uuid
+#  level_id                                         :uuid
 #  organization_id                                  :uuid
 #  owner_id                                         :uuid
 #  professional_category_id                         :uuid
@@ -384,6 +389,7 @@ end
 #  index_job_offers_on_employer_id               (employer_id)
 #  index_job_offers_on_experience_level_id       (experience_level_id)
 #  index_job_offers_on_identifier                (identifier) UNIQUE
+#  index_job_offers_on_level_id                  (level_id)
 #  index_job_offers_on_organization_id           (organization_id)
 #  index_job_offers_on_owner_id                  (owner_id)
 #  index_job_offers_on_professional_category_id  (professional_category_id)
@@ -394,6 +400,7 @@ end
 #
 # Foreign Keys
 #
+#  fk_rails_0f37831741  (level_id => levels.id)
 #  fk_rails_1d6fc1ac2d  (professional_category_id => professional_categories.id)
 #  fk_rails_1db997256c  (experience_level_id => experience_levels.id)
 #  fk_rails_2e21ee1517  (study_level_id => study_levels.id)

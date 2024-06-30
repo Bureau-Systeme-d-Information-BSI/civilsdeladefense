@@ -61,6 +61,7 @@ fr:
         foreign_language: Langue étrangère
         foreign_language_level: Niveau de langue étrangère
         category: "Domaine professionnel"
+        level: "Categorie / Niveau de l'offre"
         spontaneous: "Candidature spontanée"
         job_applications_count: "Candidatures"
       administrator:

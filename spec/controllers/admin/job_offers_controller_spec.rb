@@ -10,6 +10,7 @@ RSpec.describe Admin::JobOffersController do
       hsh = build(:job_offer).attributes
       hsh[:employer_id] = create(:employer).id
       hsh[:category_id] = create(:category).id
+      hsh[:level_id] = create(:level).id
       hsh
     end
 

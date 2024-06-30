@@ -548,6 +548,7 @@ fr:
           drawbacks: "Contraintes"
           bops: "BOPs"
           categories: "Domaines professionnels"
+          levels: "Catégories / Niveaux de l'offre"
           cmgs: "Liste des CMG"
           company : "Entreprise"
           configuration: "Configuration"
@@ -793,12 +794,28 @@ fr:
           success: "BOP mis à jour !"
         destroy:
           success: "BOP supprimé !"
+      levels:
+        index:
+          card_title:
+            zero: 'Aucun niveau'
+            one: '1 niveau'
+            other: '%{count} niveaux'
+        new:
+          title: "Ajouter une catégorie / niveau de l'offre"
+        edit:
+          title: "Modifier la catégorie / niveau de l'offre '%{name}'"
+        create:
+          success: "Catégorie / niveau de l'offre créé !"
+        update:
+          success: "Catégorie / niveau de l'offre mis à jour !"
+        destroy:
+          success: "Catégorie / niveau de l'offre supprimé !"
       categories:
         index:
           card_title:
-            zero: 'Aucune catégorie'
-            one: '1 catégorie'
-            other: '%{count} catégories'
+            zero: 'Aucun domaine professionnel'
+            one: '1 domaine professionnel'
+            other: '%{count} domaines professionels'
         new:
           title: "Ajouter une nouvelle catégorie"
         edit:

@@ -226,7 +226,7 @@ class Admin::JobOffersController < Admin::BaseController
 
   def permitted_fields
     fields = %i[
-      title description category_id professional_category_id employer_id required_profile
+      title description category_id level_id professional_category_id employer_id required_profile
       recruitment_process contract_type_id contract_duration_id contract_start_on
       is_remote_possible study_level_id experience_level_id bop_id
       sector_id estimate_monthly_salary_net estimate_annual_salary_gross

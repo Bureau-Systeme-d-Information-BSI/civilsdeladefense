@@ -83,6 +83,9 @@
                         = f.input :mobilia_date, as: :string, input_html: {class: 'default-cursor'}
                     .row
                       .col-12.col-md-4
+                        = f.association :level, required: true
+                    .row
+                      .col-12.col-md-4
                         = f.association :benefits, as: :check_boxes
                       .col-12.col-md-4
                         = f.association :drawbacks, as: :check_boxes

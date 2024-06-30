@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_29_083940) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_30_104724) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -475,6 +475,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_29_083940) do
     t.string "mobilia_value"
     t.date "mobilia_date"
     t.uuid "archiving_reason_id"
+    t.uuid "level_id"
     t.index ["archiving_reason_id"], name: "index_job_offers_on_archiving_reason_id"
     t.index ["bop_id"], name: "index_job_offers_on_bop_id"
     t.index ["category_id"], name: "index_job_offers_on_category_id"
@@ -483,6 +484,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_29_083940) do
     t.index ["employer_id"], name: "index_job_offers_on_employer_id"
     t.index ["experience_level_id"], name: "index_job_offers_on_experience_level_id"
     t.index ["identifier"], name: "index_job_offers_on_identifier", unique: true
+    t.index ["level_id"], name: "index_job_offers_on_level_id"
     t.index ["organization_id"], name: "index_job_offers_on_organization_id"
     t.index ["owner_id"], name: "index_job_offers_on_owner_id"
     t.index ["professional_category_id"], name: "index_job_offers_on_professional_category_id"
@@ -490,6 +492,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_29_083940) do
     t.index ["slug"], name: "index_job_offers_on_slug", unique: true
     t.index ["state"], name: "index_job_offers_on_state"
     t.index ["study_level_id"], name: "index_job_offers_on_study_level_id"
+  end
+
+  create_table "levels", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.integer "position"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_levels_on_name", unique: true
+    t.index ["position"], name: "index_levels_on_position"
   end
 
   create_table "maintenance_tasks_runs", force: :cascade do |t|
@@ -832,6 +843,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_29_083940) do
   add_foreign_key "job_offers", "contract_types"
   add_foreign_key "job_offers", "employers"
   add_foreign_key "job_offers", "experience_levels"
+  add_foreign_key "job_offers", "levels"
   add_foreign_key "job_offers", "professional_categories"
   add_foreign_key "job_offers", "sectors"
   add_foreign_key "job_offers", "study_levels"

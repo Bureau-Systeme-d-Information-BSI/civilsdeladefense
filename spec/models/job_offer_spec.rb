@@ -7,8 +7,6 @@ RSpec.describe JobOffer do
   let(:employer) { create(:employer) }
   let(:job_offer) { create(:job_offer) }
 
-  it { is_expected.to belong_to(:archiving_reason).optional(true) }
-
   %i[employer grand_employer supervisor_employer brh].each do |role|
     it { is_expected.to have_many(:"job_offer_#{role}_actors").inverse_of(:job_offer) }
   end
@@ -28,6 +26,10 @@ RSpec.describe JobOffer do
   end
 
   describe "associations" do
+    it { is_expected.to belong_to(:archiving_reason).optional(true) }
+
+    it { is_expected.to belong_to(:level).optional(true) }
+
     it { is_expected.to have_many(:bookmarks).dependent(:destroy) }
 
     it { is_expected.to have_many(:job_offer_actors).dependent(:destroy) }
@@ -428,6 +430,7 @@ end
 #  contract_type_id                                 :uuid
 #  employer_id                                      :uuid
 #  experience_level_id                              :uuid
+#  level_id                                         :uuid
 #  organization_id                                  :uuid
 #  owner_id                                         :uuid
 #  professional_category_id                         :uuid
@@ -445,6 +448,7 @@ end
 #  index_job_offers_on_employer_id               (employer_id)
 #  index_job_offers_on_experience_level_id       (experience_level_id)
 #  index_job_offers_on_identifier                (identifier) UNIQUE
+#  index_job_offers_on_level_id                  (level_id)
 #  index_job_offers_on_organization_id           (organization_id)
 #  index_job_offers_on_owner_id                  (owner_id)
 #  index_job_offers_on_professional_category_id  (professional_category_id)
@@ -455,6 +459,7 @@ end
 #
 # Foreign Keys
 #
+#  fk_rails_0f37831741  (level_id => levels.id)
 #  fk_rails_1d6fc1ac2d  (professional_category_id => professional_categories.id)
 #  fk_rails_1db997256c  (experience_level_id => experience_levels.id)
 #  fk_rails_2e21ee1517  (study_level_id => study_levels.id)

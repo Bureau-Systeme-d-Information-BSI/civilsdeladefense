@@ -28,7 +28,7 @@
     "sass": "^1.72.0",
     "smoothscroll-polyfill": "^0.4.3",
     "snackbarjs": "^1.1.0",
-    "sortablejs": "^1.7.0",
+    "sortablejs": "^1.15.2",
     "svg-sprite-loader": "^6.0.11",
     "trix": "^2.0.5"
   },

@@ -12,7 +12,7 @@ namespace :migrate_data do
     level = Level.find_by!(name: "1")
     scope.find_each do |job_offer|
       Rails.logger.info("Migration : #{job_offer.id} job offer without level")
-      job_offer.update!(level: level)
+      job_offer.update_columns(level_id: level.id) # rubocop:disable Rails/SkipsModelValidations
     end
 
     Rails.logger.info("Migration end")

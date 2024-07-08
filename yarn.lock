@@ -1918,9 +1918,9 @@ traverse@^0.6.6:
   integrity sha1-y99WD9e5r2MlAv7UD5GMFX6pcTc=
 
 trix@^2.0.5:
-  version "2.0.10"
-  resolved "https://registry.npmjs.org/trix/-/trix-2.0.10.tgz"
-  integrity sha512-a24w8rNVL+g9nDDdiDZwQVQ9AEWiXAmk9r0ZbwimczJi/xlaM+m0d6upAi0vysDNu0HsiYDFS1/VrR7HbX0Aig==
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/trix/-/trix-2.1.2.tgz#8185fa7e12d6cbee93db7f149907b3f7a79b3704"
+  integrity sha512-PsQC4qn1Ub0djn7FZ9KLzEC2whE1J27JiRycn5WddlVT8JgwKq5PtlXo6rRfjc7Qj2aSzIdjkApai9zAW7/IRA==
 
 undefsafe@^2.0.5:
   version "2.0.5"

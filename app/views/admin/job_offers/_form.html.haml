@@ -109,9 +109,9 @@
                           - salary_range = SalaryRange.where(professional_category_id: @job_offer.professional_category_id, experience_level_id: @job_offer.experience_level_id, sector_id: @job_offer.sector_id).first
                           .col-12
                             - estimate_monthly_salary_net = salary_range.try(:estimate_monthly_salary_net)
-                            = f.input :estimate_monthly_salary_net, disabled: true, input_html: {class: 'obviously-disabled'}
+                            = f.input :estimate_monthly_salary_net, readonly: true, input_html: {class: 'obviously-disabled'}
                           .col-12
                             - estimate_annual_salary_gross = salary_range.try(:estimate_annual_salary_gross)
-                            = f.input :estimate_annual_salary_gross, disabled: true, input_html: {class: 'obviously-disabled'}
+                            = f.input :estimate_annual_salary_gross, readonly: true, input_html: {class: 'obviously-disabled'}
         = render partial: "form_actors", locals: {f: f}
         = render partial: "form_submit", locals: {f: f}

@@ -2,13 +2,23 @@ class Department < ApplicationRecord
   has_many :department_users, dependent: :nullify
   has_many :users, through: :department_users
 
-  def label
-    "#{code} #{name} - #{name_region}"
-  end
+  default_scope { order(:code) }
 
-  def self.regions
-    Department.all.group_by(&:name_region)
-  end
+  def label = none? ? name : code_name_region
+
+  def short_label = none? ? name : code_name
+
+  def self.regions = Department.all.group_by(&:name_region)
+
+  def self.none = Department.find_or_create_by!(code: "00", name: "Aucun")
+
+  private
+
+  def none? = code == "00"
+
+  def code_name_region = "#{code} #{name} - #{name_region}"
+
+  def code_name = "#{code} #{name}"
 end
 
 # == Schema Information

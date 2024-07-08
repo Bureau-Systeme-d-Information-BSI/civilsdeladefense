@@ -5,6 +5,114 @@ I18n.config.available_locales += %w[en]
 require "faker"
 Faker::Config.locale = :fr
 
+[
+  ["01", "Ain", "84", "Auvergne-Rhône-Alpes"],
+  ["02", "Aisne", "32", "Hauts-de-France"],
+  ["03", "Allier", "84", "Auvergne-Rhône-Alpes"],
+  ["04", "Alpes-de-Haute-Provence", "93", "Provence-Alpes-Côte d'Azur"],
+  ["05", "Hautes-Alpes", "93", "Provence-Alpes-Côte d'Azur"],
+  ["06", "Alpes-Maritimes", "93", "Provence-Alpes-Côte d'Azur"],
+  ["07", "Ardèche", "84", "Auvergne-Rhône-Alpes"],
+  ["08", "Ardennes", "44", "Grand Est"],
+  ["09", "Ariège", "76", "Occitanie"],
+  ["10", "Aube", "44", "Grand Est"],
+  ["11", "Aude", "76", "Occitanie"],
+  ["12", "Aveyron", "76", "Occitanie"],
+  ["13", "Bouches-du-Rhône", "93", "Provence-Alpes-Côte d'Azur"],
+  ["14", "Calvados", "28", "Normandie"],
+  ["15", "Cantal", "84", "Auvergne-Rhône-Alpes"],
+  ["16", "Charente", "75", "Nouvelle-Aquitaine"],
+  ["17", "Charente-Maritime", "75", "Nouvelle-Aquitaine"],
+  ["18", "Cher", "24", "Centre-Val de Loire"],
+  ["19", "Corrèze", "75", "Nouvelle-Aquitaine"],
+  ["21", "Côte-d'Or", "27", "Bourgogne-Franche-Comté"],
+  ["22", "Côtes-d'Armor", "53", "Bretagne"],
+  ["23", "Creuse", "75", "Nouvelle-Aquitaine"],
+  ["24", "Dordogne", "75", "Nouvelle-Aquitaine"],
+  ["25", "Doubs", "27", "Bourgogne-Franche-Comté"],
+  ["26", "Drôme", "84", "Auvergne-Rhône-Alpes"],
+  ["27", "Eure", "28", "Normandie"],
+  ["28", "Eure-et-Loir", "24", "Centre-Val de Loire"],
+  ["29", "Finistère", "53", "Bretagne"],
+  ["2A", "Corse-du-Sud", "94", "Corse"],
+  ["2B", "Haute-Corse", "94", "Corse"],
+  ["30", "Gard", "76", "Occitanie"],
+  ["31", "Haute-Garonne", "76", "Occitanie"],
+  ["32", "Gers", "76", "Occitanie"],
+  ["33", "Gironde", "75", "Nouvelle-Aquitaine"],
+  ["34", "Hérault", "76", "Occitanie"],
+  ["35", "Ille-et-Vilaine", "53", "Bretagne"],
+  ["36", "Indre", "24", "Centre-Val de Loire"],
+  ["37", "Indre-et-Loire", "24", "Centre-Val de Loire"],
+  ["38", "Isère", "84", "Auvergne-Rhône-Alpes"],
+  ["39", "Jura", "27", "Bourgogne-Franche-Comté"],
+  ["40", "Landes", "75", "Nouvelle-Aquitaine"],
+  ["41", "Loir-et-Cher", "24", "Centre-Val de Loire"],
+  ["42", "Loire", "84", "Auvergne-Rhône-Alpes"],
+  ["43", "Haute-Loire", "84", "Auvergne-Rhône-Alpes"],
+  ["44", "Loire-Atlantique", "52", "Pays de la Loire"],
+  ["45", "Loiret", "24", "Centre-Val de Loire"],
+  ["46", "Lot", "76", "Occitanie"],
+  ["47", "Lot-et-Garonne", "75", "Nouvelle-Aquitaine"],
+  ["48", "Lozère", "76", "Occitanie"],
+  ["49", "Maine-et-Loire", "52", "Pays de la Loire"],
+  ["50", "Manche", "28", "Normandie"],
+  ["51", "Marne", "44", "Grand Est"],
+  ["52", "Haute-Marne", "44", "Grand Est"],
+  ["53", "Mayenne", "52", "Pays de la Loire"],
+  ["54", "Meurthe-et-Moselle", "44", "Grand Est"],
+  ["55", "Meuse", "44", "Grand Est"],
+  ["56", "Morbihan", "53", "Bretagne"],
+  ["57", "Moselle", "44", "Grand Est"],
+  ["58", "Nièvre", "27", "Bourgogne-Franche-Comté"],
+  ["59", "Nord", "32", "Hauts-de-France"],
+  ["60", "Oise", "32", "Hauts-de-France"],
+  ["61", "Orne", "28", "Normandie"],
+  ["62", "Pas-de-Calais", "32", "Hauts-de-France"],
+  ["63", "Puy-de-Dôme", "84", "Auvergne-Rhône-Alpes"],
+  ["64", "Pyrénées-Atlantiques", "75", "Nouvelle-Aquitaine"],
+  ["65", "Hautes-Pyrénées", "76", "Occitanie"],
+  ["66", "Pyrénées-Orientales", "76", "Occitanie"],
+  ["67", "Bas-Rhin", "44", "Grand Est"],
+  ["68", "Haut-Rhin", "44", "Grand Est"],
+  ["69", "Rhône", "84", "Auvergne-Rhône-Alpes"],
+  ["70", "Haute-Saône", "27", "Bourgogne-Franche-Comté"],
+  ["71", "Saône-et-Loire", "27", "Bourgogne-Franche-Comté"],
+  ["72", "Sarthe", "52", "Pays de la Loire"],
+  ["73", "Savoie", "84", "Auvergne-Rhône-Alpes"],
+  ["74", "Haute-Savoie", "84", "Auvergne-Rhône-Alpes"],
+  ["75", "Paris", "11", "Île-de-France"],
+  ["76", "Seine-Maritime", "28", "Normandie"],
+  ["77", "Seine-et-Marne", "11", "Île-de-France"],
+  ["78", "Yvelines", "11", "Île-de-France"],
+  ["79", "Deux-Sèvres", "75", "Nouvelle-Aquitaine"],
+  ["80", "Somme", "32", "Hauts-de-France"],
+  ["81", "Tarn", "76", "Occitanie"],
+  ["82", "Tarn-et-Garonne", "76", "Occitanie"],
+  ["83", "Var", "93", "Provence-Alpes-Côte d'Azur"],
+  ["84", "Vaucluse", "93", "Provence-Alpes-Côte d'Azur"],
+  ["85", "Vendée", "52", "Pays de la Loire"],
+  ["86", "Vienne", "75", "Nouvelle-Aquitaine"],
+  ["87", "Haute-Vienne", "75", "Nouvelle-Aquitaine"],
+  ["88", "Vosges", "44", "Grand Est"],
+  ["89", "Yonne", "27", "Bourgogne-Franche-Comté"],
+  ["90", "Territoire de Belfort", "27", "Bourgogne-Franche-Comté"],
+  ["91", "Essonne", "11", "Île-de-France"],
+  ["92", "Hauts-de-Seine", "11", "Île-de-France"],
+  ["93", "Seine-Saint-Denis", "11", "Île-de-France"],
+  ["94", "Val-de-Marne", "11", "Île-de-France"],
+  ["95", "Val-d'Oise", "11", "Île-de-France"],
+  ["971", "Guadeloupe", "01", "Guadeloupe"],
+  ["972", "Martinique", "02", "Martinique"],
+  ["973", "Guyane", "03", "Guyane"],
+  ["974", "La Réunion", "04", "La Réunion"],
+  ["976", "Mayotte", "06", "Mayotte"],
+  ["00", "Aucun", nil, nil],
+].each do |data|
+  Department.create!(code: data[0], name: data[1], code_region: data[2], name_region: data[3])
+end
+
+
 desc = "Plateforme de recrutement de personnel civils contractuels pour le Ministère des Armées"
 desc_short = "Plateforme de recrutement de personnel civils contractuels"
 organization = Organization.create!(
@@ -18,7 +126,9 @@ organization = Organization.create!(
   job_offer_term_warning: "C'est impossible"
 )
 [
-  "Le poste fait appel à des compétences techniques spécialisées ou nouvelles (un encart en surbrillance en passant la souris sur la première les compétences sollicitées sont trop récentes ou trop spécialisées pour recourir dans l'immédiat à un fonctionnaire)", "Car l'emploi ne requiert pas d'être honoré par un fonctionnaire formé par une école de la fonction publique (poste d'attaché uniquement).", "Vous n'avez reçu aucune candidature de fonctionnaire suite à la publication de l'annonce sur la Bourse nationale de l'emploi (BNE) et à la Place de l'emploi public (РЕР)"
+  "Le poste fait appel à des compétences techniques spécialisées ou nouvelles (un encart en surbrillance en passant la souris sur la première les compétences sollicitées sont trop récentes ou trop spécialisées pour recourir dans l'immédiat à un fonctionnaire)",
+  "Car l'emploi ne requiert pas d'être honoré par un fonctionnaire formé par une école de la fonction publique (poste d'attaché uniquement).",
+  "Vous n'avez reçu aucune candidature de fonctionnaire suite à la publication de l'annonce sur CSP et sur MOBILIA."
 ].each do |str|
   JobOfferTerm.create(name: str)
 end
@@ -209,6 +319,13 @@ Benefit.create!(name: "Voiture")
 Benefit.create!(name: "Crèche")
 Benefit.create!(name: "Appartement de fonction")
 
+Level.create!(name: "A")
+Level.create!(name: "B")
+Level.create!(name: "C")
+level_1 = Level.create!(name: "1")
+level_2 = Level.create!(name: "2")
+Level.create!(name: "3")
+
 Drawback.create!(name: "Astreintes")
 Drawback.create!(name: "Travail de nuit")
 Drawback.create!(name: "Permis de conduire")
@@ -318,11 +435,14 @@ job_offer = JobOffer.new { |j|
   j.owner = super_admin
   j.title = "Ingénieur expert en systemes d’information - Chef de section F/H"
   j.category = sub_sub_informatique
+  j.level = level_1
   j.professional_category = ProfessionalCategory.first
   j.location = "Rennes, FR"
   j.employer = Employer.last
-  j.bne_date = 1.day.ago
-  j.bne_value = "inconnue"
+  j.mobilia_date = 1.day.ago
+  j.mobilia_value = "MOB#{rand(1000..9999)}"
+  j.csp_date = 1.day.ago
+  j.csp_value = "CSP#{rand(1000..9999)}"
   j.organization_description = "Description de l'organisation"
   j.description = <<~HEREDOC
     Placé au sein du commandement des opérations cyber et rattaché à la direction interarmées
@@ -383,6 +503,7 @@ job_offer2.contract_type = ContractType.where(name: "CDI").first
 job_offer2.contract_duration = nil
 job_offer2.contract_start_on = 2.months.since
 job_offer2.category = sub_sub_infrastructure
+job_offer2.level = level_2
 job_offer2.identifier = nil
 job_offer2.sequential_id = nil
 job_offer2.job_offer_actors.build(administrator: employer_admin_1, role: :employer)
@@ -394,6 +515,7 @@ job_offer3.owner = employer_admin_2
 job_offer3.contract_start_on = 3.months.since
 job_offer3.title = "Responsable Achat d’Infrastructures F/H"
 job_offer3.category = sub_sub_infrastructure
+job_offer3.level = level_1
 job_offer3.location = "Brest, FR"
 job_offer3.identifier = nil
 job_offer3.sequential_id = nil
@@ -406,6 +528,7 @@ job_offer4.owner = employer_admin_2
 job_offer4.contract_start_on = 4.months.since
 job_offer4.title = "Responsable Achat d’Infrastructures F/H"
 job_offer4.category = sub_sub_infrastructure
+job_offer4.level = level_2
 job_offer4.location = "Brest, FR"
 job_offer4.identifier = nil
 job_offer4.sequential_id = nil
@@ -418,6 +541,7 @@ job_offer5.owner = employer_admin_2
 job_offer5.contract_start_on = 5.months.since
 job_offer5.title = "Responsable Achat d’Infrastructures F/H"
 job_offer5.category = sub_sub_infrastructure
+job_offer5.level = level_1
 job_offer5.location = "Brest, FR"
 job_offer5.identifier = nil
 job_offer5.sequential_id = nil
@@ -445,7 +569,8 @@ user = User.new(
   certify_majority: true,
   photo: photo,
   current_position: "Développeur",
-  phone: "0606060606"
+  phone: "0606060606",
+  departments: [Department.none]
 )
 user.skip_confirmation_notification!
 user.save!
@@ -500,7 +625,8 @@ user_candidate_of_all = User.new(
   terms_of_service: true,
   certify_majority: true,
   current_position: "Développeur",
-  phone: "0606060606"
+  phone: "0606060606",
+  departments: Department.all.sample(2)
 )
 user_candidate_of_all.skip_confirmation_notification!
 user_candidate_of_all.save!
@@ -520,7 +646,8 @@ JobOffer.where.not(contract_duration_id: nil).where.not(id: [job_offer4.id, job_
       terms_of_service: true,
       certify_majority: true,
       current_position: "Développeur",
-      phone: "0606060606"
+      phone: "0606060606",
+      departments: Department.all.sample(2)
     )
     user.skip_confirmation_notification!
     user.save!
@@ -602,112 +729,6 @@ JobOffer.where.not(contract_duration_id: nil).where.not(id: [job_offer4.id, job_
       )
     end
   end
-end
-
-[
-  ["01", "Ain", "84", "Auvergne-Rhône-Alpes"],
-  ["02", "Aisne", "32", "Hauts-de-France"],
-  ["03", "Allier", "84", "Auvergne-Rhône-Alpes"],
-  ["04", "Alpes-de-Haute-Provence", "93", "Provence-Alpes-Côte d'Azur"],
-  ["05", "Hautes-Alpes", "93", "Provence-Alpes-Côte d'Azur"],
-  ["06", "Alpes-Maritimes", "93", "Provence-Alpes-Côte d'Azur"],
-  ["07", "Ardèche", "84", "Auvergne-Rhône-Alpes"],
-  ["08", "Ardennes", "44", "Grand Est"],
-  ["09", "Ariège", "76", "Occitanie"],
-  ["10", "Aube", "44", "Grand Est"],
-  ["11", "Aude", "76", "Occitanie"],
-  ["12", "Aveyron", "76", "Occitanie"],
-  ["13", "Bouches-du-Rhône", "93", "Provence-Alpes-Côte d'Azur"],
-  ["14", "Calvados", "28", "Normandie"],
-  ["15", "Cantal", "84", "Auvergne-Rhône-Alpes"],
-  ["16", "Charente", "75", "Nouvelle-Aquitaine"],
-  ["17", "Charente-Maritime", "75", "Nouvelle-Aquitaine"],
-  ["18", "Cher", "24", "Centre-Val de Loire"],
-  ["19", "Corrèze", "75", "Nouvelle-Aquitaine"],
-  ["21", "Côte-d'Or", "27", "Bourgogne-Franche-Comté"],
-  ["22", "Côtes-d'Armor", "53", "Bretagne"],
-  ["23", "Creuse", "75", "Nouvelle-Aquitaine"],
-  ["24", "Dordogne", "75", "Nouvelle-Aquitaine"],
-  ["25", "Doubs", "27", "Bourgogne-Franche-Comté"],
-  ["26", "Drôme", "84", "Auvergne-Rhône-Alpes"],
-  ["27", "Eure", "28", "Normandie"],
-  ["28", "Eure-et-Loir", "24", "Centre-Val de Loire"],
-  ["29", "Finistère", "53", "Bretagne"],
-  ["2A", "Corse-du-Sud", "94", "Corse"],
-  ["2B", "Haute-Corse", "94", "Corse"],
-  ["30", "Gard", "76", "Occitanie"],
-  ["31", "Haute-Garonne", "76", "Occitanie"],
-  ["32", "Gers", "76", "Occitanie"],
-  ["33", "Gironde", "75", "Nouvelle-Aquitaine"],
-  ["34", "Hérault", "76", "Occitanie"],
-  ["35", "Ille-et-Vilaine", "53", "Bretagne"],
-  ["36", "Indre", "24", "Centre-Val de Loire"],
-  ["37", "Indre-et-Loire", "24", "Centre-Val de Loire"],
-  ["38", "Isère", "84", "Auvergne-Rhône-Alpes"],
-  ["39", "Jura", "27", "Bourgogne-Franche-Comté"],
-  ["40", "Landes", "75", "Nouvelle-Aquitaine"],
-  ["41", "Loir-et-Cher", "24", "Centre-Val de Loire"],
-  ["42", "Loire", "84", "Auvergne-Rhône-Alpes"],
-  ["43", "Haute-Loire", "84", "Auvergne-Rhône-Alpes"],
-  ["44", "Loire-Atlantique", "52", "Pays de la Loire"],
-  ["45", "Loiret", "24", "Centre-Val de Loire"],
-  ["46", "Lot", "76", "Occitanie"],
-  ["47", "Lot-et-Garonne", "75", "Nouvelle-Aquitaine"],
-  ["48", "Lozère", "76", "Occitanie"],
-  ["49", "Maine-et-Loire", "52", "Pays de la Loire"],
-  ["50", "Manche", "28", "Normandie"],
-  ["51", "Marne", "44", "Grand Est"],
-  ["52", "Haute-Marne", "44", "Grand Est"],
-  ["53", "Mayenne", "52", "Pays de la Loire"],
-  ["54", "Meurthe-et-Moselle", "44", "Grand Est"],
-  ["55", "Meuse", "44", "Grand Est"],
-  ["56", "Morbihan", "53", "Bretagne"],
-  ["57", "Moselle", "44", "Grand Est"],
-  ["58", "Nièvre", "27", "Bourgogne-Franche-Comté"],
-  ["59", "Nord", "32", "Hauts-de-France"],
-  ["60", "Oise", "32", "Hauts-de-France"],
-  ["61", "Orne", "28", "Normandie"],
-  ["62", "Pas-de-Calais", "32", "Hauts-de-France"],
-  ["63", "Puy-de-Dôme", "84", "Auvergne-Rhône-Alpes"],
-  ["64", "Pyrénées-Atlantiques", "75", "Nouvelle-Aquitaine"],
-  ["65", "Hautes-Pyrénées", "76", "Occitanie"],
-  ["66", "Pyrénées-Orientales", "76", "Occitanie"],
-  ["67", "Bas-Rhin", "44", "Grand Est"],
-  ["68", "Haut-Rhin", "44", "Grand Est"],
-  ["69", "Rhône", "84", "Auvergne-Rhône-Alpes"],
-  ["70", "Haute-Saône", "27", "Bourgogne-Franche-Comté"],
-  ["71", "Saône-et-Loire", "27", "Bourgogne-Franche-Comté"],
-  ["72", "Sarthe", "52", "Pays de la Loire"],
-  ["73", "Savoie", "84", "Auvergne-Rhône-Alpes"],
-  ["74", "Haute-Savoie", "84", "Auvergne-Rhône-Alpes"],
-  ["75", "Paris", "11", "Île-de-France"],
-  ["76", "Seine-Maritime", "28", "Normandie"],
-  ["77", "Seine-et-Marne", "11", "Île-de-France"],
-  ["78", "Yvelines", "11", "Île-de-France"],
-  ["79", "Deux-Sèvres", "75", "Nouvelle-Aquitaine"],
-  ["80", "Somme", "32", "Hauts-de-France"],
-  ["81", "Tarn", "76", "Occitanie"],
-  ["82", "Tarn-et-Garonne", "76", "Occitanie"],
-  ["83", "Var", "93", "Provence-Alpes-Côte d'Azur"],
-  ["84", "Vaucluse", "93", "Provence-Alpes-Côte d'Azur"],
-  ["85", "Vendée", "52", "Pays de la Loire"],
-  ["86", "Vienne", "75", "Nouvelle-Aquitaine"],
-  ["87", "Haute-Vienne", "75", "Nouvelle-Aquitaine"],
-  ["88", "Vosges", "44", "Grand Est"],
-  ["89", "Yonne", "27", "Bourgogne-Franche-Comté"],
-  ["90", "Territoire de Belfort", "27", "Bourgogne-Franche-Comté"],
-  ["91", "Essonne", "11", "Île-de-France"],
-  ["92", "Hauts-de-Seine", "11", "Île-de-France"],
-  ["93", "Seine-Saint-Denis", "11", "Île-de-France"],
-  ["94", "Val-de-Marne", "11", "Île-de-France"],
-  ["95", "Val-d'Oise", "11", "Île-de-France"],
-  ["971", "Guadeloupe", "01", "Guadeloupe"],
-  ["972", "Martinique", "02", "Martinique"],
-  ["973", "Guyane", "03", "Guyane"],
-  ["974", "La Réunion", "04", "La Réunion"],
-  ["976", "Mayotte", "06", "Mayotte"]
-].each do |data|
-  Department.create!(code: data[0], name: data[1], code_region: data[2], name_region: data[3])
 end
 
 EmailTemplate.create!(

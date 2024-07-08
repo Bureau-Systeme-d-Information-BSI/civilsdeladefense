@@ -46,6 +46,7 @@ class JobApplication < ApplicationRecord
   validates :user_id, uniqueness: {scope: :job_offer_id}, on: :create, allow_nil: true # rubocop:disable Rails/UniqueValidationWithoutIndex
   validate :cant_accept_before_delay
   validate :complete_files_before_draft_contract
+  validate :cant_be_accepted_twice, if: -> { accepted? }, unless: -> { has_accepted_other_job_application? }
 
   before_validation :set_employer
   before_save :compute_notifications_counter
@@ -279,8 +280,8 @@ class JobApplication < ApplicationRecord
   def cant_accept_before_delay
     return if state.to_s != "accepted"
     return if state_was.to_s == "accepted"
-    return if job_offer.pep_date.blank?
-    return if job_offer.pep_date + 30.days < Time.zone.now
+    return if job_offer.csp_date.blank?
+    return if job_offer.csp_date + 30.days < Time.zone.now
 
     errors.add(:state, :cant_accept_before_delay)
   end
@@ -295,6 +296,10 @@ class JobApplication < ApplicationRecord
 
     errors.add(:state, :complete_files_before_draft_contract)
   end
+
+  def cant_be_accepted_twice = errors.add(:state, :cant_be_accepted_twice)
+
+  def has_accepted_other_job_application? = user.job_applications.where(state: "accepted").where.not(id: id).empty?
 
   class << self
     def rejected_states

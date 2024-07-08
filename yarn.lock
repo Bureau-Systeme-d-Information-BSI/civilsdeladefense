@@ -1714,10 +1714,10 @@ snapdragon@^0.8.1:
     source-map-resolve "^0.5.0"
     use "^3.1.0"
 
-sortablejs@^1.7.0:
-  version "1.15.0"
-  resolved "https://registry.npmjs.org/sortablejs/-/sortablejs-1.15.0.tgz"
-  integrity sha512-bv9qgVMjUMf89wAvM6AxVvS/4MX3sPeN0+agqShejLU5z5GX4C75ow1O2e5k4L6XItUyAK3gH6AxSbXrOM5e8w==
+sortablejs@^1.15.2:
+  version "1.15.2"
+  resolved "https://registry.yarnpkg.com/sortablejs/-/sortablejs-1.15.2.tgz#4e9f7bda4718bd1838add9f1866ec77169149809"
+  integrity sha512-FJF5jgdfvoKn1MAKSdGs33bIqLi3LmsgVTliuX6iITj834F+JRQZN90Z93yql8h0K2t0RwDPBmxwlbZfDcxNZA==
 
 "source-map-js@>=0.6.2 <2.0.0", source-map-js@^1.2.0:
   version "1.2.0"
@@ -1918,9 +1918,9 @@ traverse@^0.6.6:
   integrity sha1-y99WD9e5r2MlAv7UD5GMFX6pcTc=
 
 trix@^2.0.5:
-  version "2.0.10"
-  resolved "https://registry.npmjs.org/trix/-/trix-2.0.10.tgz"
-  integrity sha512-a24w8rNVL+g9nDDdiDZwQVQ9AEWiXAmk9r0ZbwimczJi/xlaM+m0d6upAi0vysDNu0HsiYDFS1/VrR7HbX0Aig==
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/trix/-/trix-2.1.1.tgz#688f1213601316cf8b92c5e625d2f562c118c780"
+  integrity sha512-IljOMGOlRUPg1i5Pk/+x/Ia65ZY7Gw5JxxKCh/4caxG5ZaKuFJCKdn1+TF0efUYfdg+bqWenB/mAYCHjZu0zpQ==
 
 undefsafe@^2.0.5:
   version "2.0.5"

@@ -45,6 +45,7 @@ Rails.application.routes.draw do
   namespace :admin do
     authenticate :administrator do
       mount Sidekiq::Web => "/sidekiq"
+      mount MaintenanceTasks::Engine => "/maintenance_tasks"
     end
 
     resource :account do

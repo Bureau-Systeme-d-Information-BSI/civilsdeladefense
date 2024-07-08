@@ -138,6 +138,7 @@ GEM
     crass (1.0.6)
     cssbundling-rails (1.4.0)
       railties (>= 6.0.0)
+    csv (3.3.0)
     date (3.3.3)
     debug (1.8.0)
       irb (>= 1.5.0)
@@ -236,6 +237,8 @@ GEM
     jbuilder (2.11.5)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
+    job-iteration (1.5.1)
+      activejob (>= 5.2)
     jsbundling-rails (1.3.0)
       railties (>= 6.0.0)
     json (2.7.1)
@@ -262,6 +265,14 @@ GEM
       net-imap
       net-pop
       net-smtp
+    maintenance_tasks (2.7.1)
+      actionpack (>= 6.0)
+      activejob (>= 6.0)
+      activerecord (>= 6.0)
+      csv
+      job-iteration (>= 1.3.6)
+      railties (>= 6.0)
+      zeitwerk (>= 2.6.2)
     marcel (1.0.2)
     matrix (0.4.2)
     method_source (1.0.0)
@@ -284,8 +295,8 @@ GEM
       timeout
     net-smtp (0.4.0)
       net-protocol
-    nio4r (2.5.9)
-    nokogiri (1.16.3-x86_64-linux)
+    nio4r (2.7.3)
+    nokogiri (1.16.6-x86_64-linux)
       racc (~> 1.4)
     notiffany (0.1.3)
       nenv (~> 0.1)
@@ -335,11 +346,11 @@ GEM
       coderay (~> 1.1)
       method_source (~> 1.0)
     public_suffix (4.0.7)
-    puma (6.3.1)
+    puma (6.4.2)
       nio4r (~> 2.0)
     racc (1.7.3)
-    rack (3.0.9.1)
-    rack-cors (2.0.1)
+    rack (3.0.10)
+    rack-cors (2.0.2)
       rack (>= 2.0.0)
     rack-oauth2 (1.19.0)
       activesupport
@@ -515,8 +526,6 @@ GEM
       rubocop-performance (~> 1.20.1)
     stimulus-rails (1.3.3)
       railties (>= 6.0.0)
-    strong_migrations (1.8.0)
-      activerecord (>= 5.2)
     swd (1.3.0)
       activesupport (>= 3)
       attr_required (>= 0.0.5)
@@ -607,6 +616,7 @@ DEPENDENCIES
   listen (>= 3.0.5, < 3.8)
   lockbox (~> 1.2.0)
   mail
+  maintenance_tasks (~> 2.7)
   mini_magick
   omniauth-rails_csrf_protection
   omniauth_openid_connect (~> 0.4.0)
@@ -640,7 +650,6 @@ DEPENDENCIES
   sprockets-rails
   standard
   stimulus-rails (~> 1.3)
-  strong_migrations
   trix-rails
   turbo-rails
   tzinfo-data

@@ -6,6 +6,24 @@ RSpec.describe JobApplication do
   let(:job_offer) { create(:job_offer) }
   let(:job_application) { create(:job_application, job_offer: job_offer) }
 
+  describe "validations" do
+    describe "#cant_be_accepted_twice" do
+      subject(:acceptance) { job_application.accepted! }
+
+      let(:job_application) { create(:job_application) }
+
+      context "when the user has not been accepted for another job offer" do
+        it { is_expected.to be(true) }
+      end
+
+      context "when the user has been accepted for another job offer" do
+        before { create(:job_application, user: job_application.user, job_offer: create(:job_offer), state: :accepted) }
+
+        it { expect { acceptance }.to raise_error(ActiveRecord::RecordInvalid) }
+      end
+    end
+  end
+
   it "correcties tell rejected state" do
     expect(job_application.rejected_state?).to be(false)
 
@@ -86,7 +104,7 @@ RSpec.describe JobApplication do
 
   describe "cant_accept_before_delay" do
     context "when job_offer published 20 days before" do
-      before { job_offer.update(pep_date: 20.days.before) }
+      before { job_offer.update(csp_date: 20.days.before) }
 
       it "cant be accepted" do
         expect { job_application.accepted! }.to raise_error(ActiveRecord::RecordInvalid)
@@ -94,7 +112,7 @@ RSpec.describe JobApplication do
     end
 
     context "when job_offer published 31 days before" do
-      before { job_offer.update(pep_date: 31.days.before) }
+      before { job_offer.update(csp_date: 31.days.before) }
 
       it "can be accepted" do
         expect(job_application.accepted!).to be(true)

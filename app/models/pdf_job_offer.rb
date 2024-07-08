@@ -40,16 +40,18 @@ class PdfJobOffer < SimpleDelegator
 
   def attributes_tables
     [
-      [attribute_table(:contract_type), attribute_table(:contract_start_on), attribute_table(:study_level)],
-      [attribute_table(:category), attribute_table(:experience_level), attribute_table(:salary)],
-      [attribute_table(:benefits), attribute_table(:drawbacks), attribute_table(:is_remote_possible)]
+      [attribute_table(:contract_type), attribute_table(:study_level)],
+      [attribute_table(:contract_start_on), attribute_table(:application_deadline)],
+      [attribute_table(:category), attribute_table(:experience_level)],
+      [attribute_table(:salary), attribute_table(:benefits)],
+      [attribute_table(:drawbacks), attribute_table(:is_remote_possible)]
     ]
   end
 
   def attributes_style = {padding: 0, border_width: 0, inline_format: true}
 
   def attribute_table(attribute)
-    make_table(attribute_data(attribute), cell_style: attribute_style, width: bounds.width / 3) do
+    make_table(attribute_data(attribute), cell_style: attribute_style, width: bounds.width / 2) do
       row(0).font_style = :bold
       row(0).size = 10
       row(0).background_color = "F0F0F0"

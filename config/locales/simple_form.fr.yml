@@ -31,6 +31,7 @@ fr:
           catch_all: "Avec signe + dans le champ reply_to"
     labels:
       defaults:
+        language: "Langues étrangères"
         age_range: "Tranche d'âge"
         availability_range: "Disponibilité"
         body: "Corps du courriel"
@@ -61,6 +62,7 @@ fr:
         foreign_language: Langue étrangère
         foreign_language_level: Niveau de langue étrangère
         category: "Domaine professionnel"
+        level: "Categorie / Niveau de l'offre"
         spontaneous: "Candidature spontanée"
         job_applications_count: "Candidatures"
       administrator:
@@ -112,10 +114,11 @@ fr:
         option_photo: "Photo"
         option_website_url: "Site internet (URL)"
         identifier: "Référence de l'offre"
-        pep_value: "Référence PEP"
-        pep_date: "Date de publication"
-        bne_value: "Référence BNE"
-        bne_date: "Date de publication"
+        csp_value: "Référence CSP"
+        csp_date: "Date de publication"
+        mobilia_value: "Référence MOBILIA"
+        mobilia_date: "Date de publication"
+        application_deadline: "Date limite de candidature"
       organization:
         administrator_email_suffix: "Suffixes d'email obligatoire pour les comptes admin"
         brand_name: "Entité bloc marque"

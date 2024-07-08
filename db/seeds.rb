@@ -126,7 +126,9 @@ organization = Organization.create!(
   job_offer_term_warning: "C'est impossible"
 )
 [
-  "Le poste fait appel à des compétences techniques spécialisées ou nouvelles (un encart en surbrillance en passant la souris sur la première les compétences sollicitées sont trop récentes ou trop spécialisées pour recourir dans l'immédiat à un fonctionnaire)", "Car l'emploi ne requiert pas d'être honoré par un fonctionnaire formé par une école de la fonction publique (poste d'attaché uniquement).", "Vous n'avez reçu aucune candidature de fonctionnaire suite à la publication de l'annonce sur la Bourse nationale de l'emploi (BNE) et à la Place de l'emploi public (РЕР)"
+  "Le poste fait appel à des compétences techniques spécialisées ou nouvelles (un encart en surbrillance en passant la souris sur la première les compétences sollicitées sont trop récentes ou trop spécialisées pour recourir dans l'immédiat à un fonctionnaire)",
+  "Car l'emploi ne requiert pas d'être honoré par un fonctionnaire formé par une école de la fonction publique (poste d'attaché uniquement).",
+  "Vous n'avez reçu aucune candidature de fonctionnaire suite à la publication de l'annonce sur CSP et sur MOBILIA."
 ].each do |str|
   JobOfferTerm.create(name: str)
 end
@@ -317,6 +319,13 @@ Benefit.create!(name: "Voiture")
 Benefit.create!(name: "Crèche")
 Benefit.create!(name: "Appartement de fonction")
 
+Level.create!(name: "A")
+Level.create!(name: "B")
+Level.create!(name: "C")
+level_1 = Level.create!(name: "1")
+level_2 = Level.create!(name: "2")
+Level.create!(name: "3")
+
 Drawback.create!(name: "Astreintes")
 Drawback.create!(name: "Travail de nuit")
 Drawback.create!(name: "Permis de conduire")
@@ -426,11 +435,14 @@ job_offer = JobOffer.new { |j|
   j.owner = super_admin
   j.title = "Ingénieur expert en systemes d’information - Chef de section F/H"
   j.category = sub_sub_informatique
+  j.level = level_1
   j.professional_category = ProfessionalCategory.first
   j.location = "Rennes, FR"
   j.employer = Employer.last
-  j.bne_date = 1.day.ago
-  j.bne_value = "inconnue"
+  j.mobilia_date = 1.day.ago
+  j.mobilia_value = "MOB#{rand(1000..9999)}"
+  j.csp_date = 1.day.ago
+  j.csp_value = "CSP#{rand(1000..9999)}"
   j.organization_description = "Description de l'organisation"
   j.description = <<~HEREDOC
     Placé au sein du commandement des opérations cyber et rattaché à la direction interarmées
@@ -491,6 +503,7 @@ job_offer2.contract_type = ContractType.where(name: "CDI").first
 job_offer2.contract_duration = nil
 job_offer2.contract_start_on = 2.months.since
 job_offer2.category = sub_sub_infrastructure
+job_offer2.level = level_2
 job_offer2.identifier = nil
 job_offer2.sequential_id = nil
 job_offer2.job_offer_actors.build(administrator: employer_admin_1, role: :employer)
@@ -502,6 +515,7 @@ job_offer3.owner = employer_admin_2
 job_offer3.contract_start_on = 3.months.since
 job_offer3.title = "Responsable Achat d’Infrastructures F/H"
 job_offer3.category = sub_sub_infrastructure
+job_offer3.level = level_1
 job_offer3.location = "Brest, FR"
 job_offer3.identifier = nil
 job_offer3.sequential_id = nil
@@ -514,6 +528,7 @@ job_offer4.owner = employer_admin_2
 job_offer4.contract_start_on = 4.months.since
 job_offer4.title = "Responsable Achat d’Infrastructures F/H"
 job_offer4.category = sub_sub_infrastructure
+job_offer4.level = level_2
 job_offer4.location = "Brest, FR"
 job_offer4.identifier = nil
 job_offer4.sequential_id = nil
@@ -526,6 +541,7 @@ job_offer5.owner = employer_admin_2
 job_offer5.contract_start_on = 5.months.since
 job_offer5.title = "Responsable Achat d’Infrastructures F/H"
 job_offer5.category = sub_sub_infrastructure
+job_offer5.level = level_1
 job_offer5.location = "Brest, FR"
 job_offer5.identifier = nil
 job_offer5.sequential_id = nil

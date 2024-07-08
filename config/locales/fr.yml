@@ -548,6 +548,7 @@ fr:
           drawbacks: "Contraintes"
           bops: "BOPs"
           categories: "Domaines professionnels"
+          levels: "Catégories / Niveaux de l'offre"
           cmgs: "Liste des CMG"
           company : "Entreprise"
           configuration: "Configuration"
@@ -793,12 +794,28 @@ fr:
           success: "BOP mis à jour !"
         destroy:
           success: "BOP supprimé !"
+      levels:
+        index:
+          card_title:
+            zero: 'Aucun niveau'
+            one: '1 niveau'
+            other: '%{count} niveaux'
+        new:
+          title: "Ajouter une catégorie / niveau de l'offre"
+        edit:
+          title: "Modifier la catégorie / niveau de l'offre '%{name}'"
+        create:
+          success: "Catégorie / niveau de l'offre créé !"
+        update:
+          success: "Catégorie / niveau de l'offre mis à jour !"
+        destroy:
+          success: "Catégorie / niveau de l'offre supprimé !"
       categories:
         index:
           card_title:
-            zero: 'Aucune catégorie'
-            one: '1 catégorie'
-            other: '%{count} catégories'
+            zero: 'Aucun domaine professionnel'
+            one: '1 domaine professionnel'
+            other: '%{count} domaines professionels'
         new:
           title: "Ajouter une nouvelle catégorie"
         edit:
@@ -1105,7 +1122,7 @@ fr:
         job_application:
           attributes:
             state:
-              cant_accept_before_delay: "Un délai de 30 jours après la publication de l'offre sur la PEP doit être respecté avant d'accepter une candidature"
+              cant_accept_before_delay: "Un délai de 30 jours après la publication de l'offre sur CSP doit être respecté avant d'accepter une candidature"
               complete_files_before_draft_contract: "Tous les documents doivent être téléversés et validés avant la rédaction du contrat"
               cant_be_accepted_twice: "Cette action n'est pas possible. Ce candidat est déjà à l'état \"Retenu\" dans une offre d'emploi."
             cover_letter_content_type:
@@ -1122,10 +1139,12 @@ fr:
         job_offer:
           attributes:
             base:
-              pep_or_bne: "PEP et/ou BNE doit être rempli(e)"
+              csp_or_mobilia: "CSP et/ou MOBILIA doit être rempli"
             title:
               brackets: "ne doit pas contenir de parenthèse"
               f_h: "doit finir par F/H"
+            application_deadline:
+              in_the_past: "doit être dans le futur"
         user:
           attributes:
             base:
@@ -1201,6 +1220,9 @@ fr:
         is_remote_possible: "Télétravail"
         organization_description: "Descriptif de l'organisation"
         required_profile: "Profil recherché"
+        csp_date: Date de publication CSP
+        mobilia_date: Date de publication MOBILIA
+        application_deadline: "Date limite de candidature"
       job_offer_actor/role:
         employer: "Employeur"
         grand_employer: "Grand Employeur"

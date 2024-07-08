@@ -16,4 +16,4 @@
             .form-check.form-check-inline.w-100
               - checked = ary.include?(department.id.to_s)
               = check_box_tag "q[#{search_key}][]", department.id, checked, class: 'form-check-input', id: input_id
-              %label.form-check-label.text-truncate.d-block{for: input_id, title: department.name}= "#{department.code} #{department.name}"
+              %label.form-check-label.text-truncate.d-block{for: input_id, title: department.name}= "#{department.short_label}"

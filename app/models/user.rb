@@ -78,6 +78,7 @@ class User < ApplicationRecord
   before_save :remove_mark_for_deletion
   before_update :destroy_photo
   before_destroy :mark_job_applications_as_read
+  after_save :add_none_department, if: -> { departments.empty? }
 
   def self.ransackable_scopes(auth_object = nil)
     %i[concerned by_category]
@@ -142,6 +143,8 @@ class User < ApplicationRecord
   def mark_job_applications_as_read
     job_applications.map(&:mark_as_read!)
   end
+
+  def add_none_department = departments << Department.none
 end
 
 # == Schema Information

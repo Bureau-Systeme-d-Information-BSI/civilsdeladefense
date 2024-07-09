@@ -12,7 +12,8 @@
             = fa_icon('location-dot', class: 'rf-mr-1w')
             = job_offer.location
         .d-flex.align-items-center
-          .rf-tag.rf-mr-5w= job_offer.category.name
+          - if job_offer.category.present?
+            .rf-tag.rf-mr-5w= job_offer.category&.name
           %button.rf-btn.rf-fi-arrow-right-line.ml-auto{title: t('.show')}
             %sr-only=t('.show')
     .d-flex.align-items-center.justify-space-between.rf-mt-1w

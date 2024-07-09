@@ -28,6 +28,8 @@ RSpec.describe JobOffer do
   describe "associations" do
     it { is_expected.to belong_to(:archiving_reason).optional(true) }
 
+    it { is_expected.to belong_to(:category).optional(true) }
+
     it { is_expected.to belong_to(:level).optional(true) }
 
     it { is_expected.to have_many(:bookmarks).dependent(:destroy) }

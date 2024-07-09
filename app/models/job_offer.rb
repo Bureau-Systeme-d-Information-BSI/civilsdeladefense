@@ -36,7 +36,7 @@ class JobOffer < ApplicationRecord
   belongs_to :owner, class_name: "Administrator"
   belongs_to :organization
   belongs_to :employer
-  belongs_to :category
+  belongs_to :category, optional: true
   belongs_to :level, optional: true
   belongs_to :contract_type
   belongs_to :experience_level

@@ -3,10 +3,11 @@
 - job_offer = defined?(job_application) ? job_application.job_offer : nil
 .row.bg-white.border-bottom.head
   .col-12{class: job_application_modal_section_classes('pb-0')}
+    .h5.secondary.mb-0= user.full_name
+  .col-6{class: job_application_modal_section_classes('pb-0')}
     .d-flex.head.mb-3
       = image_user_tag user.photo, width: 80, class: 'mr-4'
       .d-flex.flex-column
-        .h5.secondary.mb-0= user.full_name
         - if website_url.present?
           .d-flex.flex-row.align-items-center
             - if website_url =~ /linkedin/
@@ -50,3 +51,15 @@
               - if job_application.files_unread_count > 0
                 .notification= job_application.files_unread_count
               = t('.nav_files', count: job_application.files_count)
+  .col-3{class: job_application_modal_section_classes('pb-0')}
+    .d-flex.flex-column.align-items-center
+      - user.job_applications.with_category.each do |job_application|
+        %div
+          %strong= job_application.category.name
+          - if job_application.profile.experience_level.present?
+            = "-"
+            = job_application.profile.experience_level.name
+  .col-3{class: job_application_modal_section_classes('pb-0')}
+    .d-flex.flex-column.align-items-center
+      - user.departments.each do |department|
+        %div= department.short_label

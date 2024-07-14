@@ -571,7 +571,8 @@ user = User.new(
   current_position: "Développeur",
   phone: "0606060606",
   website_url: "https://www.linkedin.com/in/coin_pan",
-  departments: [Department.none]
+  departments: [Department.none],
+  receive_job_offer_mails: true
 )
 user.skip_confirmation_notification!
 user.save!

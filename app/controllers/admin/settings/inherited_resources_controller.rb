@@ -17,21 +17,14 @@ class Admin::Settings::InheritedResourcesController < Admin::Settings::BaseContr
   end
 
   def destroy
-    key = "admin.settings.#{resource_class.to_s.tableize}.destroy.success"
     if resource.respond_to?(:children)
       recursive_destroy!(resource)
-      redirect_to({action: :index}, flash: {notice: t(key)})
     else
-      destroy!(notice: t(key))
+      resource.destroy!
     end
-  rescue ActiveRecord::InvalidForeignKey
-    key = "admin.settings.#{resource_class.to_s.tableize}.destroy.failure.foreign_key_violation"
-    redirect_to({action: :index}, flash: {notice: t(key)})
-  end
-
-  def recursive_destroy!(resource)
-    resource.children.each { |child| recursive_destroy!(child) } if resource.children.any?
-    resource.destroy!
+    redirect_to({action: :index}, flash: {notice: t("admin.settings.#{resource_class.to_s.tableize}.destroy.success")})
+  rescue => e
+    redirect_to({action: :index}, flash: {notice: t("admin.settings.destroy.failure.#{e.class.name.parameterize.underscore}")})
   end
 
   def move_higher
@@ -69,4 +62,11 @@ class Admin::Settings::InheritedResourcesController < Admin::Settings::BaseContr
   end
 
   alias_method :resource_params, :permitted_params
+
+  private
+
+  def recursive_destroy!(resource)
+    resource.children.each { |child| recursive_destroy!(child) } if resource.children.any?
+    resource.destroy!
+  end
 end

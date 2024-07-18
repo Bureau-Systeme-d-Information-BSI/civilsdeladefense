@@ -11,7 +11,7 @@ RSpec.describe Level do
   end
 
   describe "associations" do
-    it { is_expected.to have_many(:job_offers).dependent(:nullify) }
+    it { is_expected.to have_many(:job_offers).dependent(:restrict_with_error) }
   end
 end
 

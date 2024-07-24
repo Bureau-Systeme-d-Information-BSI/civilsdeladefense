@@ -596,6 +596,7 @@ fr:
             name: "Nom"
             employer: "Employeur"
             role: "Rôle"
+            job_offer_actor_roles: "Rôles sur les offres"
             last_sign_in_at: "Dernière connexion"
             created_at: "Créé le"
           account_active:

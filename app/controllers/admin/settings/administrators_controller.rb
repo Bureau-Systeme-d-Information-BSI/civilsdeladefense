@@ -137,7 +137,7 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
     @permitted_params = permitted_params
     @q = Administrator.includes(:inviter).ransack(permitted_params[:q])
     @q.sorts = "created_at desc" if @q.sorts.empty?
-    @administrators_active = @q.result.active.includes(:employer)
+    @administrators_active = @q.result.active.includes(:employer, :job_offer_actors)
     @administrators_inactive = @q.result.inactive.includes(:employer)
   end
 

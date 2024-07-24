@@ -14,6 +14,8 @@
         = Administrator.human_attribute_name("role.#{administrator.role}")
       - else
         = t('.no_role')
+  %td
+    = actor_roles(administrator)
   %td.text-dark
     .d-block.text-nowrap
       = l administrator.created_at

@@ -1,13 +1,11 @@
-currently_employed:
-  name: En Poste
-immediately:
-  name: Medium
-one_month:
-  name: Disponible sous 1 mois
-two_months:
-  name: Disponible sous 2 mois
-three_months_plus:
-  name: Disponible sous 3 mois et plus
+# frozen_string_literal: true
+
+FactoryBot.define do
+  factory :availability_range do
+    name { Faker::Name.unique.name }
+    position { 1 }
+  end
+end
 
 # == Schema Information
 #

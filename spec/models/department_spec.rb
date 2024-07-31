@@ -49,3 +49,16 @@ RSpec.describe Department do
     end
   end
 end
+
+# == Schema Information
+#
+# Table name: departments
+#
+#  id          :uuid             not null, primary key
+#  code        :string
+#  code_region :string
+#  name        :string
+#  name_region :string
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#

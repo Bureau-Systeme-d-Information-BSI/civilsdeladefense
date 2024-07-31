@@ -21,7 +21,7 @@ class Admin::Stats::JobOffersController < Admin::Stats::BaseController
     @permitted_params = permitted_params
 
     @profiles = Profile.joins(job_application: :job_offer).where(job_applications: {job_offers: @job_offers})
-    @profile_availables = @profiles.where.not(availability_range: AvailabilityRange.en_poste)
+    @profile_availables = @profiles.where.not(availability_range: AvailabilityRange.employed)
 
     @per_day = root_rel.group_by_day(:created_at, range: date_range).count
     build_average_affection

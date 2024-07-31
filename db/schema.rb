@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_30_165322) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_31_142102) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -136,7 +136,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_30_165322) do
     t.integer "position"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_availability_ranges_on_name"
+    t.index ["name"], name: "index_availability_ranges_on_name", unique: true
     t.index ["position"], name: "index_availability_ranges_on_position"
   end
 

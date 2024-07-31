@@ -576,6 +576,7 @@ fr:
           job_offer_terms: "Conditions d'accès à la création d'offres"
           user_menu_links: "Onglet espace candidat"
           archiving_reasons: "Motifs d'archivage"
+          availability_ranges: "Disponibilités"
       base:
         index:
           title: "Paramètres"
@@ -904,6 +905,24 @@ fr:
           success: "Motif ajouté !"
         destroy:
           success: "Motif supprimé !"
+      availability_ranges:
+        index:
+          title: "Disponibilités d'un·e candidat·e"
+          add: "Ajouter"
+          card_title:
+            zero: 'Aucune disponibilité pour le moment'
+            one: '1 disponibilité'
+            other: '%{count} disponibilités'
+        new:
+          title: "Ajouter une disponibilité"
+        create:
+          success: "Disponibilité ajoutée !"
+        edit:
+          title: "Modifier la disponibilité '%{name}'"
+        update:
+          success: "Disponibilité modifiée !"
+        destroy:
+          success: "Disponibilité supprimée !"
       salary_ranges:
         index:
           title: "Estimations salariales"

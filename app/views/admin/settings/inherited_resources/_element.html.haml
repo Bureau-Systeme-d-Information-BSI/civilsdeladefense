@@ -65,6 +65,7 @@
           = link_to fa_icon('arrow-up', class: 'ml-1'), [:move_higher, :admin, :settings, element], method: :post, title: t('buttons.move_higher'), data: {confirm: t('buttons.confirm')}
         - if (resource_class != Page) || (level == 1 && element.right_sibling) || (level > 1 && !element.leaf?)
           = link_to fa_icon('arrow-down', class: 'ml-1'), [:move_lower, :admin, :settings, element], method: :post, title: t('buttons.move_lower'), data: {confirm: t('buttons.confirm')}
-      = link_to fa_icon('pencil', class: 'ml-1'), [:edit, :admin, :settings, element], title: t('buttons.edit')
-      - unless resource_class == Page && level == 0
+      - unless resource_class == AvailabilityRange && element.employed?
+        = link_to fa_icon('pencil', class: 'ml-1'), [:edit, :admin, :settings, element], title: t('buttons.edit')
+      - unless (resource_class == Page && level == 0) || (resource_class == AvailabilityRange && element.employed?)
         = link_to fa_icon('trash-can', class: 'ml-1'), [:admin, :settings, element], method: :delete, title: t('buttons.delete'), data: {confirm: t('buttons.confirm')}

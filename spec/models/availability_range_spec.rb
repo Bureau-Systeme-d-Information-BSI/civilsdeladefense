@@ -18,6 +18,6 @@ end
 #
 # Indexes
 #
-#  index_availability_ranges_on_name      (name)
+#  index_availability_ranges_on_name      (name) UNIQUE
 #  index_availability_ranges_on_position  (position)
 #

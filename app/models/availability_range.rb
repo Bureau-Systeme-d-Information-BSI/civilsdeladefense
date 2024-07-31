@@ -5,13 +5,8 @@ class AvailabilityRange < ApplicationRecord
   acts_as_list
   default_scope -> { order(position: :asc) }
 
-  #####################################
-  # Validations
+  validates :name, presence: true, uniqueness: true
 
-  validates :name, presence: true
-
-  #####################################
-  # Relations
   has_many :profiles, dependent: :nullify
 
   def self.en_poste
@@ -31,6 +26,6 @@ end
 #
 # Indexes
 #
-#  index_availability_ranges_on_name      (name)
+#  index_availability_ranges_on_name      (name) UNIQUE
 #  index_availability_ranges_on_position  (position)
 #

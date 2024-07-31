@@ -12,7 +12,7 @@ class AvailabilityRange < ApplicationRecord
 
   before_destroy -> { throw :abort }, if: -> { employed? }, prepend: true
 
-  def self.en_poste = find_by(name: "En poste")
+  def self.employed = find_by(name: "En poste")
 
   def employed? = self == self.class.employed
 

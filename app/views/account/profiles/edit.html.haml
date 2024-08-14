@@ -1,0 +1,15 @@
+.rf-container
+  .rf-grid-row
+    .rf-col-12
+      %h2.rf-h3= t('.title')
+      .rf-mb-5w.rf-pb-5w
+        = simple_form_for(@profile, url: [:account, :profiles], method: :patch) do |f|
+          = f.error_notification
+
+          .form-inputs
+            = f.association :availability_range, input_html: { class: "rf-select" }
+
+            = f.association :study_level, required: true, input_html: { class: "rf-select" }
+
+          .rf-input-group.rf-grid-row.justify-content-end.rf-mt-3w
+            = f.button :submit, t('buttons.save'), class: 'rf-btn'

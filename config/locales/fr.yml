@@ -234,6 +234,11 @@ fr:
         title: "Envoyer un courriel"
         add_attachment: "Ajouter une pièce jointe"
       index:
+    profiles:
+      edit:
+        title: "Mon profil candidat"
+      update:
+        success: "Profil mis à jour !"
     users:
       link_france_connect:
         title: Certifier mon compte FranceConnect

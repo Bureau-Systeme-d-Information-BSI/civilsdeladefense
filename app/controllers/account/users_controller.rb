@@ -18,7 +18,6 @@ class Account::UsersController < Account::BaseController
 
   def update
     respond_to do |format|
-      @user.department_users = []
       if @user.update(user_params)
         format.html { redirect_to %i[edit account user], notice: t(".success") }
         format.js {}
@@ -135,8 +134,7 @@ class Account::UsersController < Account::BaseController
       :delete_photo,
       :address,
       :postal_code,
-      :city,
-      department_users_attributes: %i[department_id]
+      :city
     )
 
     if filtered_params[:photo].present? || filtered_params[:delete_photo] == "0"

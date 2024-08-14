@@ -11,6 +11,8 @@ RSpec.describe User do
   end
 
   describe "associations" do
+    it { is_expected.to have_one(:profile).dependent(:destroy) }
+
     it { is_expected.to have_many(:bookmarks).dependent(:destroy) }
 
     it { is_expected.to have_many(:job_applications).inverse_of(:user) }
@@ -228,6 +230,47 @@ RSpec.describe User do
 
         it { expect(user.reload.departments).not_to eq([Department.none]) }
       end
+    end
+  end
+
+  describe "#create_profile_from!" do
+    subject(:create_profile_from) { user.create_profile_from!(existing_profile) }
+
+    let!(:user) { create(:user) }
+    let!(:existing_profile) { create(:job_application).profile }
+
+    context "when the user has no profile" do
+      it { expect { create_profile_from }.to change(Profile, :count).by(1) }
+
+      describe "created profile" do
+        before { create_profile_from }
+
+        let(:profile) { user.profile }
+
+        it { expect(profile).to be_persisted }
+
+        it { expect(profile.profileable).to eq(user) }
+
+        it do
+          expect(profile).to have_attributes(
+            existing_profile.attributes.except(
+              "id",
+              "profileable_id",
+              "profileable_type",
+              "created_at",
+              "updated_at"
+            )
+          )
+        end
+      end
+    end
+
+    context "when the user has a profile" do
+      let!(:profile) { create(:profile, profileable: user) }
+
+      before { user.update!(profile:) }
+
+      it { expect { create_profile_from }.not_to change(Profile, :count) }
     end
   end
 end

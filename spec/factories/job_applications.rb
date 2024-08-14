@@ -5,10 +5,7 @@ FactoryBot.define do
     job_offer
     organization { Organization.first }
     user
-
-    before(:create) do |job_application|
-      job_application.profile = create(:profile, profileable: job_application)
-    end
+    profile { association :profile, profileable: @instance }
   end
 
   trait :with_job_application_file do

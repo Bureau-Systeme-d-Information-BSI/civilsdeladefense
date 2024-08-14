@@ -52,6 +52,8 @@ class JobApplication < ApplicationRecord
   before_save :compute_notifications_counter
   before_save :cleanup_rejection_reason, unless: proc { |ja| ja.rejected_state? }
 
+  after_create :create_user_profile, if: -> { user.present? }, unless: :user_has_profile?
+
   FINISHED_STATES = %w[rejected phone_meeting_rejected after_meeting_rejected affected].freeze
   REJECTED_STATES = %w[rejected phone_meeting_rejected after_meeting_rejected].freeze
   PROCESSING_STATES = %w[initial phone_meeting to_be_met].freeze
@@ -300,6 +302,10 @@ class JobApplication < ApplicationRecord
   def cant_be_accepted_twice = errors.add(:state, :cant_be_accepted_twice)
 
   def has_accepted_other_job_application? = user.job_applications.where(state: "accepted").where.not(id: id).empty?
+
+  def create_user_profile = user.create_profile_from!(profile)
+
+  def user_has_profile? = user.profile.present?
 
   class << self
     def rejected_states

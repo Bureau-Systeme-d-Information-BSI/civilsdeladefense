@@ -30,6 +30,8 @@ class User < ApplicationRecord
   belongs_to :organization
   has_many :omniauth_informations, dependent: :destroy
 
+  has_one :profile, as: :profileable, dependent: :destroy
+
   has_many :bookmarks, dependent: :destroy
   has_many :job_applications, -> { order(created_at: :desc) }, dependent: :nullify, inverse_of: :user
   has_many :job_application_files, through: :job_applications
@@ -124,6 +126,14 @@ class User < ApplicationRecord
 
   def full_address
     [address, postal_code, city].compact.join(" ")
+  end
+
+  def create_profile_from!(existing_profile)
+    return if profile.present?
+
+    self.profile = existing_profile.dup
+    profile.profileable = self
+    save!
   end
 
   private

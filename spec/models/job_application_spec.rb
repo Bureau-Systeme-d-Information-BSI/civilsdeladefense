@@ -182,6 +182,24 @@ RSpec.describe JobApplication do
       end
     end
   end
+
+  describe "after_create callbacks" do
+    describe "#create_user_profile" do
+      subject(:create) { job_application.save! }
+
+      let!(:job_application) { build(:job_application, employer: build(:employer)) }
+
+      context "when the user is missing" do
+        before { job_application.user = nil }
+
+        it { expect { create }.to change(Profile, :count).by(1) } # the one of the job application only
+      end
+
+      context "when the user is present and has no profile" do
+        it { expect { create }.to change(Profile, :count).by(2) } # the one of the job application only and the one of the user
+      end
+    end
+  end
 end
 
 # == Schema Information

@@ -11,5 +11,8 @@
 
             = f.association :study_level, required: true, input_html: { class: "rf-select" }
 
+            = f.simple_fields_for @profile.profileable do |user_form|
+              = render partial: '/department_users/form', locals: { user_form: user_form, kind: :profile }
+
           .rf-input-group.rf-grid-row.justify-content-end.rf-mt-3w
             = f.button :submit, t('buttons.save'), class: 'rf-btn'

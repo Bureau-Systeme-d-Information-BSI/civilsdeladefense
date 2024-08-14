@@ -199,6 +199,12 @@ Rails.application.routes.draw do
 
   authenticate :user do
     namespace "account", path: "espace-candidat" do
+      resource :profiles, path: "mon-profil", only: [] do
+        collection do
+          get :edit
+          patch :update
+        end
+      end
       resources :job_applications, path: "mes-candidatures" do
         member do
           get :job_offer, path: "offre"

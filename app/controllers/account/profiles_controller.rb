@@ -6,6 +6,7 @@ class Account::ProfilesController < Account::BaseController
 
   def update
     @profile.profileable.departments = departments
+    @profile.profile_foreign_languages = []
     @profile.assign_attributes(profile_params.merge(profileable: current_user))
     if @profile.save
       redirect_to edit_account_profiles_path, notice: t(".success")
@@ -24,7 +25,8 @@ class Account::ProfilesController < Account::BaseController
       .permit(
         :availability_range_id,
         :study_level_id,
-        profileable_attributes: {department_users_attributes: [:department_id]}
+        profileable_attributes: {department_users_attributes: [:department_id]},
+        profile_foreign_languages_attributes: %i[foreign_language_id foreign_language_level_id]
       )
       .except(:profileable_attributes)
   end

@@ -251,6 +251,8 @@ class JobOffer < ApplicationRecord
   end
 
   def update_category_counter
+    return if category.blank?
+
     category.self_and_ancestors.reverse.each(&:compute_published_job_offers_count!)
   end
 

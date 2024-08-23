@@ -28,8 +28,10 @@ class User < ApplicationRecord
     }
 
   belongs_to :organization
-  has_many :omniauth_informations, dependent: :destroy
 
+  has_one :profile, as: :profileable, required: true, dependent: :destroy
+
+  has_many :omniauth_informations, dependent: :destroy
   has_many :bookmarks, dependent: :destroy
   has_many :job_applications, -> { order(created_at: :desc) }, dependent: :nullify, inverse_of: :user
   has_many :job_application_files, through: :job_applications
@@ -40,6 +42,7 @@ class User < ApplicationRecord
   has_many :department_users, dependent: :destroy
   has_many :departments, through: :department_users
 
+  accepts_nested_attributes_for :profile
   accepts_nested_attributes_for :department_users, reject_if: :all_blank
 
   phony_normalize :phone, default_country_code: "FR"
@@ -75,6 +78,7 @@ class User < ApplicationRecord
 
   attr_accessor :is_deleted, :delete_photo
 
+  before_validation :build_profile, if: -> { profile.nil? }
   before_save :remove_mark_for_deletion
   before_update :destroy_photo
   before_destroy :mark_job_applications_as_read

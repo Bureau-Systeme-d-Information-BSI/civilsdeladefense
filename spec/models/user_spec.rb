@@ -11,6 +11,8 @@ RSpec.describe User do
   end
 
   describe "associations" do
+    it { is_expected.to have_one(:profile).dependent(:destroy) }
+
     it { is_expected.to have_many(:bookmarks).dependent(:destroy) }
 
     it { is_expected.to have_many(:job_applications).inverse_of(:user) }

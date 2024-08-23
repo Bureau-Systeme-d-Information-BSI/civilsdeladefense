@@ -3,6 +3,9 @@
 # User information without PII
 class Profile < ApplicationRecord
   belongs_to :profileable, polymorphic: true
+
+  # Deprecated on 2024-08-23: will be removed after v1.5.0
+  # TODO: SEB remove this line after v1.5.0
   belongs_to :job_application,
     -> { where(profiles: {profileable_type: "JobApplication"}) },
     foreign_key: "profileable_id",

@@ -99,6 +99,7 @@ RSpec.describe "JobOffers" do
       create(:foreign_language, name: "French")
       create(:foreign_language_level, name: "A1")
       create(:foreign_language_level, name: "A2")
+      create(:job_application_file_type)
     end
 
     context "when the user is not signed in" do
@@ -138,6 +139,12 @@ RSpec.describe "JobOffers" do
                 "0" => {department_id: Department.first.id},
                 "1" => {department_id: Department.last.id}
               }
+            },
+            job_application_files_attributes: {
+              "0" => {
+                job_application_file_type_id: JobApplicationFileType.first.id,
+                content: fixture_file_upload("document.pdf", "application/pdf")
+              }
             }
           }
         }
@@ -155,6 +162,8 @@ RSpec.describe "JobOffers" do
         let(:job_application) { JobApplication.first }
 
         it { expect(job_application.category).to eq(Category.first) }
+
+        it { expect(job_application.job_application_files.count).to eq(1) }
       end
 
       describe "created user" do
@@ -175,6 +184,8 @@ RSpec.describe "JobOffers" do
         it { expect(user.departments.count).to eq(2) }
 
         it { expect(user.departments.pluck(:id)).to match([Department.first.id, Department.last.id]) }
+
+        it { expect(user.organization).to eq(job_offer.organization) }
       end
 
       describe "created user profile" do
@@ -209,11 +220,113 @@ RSpec.describe "JobOffers" do
     end
 
     context "when the user is signed in" do
-      let(:user) { create(:user) }
+      let(:user) { create(:confirmed_user) }
+      let(:params) do
+        {
+          job_application: {
+            category_id: Category.first.id,
+            user_attributes: {
+              first_name: "Kambushka",
+              last_name: "Warldorf",
+              phone: "+33612345678",
+              website_url: "https://linkedin.com/in/Warldorf",
+              profile_attributes: {
+                gender: "female",
+                has_corporate_experience: "1",
+                availability_range_id: AvailabilityRange.first.id,
+                experience_level_id: ExperienceLevel.first.id,
+                study_level_id: StudyLevel.first.id,
+                profile_foreign_languages_attributes: {
+                  "0" => {
+                    foreign_language_id: ForeignLanguage.first.id,
+                    foreign_language_level_id: ForeignLanguageLevel.first.id
+                  },
+                  "1" => {
+                    foreign_language_id: ForeignLanguage.last.id,
+                    foreign_language_level_id: ForeignLanguageLevel.last.id
+                  }
+                }
+              },
+              department_users_attributes: {
+                "0" => {department_id: Department.first.id},
+                "1" => {department_id: Department.last.id}
+              }
+            },
+            job_application_files_attributes: {
+              "0" => {
+                job_application_file_type_id: JobApplicationFileType.first.id,
+                content: fixture_file_upload("document.pdf", "application/pdf")
+              }
+            }
+          }
+        }
+      end
 
       before { sign_in user }
 
-      # TODO: SEB this case
+      it { expect { post_request }.not_to change(User, :count) }
+
+      it { expect { post_request }.to change(JobApplication, :count).by(1) }
+
+      it { expect(post_request).to redirect_to(successful_job_offer_path(job_offer.slug)) }
+
+      describe "created job application" do
+        before { post_request }
+
+        let(:job_application) { JobApplication.first }
+
+        it { expect(job_application.category).to eq(Category.first) }
+
+        it { expect(job_application.job_application_files.count).to eq(1) }
+      end
+
+      describe "updated user" do
+        before { post_request }
+
+        it { expect(user.reload.first_name).to eq("Kambushka") }
+
+        it { expect(user.reload.last_name).to eq("Warldorf") }
+
+        it { expect(user.reload.phone).to eq("+33612345678") }
+
+        it { expect(user.reload.website_url).to eq("https://linkedin.com/in/Warldorf") }
+
+        it { expect(user.reload.departments.count).to eq(2) }
+
+        it { expect(user.reload.departments.pluck(:id)).to match([Department.first.id, Department.last.id]) }
+
+        it { expect(user.reload.organization).to eq(job_offer.organization) }
+      end
+
+      describe "updated user profile" do
+        before { post_request }
+
+        let(:profile) { user.reload.profile }
+
+        it { expect(profile.gender).to eq("female") }
+
+        it { expect(profile.has_corporate_experience).to be true }
+
+        it { expect(profile.availability_range).to eq(AvailabilityRange.first) }
+
+        it { expect(profile.experience_level).to eq(ExperienceLevel.first) }
+
+        it { expect(profile.study_level).to eq(StudyLevel.first) }
+
+        it { expect(profile.profile_foreign_languages.count).to eq(2) }
+
+        it do
+          expect(profile.profile_foreign_languages.pluck(:foreign_language_id)).to match(
+            [ForeignLanguage.first.id, ForeignLanguage.last.id]
+          )
+        end
+
+        it do
+          expect(profile.profile_foreign_languages.pluck(:foreign_language_level_id)).to match(
+            [ForeignLanguageLevel.first.id, ForeignLanguageLevel.last.id]
+          )
+        end
+      end
     end
   end
 end

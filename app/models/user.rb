@@ -49,6 +49,7 @@ class User < ApplicationRecord
 
   mount_uploader :photo, PhotoUploader, mount_on: :photo_file_name
 
+  # TODO: SEB remove gender from users
   enum gender: {female: 1, male: 2, other: 3}
 
   validates :photo, file_size: {less_than: 1.megabytes}
@@ -83,6 +84,7 @@ class User < ApplicationRecord
   before_update :destroy_photo
   before_destroy :mark_job_applications_as_read
   after_save :add_none_department, if: -> { departments.empty? }
+  after_save :dedupe_departments, if: -> { departments.any? }
 
   def self.ransackable_scopes(auth_object = nil)
     %i[concerned by_category]
@@ -149,6 +151,8 @@ class User < ApplicationRecord
   end
 
   def add_none_department = departments << Department.none
+
+  def dedupe_departments = self.departments = departments.uniq
 end
 
 # == Schema Information

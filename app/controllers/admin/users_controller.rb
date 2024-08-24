@@ -7,7 +7,7 @@ class Admin::UsersController < Admin::InheritedResourcesController
     pq = params[:q] || {}
     pq[:concerned] = current_administrator if pq[:concerned]
     @q = @users.ransack(pq)
-    users = @q.result.includes(job_applications: %i[profile])
+    users = @q.result.includes(:profile, :job_applications)
     users = users.search_full_text(params[:s]) if params[:s].present?
     @users_filtered = users.paginate(page: params[:page], per_page: 25).to_a
 

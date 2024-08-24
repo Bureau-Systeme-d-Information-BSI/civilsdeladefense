@@ -131,7 +131,12 @@ class Admin::UsersController < Admin::InheritedResourcesController
   protected
 
   def permitted_params
-    fields = %i[first_name last_name current_position phone website_url]
+    fields_core = %i[first_name last_name current_position phone website_url]
+    fields_profile = %i[id gender is_currently_employed
+      availability_range_id study_level_id age_range_id
+      experience_level_id corporate_experience website_url
+      has_corporate_experience]
+    fields = fields_core << {profile_attributes: fields_profile}
     params.require(:user).permit(fields)
   end
 

@@ -2,6 +2,7 @@
 
 FactoryBot.define do
   factory :profile do
+    profileable { association :user }
     gender { :male }
     is_currently_employed { false }
     age_range { AgeRange.all.sample }

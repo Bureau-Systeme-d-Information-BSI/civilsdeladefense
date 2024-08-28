@@ -93,22 +93,10 @@ class Admin::JobApplicationsController < Admin::BaseController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
-  def set_job_application
-    @job_application = JobApplication.find(params[:id])
-  end
+  def set_job_application = @job_application = JobApplication.find(params[:id])
 
-  protected
-
-  # Never trust parameters from the scary internet, only allow the white list through.
   def job_application_params
-    fields_core = %i[skills_fit_job_offer experiences_fit_job_offer rejection_reason_id]
-    fields_profile = %i[id gender is_currently_employed
-      availability_range_id study_level_id age_range_id
-      experience_level_id corporate_experience website_url
-      has_corporate_experience]
-    fields = fields_core << {profile_attributes: fields_profile}
-    params.require(:job_application).permit(fields)
+    params.require(:job_application).permit(:skills_fit_job_offer, :experiences_fit_job_offer, :rejection_reason_id)
   end
 
   def layout_choice

@@ -11,6 +11,8 @@ RSpec.describe User do
   end
 
   describe "associations" do
+    it { is_expected.to have_one(:profile).dependent(:destroy) }
+
     it { is_expected.to have_many(:bookmarks).dependent(:destroy) }
 
     it { is_expected.to have_many(:job_applications).inverse_of(:user) }
@@ -228,6 +230,19 @@ RSpec.describe User do
 
         it { expect(user.reload.departments).not_to eq([Department.none]) }
       end
+    end
+
+    describe "#dedupe_departments" do
+      subject(:user_save) { user.save! }
+
+      let(:user) { create(:user) }
+
+      before do
+        user.departments << Department.none
+        user_save
+      end
+
+      it { expect(user.reload.departments).to eq([Department.none]) }
     end
   end
 end

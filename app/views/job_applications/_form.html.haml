@@ -5,9 +5,9 @@
     = f.error_notification
     = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
     %h2.rf-h3= t('.general_informations')
-    = f.simple_fields_for :profile do |profile_form|
-      = profile_form.input :gender, collection: enum_options_for_select(Profile, :gender), input_html: { class: "rf-select" }, required: true, selected: current_user&.gender
     = f.simple_fields_for :user do |user_form|
+      = user_form.simple_fields_for :profile do |profile_form|
+        = profile_form.input :gender, collection: enum_options_for_select(Profile, :gender), input_html: { class: "rf-select" }, required: true, selected: current_user&.gender
       = user_form.input :first_name, readonly: user_signed_in?
       = user_form.input :last_name, readonly: user_signed_in?
       = user_form.input :phone, required: true
@@ -19,12 +19,13 @@
     %h2.rf-h3= t('.your_profile')
     - grouped_options = nested_set_options(Category, @category) {|i| "#{'-' * i.level} #{i.name}" }
     = f.association :category, collection: grouped_options, disabled: Category.all.select{|x| x.children.count != 0}.map(&:id), input_html: {class: 'rf-select'}, required: @job_offer.spontaneous
-    = f.simple_fields_for :profile do |profile_form|
-      = profile_form.association :availability_range, input_html: { class: "rf-select" }
-      = profile_form.association :study_level, required: true, input_html: { class: "rf-select" }
-      = profile_form.association :experience_level, input_html: { class: "rf-select" }
-      = profile_form.input :has_corporate_experience, label: "Expérience antérieure #{current_organization.operator_name}"
-      = render partial: '/profile_foreign_languages/form', locals: { profile_form: profile_form }
+    = f.simple_fields_for :user do |user_form|
+      = user_form.simple_fields_for :profile do |profile_form|
+        = profile_form.association :availability_range, input_html: { class: "rf-select" }
+        = profile_form.association :study_level, required: true, input_html: { class: "rf-select" }
+        = profile_form.association :experience_level, input_html: { class: "rf-select" }
+        = profile_form.input :has_corporate_experience, label: "Expérience antérieure #{current_organization.operator_name}"
+        = render partial: '/profile_foreign_languages/form', locals: { profile_form: profile_form }
 
     %h2.rf-h3= t('.documents')
     - job_application_files = @job_application.job_application_files.to_a

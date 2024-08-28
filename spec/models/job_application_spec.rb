@@ -24,6 +24,19 @@ RSpec.describe JobApplication do
     end
   end
 
+  describe "scopes" do
+    describe ".with_category" do
+      subject { described_class.with_category }
+
+      let(:matching) { create(:job_application, category: create(:category)) }
+      let(:unmatching) { create(:job_application, category: nil) }
+
+      it { is_expected.to include(matching) }
+
+      it { is_expected.not_to include(unmatching) }
+    end
+  end
+
   it "correcties tell rejected state" do
     expect(job_application.rejected_state?).to be(false)
 

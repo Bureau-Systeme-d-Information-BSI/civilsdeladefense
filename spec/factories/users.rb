@@ -12,6 +12,7 @@ FactoryBot.define do
     password { "f4k3p455w0rD!" }
     terms_of_service { true }
     certify_majority { true }
+    profile { association :profile, profileable: @instance }
 
     trait :with_photo do
       photo {

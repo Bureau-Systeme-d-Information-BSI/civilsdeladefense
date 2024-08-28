@@ -1,4 +1,3 @@
-- profile = form_object.profile
 - is_archived = defined?(is_archived) ? is_archived : nil
 .card{id: dom_id(profile, 'profile')}
   .card-header.bg-white.font-weight-bold.text-secondary
@@ -6,7 +5,7 @@
     Données Professionnelles et Statistiques
   .card-body.bg-white
     - %i[gender is_currently_employed age_range availability_range study_level experience_level has_corporate_experience].each do |field|
-      - hsh = {form_object: form_object, profile: profile, disabled: is_archived}
+      - hsh = {form_object: user, profile: profile, disabled: is_archived}
       - hsh[:field] = field unless field =~ /_level|range/
       - hsh[:association] = field if field =~ /_level|range/
       - hsh[:choices] = choices_boolean if field == :is_currently_employed
@@ -15,7 +14,7 @@
     .row
       %p.col-sm-4 Domaine professionnel
       .col-sm-8
-        = form_object.category&.name
+        = job_application.category&.name
     .row
       %p.col-sm-4 Langues étrangères
       .col-sm-8

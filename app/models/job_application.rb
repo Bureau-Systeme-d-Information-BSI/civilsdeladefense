@@ -36,8 +36,10 @@ class JobApplication < ApplicationRecord
   belongs_to :employer
   belongs_to :category, optional: true
 
-  has_one :profile, as: :profileable, required: true, dependent: :nullify
-  accepts_nested_attributes_for :profile
+  # Deprecated on 2024-08-23: will be removed after migration is performed
+  # TODO: SEB remove this line after migration is performed
+  has_one :profile, as: :profileable, dependent: :nullify
+
   has_many :messages, dependent: :destroy
   has_many :emails, dependent: :destroy
   has_many :job_application_files, index_errors: true, dependent: :destroy

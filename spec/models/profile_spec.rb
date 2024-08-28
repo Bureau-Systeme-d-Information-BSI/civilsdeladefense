@@ -3,7 +3,7 @@
 require "rails_helper"
 
 RSpec.describe Profile do
-  let(:profile) { create(:job_application).profile }
+  let(:profile) { build(:profile) }
 
   it "is valid with valid attributes" do
     expect(profile).to be_valid

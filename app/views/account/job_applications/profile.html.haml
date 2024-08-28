@@ -5,13 +5,13 @@
       %strong
         = Profile.human_attribute_name(attribute)
       %span
-        = profile_value_for_attribute(@job_application.profile, attribute)
+        = profile_value_for_attribute(current_user.profile, attribute)
 .d-flex
   .d-flex.flex-column
     %strong
       = Profile.human_attribute_name(:profile_foreign_languages)
     %span
-    - @job_application.profile.profile_foreign_languages.each do |fl|
+    - current_user.profile.profile_foreign_languages.each do |fl|
       = fl.foreign_language.name
       = fl.foreign_language_level.name
       %br

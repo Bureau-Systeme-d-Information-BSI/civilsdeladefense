@@ -87,12 +87,11 @@ RSpec.describe "Admin::Users" do
       let!(:user_german) { create(:user) }
 
       before do
-        create(:job_application, user: user_no_foreign_language)
-        create(:job_application, user: user_english)
+        user_english
           .profile
           .profile_foreign_languages
           .create!(foreign_language: english, foreign_language_level:)
-        create(:job_application, user: user_german)
+        user_german
           .profile
           .profile_foreign_languages
           .create!(foreign_language: german, foreign_language_level:)
@@ -109,7 +108,7 @@ RSpec.describe "Admin::Users" do
       end
 
       context "when filtering on English" do
-        let(:params) { {q: {job_applications_profile_profile_foreign_languages_foreign_language_id_in: [english.id]}} }
+        let(:params) { {q: {profile_profile_foreign_languages_foreign_language_id_in: [english.id]}} }
 
         it { expect(response.body).to include(user_english.full_name) }
 
@@ -120,7 +119,7 @@ RSpec.describe "Admin::Users" do
 
       context "when filtering on English and German" do
         let(:params) do
-          {q: {job_applications_profile_profile_foreign_languages_foreign_language_id_in: [english.id, german.id]}}
+          {q: {profile_profile_foreign_languages_foreign_language_id_in: [english.id, german.id]}}
         end
 
         it { expect(response.body).to include(user_english.full_name) }

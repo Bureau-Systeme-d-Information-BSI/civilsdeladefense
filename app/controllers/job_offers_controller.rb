@@ -43,19 +43,14 @@ class JobOffersController < ApplicationController
   def apply
     # Store location if user signup after
     store_location_for(:user, request.fullpath)
-    if user_signed_in? && (@previous_job_application = current_user.job_applications.first)
-      @job_application = @previous_job_application.dup
+    if user_signed_in? && (previous_job_application = current_user.job_applications.first)
+      @job_application = previous_job_application.dup
       @job_application.state = JobApplication.new.state
-      @job_application.profile = @previous_job_application.profile.dup
-      @previous_job_application.profile.profile_foreign_languages.each do |foreign_language|
-        @job_application.profile.profile_foreign_languages << foreign_language.dup
-      end
-      @job_application.user.department_users.build if @job_application.user.department_users.blank?
     else
       @job_application = JobApplication.new
       @job_application.user = user_signed_in? ? current_user : User.new
-      @job_application.build_profile
     end
+    @job_application.user.build_profile if @job_application.user.profile.nil?
   end
 
   # POST /job_offers/1/send_application
@@ -64,8 +59,18 @@ class JobOffersController < ApplicationController
     @job_application = JobApplication.new(job_application_params)
     @job_application.job_offer = @job_offer
     @job_application.organization = @job_offer.organization
-    @job_application.user = current_user if user_signed_in?
-    @job_application.user.organization_id = current_organization.id if @job_application.user
+
+    if user_signed_in?
+      @job_application.user = current_user
+      if job_application_params[:user_attributes].present?
+        @job_application.user.assign_attributes(
+          job_application_params[:user_attributes].except(:department_users_attributes)
+        )
+      end
+      @job_application.user.departments = departments
+    end
+
+    @job_application.user.organization = current_organization
 
     respond_to do |format|
       if @job_application.save
@@ -135,7 +140,10 @@ class JobOffersController < ApplicationController
     profile_attributes << {
       profile_foreign_languages_attributes: %i[foreign_language_id foreign_language_level_id]
     }
+
     user_attributes = %i[first_name last_name phone website_url]
+    user_attributes << {profile_attributes: profile_attributes}
+
     base_user_attributes = %i[
       photo email password password_confirmation terms_of_service certify_majority
       receive_job_offer_mails
@@ -144,7 +152,7 @@ class JobOffersController < ApplicationController
       department_users_attributes: %i[department_id]
     }
     user_attributes += base_user_attributes unless user_signed_in?
-    permitted_params << {user_attributes: user_attributes, profile_attributes: profile_attributes}
+    permitted_params << {user_attributes: user_attributes}
     job_application_files_attributes = %i[content job_application_file_type_id job_application_file_existing_id]
     permitted_params << {job_application_files_attributes: job_application_files_attributes}
     params.require(:job_application).permit(permitted_params)
@@ -213,4 +221,10 @@ class JobOffersController < ApplicationController
   end
 
   def pdf_job_offer = @pdf_job_offer ||= PdfJobOffer.new(@job_offer)
+
+  def departments = Department.where(id: department_ids)
+
+  def department_ids = department_user_attributes&.to_unsafe_h&.map { |_, department| department[:department_id] }
+
+  def department_user_attributes = job_application_params.dig(:user_attributes, :department_users_attributes)
 end

@@ -453,6 +453,8 @@ fr:
         success: "Annonce désarchivée !"
       update_and_archive:
         success: "Annonce mise à jour et archivée !"
+      update_and_unarchive:
+        success: "Annonce mise à jour et désarchivée !"
       suspend:
         success: "Annonce mise en pause !"
       update_and_suspend:

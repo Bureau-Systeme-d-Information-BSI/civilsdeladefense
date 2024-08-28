@@ -45,6 +45,8 @@ class JobApplication < ApplicationRecord
   has_many :job_application_files, index_errors: true, dependent: :destroy
   accepts_nested_attributes_for :job_application_files
 
+  scope :with_category, -> { where.not(category: nil) }
+
   validates :user_id, uniqueness: {scope: :job_offer_id}, on: :create, allow_nil: true # rubocop:disable Rails/UniqueValidationWithoutIndex
   validate :cant_accept_before_delay
   validate :complete_files_before_draft_contract

@@ -37,7 +37,7 @@ class JobOffer < ApplicationRecord
   belongs_to :organization
   belongs_to :employer
   belongs_to :category, optional: true
-  belongs_to :level, optional: true
+  belongs_to :level
   belongs_to :contract_type
   belongs_to :experience_level
   belongs_to :professional_category
@@ -251,6 +251,8 @@ class JobOffer < ApplicationRecord
   end
 
   def update_category_counter
+    return if category.blank?
+
     category.self_and_ancestors.reverse.each(&:compute_published_job_offers_count!)
   end
 

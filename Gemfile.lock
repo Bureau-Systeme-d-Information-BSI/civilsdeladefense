@@ -125,7 +125,6 @@ GEM
       marcel (~> 1.0)
       nokogiri (~> 1.10, >= 1.10.4)
       rubyzip (>= 1.3.0, < 3)
-    charlock_holmes (0.7.7)
     clockwork (3.0.2)
       activesupport
       tzinfo
@@ -593,7 +592,6 @@ DEPENDENCIES
   capybara (~> 3.40.0)
   carrierwave
   caxlsx (~> 3.4.1)
-  charlock_holmes
   clockwork
   counter_culture
   cssbundling-rails (~> 1.4)

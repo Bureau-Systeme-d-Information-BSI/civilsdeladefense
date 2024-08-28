@@ -14,14 +14,6 @@ module Clockwork
     config[:tz] = "Europe/Paris"
   end
 
-  if ENV["CRON_FETCH_INBOUND"].present?
-    every 5.minutes, "inbound_message_fetch_and_process" do
-      ActiveRecord::Base.connection_pool.with_connection do
-        InboundMessage.fetch_and_process
-      end
-    end
-  end
-
   cond = ENV["DAYS_INACTIVITY_PERIOD_BEFORE_DELETION"].present?
   cond &&= ENV["DAYS_NOTICE_PERIOD_BEFORE_DELETION"].present?
   if cond

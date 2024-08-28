@@ -143,7 +143,7 @@ fr:
       select_region: Région
     job_offer:
       show: "Voir le détail de l'offre"
-      published_date: 'Publiée il y a %{time_ago_in_words}'
+      published_date: "Publiée il y a %{time_ago_in_words}"
       archiving_reasons:
         no_reason: Aucune raison
     job_offer_content:
@@ -365,7 +365,7 @@ fr:
       unfeature:
         success: "Annonce retirée de la une"
       administrator:
-        new_record: "Cliquer sur \"Enregistrer\" pour inviter"
+        new_record: 'Cliquer sur "Enregistrer" pour inviter'
         waiting: "En attente de confirmation"
         active: "Utilisateur actif"
       board:
@@ -390,14 +390,13 @@ fr:
         card_title: "3. Notifications"
         card_subtitle: "3.1 Acteurs du processus notifiés"
       job_offer:
-        follow: 'Suivre'
-        unfollow: 'Ne plus suivre'
+        follow: "Suivre"
+        unfollow: "Ne plus suivre"
         job_applications_count:
-          zero: 'Candidature'
-          one: 'Candidature'
-          other: 'Candidatures'
-        job_applications_to_be_treated_count:
-          "Nouvelles candidatures"
+          zero: "Candidature"
+          one: "Candidature"
+          other: "Candidatures"
+        job_applications_to_be_treated_count: "Nouvelles candidatures"
       job_offer_nav:
         new_transfer: "Transférer"
         show: "Description"
@@ -453,6 +452,8 @@ fr:
         success: "Annonce désarchivée !"
       update_and_archive:
         success: "Annonce mise à jour et archivée !"
+      update_and_unarchive:
+        success: "Annonce mise à jour et désarchivée !"
       suspend:
         success: "Annonce mise en pause !"
       update_and_suspend:
@@ -540,6 +541,10 @@ fr:
         success: "Profil mis à jour !"
         failure: "Erreur dans la mise à jour du profil"
     settings:
+      destroy:
+        failure:
+          activerecord_recordnotdestroyed: "Suppression impossible : il existe des éléments liés."
+          activerecord_invalidforeignkey: "Suppression impossible : il existe des éléments liés."
       shared:
         navbar:
           admin: "Administration"
@@ -550,7 +555,7 @@ fr:
           categories: "Domaines professionnels"
           levels: "Catégories / Niveaux de l'offre"
           cmgs: "Liste des CMG"
-          company : "Entreprise"
+          company: "Entreprise"
           configuration: "Configuration"
           contract_types: "Types de contrat"
           email_templates: "Courriels"
@@ -567,7 +572,7 @@ fr:
           salary_ranges: "Estimations salariales"
           sectors: "Secteurs / Filières"
           study_levels: "Niveaux d'études"
-          templates : "Modèles"
+          templates: "Modèles"
           writing_job_offers: "Rédaction offres d'emploi"
           contract_durations: "Durées de contrat"
           foreign_languages: "Langue étrangères"
@@ -576,6 +581,7 @@ fr:
           job_offer_terms: "Conditions d'accès à la création d'offres"
           user_menu_links: "Onglet espace candidat"
           archiving_reasons: "Motifs d'archivage"
+          availability_ranges: "Disponibilités"
       base:
         index:
           title: "Paramètres"
@@ -596,20 +602,21 @@ fr:
             name: "Nom"
             employer: "Employeur"
             role: "Rôle"
+            job_offer_actor_roles: "Rôles sur les offres"
             last_sign_in_at: "Dernière connexion"
             created_at: "Créé le"
           account_active:
-            zero: 'Aucun compte admin actif'
-            one: 'Compte actif (1)'
+            zero: "Aucun compte admin actif"
+            one: "Compte actif (1)"
             other: "Comptes actifs (%{count})"
           account_inactive:
-            zero: 'Aucun compte admin désactivé'
-            one: 'Compte désactivé (1)'
+            zero: "Aucun compte admin désactivé"
+            one: "Compte désactivé (1)"
             other: "Comptes désactivés (%{count})"
           card_title:
-            zero: 'Aucun compte admin'
-            one: '1 compte admin'
-            other: '%{count} comptes admin'
+            zero: "Aucun compte admin"
+            one: "1 compte admin"
+            other: "%{count} comptes admin"
         new:
           title: "Inviter un nouveau compte admin"
         create:
@@ -634,17 +641,17 @@ fr:
           title: "Liste des CMG"
           add: "Ajouter"
           card_title:
-            zero: 'Aucun CMG'
-            one: '1 CMG'
-            other: '%{count} CMGs'
+            zero: "Aucun CMG"
+            one: "1 CMG"
+            other: "%{count} CMGs"
       frequently_asked_questions:
         index:
           title: "FAQ"
           add: "Ajouter"
           card_title:
-            zero: 'Aucune FAQ'
-            one: '1 FAQ'
-            other: '%{count} FAQ'
+            zero: "Aucune FAQ"
+            one: "1 FAQ"
+            other: "%{count} FAQ"
         new:
           title: "Ajouter une question"
         create:
@@ -664,9 +671,9 @@ fr:
           grand_employer: "Grand Employeur"
           employer: "Employeur"
           card_title:
-            zero: 'Aucun employeur'
-            one: '1 employeur'
-            other: '%{count} employeurs'
+            zero: "Aucun employeur"
+            one: "1 employeur"
+            other: "%{count} employeurs"
         new:
           title: "Ajouter un nouvel employeur"
         create:
@@ -682,9 +689,9 @@ fr:
           title: "Modèles de courriels"
           add: "Ajouter"
           card_title:
-            zero: 'Aucun modèle'
-            one: '1 modèle'
-            other: '%{count} modèles'
+            zero: "Aucun modèle"
+            one: "1 modèle"
+            other: "%{count} modèles"
         new:
           title: "Ajouter un nouveau modèle"
         create:
@@ -727,9 +734,9 @@ fr:
       benefits:
         index:
           card_title:
-            zero: 'Aucun avantage en nature'
-            one: '1 avantage en nature'
-            other: '%{count} avantages en nature'
+            zero: "Aucun avantage en nature"
+            one: "1 avantage en nature"
+            other: "%{count} avantages en nature"
         new:
           title: "Ajouter un avantage en nature"
         edit:
@@ -759,15 +766,15 @@ fr:
       job_offer_terms:
         index:
           card_title:
-            zero: 'Aucune condition'
-            one: '1 condition'
-            other: '%{count} conditions'
+            zero: "Aucune condition"
+            one: "1 condition"
+            other: "%{count} conditions"
       user_menu_links:
         index:
           card_title:
-            zero: 'Aucun lien'
-            one: '1 lien'
-            other: '%{count} liens'
+            zero: "Aucun lien"
+            one: "1 lien"
+            other: "%{count} liens"
         new:
           title: "Ajouter une condition"
         edit:
@@ -781,9 +788,9 @@ fr:
       bops:
         index:
           card_title:
-            zero: 'Aucun BOP'
-            one: '1 BOP'
-            other: '%{count} BOPs'
+            zero: "Aucun BOP"
+            one: "1 BOP"
+            other: "%{count} BOPs"
         new:
           title: "Ajouter un BOP"
         edit:
@@ -797,25 +804,25 @@ fr:
       levels:
         index:
           card_title:
-            zero: 'Aucun niveau'
-            one: '1 niveau'
-            other: '%{count} niveaux'
+            zero: "Aucun niveau"
+            one: "1 niveau"
+            other: "%{count} niveaux"
         new:
           title: "Ajouter une catégorie / niveau de l'offre"
         edit:
           title: "Modifier la catégorie / niveau de l'offre '%{name}'"
         create:
-          success: "Catégorie / niveau de l'offre créé !"
+          success: "Catégorie / niveau de l'offre créée !"
         update:
-          success: "Catégorie / niveau de l'offre mis à jour !"
+          success: "Catégorie / niveau de l'offre mise à jour !"
         destroy:
-          success: "Catégorie / niveau de l'offre supprimé !"
+          success: "Catégorie / niveau de l'offre supprimée !"
       categories:
         index:
           card_title:
-            zero: 'Aucun domaine professionnel'
-            one: '1 domaine professionnel'
-            other: '%{count} domaines professionels'
+            zero: "Aucun domaine professionnel"
+            one: "1 domaine professionnel"
+            other: "%{count} domaines professionels"
         new:
           title: "Ajouter une nouvelle catégorie"
         edit:
@@ -829,9 +836,9 @@ fr:
       job_application_file_types:
         index:
           card_title:
-            zero: 'Aucun type défini'
-            one: '1 type de fichier'
-            other: '%{count} types de fichier'
+            zero: "Aucun type défini"
+            one: "1 type de fichier"
+            other: "%{count} types de fichier"
         new:
           title: "Ajouter un nouveau type de fichier"
         edit:
@@ -845,9 +852,9 @@ fr:
       professional_categories:
         index:
           card_title:
-            zero: 'Aucun statut'
-            one: '1 statut'
-            other: '%{count} statuts'
+            zero: "Aucun statut"
+            one: "1 statut"
+            other: "%{count} statuts"
         new:
           title: "Ajouter un nouveau statut"
         edit:
@@ -858,14 +865,12 @@ fr:
           success: "Statut mis à jour !"
         destroy:
           success: "Statut supprimé !"
-          failure:
-            foreign_key_violation: "Impossible de supprimer : il existe des offres liées."
       contract_types:
         index:
           card_title:
-            zero: 'Aucun type de contrat'
-            one: '1 type de contrat'
-            other: '%{count} types de contrat'
+            zero: "Aucun type de contrat"
+            one: "1 type de contrat"
+            other: "%{count} types de contrat"
         new:
           title: "Ajouter un nouveau type de contrat"
         edit:
@@ -881,9 +886,9 @@ fr:
           title: "Motifs de rejet d'une candidature"
           add: "Ajouter"
           card_title:
-            zero: 'Aucun motif pour le moment'
-            one: '1 motif'
-            other: '%{count} motifs'
+            zero: "Aucun motif pour le moment"
+            one: "1 motif"
+            other: "%{count} motifs"
         new:
           title: "Ajouter un motif"
         create:
@@ -895,23 +900,41 @@ fr:
           title: "Motifs d'archivage d'une offre'"
           add: "Ajouter"
           card_title:
-            zero: 'Aucun motif pour le moment'
-            one: '1 motif'
-            other: '%{count} motifs'
+            zero: "Aucun motif pour le moment"
+            one: "1 motif"
+            other: "%{count} motifs"
         new:
           title: "Ajouter un motif"
         create:
           success: "Motif ajouté !"
         destroy:
           success: "Motif supprimé !"
+      availability_ranges:
+        index:
+          title: "Disponibilités d'un·e candidat·e"
+          add: "Ajouter"
+          card_title:
+            zero: 'Aucune disponibilité pour le moment'
+            one: '1 disponibilité'
+            other: '%{count} disponibilités'
+        new:
+          title: "Ajouter une disponibilité"
+        create:
+          success: "Disponibilité ajoutée !"
+        edit:
+          title: "Modifier la disponibilité '%{name}'"
+        update:
+          success: "Disponibilité modifiée !"
+        destroy:
+          success: "Disponibilité supprimée !"
       salary_ranges:
         index:
           title: "Estimations salariales"
           add: "Ajouter"
           card_title:
-            zero: 'Aucune estimation pour le moment'
-            one: '1 estimation'
-            other: '%{count} estimations'
+            zero: "Aucune estimation pour le moment"
+            one: "1 estimation"
+            other: "%{count} estimations"
         new:
           title: "Ajouter une estimation"
         create:
@@ -1001,9 +1024,9 @@ fr:
       organization_defaults:
         index:
           card_title:
-            zero: 'Aucune valeur par défaut'
-            one: '1 valeur par défaut'
-            other: '%{count} valeurs par défaut'
+            zero: "Aucune valeur par défaut"
+            one: "1 valeur par défaut"
+            other: "%{count} valeurs par défaut"
         new:
           title: "Définir une valeur par défaut"
         edit:
@@ -1124,7 +1147,7 @@ fr:
             state:
               cant_accept_before_delay: "Un délai de 30 jours après la publication de l'offre sur CSP doit être respecté avant d'accepter une candidature"
               complete_files_before_draft_contract: "Tous les documents doivent être téléversés et validés avant la rédaction du contrat"
-              cant_be_accepted_twice: "Cette action n'est pas possible. Ce candidat est déjà à l'état \"Retenu\" dans une offre d'emploi."
+              cant_be_accepted_twice: 'Cette action n''est pas possible. Ce candidat est déjà à l''état "Retenu" dans une offre d''emploi.'
             cover_letter_content_type:
               invalid: "PDF uniquement, max 2Mo"
             resume_content_type:

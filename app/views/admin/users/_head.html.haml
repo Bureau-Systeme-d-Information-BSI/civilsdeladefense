@@ -56,9 +56,9 @@
       - user.job_applications.with_category.each do |job_application|
         %div
           %strong= job_application.category.name
-          - if job_application.profile.experience_level.present?
+          - if user.profile.experience_level.present?
             = "-"
-            = job_application.profile.experience_level.name
+            = user.profile.experience_level.name
   .col-3{class: job_application_modal_section_classes('pb-0')}
     .d-flex.flex-column.align-items-center
       - user.departments.each do |department|

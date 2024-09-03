@@ -51,9 +51,6 @@ class User < ApplicationRecord
 
   mount_uploader :photo, PhotoUploader, mount_on: :photo_file_name
 
-  # TODO: SEB remove gender from users
-  enum gender: {female: 1, male: 2, other: 3}
-
   validates :photo, file_size: {less_than: 1.megabytes}
   validates :first_name, :last_name, presence: true
   validates_plausible_phone :phone

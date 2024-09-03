@@ -2,6 +2,8 @@
 
 # Candidate to job offer
 class User < ApplicationRecord
+  self.ignored_columns += %w[gender] # Deprecated on 2024-09-03
+
   PASSWORD_REGEX = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[\\\/<>{}()#¤:;,.?!•·|"'`´~@£¨µ§²$€%^&*+=_-]).{12,70}$/
 
   def self.omniauth_providers

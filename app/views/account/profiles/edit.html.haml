@@ -11,5 +11,7 @@
 
             = f.association :study_level, required: true, input_html: { class: "rf-select" }
 
+            = render partial: '/profile_foreign_languages/form', locals: { profile_form: f, name_prefix: "profile" }
+
           .rf-input-group.rf-grid-row.justify-content-end.rf-mt-3w
             = f.button :submit, t('buttons.save'), class: 'rf-btn'

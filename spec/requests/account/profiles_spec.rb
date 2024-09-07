@@ -16,32 +16,44 @@ RSpec.describe "Account::Profiles" do
   end
 
   describe "PATCH /espace-candidat/mon-profile" do
-    subject(:update_request) { patch account_profiles_path, params: params }
+    subject(:update_request) { patch account_profiles_path, params: }
 
-    let(:params) { {profile: {availability_range_id: availability_range_id, study_level_id: study_level_id}} }
+    let(:params) do
+      {
+        profile: {
+          availability_range_id:,
+          study_level_id:,
+          experience_level_id:,
+          has_corporate_experience: true
+        }
+      }
+    end
     let(:availability_range_id) { AvailabilityRange.first.id }
     let(:study_level_id) { create(:study_level).id }
+    let(:experience_level_id) { create(:experience_level).id }
 
-    context "when the user has a profile" do
-      before { user.update!(profile: create(:profile, profileable: user)) }
+    before { user.update!(profile: create(:profile, profileable: user)) }
 
-      it { expect { update_request }.not_to change { user.reload.profile } }
+    it { expect { update_request }.not_to change { user.reload.profile } }
 
-      describe "response" do
-        before { update_request }
+    describe "profile" do
+      let(:profile) { user.profile }
 
-        it { expect(response).to redirect_to(edit_account_profiles_path) }
-      end
+      before { update_request }
+
+      it { expect(profile.availability_range_id).to eq(availability_range_id) }
+
+      it { expect(profile.study_level_id).to eq(study_level_id) }
+
+      it { expect(profile.experience_level_id).to eq(experience_level_id) }
+
+      it { expect(profile.has_corporate_experience).to be(true) }
     end
 
-    context "when the user doesn't have a profile" do
-      it { expect { update_request }.to change { user.reload.profile }.from(nil) }
+    describe "response" do
+      before { update_request }
 
-      describe "response" do
-        before { update_request }
-
-        it { expect(response).to redirect_to(edit_account_profiles_path) }
-      end
+      it { expect(response).to redirect_to(edit_account_profiles_path) }
     end
   end
 end

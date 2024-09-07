@@ -22,6 +22,8 @@ class Account::ProfilesController < Account::BaseController
     params.require(:profile).permit(
       :availability_range_id,
       :study_level_id,
+      :experience_level_id,
+      :has_corporate_experience,
       profile_foreign_languages_attributes: %i[foreign_language_id foreign_language_level_id]
     )
   end

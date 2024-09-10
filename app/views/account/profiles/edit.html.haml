@@ -1,0 +1,21 @@
+.rf-container
+  .rf-grid-row
+    .rf-col-12
+      %h2.rf-h3= t('.title')
+      .rf-mb-5w.rf-pb-5w
+        = simple_form_for(@profile, url: [:account, :profiles], method: :patch) do |f|
+          = f.error_notification
+
+          .form-inputs
+            = f.association :availability_range, input_html: { class: "rf-select" }
+
+            = f.association :study_level, required: true, input_html: { class: "rf-select" }
+
+            = f.association :experience_level, input_html: { class: "rf-select" }
+
+            = f.input :has_corporate_experience, label: "Expérience antérieure #{current_organization.operator_name}"
+
+            = render partial: '/profile_foreign_languages/form', locals: { profile_form: f, name_prefix: "profile" }
+
+          .rf-input-group.rf-grid-row.justify-content-end.rf-mt-3w
+            = f.button :submit, t('buttons.save'), class: 'rf-btn'

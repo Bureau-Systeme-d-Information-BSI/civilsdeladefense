@@ -14,7 +14,7 @@
       = user_form.input :first_name, readonly: user_signed_in?
       = user_form.input :last_name, readonly: user_signed_in?
       = user_form.input :phone, required: true
-      = render partial: '/department_users/form', locals: { user_form: user_form, kind: :job_application }
+      = render partial: '/department_profiles/form', locals: { form: user_form, name_prefix: "job_application[user_attributes][profile_attributes]", department_profiles: @job_application.user.profile.department_profiles }
     - unless user_signed_in?
       = f.simple_fields_for :user do |user_form|
         = user_form.input :photo

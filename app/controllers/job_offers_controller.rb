@@ -67,7 +67,6 @@ class JobOffersController < ApplicationController
           job_application_params[:user_attributes].except(:department_users_attributes)
         )
       end
-      @job_application.user.departments = departments
     end
 
     @job_application.user.organization = current_organization
@@ -139,7 +138,8 @@ class JobOffersController < ApplicationController
     ]
     profile_attributes << {
       profile_foreign_languages_attributes: %i[foreign_language_id foreign_language_level_id],
-      category_experience_levels_attributes: %i[category_id experience_level_id]
+      category_experience_levels_attributes: %i[category_id experience_level_id],
+      department_profiles_attributes: %i[department_id]
     }
 
     user_attributes = %i[first_name last_name phone website_url]
@@ -225,7 +225,7 @@ class JobOffersController < ApplicationController
 
   def departments = Department.where(id: department_ids)
 
-  def department_ids = department_user_attributes&.to_unsafe_h&.map { |_, department| department[:department_id] }
+  def department_ids = department_profiles_attributes&.to_unsafe_h&.map { |_, department| department[:department_id] }
 
-  def department_user_attributes = job_application_params.dig(:user_attributes, :department_users_attributes)
+  def department_profiles_attributes = job_application_params.dig(:user_attributes, :department_profiles_attributes)
 end

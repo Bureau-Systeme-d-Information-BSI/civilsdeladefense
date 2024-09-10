@@ -26,7 +26,6 @@
               .rf-col-12.rf-col-md-7.rf-mt-3w
                 = f.input :city, input_html: { data: { autocomplete_address_target: :city } }, required: false
 
-            = render partial: '/department_users/form', locals: { user_form: f, kind: :user }
             = f.input :photo
             - if @user.photo.present?
               = f.input :delete_photo, as: :boolean

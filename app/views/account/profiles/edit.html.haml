@@ -22,5 +22,7 @@
 
             = render partial: '/profile_foreign_languages/form', locals: { profile_form: f, name_prefix: "profile" }
 
+            = render partial: '/department_profiles/form', locals: { form: f, name_prefix: :profile, department_profiles: @profile.department_profiles }
+
           .rf-input-group.rf-grid-row.justify-content-end.rf-mt-3w
             = f.button :submit, t('buttons.save'), class: 'rf-btn'

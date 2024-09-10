@@ -554,7 +554,7 @@ file = File.open(Rails.root.join("spec", "fixtures", "files", "document.pdf"))
 
 user = User.new(
   email: "cvd_coin@example.com",
-  first_name: "Coin",
+  first_name: "Colin",
   last_name: "Pan",
   organization: organization,
   password: ENV["SEED_PASSWORD"],
@@ -565,7 +565,6 @@ user = User.new(
   current_position: "Développeur",
   phone: "0606060606",
   website_url: "https://www.linkedin.com/in/coin_pan",
-  departments: [Department.none],
   receive_job_offer_mails: true
 )
 user.build_profile(
@@ -625,6 +624,18 @@ user_candidate_of_all = User.new(
   current_position: "Développeur",
   phone: "0606060606",
   website_url: "https://www.linkedin.com/in/nicolas_agoini",
+)
+user_candidate_of_all.build_profile(
+  gender: "other",
+  study_level_id: StudyLevel.all.sample.id,
+  profile_foreign_languages_attributes: {
+    "0" => { foreign_language_id: ForeignLanguage.first.id, foreign_language_level_id: ForeignLanguageLevel.all.sample.id },
+    "1" => { foreign_language_id: ForeignLanguage.last.id, foreign_language_level_id: ForeignLanguageLevel.all.sample.id }
+  },
+  category_experience_levels_attributes: {
+    "0" => { category_id: Category.first.id, experience_level_id: ExperienceLevel.all.sample.id },
+    "1" => { category_id: Category.last.id, experience_level_id: ExperienceLevel.all.sample.id }
+  },
   departments: Department.all.sample(2)
 )
 user_candidate_of_all.build_profile(
@@ -658,7 +669,19 @@ JobOffer.where.not(contract_duration_id: nil).where.not(id: [job_offer4.id, job_
       certify_majority: true,
       current_position: "Développeur",
       phone: "0606060606",
-      website_url: "https://www.linkedin.com/in/#{SecureRandom.hex(5)}",
+      website_url: "https://www.linkedin.com/in/#{SecureRandom.hex(5)}"
+    )
+    user.build_profile(
+      gender: "other",
+      study_level_id: StudyLevel.all.sample.id,
+      profile_foreign_languages_attributes: {
+        "0" => { foreign_language_id: ForeignLanguage.first.id, foreign_language_level_id: ForeignLanguageLevel.all.sample.id },
+        "1" => { foreign_language_id: ForeignLanguage.last.id, foreign_language_level_id: ForeignLanguageLevel.all.sample.id }
+        },
+      category_experience_levels_attributes: {
+        "0" => { category_id: Category.first.id, experience_level_id: ExperienceLevel.all.sample.id },
+        "1" => { category_id: Category.last.id, experience_level_id: ExperienceLevel.all.sample.id }
+      },
       departments: Department.all.sample(2)
     )
     user.build_profile(

@@ -18,11 +18,14 @@ class Profile < ApplicationRecord
 
   has_many :profile_foreign_languages, dependent: :destroy
   has_many :category_experience_levels, dependent: :destroy
+  has_many :department_profiles, dependent: :destroy
+  has_many :departments, through: :department_profiles
 
   accepts_nested_attributes_for :profile_foreign_languages,
     reject_if: proc { |attrs| attrs["foreign_language_id"].blank? || attrs["foreign_language_level_id"].blank? }
   accepts_nested_attributes_for :category_experience_levels,
     reject_if: proc { |attrs| attrs["category_id"].blank? || attrs["experience_level_id"].blank? }
+  accepts_nested_attributes_for :department_profiles, reject_if: :all_blank
 
   validate :at_least_one_category_experience_level, on: :profile
 
@@ -32,16 +35,20 @@ class Profile < ApplicationRecord
     errors.add(:base, :at_least_one_category_experience_level)
   end
 
-  #####################################
-  # Validations
+  after_save :add_none_department, if: -> { departments.empty? }
+  after_save :dedupe_departments, if: -> { departments.any? }
 
-  #####################################
-  # Enums
   enum gender: {
     female: 1,
     male: 2,
     other: 3
   }
+
+  private
+
+  def add_none_department = departments << Department.none
+
+  def dedupe_departments = self.departments = departments.uniq
 end
 
 # == Schema Information

@@ -6,9 +6,7 @@ RSpec.describe Profile do
   describe "validations" do
     let(:profile) { build(:profile) }
 
-    it "is valid with valid attributes" do
-      expect(profile).to be_valid
-    end
+    it { expect(profile).to be_valid }
 
     it "has correct gender" do
       profile.gender = 2
@@ -19,9 +17,57 @@ RSpec.describe Profile do
   describe "associations" do
     it { is_expected.to belong_to(:profileable) }
 
+    it { is_expected.to belong_to(:study_level).optional }
+
+    it { is_expected.to belong_to(:experience_level).optional }
+
+    it { is_expected.to belong_to(:availability_range).optional }
+
+    it { is_expected.to belong_to(:age_range).optional }
+
     it { is_expected.to have_many(:profile_foreign_languages).dependent(:destroy) }
 
     it { is_expected.to have_many(:category_experience_levels).dependent(:destroy) }
+
+    it { is_expected.to have_many(:department_profiles).dependent(:destroy) }
+
+    it { is_expected.to have_many(:departments).through(:department_profiles) }
+  end
+
+  describe "after_save callbacks" do
+    describe "#add_none_department" do
+      subject(:profile_save) { profile.save! }
+
+      let(:profile) { build(:profile) }
+
+      before do
+        create(:department, :none)
+        profile_save
+      end
+
+      context "when user has no department" do
+        it { expect(profile.reload.departments).to eq([Department.none]) }
+      end
+
+      context "when user has a department" do
+        before { profile.departments << create(:department) }
+
+        it { expect(profile.reload.departments).not_to eq([Department.none]) }
+      end
+    end
+
+    describe "#dedupe_departments" do
+      subject(:profile_save) { profile.save! }
+
+      let(:profile) { create(:profile) }
+
+      before do
+        profile.departments << Department.none
+        profile_save
+      end
+
+      it { expect(profile.reload.departments).to eq([Department.none]) }
+    end
   end
 end
 

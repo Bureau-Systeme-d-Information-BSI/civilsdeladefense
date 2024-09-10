@@ -228,6 +228,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_21_073757) do
     t.index ["position"], name: "index_contract_types_on_position"
   end
 
+  create_table "department_profiles", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "department_id", null: false
+    t.uuid "profile_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["department_id"], name: "index_department_profiles_on_department_id"
+    t.index ["profile_id"], name: "index_department_profiles_on_profile_id"
+  end
+
   create_table "department_users", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "user_id", null: false
     t.uuid "department_id", null: false
@@ -836,6 +845,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_21_073757) do
   add_foreign_key "category_experience_levels", "experience_levels"
   add_foreign_key "category_experience_levels", "profiles"
   add_foreign_key "cmgs", "organizations"
+  add_foreign_key "department_profiles", "departments"
+  add_foreign_key "department_profiles", "profiles"
   add_foreign_key "department_users", "departments"
   add_foreign_key "department_users", "users"
   add_foreign_key "drawback_job_offers", "drawbacks"

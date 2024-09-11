@@ -10,5 +10,4 @@
     .row
       %p.col-sm-4 Souhait(s) géographique(s) (département)
       .col-sm-8
-        - user.department_users.each do |du|
-          = "#{du.department.name} -"
+        = user.profile.departments.pluck(:name).to_sentence

@@ -29,13 +29,13 @@ module JobOfferStats
     root_rel = @job_offer.job_applications.unscope(:order)
     root_rel_profile = root_rel.joins(:profile)
 
-    @per_gender = root_rel_profile.group(:gender).count
+    @per_gender = root_rel_profile.group("profiles.gender").count
     @per_age_range = root_rel_profile.group(:age_range_id).count
     @per_experiences_fit_job_offer = root_rel.group(:experiences_fit_job_offer).count
     @per_has_corporate_experience = root_rel_profile.group(:has_corporate_experience).count
     @per_is_currently_employed = root_rel_profile.group(:is_currently_employed).count
     @per_state = root_rel.group(:state).count
-    @in_department_count = root_rel.joins(:job_offer, user: :departments).where(
+    @in_department_count = root_rel.joins(:job_offer, user: {profile: :departments}).where(
       "departments.code = job_offers.county_code::text"
     ).count
     @per_rejection_reason = root_rel.where.not(rejection_reason_id: nil).group(:rejection_reason_id).count

@@ -1,4 +1,4 @@
-%div{ data: { controller: "duplicator"}}
+%div{ data: { controller: "duplicator", duplicator_max_value: 3 }}
   .rf-grid-row.fr-grid-row--center.d-none{ data: { duplicator: { target: :duplicated }}}
     .rf-col-11
       .rf-grid-row.rf-grid-row--gutters
@@ -14,7 +14,7 @@
       %button.blank_button.rf-fi-delete-line{data: { action: 'click->duplicator#remove' }}
   %div{ data: { duplicator: { target: :root }}}
     - profile_form.object.category_experience_levels.each_with_index do |category_experience_level, index|
-      .rf-grid-row.fr-grid-row--center{ data: { duplicator: { target: :element }}}
+      .rf-grid-row.fr-grid-row--center{ data: { duplicator: { target: :element }, category_experience_level_target: "element" }}
         .rf-col-11
           .rf-grid-row.rf-grid-row--gutters
             .rf-col-6
@@ -28,4 +28,4 @@
         .rf-col-1.text-center.rf-mt-4w
           %button.blank_button.rf-fi-delete-line{data: { action: 'click->duplicator#remove' }}
 
-  = button_tag("Ajouter un domaine professionnel", type: :button, class: 'rf-btn rf-mb-3w', data: { action: 'click->duplicator#duplicate' })
+  = button_tag("Ajouter un domaine professionnel", type: :button, class: 'rf-btn rf-mb-3w', data: { action: 'click->duplicator#duplicate', duplicator_target: "addButton" })

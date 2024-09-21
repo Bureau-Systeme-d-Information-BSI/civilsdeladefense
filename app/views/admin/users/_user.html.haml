@@ -17,11 +17,13 @@
                 - if last_job_application_resume_url
                   %div{data: {controller: "rich-tooltip", bs_custom_class: "tooltip-rich", bs_placement: "right"}, title: "<object data='#{last_job_application_resume_url}' style='margin-left: 10px; bottom: 0;' class='position-fixed' height='600px' width='800px' type='application/pdf'></object>"}
                     = fa_icon "file-lines", class: "ml-2"
-            .col-12.personal-profile-current-position
-              - current_position = user&.current_position
-              - if current_position
-                %span{title: current_position}
-                  = current_position
+            .col-12.category-experience-levels
+              - user.profile.category_experience_levels.each do |category_experience_level|
+                %span.font-weight-bold
+                  = category_experience_level.category.name
+                = "-"
+                = category_experience_level.experience_level.name
+                %br
             .col-12.user-job-applications-count
               = user.job_applications_count
       .card-footer.d-flex.flex-column.flex-md-row

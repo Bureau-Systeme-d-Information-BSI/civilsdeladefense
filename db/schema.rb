@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_31_142102) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_21_073757) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -188,6 +188,17 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_31_142102) do
     t.integer "children_count", default: 0, null: false
     t.integer "published_job_offers_count", default: 0, null: false
     t.index ["name"], name: "index_categories_on_name", unique: true
+  end
+
+  create_table "category_experience_levels", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "category_id", null: false
+    t.uuid "experience_level_id", null: false
+    t.uuid "profile_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_category_experience_levels_on_category_id"
+    t.index ["experience_level_id"], name: "index_category_experience_levels_on_experience_level_id"
+    t.index ["profile_id"], name: "index_category_experience_levels_on_profile_id"
   end
 
   create_table "cmgs", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
@@ -821,6 +832,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_31_142102) do
   add_foreign_key "benefit_job_offers", "job_offers"
   add_foreign_key "bookmarks", "job_offers"
   add_foreign_key "bookmarks", "users"
+  add_foreign_key "category_experience_levels", "categories"
+  add_foreign_key "category_experience_levels", "experience_levels"
+  add_foreign_key "category_experience_levels", "profiles"
   add_foreign_key "cmgs", "organizations"
   add_foreign_key "department_users", "departments"
   add_foreign_key "department_users", "users"

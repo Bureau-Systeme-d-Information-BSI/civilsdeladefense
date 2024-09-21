@@ -3,15 +3,25 @@
 require "rails_helper"
 
 RSpec.describe Profile do
-  let(:profile) { build(:profile) }
+  describe "validations" do
+    let(:profile) { build(:profile) }
 
-  it "is valid with valid attributes" do
-    expect(profile).to be_valid
+    it "is valid with valid attributes" do
+      expect(profile).to be_valid
+    end
+
+    it "has correct gender" do
+      profile.gender = 2
+      expect(profile.gender).to eq("male")
+    end
   end
 
-  it "has correct gender" do
-    profile.gender = 2
-    expect(profile.gender).to eq("male")
+  describe "associations" do
+    it { is_expected.to belong_to(:profileable) }
+
+    it { is_expected.to have_many(:profile_foreign_languages).dependent(:destroy) }
+
+    it { is_expected.to have_many(:category_experience_levels).dependent(:destroy) }
   end
 end
 

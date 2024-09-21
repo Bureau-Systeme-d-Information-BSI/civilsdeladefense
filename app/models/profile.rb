@@ -15,7 +15,10 @@ class Profile < ApplicationRecord
   belongs_to :experience_level, optional: true
   belongs_to :availability_range, optional: true
   belongs_to :age_range, optional: true
+
   has_many :profile_foreign_languages, dependent: :destroy
+  has_many :category_experience_levels, dependent: :destroy
+
   accepts_nested_attributes_for :profile_foreign_languages,
     reject_if: proc { |attrs| attrs["foreign_language_id"].blank? || attrs["foreign_language_level_id"].blank? }
 

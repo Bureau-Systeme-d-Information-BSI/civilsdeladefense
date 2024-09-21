@@ -40,4 +40,4 @@ RSpec/SpecFilePathFormat:
 
 RSpec/MultipleMemoizedHelpers:
   AllowSubject: true
-  Max: 6
+  Max: 7

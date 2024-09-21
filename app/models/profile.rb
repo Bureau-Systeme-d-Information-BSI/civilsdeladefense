@@ -21,6 +21,8 @@ class Profile < ApplicationRecord
 
   accepts_nested_attributes_for :profile_foreign_languages,
     reject_if: proc { |attrs| attrs["foreign_language_id"].blank? || attrs["foreign_language_level_id"].blank? }
+  accepts_nested_attributes_for :category_experience_levels,
+    reject_if: proc { |attrs| attrs["category_id"].blank? || attrs["experience_level_id"].blank? }
 
   #####################################
   # Validations

@@ -1,0 +1,31 @@
+%div{ data: { controller: "duplicator"}}
+  .rf-grid-row.fr-grid-row--center.d-none{ data: { duplicator: { target: :duplicated }}}
+    .rf-col-11
+      .rf-grid-row.rf-grid-row--gutters
+        .rf-col-6
+          - name = "#{name_prefix}[category_experience_levels_attributes][index][category_id]"
+          = label_tag name, t("simple_form.labels.defaults.category")
+          = select_tag name, options_for_select(nested_set_options(Category) {|i| "#{'-' * i.level} #{i.name}" }), class: "rf-select", include_blank: true
+        .rf-col-6
+          - name = "#{name_prefix}[category_experience_levels_attributes][index][experience_level_id]"
+          = label_tag name, t("simple_form.labels.defaults.experience_level")
+          = select_tag name, options_from_collection_for_select(ExperienceLevel.all, "id", "name"), class: "rf-select", include_blank: true
+    .rf-col-1.text-center.rf-mt-4w
+      %button.blank_button.rf-fi-delete-line{data: { action: 'click->duplicator#remove' }}
+  %div{ data: { duplicator: { target: :root }}}
+    - profile_form.object.category_experience_levels.each_with_index do |category_experience_level, index|
+      .rf-grid-row.fr-grid-row--center{ data: { duplicator: { target: :element }}}
+        .rf-col-11
+          .rf-grid-row.rf-grid-row--gutters
+            .rf-col-6
+              - name = "#{name_prefix}[category_experience_levels_attributes][#{index}][category_id]"
+              = label_tag name, t("simple_form.labels.defaults.category")
+              = select_tag name, options_for_select(nested_set_options(Category) {|i| "#{'-' * i.level} #{i.name}" }, category_experience_level.category_id), class: "rf-select", include_blank: true
+            .rf-col-6
+              - name = "#{name_prefix}[category_experience_levels_attributes][#{index}][experience_level_id]"
+              = label_tag name, t("simple_form.labels.defaults.experience_level")
+              = select_tag name, options_from_collection_for_select(ExperienceLevel.all, "id", "name", selected: category_experience_level.experience_level_id), class: "rf-select", include_blank: true
+        .rf-col-1.text-center.rf-mt-4w
+          %button.blank_button.rf-fi-delete-line{data: { action: 'click->duplicator#remove' }}
+
+  = button_tag("Ajouter un domaine professionnel", type: :button, class: 'rf-btn rf-mb-3w', data: { action: 'click->duplicator#duplicate' })

@@ -6,6 +6,7 @@ class Account::ProfilesController < Account::BaseController
 
   def update
     @profile.profile_foreign_languages = []
+    @profile.category_experience_levels = []
     @profile.assign_attributes(profile_params)
     if @profile.save
       redirect_to edit_account_profiles_path, notice: t(".success")
@@ -24,7 +25,8 @@ class Account::ProfilesController < Account::BaseController
       :study_level_id,
       :experience_level_id,
       :has_corporate_experience,
-      profile_foreign_languages_attributes: %i[foreign_language_id foreign_language_level_id]
+      profile_foreign_languages_attributes: %i[foreign_language_id foreign_language_level_id],
+      category_experience_levels_attributes: %i[category_id experience_level_id]
     )
   end
 end

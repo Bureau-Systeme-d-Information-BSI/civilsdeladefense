@@ -25,7 +25,10 @@
         = profile_form.association :study_level, required: true, input_html: { class: "rf-select" }
         = profile_form.association :experience_level, input_html: { class: "rf-select" }
         = profile_form.input :has_corporate_experience, label: "Expérience antérieure #{current_organization.operator_name}"
+
         = render partial: '/profile_foreign_languages/form', locals: { profile_form: profile_form, name_prefix: "job_application[user_attributes][profile_attributes]" }
+
+        = render partial: '/category_experience_levels/form', locals: { profile_form: profile_form, name_prefix: "job_application[user_attributes][profile_attributes]" }
 
     %h2.rf-h3= t('.documents')
     - job_application_files = @job_application.job_application_files.to_a

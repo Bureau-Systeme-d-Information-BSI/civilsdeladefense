@@ -138,7 +138,8 @@ class JobOffersController < ApplicationController
       gender has_corporate_experience age_range_id availability_range_id experience_level_id study_level_id
     ]
     profile_attributes << {
-      profile_foreign_languages_attributes: %i[foreign_language_id foreign_language_level_id]
+      profile_foreign_languages_attributes: %i[foreign_language_id foreign_language_level_id],
+      category_experience_levels_attributes: %i[category_id experience_level_id]
     }
 
     user_attributes = %i[first_name last_name phone website_url]

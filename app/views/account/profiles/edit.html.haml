@@ -4,7 +4,10 @@
       %h2.rf-h3= t('.title')
       .rf-mb-5w.rf-pb-5w
         = simple_form_for(@profile, url: [:account, :profiles], method: :patch) do |f|
-          = f.error_notification
+          - if f.object.errors[:base].present?
+            = f.error_notification message: f.object.errors[:base].to_sentence
+          - else
+            = f.error_notification
 
           .form-inputs
             = render partial: '/category_experience_levels/form', locals: { profile_form: f, name_prefix: "profile" }

@@ -2,8 +2,11 @@
   = render "devise/shared/france_connect"
 = simple_form_for(@job_application, url: [:send_application, @job_offer], method: :post, data: { turbo: true, controller: "form-save", form_save_target: "form", action: "change->form-save#saveFormData submit->form-save#clearFormData" }) do |f|
   .form-inputs.mt-3
-    = f.error_notification
-    = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+    - if f.object.errors["user.profile.base"].present?
+      = f.error_notification message: f.object.errors["user.profile.base"].to_sentence
+    - else
+      = f.error_notification
+
     %h2.rf-h3= t('.general_informations')
     = f.simple_fields_for :user do |user_form|
       = user_form.simple_fields_for :profile do |profile_form|

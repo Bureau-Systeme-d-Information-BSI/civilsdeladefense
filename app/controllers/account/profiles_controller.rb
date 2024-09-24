@@ -8,7 +8,7 @@ class Account::ProfilesController < Account::BaseController
     @profile.profile_foreign_languages = []
     @profile.category_experience_levels = []
     @profile.assign_attributes(profile_params)
-    if @profile.save
+    if @profile.save(context: :profile)
       redirect_to edit_account_profiles_path, notice: t(".success")
     else
       render :edit

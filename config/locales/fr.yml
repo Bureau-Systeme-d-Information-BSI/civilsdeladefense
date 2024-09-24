@@ -1173,6 +1173,10 @@ fr:
               f_h: "doit finir par F/H"
             application_deadline:
               in_the_past: "doit être dans le futur"
+        profile:
+          attributes:
+            base:
+              at_least_one_category_experience_level: "Vous devez choisir au moins un domaine professionnel et préciser votre expérience dans ce domaine"
         user:
           attributes:
             base:

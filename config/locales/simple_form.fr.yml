@@ -43,7 +43,7 @@ fr:
         estimate_annual_salary_gross: "Estimation annuel brut (fonction publique)"
         estimate_monthly_salary_net: "Estimation mensuel net (fonction publique)"
         experience_level: "Expérience"
-        experience_level_in_domain: "Expérience dans ce domaine"
+        experience_level_in_domain_html: "<span>Expérience dans ce domaine <abbr title='obligatoire'>*</abbr></span>"
         first_name: "Prénom"
         gender: "Civilité"
         has_corporate_experience: "Expérience antérieure au sein du Ministère des Armées"
@@ -62,7 +62,7 @@ fr:
         website_url: "LinkedIn, autre CV en ligne ou site Web"
         foreign_language: Langue étrangère
         foreign_language_level: Niveau de langue étrangère
-        category: "Domaine professionnel"
+        category_html: "<span>Domaine professionnel <abbr title='obligatoire'>*</abbr></span>"
         level: "Categorie / Niveau de l'offre"
         spontaneous: "Candidature spontanée"
         job_applications_count: "Candidatures"

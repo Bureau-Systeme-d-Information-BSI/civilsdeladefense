@@ -24,6 +24,14 @@ class Profile < ApplicationRecord
   accepts_nested_attributes_for :category_experience_levels,
     reject_if: proc { |attrs| attrs["category_id"].blank? || attrs["experience_level_id"].blank? }
 
+  validate :at_least_one_category_experience_level, on: :profile
+
+  def at_least_one_category_experience_level
+    return if category_experience_levels.any?
+
+    errors.add(:base, :at_least_one_category_experience_level)
+  end
+
   #####################################
   # Validations
 

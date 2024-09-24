@@ -43,6 +43,7 @@ fr:
         estimate_annual_salary_gross: "Estimation annuel brut (fonction publique)"
         estimate_monthly_salary_net: "Estimation mensuel net (fonction publique)"
         experience_level: "Expérience"
+        experience_level_in_domain: "Expérience dans ce domaine"
         first_name: "Prénom"
         gender: "Civilité"
         has_corporate_experience: "Expérience antérieure au sein du Ministère des Armées"

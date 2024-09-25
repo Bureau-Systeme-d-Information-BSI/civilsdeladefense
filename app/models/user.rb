@@ -68,13 +68,13 @@ class User < ApplicationRecord
   }
 
   scope :by_category, ->(*category_ids) {
-    joins(job_applications: :job_offer).where(
-      job_applications: {category_id: category_ids}
-    ).or(
-      joins(job_applications: :job_offer).where(
-        job_applications: {job_offers: {category_id: category_ids}}
-      )
-    )
+    joins(profile: :category_experience_levels)
+      .where(category_experience_levels: {category_id: category_ids})
+  }
+
+  scope :by_experience_level, ->(*experience_level_ids) {
+    joins(profile: :category_experience_levels)
+      .where(category_experience_levels: {experience_level_id: experience_level_ids})
   }
 
   attr_accessor :is_deleted, :delete_photo
@@ -87,7 +87,7 @@ class User < ApplicationRecord
   after_save :dedupe_departments, if: -> { departments.any? }
 
   def self.ransackable_scopes(auth_object = nil)
-    %i[concerned by_category]
+    %i[concerned by_category by_experience_level]
   end
 
   def full_name

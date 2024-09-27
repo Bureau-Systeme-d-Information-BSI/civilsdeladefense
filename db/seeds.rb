@@ -570,6 +570,7 @@ user = User.new(
 )
 user.build_profile(
   gender: "other",
+  study_level_id: StudyLevel.all.sample.id,
   profile_foreign_languages_attributes: {
     "0" => { foreign_language_id: ForeignLanguage.first.id, foreign_language_level_id: ForeignLanguageLevel.all.sample.id },
     "1" => { foreign_language_id: ForeignLanguage.last.id, foreign_language_level_id: ForeignLanguageLevel.all.sample.id }
@@ -628,6 +629,7 @@ user_candidate_of_all = User.new(
 )
 user_candidate_of_all.build_profile(
   gender: "other",
+  study_level_id: StudyLevel.all.sample.id,
   profile_foreign_languages_attributes: {
     "0" => { foreign_language_id: ForeignLanguage.first.id, foreign_language_level_id: ForeignLanguageLevel.all.sample.id },
     "1" => { foreign_language_id: ForeignLanguage.last.id, foreign_language_level_id: ForeignLanguageLevel.all.sample.id }
@@ -661,6 +663,7 @@ JobOffer.where.not(contract_duration_id: nil).where.not(id: [job_offer4.id, job_
     )
     user.build_profile(
       gender: "other",
+      study_level_id: StudyLevel.all.sample.id,
       profile_foreign_languages_attributes: {
         "0" => { foreign_language_id: ForeignLanguage.first.id, foreign_language_level_id: ForeignLanguageLevel.all.sample.id },
         "1" => { foreign_language_id: ForeignLanguage.last.id, foreign_language_level_id: ForeignLanguageLevel.all.sample.id }

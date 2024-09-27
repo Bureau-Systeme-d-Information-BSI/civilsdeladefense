@@ -24,6 +24,8 @@
                 = "-"
                 = category_experience_level.experience_level.name
                 %br
+            .col-12.study-level
+              = user.profile.study_level&.name
             .col-12.user-job-applications-count
               = user.job_applications_count
       .card-footer.d-flex.flex-column.flex-md-row

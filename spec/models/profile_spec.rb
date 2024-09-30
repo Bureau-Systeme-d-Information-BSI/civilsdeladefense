@@ -5,6 +5,10 @@ require "rails_helper"
 RSpec.describe Profile do
   let(:profile) { build(:profile) }
 
+  describe "associations" do
+    it { is_expected.to have_one(:resume).dependent(:destroy) }
+  end
+
   it "is valid with valid attributes" do
     expect(profile).to be_valid
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_31_142102) do
+ActiveRecord::Schema[7.1].define(version: 2024_09_30_075043) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -718,6 +718,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_31_142102) do
     t.index ["position"], name: "index_rejection_reasons_on_position"
   end
 
+  create_table "resumes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "profile_id", null: false
+    t.string "content_file_name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["profile_id"], name: "index_resumes_on_profile_id"
+  end
+
   create_table "salary_ranges", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "estimate_annual_salary_gross"
     t.uuid "professional_category_id"
@@ -862,6 +870,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_31_142102) do
   add_foreign_key "profiles", "availability_ranges"
   add_foreign_key "profiles", "experience_levels"
   add_foreign_key "profiles", "study_levels"
+  add_foreign_key "resumes", "profiles"
   add_foreign_key "salary_ranges", "experience_levels"
   add_foreign_key "salary_ranges", "professional_categories"
   add_foreign_key "salary_ranges", "sectors"

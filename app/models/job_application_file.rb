@@ -3,7 +3,7 @@
 # Container for real file mandatory to fullfill a job application
 class JobApplicationFile < ApplicationRecord
   include Securable
-  attr_accessor :job_application_file_existing_id, :do_not_provide_immediately
+  attr_accessor :job_application_file_existing_id, :do_not_provide_immediately, :remote_content_url
 
   belongs_to :job_application
   belongs_to :job_application_file_type

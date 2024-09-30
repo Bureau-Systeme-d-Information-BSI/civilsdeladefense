@@ -59,18 +59,18 @@ class JobOffersController < ApplicationController
     @job_application = JobApplication.new(job_application_params)
     @job_application.job_offer = @job_offer
     @job_application.organization = @job_offer.organization
+    @job_application.user = current_user if user_signed_in?
+    @job_application.user.organization = current_organization unless user_signed_in?
 
     if user_signed_in?
-      @job_application.user = current_user
       if job_application_params[:user_attributes].present?
         @job_application.user.assign_attributes(
-          job_application_params[:user_attributes].except(:department_users_attributes)
+          job_application_params[:user_attributes].except(:department_users_attributes, :profile_attributes)
         )
       end
       @job_application.user.departments = departments
+      @job_application.user.profile.assign_attributes(job_application_params[:user_attributes][:profile_attributes])
     end
-
-    @job_application.user.organization = current_organization
 
     respond_to do |format|
       if @job_application.save
@@ -133,29 +133,42 @@ class JobOffersController < ApplicationController
   end
 
   def job_application_params
-    permitted_params = %i[category_id]
-    profile_attributes = %i[
-      gender has_corporate_experience age_range_id availability_range_id experience_level_id study_level_id
-    ]
-    profile_attributes << {
-      profile_foreign_languages_attributes: %i[foreign_language_id foreign_language_level_id]
-    }
-
-    user_attributes = %i[first_name last_name phone website_url]
-    user_attributes << {profile_attributes: profile_attributes}
-
-    base_user_attributes = %i[
-      photo email password password_confirmation terms_of_service certify_majority
-      receive_job_offer_mails
-    ]
-    user_attributes << {
-      department_users_attributes: %i[department_id]
-    }
-    user_attributes += base_user_attributes unless user_signed_in?
-    permitted_params << {user_attributes: user_attributes}
-    job_application_files_attributes = %i[content job_application_file_type_id job_application_file_existing_id]
-    permitted_params << {job_application_files_attributes: job_application_files_attributes}
-    params.require(:job_application).permit(permitted_params)
+    params.require(:job_application).permit(
+      :category_id,
+      user_attributes: [
+        :first_name,
+        :last_name,
+        :phone,
+        :website_url,
+        :photo,
+        :email,
+        :password,
+        :password_confirmation,
+        :terms_of_service,
+        :certify_majority,
+        :receive_job_offer_mails,
+        profile_attributes: [
+          :gender,
+          :has_corporate_experience,
+          :age_range_id,
+          :availability_range_id,
+          :experience_level_id,
+          :study_level_id,
+          profile_foreign_languages_attributes: [
+            :foreign_language_id,
+            :foreign_language_level_id
+          ]
+        ],
+        department_users_attributes: [
+          :department_id
+        ]
+      ],
+      job_application_files_attributes: [
+        :content,
+        :job_application_file_type_id,
+        :job_application_file_existing_id
+      ]
+    )
   end
 
   def search_params

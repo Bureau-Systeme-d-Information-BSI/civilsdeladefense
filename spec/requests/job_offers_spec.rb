@@ -270,6 +270,8 @@ RSpec.describe "JobOffers" do
 
       it { expect(post_request).to redirect_to(successful_job_offer_path(job_offer.slug)) }
 
+      it { expect { post_request }.not_to change { user.reload.profile } }
+
       describe "created job application" do
         before { post_request }
 

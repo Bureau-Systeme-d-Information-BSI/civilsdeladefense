@@ -41,7 +41,9 @@
         = file_form.hidden_field :job_application_file_type_id
         = file_form.input :content, label: job_application_file_type.name, required: false
         - if current_user
-          - collection = current_user.job_application_files.where(job_application_file_type: job_application_file_type).uniq { |f| f.content_file_name }
+          - collection = []
+          - collection << current_user.profile.resume if current_user.profile.resume.present?
+          - collection += current_user.job_application_files.where(job_application_file_type: job_application_file_type).uniq { |f| f.content_file_name }
           = file_form.input :job_application_file_existing_id, collection: collection, label_method: :content_file_name, value_method: :id, input_html: { class: "rf-select" } if collection.any?
 
     %h2.rf-h3= t('.your_internet_presence')

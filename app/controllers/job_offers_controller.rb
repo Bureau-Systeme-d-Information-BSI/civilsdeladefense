@@ -70,6 +70,22 @@ class JobOffersController < ApplicationController
       end
       @job_application.user.departments = departments
       @job_application.user.profile.assign_attributes(job_application_params[:user_attributes][:profile_attributes])
+
+      @job_application.job_application_files.select do |job_application_file|
+        job_application_file.job_application_file_existing_id == current_user.profile&.resume&.id
+      end.each do |resume|
+        @job_application.job_application_files = @job_application.job_application_files - [resume]
+        jaf = JobApplicationFile.new(
+          job_application: @job_application,
+          job_application_file_type_id: resume.job_application_file_type_id
+        )
+        if Rails.env.development?
+          jaf.content = current_user.profile.resume.content.file.path
+        else
+          jaf.remote_content_url = current_user.profile.resume.content_url
+        end
+        @job_application.job_application_files << jaf
+      end
     end
 
     respond_to do |format|

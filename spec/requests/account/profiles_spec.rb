@@ -24,7 +24,8 @@ RSpec.describe "Account::Profiles" do
           availability_range_id:,
           study_level_id:,
           experience_level_id:,
-          has_corporate_experience: true
+          has_corporate_experience: true,
+          resume_attributes: {content: fixture_file_upload("document.pdf", "application/pdf")}
         }
       }
     end
@@ -48,6 +49,10 @@ RSpec.describe "Account::Profiles" do
       it { expect(profile.experience_level_id).to eq(experience_level_id) }
 
       it { expect(profile.has_corporate_experience).to be(true) }
+
+      it { expect(profile.resume).to be_present }
+
+      it { expect(profile.resume.content).to be_present }
     end
 
     describe "response" do

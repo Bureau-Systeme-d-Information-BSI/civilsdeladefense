@@ -17,5 +17,12 @@
 
             = render partial: '/profile_foreign_languages/form', locals: { profile_form: f, name_prefix: "profile" }
 
+            = f.simple_fields_for :resume do |resume_form|
+              - label = @profile.resume.content.blank? ? t('.resume') : t('.resume_html')
+              = resume_form.input :content, label:, as: :file, required: @profile.resume.content.blank?
+
+            - if @profile.resume.content.present?
+              = link_to(@profile.resume.content_file_name, @profile.resume.content.url, target: '_blank')
+
           .rf-input-group.rf-grid-row.justify-content-end.rf-mt-3w
             = f.button :submit, t('buttons.save'), class: 'rf-btn'

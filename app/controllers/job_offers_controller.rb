@@ -67,9 +67,11 @@ class JobOffersController < ApplicationController
         @job_application.user.assign_attributes(
           job_application_params[:user_attributes].except(:department_users_attributes, :profile_attributes)
         )
+        if job_application_params[:user_attributes][:profile_attributes].present?
+          @job_application.user.profile.assign_attributes(job_application_params[:user_attributes][:profile_attributes])
+        end
       end
       @job_application.user.departments = departments
-      @job_application.user.profile.assign_attributes(job_application_params[:user_attributes][:profile_attributes])
 
       @job_application.job_application_files.select do |job_application_file|
         job_application_file.job_application_file_existing_id.present? && job_application_file.job_application_file_existing_id == current_user.profile&.resume&.id

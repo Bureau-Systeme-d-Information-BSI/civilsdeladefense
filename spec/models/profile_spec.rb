@@ -4,11 +4,12 @@ require "rails_helper"
 
 RSpec.describe Profile do
   describe "validations" do
-    let(:profile) { build(:profile) }
+    it { expect(build(:profile)).to be_valid }
 
-    it { expect(profile).to be_valid }
+    it { expect(build(:profile, :with_resume)).to be_valid }
 
     it "has correct gender" do
+      profile = build(:profile)
       profile.gender = 2
       expect(profile.gender).to eq("male")
     end
@@ -80,6 +81,7 @@ end
 #  has_corporate_experience :boolean
 #  is_currently_employed    :boolean
 #  profileable_type         :string
+#  resume_file_name         :string
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #  age_range_id             :uuid

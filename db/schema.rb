@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_09_21_073757) do
+ActiveRecord::Schema[7.1].define(version: 2024_10_02_131847) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -723,6 +723,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_09_21_073757) do
     t.datetime "updated_at", precision: nil, null: false
     t.uuid "availability_range_id"
     t.uuid "age_range_id"
+    t.string "resume_file_name"
     t.index ["age_range_id"], name: "index_profiles_on_age_range_id"
     t.index ["availability_range_id"], name: "index_profiles_on_availability_range_id"
     t.index ["experience_level_id"], name: "index_profiles_on_experience_level_id"

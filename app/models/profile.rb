@@ -27,6 +27,9 @@ class Profile < ApplicationRecord
     reject_if: proc { |attrs| attrs["category_id"].blank? || attrs["experience_level_id"].blank? }
   accepts_nested_attributes_for :department_profiles, reject_if: :all_blank
 
+  mount_uploader :resume, DocumentUploader, mount_on: :resume_file_name
+  validates :resume, file_size: {less_than: 2.megabytes}, if: -> { resume.present? }
+
   validate :at_least_one_category_experience_level, on: :profile
 
   def at_least_one_category_experience_level
@@ -60,6 +63,7 @@ end
 #  has_corporate_experience :boolean
 #  is_currently_employed    :boolean
 #  profileable_type         :string
+#  resume_file_name         :string
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #  age_range_id             :uuid

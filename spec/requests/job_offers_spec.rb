@@ -256,12 +256,12 @@ RSpec.describe "JobOffers" do
                   "1" => {
                     foreign_language_id: ForeignLanguage.last.id,
                     foreign_language_level_id: ForeignLanguageLevel.last.id
-                  },
-                  :category_experience_levels_attributes => {
-                    "0" => {
-                      category_id: Category.first.id,
-                      experience_level_id: ExperienceLevel.first.id
-                    }
+                  }
+                },
+                category_experience_levels_attributes: {
+                  "0" => {
+                    category_id: Category.first.id,
+                    experience_level_id: ExperienceLevel.first.id
                   }
                 },
                 department_profiles_attributes: {

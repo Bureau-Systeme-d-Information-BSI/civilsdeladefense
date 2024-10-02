@@ -2,6 +2,8 @@
 
 # Candidate to job offer
 class User < ApplicationRecord
+  self.ignored_columns += %w[gender] # Deprecated on 2024-09-03
+
   PASSWORD_REGEX = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[\\\/<>{}()#¤:;,.?!•·|"'`´~@£¨µ§²$€%^&*+=_-]).{12,70}$/
 
   def self.omniauth_providers
@@ -48,9 +50,6 @@ class User < ApplicationRecord
   phony_normalize :phone, default_country_code: "FR"
 
   mount_uploader :photo, PhotoUploader, mount_on: :photo_file_name
-
-  # TODO: SEB remove gender from users
-  enum gender: {female: 1, male: 2, other: 3}
 
   validates :photo, file_size: {less_than: 1.megabytes}
   validates :first_name, :last_name, presence: true

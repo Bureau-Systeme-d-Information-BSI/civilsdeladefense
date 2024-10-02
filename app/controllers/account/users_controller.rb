@@ -136,7 +136,8 @@ class Account::UsersController < Account::BaseController
       :address,
       :postal_code,
       :city,
-      department_users_attributes: %i[department_id]
+      department_users_attributes: %i[department_id],
+      profile_attributes: %i[id gender]
     )
 
     if filtered_params[:photo].present? || filtered_params[:delete_photo] == "0"

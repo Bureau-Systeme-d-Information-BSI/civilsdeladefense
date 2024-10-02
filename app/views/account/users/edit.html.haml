@@ -8,7 +8,8 @@
             .autocomplete{ data: { autocomplete_address_target: :query } }
           = f.error_notification
           .form-inputs
-            = f.input :gender, collection: enum_options_for_select(User, :gender), input_html: { class: "rf-select" }, label_required: true, include_blank: false
+            = f.simple_fields_for :profile do |profile_form|
+              = profile_form.input :gender, collection: gender_options_for_select, input_html: { class: "rf-select" }, required: true
             = f.input :first_name
             = f.input :last_name
             = f.input :phone

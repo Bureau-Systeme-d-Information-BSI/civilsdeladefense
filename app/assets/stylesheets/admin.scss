@@ -328,7 +328,7 @@ a {
   @extend .text-truncate, .font-weight-bold, .text-primary;
 }
 .job-application {
-  .user-card-title, .user-full-name, .category-experience-levels, .personal-profile-current-position, .personal-profile-is-currently-employed, .user-job-applications-count, .personal-profile-address-short {
+  .user-card-title, .user-full-name, .category-experience-levels, .study-level, .personal-profile-current-position, .personal-profile-is-currently-employed, .user-job-applications-count, .personal-profile-address-short {
     @extend .text-dark;
   }
 }
@@ -338,19 +338,24 @@ a {
 .personal-profile-address-short {
   padding-left: 5px;
 }
-.category-experience-levels, .personal-profile-current-position, .personal-profile-is-currently-employed, .user-job-applications-count {
+.category-experience-levels, .study-level, .personal-profile-current-position, .personal-profile-is-currently-employed, .user-job-applications-count {
   padding-left: 5px;
   padding-right: 5px;
 }
 .user-full-name {
   @extend .col-md-5;
-  flex: 0 0 30%;
-  max-width: 30%;
+  flex: 0 0 35%;
+  max-width: 35%;
 }
 .category-experience-levels {
   @extend .col-md-5;
-  flex: 0 0 36%;
-  max-width: 36%;
+  flex: 0 0 29%;
+  max-width: 29%;
+}
+.study-level {
+  @extend .col-md-5;
+  flex: 0 0 25%;
+  max-width: 25%;
 }
 .personal-profile-current-position {
   @extend .col-md-5;
@@ -372,7 +377,6 @@ a {
   flex: 0 0 15%;
   max-width: 15%;
 }
-
 
 .job_application_user_profile_address {
   .ap-icon-pin {

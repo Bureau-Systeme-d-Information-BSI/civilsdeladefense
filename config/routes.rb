@@ -201,6 +201,7 @@ Rails.application.routes.draw do
   authenticate :user do
     namespace "account", path: "espace-candidat" do
       resource :profiles, path: "mon-profil", only: [] do
+        resource :resume, only: :show
         collection do
           get :edit
           patch :update

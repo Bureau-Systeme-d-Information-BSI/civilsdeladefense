@@ -237,6 +237,8 @@ fr:
     profiles:
       edit:
         title: "Mon profil candidat"
+        resume: "CV (PDF uniquement, max 2Mo)"
+        resume_html: "CV (PDF uniquement, max 2Mo) <abbr title='obligatoire'>*</abbr>"
       update:
         success: "Profil mis à jour !"
     users:

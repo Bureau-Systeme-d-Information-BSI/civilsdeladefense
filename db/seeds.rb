@@ -577,7 +577,8 @@ user.build_profile(
   category_experience_levels_attributes: {
     "0" => { category_id: Category.first.id, experience_level_id: ExperienceLevel.all.sample.id },
     "1" => { category_id: Category.last.id, experience_level_id: ExperienceLevel.all.sample.id }
-  }
+  },
+  resume: file
 )
 user.skip_confirmation_notification!
 user.save!
@@ -648,7 +649,8 @@ user_candidate_of_all.build_profile(
   category_experience_levels_attributes: {
     "0" => { category_id: Category.first.id, experience_level_id: ExperienceLevel.all.sample.id },
     "1" => { category_id: Category.last.id, experience_level_id: ExperienceLevel.all.sample.id }
-  }
+  },
+  resume: file
 )
 user_candidate_of_all.skip_confirmation_notification!
 user_candidate_of_all.save!
@@ -694,7 +696,8 @@ JobOffer.where.not(contract_duration_id: nil).where.not(id: [job_offer4.id, job_
       category_experience_levels_attributes: {
         "0" => { category_id: Category.first.id, experience_level_id: ExperienceLevel.all.sample.id },
         "1" => { category_id: Category.last.id, experience_level_id: ExperienceLevel.all.sample.id }
-      }
+      },
+      resume: file
     )
     user.skip_confirmation_notification!
     user.save!

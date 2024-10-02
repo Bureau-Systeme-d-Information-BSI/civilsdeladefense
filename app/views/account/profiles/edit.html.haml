@@ -24,5 +24,13 @@
 
             = render partial: '/department_profiles/form', locals: { form: f, name_prefix: :profile, department_profiles: @profile.department_profiles }
 
+            .d-flex.align-items-end
+              %div
+                - label = @profile.resume.blank? ? t('.resume') : t('.resume_html')
+                = f.input :resume, label:, as: :file, required: @profile.resume.blank?
+              %div.rf-ml-3w
+                - if @profile.resume.present?
+                  = link_to @profile.resume_file_name, account_profiles_resume_path, target: '_blank'
+
           .rf-input-group.rf-grid-row.justify-content-end.rf-mt-3w
             = f.button :submit, t('buttons.save'), class: 'rf-btn'

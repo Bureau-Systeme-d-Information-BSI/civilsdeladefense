@@ -24,13 +24,20 @@ RSpec.describe "Account::Profiles" do
           availability_range_id:,
           study_level_id:,
           experience_level_id:,
-          has_corporate_experience: true
+          has_corporate_experience: true,
+          category_experience_levels_attributes: {
+            "0": {
+              category_id:,
+              experience_level_id:
+            }
+          }
         }
       }
     end
     let(:availability_range_id) { AvailabilityRange.first.id }
     let(:study_level_id) { create(:study_level).id }
     let(:experience_level_id) { create(:experience_level).id }
+    let(:category_id) { create(:category).id }
 
     before { user.update!(profile: create(:profile, profileable: user)) }
 
@@ -48,6 +55,12 @@ RSpec.describe "Account::Profiles" do
       it { expect(profile.experience_level_id).to eq(experience_level_id) }
 
       it { expect(profile.has_corporate_experience).to be(true) }
+
+      it { expect(profile.reload.category_experience_levels.count).to eq(1) }
+
+      it { expect(profile.category_experience_levels.first.category_id).to eq(category_id) }
+
+      it { expect(profile.category_experience_levels.first.experience_level_id).to eq(experience_level_id) }
     end
 
     describe "response" do

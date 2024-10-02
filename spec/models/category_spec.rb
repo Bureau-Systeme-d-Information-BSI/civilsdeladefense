@@ -9,6 +9,8 @@ RSpec.describe Category do
     it { is_expected.to have_many(:job_offers).dependent(:nullify) }
 
     it { is_expected.to have_many(:job_applications).dependent(:nullify) }
+
+    it { is_expected.to have_many(:category_experience_levels).dependent(:destroy) }
   end
 end
 

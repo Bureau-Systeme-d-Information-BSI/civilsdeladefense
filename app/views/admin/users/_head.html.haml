@@ -52,14 +52,18 @@
                 .notification= job_application.files_unread_count
               = t('.nav_files', count: job_application.files_count)
   .col-3{class: job_application_modal_section_classes('pb-0')}
+    .text-center.font-weight-bold.text-secondary
+      Domaines professionnels
     .d-flex.flex-column.align-items-center
-      - user.job_applications.with_category.each do |job_application|
+      - user.profile.category_experience_levels.each do |category_experience_level|
         %div
-          %strong= job_application.category.name
-          - if user.profile.experience_level.present?
+          %strong= category_experience_level.category.name
+          - if category_experience_level.experience_level.present?
             = "-"
-            = user.profile.experience_level.name
+            = category_experience_level.experience_level.name
   .col-3{class: job_application_modal_section_classes('pb-0')}
+    .text-center.font-weight-bold.text-secondary
+      Souhaits géographiques
     .d-flex.flex-column.align-items-center
       - user.departments.each do |department|
         %div= department.short_label

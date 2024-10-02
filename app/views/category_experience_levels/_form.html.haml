@@ -1,0 +1,32 @@
+%div{ data: { controller: "duplicator category-experience-levels", duplicator_max_value: 3 }}
+  .rf-grid-row.fr-grid-row--center.d-none{ data: { duplicator: { target: :duplicated }}}
+    .rf-col-11
+      .rf-grid-row.rf-grid-row--gutters
+        .rf-col-6
+          - name = "#{name_prefix}[category_experience_levels_attributes][index][category_id]"
+          = label_tag name, t("simple_form.labels.defaults.category_html")
+          = select_tag name, categories_options_for_select, class: "rf-select", include_blank: true
+        .rf-col-6
+          - name = "#{name_prefix}[category_experience_levels_attributes][index][experience_level_id]"
+          = label_tag name, t("simple_form.labels.defaults.experience_level_in_domain_html")
+          = select_tag name, options_from_collection_for_select(ExperienceLevel.all, "id", "name"), class: "rf-select", include_blank: true
+    .rf-col-1.text-center.rf-mt-4w
+      %button.blank_button.rf-fi-delete-line{data: { action: 'click->duplicator#remove click->category-experience-levels#remove' }}
+  %div{ data: { duplicator: { target: :root }}}
+    - profile_form.object.category_experience_levels.each_with_index do |category_experience_level, index|
+      .rf-grid-row.fr-grid-row--center{ data: { duplicator: { target: :element }, category_experience_levels_target: "element" }}
+        .rf-col-11
+          .rf-grid-row.rf-grid-row--gutters
+            .rf-col-6
+              - name = "#{name_prefix}[category_experience_levels_attributes][#{index}][category_id]"
+              = label_tag name, t("simple_form.labels.defaults.category_html")
+              = select_tag name, categories_options_for_select(category_experience_level.category_id), class: "rf-select", include_blank: true
+            .rf-col-6
+              - name = "#{name_prefix}[category_experience_levels_attributes][#{index}][experience_level_id]"
+              = label_tag name, t("simple_form.labels.defaults.experience_level_in_domain_html")
+              = select_tag name, options_from_collection_for_select(ExperienceLevel.all, "id", "name", selected: category_experience_level.experience_level_id), class: "rf-select", include_blank: true
+        .rf-col-1.text-center.rf-mt-4w
+          %button.blank_button.rf-fi-delete-line{data: { action: 'click->duplicator#remove click->category-experience-levels#remove' }}
+
+  = button_tag("Ajouter un domaine et une expérience", type: :button, class: 'rf-btn', data: { action: 'click->duplicator#duplicate click->category-experience-levels#add', duplicator_target: "addButton", category_experience_levels_target: "addButton" })
+  %div.rf-mb-3w

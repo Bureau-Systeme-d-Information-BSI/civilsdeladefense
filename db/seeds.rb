@@ -269,17 +269,11 @@ Category.create!(name: "Archives")
 Category.create!(name: "Audit")
 Category.create!(name: "Communication")
 infrastructure = Category.create!(name: "Infrastructure")
-sub_infrastructure = Category.create!(
-  name: "Sous-infrastructure", parent: infrastructure
-)
-sub_sub_infrastructure = Category.create!(
-  name: "Sous sous-infrastructure", parent: sub_infrastructure
-)
+sub_infrastructure = Category.create!(name: "Opérations", parent: infrastructure)
+sub_sub_infrastructure = Category.create!(name: "AWS", parent: sub_infrastructure)
 informatique = Category.create!(name: "Informatique")
-sub_informatique = Category.create!(name: "Sous-informatique", parent: informatique)
-sub_sub_informatique = Category.create!(
-  name: "Sous sous-informatique", parent: sub_informatique
-)
+sub_informatique = Category.create!(name: "Développement", parent: informatique)
+sub_sub_informatique = Category.create!(name: "Ruby on Rails", parent: sub_informatique)
 
 ProfessionalCategory.create!(name: "Cadre")
 ProfessionalCategory.create!(name: "Non Cadre")
@@ -574,6 +568,18 @@ user = User.new(
   departments: [Department.none],
   receive_job_offer_mails: true
 )
+user.build_profile(
+  gender: "other",
+  study_level_id: StudyLevel.all.sample.id,
+  profile_foreign_languages_attributes: {
+    "0" => { foreign_language_id: ForeignLanguage.first.id, foreign_language_level_id: ForeignLanguageLevel.all.sample.id },
+    "1" => { foreign_language_id: ForeignLanguage.last.id, foreign_language_level_id: ForeignLanguageLevel.all.sample.id }
+  },
+  category_experience_levels_attributes: {
+    "0" => { category_id: Category.first.id, experience_level_id: ExperienceLevel.all.sample.id },
+    "1" => { category_id: Category.last.id, experience_level_id: ExperienceLevel.all.sample.id }
+  }
+)
 user.skip_confirmation_notification!
 user.save!
 user.confirm
@@ -583,13 +589,8 @@ job_application = JobApplication.new { |ja|
   ja.job_offer = job_offer
   ja.user = user
 }
-job_application.build_profile(gender: "male")
-job_application.job_application_files.build(
-  content: file, job_application_file_type: resume
-)
-job_application.job_application_files.build(
-  content: file, job_application_file_type: cover_letter
-)
+job_application.job_application_files.build(content: file, job_application_file_type: resume)
+job_application.job_application_files.build(content: file, job_application_file_type: cover_letter)
 job_application.save!
 
 Audited.audit_class.as_user(super_admin) do
@@ -608,13 +609,8 @@ job_application2 = JobApplication.new { |ja|
   ja.job_offer = job_offer2
   ja.user = user
 }
-job_application2.build_profile(gender: "male")
-job_application2.job_application_files.build(
-  content: file, job_application_file_type: resume
-)
-job_application2.job_application_files.build(
-  content: file, job_application_file_type: cover_letter
-)
+job_application2.job_application_files.build(content: file, job_application_file_type: resume)
+job_application2.job_application_files.build(content: file, job_application_file_type: cover_letter)
 job_application2.save!
 
 user_candidate_of_all = User.new(
@@ -630,6 +626,18 @@ user_candidate_of_all = User.new(
   phone: "0606060606",
   website_url: "https://www.linkedin.com/in/nicolas_agoini",
   departments: Department.all.sample(2)
+)
+user_candidate_of_all.build_profile(
+  gender: "other",
+  study_level_id: StudyLevel.all.sample.id,
+  profile_foreign_languages_attributes: {
+    "0" => { foreign_language_id: ForeignLanguage.first.id, foreign_language_level_id: ForeignLanguageLevel.all.sample.id },
+    "1" => { foreign_language_id: ForeignLanguage.last.id, foreign_language_level_id: ForeignLanguageLevel.all.sample.id }
+  },
+  category_experience_levels_attributes: {
+    "0" => { category_id: Category.first.id, experience_level_id: ExperienceLevel.all.sample.id },
+    "1" => { category_id: Category.last.id, experience_level_id: ExperienceLevel.all.sample.id }
+  }
 )
 user_candidate_of_all.skip_confirmation_notification!
 user_candidate_of_all.save!
@@ -653,6 +661,18 @@ JobOffer.where.not(contract_duration_id: nil).where.not(id: [job_offer4.id, job_
       website_url: "https://www.linkedin.com/in/#{SecureRandom.hex(5)}",
       departments: Department.all.sample(2)
     )
+    user.build_profile(
+      gender: "other",
+      study_level_id: StudyLevel.all.sample.id,
+      profile_foreign_languages_attributes: {
+        "0" => { foreign_language_id: ForeignLanguage.first.id, foreign_language_level_id: ForeignLanguageLevel.all.sample.id },
+        "1" => { foreign_language_id: ForeignLanguage.last.id, foreign_language_level_id: ForeignLanguageLevel.all.sample.id }
+        },
+      category_experience_levels_attributes: {
+        "0" => { category_id: Category.first.id, experience_level_id: ExperienceLevel.all.sample.id },
+        "1" => { category_id: Category.last.id, experience_level_id: ExperienceLevel.all.sample.id }
+      }
+    )
     user.skip_confirmation_notification!
     user.save!
     user.confirm
@@ -664,17 +684,8 @@ JobOffer.where.not(contract_duration_id: nil).where.not(id: [job_offer4.id, job_
       ja.created_at = 1.upto(6).map { |x| x.days.ago }
       ja.experiences_fit_job_offer = boolean_choices.sample
     }
-    job_application.build_profile(
-      gender: Profile.genders.keys.sample,
-      is_currently_employed: boolean_choices.sample,
-      has_corporate_experience: boolean_choices.sample
-    )
-    job_application.job_application_files.build(
-      content: file, job_application_file_type: resume
-    )
-    job_application.job_application_files.build(
-      content: file, job_application_file_type: cover_letter
-    )
+    job_application.job_application_files.build(content: file, job_application_file_type: resume)
+    job_application.job_application_files.build(content: file, job_application_file_type: cover_letter)
     job_application.job_offer.initial!
     job_application.save!
 
@@ -703,15 +714,8 @@ JobOffer.where.not(contract_duration_id: nil).where.not(id: [job_offer4.id, job_
     ja.job_offer = job_offer
     ja.user = user_candidate_of_all
   }
-  job_application.build_profile(
-    gender: Profile.genders.keys.sample
-  )
-  job_application.job_application_files.build(
-    content: file, job_application_file_type: resume
-  )
-  job_application.job_application_files.build(
-    content: file, job_application_file_type: cover_letter
-  )
+  job_application.job_application_files.build(content: file, job_application_file_type: resume)
+  job_application.job_application_files.build(content: file, job_application_file_type: cover_letter)
   job_application.job_offer.initial!
   job_application.save!
 

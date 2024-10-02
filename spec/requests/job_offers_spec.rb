@@ -133,6 +133,12 @@ RSpec.describe "JobOffers" do
                     foreign_language_id: ForeignLanguage.last.id,
                     foreign_language_level_id: ForeignLanguageLevel.last.id
                   }
+                },
+                category_experience_levels_attributes: {
+                  "0" => {
+                    category_id: Category.first.id,
+                    experience_level_id: ExperienceLevel.first.id
+                  }
                 }
               },
               department_users_attributes: {
@@ -216,6 +222,12 @@ RSpec.describe "JobOffers" do
             [ForeignLanguageLevel.first.id, ForeignLanguageLevel.last.id]
           )
         end
+
+        it { expect(profile.category_experience_levels.count).to eq(1) }
+
+        it { expect(profile.category_experience_levels.first.category_id).to eq(Category.first.id) }
+
+        it { expect(profile.category_experience_levels.first.experience_level_id).to eq(ExperienceLevel.first.id) }
       end
     end
 
@@ -244,6 +256,12 @@ RSpec.describe "JobOffers" do
                   "1" => {
                     foreign_language_id: ForeignLanguage.last.id,
                     foreign_language_level_id: ForeignLanguageLevel.last.id
+                  }
+                },
+                category_experience_levels_attributes: {
+                  "0" => {
+                    category_id: Category.first.id,
+                    experience_level_id: ExperienceLevel.first.id
                   }
                 }
               },
@@ -326,6 +344,12 @@ RSpec.describe "JobOffers" do
             [ForeignLanguageLevel.first.id, ForeignLanguageLevel.last.id]
           )
         end
+
+        it { expect(profile.category_experience_levels.count).to eq(1) }
+
+        it { expect(profile.category_experience_levels.first.category_id).to eq(Category.first.id) }
+
+        it { expect(profile.category_experience_levels.first.experience_level_id).to eq(ExperienceLevel.first.id) }
       end
     end
   end

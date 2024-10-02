@@ -73,7 +73,7 @@ class JobOffersController < ApplicationController
     @job_application.user.organization = current_organization
 
     respond_to do |format|
-      if @job_application.save
+      if @job_application.save(context: :profile)
         @job_offer.initial! if @job_offer.start?
         @job_application.send_confirmation_email
         format.html { redirect_to [:successful, @job_offer] }
@@ -138,7 +138,8 @@ class JobOffersController < ApplicationController
       gender has_corporate_experience age_range_id availability_range_id experience_level_id study_level_id
     ]
     profile_attributes << {
-      profile_foreign_languages_attributes: %i[foreign_language_id foreign_language_level_id]
+      profile_foreign_languages_attributes: %i[foreign_language_id foreign_language_level_id],
+      category_experience_levels_attributes: %i[category_id experience_level_id]
     }
 
     user_attributes = %i[first_name last_name phone website_url]

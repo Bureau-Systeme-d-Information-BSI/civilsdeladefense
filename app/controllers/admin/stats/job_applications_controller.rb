@@ -45,10 +45,10 @@ class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
   end
 
   def build_stats_per_profile
-    @per_gender = root_rel_profile.group(:gender).count
-    @per_age_range = root_rel_profile.group(:age_range_id).count
-    @per_has_corporate_experience = root_rel_profile.group(:has_corporate_experience).count
-    @per_is_currently_employed = root_rel_profile.group(:is_currently_employed).count
+    @per_gender = root_rel_profile.group("profiles.gender").count
+    @per_age_range = root_rel_profile.group("profiles.age_range_id").count
+    @per_has_corporate_experience = root_rel_profile.group("profiles.has_corporate_experience").count
+    @per_is_currently_employed = root_rel_profile.group("profiles.is_currently_employed").count
   end
 
   def filter_by_full_text
@@ -91,9 +91,12 @@ class Admin::Stats::JobApplicationsController < Admin::Stats::BaseController
     params.permit(
       :s, :start, :end,
       q: {
-        employer_id_in: [], job_offer_category_id_in: [],
-        contract_type_id_in: [], job_offer_bop_id_in: [],
-        profile_experience_level_id_in: [], profile_study_level_id_in: [],
+        employer_id_in: [],
+        job_offer_category_id_in: [],
+        contract_type_id_in: [],
+        job_offer_bop_id_in: [],
+        user_profile_category_experience_levels_experience_level_id_in: [],
+        profile_study_level_id_in: [],
         user_department_users_department_id_in: []
       }
     )

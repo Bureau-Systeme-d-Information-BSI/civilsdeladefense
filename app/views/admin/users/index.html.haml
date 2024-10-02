@@ -34,8 +34,10 @@
                     .row
                       .col-12.user-full-name
                         = User.human_attribute_name(:name)
-                      .col-12.personal-profile-current-position
-                        = User.human_attribute_name(:current_position)
+                      .col-12.category-experience-levels.user-card-title
+                        Domaine professionnel - Expérience
+                      .col-12.study-level.user-card-title
+                        Niveau d'études
                       .col-12.user-job-applications-count
                         Candidatures
             = render partial: 'user', collection: @users_filtered, locals: {list: true}

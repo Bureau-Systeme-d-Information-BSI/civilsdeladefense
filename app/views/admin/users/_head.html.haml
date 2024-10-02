@@ -65,5 +65,5 @@
     .text-center.font-weight-bold.text-secondary
       Souhaits géographiques
     .d-flex.flex-column.align-items-center
-      - user.departments.each do |department|
+      - user.profile.departments.each do |department|
         %div= department.short_label

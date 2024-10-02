@@ -41,11 +41,7 @@ class User < ApplicationRecord
   has_many :preferred_users, dependent: :destroy
   has_many :preferred_users_lists, through: :preferred_users
 
-  has_many :department_users, dependent: :destroy
-  has_many :departments, through: :department_users
-
   accepts_nested_attributes_for :profile
-  accepts_nested_attributes_for :department_users, reject_if: :all_blank
 
   phony_normalize :phone, default_country_code: "FR"
 
@@ -82,8 +78,6 @@ class User < ApplicationRecord
   before_save :remove_mark_for_deletion
   before_update :destroy_photo
   before_destroy :mark_job_applications_as_read
-  after_save :add_none_department, if: -> { departments.empty? }
-  after_save :dedupe_departments, if: -> { departments.any? }
 
   def self.ransackable_scopes(auth_object = nil)
     %i[concerned by_category by_experience_level]
@@ -148,10 +142,6 @@ class User < ApplicationRecord
   def mark_job_applications_as_read
     job_applications.map(&:mark_as_read!)
   end
-
-  def add_none_department = departments << Department.none
-
-  def dedupe_departments = self.departments = departments.uniq
 end
 
 # == Schema Information

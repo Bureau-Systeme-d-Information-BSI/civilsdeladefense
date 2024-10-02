@@ -139,11 +139,11 @@ RSpec.describe "JobOffers" do
                     category_id: Category.first.id,
                     experience_level_id: ExperienceLevel.first.id
                   }
+                },
+                department_profiles_attributes: {
+                  "0" => {department_id: Department.first.id},
+                  "1" => {department_id: Department.last.id}
                 }
-              },
-              department_users_attributes: {
-                "0" => {department_id: Department.first.id},
-                "1" => {department_id: Department.last.id}
               }
             },
             job_application_files_attributes: {
@@ -187,10 +187,6 @@ RSpec.describe "JobOffers" do
 
         it { expect(user.email).to eq("k.warldorf@gmail.com") }
 
-        it { expect(user.departments.count).to eq(2) }
-
-        it { expect(user.departments.pluck(:id)).to match([Department.first.id, Department.last.id]) }
-
         it { expect(user.organization).to eq(job_offer.organization) }
       end
 
@@ -228,6 +224,10 @@ RSpec.describe "JobOffers" do
         it { expect(profile.category_experience_levels.first.category_id).to eq(Category.first.id) }
 
         it { expect(profile.category_experience_levels.first.experience_level_id).to eq(ExperienceLevel.first.id) }
+
+        it { expect(profile.departments.count).to eq(2) }
+
+        it { expect(profile.departments.pluck(:id)).to match([Department.first.id, Department.last.id]) }
       end
     end
 
@@ -263,11 +263,11 @@ RSpec.describe "JobOffers" do
                     category_id: Category.first.id,
                     experience_level_id: ExperienceLevel.first.id
                   }
+                },
+                department_profiles_attributes: {
+                  "0" => {department_id: Department.first.id},
+                  "1" => {department_id: Department.last.id}
                 }
-              },
-              department_users_attributes: {
-                "0" => {department_id: Department.first.id},
-                "1" => {department_id: Department.last.id}
               }
             },
             job_application_files_attributes: {
@@ -309,10 +309,6 @@ RSpec.describe "JobOffers" do
 
         it { expect(user.reload.website_url).to eq("https://linkedin.com/in/Warldorf") }
 
-        it { expect(user.reload.departments.count).to eq(2) }
-
-        it { expect(user.reload.departments.pluck(:id)).to match([Department.first.id, Department.last.id]) }
-
         it { expect(user.reload.organization).to eq(job_offer.organization) }
       end
 
@@ -350,6 +346,10 @@ RSpec.describe "JobOffers" do
         it { expect(profile.category_experience_levels.first.category_id).to eq(Category.first.id) }
 
         it { expect(profile.category_experience_levels.first.experience_level_id).to eq(ExperienceLevel.first.id) }
+
+        it { expect(profile.departments.count).to eq(2) }
+
+        it { expect(profile.departments.pluck(:id)).to match([Department.first.id, Department.last.id]) }
       end
     end
   end

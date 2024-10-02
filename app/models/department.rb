@@ -1,6 +1,6 @@
 class Department < ApplicationRecord
-  has_many :department_users, dependent: :nullify
-  has_many :users, through: :department_users
+  has_many :department_profiles, dependent: :nullify
+  has_many :profiles, through: :department_profiles
 
   default_scope { order(:code) }
 

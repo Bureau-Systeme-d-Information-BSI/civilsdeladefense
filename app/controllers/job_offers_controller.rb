@@ -63,11 +63,8 @@ class JobOffersController < ApplicationController
     if user_signed_in?
       @job_application.user = current_user
       if job_application_params[:user_attributes].present?
-        @job_application.user.assign_attributes(
-          job_application_params[:user_attributes].except(:department_users_attributes)
-        )
+        @job_application.user.assign_attributes(job_application_params[:user_attributes])
       end
-      @job_application.user.departments = departments
     end
 
     @job_application.user.organization = current_organization
@@ -134,28 +131,27 @@ class JobOffersController < ApplicationController
 
   def job_application_params
     permitted_params = %i[category_id]
-    profile_attributes = %i[
-      gender has_corporate_experience age_range_id availability_range_id experience_level_id study_level_id
-    ]
-    profile_attributes << {
-      profile_foreign_languages_attributes: %i[foreign_language_id foreign_language_level_id],
-      category_experience_levels_attributes: %i[category_id experience_level_id]
-    }
-
-    user_attributes = %i[first_name last_name phone website_url]
-    user_attributes << {profile_attributes: profile_attributes}
 
     base_user_attributes = %i[
       photo email password password_confirmation terms_of_service certify_majority
       receive_job_offer_mails
     ]
-    user_attributes << {
-      department_users_attributes: %i[department_id]
+    profile_attributes = %i[
+      gender has_corporate_experience age_range_id availability_range_id experience_level_id study_level_id
+    ]
+    profile_attributes << {
+      profile_foreign_languages_attributes: %i[foreign_language_id foreign_language_level_id],
+      category_experience_levels_attributes: %i[category_id experience_level_id],
+      department_profiles_attributes: %i[department_id]
     }
+    user_attributes = %i[first_name last_name phone website_url]
+    user_attributes << {profile_attributes: profile_attributes}
     user_attributes += base_user_attributes unless user_signed_in?
     permitted_params << {user_attributes: user_attributes}
+
     job_application_files_attributes = %i[content job_application_file_type_id job_application_file_existing_id]
     permitted_params << {job_application_files_attributes: job_application_files_attributes}
+
     params.require(:job_application).permit(permitted_params)
   end
 
@@ -225,7 +221,7 @@ class JobOffersController < ApplicationController
 
   def departments = Department.where(id: department_ids)
 
-  def department_ids = department_user_attributes&.to_unsafe_h&.map { |_, department| department[:department_id] }
+  def department_ids = department_profiles_attributes&.to_unsafe_h&.map { |_, department| department[:department_id] }
 
-  def department_user_attributes = job_application_params.dig(:user_attributes, :department_users_attributes)
+  def department_profiles_attributes = job_application_params.dig(:user_attributes, :department_profiles_attributes)
 end

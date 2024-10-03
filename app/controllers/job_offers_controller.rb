@@ -63,6 +63,8 @@ class JobOffersController < ApplicationController
     @job_application.user.organization = current_organization unless user_signed_in?
 
     if user_signed_in?
+      @job_application.user.profile.profile_foreign_languages = []
+      @job_application.user.profile.category_experience_levels = []
       if job_application_params[:user_attributes].present?
         @job_application.user.assign_attributes(
           job_application_params[:user_attributes].except(:profile_attributes)

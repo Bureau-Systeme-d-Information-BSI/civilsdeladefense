@@ -154,6 +154,7 @@ class JobOffersController < ApplicationController
           :availability_range_id,
           :experience_level_id,
           :study_level_id,
+          :resume,
           profile_foreign_languages_attributes: [
             :foreign_language_id,
             :foreign_language_level_id

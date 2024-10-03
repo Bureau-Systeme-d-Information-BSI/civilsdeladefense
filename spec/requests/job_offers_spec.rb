@@ -124,6 +124,7 @@ RSpec.describe "JobOffers" do
                 availability_range_id: AvailabilityRange.first.id,
                 experience_level_id: ExperienceLevel.first.id,
                 study_level_id: StudyLevel.first.id,
+                resume: fixture_file_upload("document.pdf", "application/pdf"),
                 profile_foreign_languages_attributes: {
                   "0" => {
                     foreign_language_id: ForeignLanguage.first.id,
@@ -228,6 +229,8 @@ RSpec.describe "JobOffers" do
         it { expect(profile.departments.count).to eq(2) }
 
         it { expect(profile.departments.pluck(:id)).to match([Department.first.id, Department.last.id]) }
+
+        it { expect(profile.resume).to be_present }
       end
     end
 
@@ -248,6 +251,7 @@ RSpec.describe "JobOffers" do
                 availability_range_id: AvailabilityRange.first.id,
                 experience_level_id: ExperienceLevel.first.id,
                 study_level_id: StudyLevel.first.id,
+                resume: fixture_file_upload("document.pdf", "application/pdf"),
                 profile_foreign_languages_attributes: {
                   "0" => {
                     foreign_language_id: ForeignLanguage.first.id,
@@ -352,6 +356,8 @@ RSpec.describe "JobOffers" do
         it { expect(profile.departments.count).to eq(2) }
 
         it { expect(profile.departments.pluck(:id)).to match([Department.first.id, Department.last.id]) }
+
+        it { expect(profile.resume).to be_present }
       end
     end
   end

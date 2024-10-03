@@ -330,12 +330,6 @@ AvailabilityRange.create!(name: "Disponible sous 1 mois")
 AvailabilityRange.create!(name: "Disponible sous 2 mois")
 AvailabilityRange.create!(name: "Disponible sous 3 mois ou plus")
 
-resume = JobApplicationFileType.create!(
-  name: "CV",
-  kind: :applicant_provided,
-  from_state: :initial,
-  by_default: true
-)
 cover_letter = JobApplicationFileType.create!(
   name: "Lettre de Motivation",
   kind: :applicant_provided,
@@ -589,7 +583,6 @@ job_application = JobApplication.new { |ja|
   ja.job_offer = job_offer
   ja.user = user
 }
-job_application.job_application_files.build(content: file, job_application_file_type: resume)
 job_application.job_application_files.build(content: file, job_application_file_type: cover_letter)
 job_application.save!
 
@@ -609,7 +602,6 @@ job_application2 = JobApplication.new { |ja|
   ja.job_offer = job_offer2
   ja.user = user
 }
-job_application2.job_application_files.build(content: file, job_application_file_type: resume)
 job_application2.job_application_files.build(content: file, job_application_file_type: cover_letter)
 job_application2.save!
 
@@ -710,7 +702,6 @@ JobOffer.where.not(contract_duration_id: nil).where.not(id: [job_offer4.id, job_
       ja.created_at = 1.upto(6).map { |x| x.days.ago }
       ja.experiences_fit_job_offer = boolean_choices.sample
     }
-    job_application.job_application_files.build(content: file, job_application_file_type: resume)
     job_application.job_application_files.build(content: file, job_application_file_type: cover_letter)
     job_application.job_offer.initial!
     job_application.save!
@@ -740,7 +731,6 @@ JobOffer.where.not(contract_duration_id: nil).where.not(id: [job_offer4.id, job_
     ja.job_offer = job_offer
     ja.user = user_candidate_of_all
   }
-  job_application.job_application_files.build(content: file, job_application_file_type: resume)
   job_application.job_application_files.build(content: file, job_application_file_type: cover_letter)
   job_application.job_offer.initial!
   job_application.save!

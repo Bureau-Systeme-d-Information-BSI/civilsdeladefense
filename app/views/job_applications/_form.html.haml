@@ -35,7 +35,16 @@
 
         = render partial: '/profile_foreign_languages/form', locals: { profile_form: profile_form, name_prefix: "job_application[user_attributes][profile_attributes]" }
 
-    %h2.rf-h3= t('.documents')
+        %h2.rf-h3= t('.documents')
+
+        .d-flex.align-items-end.rf-mb-3w
+          %div
+            - label = profile_form.object.resume.blank? ? t('.resume') : t('.resume_html')
+            = profile_form.input :resume, label:, as: :file, required: profile_form.object.resume.blank?
+          %div.rf-ml-3w
+            - if profile_form.object.resume.present?
+              = link_to profile_form.object.resume_file_name, account_profiles_resume_path, target: '_blank'
+
     - job_application_files = @job_application.job_application_files.to_a
     - current_state = JobApplication.states[@job_application.state]
     - if @job_offer.spontaneous

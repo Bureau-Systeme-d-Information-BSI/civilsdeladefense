@@ -104,6 +104,7 @@ Rails.application.routes.draw do
       resources :preferred_users
     end
     resources :users, path: "candidats", except: %i[create] do
+      resource :resume, only: %i[show]
       collection do
         post :multi_select
       end

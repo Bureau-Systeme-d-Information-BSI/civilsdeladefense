@@ -4,7 +4,7 @@ class Admin::ResumesController < Admin::BaseController
   def show
     send_data(
       user.profile.resume.read,
-      filename: "resume.pdf",
+      filename: user.profile.resume_file_name,
       type: "application/pdf",
       disposition: "inline"
     )

@@ -20,6 +20,7 @@
 - job_application_files.each do |job_application_file|
   - if job_application_file.document_content.present?
     - file_type = job_application_file.job_application_file_type
+    - next if file_type.name == "CV"
     - pdf_url = url_for([:admin, job_application, job_application_file, {format: :pdf}])
 
     .card

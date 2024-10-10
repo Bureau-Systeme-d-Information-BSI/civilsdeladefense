@@ -7,6 +7,8 @@ module Maintenance
     def collection = Profile.where(profileable_type: "User", resume_file_name: [nil, ""])
 
     def process(profile)
+      return if profile.profileable.blank?
+
       job_application = profile.profileable.last_job_application
       return if job_application.blank?
 
@@ -15,6 +17,9 @@ module Maintenance
 
       job_application_file = job_application.job_application_files.find_by(job_application_file_type:)
       return if job_application_file.blank?
+
+      return if job_application_file.content_file_name.blank?
+      return unless job_application_file.content_file_name.ends_with?(".pdf")
 
       update_resume(profile, job_application_file)
     end

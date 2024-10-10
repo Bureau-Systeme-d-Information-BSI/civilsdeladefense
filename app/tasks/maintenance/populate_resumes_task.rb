@@ -22,6 +22,8 @@ module Maintenance
       return unless job_application_file.content_file_name.ends_with?(".pdf")
 
       update_resume(profile, job_application_file)
+    rescue ActiveRecord::RecordInvalid => e
+      Rails.logger.error("Error updating resume for profile #{profile.id}: #{e.message}")
     end
 
     delegate :count, to: :collection

@@ -19,6 +19,7 @@ module Maintenance
       return if job_application_file.blank?
 
       return if job_application_file.content_file_name.blank?
+      return if job_application_file.document_content.blank?
       return unless job_application_file.content_file_name.ends_with?(".pdf")
 
       update_resume(profile, job_application_file)

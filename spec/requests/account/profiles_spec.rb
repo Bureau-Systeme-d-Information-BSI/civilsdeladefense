@@ -25,6 +25,7 @@ RSpec.describe "Account::Profiles" do
           study_level_id:,
           experience_level_id:,
           has_corporate_experience: true,
+          resume: fixture_file_upload("document.pdf", "application/pdf"),
           category_experience_levels_attributes: {
             "0": {
               category_id:,
@@ -61,6 +62,8 @@ RSpec.describe "Account::Profiles" do
       it { expect(profile.category_experience_levels.first.category_id).to eq(category_id) }
 
       it { expect(profile.category_experience_levels.first.experience_level_id).to eq(experience_level_id) }
+
+      it { expect(profile.resume).to be_present }
     end
 
     describe "response" do

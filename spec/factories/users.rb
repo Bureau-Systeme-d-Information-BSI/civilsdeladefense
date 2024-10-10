@@ -47,7 +47,6 @@ end
 #  encrypted_password               :string           default(""), not null
 #  failed_attempts                  :integer          default(0), not null
 #  first_name                       :string
-#  gender                           :integer          default("other")
 #  job_applications_count           :integer          default(0), not null
 #  last_name                        :string
 #  last_sign_in_at                  :datetime

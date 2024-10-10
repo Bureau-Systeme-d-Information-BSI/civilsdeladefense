@@ -14,7 +14,10 @@
               .d-flex
                 = image_user_tag user.photo, width: 32, class: 'mr-2'
                 = user.full_name
-                - if last_job_application_resume_url
+                - if user.profile.resume.present?
+                  %div{data: {controller: "rich-tooltip", bs_custom_class: "tooltip-rich", bs_placement: "right"}, title: "<object data='#{admin_user_resume_path(user)}' style='margin-left: 10px; bottom: 0;' class='position-fixed' height='600px' width='800px' type='application/pdf'></object>"}
+                    = fa_icon "file-lines", class: "ml-2"
+                - elsif last_job_application_resume_url
                   %div{data: {controller: "rich-tooltip", bs_custom_class: "tooltip-rich", bs_placement: "right"}, title: "<object data='#{last_job_application_resume_url}' style='margin-left: 10px; bottom: 0;' class='position-fixed' height='600px' width='800px' type='application/pdf'></object>"}
                     = fa_icon "file-lines", class: "ml-2"
             .col-12.category-experience-levels

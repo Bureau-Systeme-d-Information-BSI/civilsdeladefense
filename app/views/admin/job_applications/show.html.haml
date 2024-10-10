@@ -20,7 +20,7 @@
               = render partial: 'user_job_applications', locals: {job_applications: @other_job_applications}
         - if tab_active == :cvlm
           .tab-pane.active.show{role: :tabpanel, aria: {labelledby: :cvlm}}
-            = render template: '/admin/job_applications/cvlm', locals: {job_application: @job_application}
+            = render template: '/admin/job_applications/cvlm', locals: {user: user, job_application: @job_application}
         - if can?(:read, Email) && tab_active == :emails
           .tab-pane.active.show{role: :tabpanel, aria: {labelledby: :emails}}
             = render template: '/admin/job_applications/emails', locals: {job_application: @job_application}

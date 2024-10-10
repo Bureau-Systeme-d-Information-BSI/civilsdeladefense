@@ -115,6 +115,8 @@ fr:
       documents: "Vos documents"
       your_internet_presence: "Votre présence sur internet"
       your_account_creation: "Votre création de compte"
+      resume: "CV"
+      resume_html: "CV <abbr title='obligatoire'>*</abbr>"
   job_offers:
     no_bookmarks:
       title: Vous n'avez pas encore d'offres favorites
@@ -237,6 +239,8 @@ fr:
     profiles:
       edit:
         title: "Mon profil candidat"
+        resume: "CV (PDF uniquement, max 2Mo)"
+        resume_html: "CV (PDF uniquement, max 2Mo) <abbr title='obligatoire'>*</abbr>"
       update:
         success: "Profil mis à jour !"
     users:

@@ -26,6 +26,7 @@ class Account::ProfilesController < Account::BaseController
       :study_level_id,
       :experience_level_id,
       :has_corporate_experience,
+      :resume,
       profile_foreign_languages_attributes: %i[foreign_language_id foreign_language_level_id],
       category_experience_levels_attributes: %i[category_id experience_level_id],
       department_profiles_attributes: %i[department_id]

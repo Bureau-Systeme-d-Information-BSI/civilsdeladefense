@@ -1,5 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 import Sortable from "sortablejs"
+import { patch } from '@rails/request.js'
 
 export default class extends Controller {
   static values = { url: String }
@@ -8,9 +9,13 @@ export default class extends Controller {
     new Sortable(this.element, {
       animation: 150,
       handle: ".grabbable",
+      filter: ".no-drag",
       ghostClass: "grabbed",
-      direction: "vertical"
-      // onEnd: this.persistNewPosition
+      direction: "vertical",
+      onMove: (event) => {
+        return event.related.classList.contains('grabbable');
+      },
+      onEnd: this.persistNewPosition
     })
   }
 
@@ -18,14 +23,21 @@ export default class extends Controller {
 
   persistNewPosition = (event) => {
     const newIndex = event.newIndex
-    const url = event.item.getAttribute("data-quote-item--sortable-url-value")
+
+    const url = "/admin/parametres/positions"
     const data = new FormData
     data.append("position", newIndex + 1)
+    data.append("resource_class", event.item.getAttribute("data-resource-class"))
+    data.append("resource_id", event.item.getAttribute("data-id"))
 
-    patch(url, { body: data, responseKind: "turbo-stream" }).then(response => {
-      if (!response.ok) {
-        window.location.reload()
-      }
-    })
+    const next = event.to.children[newIndex + 1]
+    if (next !== undefined) {
+      data.append("sibling_resource_id", next.getAttribute("data-id"))
+    }
+
+    const response = patch(url, { body: data })
+    if (response.ok) {
+      window.location.reload(true)
+    }
   }
 }

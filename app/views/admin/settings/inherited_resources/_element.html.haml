@@ -1,4 +1,4 @@
-%tr{data: {id: element.id}, class: ("grabbable" if !defined?(level) || level == 0)}
+%tr{data: {id: element.id, resource_class: resource_class}, class: ("grabbable" if element.respond_to?(:position))}
   - if defined?(level)
     %td
       .d-flex

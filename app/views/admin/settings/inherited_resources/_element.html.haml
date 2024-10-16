@@ -1,4 +1,4 @@
-%tr
+%tr{data: {id: element.id}, class: ("grabbable" if !defined?(level) || level == 0)}
   - if defined?(level)
     %td
       .d-flex

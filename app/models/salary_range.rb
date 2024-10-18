@@ -20,6 +20,20 @@ class SalaryRange < ApplicationRecord
       experience_level_id: experience_level_id,
       sector_id: sector_id)
   }
+
+  def self.ransackable_attributes(auth_object = nil)
+    [
+      "created_at",
+      "estimate_annual_salary_gross",
+      "estimate_monthly_salary_net",
+      "experience_level_id",
+      "id",
+      "id_value",
+      "professional_category_id",
+      "sector_id",
+      "updated_at"
+    ]
+  end
 end
 
 # == Schema Information

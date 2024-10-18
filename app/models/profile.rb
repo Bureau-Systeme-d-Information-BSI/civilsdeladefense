@@ -29,6 +29,35 @@ class Profile < ApplicationRecord
     male: 2,
     other: 3
   }
+  def self.ransackable_associations(auth_object = nil)
+    [
+      "age_range",
+      "availability_range",
+      "experience_level",
+      "job_application",
+      "profile_foreign_languages",
+      "profileable",
+      "study_level"
+    ]
+  end
+
+  def self.ransackable_attributes(auth_object = nil)
+    [
+      "age_range_id",
+      "availability_range_id",
+      "created_at",
+      "experience_level_id",
+      "gender",
+      "has_corporate_experience",
+      "id",
+      "id_value",
+      "is_currently_employed",
+      "profileable_id",
+      "profileable_type",
+      "study_level_id",
+      "updated_at"
+    ]
+  end
 end
 
 # == Schema Information

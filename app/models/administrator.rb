@@ -29,6 +29,58 @@ class Administrator < ApplicationRecord
 
   has_many :preferred_users, through: :preferred_users_list
   has_many :preferred_users_lists, dependent: :destroy
+  def self.ransackable_associations(auth_object = nil)
+    [
+      "employer",
+      "grand_employer_administrator",
+      "invitees",
+      "inviter",
+      "job_offer_actors",
+      "job_offers",
+      "organization",
+      "owned_job_offers",
+      "preferred_users",
+      "preferred_users_lists",
+      "supervisor_administrator"
+    ]
+  end
+
+  def self.ransackable_attributes(auth_object = nil)
+    [
+      "confirmation_sent_at",
+      "confirmed_at",
+      "created_at",
+      "current_sign_in_at",
+      "current_sign_in_ip",
+      "deleted_at",
+      "email",
+      "employer_id",
+      "failed_attempts",
+      "first_name",
+      "grand_employer_administrator_id",
+      "id",
+      "id_value",
+      "inviter_id",
+      "last_name",
+      "last_sign_in_at",
+      "last_sign_in_ip",
+      "locked_at",
+      "marked_for_deactivation_on",
+      "organization_id",
+      "photo_content_type",
+      "photo_file_name",
+      "photo_file_size",
+      "photo_updated_at",
+      "reset_password_sent_at",
+      "role",
+      "sign_in_count",
+      "supervisor_administrator_id",
+      "title",
+      "unconfirmed_email",
+      "updated_at",
+      "very_first_account"
+    ]
+  end
 
   def supervisor_administrator_attributes=(attributes)
     return if attributes[:email].blank?

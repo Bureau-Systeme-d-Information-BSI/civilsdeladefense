@@ -120,6 +120,30 @@ class JobApplication < ApplicationRecord
     [:contract_received, :affected]
   ]
 
+  def self.ransackable_attributes(auth_object = nil)
+    [
+      "administrator_notifications_count",
+      "category_id",
+      "created_at",
+      "emails_administrator_unread_count",
+      "emails_count",
+      "emails_unread_count",
+      "emails_user_unread_count",
+      "employer_id",
+      "experiences_fit_job_offer",
+      "files_count",
+      "files_unread_count",
+      "id",
+      "job_offer_id",
+      "organization_id",
+      "rejection_reason_id",
+      "skills_fit_job_offer",
+      "state",
+      "updated_at",
+      "user_id"
+    ]
+  end
+
   def self.state_durations_map(scope)
     Rails.cache.fetch(scope.to_sql, expires_in: 24.hours) do
       query_state_durations_map(scope)

@@ -90,6 +90,64 @@ class User < ApplicationRecord
     %i[concerned by_category]
   end
 
+  def self.ransackable_associations(auth_object = nil)
+    [
+      "bookmarks",
+      "department_users",
+      "departments",
+      "job_application_files",
+      "job_applications",
+      "job_offers",
+      "omniauth_informations",
+      "organization",
+      "preferred_users",
+      "preferred_users_lists",
+      "profile"
+    ]
+  end
+
+  def self.ransackable_attributes(auth_object = nil)
+    [
+      "address",
+      "city",
+      "confirmation_sent_at",
+      "confirmed_at",
+      "created_at",
+      "current_position",
+      "current_sign_in_at",
+      "current_sign_in_ip",
+      "email",
+      "failed_attempts",
+      "first_name",
+      "gender",
+      "id",
+      "id_value",
+      "job_applications_count",
+      "last_name",
+      "last_sign_in_at",
+      "last_sign_in_ip",
+      "locked_at",
+      "marked_for_deletion_on",
+      "organization_id",
+      "phone",
+      "photo_content_type",
+      "photo_file_name",
+      "photo_file_size",
+      "photo_is_validated",
+      "photo_updated_at",
+      "postal_code",
+      "receive_job_offer_mails",
+      "remember_created_at",
+      "reset_password_sent_at",
+      "sign_in_count",
+      "suspended_at",
+      "suspension_reason",
+      "unconfirmed_email",
+      "updated_at",
+      "website_url"
+    ]
+  end
+
   def full_name
     if is_deleted
       "Compte candidat supprimé"

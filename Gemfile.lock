@@ -631,7 +631,7 @@ DEPENDENCIES
   puma
   rack-cors
   rack-rewrite
-  rails (~> 7.1.4)
+  rails (~> 7.1.4.1)
   rails-controller-testing
   rails-i18n
   ransack

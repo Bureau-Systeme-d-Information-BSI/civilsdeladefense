@@ -12,7 +12,7 @@ class Admin::Settings::PositionsController < Admin::BaseController
       else
         resource.move_to_right_of(resource_class.roots.last) # move to the end of the list
       end
-      redirect_to request.referer
+      redirect_back_or_to admin_settings_root_path
     else # acts as list
       resource.insert_at(position)
       head :ok

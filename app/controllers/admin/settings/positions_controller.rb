@@ -1,10 +1,22 @@
 class Admin::Settings::PositionsController < Admin::BaseController
   skip_load_and_authorize_resource
 
+  # TODO: spec and refactoring
+
   def update
     resource = resource_class.find(params[:resource_id])
-    resource.insert_at(position)
-    head :ok
+    if resource.respond_to?(:parent_id) # acts as nested set
+      sibling_resource = resource_class.find_by(id: params[:next_resource_id]) if params[:next_resource_id]
+      if sibling_resource
+        resource.move_to_left_of(sibling_resource) if sibling_resource.root?
+      else
+        resource.move_to_right_of(resource_class.roots.last) # move to the end of the list
+      end
+      redirect_to request.referer
+    else # acts as list
+      resource.insert_at(position)
+      head :ok
+    end
   end
 
   private

@@ -29,7 +29,7 @@ class Exporter::Users < Exporter::Base
   end
 
   def format_job_application(job_application, index)
-    profile = job_application.user.profile
+    profile = job_application.user.profile.presence || job_application.user.build_profile
     [
       nil,
       job_application.job_offer.employer.name,

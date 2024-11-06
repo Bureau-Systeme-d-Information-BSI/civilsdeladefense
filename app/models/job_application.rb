@@ -198,7 +198,7 @@ class JobApplication < ApplicationRecord
     ary_start = [0, 0]
     ary = job_application_files.each_with_object(ary_start) { |job_application_file, memo|
       memo[0] += 1
-      memo[1] += 1 if job_application_file.waiting_validation? && job_application_file.job_application_file_type.notification
+      memo[1] += 1 if job_application_file.waiting_validation? && job_application_file.job_application_file_type&.notification
     }
     self.files_count, self.files_unread_count = ary
   end

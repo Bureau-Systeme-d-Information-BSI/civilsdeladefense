@@ -13,9 +13,12 @@ module Maintenance
       return if job_application.blank?
 
       job_application_file_type = JobApplicationFileType.find_by(name: "CV")
-      return if job_application_file_type.blank?
-
-      job_application_file = job_application.job_application_files.find_by(job_application_file_type:)
+      if job_application_file_type.blank?
+        job_application_file = job_application.job_application_files.where(job_application_file_type: nil).first
+      else
+        job_application_file = job_application.job_application_files.find_by(job_application_file_type:)
+        job_application_file ||= job_application.job_application_files.where(job_application_file_type: nil).first
+      end
       return if job_application_file.blank?
 
       return if job_application_file.content_file_name.blank?
@@ -25,6 +28,8 @@ module Maintenance
       update_resume(profile, job_application_file)
     rescue ActiveRecord::RecordInvalid => e
       Rails.logger.error("Error updating resume for profile #{profile.id}: #{e.message}")
+    rescue => e
+      Rails.logger.error("Something went wrong #{profile.id}: #{e.message}")
     end
 
     delegate :count, to: :collection

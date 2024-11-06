@@ -104,6 +104,7 @@ Rails.application.routes.draw do
       resources :preferred_users
     end
     resources :users, path: "candidats", except: %i[create] do
+      resource :resume, only: %i[show]
       collection do
         post :multi_select
       end
@@ -200,6 +201,13 @@ Rails.application.routes.draw do
 
   authenticate :user do
     namespace "account", path: "espace-candidat" do
+      resource :profiles, path: "mon-profil", only: [] do
+        resource :resume, only: :show
+        collection do
+          get :edit
+          patch :update
+        end
+      end
       resources :job_applications, path: "mes-candidatures" do
         member do
           get :job_offer, path: "offre"

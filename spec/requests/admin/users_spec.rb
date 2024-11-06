@@ -24,17 +24,17 @@ RSpec.describe "Admin::Users" do
 
     # rubocop:disable RSpec/MultipleMemoizedHelpers
     describe "filtering users on departments" do
-      let!(:ain) { create(:department, name: "Ain") }
-      let!(:gironde) { create(:department, name: "Gironde") }
+      let(:ain) { create(:department, name: "Ain") }
+      let(:gironde) { create(:department, name: "Gironde") }
 
       let!(:user_none) { create(:user) }
-      let!(:user_gironde) { create(:user, departments: [gironde]) }
-      let!(:user_ain) { create(:user, departments: [ain]) }
+      let!(:user_gironde) { create(:user, profile: create(:profile, departments: [gironde])) }
+      let!(:user_ain) { create(:user, profile: create(:profile, departments: [ain])) }
 
       before { index_request }
 
       context "when filtering on a single department" do
-        let(:params) { {q: {departments_id_in: [ain.id]}} }
+        let(:params) { {q: {profile_departments_id_in: [ain.id]}} }
 
         it { expect(response.body).to include(user_ain.full_name) }
 
@@ -44,7 +44,7 @@ RSpec.describe "Admin::Users" do
       end
 
       context "when filtering on multiple departments" do
-        let(:params) { {q: {departments_id_in: [ain.id, gironde.id]}} }
+        let(:params) { {q: {profile_departments_id_in: [ain.id, gironde.id]}} }
 
         it { expect(response.body).to include(user_ain.full_name) }
 
@@ -54,7 +54,7 @@ RSpec.describe "Admin::Users" do
       end
 
       context "when filtering on 'none' department" do
-        let(:params) { {q: {departments_id_in: [Department.none.id]}} }
+        let(:params) { {q: {profile_departments_id_in: [Department.none.id]}} }
 
         it { expect(response.body).not_to include(user_ain.full_name) }
 
@@ -64,7 +64,7 @@ RSpec.describe "Admin::Users" do
       end
 
       context "when filtering on 'none' departments and an existing department" do
-        let(:params) { {q: {departments_id_in: [ain.id, Department.none.id]}} }
+        let(:params) { {q: {profile_departments_id_in: [ain.id, Department.none.id]}} }
 
         it { expect(response.body).to include(user_ain.full_name) }
 

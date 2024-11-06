@@ -10,6 +10,15 @@ FactoryBot.define do
     study_level { StudyLevel.all.sample }
     experience_level { ExperienceLevel.all.sample }
     has_corporate_experience { false }
+
+    trait :with_resume do
+      resume do
+        Rack::Test::UploadedFile.new(
+          Rails.root.join("spec/fixtures/files/document.pdf"),
+          "application/pdf"
+        )
+      end
+    end
   end
 end
 
@@ -22,6 +31,7 @@ end
 #  has_corporate_experience :boolean
 #  is_currently_employed    :boolean
 #  profileable_type         :string
+#  resume_file_name         :string
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #  age_range_id             :uuid

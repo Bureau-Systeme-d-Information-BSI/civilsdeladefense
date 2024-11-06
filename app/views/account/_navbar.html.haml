@@ -4,15 +4,22 @@
     #rf-sidemenu-wrapper.rf-sidemenu__wrapper
       .rf-sidemenu__title Mon espace candidat
       %ul.rf-sidemenu__list
-        - klass = controller.controller_name == 'job_applications' ? 'rf-sidemenu__item--active' : nil
-        %li.rf-sidemenu__item{class: klass}
-          = link_to "Mes candidatures", [:account, :job_applications], class: "rf-sidemenu__link"
         - klass = controller.controller_name == 'users' && controller.action_name == 'edit' ? 'rf-sidemenu__item--active' : nil
         %li.rf-sidemenu__item{class: klass}
           = link_to "Mes informations personnelles", [:edit, :account, :user], class: "rf-sidemenu__link"
+
+        - klass = controller.controller_name == 'profiles' ? 'rf-sidemenu__item--active' : nil
+        %li.rf-sidemenu__item{class: klass}
+          = link_to "Mon profil candidat", [:edit, :account, :profiles], class: "rf-sidemenu__link"
+
+        - klass = controller.controller_name == 'job_applications' ? 'rf-sidemenu__item--active' : nil
+        %li.rf-sidemenu__item{class: klass}
+          = link_to "Mes candidatures", [:account, :job_applications], class: "rf-sidemenu__link"
+
         - klass = controller.controller_name == 'users' && controller.action_name == 'show' ? 'rf-sidemenu__item--active' : nil
         %li.rf-sidemenu__item{class: klass}
           = link_to "Mon compte", [:account, :user], class: "rf-sidemenu__link"
+
         - UserMenuLink.all.each do |menu_link|
           %li.rf-sidemenu__item
             = link_to menu_link.name, menu_link.url, class: "rf-sidemenu__link", target: "_blank"

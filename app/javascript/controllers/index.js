@@ -16,6 +16,9 @@ application.register("autocomplete-address", AutocompleteAddressController)
 import AutocompleteCityController from "./autocomplete_city_controller"
 application.register("autocomplete-city", AutocompleteCityController)
 
+import CategoryExperienceLevelsController from "./category_experience_levels_controller"
+application.register("category-experience-levels", CategoryExperienceLevelsController)
+
 import DuplicatorController from "./duplicator_controller"
 application.register("duplicator", DuplicatorController)
 

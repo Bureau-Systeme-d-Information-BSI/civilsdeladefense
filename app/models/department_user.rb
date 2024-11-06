@@ -1,3 +1,4 @@
+# Deprecated on 2024-09-11 : will be removed after version 1.5.0
 class DepartmentUser < ApplicationRecord
   belongs_to :user
   belongs_to :department

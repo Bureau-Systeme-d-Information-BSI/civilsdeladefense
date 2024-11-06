@@ -17,12 +17,12 @@
         %li.nav-item.mr-3
           - klasses = %i(nav-link text-uppercase my-0)
           - klasses << :active if @active
-          - url = [:admin, :settings, :root]
+          - url = [:admin, :settings, :root, q: {first_name_or_last_name_or_email_cont: params.dig(:q, :first_name_or_last_name_or_email_cont)}]
           = link_to t('.account_active', count: @administrators_active.size), url, class: klasses
         %li.nav-item.mr-3
           - klasses = %i(nav-link text-uppercase my-0)
           - klasses << :active unless @active
-          - url = [:inactive, :admin, :settings, :administrators]
+          - url = [:inactive, :admin, :settings, :administrators, q: {first_name_or_last_name_or_email_cont: params.dig(:q, :first_name_or_last_name_or_email_cont)}]
           = link_to t('.account_inactive', count: @administrators_inactive.size), url, class: klasses
   - url = @active ? [:admin, :settings, @q] : [:inactive, :admin, :settings, @q]
   = search_form_for url, wrapper: :inline_form, html: { class: 'form-inline auto-submit' }, builder: SimpleForm::FormBuilder do |f|

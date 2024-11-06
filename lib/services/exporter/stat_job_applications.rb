@@ -184,7 +184,7 @@ class Exporter::StatJobApplications < Exporter::Base
   end
 
   def departments
-    Department.where(id: stat_data[:q][:user_department_users_department_id_in])
+    Department.where(id: stat_data[:q][:profile_departments_id_in])
   end
 
   def i18n_key

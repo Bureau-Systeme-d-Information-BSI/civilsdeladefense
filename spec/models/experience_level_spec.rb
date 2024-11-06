@@ -9,8 +9,12 @@ RSpec.describe ExperienceLevel do
 
   describe "associations" do
     it { is_expected.to have_many(:job_offers).dependent(:nullify) }
+
     it { is_expected.to have_many(:salary_ranges).dependent(:destroy) }
+
     it { is_expected.to have_many(:profiles).dependent(:nullify) }
+
+    it { is_expected.to have_many(:category_experience_levels).dependent(:destroy) }
   end
 end
 # == Schema Information

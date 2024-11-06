@@ -2,6 +2,8 @@
 
 # Candidate to job offer
 class User < ApplicationRecord
+  self.ignored_columns += %w[gender] # Deprecated on 2024-09-03
+
   PASSWORD_REGEX = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[\\\/<>{}()#¤:;,.?!•·|"'`´~@£¨µ§²$€%^&*+=_-]).{12,70}$/
 
   def self.omniauth_providers
@@ -39,18 +41,11 @@ class User < ApplicationRecord
   has_many :preferred_users, dependent: :destroy
   has_many :preferred_users_lists, through: :preferred_users
 
-  has_many :department_users, dependent: :destroy
-  has_many :departments, through: :department_users
-
   accepts_nested_attributes_for :profile
-  accepts_nested_attributes_for :department_users, reject_if: :all_blank
 
   phony_normalize :phone, default_country_code: "FR"
 
   mount_uploader :photo, PhotoUploader, mount_on: :photo_file_name
-
-  # TODO: SEB remove gender from users
-  enum gender: {female: 1, male: 2, other: 3}
 
   validates :photo, file_size: {less_than: 1.megabytes}
   validates :first_name, :last_name, presence: true
@@ -68,13 +63,13 @@ class User < ApplicationRecord
   }
 
   scope :by_category, ->(*category_ids) {
-    joins(job_applications: :job_offer).where(
-      job_applications: {category_id: category_ids}
-    ).or(
-      joins(job_applications: :job_offer).where(
-        job_applications: {job_offers: {category_id: category_ids}}
-      )
-    )
+    joins(profile: :category_experience_levels)
+      .where(category_experience_levels: {category_id: category_ids})
+  }
+
+  scope :by_experience_level, ->(*experience_level_ids) {
+    joins(profile: :category_experience_levels)
+      .where(category_experience_levels: {experience_level_id: experience_level_ids})
   }
 
   attr_accessor :is_deleted, :delete_photo
@@ -83,11 +78,9 @@ class User < ApplicationRecord
   before_save :remove_mark_for_deletion
   before_update :destroy_photo
   before_destroy :mark_job_applications_as_read
-  after_save :add_none_department, if: -> { departments.empty? }
-  after_save :dedupe_departments, if: -> { departments.any? }
 
   def self.ransackable_scopes(auth_object = nil)
-    %i[concerned by_category]
+    %i[concerned by_category by_experience_level]
   end
 
   def full_name
@@ -149,10 +142,6 @@ class User < ApplicationRecord
   def mark_job_applications_as_read
     job_applications.map(&:mark_as_read!)
   end
-
-  def add_none_department = departments << Department.none
-
-  def dedupe_departments = self.departments = departments.uniq
 end
 
 # == Schema Information
@@ -173,7 +162,6 @@ end
 #  encrypted_password               :string           default(""), not null
 #  failed_attempts                  :integer          default(0), not null
 #  first_name                       :string
-#  gender                           :integer          default("other")
 #  job_applications_count           :integer          default(0), not null
 #  last_name                        :string
 #  last_sign_in_at                  :datetime

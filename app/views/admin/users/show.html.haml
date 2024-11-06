@@ -11,7 +11,7 @@
         .border-right{class: job_application_modal_section_classes}
           .tab-content
             .tab-pane.fade.active.show
-              = render template: '/admin/job_applications/cvlm', locals: {job_application: @user.last_job_application, only_first: true}
+              = render template: '/admin/job_applications/cvlm', locals: {user: @user, job_application: @user.last_job_application, only_first: true}
     .col-12.col-md-4{class: job_application_modal_section_classes}
       - unless @user.new_record?
         = render partial: 'actions', locals: { user: @user }

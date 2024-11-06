@@ -1,24 +1,23 @@
-- form = kind == :job_application ? "job_application[user_attributes]" : "user"
 %div{ data: { controller: "duplicator"}}
   .rf-grid-row.fr-grid-row--center.d-none{ data: { duplicator: { target: :duplicated }}}
     .rf-col-11
       .rf-grid-row.rf-grid-row--gutters
         .rf-col-12
-          - name = "#{form}[department_users_attributes][index][department_id]"
+          - name = "#{name_prefix}[department_profiles_attributes][index][department_id]"
           = label_tag name, "Souhait(s) géographique(s) (département)"
           = select_tag name, options_from_collection_for_select(Department.all, "id", "label"), class: "rf-select"
     .rf-col-1.text-center.rf-mt-4w
       %button.blank_button.rf-fi-delete-line{data: { action: 'click->duplicator#remove' }}
   %div{ data: { duplicator: { target: :root }}}
-    - user_form.object.department_users.each_with_index do |department_user, index|
+    - department_profiles.each_with_index do |department_profile, index|
       .rf-grid-row.fr-grid-row--center{ data: { duplicator: { target: :element }}}
         .rf-col-11
           .rf-grid-row.rf-grid-row--gutters
             .rf-col-12
-              - name = "#{form}[department_users_attributes][#{index}][department_id]"
+              - name = "#{name_prefix}[department_profiles_attributes][#{index}][department_id]"
               = label_tag name, "Souhait(s) géographique(s) (département)"
-              = select_tag name, options_from_collection_for_select(Department.all, "id", "label", selected: department_user.department_id), class: "rf-select"
+              = select_tag name, options_from_collection_for_select(Department.all, "id", "label", selected: department_profile.department_id), class: "rf-select"
         .rf-col-1.text-center.rf-mt-4w
           %button.blank_button.rf-fi-delete-line{data: { action: 'click->duplicator#remove' }}
 
-  = button_tag("Ajouter un souhait géographique", type: :button, class: 'rf-btn rf-mb-3w', data: { action: 'click->duplicator#duplicate' })
+  = button_tag("Ajouter un souhait géographique", type: :button, class: 'rf-btn rf-mb-3w', data: { action: 'click->duplicator#duplicate', duplicator_target: "addButton" })

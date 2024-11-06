@@ -209,42 +209,6 @@ RSpec.describe User do
       it { is_expected.to eq("") }
     end
   end
-
-  describe "after_save callbacks" do
-    describe "#add_none_department" do
-      subject(:user_save) { user.save! }
-
-      let(:user) { build(:user) }
-
-      before do
-        create(:department, :none)
-        user_save
-      end
-
-      context "when user has no department" do
-        it { expect(user.reload.departments).to eq([Department.none]) }
-      end
-
-      context "when user has a department" do
-        before { user.departments << create(:department) }
-
-        it { expect(user.reload.departments).not_to eq([Department.none]) }
-      end
-    end
-
-    describe "#dedupe_departments" do
-      subject(:user_save) { user.save! }
-
-      let(:user) { create(:user) }
-
-      before do
-        user.departments << Department.none
-        user_save
-      end
-
-      it { expect(user.reload.departments).to eq([Department.none]) }
-    end
-  end
 end
 
 # == Schema Information
@@ -265,7 +229,6 @@ end
 #  encrypted_password               :string           default(""), not null
 #  failed_attempts                  :integer          default(0), not null
 #  first_name                       :string
-#  gender                           :integer          default("other")
 #  job_applications_count           :integer          default(0), not null
 #  last_name                        :string
 #  last_sign_in_at                  :datetime

@@ -2,15 +2,37 @@
 - target_file_type = JobApplicationFileType.where(by_default: true, from_state: target_state, kind: :applicant_provided)
 - job_application_files = job_application.job_application_files.where(job_application_file_type: target_file_type).joins(:job_application_file_type).order('job_application_file_types.position')
 - job_application_files = job_application_files.limit(1) if defined?(only_first) && only_first
+
+- if user.profile.resume.present?
+  .card
+    .card-header.with-subheader.bg-white.font-weight-bold.text-secondary.d-flex.align-items-center.justify-content-between
+      %div
+        = fa_icon('file-lines', class: 'text-secondary')
+        CV
+      %div
+        = link_to admin_user_resume_path(user), target: "_blank" do
+          = fa_icon('download', class: 'text-secondary')
+
+    .card-subheader.bg-secondary
+    %div
+      %object{data: admin_user_resume_path(user), type: "application/pdf", width: "100%", height: "500px"}
+
 - job_application_files.each do |job_application_file|
   - if job_application_file.document_content.present?
     - file_type = job_application_file.job_application_file_type
+    - next if file_type.name == "CV"
+    - pdf_url = url_for([:admin, job_application, job_application_file, {format: :pdf}])
+
     .card
-      .card-header.with-subheader.bg-white.font-weight-bold.text-secondary
-        = fa_icon('file-lines', class: 'text-secondary')
-        = file_type.name
+      .card-header.with-subheader.bg-white.font-weight-bold.text-secondary.d-flex.align-items-center.justify-content-between
+        %div
+          = fa_icon('file-lines', class: 'text-secondary')
+          = file_type.name
+        %div
+          = link_to pdf_url, target: "_blank" do
+            = fa_icon('download', class: 'text-secondary')
+
       .card-subheader.bg-secondary
       %div
-        - pdf_url = url_for([:admin, job_application, job_application_file, {format: :pdf}])
         %object{data: pdf_url, type: "application/pdf", width: "100%", height: "500px"}
-          = link_to t("buttons.download") + file_type.name, pdf_url
+

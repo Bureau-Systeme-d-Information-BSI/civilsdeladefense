@@ -2,32 +2,49 @@
   = render "devise/shared/france_connect"
 = simple_form_for(@job_application, url: [:send_application, @job_offer], method: :post, data: { turbo: true, controller: "form-save", form_save_target: "form", action: "change->form-save#saveFormData submit->form-save#clearFormData" }) do |f|
   .form-inputs.mt-3
-    = f.error_notification
-    = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+    - if f.object.errors["user.profile.base"].present?
+      = f.error_notification message: f.object.errors["user.profile.base"].to_sentence
+    - else
+      = f.error_notification
+
     %h2.rf-h3= t('.general_informations')
     = f.simple_fields_for :user do |user_form|
       = user_form.simple_fields_for :profile do |profile_form|
-        = profile_form.input :gender, collection: enum_options_for_select(Profile, :gender), input_html: { class: "rf-select" }, required: true, selected: current_user&.gender
+        = profile_form.input :gender, collection: gender_options_for_select, input_html: { class: "rf-select" }, required: true
       = user_form.input :first_name, readonly: user_signed_in?
       = user_form.input :last_name, readonly: user_signed_in?
       = user_form.input :phone, required: true
-      = render partial: '/department_users/form', locals: { user_form: user_form, kind: :job_application }
+      = render partial: '/department_profiles/form', locals: { form: user_form, name_prefix: "job_application[user_attributes][profile_attributes]", department_profiles: @job_application.user.profile.department_profiles }
     - unless user_signed_in?
       = f.simple_fields_for :user do |user_form|
         = user_form.input :photo
 
     %h2.rf-h3= t('.your_profile')
-    - grouped_options = nested_set_options(Category, @category) {|i| "#{'-' * i.level} #{i.name}" }
-    = f.association :category, collection: grouped_options, disabled: Category.all.select{|x| x.children.count != 0}.map(&:id), input_html: {class: 'rf-select'}, required: @job_offer.spontaneous
+
     = f.simple_fields_for :user do |user_form|
       = user_form.simple_fields_for :profile do |profile_form|
-        = profile_form.association :availability_range, input_html: { class: "rf-select" }
-        = profile_form.association :study_level, required: true, input_html: { class: "rf-select" }
-        = profile_form.association :experience_level, input_html: { class: "rf-select" }
-        = profile_form.input :has_corporate_experience, label: "Expérience antérieure #{current_organization.operator_name}"
-        = render partial: '/profile_foreign_languages/form', locals: { profile_form: profile_form }
+        = render partial: '/category_experience_levels/form', locals: { profile_form: profile_form, name_prefix: "job_application[user_attributes][profile_attributes]" }
 
-    %h2.rf-h3= t('.documents')
+        = profile_form.association :availability_range, input_html: { class: "rf-select" }
+
+        = profile_form.association :study_level, required: true, input_html: { class: "rf-select" }
+
+        = profile_form.association :experience_level, input_html: { class: "rf-select" }
+
+        = profile_form.input :has_corporate_experience, label: "Expérience antérieure #{current_organization.operator_name}"
+
+        = render partial: '/profile_foreign_languages/form', locals: { profile_form: profile_form, name_prefix: "job_application[user_attributes][profile_attributes]" }
+
+        %h2.rf-h3= t('.documents')
+
+        .d-flex.align-items-end.rf-mb-3w
+          %div
+            - label = profile_form.object.resume.blank? ? t('.resume') : t('.resume_html')
+            = profile_form.input :resume, label:, as: :file, required: profile_form.object.resume.blank?
+          %div.rf-ml-3w
+            - if profile_form.object.resume.present?
+              = link_to profile_form.object.resume_file_name, account_profiles_resume_path, target: '_blank'
+
     - job_application_files = @job_application.job_application_files.to_a
     - current_state = JobApplication.states[@job_application.state]
     - if @job_offer.spontaneous

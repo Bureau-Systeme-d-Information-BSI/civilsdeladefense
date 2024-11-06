@@ -124,6 +124,7 @@ RSpec.describe "JobOffers" do
                 availability_range_id: AvailabilityRange.first.id,
                 experience_level_id: ExperienceLevel.first.id,
                 study_level_id: StudyLevel.first.id,
+                resume: fixture_file_upload("document.pdf", "application/pdf"),
                 profile_foreign_languages_attributes: {
                   "0" => {
                     foreign_language_id: ForeignLanguage.first.id,
@@ -133,11 +134,17 @@ RSpec.describe "JobOffers" do
                     foreign_language_id: ForeignLanguage.last.id,
                     foreign_language_level_id: ForeignLanguageLevel.last.id
                   }
+                },
+                category_experience_levels_attributes: {
+                  "0" => {
+                    category_id: Category.first.id,
+                    experience_level_id: ExperienceLevel.first.id
+                  }
+                },
+                department_profiles_attributes: {
+                  "0" => {department_id: Department.first.id},
+                  "1" => {department_id: Department.last.id}
                 }
-              },
-              department_users_attributes: {
-                "0" => {department_id: Department.first.id},
-                "1" => {department_id: Department.last.id}
               }
             },
             job_application_files_attributes: {
@@ -181,10 +188,6 @@ RSpec.describe "JobOffers" do
 
         it { expect(user.email).to eq("k.warldorf@gmail.com") }
 
-        it { expect(user.departments.count).to eq(2) }
-
-        it { expect(user.departments.pluck(:id)).to match([Department.first.id, Department.last.id]) }
-
         it { expect(user.organization).to eq(job_offer.organization) }
       end
 
@@ -216,6 +219,18 @@ RSpec.describe "JobOffers" do
             [ForeignLanguageLevel.first.id, ForeignLanguageLevel.last.id]
           )
         end
+
+        it { expect(profile.category_experience_levels.count).to eq(1) }
+
+        it { expect(profile.category_experience_levels.first.category_id).to eq(Category.first.id) }
+
+        it { expect(profile.category_experience_levels.first.experience_level_id).to eq(ExperienceLevel.first.id) }
+
+        it { expect(profile.departments.count).to eq(2) }
+
+        it { expect(profile.departments.pluck(:id)).to match([Department.first.id, Department.last.id]) }
+
+        it { expect(profile.resume).to be_present }
       end
     end
 
@@ -236,6 +251,7 @@ RSpec.describe "JobOffers" do
                 availability_range_id: AvailabilityRange.first.id,
                 experience_level_id: ExperienceLevel.first.id,
                 study_level_id: StudyLevel.first.id,
+                resume: fixture_file_upload("document.pdf", "application/pdf"),
                 profile_foreign_languages_attributes: {
                   "0" => {
                     foreign_language_id: ForeignLanguage.first.id,
@@ -245,11 +261,17 @@ RSpec.describe "JobOffers" do
                     foreign_language_id: ForeignLanguage.last.id,
                     foreign_language_level_id: ForeignLanguageLevel.last.id
                   }
+                },
+                category_experience_levels_attributes: {
+                  "0" => {
+                    category_id: Category.first.id,
+                    experience_level_id: ExperienceLevel.first.id
+                  }
+                },
+                department_profiles_attributes: {
+                  "0" => {department_id: Department.first.id},
+                  "1" => {department_id: Department.last.id}
                 }
-              },
-              department_users_attributes: {
-                "0" => {department_id: Department.first.id},
-                "1" => {department_id: Department.last.id}
               }
             },
             job_application_files_attributes: {
@@ -269,6 +291,8 @@ RSpec.describe "JobOffers" do
       it { expect { post_request }.to change(JobApplication, :count).by(1) }
 
       it { expect(post_request).to redirect_to(successful_job_offer_path(job_offer.slug)) }
+
+      it { expect { post_request }.not_to change { user.reload.profile } }
 
       describe "created job application" do
         before { post_request }
@@ -290,10 +314,6 @@ RSpec.describe "JobOffers" do
         it { expect(user.reload.phone).to eq("+33612345678") }
 
         it { expect(user.reload.website_url).to eq("https://linkedin.com/in/Warldorf") }
-
-        it { expect(user.reload.departments.count).to eq(2) }
-
-        it { expect(user.reload.departments.pluck(:id)).to match([Department.first.id, Department.last.id]) }
 
         it { expect(user.reload.organization).to eq(job_offer.organization) }
       end
@@ -326,6 +346,18 @@ RSpec.describe "JobOffers" do
             [ForeignLanguageLevel.first.id, ForeignLanguageLevel.last.id]
           )
         end
+
+        it { expect(profile.category_experience_levels.count).to eq(1) }
+
+        it { expect(profile.category_experience_levels.first.category_id).to eq(Category.first.id) }
+
+        it { expect(profile.category_experience_levels.first.experience_level_id).to eq(ExperienceLevel.first.id) }
+
+        it { expect(profile.departments.count).to eq(2) }
+
+        it { expect(profile.departments.pluck(:id)).to match([Department.first.id, Department.last.id]) }
+
+        it { expect(profile.resume).to be_present }
       end
     end
   end

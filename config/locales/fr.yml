@@ -115,6 +115,8 @@ fr:
       documents: "Vos documents"
       your_internet_presence: "Votre présence sur internet"
       your_account_creation: "Votre création de compte"
+      resume: "CV"
+      resume_html: "CV <abbr title='obligatoire'>*</abbr>"
   job_offers:
     no_bookmarks:
       title: Vous n'avez pas encore d'offres favorites
@@ -234,6 +236,13 @@ fr:
         title: "Envoyer un courriel"
         add_attachment: "Ajouter une pièce jointe"
       index:
+    profiles:
+      edit:
+        title: "Mon profil candidat"
+        resume: "CV (PDF uniquement, max 2Mo)"
+        resume_html: "CV (PDF uniquement, max 2Mo) <abbr title='obligatoire'>*</abbr>"
+      update:
+        success: "Profil mis à jour !"
     users:
       link_france_connect:
         title: Certifier mon compte FranceConnect
@@ -1168,6 +1177,10 @@ fr:
               f_h: "doit finir par F/H"
             application_deadline:
               in_the_past: "doit être dans le futur"
+        profile:
+          attributes:
+            base:
+              at_least_one_category_experience_level: "Vous devez choisir au moins un domaine professionnel et préciser votre expérience dans ce domaine"
         user:
           attributes:
             base:

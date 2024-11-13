@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_10_02_131847) do
+ActiveRecord::Schema[7.1].define(version: 2024_11_10_091342) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -235,15 +235,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_02_131847) do
     t.datetime "updated_at", null: false
     t.index ["department_id"], name: "index_department_profiles_on_department_id"
     t.index ["profile_id"], name: "index_department_profiles_on_profile_id"
-  end
-
-  create_table "department_users", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "user_id", null: false
-    t.uuid "department_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["department_id"], name: "index_department_users_on_department_id"
-    t.index ["user_id"], name: "index_department_users_on_user_id"
   end
 
   create_table "departments", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
@@ -848,8 +839,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_10_02_131847) do
   add_foreign_key "cmgs", "organizations"
   add_foreign_key "department_profiles", "departments"
   add_foreign_key "department_profiles", "profiles"
-  add_foreign_key "department_users", "departments"
-  add_foreign_key "department_users", "users"
   add_foreign_key "drawback_job_offers", "drawbacks"
   add_foreign_key "drawback_job_offers", "job_offers"
   add_foreign_key "email_attachments", "emails"

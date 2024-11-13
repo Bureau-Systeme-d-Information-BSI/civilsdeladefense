@@ -284,7 +284,10 @@ RSpec.describe "JobOffers" do
         }
       end
 
-      before { sign_in user }
+      before do
+        user.profile.departments = [Department.first, Department.last]
+        sign_in user
+      end
 
       it { expect { post_request }.not_to change(User, :count) }
 

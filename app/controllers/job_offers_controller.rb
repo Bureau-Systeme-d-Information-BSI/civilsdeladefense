@@ -70,7 +70,9 @@ class JobOffersController < ApplicationController
           job_application_params[:user_attributes].except(:profile_attributes)
         )
       end
-      @job_application.user.profile.assign_attributes(job_application_params[:user_attributes][:profile_attributes])
+      @job_application.user.profile.assign_attributes(
+        job_application_params[:user_attributes][:profile_attributes].except(:department_profiles_attributes)
+      )
       @job_application.user.profile.departments = departments
     end
 
@@ -244,5 +246,7 @@ class JobOffersController < ApplicationController
 
   def department_ids = department_profiles_attributes&.to_unsafe_h&.map { |_, department| department[:department_id] }
 
-  def department_profiles_attributes = job_application_params.dig(:user_attributes, :department_profiles_attributes)
+  def department_profiles_attributes
+    job_application_params.dig(:user_attributes, :profile_attributes, :department_profiles_attributes)
+  end
 end

@@ -51,19 +51,20 @@
               - if job_application.files_unread_count > 0
                 .notification= job_application.files_unread_count
               = t('.nav_files', count: job_application.files_count)
-  .col-3{class: job_application_modal_section_classes('pb-0')}
-    .text-center.font-weight-bold.text-secondary
-      Domaines professionnels
-    .d-flex.flex-column.align-items-center
-      - user.profile.category_experience_levels.each do |category_experience_level|
-        %div
-          %strong= category_experience_level.category.name
-          - if category_experience_level.experience_level.present?
-            = "-"
-            = category_experience_level.experience_level.name
-  .col-3{class: job_application_modal_section_classes('pb-0')}
-    .text-center.font-weight-bold.text-secondary
-      Souhaits géographiques
-    .d-flex.flex-column.align-items-center
-      - user.profile.departments.each do |department|
-        %div= department.short_label
+  - if user&.profile.present?
+    .col-3{class: job_application_modal_section_classes('pb-0')}
+      .text-center.font-weight-bold.text-secondary
+        Domaines professionnels
+      .d-flex.flex-column.align-items-center
+        - user.profile.category_experience_levels.each do |category_experience_level|
+          %div
+            %strong= category_experience_level.category.name
+            - if category_experience_level.experience_level.present?
+              = "-"
+              = category_experience_level.experience_level.name
+    .col-3{class: job_application_modal_section_classes('pb-0')}
+      .text-center.font-weight-bold.text-secondary
+        Souhaits géographiques
+      .d-flex.flex-column.align-items-center
+        - user.profile.departments.each do |department|
+          %div= department.short_label

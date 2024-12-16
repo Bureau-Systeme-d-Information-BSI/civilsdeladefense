@@ -14,7 +14,7 @@
             - if user.is_deleted
               %em Profil supprimé
             = render partial: '/admin/profiles/personal_profile', locals: { user: user, is_archived: is_archived_or_is_deleted }
-            = render partial: '/admin/profiles/profile', locals: { user: user, job_application: @job_application, profile: @job_application.user.profile, is_archived: is_archived_or_is_deleted }
+            = render partial: '/admin/profiles/profile', locals: { user: user, job_application: @job_application, profile: @job_application.user&.profile, is_archived: is_archived_or_is_deleted }
             = render partial: '/admin/job_applications/profile', locals: { job_application: @job_application, is_archived: is_archived_or_is_deleted }
             - if @other_job_applications && @other_job_applications.any?
               = render partial: 'user_job_applications', locals: {job_applications: @other_job_applications}

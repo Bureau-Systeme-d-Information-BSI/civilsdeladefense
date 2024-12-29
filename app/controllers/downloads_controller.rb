@@ -19,6 +19,8 @@ class DownloadsController < ApplicationController
     case params[:resource_type]
     when "User"
       User
+    when "Profile"
+      Profile
     else
       throw "Invalid resource type"
     end
@@ -28,6 +30,8 @@ class DownloadsController < ApplicationController
     case params[:attribute_name]
     when "photo"
       resource.photo
+    when "resume"
+      resource.resume
     else
       throw "Invalid attribute"
     end

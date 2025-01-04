@@ -31,5 +31,9 @@ RSpec.describe "Downloads" do
     it_behaves_like "a downloadable resource", "Profile", "resume", "application/pdf" do
       let(:resource) { create(:profile, :with_resume) }
     end
+
+    it_behaves_like "a downloadable resource", "JobApplicationFile", "content", "application/pdf" do
+      let(:resource) { create(:job_application_file) }
+    end
   end
 end

@@ -21,6 +21,8 @@ class DownloadsController < ApplicationController
       User
     when "Profile"
       Profile
+    when "JobApplicationFile"
+      JobApplicationFile
     else
       throw "Invalid resource type"
     end
@@ -32,6 +34,8 @@ class DownloadsController < ApplicationController
       resource.photo
     when "resume"
       resource.resume
+    when "content"
+      resource.content
     else
       throw "Invalid attribute"
     end

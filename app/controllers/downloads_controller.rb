@@ -23,6 +23,8 @@ class DownloadsController < ApplicationController
       Profile
     when "JobApplicationFile"
       JobApplicationFile
+    when "EmailAttachment"
+      EmailAttachment
     else
       throw "Invalid resource type"
     end

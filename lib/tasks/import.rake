@@ -18,7 +18,7 @@ namespace :import do
     end.each do |raw|
       puts "Importing administrator: #{raw["email"]}"
 
-      attributes = raw.except("organization_id").merge(organization)
+      attributes = raw.except("organization_id").merge(organization_mapping)
       attributes = attributes.except("supervisor_administrator_id") unless Administrator.exists?(id: raw["supervisor_administrator_id"])
       attributes = attributes.except("grand_employer_administrator_id") unless Administrator.exists?(id: raw["grand_employer_administrator_id"])
       attributes = attributes.except("inviter_id") unless Administrator.exists?(id: raw["inviter_id"])
@@ -91,8 +91,6 @@ namespace :import do
 
   task users: :environment do
     import_json("users.json").each_with_index do |raw, index|
-      photo_filename = raw["photo_file_name"]
-
       user = User.find_by(id: raw["id"])
       puts "User already present: #{raw["id"]}" && next if user.present?
 
@@ -100,13 +98,11 @@ namespace :import do
       puts "User already present: #{raw["email"]}" && next if user.present?
 
       puts "Importing user: #{raw["email"]} (#{index + 1})"
-      user = User.new(raw.except("organization_id", "gender").merge(organization))
-
-      user.photo = download("User", "photo", raw["id"], photo_filename) if photo_filename.present?
+      user = User.new(raw.except("organization_id", "gender").merge(organization_mapping))
       user.skip_confirmation!
       user.save(validate: false)
 
-      File.delete(photo_filename) if photo_filename.present? && File.exist?(photo_filename)
+      DownloadJob.set(wait: 10.seconds).perform_later(resource_type: "User", attribute_name: "photo", id: raw["id"], file_name: raw["photo_file_name"])
     end
     File.delete("users.json")
   end
@@ -117,8 +113,6 @@ namespace :import do
     end.each_with_index do |raw, index|
       puts "Importing user profile: #{raw["id"]} (#{index + 1})"
 
-      resume_file_name = raw["resume_file_name"]
-
       attributes = raw.except("availability_range_id", "age_range_id").merge(
         study_level_id: study_level_id(raw["study_level_id"]),
         experience_level_id: experience_level_id(raw["experience_level_id"])
@@ -126,10 +120,9 @@ namespace :import do
       attributes = attributes.merge(profileable_id: user_mapping[raw["profileable_id"]]) unless User.exists?(id: raw["profileable_id"])
 
       profile = Profile.new(attributes)
-      profile.resume = download("Profile", "resume", raw["id"], resume_file_name) if resume_file_name.present?
       profile.save(validate: false)
 
-      File.delete(resume_file_name) if resume_file_name.present? && File.exist?(resume_file_name)
+      DownloadJob.set(wait: 10.seconds).perform_later(resource_type: "Profile", attribute_name: "resume", id: raw["id"], file_name: raw["resume_file_name"])
     end
     File.delete("profiles.json")
   end
@@ -143,7 +136,7 @@ namespace :import do
       attributes = raw.except(
         :organization_id
       ).merge(
-        organization,
+        organization_mapping,
         category_id: category_id(raw["category_id"]),
         contract_type_id: contract_type_id(raw["contract_type_id"]),
         experience_level_id: experience_level_id(raw["experience_level_id"]),
@@ -173,7 +166,7 @@ namespace :import do
     end.each_with_index do |raw, index|
       puts "Importing job application: #{raw["id"]} (#{index + 1})"
 
-      attributes = raw.except(:organization_id).merge(organization)
+      attributes = raw.except(:organization_id).merge(organization_mapping)
       attributes = attributes.merge(user_id: user_mapping[raw["user_id"]]) unless User.exists?(id: raw["user_id"])
       attributes = attributes.merge(category_id: category_id(raw["category_id"]))
       attributes = attributes.merge(rejection_reason_id: rejection_reason_id(raw["rejection_reason_id"]))
@@ -191,17 +184,14 @@ namespace :import do
     end.each_with_index do |raw, index|
       puts "Importing job application profile: #{raw["id"]} (#{index + 1})"
 
-      resume_file_name = raw["resume_file_name"]
-
       attributes = raw.except("availability_range_id", "age_range_id").merge(
         study_level_id: study_level_id(raw["study_level_id"]),
         experience_level_id: experience_level_id(raw["experience_level_id"])
       )
       profile = Profile.new(attributes)
-      profile.resume = download("Profile", "resume", raw["id"], resume_file_name) if resume_file_name.present?
       profile.save(validate: false)
 
-      File.delete(resume_file_name) if resume_file_name.present? && File.exist?(resume_file_name)
+      DownloadJob.set(wait: 10.seconds).perform_later(resource_type: "Profile", attribute_name: "resume", id: raw["id"], file_name: raw["resume_file_name"])
     end
     File.delete("profiles.json")
   end
@@ -212,8 +202,6 @@ namespace :import do
     end.each_with_index do |raw, index|
       puts "Importing job application file: #{raw["id"]} (#{index + 1})"
 
-      content_file_name = raw["content_file_name"]
-
       attributes = raw.except(:content_file_name).merge(secured_content: false)
       job_application_file_type_id = if JobApplicationFileType.exists?(id: raw["job_application_file_type_id"])
         raw["job_application_file_type_id"]
@@ -223,12 +211,9 @@ namespace :import do
       attributes = attributes.merge(job_application_file_type_id: job_application_file_type_id)
 
       job_application_file = JobApplicationFile.new(attributes)
-      if content_file_name.present?
-        job_application_file.content = download("JobApplicationFile", "content", raw["id"], content_file_name)
-      end
       job_application_file.save(validate: false)
 
-      File.delete(content_file_name) if content_file_name.present? && File.exist?(content_file_name)
+      DownloadJob.set(wait: 10.seconds).perform_later(resource_type: "JobApplicationFile", attribute_name: "content", id: raw["id"], file_name: raw["content_file_name"])
     rescue Socket::ResolutionError => e
       puts "Failed to import job application file type: #{raw["name"]} => #{e}"
     end
@@ -295,13 +280,10 @@ namespace :import do
     end.each_with_index do |raw, index|
       puts "Importing email attachment: #{raw["id"]} (#{index + 1})"
 
-      content_file_name = raw["content"]
-
       email_attachment = EmailAttachment.new(raw.merge(secured_content: false))
-      email_attachment.content = download("EmailAttachment", "content", raw["id"], content_file_name) if content_file_name.present?
       email_attachment.save(validate: false)
 
-      File.delete(content_file_name) if content_file_name.present? && File.exist?(content_file_name)
+      DownloadJob.set(wait: 10.seconds).perform_later(resource_type: "EmailAttachment", attribute_name: "content", id: raw["id"], file_name: raw["content"])
     rescue Socket::ResolutionError => e
       puts "Failed to import email attachment: #{raw["name"]} => #{e}"
     end
@@ -386,17 +368,7 @@ namespace :import do
     JSON.parse(File.read(file_name)).sort_by { |item| item["created_at"] }
   end
 
-  def download(resource_type, attribute_name, id, file_name)
-    url = "https://ict-tct.contractuels.civils.defense.gouv.fr/downloads/#{id}?resource_type=#{resource_type}&attribute_name=#{attribute_name}"
-    content = URI.open(url, "X-Download-Secret-Key" => ENV["DOWNLOAD_SECRET_KEY"]).read.force_encoding("UTF-8") # rubocop:disable Security/Open
-    File.write(file_name, content)
-    File.open(file_name)
-  rescue OpenURI::HTTPError => e
-    puts "Failed to download content for job application file: #{id} => #{e}"
-    nil
-  end
-
-  def organization
+  def organization_mapping
     @organization ||= Organization.find("9573652a-7b89-44e8-864c-75c0ec3a8ede")
     {organization: @organization}
   end

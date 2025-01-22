@@ -55,7 +55,7 @@ gem "trix-rails", require: "trix"
 gem "turbo-rails"
 gem "will_paginate"
 gem "working_hours", "~> 1.4"
-gem "sidekiq" # Async jobs
+gem "sidekiq", "~> 7.1.6" # Async jobs
 gem "rorvswild" # Errors tracking
 gem "phony_rails" # Normalize phone numbers
 

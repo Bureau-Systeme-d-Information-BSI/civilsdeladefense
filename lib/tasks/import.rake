@@ -90,15 +90,18 @@ namespace :import do
   end
 
   task users: :environment do
-    import_json("users.json").each_with_index do |raw, index|
-      user = User.find_by(id: raw["id"])
-      puts "User already present: #{raw["id"]}" && next if user.present?
+    import_json("users.json").select do |raw|
+      User.find_by(id: raw["id"]).nil?
+    end.each_with_index do |raw, index|
+      email = raw["email"]
+      user = User.find_by(email:)
+      if user.present?
+        email_value, email_domain = email.split("@")
+        email = "#{email_value}+cvd@#{email_domain}"
+      end
 
-      user = User.find_by(email: raw["email"])
-      puts "User already present: #{raw["email"]}" && next if user.present?
-
-      puts "Importing user: #{raw["email"]} (#{index + 1})"
-      user = User.new(raw.except("organization_id", "gender").merge(organization_mapping))
+      puts "Importing user: #{email} (#{index + 1})"
+      user = User.new(raw.except("organization_id", "gender").merge(organization_mapping, email:))
       user.skip_confirmation!
       user.save(validate: false)
 
@@ -113,13 +116,14 @@ namespace :import do
     end.each_with_index do |raw, index|
       puts "Importing user profile: #{raw["id"]} (#{index + 1})"
 
-      attributes = raw.except("availability_range_id", "age_range_id").merge(
-        study_level_id: study_level_id(raw["study_level_id"]),
-        experience_level_id: experience_level_id(raw["experience_level_id"])
+      profile = Profile.new(
+        raw
+          .except("availability_range_id", "age_range_id")
+          .merge(
+            study_level_id: study_level_id(raw["study_level_id"]),
+            experience_level_id: experience_level_id(raw["experience_level_id"])
+          )
       )
-      attributes = attributes.merge(profileable_id: user_mapping[raw["profileable_id"]]) unless User.exists?(id: raw["profileable_id"])
-
-      profile = Profile.new(attributes)
       profile.save(validate: false)
 
       DownloadJob.set(wait: 10.seconds).perform_later(resource_type: "Profile", attribute_name: "resume", id: raw["id"], file_name: raw["resume_file_name"])
@@ -167,7 +171,6 @@ namespace :import do
       puts "Importing job application: #{raw["id"]} (#{index + 1})"
 
       attributes = raw.except(:organization_id).merge(organization_mapping)
-      attributes = attributes.merge(user_id: user_mapping[raw["user_id"]]) unless User.exists?(id: raw["user_id"])
       attributes = attributes.merge(category_id: category_id(raw["category_id"]))
       attributes = attributes.merge(rejection_reason_id: rejection_reason_id(raw["rejection_reason_id"]))
 
@@ -175,7 +178,6 @@ namespace :import do
       job_application.save(validate: false)
     end
     File.delete("job_applications.json")
-    File.delete("users.json") if File.exist?("users.json")
   end
 
   task job_application_profiles: :environment do
@@ -237,12 +239,9 @@ namespace :import do
     end.each do |raw|
       puts "Importing bookmark: #{raw["id"]}"
 
-      attributes = raw
-      attributes = attributes.merge(user_id: user_mapping[raw["user_id"]]) unless User.exists?(id: raw["user_id"])
-      Bookmark.create!(attributes)
+      Bookmark.create!(raw)
     end
     File.delete("bookmarks.json")
-    File.delete("users.json") if File.exist?("users.json")
   end
 
   task department_profiles: :environment do
@@ -338,12 +337,9 @@ namespace :import do
     end.each do |raw|
       puts "Importing preferred user: #{raw["id"]}"
 
-      attributes = raw
-      attributes = attributes.merge(user_id: user_mapping[raw["user_id"]]) unless User.exists?(id: raw["user_id"])
-      PreferredUser.create!(attributes)
+      PreferredUser.create!(raw)
     end
     File.delete("preferred_users.json")
-    File.delete("users.json") if File.exist?("users.json")
   end
 
   task profile_foreign_languages: :environment do
@@ -376,12 +372,6 @@ namespace :import do
   def admin_mapping
     @admin_mapping ||= import_json("administrators.json").each_with_object({}) do |raw, hash|
       hash[raw["id"]] = Administrator.find_by(email: raw["email"]).id
-    end
-  end
-
-  def user_mapping
-    @user_mapping ||= import_json("users.json").each_with_object({}) do |raw, hash|
-      hash[raw["id"]] = User.find_by(email: raw["email"]).id
     end
   end
 

@@ -14,11 +14,17 @@ namespace :import do
 
   task administrators: :environment do
     import_json("administrators.json").select do |raw|
-      Administrator.where(email: raw["email"]).empty?
+      Administrator.find_by(id: raw["id"]).nil?
     end.each do |raw|
       puts "Importing administrator: #{raw["email"]}"
 
-      attributes = raw.except("organization_id").merge(organization_mapping)
+      email = raw["email"]
+      if Administrator.exists?(email: email)
+        email_value, email_domain = email.split("@")
+        email = "#{email_value}+cvd@#{email_domain}"
+      end
+
+      attributes = raw.merge(organization_mapping, email:)
       attributes = attributes.except("supervisor_administrator_id") unless Administrator.exists?(id: raw["supervisor_administrator_id"])
       attributes = attributes.except("grand_employer_administrator_id") unless Administrator.exists?(id: raw["grand_employer_administrator_id"])
       attributes = attributes.except("inviter_id") unless Administrator.exists?(id: raw["inviter_id"])
@@ -150,18 +156,12 @@ namespace :import do
         level_id: level_id(raw["level_id"]),
         archiving_reason_id: archiving_reason_id(raw["archiving_reason_id"])
       )
-      if JobOffer.exists?(slug: raw["slug"])
-        attributes = attributes.merge(slug: "#{raw["slug"]}-#{SecureRandom.hex(4)}")
-      end
-      unless Administrator.exists?(id: raw["owner_id"])
-        attributes = attributes.merge(owner_id: admin_mapping[raw["owner_id"]])
-      end
+      attributes = attributes.merge(slug: "#{raw["slug"]}-#{SecureRandom.hex(4)}") if JobOffer.exists?(slug: raw["slug"])
 
       job_offer = JobOffer.new(attributes)
       job_offer.save(validate: false)
     end
     File.delete("job_offers.json")
-    File.delete("administrators.json") if File.exist?("administrators.json")
   end
 
   task job_applications: :environment do
@@ -262,15 +262,12 @@ namespace :import do
     end.each do |raw|
       puts "Importing email: #{raw["id"]}"
 
-      attributes = raw
-      attributes = attributes.merge(sender_id: admin_mapping[raw["sender_id"]]) unless Administrator.exists?(id: raw["sender_id"])
-      email = Email.new(attributes)
+      email = Email.new(raw)
       email.save(validate: false)
     end
 
     Email.set_callback(:save, :after, :compute_job_application_notifications_counter)
     File.delete("emails.json")
-    File.delete("administrators.json") if File.exist?("administrators.json")
   end
 
   task email_attachments: :environment do
@@ -295,12 +292,9 @@ namespace :import do
     end.each do |raw|
       puts "Importing job offer actor: #{raw["id"]}"
 
-      attributes = raw
-      attributes = attributes.merge(administrator_id: admin_mapping[raw["administrator_id"]]) unless Administrator.exists?(id: raw["administrator_id"])
-      JobOfferActor.create!(attributes)
+      JobOfferActor.create!(raw)
     end
     File.delete("job_offer_actors.json")
-    File.delete("administrators.json") if File.exist?("administrators.json")
   end
 
   task messages: :environment do
@@ -309,12 +303,9 @@ namespace :import do
     end.each do |raw|
       puts "Importing message: #{raw["id"]}"
 
-      attributes = raw
-      attributes = attributes.merge(administrator_id: admin_mapping[raw["administrator_id"]]) unless Administrator.exists?(id: raw["administrator_id"])
-      Message.create!(attributes)
+      Message.create!(raw)
     end
     File.delete("messages.json")
-    File.delete("administrators.json") if File.exist?("administrators.json")
   end
 
   task preferred_users_lists: :environment do
@@ -323,12 +314,9 @@ namespace :import do
     end.each do |raw|
       puts "Importing preferred user list: #{raw["id"]}"
 
-      attributes = raw
-      attributes = attributes.merge(administrator_id: admin_mapping[raw["administrator_id"]]) unless Administrator.exists?(id: raw["administrator_id"])
-      PreferredUsersList.create!(attributes)
+      PreferredUsersList.create!(raw)
     end
     File.delete("preferred_users_lists.json")
-    File.delete("administrators.json") if File.exist?("administrators.json")
   end
 
   task preferred_users: :environment do
@@ -367,12 +355,6 @@ namespace :import do
   def organization_mapping
     @organization ||= Organization.find("9573652a-7b89-44e8-864c-75c0ec3a8ede")
     {organization: @organization}
-  end
-
-  def admin_mapping
-    @admin_mapping ||= import_json("administrators.json").each_with_object({}) do |raw, hash|
-      hash[raw["id"]] = Administrator.find_by(email: raw["email"]).id
-    end
   end
 
   def department_id(department_id)

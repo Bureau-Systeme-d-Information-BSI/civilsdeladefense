@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  before_action :redirect_to_maintenance_mode, if: :maintenance_mode_activated?
   before_action :basic_auth, if: -> { ENV["BASIC_AUTH"].present? }
 
   layout :layout_by_resource
@@ -18,6 +19,10 @@ class ApplicationController < ActionController::Base
   helper_method :current_organization
 
   private
+
+  def redirect_to_maintenance_mode = redirect_to maintenance_path
+
+  def maintenance_mode_activated? = ENV["MAINTENANCE_MODE"] == "true"
 
   def basic_auth
     authenticate_or_request_with_http_basic do |u1, p1|

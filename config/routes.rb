@@ -249,6 +249,7 @@ Rails.application.routes.draw do
   resources :pages, only: %w[show]
   resource :robots, only: %w[show]
   resource :sitemap
+  resource :maintenance, only: %w[show]
 
   root to: "homepages#show"
 end

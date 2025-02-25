@@ -8,7 +8,7 @@ jobs:
     env:
       RAILS_ENV: test
       NODE_ENV: test
-    
+
     services:
       postgres:
         image: postgres:latest
@@ -38,7 +38,7 @@ jobs:
         run: |
           yarn install --frozen-lockfile
           bundle install --jobs 4 --retry 3 --path vendor/bundle
-      
+
       - name: Set up database
         env:
           DATABASE_URL_TEST: postgresql://cvd:postgres@localhost/cvd_test
@@ -48,7 +48,7 @@ jobs:
         run: |
           bundle exec rails tmp:clear
           bundle exec rails assets:precompile
-          
+
       - name: RSpec
         run: bundle exec rspec --fail-fast --format documentation
         env:
@@ -60,10 +60,3 @@ jobs:
           FRANCE_CONNECT_HOST: not.a.real.host.test-franceconnect.fr
           SECURE_CONTENT: true
 
-      - name: Upload Capybara screenshots
-        if: failure()
-        uses: actions/upload-artifact@v3
-        with:
-          name: capybara-artifacts
-          path: /home/runner/work/**/tmp/capybara/*.png
-          retention-days: 5

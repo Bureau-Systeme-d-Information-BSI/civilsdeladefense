@@ -19,10 +19,12 @@ Installer ASDF pour gérer les versions de Ruby et de NodeJS.
 Une fois installé, dans le dossier du projet cloné depuis GitHub :
 
 ```
+asdf plugin add ruby
 asdf install ruby 3.3.0
-asdf local ruby 3.3.0
+asdf set ruby 3.3.0
+asdf plugin add nodejs
 asdf install nodejs 18.20.4
-asdf local nodejs 18.20.4
+asdf set nodejs 18.20.4
 ```
 
 ## Installation locale

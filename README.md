@@ -41,7 +41,8 @@ Créer un fichier .env à la racine du projet contenant les valeurs :
 ```
 DEFAULT_FROM=hello@localhost
 DEFAULT_HOST=http://localhost:3000
-LOCKBOX_MASTER_KEY=
+SEED_PASSWORD=<insert any value here>
+LOCKBOX_MASTER_KEY=0000000000000000000000000000000000000000000000000000000000000000
 ```
 
 Optionnellement ce fichier .env peut contenir les variables suivantes pour configurer un Object Storage basé sur OSU/S3 :

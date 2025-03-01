@@ -120,7 +120,12 @@ class JobOffersController < ApplicationController
       end_of_month = contract_start_on.end_of_month
       @job_offers = @job_offers.where(contract_start_on: start_of_month..end_of_month)
     end
-    @job_offers = @job_offers.where("published_at >= ?", published_at) if published_at.present?
+
+    if published_at.present?
+      start_of_month = published_at.beginning_of_month
+      end_of_month = published_at.end_of_month
+      @job_offers = @job_offers.where(published_at: start_of_month..end_of_month)
+    end
 
     @job_offers = @job_offers.bookmarked(current_user) if params[:bookmarked].present? && user_signed_in?
 

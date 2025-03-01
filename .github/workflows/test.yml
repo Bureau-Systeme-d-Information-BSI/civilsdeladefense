@@ -8,16 +8,22 @@ jobs:
     env:
       RAILS_ENV: test
       NODE_ENV: test
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/test
 
     services:
       postgres:
         image: postgres:latest
         env:
-          POSTGRES_USER: cvd
-          POSTGRES_DB: cvd_test
+          POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: test
         ports:
           - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     steps:
       - name: Checkout code
@@ -40,8 +46,6 @@ jobs:
           bundle install --jobs 4 --retry 3 --path vendor/bundle
 
       - name: Set up database
-        env:
-          DATABASE_URL_TEST: postgresql://cvd:postgres@localhost/cvd_test
         run: bundle exec rails db:schema:load
 
       - name: Compile assets
@@ -52,7 +56,6 @@ jobs:
       - name: RSpec
         run: bundle exec rspec --fail-fast --format documentation
         env:
-          DATABASE_URL_TEST: postgresql://cvd:postgres@localhost/cvd_test
           SMTP_URL: smtp://hello%40localhost@localhost
           LOCKBOX_MASTER_KEY: 0000000000000000000000000000000000000000000000000000000000000000
           DEFAULT_FROM: hello@localhost

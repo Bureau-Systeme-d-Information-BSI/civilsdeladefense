@@ -5,11 +5,11 @@ default: &default
 
 development:
   <<: *default
-  url: <%= ENV['DATABASE_URL'] %>
+  database: civilsdeladefense_development
 
 test:
   <<: *default
-  url: <%= ENV['DATABASE_URL_TEST'] %>
+  database: civilsdeladefense_test
 
 production:
   <<: *default

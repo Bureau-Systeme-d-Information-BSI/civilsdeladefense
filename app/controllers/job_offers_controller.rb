@@ -115,7 +115,11 @@ class JobOffersController < ApplicationController
 
     @job_offers = @job_offers.where(category_id: searched_category_ids) if searched_category_ids.present?
 
-    @job_offers = @job_offers.where("contract_start_on <= ?", contract_start_on) if contract_start_on.present?
+    if contract_start_on.present?
+      start_of_month = contract_start_on.beginning_of_month
+      end_of_month = contract_start_on.end_of_month
+      @job_offers = @job_offers.where(contract_start_on: start_of_month..end_of_month)
+    end
     @job_offers = @job_offers.where("published_at >= ?", published_at) if published_at.present?
 
     @job_offers = @job_offers.bookmarked(current_user) if params[:bookmarked].present? && user_signed_in?

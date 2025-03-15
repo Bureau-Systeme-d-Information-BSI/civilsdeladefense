@@ -27,7 +27,7 @@ module Clockwork
   cond &&= ENV["DAYS_NOTICE_PERIOD_BEFORE_DEACTIVATION"].present?
   if cond
     every 1.day, "purge_administrators", at: "11:00" do
-      Administrator.deactivate_when_too_old!
+      Administrator::DeactivateOldJob.perform_later
     end
   end
 

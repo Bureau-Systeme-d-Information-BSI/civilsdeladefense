@@ -18,7 +18,8 @@ module Clockwork
   cond &&= ENV["DAYS_NOTICE_PERIOD_BEFORE_DELETION"].present?
   if cond
     every 1.day, "purge_users", at: "11:00" do
-      User.destroy_when_too_old
+      User::MarkForDeletionJob.perform_later
+      User::DeleteOldJob.perform_later
     end
   end
 

@@ -345,6 +345,11 @@ namespace :import do
     File.delete("profile_foreign_languages.json")
   end
 
+  task fix_job_offer_regions: :environment do
+    puts "Fixing job offer regions"
+    JobOffer.where(region: "Pays-de-la-Loire").update_all(region: "Pays de la Loire") # rubocop:disable Rails/SkipsModelValidations
+  end
+
   private
 
   def import_json(file_name)

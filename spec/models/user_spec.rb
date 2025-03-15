@@ -157,6 +157,7 @@ RSpec.describe User do
       ENV["DAYS_NOTICE_PERIOD_BEFORE_DELETION"] = "20"
       user.reload
       described_class.destroy_when_too_old
+      described_class.mark_for_deletion
     end
 
     context "when connected long time ago" do

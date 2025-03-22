@@ -129,6 +129,30 @@ RSpec.describe "Admin::Users" do
         it { expect(response.body).not_to include(user_no_foreign_language.full_name) }
       end
     end
+
+    describe "searching and filtering users on job application state" do
+      let(:initial_user) { create(:user, first_name: "René") }
+      let(:accepted_user) { create(:user, first_name: "René") }
+
+      let(:params) {
+        {
+          q: {job_applications_state_in: ["initial"]},
+          s: "René"
+        }
+      }
+
+      before do
+        create(:job_application, user: initial_user, state: "initial")
+        create(:job_application, user: accepted_user, state: "accepted")
+        index_request
+      end
+
+      it { expect(response).to be_successful }
+
+      it { expect(response.body).to include(initial_user.full_name) }
+
+      it { expect(response.body).not_to include(accepted_user.full_name) }
+    end
     # rubocop:enable RSpec/MultipleMemoizedHelpers
   end
 

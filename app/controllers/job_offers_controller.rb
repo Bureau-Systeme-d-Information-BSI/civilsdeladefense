@@ -173,7 +173,8 @@ class JobOffersController < ApplicationController
       job_application_files_attributes: [
         :content,
         :job_application_file_type_id,
-        :job_application_file_existing_id
+        :job_application_file_existing_id,
+        :do_not_provide_immediately
       ]
     )
   end

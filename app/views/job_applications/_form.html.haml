@@ -56,6 +56,7 @@
       - job_application_file ||= @job_application.job_application_files.build(job_application_file_type: job_application_file_type)
       = f.simple_fields_for :job_application_files, job_application_file, input_html: {placeholder: false, required: true} do |file_form|
         = file_form.hidden_field :job_application_file_type_id
+        = file_form.hidden_field :do_not_provide_immediately, value: true
         = file_form.input :content, label: job_application_file_type.name, required: false
         - if current_user
           - collection = current_user.job_application_files.where(job_application_file_type: job_application_file_type).uniq { |f| f.content_file_name }

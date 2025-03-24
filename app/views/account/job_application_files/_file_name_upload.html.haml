@@ -2,12 +2,12 @@
 - is_validated_value = job_application_file.is_validated
 - hint_text = hint_text_for_file(job_application, job_application_file)
 - klasses = ["is-validated-#{ is_validated_value }"]
-- html = { id: "job_application_file_#{file_type.name.parameterize}", class: klasses, "data-file-drop-target" => "form" }
+- html = { id: "job_application_file_#{file_type.name.parameterize}", class: klasses, "data-file-drop-target" => "form", "data-controller" => "file-drop" }
 - options = { html: html, namespace: file_type.name.parameterize }
 = turbo_frame_tag dom_id(job_application_file.job_application_file_type) do
   %h3= file_type.name
   .rf-mb-1w= hint_text
-  - data = { controller: "file-drop", action: "dragenter->file-drop#highlight dragover->file-drop#highlight dragleave->file-drop#unhighlight drop->file-drop#unhighlight drop->file-drop#setFile" }
+  - data = { action: "dragenter->file-drop#highlight dragover->file-drop#highlight dragleave->file-drop#unhighlight drop->file-drop#unhighlight drop->file-drop#setFile" }
   = simple_form_for([:account, job_application, job_application_file], options) do |f|
     %label
       .rf-card.rf-card--no-arrow.rf-card--no-full-height.rf-mb-3w.hidden-file-input{ data: data }

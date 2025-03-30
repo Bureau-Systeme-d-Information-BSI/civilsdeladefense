@@ -73,6 +73,8 @@ gem "maintenance_tasks" # Database maintenance tasks (data migrations, etc.)
 
 gem "hotwire_combobox" # Modern autocomplete
 
+gem "hotwire_combobox" # Modern autocomplete
+
 group :development, :test do
   gem "brakeman", require: false
   gem "debug"

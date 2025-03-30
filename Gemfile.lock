@@ -129,8 +129,8 @@ GEM
       activesupport
       tzinfo
     coderay (1.1.3)
-    concurrent-ruby (1.2.2)
-    connection_pool (2.4.1)
+    concurrent-ruby (1.3.5)
+    connection_pool (2.5.4)
     counter_culture (3.5.0)
       activerecord (>= 4.2)
       activesupport (>= 4.2)
@@ -358,7 +358,7 @@ GEM
     puma (6.4.3)
       nio4r (~> 2.0)
     racc (1.7.3)
-    rack (3.0.10)
+    rack (3.2.1)
     rack-cors (2.0.2)
       rack (>= 2.0.0)
     rack-oauth2 (1.19.0)
@@ -424,7 +424,7 @@ GEM
       ffi (~> 1.0)
     redis (5.0.6)
       redis-client (>= 0.9.0)
-    redis-client (0.17.0)
+    redis-client (0.25.3)
       connection_pool
     regexp_parser (2.8.3)
     reline (0.4.2)

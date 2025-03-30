@@ -53,6 +53,8 @@ class JobApplication < ApplicationRecord
   before_validation :set_employer
   before_save :compute_notifications_counter
   before_save :cleanup_rejection_reason, unless: proc { |ja| ja.rejected_state? }
+  after_update :notify_new_state, if: -> { new_state_requires_notification? }
+  after_update :notify_rejected, if: -> { rejected_state_requires_notification? }
 
   FINISHED_STATES = %w[rejected phone_meeting_rejected after_meeting_rejected affected].freeze
   REJECTED_STATES = %w[rejected phone_meeting_rejected after_meeting_rejected].freeze
@@ -60,6 +62,10 @@ class JobApplication < ApplicationRecord
   FILLED_STATES = %w[
     accepted contract_drafting contract_feedback_waiting contract_received affected
   ].freeze
+  NOTIFICATION_STATES = %w[
+    phone_meeting to_be_met accepted contract_drafting contract_feedback_waiting contract_received affected
+  ].freeze
+
   enum state: {
     initial: 0,
     rejected: 1,
@@ -77,7 +83,8 @@ class JobApplication < ApplicationRecord
   aasm column: :state, enum: true do
     state :initial, initial: true
     state :rejected
-    state :phone_meeting
+    state :phone_meeting,
+      before_enter: proc { notify_new_state(:phone_meeting) }
     state :phone_meeting_rejected
     state :to_be_met
     state :after_meeting_rejected
@@ -302,6 +309,14 @@ class JobApplication < ApplicationRecord
   def cant_be_accepted_twice = errors.add(:state, :cant_be_accepted_twice)
 
   def has_accepted_other_job_application? = user.job_applications.where(state: "accepted").where.not(id: id).empty?
+
+  def notify_new_state = ApplicantNotificationsMailer.with(user:, job_offer:, state:).notify_new_state.deliver_later
+
+  def new_state_requires_notification? = saved_change_to_state? && NOTIFICATION_STATES.include?(state.to_s)
+
+  def notify_rejected = ApplicantNotificationsMailer.with(user:, job_offer:).notify_rejected.deliver_later
+
+  def rejected_state_requires_notification? = saved_change_to_state? && REJECTED_STATES.include?(state.to_s)
 
   class << self
     def rejected_states

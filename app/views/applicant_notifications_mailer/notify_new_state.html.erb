@@ -1,0 +1,29 @@
+<p>
+  Bonjour <%= @user.full_name %>,
+</p>
+
+<p>
+  Vous recevez ce message parce que vous avez candidaté à l'offre
+  <%= @job_offer.identifier %> "<%= @job_offer.title %>".
+</p>
+
+<p>
+  Votre candidature est passée à l'étape
+  <%= @state %> !
+  Vous avez probablement de nouvelles actions à effectuer.
+</p>
+
+<p>
+  Veuillez-vous connecter à votre espace
+  <a href="<%= account_job_applications_url %>">
+    Mes candidatures.
+  </a>
+</p>
+
+<p>
+Cordialement,
+</p>
+
+<p>
+  L'équipe <%= @service_name %>
+</p>

@@ -1,0 +1,25 @@
+<p>
+  Bonjour <%= @user.full_name %>,
+</p>
+
+<p>
+  Vous recevez ce message parce que vous avez candidaté à l'offre
+  <%= @job_offer.identifier %> "<%= @job_offer.title %>".
+</p>
+
+<p>
+  Malheureusement, après l’étude de votre candidature, nous ne pourrons pas y donner une suite favorable.
+</p>
+
+<p>
+  Nous vous invitons à rester à l'écoute des offres que nous serons amenées à proposer dans les prochains mois sur notre site
+  <%= link_to @service_name, ENV.fetch('DEFAULT_HOST') %>.
+</p>
+
+<p>
+  Cordialement,
+</p>
+
+<p>
+  L'équipe <%= @service_name %>
+</p>

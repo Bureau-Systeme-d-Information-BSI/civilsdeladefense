@@ -176,6 +176,10 @@ fr:
   applicant_notifications_mailer:
     send_job_offer:
       subject: "Nouvelle offre"
+    notify_new_state:
+      subject: "Votre candidature : nouvelle étape"
+    notify_rejected:
+      subject: "Votre candidature a été refusée"
   notifications_mailer:
     daily_summary:
       subject: "[%{service_name}] Rapport journalier"

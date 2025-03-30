@@ -86,3 +86,9 @@ document.addEventListener('turbo:load', function () {
     dateFormat: 'Y-m-d'
   })
 })
+
+import { Application } from "@hotwired/stimulus"
+const application = Application.start()
+
+import HwComboboxController from "@josefarias/hotwire_combobox"
+application.register("hw-combobox", HwComboboxController)

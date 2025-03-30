@@ -71,6 +71,8 @@ gem "prawn-table" # Add tables to PDFs
 
 gem "maintenance_tasks", "~> 2.7" # Database maintenance tasks (data migrations, etc.)
 
+gem "hotwire_combobox" # Modern autocomplete
+
 group :development, :test do
   gem "brakeman", require: false
   gem "debug"

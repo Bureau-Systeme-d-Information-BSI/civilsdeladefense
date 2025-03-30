@@ -55,7 +55,7 @@ gem "trix-rails", require: "trix"
 gem "turbo-rails"
 gem "will_paginate"
 gem "working_hours", "~> 1.4"
-gem "sidekiq" # Async jobs
+gem "sidekiq", "~> 7.1.6" # Async jobs
 gem "rorvswild" # Errors tracking
 gem "phony_rails" # Normalize phone numbers
 
@@ -70,6 +70,8 @@ gem "prawn" # PDF generation
 gem "prawn-table" # Add tables to PDFs
 
 gem "maintenance_tasks", "~> 2.7" # Database maintenance tasks (data migrations, etc.)
+
+gem "aws-sdk-s3", "~> 1" # AWS S3 - only used for DGA > CVD merge
 
 group :development, :test do
   gem "brakeman", require: false

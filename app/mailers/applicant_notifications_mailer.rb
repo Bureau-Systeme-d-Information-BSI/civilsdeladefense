@@ -73,6 +73,15 @@ class ApplicantNotificationsMailer < ApplicationMailer
     @user = params[:user]
     @job_offer = params[:job_offer]
     @state = JobApplication.human_attribute_name("state/#{params[:state]}")
+    @service_name = @job_offer.organization.service_name
+
+    mail to: @user.email, subject: t(".subject")
+  end
+
+  def notify_rejected
+    @user = params[:user]
+    @job_offer = params[:job_offer]
+    @service_name = @job_offer.organization.service_name
 
     mail to: @user.email, subject: t(".subject")
   end

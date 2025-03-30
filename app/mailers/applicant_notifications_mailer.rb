@@ -68,4 +68,12 @@ class ApplicantNotificationsMailer < ApplicationMailer
 
     mail to: @user.email, subject: t(".subject")
   end
+
+  def notify_new_state
+    @user = params[:user]
+    @job_offer = params[:job_offer]
+    @state = JobApplication.human_attribute_name("state/#{params[:state]}")
+
+    mail to: @user.email, subject: t(".subject")
+  end
 end

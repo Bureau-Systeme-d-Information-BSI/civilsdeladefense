@@ -6,4 +6,12 @@ class ApplicantNotificationsPreview < ActionMailer::Preview
   def new_email
     ApplicantNotificationsMailer.new_email
   end
+
+  def notify_new_state
+    ApplicantNotificationsMailer.with(
+      user: User.first,
+      job_offer: JobOffer.first,
+      state: "phone_meeting"
+    ).notify_new_state
+  end
 end

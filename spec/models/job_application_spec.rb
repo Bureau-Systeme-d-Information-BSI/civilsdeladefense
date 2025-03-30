@@ -4,7 +4,7 @@ require "rails_helper"
 
 RSpec.describe JobApplication do
   let(:job_offer) { create(:job_offer) }
-  let(:job_application) { create(:job_application, job_offer: job_offer) }
+  let(:job_application) { create(:job_application, job_offer:) }
 
   describe "validations" do
     describe "#cant_be_accepted_twice" do
@@ -34,6 +34,26 @@ RSpec.describe JobApplication do
       it { is_expected.to include(matching) }
 
       it { is_expected.not_to include(unmatching) }
+    end
+  end
+
+  describe "after_update callbacks" do
+    describe "#notify_new_state" do
+      subject(:state_change) { job_application.update!(state:) }
+
+      described_class::NOTIFICATION_STATES.each do |notification_state|
+        context "when the state is a notification state (#{notification_state})" do
+          let(:state) { notification_state }
+
+          it { expect { state_change }.to have_enqueued_mail(ApplicantNotificationsMailer, :notify_new_state) }
+        end
+      end
+
+      context "when the state is not a notification state" do
+        let(:state) { "phone_meeting_rejected" }
+
+        it { expect { state_change }.not_to have_enqueued_mail(ApplicantNotificationsMailer, :notify_new_state) }
+      end
     end
   end
 

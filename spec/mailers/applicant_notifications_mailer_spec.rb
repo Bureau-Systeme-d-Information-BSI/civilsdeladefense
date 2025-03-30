@@ -55,4 +55,16 @@ RSpec.describe ApplicantNotificationsMailer do
 
     it { expect(notify_new_state.body.encoded).to match(/Votre candidature est passée à l'étape/) }
   end
+
+  describe "notify_rejected" do
+    subject(:notify_rejected) { described_class.with(user:, job_offer:).notify_rejected }
+
+    let(:job_application) { build_stubbed(:job_application) }
+    let(:user) { job_application.user }
+    let(:job_offer) { job_application.job_offer }
+
+    it { expect(notify_rejected.subject).to eq("Votre candidature a été refusée") }
+
+    it { expect(notify_rejected.body.encoded).to match(/nous ne pourrons pas y donner une suite favorable/) }
+  end
 end

@@ -55,6 +55,7 @@ class JobApplication < ApplicationRecord
   before_save :compute_notifications_counter
   before_save :cleanup_rejection_reason, unless: proc { |ja| ja.rejected_state? }
   after_update :notify_new_state, if: -> { new_state_requires_notification? }
+  after_update :notify_rejected, if: -> { rejected_state_requires_notification? }
 
   FINISHED_STATES = %w[rejected phone_meeting_rejected after_meeting_rejected affected].freeze
   REJECTED_STATES = %w[rejected phone_meeting_rejected after_meeting_rejected].freeze
@@ -313,6 +314,10 @@ class JobApplication < ApplicationRecord
   def notify_new_state = ApplicantNotificationsMailer.with(user:, job_offer:, state:).notify_new_state.deliver_later
 
   def new_state_requires_notification? = saved_change_to_state? && NOTIFICATION_STATES.include?(state.to_s)
+
+  def notify_rejected = ApplicantNotificationsMailer.with(user:, job_offer:).notify_rejected.deliver_later
+
+  def rejected_state_requires_notification? = saved_change_to_state? && REJECTED_STATES.include?(state.to_s)
 
   class << self
     def rejected_states

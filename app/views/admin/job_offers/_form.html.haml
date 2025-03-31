@@ -42,6 +42,8 @@
                         = f.association :bop
                     .row{data: { controller: 'autocomplete-city' }}
                       .col-12.col-md-6
+                        = f.label :location, t('simple_form.labels.job_offer.location')
+                        = combobox_tag "location", admin_cities_path, id: "location"
                         = f.input :location, input_html: { 'data-autocomplete-city-target' => :location, 'data-action' => "click->autocomplete-city#search" }
                         = f.input :city, as: :hidden, input_html: { 'data-autocomplete-city-target' => :city }
                         = f.input :county, as: :hidden, input_html: { 'data-autocomplete-city-target' => :county }

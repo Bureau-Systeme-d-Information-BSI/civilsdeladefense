@@ -96,7 +96,7 @@ fr:
       job_offer:
         title: "Intitulé du poste"
         professional_category: "Catégorie professionnelle"
-        location: "Localisation"
+        location_search: "Localisation"
         employer: "Employeur"
         description: "Descriptif des missions"
         required_profile: "Profil recherché"

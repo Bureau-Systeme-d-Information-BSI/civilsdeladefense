@@ -40,17 +40,18 @@
                           = f.association :employer, collection: employers.map{|x| [x.code, x.id]}, disabled: true, include_blank: false
                       .col-12.col-md-3
                         = f.association :bop
-                    .row{data: { controller: 'autocomplete-city' }}
+                    .row{data: { controller: 'location' }}
                       .col-12.col-md-6
-                        = f.input :location, input_html: { 'data-autocomplete-city-target' => :location, 'data-action' => "click->autocomplete-city#search" }
-                        = f.input :city, as: :hidden, input_html: { 'data-autocomplete-city-target' => :city }
-                        = f.input :county, as: :hidden, input_html: { 'data-autocomplete-city-target' => :county }
-                        = f.input :county_code, as: :hidden, input_html: { 'data-autocomplete-city-target' => :countyCode }
-                        = f.input :country_code, as: :hidden, input_html: { 'data-autocomplete-city-target' => :countryCode }
-                        = f.input :postcode, as: :hidden, input_html: { 'data-autocomplete-city-target' => :postcode }
-                        = f.input :region, as: :hidden, input_html: { 'data-autocomplete-city-target' => :region }
-                        .d-none
-                          .autocomplete{ 'data-autocomplete-city-target' => :query }
+                        = f.label :location_search, t('simple_form.labels.job_offer.location_search')
+                        = combobox_tag "location_search", admin_cities_path, id: "location_search", input: { data: { location_target: "location_search" } }, value: @job_offer.location
+                        = f.input :location, as: :hidden, input_html: { 'data-location-target' => :location }
+                        = f.input :city, as: :hidden, input_html: { 'data-location-target' => :city }
+                        = f.input :county, as: :hidden, input_html: { 'data-location-target' => :county }
+                        = f.input :county_code, as: :hidden, input_html: { 'data-location-target' => :countyCode }
+                        = f.input :country_code, as: :hidden, input_html: { 'data-location-target' => :countryCode }
+                        = f.input :postcode, as: :hidden, input_html: { 'data-location-target' => :postcode }
+                        = f.input :region, as: :hidden, input_html: { 'data-location-target' => :region }
+
                       - if current_administrator.admin?
                         .col-12.col-md-6
                           = f.input :spontaneous

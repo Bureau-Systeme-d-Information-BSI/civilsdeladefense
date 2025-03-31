@@ -3,7 +3,6 @@ import Url from 'domurl'
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-
   removeRecord(event) {
     let node = event.currentTarget
 
@@ -23,7 +22,7 @@ export default class extends Controller {
 
   addFields(event) {
     let node = event.currentTarget
-    let emailField = node.previousElementSibling.querySelector('input[type=email]')
+    let emailField = node.previousElementSibling.querySelector('input[name=email]')
     if (emailField == null) {
       emailField = node.previousElementSibling.querySelector('select')
     }

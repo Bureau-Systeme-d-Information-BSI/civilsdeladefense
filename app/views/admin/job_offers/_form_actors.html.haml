@@ -24,7 +24,7 @@
                         - options = options_from_collection_for_select(Cmg.all, 'email', 'email')
                         = select_tag :email, options, include_blank: true, class: 'form-control', id: "email_#{actor_role}"
                       - else
-                        = email_field_tag :email, nil, placeholder: t('simple_form.labels.defaults.email'), class: 'form-control', id: "email_#{actor_role}"
+                        = combobox_tag "email", admin_administrator_emails_path, placeholder: t('simple_form.labels.defaults.email'), id: "email_#{actor_role}"
                     - url = add_actor_admin_job_offers_url(role: actor_role, job_offer_id: job_offer_id)
                     - data = { action: "job-offer-management#addFields", url: url}
                     = link_to('#', class: 'btn btn-primary btn-raised mb-0 d-flex flex-row align-items-center', data: data) do

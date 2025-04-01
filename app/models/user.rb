@@ -17,17 +17,7 @@ class User < ApplicationRecord
   include Suspendable
   include DeletionFlow
   include PgSearch::Model
-  pg_search_scope :search_full_text,
-    against: [:first_name, :last_name],
-    ignoring: :accents,
-    associated_against: {
-      job_offers: {
-        identifier: "A",
-        title: "A",
-        description: "B",
-        location: "C"
-      }
-    }
+  pg_search_scope :search_full_text, against: [:first_name, :last_name], ignoring: :accents
 
   belongs_to :organization
 

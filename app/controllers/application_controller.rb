@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
+  before_action :redirect_permanently, if: -> { redirect_url.present? }
   before_action :redirect_to_maintenance_mode, if: :maintenance_mode_activated?
   before_action :basic_auth, if: -> { ENV["BASIC_AUTH"].present? }
 
@@ -19,6 +20,10 @@ class ApplicationController < ActionController::Base
   helper_method :current_organization
 
   private
+
+  def redirect_permanently = redirect_to redirect_url, allow_other_host: true, status: :moved_permanently
+
+  def redirect_url = ENV["PERMANENTLY_REDIRECT_URL"]
 
   def redirect_to_maintenance_mode = redirect_to maintenance_path
 

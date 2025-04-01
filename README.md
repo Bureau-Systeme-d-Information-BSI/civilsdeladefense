@@ -19,10 +19,12 @@ Installer ASDF pour gérer les versions de Ruby et de NodeJS.
 Une fois installé, dans le dossier du projet cloné depuis GitHub :
 
 ```
+asdf plugin add ruby
 asdf install ruby 3.3.0
-asdf local ruby 3.3.0
+asdf set ruby 3.3.0
+asdf plugin add nodejs
 asdf install nodejs 18.20.4
-asdf local nodejs 18.20.4
+asdf set nodejs 18.20.4
 ```
 
 ## Installation locale
@@ -39,7 +41,8 @@ Créer un fichier .env à la racine du projet contenant les valeurs :
 ```
 DEFAULT_FROM=hello@localhost
 DEFAULT_HOST=http://localhost:3000
-LOCKBOX_MASTER_KEY=
+SEED_PASSWORD=<insert any value here>
+LOCKBOX_MASTER_KEY=0000000000000000000000000000000000000000000000000000000000000000
 ```
 
 Optionnellement ce fichier .env peut contenir les variables suivantes pour configurer un Object Storage basé sur OSU/S3 :

@@ -21,7 +21,9 @@ module DeletionFlow
           user.destroy
           ApplicantNotificationsMailer.deletion_notice(email, name, org_id).deliver_now
         end
+    end
 
+    def mark_for_deletion
       where("last_sign_in_at < ?", notice_period_target_date)
         .where(marked_for_deletion_on: nil)
         .find_each do |user|

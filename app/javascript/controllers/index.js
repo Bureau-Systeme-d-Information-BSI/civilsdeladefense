@@ -13,9 +13,6 @@ application.register("auto-submit", AutoSubmitController)
 import AutocompleteAddressController from "./autocomplete_address_controller"
 application.register("autocomplete-address", AutocompleteAddressController)
 
-import AutocompleteCityController from "./autocomplete_city_controller"
-application.register("autocomplete-city", AutocompleteCityController)
-
 import CategoryExperienceLevelsController from "./category_experience_levels_controller"
 application.register("category-experience-levels", CategoryExperienceLevelsController)
 
@@ -36,6 +33,9 @@ application.register("job-offer-management", JobOfferManagementController)
 
 import JobOfferTermController from "./job_offer_term_controller"
 application.register("job-offer-term", JobOfferTermController)
+
+import LocationController from "./location_controller"
+application.register("location", LocationController)
 
 import PasswordRulesController from "./password_rules_controller"
 application.register("password-rules", PasswordRulesController)

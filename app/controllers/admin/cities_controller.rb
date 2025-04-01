@@ -1,23 +1,20 @@
 class Admin::CitiesController < Admin::BaseController
   skip_load_and_authorize_resource
 
-  # TODO: SEB on change :
-  # const properties = item.properties
-  # const context = item.properties.context
-  # const splittedContext = item.properties.context.split(", ") # 59, Nord, Hauts-de-France
-  # this.locationTarget.value = `${item.properties.label}, ${context}`
-  # this.cityTarget.value = properties.city # Ville (Lille)
-  # this.postcodeTarget.value = properties.postcode # Code postal (59000)
-  # this.countyCodeTarget.value = splittedContext[0] # Code département (59)
-  # this.countyTarget.value = splittedContext[1] # Département (Nord)
-  # this.regionTarget.value = splittedContext[2] # Region (Hauts-de-France)
-  # this.countryCodeTarget.value = "fr" # Pays (fr)
   def index = @cities = query? ? convert_raw_data_to_cities(search_for_cities) : []
 
   private
 
-  City = Data.define(:id, :label, :context) do
+  City = Data.define(:id, :label, :name, :context, :postcode) do
     def to_combobox_display = "#{label} (#{context})"
+
+    def county_code = context.split(", ")[0]
+
+    def county = context.split(", ")[1]
+
+    def region = context.split(", ")[2]
+
+    def country_code = "fr"
   end
 
   def search_for_cities
@@ -26,7 +23,9 @@ class Admin::CitiesController < Admin::BaseController
     JSON.parse(Net::HTTP.get(uri))["features"].pluck("properties")
   end
 
-  def convert_raw_data_to_cities(json) = json.map { |city| City.new(city["id"], city["label"], city["context"]) }
+  def convert_raw_data_to_cities(json)
+    json.map { |city| City.new(city["id"], city["label"], city["city"], city["context"], city["postcode"]) }
+  end
 
   def query? = query.present? && query.length > 2
 

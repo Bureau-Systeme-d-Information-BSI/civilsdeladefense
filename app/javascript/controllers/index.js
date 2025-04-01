@@ -37,6 +37,9 @@ application.register("job-offer-management", JobOfferManagementController)
 import JobOfferTermController from "./job_offer_term_controller"
 application.register("job-offer-term", JobOfferTermController)
 
+import LocationController from "./location_controller"
+application.register("location", LocationController)
+
 import PasswordRulesController from "./password_rules_controller"
 application.register("password-rules", PasswordRulesController)
 

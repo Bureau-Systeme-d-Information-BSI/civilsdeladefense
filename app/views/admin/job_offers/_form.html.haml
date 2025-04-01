@@ -43,7 +43,7 @@
                     .row{data: { controller: 'location' }}
                       .col-12.col-md-6
                         = f.label :location, t('simple_form.labels.job_offer.location')
-                        = combobox_tag "location", admin_cities_path, id: "location", input: { data: { location_target: :location, action: "blur->location#locationChanged" } }
+                        = combobox_tag "location", admin_cities_path, id: "location", input: { data: { action: "blur->location#locationChanged" } }
                         = f.input :city, as: :hidden, input_html: { 'data-location-target' => :city }
                         = f.input :county, as: :hidden, input_html: { 'data-location-target' => :county }
                         = f.input :county_code, as: :hidden, input_html: { 'data-location-target' => :countyCode }

@@ -7,8 +7,8 @@ export default class extends Controller {
   ]
 
   locationChanged(event) {
-    const cityLabel = event.target.value
-    const cityId = document.querySelector(`[data-filterable-as='${cityLabel}']`).dataset.value
+    const escapedCityLabel = event.target.value.replace(/[.*+?^${}()|[\]\\'"]/g, '\\$&')
+    const cityId = document.querySelector(`[data-filterable-as='${escapedCityLabel}']`).dataset.value
     this.fillInputs(document.querySelector(`#city-${cityId}`).dataset)
   }
 

@@ -47,6 +47,7 @@ Rails.application.routes.draw do
       mount Sidekiq::Web => "/sidekiq"
       mount MaintenanceTasks::Engine => "/maintenance_tasks"
     end
+    resources :cities, only: [:index, :show]
     resources :administrator_emails, only: :index
     resource :account do
       member do

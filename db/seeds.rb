@@ -123,7 +123,12 @@ organization = Organization.create!(
   service_description_short: desc_short,
   job_offer_term_title: "Bienvenue sur l'outil E-recrutement contractuels",
   job_offer_term_subtitle: "Vous souhaitez recourir à un agent contractuel civil car",
-  job_offer_term_warning: "C'est impossible"
+  job_offer_term_warning: "C'est impossible",
+  twitter_url: "https://twitter.com/civilsdeladefense",
+  facebook_url: "https://www.facebook.com/civilsdeladefense",
+  linkedin_url: "https://www.linkedin.com/company/civilsdeladefense",
+  youtube_url: "https://www.youtube.com/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ",
+  instagram_url: "https://www.instagram.com/civilsdeladefense"
 )
 [
   "Le poste fait appel à des compétences techniques spécialisées ou nouvelles (un encart en surbrillance en passant la souris sur la première les compétences sollicitées sont trop récentes ou trop spécialisées pour recourir dans l'immédiat à un fonctionnaire)",

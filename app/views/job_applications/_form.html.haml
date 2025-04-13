@@ -39,10 +39,10 @@
 
         .d-flex.align-items-end.rf-mb-3w
           %div
-            - label = profile_form.object.resume.blank? ? t('.resume') : t('.resume_html')
-            = profile_form.input :resume, label:, as: :file, required: profile_form.object.resume.blank?
+            - label = (profile_form.object.resume.blank? || !user_signed_in?) ? t('.resume') : t('.resume_html')
+            = profile_form.input :resume, label:, as: :file, required: (profile_form.object.resume.blank? || !user_signed_in?)
           %div.rf-ml-3w
-            - if profile_form.object.resume.present?
+            - if profile_form.object.resume.present? && user_signed_in?
               = link_to profile_form.object.resume_file_name, account_profiles_resume_path, target: '_blank'
 
     - job_application_files = @job_application.job_application_files.to_a

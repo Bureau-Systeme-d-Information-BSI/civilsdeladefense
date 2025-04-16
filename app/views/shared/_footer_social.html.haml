@@ -1,5 +1,5 @@
-- social_urls = %i[linkedin_url twitter_url youtube_url instagram_url facebook_url]
-- if social_urls.any?{|x| current_organization.send(x).present? }
+- social_urls = {linkedin_url: "linkedin", twitter_url: "square-twitter", youtube_url: "square-youtube", instagram_url: "square-instagram", facebook_url: "square-facebook"}
+- if social_urls.keys.any?{|x| current_organization.send(x).present? }
   .rf-footer__top
     .rf-container
       .rf-grid-row.rf-grid-row--start.rf-grid-row--gutters
@@ -9,10 +9,7 @@
           %ul.rf-footer__top-list
             %li
               .d-flex.flex-row
-                - social_urls.each do |social_url|
+                - social_urls.each do |social_url, icon_name|
                   - if current_organization.send(social_url).present?
                     = link_to current_organization.send(social_url), class: 'rf-footer__top-link rf-mr-2w', target: '_blank' do
-                      - icon_name = social_url.to_s.gsub('_url', '')
-                      - icon_name += {'facebook' => '-circle', 'linkedin' => '-box'}[icon_name] || ''
-                      - icon_name += '-fill'
-                      = fa_icon icon_name, class: 'rf-icon-xl'
+                      = fa_icon icon_name, flavor: 'brands', class: 'rf-icon rf-icon-xl'

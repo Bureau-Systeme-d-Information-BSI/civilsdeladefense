@@ -198,8 +198,11 @@ fr:
       user:
         password: 'Mot de passe'
       administrator:
+        first_name: "Prénom"
+        last_name: "Nom"
+        email: "prenom.nom@intradef.gouv.fr"
         name: 'Nom complet'
-        password: 'Mot de passe'
+        password: ''
         password_confirmation: 'Confirmation du mot de passe'
         email_grand_employer: 'Courriel'
         email_brh: 'Courriel'
@@ -207,7 +210,7 @@ fr:
           email: "Courriel Employeur Superviseur"
         grand_employer_administrator:
           email: "Courriel Grand Employeur"
-        title: "Fonction"
+        title: "Chef·fe de département qualité"
       message:
         body: 'Ce commentaire ne sera visible que par vous et les autres membres de votre équipe.'
     prompts:
@@ -226,9 +229,6 @@ fr:
       defaults:
         current_position: "Si aucun poste occupé actuellement, saisir \"sans emploi\"."
       administrator:
-        title: "Facultatif. Ex. : Chef de département Qualité"
-        first_name: "Facultatif"
-        last_name: "Facultatif"
         employer_id: "Actif seulement si le rôle est \"Employeur\""
         password: "12 caractères minimum, dont au moins 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial"
       employer:

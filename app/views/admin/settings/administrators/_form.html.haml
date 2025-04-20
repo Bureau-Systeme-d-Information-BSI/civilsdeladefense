@@ -10,6 +10,14 @@
       .form-inputs
         .row
           .col-12.col-md-6
+            = f.input :first_name
+          .col-12.col-md-6
+            = f.input :last_name
+        .row
+          .col-12.col-md-6
+            = f.input :email
+        .row
+          .col-12.col-md-6
             - roles = current_administrator.authorized_roles_to_confer
             - roles = roles.map{|x| [Administrator.human_attribute_name("role.#{ x }"), x]}
             = f.input :role, collection: roles, prompt: false, include_blank: :translate
@@ -26,14 +34,7 @@
               = f.association :employer, collection: employers, input_html: {class: 'custom-select', id: :administrator_employer_id}
               - employers = current_administrator.grand_employer? ? [current_administrator.employer] : [current_administrator.employer.parent]
               = f.association :employer, collection: employers, label: t("simple_form.labels.administrator.grand_employer"), input_html: {class: 'custom-select', id: :administrator_grand_employer_id}
-        .row
-          .col-12.col-md-6
-            = f.input :first_name, required: false, placeholder: false
-          .col-12.col-md-6
-            = f.input :last_name, required: false, placeholder: false
-        .row
-          .col-12.col-md-6
-            = f.input :email, placeholder: false
+
       .form-actions.text-right.mt-4
         %ul.list-inline.mb-0
           %li.list-inline-item

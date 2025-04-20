@@ -69,7 +69,7 @@ gem "omniauth-rails_csrf_protection"
 gem "prawn" # PDF generation
 gem "prawn-table" # Add tables to PDFs
 
-gem "maintenance_tasks", "~> 2.7" # Database maintenance tasks (data migrations, etc.)
+gem "maintenance_tasks" # Database maintenance tasks (data migrations, etc.)
 
 gem "hotwire_combobox" # Modern autocomplete
 

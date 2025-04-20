@@ -23,7 +23,7 @@
             = f.input :role, collection: roles, prompt: false, include_blank: :translate
         .row
           .col-12.col-md-6
-            = f.input :title, required: false
+            = f.input :title
           .col-12.col-md-6
             - if current_administrator.admin?
               - grouped_options = Employer.roots.map{|x| [x.name, x.children]}

@@ -17,6 +17,8 @@ RSpec.describe Administrator do
     it { is_expected.to validate_presence_of(:first_name) }
 
     it { is_expected.to validate_presence_of(:last_name) }
+
+    it { is_expected.to validate_presence_of(:title) }
   end
 
   describe "before_validation callbacks" do
@@ -34,6 +36,14 @@ RSpec.describe Administrator do
       let(:administrator) { build(:administrator, last_name: nil, email: "john.doe@example.com") }
 
       it { expect { save }.to change(administrator, :last_name).from(nil).to("Doe") }
+    end
+
+    describe "#set_title" do
+      subject(:save) { administrator.save! }
+
+      let(:administrator) { build(:administrator, title: nil) }
+
+      it { expect { save }.to change(administrator, :title).from(nil).to("-") }
     end
   end
 

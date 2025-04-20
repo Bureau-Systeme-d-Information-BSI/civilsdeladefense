@@ -61,7 +61,7 @@ class Administrator < ApplicationRecord
   validate :password_complexity
   validate :email_conformance
   validates :email, presence: true, uniqueness: true
-  validates :first_name, :last_name, presence: true
+  validates :first_name, :last_name, :title, presence: true
   validates :employer, presence: true, if: proc { |a| %w[employer grand_employer].include?(a.role) }
   validates :inviter, presence: true, unless: proc { |a| a.very_first_account }, on: :create
   validates :role,
@@ -78,6 +78,7 @@ class Administrator < ApplicationRecord
 
   before_validation :set_first_name, if: -> { first_name.blank? && email.present? }
   before_validation :set_last_name, if: -> { last_name.blank? && email.present? }
+  before_validation :set_title, if: -> { title.blank? && email.present? }
   before_save :remove_mark_for_deactivation
 
   scope :active, -> { where(deleted_at: nil) }
@@ -202,6 +203,8 @@ class Administrator < ApplicationRecord
   def first_name_from(email) = email.split("@").first.split(".").first.capitalize
 
   def last_name_from(email) = email.split("@").first.split(".").last.capitalize
+
+  def set_title = self.title = "-"
 end
 
 # == Schema Information

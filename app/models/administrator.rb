@@ -2,12 +2,9 @@
 
 # Recruiter on the platform
 class Administrator < ApplicationRecord
-  devise :database_authenticatable,
-    :recoverable, :trackable, :validatable, :confirmable, :lockable,
-    :timeoutable
+  devise :database_authenticatable, :recoverable, :trackable, :validatable, :confirmable, :lockable, :timeoutable
 
   include DeactivationFlow
-  before_save :remove_mark_for_deactivation
 
   include PgSearch::Model
   pg_search_scope :search_email, against: :email, using: {tsearch: {prefix: true}}
@@ -16,22 +13,19 @@ class Administrator < ApplicationRecord
   # Relationships
   belongs_to :organization
   belongs_to :employer, optional: true
-  validates :employer, presence: true, if: proc { |a| a.employer? || a.ensure_employer_is_set }
   belongs_to :inviter, optional: true, class_name: "Administrator"
-  has_many :invitees, class_name: "Administrator", foreign_key: "inviter_id", inverse_of: :inviter, dependent: :nullify
-
-  has_many :owned_job_offers, class_name: "JobOffer", foreign_key: "owner_id", inverse_of: :owner, dependent: :nullify
-  has_many :job_offer_actors, dependent: :destroy
-  has_many :job_offers, through: :job_offer_actors
-
   belongs_to :supervisor_administrator, optional: true, class_name: "Administrator"
   belongs_to :grand_employer_administrator, optional: true, class_name: "Administrator"
 
-  accepts_nested_attributes_for :supervisor_administrator
-  accepts_nested_attributes_for :grand_employer_administrator
-
+  has_many :invitees, class_name: "Administrator", foreign_key: "inviter_id", inverse_of: :inviter, dependent: :nullify
+  has_many :owned_job_offers, class_name: "JobOffer", foreign_key: "owner_id", inverse_of: :owner, dependent: :nullify
+  has_many :job_offer_actors, dependent: :destroy
+  has_many :job_offers, through: :job_offer_actors
   has_many :preferred_users, through: :preferred_users_list
   has_many :preferred_users_lists, dependent: :destroy
+
+  accepts_nested_attributes_for :supervisor_administrator
+  accepts_nested_attributes_for :grand_employer_administrator
 
   def supervisor_administrator_attributes=(attributes)
     return if attributes[:email].blank?
@@ -63,14 +57,11 @@ class Administrator < ApplicationRecord
 
   mount_uploader :photo, PhotoUploader, mount_on: :photo_file_name
 
-  #####################################
-  # Validations
-
-  validates :photo,
-    file_size: {less_than: 1.megabytes}
+  validates :photo, file_size: {less_than: 1.megabytes}
   validate :password_complexity
   validate :email_conformance
   validates :email, presence: true, uniqueness: true
+  validates :first_name, :last_name, presence: true
   validates :employer, presence: true, if: proc { |a| %w[employer grand_employer].include?(a.role) }
   validates :inviter, presence: true, unless: proc { |a| a.very_first_account }, on: :create
   validates :role,
@@ -85,13 +76,13 @@ class Administrator < ApplicationRecord
                 message: :non_compliant_role,
                 on: :create}
 
-  ####################################
-  # Scope
+  before_validation :set_first_name, if: -> { first_name.blank? && email.present? }
+  before_validation :set_last_name, if: -> { last_name.blank? && email.present? }
+  before_save :remove_mark_for_deactivation
+
   scope :active, -> { where(deleted_at: nil) }
   scope :inactive, -> { where.not(deleted_at: nil) }
 
-  #####################################
-  # Enums
   enum role: {
     admin: 0,
     employer: 1
@@ -149,7 +140,7 @@ class Administrator < ApplicationRecord
   end
 
   def email_conformance
-    suffixes = organization.administrator_email_suffix&.split("\r\n")
+    suffixes = organization&.administrator_email_suffix&.split("\r\n")
     return if suffixes.blank? || suffixes.map { |suffix| email.ends_with?(suffix) }.any?
 
     msg = I18n.t("activerecord.errors.messages.invalid_suffix", suffixes: suffixes.join(" ou "))
@@ -202,6 +193,16 @@ class Administrator < ApplicationRecord
   def remove_mark_for_deactivation
     self.marked_for_deactivation_on = nil
   end
+
+  private
+
+  def set_first_name = self.first_name = first_name_from(email)
+
+  def set_last_name = self.last_name = last_name_from(email)
+
+  def first_name_from(email) = email.split("@").first.split(".").first.capitalize
+
+  def last_name_from(email) = email.split("@").first.split(".").last.capitalize
 end
 
 # == Schema Information

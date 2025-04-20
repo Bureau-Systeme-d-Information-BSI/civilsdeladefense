@@ -5,11 +5,36 @@ require "rails_helper"
 RSpec.describe Administrator do
   let(:administrator) { create(:administrator) }
 
-  it { is_expected.to have_many(:invitees).inverse_of(:inviter) }
-  it { is_expected.to have_many(:owned_job_offers).inverse_of(:owner) }
+  describe "associations" do
+    it { is_expected.to have_many(:invitees).inverse_of(:inviter) }
 
-  it "is valid with valid attributes" do
-    expect(administrator).to be_valid
+    it { is_expected.to have_many(:owned_job_offers).inverse_of(:owner) }
+  end
+
+  describe "validations" do
+    it { expect(administrator).to be_valid }
+
+    it { is_expected.to validate_presence_of(:first_name) }
+
+    it { is_expected.to validate_presence_of(:last_name) }
+  end
+
+  describe "before_validation callbacks" do
+    describe "#set_first_name" do
+      subject(:save) { administrator.save! }
+
+      let(:administrator) { build(:administrator, first_name: nil, email: "john.doe@example.com") }
+
+      it { expect { save }.to change(administrator, :first_name).from(nil).to("John") }
+    end
+
+    describe "#set_last_name" do
+      subject(:save) { administrator.save! }
+
+      let(:administrator) { build(:administrator, last_name: nil, email: "john.doe@example.com") }
+
+      it { expect { save }.to change(administrator, :last_name).from(nil).to("Doe") }
+    end
   end
 
   it "has a unique email" do
@@ -41,6 +66,8 @@ RSpec.describe Administrator do
     employer = create(:employer)
 
     attrs = {
+      first_name: "Supervisor",
+      last_name: "Supervisor",
       email: "supervisor@gmail.com",
       ensure_employer_is_set: true,
       employer_id: employer.id
@@ -48,7 +75,7 @@ RSpec.describe Administrator do
 
     expect {
       administrator.supervisor_administrator_attributes = attrs
-      administrator.save
+      administrator.save!
     }.to change(described_class, :count).by(2)
 
     expect(administrator.supervisor_administrator.email).to eq("supervisor@gmail.com")
@@ -60,6 +87,8 @@ RSpec.describe Administrator do
     administrator = build(:administrator)
 
     attrs = {
+      first_name: "Supervisor",
+      last_name: "Supervisor",
       email: supervisor_administrator.email,
       ensure_employer_is_set: true,
       employer_id: employer.id
@@ -67,7 +96,7 @@ RSpec.describe Administrator do
 
     expect {
       administrator.supervisor_administrator_attributes = attrs
-      administrator.save
+      administrator.save!
     }.to change(described_class, :count).by(1)
 
     expect(administrator.supervisor_administrator.email).to eq(supervisor_administrator.email)
@@ -78,6 +107,8 @@ RSpec.describe Administrator do
     employer = create(:employer)
 
     attrs = {
+      first_name: "Grand Employer",
+      last_name: "Grand Employer",
       email: "grand.employer@gmail.com",
       ensure_employer_is_set: true,
       employer_id: employer.id
@@ -85,7 +116,7 @@ RSpec.describe Administrator do
 
     expect {
       administrator.grand_employer_administrator_attributes = attrs
-      administrator.save
+      administrator.save!
     }.to change(described_class, :count).by(2)
 
     expect(administrator.grand_employer_administrator.email).to eq("grand.employer@gmail.com")
@@ -117,12 +148,16 @@ RSpec.describe Administrator do
     employer2 = create(:employer)
 
     attrs1 = {
+      first_name: "Supervisor",
+      last_name: "Supervisor",
       email: "supervisor@gmail.com",
       ensure_employer_is_set: true,
       employer_id: employer1.id
     }
 
     attrs2 = {
+      first_name: "Grand Employer",
+      last_name: "Grand Employer",
       email: "grand.employer@gmail.com",
       ensure_employer_is_set: true,
       employer_id: employer2.id
@@ -131,7 +166,7 @@ RSpec.describe Administrator do
     expect {
       administrator.supervisor_administrator_attributes = attrs1
       administrator.grand_employer_administrator_attributes = attrs2
-      administrator.save
+      administrator.save!
     }.to change(described_class, :count).by(3)
   end
 

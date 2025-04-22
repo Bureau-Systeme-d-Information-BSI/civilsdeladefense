@@ -9,6 +9,10 @@ RSpec.describe Administrator do
     it { is_expected.to have_many(:invitees).inverse_of(:inviter) }
 
     it { is_expected.to have_many(:owned_job_offers).inverse_of(:owner) }
+
+    it { is_expected.to have_many(:administrator_employers).dependent(:destroy) }
+
+    it { is_expected.to have_many(:employers).through(:administrator_employers) }
   end
 
   describe "validations" do

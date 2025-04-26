@@ -7,6 +7,9 @@ import { application } from "./application"
 import AddRecipientController from "./add_recipient_controller"
 application.register("add-recipient", AddRecipientController)
 
+import Administrators__EmployersController from "./administrators/employers_controller"
+application.register("administrators--employers", Administrators__EmployersController)
+
 import AutoSubmitController from "./auto_submit_controller"
 application.register("auto-submit", AutoSubmitController)
 

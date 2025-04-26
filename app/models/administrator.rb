@@ -12,10 +12,10 @@ class Administrator < ApplicationRecord
   #####################################
   # Relationships
   belongs_to :organization
-  belongs_to :employer, optional: true
+  belongs_to :employer, optional: true # Deprecated on 2025-04-26, replaced by employers
   belongs_to :inviter, optional: true, class_name: "Administrator"
   belongs_to :supervisor_administrator, optional: true, class_name: "Administrator"
-  belongs_to :grand_employer_administrator, optional: true, class_name: "Administrator"
+  belongs_to :grand_employer_administrator, optional: true, class_name: "Administrator" # Deprecated on 2025-04-26, replaced by employers
 
   has_many :invitees, class_name: "Administrator", foreign_key: "inviter_id", inverse_of: :inviter, dependent: :nullify
   has_many :owned_job_offers, class_name: "JobOffer", foreign_key: "owner_id", inverse_of: :owner, dependent: :nullify
@@ -64,7 +64,6 @@ class Administrator < ApplicationRecord
   validate :email_conformance
   validates :email, presence: true, uniqueness: true
   validates :first_name, :last_name, :title, presence: true
-  validates :employer, presence: true, if: proc { |a| %w[employer grand_employer].include?(a.role) }
   validates :inviter, presence: true, unless: proc { |a| a.very_first_account }, on: :create
   validates :role,
     inclusion: {in: lambda { |a|

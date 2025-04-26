@@ -205,6 +205,11 @@ organization.save!
 
 employer_parent = Employer.create!(name: "EMA", code: "EMA")
 employer = Employer.create!(name: "DIRISI", code: "DRI", parent: employer_parent)
+Employer.create!(name: "DMAé", code: "DMAE", parent: employer_parent)
+Employer.create!(name: "SIMU", code: "SIMU", parent: employer_parent)
+
+other_employer_parent = Employer.create!(name: "SGA", code: "SGA-GE")
+Employer.create!(name: "DRH-MD", code: "DRH-MD", parent: other_employer_parent)
 
 super_admin = Administrator.new(
   email: "admin@example.com",
@@ -214,7 +219,8 @@ super_admin = Administrator.new(
   password_confirmation: ENV["SEED_PASSWORD"],
   very_first_account: true,
   role: "admin",
-  organization: organization
+  organization: organization,
+  title: "Administrateur"
 )
 super_admin.skip_confirmation_notification!
 super_admin.save!
@@ -228,8 +234,9 @@ employer_admin_1 = Administrator.new(
   password_confirmation: ENV["SEED_PASSWORD"],
   very_first_account: true,
   role: "employer",
-  employer: employer,
-  organization: organization
+  employers: [employer],
+  organization: organization,
+  title: "Employeur"
 )
 employer_admin_1.skip_confirmation_notification!
 employer_admin_1.save!
@@ -243,8 +250,9 @@ employer_admin_2 = Administrator.new(
   password_confirmation: ENV["SEED_PASSWORD"],
   very_first_account: true,
   role: "employer",
-  employer: employer,
-  organization: organization
+  employers: [employer],
+  organization: organization,
+  title: "Employeur"
 )
 employer_admin_2.skip_confirmation_notification!
 employer_admin_2.save!
@@ -257,8 +265,10 @@ brh_admin = Administrator.new(
   password: ENV["SEED_PASSWORD"],
   password_confirmation: ENV["SEED_PASSWORD"],
   very_first_account: true,
-  employer: employer,
-  organization: organization
+  role: "employer",
+  employers: [employer],
+  organization: organization,
+  title: "BRH"
 )
 brh_admin.skip_confirmation_notification!
 brh_admin.save!

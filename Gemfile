@@ -58,7 +58,7 @@ gem "working_hours", "~> 1.4"
 gem "sidekiq" # Async jobs
 gem "rorvswild" # Errors tracking
 gem "phony_rails" # Normalize phone numbers
-
+gem "enummer" # Enums with multiple values
 gem "clockwork" # simulate cron on Scalingo
 
 gem "faker", require: false

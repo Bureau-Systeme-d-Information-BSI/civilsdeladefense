@@ -140,11 +140,10 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
     @administrators_inactive = @q.result.inactive.includes(:employer)
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
   def administrator_params
     params
       .require(:administrator)
-      .permit(:title, :first_name, :last_name, :email, :employer_id, :role, employer_ids: [])
+      .permit(:title, :first_name, :last_name, :email, :employer_id, :ace, :ate, roles: [], employer_ids: [])
   end
 
   def set_role_and_employer

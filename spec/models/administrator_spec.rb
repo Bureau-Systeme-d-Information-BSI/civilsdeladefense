@@ -23,6 +23,32 @@ RSpec.describe Administrator do
     it { is_expected.to validate_presence_of(:last_name) }
 
     it { is_expected.to validate_presence_of(:title) }
+
+    it { is_expected.to validate_presence_of(:roles) }
+
+    describe "roles_inclusion" do
+      subject { administrator.valid? }
+
+      let(:administrator) { build(:administrator) }
+
+      context "when roles are empty" do
+        before { administrator.roles = [] }
+
+        it { is_expected.to be_falsey }
+      end
+
+      context "when roles are invalid" do
+        before { administrator.roles = ["invalid_role"] }
+
+        it { is_expected.to be_falsey }
+      end
+
+      context "when roles are valid" do
+        before { administrator.roles = ["functional_administrator", "hr_manager"] }
+
+        it { is_expected.to be_truthy }
+      end
+    end
   end
 
   describe "before_validation callbacks" do
@@ -83,6 +109,7 @@ RSpec.describe Administrator do
       first_name: "Supervisor",
       last_name: "Supervisor",
       email: "supervisor@gmail.com",
+      roles: [:employer_recruiter],
       ensure_employer_is_set: true,
       employer_id: employer.id
     }
@@ -104,6 +131,7 @@ RSpec.describe Administrator do
       first_name: "Supervisor",
       last_name: "Supervisor",
       email: supervisor_administrator.email,
+      roles: [:employer_recruiter],
       ensure_employer_is_set: true,
       employer_id: employer.id
     }
@@ -124,6 +152,7 @@ RSpec.describe Administrator do
       first_name: "Grand Employer",
       last_name: "Grand Employer",
       email: "grand.employer@gmail.com",
+      roles: [:employer_recruiter],
       ensure_employer_is_set: true,
       employer_id: employer.id
     }
@@ -165,6 +194,7 @@ RSpec.describe Administrator do
       first_name: "Supervisor",
       last_name: "Supervisor",
       email: "supervisor@gmail.com",
+      roles: [:employer_recruiter],
       ensure_employer_is_set: true,
       employer_id: employer1.id
     }
@@ -173,6 +203,7 @@ RSpec.describe Administrator do
       first_name: "Grand Employer",
       last_name: "Grand Employer",
       email: "grand.employer@gmail.com",
+      roles: [:employer_recruiter],
       ensure_employer_is_set: true,
       employer_id: employer2.id
     }
@@ -294,6 +325,8 @@ end
 # Table name: administrators
 #
 #  id                              :uuid             not null, primary key
+#  ace                             :boolean          default(FALSE)
+#  ate                             :boolean          default(FALSE)
 #  confirmation_sent_at            :datetime
 #  confirmation_token              :string
 #  confirmed_at                    :datetime
@@ -316,6 +349,7 @@ end
 #  reset_password_sent_at          :datetime
 #  reset_password_token            :string
 #  role                            :integer
+#  roles                           :integer          default([]), not null
 #  sign_in_count                   :integer          default(0), not null
 #  title                           :string
 #  unconfirmed_email               :string

@@ -74,6 +74,9 @@ fr:
         employer: "Employeur"
         grand_employer: "Grand Employeur"
         role: "Rôle"
+        ace: ACE
+        ate: ATE
+        ace_ate: "Autorité d'emploi"
       category:
         parent_id: "Catégorie parente"
       email:

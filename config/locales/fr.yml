@@ -622,8 +622,7 @@ fr:
             photo: "Avatar"
             name: "Nom"
             employer: "Employeur"
-            role: "Rôle"
-            job_offer_actor_roles: "Rôles sur les offres"
+            roles: "Rôles"
             last_sign_in_at: "Dernière connexion"
             created_at: "Créé le"
           account_active:
@@ -1215,6 +1214,12 @@ fr:
         employer: "Employeur"
         grand_employer: "Grand Employeur"
         brh: "RH"
+      administrator/roles:
+        functional_administrator: "Administrateur fonctionnel"
+        employer_recruiter: "Employeur recruteur"
+        employment_authority: "Autorité d'emploi"
+        hr_manager: "Gestionnaire RH"
+        payroll_manager: "Gestionnaire GA PAIE"
       email_template:
         title: "Titre"
       employer:

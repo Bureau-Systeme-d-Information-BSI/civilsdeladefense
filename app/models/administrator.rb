@@ -9,8 +9,14 @@ class Administrator < ApplicationRecord
   include PgSearch::Model
   pg_search_scope :search_email, against: :email, using: {tsearch: {prefix: true}}
 
-  #####################################
-  # Relationships
+  ROLES = {
+    functional_administrator: 0,
+    employer_recruiter: 1,
+    employment_authority: 2,
+    hr_manager: 3,
+    payroll_manager: 4
+  }
+
   belongs_to :organization
   belongs_to :employer, optional: true # Deprecated on 2025-04-26, replaced by employers
   belongs_to :inviter, optional: true, class_name: "Administrator"
@@ -65,32 +71,27 @@ class Administrator < ApplicationRecord
   validates :email, presence: true, uniqueness: true
   validates :first_name, :last_name, :title, presence: true
   validates :inviter, presence: true, unless: proc { |a| a.very_first_account }, on: :create
-  validates :role,
-    inclusion: {in: lambda { |a|
-      if a.very_first_account
-        a.class.roles.keys
-      else
-        a.inviter&.authorized_roles_to_confer || a.class.roles.keys.last
-      end
-    },
-                allow_blank: true,
-                message: :non_compliant_role,
-                on: :create}
+  validates :roles, presence: true
+  validate :roles_inclusion
 
   before_validation :set_first_name, if: -> { first_name.blank? && email.present? }
   before_validation :set_last_name, if: -> { last_name.blank? && email.present? }
   before_validation :set_title, if: -> { title.blank? && email.present? }
+  before_validation :normalize_roles, unless: -> { roles.empty? }
   before_save :remove_mark_for_deactivation
 
   scope :active, -> { where(deleted_at: nil) }
   scope :inactive, -> { where.not(deleted_at: nil) }
 
-  enum role: {
-    admin: 0,
-    employer: 1
-  }
+  enummer roles: ROLES
 
   attr_accessor :ensure_employer_is_set
+
+  # As 'role' attribute has been removed from model, we use 'roles' attribute instead
+  # 'role' attribute has been deprecated on 2025-04-26 and should be remove from schema
+  def admin? = role == 0 || functional_administrator?
+
+  def employer? = role == 1 || employer_recruiter?
 
   # ensure user account is active
   def active_for_authentication?
@@ -167,9 +168,9 @@ class Administrator < ApplicationRecord
 
   def authorized_roles_to_confer
     if admin?
-      self.class.roles.map(&:first)
+      self.class::ROLES.keys
     elsif employer?
-      %w[employer]
+      self.class::ROLES.keys - [:functional_administrator]
     end
   end
 
@@ -206,6 +207,12 @@ class Administrator < ApplicationRecord
   def last_name_from(email) = email.split("@").first.split(".").last.capitalize
 
   def set_title = self.title = "-"
+
+  def normalize_roles = self.roles = roles.compact - [:""]
+
+  def roles_inclusion
+    errors.add(:roles, :invalid) if roles.empty? || !roles.all? { |role| Administrator::ROLES.key?(role) }
+  end
 end
 
 # == Schema Information
@@ -213,6 +220,8 @@ end
 # Table name: administrators
 #
 #  id                              :uuid             not null, primary key
+#  ace                             :boolean          default(FALSE)
+#  ate                             :boolean          default(FALSE)
 #  confirmation_sent_at            :datetime
 #  confirmation_token              :string
 #  confirmed_at                    :datetime
@@ -235,6 +244,7 @@ end
 #  reset_password_sent_at          :datetime
 #  reset_password_token            :string
 #  role                            :integer
+#  roles                           :integer          default([]), not null
 #  sign_in_count                   :integer          default(0), not null
 #  title                           :string
 #  unconfirmed_email               :string

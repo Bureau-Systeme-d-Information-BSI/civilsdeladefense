@@ -1,4 +1,4 @@
-= simple_form_for([:admin, :settings, @administrator], html: {data: {controller: "administrators--employers"}}) do |f|
+= simple_form_for([:admin, :settings, @administrator], html: {data: {controller: "administrators--roles"}}) do |f|
   .card
     .card-header.d-flex.align-items-center
       = image_user_tag @administrator.photo, width: 40, class: 'mr-2'
@@ -19,9 +19,14 @@
         .row
           .col-12.col-md-6
             - roles = current_administrator.authorized_roles_to_confer
-            - roles = roles.map{|x| [Administrator.human_attribute_name("role.#{ x }"), x]}
-            = f.input :role, collection: roles, prompt: false, include_blank: :translate, input_html: {data: {administrators__employers_target: "role", action: "administrators--employers#roleChanged"}}
-        .row{data: {administrators__employers_target: "employers"}}
+            - roles = roles.map{|x| [Administrator.human_attribute_name("roles.#{ x }"), x]}
+            = f.input :roles, collection: roles, multiple: true, prompt: false, input_html: {data: {administrators__roles_target: "roles", action: "administrators--roles#rolesChanged"}}, required: true
+          .col-12.col-md-6.ace-ate{data: {administrators__roles_target: "aceAte"}}
+            %label
+              = t('simple_form.labels.administrator.ace_ate')
+            = f.input :ace, as: :boolean
+            = f.input :ate, as: :boolean
+        .row{data: {administrators__roles_target: "employers"}}
           .col-12.col-md-6
             - grouped_options = Employer.roots.map{|x| [x.name, x.children]}
             = f.association :employers, collection: grouped_options, as: :grouped_select, group_method: :last, input_html: {class: 'custom-select', id: :administrator_employer_ids}, required: true

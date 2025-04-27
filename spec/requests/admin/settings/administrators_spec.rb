@@ -60,7 +60,10 @@ RSpec.describe "Admin::Settings::Administrators" do
             first_name: "first_name",
             last_name: "last_name",
             email: "email@example.com",
-            employer_ids: [first_employer.id, second_employer.id]
+            roles: ["", "employer_recruiter", "hr_manager"],
+            employer_ids: ["", first_employer.id, second_employer.id],
+            ace: 1,
+            ate: 0
           }
         }
       }
@@ -76,10 +79,20 @@ RSpec.describe "Admin::Settings::Administrators" do
         before { create_request }
 
         it { expect(admin.title).to eq("title") }
+
         it { expect(admin.first_name).to eq("first_name") }
+
         it { expect(admin.last_name).to eq("last_name") }
+
         it { expect(admin.email).to eq("email@example.com") }
+
+        it { expect(admin.roles).to contain_exactly(:employer_recruiter, :hr_manager) }
+
         it { expect(admin.employers).to contain_exactly(first_employer, second_employer) }
+
+        it { expect(admin.ace).to be_truthy }
+
+        it { expect(admin.ate).to be_falsey }
       end
 
       it { expect(create_request).to redirect_to(admin_settings_root_path) }
@@ -106,8 +119,10 @@ RSpec.describe "Admin::Settings::Administrators" do
           last_name: "last",
           email: "email@example.com",
           title: "title",
-          employer_id: new_employer.id,
-          employer_ids: [new_employer.id]
+          roles: [:employer_recruiter, :hr_manager],
+          employer_ids: [new_employer.id],
+          ace: 1,
+          ate: 0
         }
       }
     }
@@ -121,9 +136,13 @@ RSpec.describe "Admin::Settings::Administrators" do
 
       it { expect { update_request }.to change { administrator.reload.unconfirmed_email }.to("email@example.com") }
 
-      it { expect { update_request }.to change { administrator.reload.employer }.to(new_employer) }
+      it { expect { update_request }.to change { administrator.reload.roles }.to([:employer_recruiter, :hr_manager]) }
 
       it { expect { update_request }.to change { administrator.reload.employers }.to([new_employer]) }
+
+      it { expect { update_request }.to change { administrator.reload.ace }.to(true) }
+
+      it { expect { update_request }.not_to change { administrator.reload.ate } }
 
       it { expect(update_request).to redirect_to(admin_settings_root_path) }
     end

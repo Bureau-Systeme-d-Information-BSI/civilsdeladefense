@@ -17,7 +17,7 @@ class PlatformMailer < Devise::Mailer
 
     if record.is_a?(Administrator)
       opts[:template_name] = "confirmation_instructions_admin"
-      @roles = actor_roles_or_general_role(record)
+      @roles = roles(record)
     end
 
     super

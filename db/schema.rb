@@ -90,6 +90,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_07_061120) do
     t.uuid "grand_employer_administrator_id"
     t.uuid "organization_id"
     t.date "marked_for_deactivation_on"
+    t.integer "roles", default: 0, null: false
+    t.boolean "ace", default: false
+    t.boolean "ate", default: false
     t.index ["confirmation_token"], name: "index_administrators_on_confirmation_token", unique: true
     t.index ["email"], name: "index_administrators_on_email", unique: true
     t.index ["employer_id"], name: "index_administrators_on_employer_id"

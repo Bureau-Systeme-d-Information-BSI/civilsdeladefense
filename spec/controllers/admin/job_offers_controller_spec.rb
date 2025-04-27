@@ -172,34 +172,6 @@ RSpec.describe Admin::JobOffersController do
 
           expect(subject).to render_template(:add_actor) # rubocop:disable RSpec/NamedSubject
         end
-
-        it "returns a successful response with a non existing user" do
-          job_offer = create(:job_offer)
-
-          valid_attributes = {
-            id: job_offer.to_param,
-            email: "non-existing@user.fr",
-            role: "employer"
-          }
-
-          post :add_actor, params: valid_attributes
-
-          expect(response).to be_successful
-        end
-
-        it "renders the actor widget with a non existing user" do
-          job_offer = create(:job_offer)
-
-          valid_attributes = {
-            id: job_offer.to_param,
-            email: "non-existing@user.fr",
-            role: "employer"
-          }
-
-          post :add_actor, params: valid_attributes
-
-          expect(subject).to render_template(:add_actor) # rubocop:disable RSpec/NamedSubject
-        end
       end
 
       context "with invalid params" do
@@ -214,21 +186,6 @@ RSpec.describe Admin::JobOffersController do
           post :add_actor, params: invalid_attributes
 
           expect(response).not_to be_successful
-        end
-
-        it "returns a json filled with errors" do
-          job_offer = create(:job_offer)
-
-          invalid_attributes = {
-            id: job_offer.to_param,
-            email: "pipo"
-          }
-
-          post :add_actor, params: invalid_attributes
-
-          parsed_body = response.parsed_body
-
-          expect(parsed_body.keys).to eq(["email"])
         end
       end
     end

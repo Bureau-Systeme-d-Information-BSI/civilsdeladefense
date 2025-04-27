@@ -154,6 +154,8 @@ GEM
       dotenv (= 2.8.1)
       railties (>= 3.2)
     drb (2.2.1)
+    enummer (1.1.0)
+      rails (>= 7.0.0)
     erubi (1.13.1)
     excon (0.92.3)
     factory_bot (6.4.6)
@@ -621,6 +623,7 @@ DEPENDENCIES
   debug
   devise (~> 4.9.2)
   dotenv-rails
+  enummer
   factory_bot_rails (~> 6.4.3)
   faker
   file_validators

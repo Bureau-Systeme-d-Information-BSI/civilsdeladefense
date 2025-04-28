@@ -613,7 +613,6 @@ fr:
           last_connection: "Dernière conn. :"
           invited_by: "Invité par"
           never_connected: "Jamais connecté"
-          no_role: "Aucun rôle"
           lock_explanation: "Ce compte est bloqué car trop de tentatives infructueuses de se connecter"
         index:
           title: "Comptes utilisateurs"

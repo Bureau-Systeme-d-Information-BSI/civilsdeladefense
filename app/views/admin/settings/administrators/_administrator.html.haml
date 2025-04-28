@@ -9,13 +9,9 @@
   %td.text-dark
     = administrator&.employer&.code
   %td
-    .badge.badge-light-gray.text-white
-      - if administrator.role?
-        = Administrator.human_attribute_name("role.#{administrator.role}")
-      - else
-        = t('.no_role')
-  %td
-    = actor_roles(administrator)
+    - administrator.roles.each do |role|
+      .badge.badge-light-gray.text-white
+        = Administrator.human_attribute_name("roles.#{role}")
   %td.text-dark
     .d-block.text-nowrap
       = l administrator.created_at

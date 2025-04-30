@@ -69,11 +69,11 @@ class JobApplication < ApplicationRecord
 
   enum state: {
     initial: 0,
-    rejected: 1,
+    rejected: 1, # Deprecated on 2025-04-30 (rejected states)
     phone_meeting: 2,
-    phone_meeting_rejected: 3,
+    phone_meeting_rejected: 3, # Deprecated on 2025-04-30 (rejected states)
     to_be_met: 5,
-    after_meeting_rejected: 6,
+    after_meeting_rejected: 6, # Deprecated on 2025-04-30 (rejected states)
     accepted: 7,
     contract_drafting: 8,
     contract_feedback_waiting: 9,
@@ -83,19 +83,19 @@ class JobApplication < ApplicationRecord
 
   aasm column: :state, enum: true do
     state :initial, initial: true
-    state :rejected
+    state :rejected # Deprecated on 2025-04-30 (rejected states)
     state :phone_meeting,
       before_enter: proc { notify_new_state(:phone_meeting) }
-    state :phone_meeting_rejected
+    state :phone_meeting_rejected # Deprecated on 2025-04-30 (rejected states)
     state :to_be_met
-    state :after_meeting_rejected
+    state :after_meeting_rejected # Deprecated on 2025-04-30 (rejected states)
     state :accepted
     state :contract_drafting
     state :contract_feedback_waiting
     state :contract_received
     state :affected
 
-    event :reject do
+    event :reject do # Deprecated on 2025-04-30 (rejected states)
       transitions from: [:initial], to: :rejected
     end
   end

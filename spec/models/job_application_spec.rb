@@ -7,6 +7,33 @@ RSpec.describe JobApplication do
   let(:job_application) { create(:job_application, job_offer:) }
 
   describe "validations" do
+    describe "#rejection_reason" do
+      subject { job_application.valid? }
+
+      let(:job_application) { build(:job_application, :with_employer) }
+
+      context "when the job application is rejected" do
+        before { job_application.rejected = true }
+
+        it { is_expected.to be false }
+      end
+
+      context "when the job application is a rejected and has a rejection reason" do
+        before do
+          job_application.rejected = true
+          job_application.rejection_reason = create(:rejection_reason)
+        end
+
+        it { is_expected.to be true }
+      end
+
+      context "when the job application is not rejected" do
+        before { job_application.rejected = false }
+
+        it { is_expected.to be true }
+      end
+    end
+
     describe "#cant_be_accepted_twice" do
       subject(:acceptance) { job_application.accepted! }
 

@@ -46,6 +46,7 @@ class JobApplication < ApplicationRecord
   scope :with_category, -> { where.not(category: nil) }
 
   validates :user_id, uniqueness: {scope: :job_offer_id}, on: :create, allow_nil: true # rubocop:disable Rails/UniqueValidationWithoutIndex
+  validate :missing_rejection_reason, if: -> { rejected && rejection_reason.blank? }
   validate :cant_accept_before_delay
   validate :complete_files_before_draft_contract
   validate :cant_be_accepted_twice, if: -> { accepted? }, unless: -> { has_accepted_other_job_application? }
@@ -309,6 +310,8 @@ class JobApplication < ApplicationRecord
   def cant_be_accepted_twice = errors.add(:state, :cant_be_accepted_twice)
 
   def has_accepted_other_job_application? = user.job_applications.where(state: "accepted").where.not(id: id).empty?
+
+  def missing_rejection_reason = errors.add(:rejection_reason, :blank)
 
   def notify_new_state = ApplicantNotificationsMailer.with(user:, job_offer:, state:).notify_new_state.deliver_later
 

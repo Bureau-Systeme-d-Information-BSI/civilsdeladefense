@@ -7,6 +7,10 @@ FactoryBot.define do
     user
   end
 
+  trait :with_employer do
+    employer
+  end
+
   trait :with_job_application_file do
     after(:create) do |job_application|
       job_application.job_application_files << build(:job_application_file)

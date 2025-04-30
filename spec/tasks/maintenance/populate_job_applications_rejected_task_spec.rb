@@ -10,7 +10,9 @@ module Maintenance
       let!(:phone_meeting_rejected_job_application) { create(:job_application, state: 3) } # phone_meeting_rejected
       let!(:after_meeting_rejected_job_application) { create(:job_application, state: 6) } # after_meeting_rejected
       let!(:other_job_application) { create(:job_application) }
-      let!(:already_migrated_job_application) { create(:job_application, state: 1, rejected: true) }
+      let!(:already_migrated_job_application) do
+        create(:job_application, state: 1, rejected: true, rejection_reason: create(:rejection_reason))
+      end
 
       it { is_expected.to include(rejected_job_application) }
 

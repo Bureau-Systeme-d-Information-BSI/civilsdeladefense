@@ -260,6 +260,16 @@ RSpec.describe JobApplication do
       end
     end
   end
+
+  describe "before_validation callbacks" do
+    describe "#cleanup_rejection_reason" do
+      subject(:unreject) { job_application.update!(rejected: false) }
+
+      let(:job_application) { create(:job_application, rejected: true, rejection_reason: create(:rejection_reason)) }
+
+      it { expect { unreject }.to change(job_application, :rejection_reason).to(nil) }
+    end
+  end
 end
 
 # == Schema Information

@@ -248,6 +248,7 @@ end
 #  experiences_fit_job_offer         :boolean
 #  files_count                       :integer          default(0)
 #  files_unread_count                :integer          default(0)
+#  rejected                          :boolean          default(FALSE)
 #  skills_fit_job_offer              :boolean
 #  state                             :integer
 #  created_at                        :datetime         not null

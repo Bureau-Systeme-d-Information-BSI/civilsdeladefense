@@ -1,0 +1,8 @@
+= simple_form_for job_application, url: admin_job_application_rejections_path(job_application), method: :post, html: { data: {flash: true, controller: "rejection"}} do |f|
+  .form-inputs
+    = f.input :rejection_reason_id, collection: RejectionReason.all, label: false, prompt: :translate, wrapper: :custom_multi_select_full_wide, disabled: job_application.rejected, input_html: { data: { action: "rejection#reasonChanged"} }
+  - unless job_application.rejected
+    .form-actions.text-right
+      = button_tag type: 'submit', class: 'btn btn-danger', disabled: true, data: { rejection_target: "submit", confirm: t('admin.job_applications.rejection_form.confirm') } do
+        = t('buttons.reject')
+        = fa_icon('circle-xmark', class: 'ml-1')

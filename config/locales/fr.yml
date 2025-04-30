@@ -82,6 +82,7 @@ fr:
     preview: "Aperçu"
     publish: "Publier"
     reactivate: "Réactiver"
+    reject: "Refuser"
     resend_confirmation_instructions: "Renvoyer le courriel d'activation"
     save: "Enregistrer"
     search: "Rechercher"
@@ -292,6 +293,8 @@ fr:
       update:
         success: "Vos informations ont été mises à jour"
     job_applications:
+      rejection_form:
+        confirm: "Confirmez-vous le refus ou désistement du candidat ?"
       show:
         user_deleted: Ce compte candidat a été supprimé
       index:
@@ -331,6 +334,7 @@ fr:
       job_application_activity:
         title: "Activité et commentaires"
         title_state: "État de la candidature"
+        title_rejection_reason: "Refus ou désistement"
         activities:
           creation_html: "<span class='user-name'>%{name}</span> a postulé"
           change_state_html: "<span class='user-name'>%{admin_name}</span> a déplacé <span class='user-name'>%{name}</span> dans la colonne “%{state_name}”"
@@ -366,6 +370,9 @@ fr:
         help: "Téléverser un fichier à la place de l'utilisateur"
       uncheck:
         success: "Fichier invalidé !"
+    rejections:
+      create:
+        success: "Candidature refusée ou désistée"
     job_offers:
       new_transfer:
         submit: "Transférer"

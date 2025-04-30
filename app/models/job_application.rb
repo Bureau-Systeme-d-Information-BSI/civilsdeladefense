@@ -3,6 +3,7 @@
 # Candidacy to a job offer
 class JobApplication < ApplicationRecord
   include Readable
+  include Rejectable
 
   include AASM
   audited except: %i[files_count files_unread_count emails_count
@@ -32,7 +33,6 @@ class JobApplication < ApplicationRecord
   belongs_to :organization
   belongs_to :user, optional: true
   accepts_nested_attributes_for :user
-  belongs_to :rejection_reason, optional: true
   belongs_to :employer
   belongs_to :category, optional: true
 
@@ -46,14 +46,12 @@ class JobApplication < ApplicationRecord
   scope :with_category, -> { where.not(category: nil) }
 
   validates :user_id, uniqueness: {scope: :job_offer_id}, on: :create, allow_nil: true # rubocop:disable Rails/UniqueValidationWithoutIndex
-  validate :missing_rejection_reason, if: -> { rejected && rejection_reason.blank? }
   validate :cant_accept_before_delay
   validate :complete_files_before_draft_contract
   validate :cant_be_accepted_twice, if: -> { accepted? }, unless: -> { has_accepted_other_job_application? }
 
   before_validation :set_employer
   before_save :compute_notifications_counter
-  before_save :cleanup_rejection_reason, unless: -> { rejected }
   after_update :notify_new_state, if: -> { new_state_requires_notification? }
   after_update :notify_rejected, if: -> { rejected_state_requires_notification? }
 
@@ -94,10 +92,6 @@ class JobApplication < ApplicationRecord
     state :contract_feedback_waiting
     state :contract_received
     state :affected
-
-    event :reject do # Deprecated on 2025-04-30 (rejected states)
-      transitions from: [:initial], to: :rejected
-    end
   end
 
   def self.end_user_states_regrouping
@@ -184,10 +178,6 @@ class JobApplication < ApplicationRecord
 
   def set_employer
     self.employer_id ||= job_offer.employer_id
-  end
-
-  def cleanup_rejection_reason
-    self.rejection_reason = nil
   end
 
   def compute_notifications_counter!
@@ -310,8 +300,6 @@ class JobApplication < ApplicationRecord
   def cant_be_accepted_twice = errors.add(:state, :cant_be_accepted_twice)
 
   def has_accepted_other_job_application? = user.job_applications.where(state: "accepted").where.not(id: id).empty?
-
-  def missing_rejection_reason = errors.add(:rejection_reason, :blank)
 
   def notify_new_state = ApplicantNotificationsMailer.with(user:, job_offer:, state:).notify_new_state.deliver_later
 

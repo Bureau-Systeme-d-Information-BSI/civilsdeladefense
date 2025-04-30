@@ -7,33 +7,6 @@ RSpec.describe JobApplication do
   let(:job_application) { create(:job_application, job_offer:) }
 
   describe "validations" do
-    describe "#rejection_reason" do
-      subject { job_application.valid? }
-
-      let(:job_application) { build(:job_application, :with_employer) }
-
-      context "when the job application is rejected" do
-        before { job_application.rejected = true }
-
-        it { is_expected.to be false }
-      end
-
-      context "when the job application is a rejected and has a rejection reason" do
-        before do
-          job_application.rejected = true
-          job_application.rejection_reason = create(:rejection_reason)
-        end
-
-        it { is_expected.to be true }
-      end
-
-      context "when the job application is not rejected" do
-        before { job_application.rejected = false }
-
-        it { is_expected.to be true }
-      end
-    end
-
     describe "#cant_be_accepted_twice" do
       subject(:acceptance) { job_application.accepted! }
 
@@ -100,41 +73,6 @@ RSpec.describe JobApplication do
         it { expect { rejection }.not_to have_enqueued_mail(ApplicantNotificationsMailer, :notify_rejected) }
       end
     end
-  end
-
-  it "correcties tell rejected state" do
-    expect(job_application.rejected_state?).to be(false)
-
-    job_application.reject!
-    expect(job_application.rejected_state?).to be(true)
-
-    job_application.phone_meeting!
-    expect(job_application.rejected_state?).to be(false)
-
-    job_application.phone_meeting_rejected!
-    expect(job_application.rejected_state?).to be(true)
-
-    job_application.to_be_met!
-    expect(job_application.rejected_state?).to be(false)
-
-    job_application.after_meeting_rejected!
-    expect(job_application.rejected_state?).to be(true)
-
-    job_offer.update(published_at: 40.days.before)
-    job_application.accepted!
-    expect(job_application.rejected_state?).to be(false)
-
-    job_application.contract_drafting!
-    expect(job_application.rejected_state?).to be(false)
-
-    job_application.contract_feedback_waiting!
-    expect(job_application.rejected_state?).to be(false)
-
-    job_application.contract_received!
-    expect(job_application.rejected_state?).to be(false)
-
-    job_application.affected!
-    expect(job_application.rejected_state?).to be(false)
   end
 
   it "correcties tell rejected states from JobOffer class" do
@@ -258,16 +196,6 @@ RSpec.describe JobApplication do
       it "cant pass to contract_drafting" do
         expect(job_application.contract_drafting!).to be(true)
       end
-    end
-  end
-
-  describe "before_validation callbacks" do
-    describe "#cleanup_rejection_reason" do
-      subject(:unreject) { job_application.update!(rejected: false) }
-
-      let(:job_application) { create(:job_application, rejected: true, rejection_reason: create(:rejection_reason)) }
-
-      it { expect { unreject }.to change(job_application, :rejection_reason).to(nil) }
     end
   end
 end

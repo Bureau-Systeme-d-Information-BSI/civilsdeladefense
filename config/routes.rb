@@ -126,6 +126,7 @@ Rails.application.routes.draw do
           post :uncheck
         end
       end
+      resources :rejections, only: %i[create]
       resources :messages, only: %i[create]
       resources :emails, only: %i[create] do
         member do

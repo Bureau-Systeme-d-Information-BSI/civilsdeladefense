@@ -54,12 +54,12 @@ class JobApplication < ApplicationRecord
 
   before_validation :set_employer
   before_save :compute_notifications_counter
-  before_save :cleanup_rejection_reason, unless: proc { |ja| ja.rejected_state? }
+  before_save :cleanup_rejection_reason, unless: -> { rejected }
   after_update :notify_new_state, if: -> { new_state_requires_notification? }
   after_update :notify_rejected, if: -> { rejected_state_requires_notification? }
 
   FINISHED_STATES = %w[rejected phone_meeting_rejected after_meeting_rejected affected].freeze
-  REJECTED_STATES = %w[rejected phone_meeting_rejected after_meeting_rejected].freeze
+  REJECTED_STATES = %w[rejected phone_meeting_rejected after_meeting_rejected].freeze # Deprecated on 2025-04-30 (rejected states)
   PROCESSING_STATES = %w[initial phone_meeting to_be_met].freeze
   FILLED_STATES = %w[
     accepted contract_drafting contract_feedback_waiting contract_received affected

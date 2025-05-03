@@ -34,9 +34,13 @@
       .card-footer.d-flex.flex-column.flex-md-row
         .mr-auto
           - if last_job_application
-            - klass = badge_class(last_job_application.state.to_sym)
-            %small.badge.text-white.text-uppercase.text-nowrap.mr-1{class: klass}
-              = last_job_application.aasm.human_state
+            - if last_job_application.rejected
+              %small.badge.text-white.text-uppercase.text-nowrap.mr-1.badge-light-gray
+                = t('activerecord.attributes.job_application.rejected')
+            - else
+              - klass = badge_class(last_job_application.state.to_sym)
+              %small.badge.text-white.text-uppercase.text-nowrap.mr-1{class: klass}
+                = last_job_application.aasm.human_state
             %small
               = t('admin.job_applications.job_application.applied_on', date: I18n.l(last_job_application.created_at.to_date))
           - else

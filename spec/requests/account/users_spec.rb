@@ -65,7 +65,7 @@ RSpec.describe "Account::Users" do
             user: {
               first_name: new_first_name,
               photo: Rack::Test::UploadedFile.new(
-                Rails.root.join("spec/fixtures/files/avatar2.jpg"),
+                Rails.root.join("spec/fixtures/files/avatar.jpg"),
                 "image/jpg"
               ),
               delete_photo: "0"
@@ -73,7 +73,7 @@ RSpec.describe "Account::Users" do
           }
         }
 
-        it { expect { update_request }.to change { user.reload.photo.filename }.from("avatar.jpg").to("avatar2.jpg") }
+        it { expect { update_request }.to change { user.reload.photo.filename }.from("user.jpg").to("avatar.jpg") }
       end
 
       context "when not deleting the photo" do

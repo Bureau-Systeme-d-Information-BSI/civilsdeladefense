@@ -1213,6 +1213,7 @@ fr:
       employer:
         code: "Libellé"
       job_application:
+        rejected: "Refusé·e"
         state: "État"
         state/start: "N'a encore aucune candidature"
         state/initial: "Nouveau"

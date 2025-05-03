@@ -543,7 +543,7 @@ job_offer3.publish!
 job_offer4.publish!
 job_offer5.publish!
 
-photo = File.open(Rails.root.join("spec", "fixtures", "files", "avatar.jpg"))
+photo = File.open(Rails.root.join("spec", "fixtures", "files", "user.jpg"))
 file = File.open(Rails.root.join("spec", "fixtures", "files", "document.pdf"))
 
 user = User.new(

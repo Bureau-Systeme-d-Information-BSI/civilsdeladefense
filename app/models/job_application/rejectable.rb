@@ -7,6 +7,9 @@ module JobApplication::Rejectable
     validate :missing_rejection_reason, if: -> { rejected && rejection_reason.blank? }
 
     before_save :cleanup_rejection_reason, unless: -> { rejected }
+
+    scope :rejecteds, -> { where(rejected: true) }
+    scope :not_rejecteds, -> { where(rejected: false) }
   end
 
   def reject!(rejection_reason:) = update!(rejected: true, rejection_reason:)

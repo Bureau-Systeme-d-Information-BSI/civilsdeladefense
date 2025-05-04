@@ -36,6 +36,34 @@ RSpec.describe JobApplication::Rejectable do
     end
   end
 
+  describe "scopes" do
+    describe ".rejecteds" do
+      subject { JobApplication.rejecteds }
+
+      let!(:matching_job_application) do
+        create(:job_application, rejected: true, rejection_reason: create(:rejection_reason))
+      end
+      let!(:non_matching_job_application) { create(:job_application, rejected: false) }
+
+      it { is_expected.to include(matching_job_application) }
+
+      it { is_expected.not_to include(non_matching_job_application) }
+    end
+
+    describe ".not_rejecteds" do
+      subject { JobApplication.not_rejecteds }
+
+      let!(:matching_job_application) { create(:job_application, rejected: false) }
+      let!(:non_matching_job_application) do
+        create(:job_application, rejected: true, rejection_reason: create(:rejection_reason))
+      end
+
+      it { is_expected.to include(matching_job_application) }
+
+      it { is_expected.not_to include(non_matching_job_application) }
+    end
+  end
+
   describe "before_validation callbacks" do
     describe "#cleanup_rejection_reason" do
       subject(:unreject) { job_application.update!(rejected: false) }

@@ -1,0 +1,12 @@
+- val = params.dig(:q, :rejected).present?
+.dropdown.dropdown-checks.form-group
+  %button.form-control.dropdown-toggle.text-left.d-flex.align-items-center#dropdownContractType{type: 'button', data: {toggle: 'dropdown'}, aria: {haspopup: true, expanded: false}}
+    Refus ou desistement
+    - if val.present?
+      (oui)
+  .dropdown-menu.dropdown-menu-right.allow-focus{aria: {labelledby: 'dropdownContractType'}}
+    %ul
+      %li
+        .form-check.form-check-inline.w-100
+          = check_box_tag "q[rejected]", true, val, class: 'form-check-input', id: :rejected_true
+          %label.form-check-label.text-truncate.d-block{for: :rejected_true} Oui

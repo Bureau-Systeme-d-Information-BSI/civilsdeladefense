@@ -62,7 +62,7 @@ class Admin::UsersController < Admin::InheritedResourcesController
         format.html { render :edit }
         format.js do
           @notification = t(".failure")
-          render :update, status: :unprocessable_entity
+          render :update, status: :unprocessable_content
         end
       end
     end

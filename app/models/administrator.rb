@@ -9,6 +9,9 @@ class Administrator < ApplicationRecord
   include DeactivationFlow
   before_save :remove_mark_for_deactivation
 
+  include PgSearch::Model
+  pg_search_scope :search_email, against: :email, using: {tsearch: {prefix: true}}
+
   #####################################
   # Relationships
   belongs_to :organization

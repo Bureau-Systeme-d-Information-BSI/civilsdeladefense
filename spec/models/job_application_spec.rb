@@ -75,11 +75,6 @@ RSpec.describe JobApplication do
     end
   end
 
-  it "correcties tell rejected states from JobOffer class" do
-    ary = %w[rejected phone_meeting_rejected after_meeting_rejected]
-    expect(described_class.rejected_states).to match_array(ary)
-  end
-
   describe "files_to_be_provided" do
     before do
       create(

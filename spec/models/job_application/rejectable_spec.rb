@@ -74,6 +74,16 @@ RSpec.describe JobApplication::Rejectable do
     end
   end
 
+  describe "after_update callbacks" do
+    describe "#notify_rejected" do
+      subject(:rejection) { job_application.update!(rejected: true, rejection_reason: create(:rejection_reason)) }
+
+      let(:job_application) { create(:job_application) }
+
+      it { expect { rejection }.to have_enqueued_mail(ApplicantNotificationsMailer, :notify_rejected) }
+    end
+  end
+
   describe "#reject!" do
     subject(:reject) { job_application.reject!(rejection_reason:) }
 

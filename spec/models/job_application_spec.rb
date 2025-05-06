@@ -50,27 +50,9 @@ RSpec.describe JobApplication do
       end
 
       context "when the state is not a notification state" do
-        let(:state) { "phone_meeting_rejected" }
+        let(:state) { "initial" }
 
         it { expect { state_change }.not_to have_enqueued_mail(ApplicantNotificationsMailer, :notify_new_state) }
-      end
-    end
-
-    describe "#notify_rejected" do
-      subject(:rejection) { job_application.update!(state:) }
-
-      described_class::REJECTED_STATES.each do |rejected_state|
-        context "when the state is a rejected state (#{rejected_state})" do
-          let(:state) { rejected_state }
-
-          it { expect { rejection }.to have_enqueued_mail(ApplicantNotificationsMailer, :notify_rejected) }
-        end
-      end
-
-      context "when the state is not a rejected state" do
-        let(:state) { "phone_meeting" }
-
-        it { expect { rejection }.not_to have_enqueued_mail(ApplicantNotificationsMailer, :notify_rejected) }
       end
     end
   end

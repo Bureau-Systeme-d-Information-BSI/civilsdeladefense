@@ -34,6 +34,26 @@ RSpec.describe JobApplication::Rejectable do
         it { is_expected.to be true }
       end
     end
+
+    describe "#immutable_state" do
+      subject { job_application.valid? }
+
+      let(:job_application) { build(:job_application, :with_employer) }
+
+      before { job_application.state = :accepted }
+
+      context "when the job application is rejected" do
+        before { job_application.rejected = true }
+
+        it { is_expected.to be false }
+      end
+
+      context "when the job application is not rejected" do
+        before { job_application.rejected = false }
+
+        it { is_expected.to be true }
+      end
+    end
   end
 
   describe "scopes" do

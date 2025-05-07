@@ -35,9 +35,8 @@ import displayCharts from './js/display-charts'
 
 import displaySnackbars from './js/display-snackbars'
 
-import { boardManagement, boardRedraw, boardShowRejectionModal } from './js/board'
+import { boardManagement, boardRedraw } from './js/board'
 window.boardRedraw = boardRedraw
-window.boardShowRejectionModal = boardShowRejectionModal
 
 import reloadWithTurbo from './js/reload-with-turbo'
 window.reloadWithTurbo = reloadWithTurbo

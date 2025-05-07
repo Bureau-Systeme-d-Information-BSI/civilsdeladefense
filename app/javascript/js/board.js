@@ -26,33 +26,6 @@ export function boardRedraw() {
   }
 }
 
-export function boardShowRejectionModal(url) {
-  var nodeBoard = document.querySelector('#board')
-  if (nodeBoard !== null) {
-    Rails.ajax({
-      type: 'GET',
-      url: url,
-      dataType: 'html',
-      success: (response) => {
-        var html = response.body.innerHTML
-        var nodeRemoteContentModal = document.querySelector('#remoteContentModal')
-        var nodeModalContent = nodeRemoteContentModal.querySelector('.modal-content')
-        nodeModalContent.insertAdjacentHTML('afterbegin', html)
-        new BSN.Modal('#remoteContentModal').show()
-        BSN.initCallback()
-        formAutoSubmit()
-        dependentFields()
-        displaySnackbars()
-        emailTemplateSelectHandling()
-      },
-      error: (response) => {
-        console.log('error boardManagement')
-        console.log(response)
-      }
-    })
-  }
-}
-
 export function boardManagement() {
   var board = document.getElementById('board')
   if (board !== null && board.getAttribute('data-draggable') !== null) {

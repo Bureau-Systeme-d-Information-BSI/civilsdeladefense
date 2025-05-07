@@ -1169,6 +1169,7 @@ fr:
               cant_accept_before_delay: "Un délai de 30 jours après la publication de l'offre sur CSP doit être respecté avant d'accepter une candidature"
               complete_files_before_draft_contract: "Tous les documents doivent être téléversés et validés avant la rédaction du contrat"
               cant_be_accepted_twice: 'Cette action n''est pas possible. Ce candidat est déjà à l''état "Retenu" dans une offre d''emploi.'
+              immutable_rejected: "Cette candidature a été refusée, son état ne peut pas être modifié"
             cover_letter_content_type:
               invalid: "PDF uniquement, max 2Mo"
             resume_content_type:

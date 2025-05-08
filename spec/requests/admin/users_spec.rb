@@ -134,12 +134,7 @@ RSpec.describe "Admin::Users" do
       let(:initial_user) { create(:user, first_name: "René") }
       let(:accepted_user) { create(:user, first_name: "René") }
 
-      let(:params) {
-        {
-          q: {job_applications_state_in: ["initial"]},
-          s: "René"
-        }
-      }
+      let(:params) { {q: {job_applications_state_in: ["initial"]}, s: "René"} }
 
       before do
         create(:job_application, user: initial_user, state: "initial")
@@ -152,6 +147,22 @@ RSpec.describe "Admin::Users" do
       it { expect(response.body).to include(initial_user.full_name) }
 
       it { expect(response.body).not_to include(accepted_user.full_name) }
+    end
+
+    describe "searching and filtering users on job application rejected" do
+      let(:rejected_user) { create(:user, first_name: "René") }
+      let(:unrejected_user) { create(:user, first_name: "René") }
+      let(:params) { {q: {rejected: true}, s: "René"} }
+
+      before do
+        create(:job_application, user: rejected_user, rejected: true, rejection_reason: create(:rejection_reason))
+        create(:job_application, user: unrejected_user, rejected: false)
+        index_request
+      end
+
+      it { expect(response.body).to include(rejected_user.full_name) }
+
+      it { expect(response.body).not_to include(unrejected_user.full_name) }
     end
     # rubocop:enable RSpec/MultipleMemoizedHelpers
   end

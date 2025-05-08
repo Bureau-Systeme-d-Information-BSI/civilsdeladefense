@@ -7,6 +7,10 @@ FactoryBot.define do
     user
   end
 
+  trait :with_employer do
+    employer
+  end
+
   trait :with_job_application_file do
     after(:create) do |job_application|
       job_application.job_application_files << build(:job_application_file)
@@ -27,6 +31,7 @@ end
 #  experiences_fit_job_offer         :boolean
 #  files_count                       :integer          default(0)
 #  files_unread_count                :integer          default(0)
+#  rejected                          :boolean          default(FALSE)
 #  skills_fit_job_offer              :boolean
 #  state                             :integer
 #  created_at                        :datetime         not null

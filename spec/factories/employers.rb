@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :employer do
     name { Faker::Company.unique.name }
-    code { Faker::Code.unique.asin }
+    code { Faker::Alphanumeric.unique.alpha(number: 10).upcase }
   end
 end
 

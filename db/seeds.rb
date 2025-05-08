@@ -501,7 +501,7 @@ job_offer2.save!
 job_offer3 = job_offer.dup
 job_offer3.owner = employer_admin_2
 job_offer3.contract_start_on = 3.months.since
-job_offer3.title = "Responsable Achat d’Infrastructures F/H"
+job_offer3.title = "Administrateur Systèmes et Réseaux F/H"
 job_offer3.category = sub_sub_infrastructure
 job_offer3.level = level_1
 job_offer3.location = "Brest, FR"
@@ -514,7 +514,7 @@ job_offer3.save!
 job_offer4 = job_offer.dup
 job_offer4.owner = employer_admin_2
 job_offer4.contract_start_on = 4.months.since
-job_offer4.title = "Responsable Achat d’Infrastructures F/H"
+job_offer4.title = "Responsable Exploitation Réseaux F/H"
 job_offer4.category = sub_sub_infrastructure
 job_offer4.level = level_2
 job_offer4.location = "Brest, FR"
@@ -543,7 +543,7 @@ job_offer3.publish!
 job_offer4.publish!
 job_offer5.publish!
 
-photo = File.open(Rails.root.join("spec", "fixtures", "files", "avatar.jpg"))
+photo = File.open(Rails.root.join("spec", "fixtures", "files", "user.jpg"))
 file = File.open(Rails.root.join("spec", "fixtures", "files", "document.pdf"))
 
 user = User.new(
@@ -789,5 +789,14 @@ ArchivingReason.create!(
   [
     { name: "Offre suspendue"},
     { name: "Candidat·e trouvé·e"}
+  ]
+)
+
+RejectionReason.create!(
+  [
+    { name: "Offre suspendue"},
+    { name: "Candidat·e trouvé·e"},
+    { name: "Candidat·e non qualifié·e"},
+    { name: "Candidat·e non disponible"}
   ]
 )

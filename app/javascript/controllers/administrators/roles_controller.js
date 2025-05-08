@@ -8,15 +8,17 @@ export default class extends Controller {
   }
 
   rolesChanged() {
+    if (this.getRoles().includes("employment_authority")) {
+      this.aceAteTarget.classList.remove("d-none");
+    } else {
+      this.aceAteTarget.classList.add("d-none");
+    }
+
     if (this.getRoles().includes("functional_administrator")) {
       this.employersTarget.classList.add("d-none");
       this.aceAteTarget.classList.add("d-none");
     } else {
       this.employersTarget.classList.remove("d-none");
-
-      if (this.getRoles().includes("employment_authority")) {
-        this.aceAteTarget.classList.remove("d-none");
-      }
     }
   }
 

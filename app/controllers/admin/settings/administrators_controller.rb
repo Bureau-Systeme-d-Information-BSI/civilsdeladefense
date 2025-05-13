@@ -153,7 +153,7 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
 
   def permitted_params
     params.permit(
-      q: [:employer_id_eq, :first_name_or_last_name_or_email_cont, :role_eq, :s]
+      q: [:employers_id_in, :first_name_or_last_name_or_email_cont, :role_eq, :s]
     )
   end
 end

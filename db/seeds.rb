@@ -224,6 +224,7 @@ super_admin = Administrator.new(
   password_confirmation: ENV["SEED_PASSWORD"],
   very_first_account: true,
   role: "admin",
+  roles: ["functional_administrator"],
   organization: organization,
   title: "Administrateur"
 )
@@ -239,6 +240,7 @@ employer_admin_1 = Administrator.new(
   password_confirmation: ENV["SEED_PASSWORD"],
   very_first_account: true,
   role: "employer",
+  roles: ["employer_recruiter"],
   employers: [employer],
   organization: organization,
   title: "Employeur"
@@ -255,6 +257,7 @@ employer_admin_2 = Administrator.new(
   password_confirmation: ENV["SEED_PASSWORD"],
   very_first_account: true,
   role: "employer",
+  roles: ["employer_recruiter"],
   employers: [employer],
   organization: organization,
   title: "Employeur"
@@ -271,6 +274,7 @@ brh_admin = Administrator.new(
   password_confirmation: ENV["SEED_PASSWORD"],
   very_first_account: true,
   role: "employer",
+  roles: ["employer_recruiter"],
   employers: [employer],
   organization: organization,
   title: "BRH"

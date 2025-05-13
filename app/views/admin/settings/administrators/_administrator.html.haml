@@ -7,7 +7,7 @@
     .text-dark
       = administrator.email.truncate(60, separator: '…')
   %td.text-dark
-    = administrator&.employer&.code
+    = administrator.employers.pluck(:name).join(', ')
   %td
     - administrator.roles.each do |role|
       .badge.badge-light-gray.text-white

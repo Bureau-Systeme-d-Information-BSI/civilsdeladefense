@@ -620,7 +620,7 @@ fr:
           table:
             photo: "Avatar"
             name: "Nom"
-            employer: "Employeur"
+            employer: "Chaîne d'emploi"
             roles: "Rôles"
             last_sign_in_at: "Dernière connexion"
             created_at: "Créé le"

@@ -47,7 +47,7 @@
           %td
             = f.input :first_name_or_last_name_or_email_cont, as: :string, label: false, input_html: {class: 'w-100'}
           %td
-            = f.input :employer_id_eq, collection: Employer.all.map{|e| [e.name.truncate(10, separator: '…'), e.id]}, label: false
+            = f.input :employers_id_in, collection: Employer.all.map{|e| [e.name.truncate(10, separator: '…'), e.id]}, label: false
           %td
             = f.input :role_eq, collection: Administrator.roles.map{|x,y| [Administrator.human_attribute_name("roles.#{ x }"), y]}, label: false, input_html: {class: 'w-100'}
           %td

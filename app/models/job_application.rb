@@ -55,17 +55,25 @@ class JobApplication < ApplicationRecord
   after_update :notify_new_state, if: -> { new_state_requires_notification? }
 
   FINISHED_STATES = %w[affected].freeze
-  PROCESSING_STATES = %w[initial phone_meeting to_be_met].freeze
+  PROCESSING_STATES = %w[initial phone_meeting to_be_met financial_estimate].freeze
   FILLED_STATES = %w[accepted contract_drafting contract_feedback_waiting contract_received affected].freeze
 
   NOTIFICATION_STATES = %w[
-    phone_meeting to_be_met accepted contract_drafting contract_feedback_waiting contract_received affected
+    phone_meeting
+    to_be_met
+    financial_estimate
+    accepted
+    contract_drafting
+    contract_feedback_waiting
+    contract_received
+    affected
   ].freeze
 
   enum state: {
     initial: 0,
     phone_meeting: 2,
     to_be_met: 5,
+    financial_estimate: 12,
     accepted: 7,
     contract_drafting: 8,
     contract_feedback_waiting: 9,
@@ -78,6 +86,7 @@ class JobApplication < ApplicationRecord
     state :phone_meeting,
       before_enter: proc { notify_new_state(:phone_meeting) }
     state :to_be_met
+    state :financial_estimate
     state :accepted
     state :contract_drafting
     state :contract_feedback_waiting
@@ -90,6 +99,7 @@ class JobApplication < ApplicationRecord
       %i[initial],
       %i[phone_meeting],
       %i[to_be_met],
+      %i[financial_estimate],
       [:accepted],
       [:contract_drafting],
       [:contract_feedback_waiting],
@@ -101,7 +111,8 @@ class JobApplication < ApplicationRecord
   STATE_DURATION = [
     [:initial, :phone_meeting],
     [:phone_meeting, :to_be_met],
-    [:to_be_met, :accepted],
+    [:to_be_met, :financial_estimate],
+    [:financial_estimate, :accepted],
     [:accepted, :contract_drafting],
     [:contract_drafting, :contract_feedback_waiting],
     [:contract_feedback_waiting, :contract_received],

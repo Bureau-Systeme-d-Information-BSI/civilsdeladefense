@@ -1226,6 +1226,7 @@ fr:
         state/phone_meeting_rejected: "Refusé·e après e. tél."
         state/to_be_met: "Entretien d'embauche"
         state/after_meeting_rejected: "Rencontré·e mais refusé·e"
+        state/financial_estimate: "Estimation financière"
         state/accepted: "Candidature retenue"
         state/contract_drafting: "Validation dossier complet"
         state/contract_feedback_waiting: "Contrat"

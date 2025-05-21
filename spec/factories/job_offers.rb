@@ -76,6 +76,7 @@ end
 #  estimate_annual_salary_gross                     :string
 #  estimate_monthly_salary_net                      :string
 #  featured                                         :boolean          default(FALSE)
+#  financial_estimate_job_applications_count        :integer          default(0), not null
 #  identifier                                       :string
 #  initial_job_applications_count                   :integer          default(0), not null
 #  is_remote_possible                               :boolean

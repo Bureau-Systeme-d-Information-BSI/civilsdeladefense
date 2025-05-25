@@ -446,9 +446,9 @@ job_offer = JobOffer.new { |j|
   j.professional_category = ProfessionalCategory.first
   j.location = "Rennes, FR"
   j.employer = Employer.last
-  j.mobilia_date = 1.day.ago
+  j.mobilia_date = 1.month.ago
   j.mobilia_value = "MOB#{rand(1000..9999)}"
-  j.csp_date = 1.day.ago
+  j.csp_date = 1.month.ago
   j.csp_value = "CSP#{rand(1000..9999)}"
   j.organization_description = "Description de l'organisation"
   j.description = <<~HEREDOC
@@ -684,7 +684,7 @@ user_candidate_of_all.confirm
 boolean_choices = [true, false, nil]
 
 JobOffer.where.not(contract_duration_id: nil).where.not(id: [job_offer4.id, job_offer5.id]).each do |job_offer|
-  15.times do |_i|
+  5.times do |_i|
     user = User.new(
       email: Faker::Internet.unique.email,
       organization: organization,

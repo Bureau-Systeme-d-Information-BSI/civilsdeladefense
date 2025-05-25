@@ -22,6 +22,20 @@ RSpec.describe JobApplication do
         it { expect { acceptance }.to raise_error(ActiveRecord::RecordInvalid) }
       end
     end
+
+    describe "#cant_accept_remaining_initial_job_applications" do
+      subject(:acceptance) { job_application.accepted! }
+
+      context "when the job offer has no initial job applications" do
+        it { is_expected.to be(true) }
+      end
+
+      context "when the job offer has initial job applications" do
+        before { create(:job_application, job_offer:, state: :initial) }
+
+        it { expect { acceptance }.to raise_error(ActiveRecord::RecordInvalid) }
+      end
+    end
   end
 
   describe "scopes" do

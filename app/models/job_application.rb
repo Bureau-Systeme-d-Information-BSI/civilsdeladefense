@@ -49,6 +49,7 @@ class JobApplication < ApplicationRecord
   validates :user_id, uniqueness: {scope: :job_offer_id}, on: :create, allow_nil: true # rubocop:disable Rails/UniqueValidationWithoutIndex
   validate :cant_accept_before_delay
   validate :cant_accept_remaining_initial_job_applications
+  validate :cant_skip_state, on: :update
   validate :complete_files_before_draft_contract
   validate :cant_be_accepted_twice, if: -> { accepted? }, unless: -> { has_accepted_other_job_application? }
 
@@ -71,6 +72,18 @@ class JobApplication < ApplicationRecord
     affected
   ].freeze
 
+  ORDERED_STATES = %w[
+    initial
+    phone_meeting
+    to_be_met
+    financial_estimate
+    accepted
+    contract_drafting
+    contract_feedback_waiting
+    contract_received
+    affected
+  ]
+
   enum state: {
     initial: 0,
     phone_meeting: 2,
@@ -85,8 +98,7 @@ class JobApplication < ApplicationRecord
 
   aasm column: :state, enum: true do
     state :initial, initial: true
-    state :phone_meeting,
-      before_enter: proc { notify_new_state(:phone_meeting) }
+    state :phone_meeting, before_enter: proc { notify_new_state(:phone_meeting) }
     state :to_be_met
     state :financial_estimate
     state :accepted
@@ -290,6 +302,21 @@ class JobApplication < ApplicationRecord
 
     errors.add(:state, :cant_accept_remaining_initial_job_applications)
   end
+
+  def cant_skip_state
+    return if new_state_immediatly_after?
+    return if new_state_before?
+
+    errors.add(:state, :cant_skip_state)
+  end
+
+  def new_state_immediatly_after? = current_state_index == previous_state_index + 1
+
+  def new_state_before? = current_state_index <= previous_state_index
+
+  def current_state_index = ORDERED_STATES.index(state)
+
+  def previous_state_index = ORDERED_STATES.index(state_was)
 
   def complete_files_before_draft_contract
     return if state.to_s != "contract_drafting"

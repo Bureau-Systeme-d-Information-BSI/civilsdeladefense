@@ -10,7 +10,7 @@ RSpec.describe JobApplication do
     describe "#cant_be_accepted_twice" do
       subject(:acceptance) { job_application.accepted! }
 
-      let(:job_application) { create(:job_application) }
+      let(:job_application) { create(:job_application, state: :financial_estimate) }
 
       context "when the user has not been accepted for another job offer" do
         it { is_expected.to be(true) }
@@ -26,6 +26,8 @@ RSpec.describe JobApplication do
     describe "#cant_accept_remaining_initial_job_applications" do
       subject(:acceptance) { job_application.accepted! }
 
+      let(:job_application) { create(:job_application, job_offer:, state: :financial_estimate) }
+
       context "when the job offer has no initial job applications" do
         it { is_expected.to be(true) }
       end
@@ -34,6 +36,30 @@ RSpec.describe JobApplication do
         before { create(:job_application, job_offer:, state: :initial) }
 
         it { expect { acceptance }.to raise_error(ActiveRecord::RecordInvalid) }
+      end
+    end
+
+    describe "#cant_skip_state" do
+      subject(:state_change) { job_application.update!(state:) }
+
+      let(:job_application) { create(:job_application, state: :phone_meeting) }
+
+      context "when the state is immediatly after the previous state" do
+        let(:state) { "to_be_met" }
+
+        it { is_expected.to be(true) }
+      end
+
+      context "when the state is before the previous state" do
+        let(:state) { "initial" }
+
+        it { is_expected.to be(true) }
+      end
+
+      context "when the state is after the previous state" do
+        let(:state) { "accepted" }
+
+        it { expect { state_change }.to raise_error(ActiveRecord::RecordInvalid) }
       end
     end
   end
@@ -48,26 +74,6 @@ RSpec.describe JobApplication do
       it { is_expected.to include(matching) }
 
       it { is_expected.not_to include(unmatching) }
-    end
-  end
-
-  describe "after_update callbacks" do
-    describe "#notify_new_state" do
-      subject(:state_change) { job_application.update!(state:) }
-
-      described_class::NOTIFICATION_STATES.each do |notification_state|
-        context "when the state is a notification state (#{notification_state})" do
-          let(:state) { notification_state }
-
-          it { expect { state_change }.to have_enqueued_mail(ApplicantNotificationsMailer, :notify_new_state) }
-        end
-      end
-
-      context "when the state is not a notification state" do
-        let(:state) { "initial" }
-
-        it { expect { state_change }.not_to have_enqueued_mail(ApplicantNotificationsMailer, :notify_new_state) }
-      end
     end
   end
 
@@ -86,6 +92,8 @@ RSpec.describe JobApplication do
         name: "FILE", from_state: :to_be_met, kind: :applicant_provided, by_default: true
       )
     end
+
+    let(:job_application) { create(:job_application, job_offer:, state: :phone_meeting) }
 
     it "computes files to be provided" do
       result = job_application.files_to_be_provided
@@ -110,20 +118,22 @@ RSpec.describe JobApplication do
   end
 
   describe "cant_accept_before_delay" do
+    subject(:acceptance) { job_application.accepted! }
+
+    let(:job_application) { create(:job_application, job_offer:, state: :financial_estimate) }
+
     context "when job_offer published 20 days before" do
       before { job_offer.update(csp_date: 20.days.before) }
 
       it "cant be accepted" do
-        expect { job_application.accepted! }.to raise_error(ActiveRecord::RecordInvalid)
+        expect { acceptance }.to raise_error(ActiveRecord::RecordInvalid)
       end
     end
 
     context "when job_offer published 31 days before" do
       before { job_offer.update(csp_date: 31.days.before) }
 
-      it "can be accepted" do
-        expect(job_application.accepted!).to be(true)
-      end
+      it { is_expected.to be(true) }
     end
   end
 

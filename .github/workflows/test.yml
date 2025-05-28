@@ -54,7 +54,7 @@ jobs:
           bundle exec rails assets:precompile
 
       - name: RSpec
-        run: bundle exec rspec --fail-fast --format documentation
+        run: bundle exec rspec --format documentation
         env:
           SMTP_URL: smtp://hello%40localhost@localhost
           LOCKBOX_MASTER_KEY: 0000000000000000000000000000000000000000000000000000000000000000

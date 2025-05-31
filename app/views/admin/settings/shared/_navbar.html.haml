@@ -1,6 +1,7 @@
 .list-group.stepper
   - if can?(:read, Administrator) || can?(:read, Page)
     .list-group-item.menu
+      = fa_icon "gears"
       = t(".admin")
 
     = settings_navbar_item(:administrators)
@@ -15,6 +16,7 @@
 
   - if can?(:read, Organization) || can?(:read, OrganizationDefault) || can?(:read, Page)
     .list-group-item.menu
+      = fa_icon "house"
       = t(".configuration")
 
     - if can? :read, Organization
@@ -28,6 +30,7 @@
     = settings_navbar_item(:user_menu_links)
 
   .list-group-item.menu
+    = fa_icon "users-gear"
     = t(".job_applications")
 
   .list-group.stepper
@@ -47,6 +50,7 @@
   - entries += %i[availability_ranges benefits drawbacks bops salary_ranges contract_durations foreign_languages foreign_language_levels]
   - if entries.any?{ |entry| can?(:manage, entry.to_s.singularize.classify.constantize) }
     .list-group-item.menu
+      = fa_icon "file-lines"
       = t(".writing_job_offers")
 
     .list-group.stepper

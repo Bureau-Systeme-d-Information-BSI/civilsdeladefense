@@ -7,4 +7,4 @@
           %span.total= job_applications.size
       = link_to fa_icon('envelope'), [:new, :admin, @job_offer, :multiple_recipients_email, state: state_name], title: t('buttons.email')
   .d-flex.flex-column.cards{data: {state: state_name}}
-    = render partial: 'job_application', collection: job_applications, locals: {with_header: false}
+    = render partial: 'job_application', collection: job_applications, locals: {preselection: (state_name == "initial")}

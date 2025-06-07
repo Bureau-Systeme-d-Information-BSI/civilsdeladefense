@@ -5,7 +5,7 @@
   .lists
     - JobApplication.aasm.states.each do |state|
       - state_name = state.name.to_s
-      - concerned_job_applications = @job_applications[state_name] || []
+      - concerned_job_applications = @job_applications[state_name]&.sort_by(&:preselection) || []
       = render partial: 'board_column', locals: { state_name: state_name, job_applications: concerned_job_applications}
 .modal.fade#remoteContentModal{tabindex: -1, role: :dialog, aria: {labelledby: :remoteContentModal, hidden: true}}
   .modal-dialog.modal-lg{role: :document}

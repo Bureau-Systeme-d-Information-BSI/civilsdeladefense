@@ -90,6 +90,8 @@ Rails.application.routes.draw do
           get :files
           get :emails
         end
+        resource :favorite, only: %i[create destroy]
+        resource :unfavorite, only: %i[create destroy]
       end
       resources :archives, only: [:new, :create]
       resources :multiple_recipients_emails, only: %i[new create]

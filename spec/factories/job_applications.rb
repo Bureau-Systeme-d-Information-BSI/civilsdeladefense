@@ -31,6 +31,7 @@ end
 #  experiences_fit_job_offer         :boolean
 #  files_count                       :integer          default(0)
 #  files_unread_count                :integer          default(0)
+#  preselection                      :integer          default("pending")
 #  rejected                          :boolean          default(FALSE)
 #  skills_fit_job_offer              :boolean
 #  state                             :integer

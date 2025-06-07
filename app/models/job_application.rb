@@ -4,6 +4,7 @@
 class JobApplication < ApplicationRecord
   include Readable
   include Rejectable
+  include Preselectable
 
   include AASM
   audited except: %i[files_count files_unread_count emails_count
@@ -323,6 +324,7 @@ end
 #  experiences_fit_job_offer         :boolean
 #  files_count                       :integer          default(0)
 #  files_unread_count                :integer          default(0)
+#  preselection                      :integer          default("pending")
 #  rejected                          :boolean          default(FALSE)
 #  skills_fit_job_offer              :boolean
 #  state                             :integer

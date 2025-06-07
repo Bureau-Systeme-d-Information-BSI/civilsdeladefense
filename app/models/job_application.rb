@@ -62,6 +62,12 @@ class JobApplication < ApplicationRecord
     phone_meeting to_be_met accepted contract_drafting contract_feedback_waiting contract_received affected
   ].freeze
 
+  enum preselection: {
+    pending: 0,
+    favorite: 1,
+    unfavorite: 2
+  }
+
   enum state: {
     initial: 0,
     phone_meeting: 2,
@@ -323,6 +329,7 @@ end
 #  experiences_fit_job_offer         :boolean
 #  files_count                       :integer          default(0)
 #  files_unread_count                :integer          default(0)
+#  preselection                      :integer          default("pending")
 #  rejected                          :boolean          default(FALSE)
 #  skills_fit_job_offer              :boolean
 #  state                             :integer

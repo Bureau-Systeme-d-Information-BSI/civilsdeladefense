@@ -4,6 +4,7 @@
 class JobApplication < ApplicationRecord
   include Readable
   include Rejectable
+  include Preselectable
 
   include AASM
   audited except: %i[files_count files_unread_count emails_count
@@ -61,12 +62,6 @@ class JobApplication < ApplicationRecord
   NOTIFICATION_STATES = %w[
     phone_meeting to_be_met accepted contract_drafting contract_feedback_waiting contract_received affected
   ].freeze
-
-  enum preselection: {
-    pending: 0,
-    favorite: 1,
-    unfavorite: 2
-  }
 
   enum state: {
     initial: 0,

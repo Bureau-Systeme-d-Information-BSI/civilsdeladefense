@@ -60,6 +60,12 @@ class JobApplication < ApplicationRecord
   FILLED_STATES = %w[
     accepted contract_drafting contract_feedback_waiting contract_received affected
   ].freeze
+
+  enum preselection: {
+    pending: 0,
+    favorite: 1,
+    unfavorite: 2
+  }
   enum state: {
     initial: 0,
     rejected: 1,
@@ -341,6 +347,7 @@ end
 #  experiences_fit_job_offer         :boolean
 #  files_count                       :integer          default(0)
 #  files_unread_count                :integer          default(0)
+#  preselection                      :integer          default("pending")
 #  skills_fit_job_offer              :boolean
 #  state                             :integer
 #  created_at                        :datetime         not null

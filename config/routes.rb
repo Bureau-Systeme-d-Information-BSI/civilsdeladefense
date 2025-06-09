@@ -213,7 +213,6 @@ Rails.application.routes.draw do
       resources :job_applications, path: "mes-candidatures" do
         member do
           get :job_offer, path: "offre"
-          get :profile
         end
         resources :job_application_files, path: "documents"
         resources :emails, only: %i[index create] do

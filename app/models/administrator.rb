@@ -181,14 +181,13 @@ class Administrator < ApplicationRecord
   end
 
   def transfer(email)
-    administrator = Administrator.find_by(email: email.downcase) || Administrator.new(email: email)
-    administrator.inviter ||= self
-    administrator.organization = organization
-    if administrator.save
+    if (administrator = Administrator.find_by(email:))
       job_offer_actors.update_all(administrator_id: administrator.id) # rubocop:disable Rails/SkipsModelValidations
       owned_job_offers.update_all(owner_id: administrator.id) # rubocop:disable Rails/SkipsModelValidations
+      true
+    else
+      false
     end
-    administrator
   end
 
   def password_complexity

@@ -378,6 +378,7 @@ fr:
         submit: "Transférer"
       transfer:
         success: "Annonce transférée !"
+        error: "L'annonce n'a pas pu être transférée, veuillez vérifier l'email du nouveau propriétaire"
       send_to_list:
         success: "Annonce diffusées !"
       feature:
@@ -649,6 +650,7 @@ fr:
         edit:
           title: "Modifier un compte utilisateur"
           transfer: "Transférer les offres"
+          transfer_email_label: "Email du nouveau propriétaire des offres"
           submit: "Transférer"
           list: "Liste des offres"
         deactivate:

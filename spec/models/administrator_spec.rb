@@ -216,50 +216,26 @@ RSpec.describe Administrator do
   end
 
   describe "#transfer" do
-    let(:email) { "any@email.org" }
+    subject(:transfer) { administrator.transfer(email) }
+
+    let(:administrator) { create(:administrator) }
     let!(:job_offer) { create(:job_offer, owner: administrator) }
 
     context "when the new administrator exists" do
-      let!(:new_administrator) { create(:administrator, email: email) }
+      let!(:new_administrator) { create(:administrator) }
+      let(:email) { new_administrator.email }
 
-      it "returns a persisted administrator" do
-        expect(administrator.transfer(email).persisted?).to be(true)
-      end
+      it { is_expected.to be(true) }
 
-      it "doesn't create an administrator" do
-        expect { administrator.transfer(email) }.not_to change(described_class, :count)
-      end
-
-      it "transfers the job offers to the new administrator" do
-        expect { administrator.transfer(email) }.to change { job_offer.reload.owner }.to(new_administrator)
-      end
+      it { expect { transfer }.to change { job_offer.reload.owner }.to(new_administrator) }
     end
 
     context "when the new administrator does not exist" do
-      it "returns a persisted administrator" do
-        expect(administrator.transfer(email).persisted?).to be(true)
-      end
+      let(:email) { "any@email.org" }
 
-      it "creates a new administrator" do
-        expect { administrator.transfer(email) }.to change(described_class, :count).by(1)
-      end
+      it { is_expected.to be(false) }
 
-      it "transfers the job offers to the new administrator" do
-        expect { administrator.transfer(email) }.to change { job_offer.reload.owner }
-      end
-    end
-
-    context "when the organization has an administrator email suffix which isn't used by the new administrator" do
-      before { administrator.organization.update!(administrator_email_suffix: "example.com") }
-
-      it "returns a unpersisted administrator with errors" do
-        expect(administrator.transfer(email).persisted?).to be(false)
-        expect(administrator.transfer(email).errors).to be_present
-      end
-
-      it "doesn't transfer the job offers" do
-        expect { administrator.transfer(email) }.not_to change { job_offer.reload.owner }
-      end
+      it { expect { transfer }.not_to change { job_offer.reload.owner } }
     end
   end
 end

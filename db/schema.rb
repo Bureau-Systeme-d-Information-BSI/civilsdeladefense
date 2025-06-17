@@ -412,6 +412,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_07_061120) do
     t.uuid "rejection_reason_id"
     t.uuid "organization_id"
     t.uuid "category_id"
+    t.boolean "rejected", default: false
     t.integer "preselection", default: 0
     t.index ["category_id"], name: "index_job_applications_on_category_id"
     t.index ["employer_id"], name: "index_job_applications_on_employer_id"

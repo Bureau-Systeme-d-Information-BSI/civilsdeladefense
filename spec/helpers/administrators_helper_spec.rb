@@ -1,61 +1,38 @@
 require "rails_helper"
 
 RSpec.describe AdministratorsHelper do
-  describe "#actor_roles_or_general_role" do
-    subject { helper.actor_roles_or_general_role(administrator) }
+  describe "#roles" do
+    subject { helper.roles(administrator) }
 
-    context "when administrator has actor roles" do
-      let(:administrator) { create(:administrator) }
+    context "when administrator has roles" do
+      let(:administrator) { build(:administrator, roles: [:employer_recruiter, :hr_manager]) }
 
-      before do
-        job_offer = create(:job_offer)
-        create(:job_offer_actor, job_offer:, administrator:, role: :cmg)
-        create(:job_offer_actor, job_offer:, administrator:, role: :brh)
-        create(:job_offer_actor, job_offer:, administrator:, role: :grand_employer)
-      end
-
-      it { is_expected.to eq("CMG, RH et Grand Employeur") }
-    end
-
-    context "when administrator has general role" do
-      let(:administrator) { build(:administrator) }
-
-      before { allow(administrator).to receive(:role).and_return(:employer) }
-
-      it { is_expected.to eq("Employeur") }
+      it { is_expected.to eq("Employeur recruteur et Gestionnaire RH") }
     end
 
     context "when administrator has no roles" do
-      let(:administrator) { build(:administrator) }
+      let(:administrator) { build(:administrator, roles: []) }
 
-      before { allow(administrator).to receive(:role).and_return(nil) }
-
-      it { is_expected.to be_nil }
+      it { is_expected.to be_blank }
     end
   end
 
-  describe "#actor_roles" do
-    subject { helper.actor_roles(administrator) }
+  describe "#employers" do
+    subject { helper.employers(administrator) }
 
-    context "when administrator has actor roles" do
-      let(:administrator) { create(:administrator) }
-
-      before do
-        job_offer = create(:job_offer)
-        create(:job_offer_actor, job_offer:, administrator:, role: :cmg)
-        create(:job_offer_actor, job_offer:, administrator:, role: :brh)
-        create(:job_offer_actor, job_offer:, administrator:, role: :grand_employer)
-      end
-
-      it { is_expected.to eq("CMG, RH et Grand Employeur") }
-    end
-
-    context "when administrator has no actor roles" do
-      let(:administrator) { build(:administrator) }
-
-      before { allow(administrator).to receive(:role).and_return(nil) }
+    context "when administrator is a functional administrator" do
+      let(:administrator) { build(:administrator, roles: [:functional_administrator]) }
 
       it { is_expected.to be_blank }
+    end
+
+    context "when administrator is not a functional administrator" do
+      let(:administrator) { build(:administrator, roles: [:employer_recruiter]) }
+      let(:employers) { [build(:employer, code: "EMP1"), build(:employer, code: "EMP2")] }
+
+      before { allow(administrator).to receive(:employers).and_return(employers) }
+
+      it { is_expected.to eq(employers.pluck(:code).to_sentence) }
     end
   end
 end

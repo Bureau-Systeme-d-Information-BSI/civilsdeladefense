@@ -58,7 +58,7 @@ gem "working_hours", "~> 1.4"
 gem "sidekiq" # Async jobs
 gem "rorvswild" # Errors tracking
 gem "phony_rails" # Normalize phone numbers
-
+gem "enummer" # Enums with multiple values
 gem "clockwork" # simulate cron on Scalingo
 
 gem "faker", require: false
@@ -69,7 +69,7 @@ gem "omniauth-rails_csrf_protection"
 gem "prawn" # PDF generation
 gem "prawn-table" # Add tables to PDFs
 
-gem "maintenance_tasks", "~> 2.7" # Database maintenance tasks (data migrations, etc.)
+gem "maintenance_tasks" # Database maintenance tasks (data migrations, etc.)
 
 gem "hotwire_combobox" # Modern autocomplete
 

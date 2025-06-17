@@ -140,16 +140,10 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
     @administrators_inactive = @q.result.inactive.includes(:employer)
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
   def administrator_params
-    params.require(:administrator).permit(permitted_fields)
-  end
-
-  def permitted_fields
-    ary = %i[title first_name last_name email]
-    ary += %i[employer_id] if current_administrator.admin?
-    ary += %i[role] if current_administrator.admin? || current_administrator.employer?
-    ary
+    params
+      .require(:administrator)
+      .permit(:title, :first_name, :last_name, :email, :employer_id, :ace, :ate, roles: [], employer_ids: [])
   end
 
   def set_role_and_employer
@@ -158,7 +152,7 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
 
   def permitted_params
     params.permit(
-      q: [:employer_id_eq, :first_name_or_last_name_or_email_cont, :role_eq, :s]
+      q: [:employers_id_in, :first_name_or_last_name_or_email_cont, :role_eq, :s]
     )
   end
 end

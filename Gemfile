@@ -73,8 +73,6 @@ gem "maintenance_tasks", "~> 2.7" # Database maintenance tasks (data migrations,
 
 gem "aws-sdk-s3", "~> 1" # AWS S3 - only used for DGA > CVD merge
 
-gem "hotwire_combobox" # Modern autocomplete
-
 group :development, :test do
   gem "brakeman", require: false
   gem "debug"

@@ -51,8 +51,7 @@ Rails.application.routes.draw do
     resources :administrator_emails, only: :index
     resource :account do
       member do
-        get :change_email, :change_password, :photo
-        patch :update_email, :update_password
+        get :photo
       end
     end
     resources :salary_ranges, only: %i[index]

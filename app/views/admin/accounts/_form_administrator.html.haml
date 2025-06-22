@@ -29,6 +29,12 @@
                   - else
                     = submodel_form.association :employer, collection: [@administrator.employer], label: false, include_blank: false, input_html: {class: 'custom-select'}
 
+        = f.input :email, placeholder: false
+
+        = f.input :current_password, placeholder: false
+        = f.input :password, placeholder: false
+        = f.input :password_confirmation, placeholder: false
+
       .form-actions.text-right.mt-4
         %ul.list-inline.mb-0
           %li.list-inline-item

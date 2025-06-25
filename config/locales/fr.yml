@@ -270,8 +270,6 @@ fr:
         destroy: "Je veux supprimer mon compte"
   admin:
     accounts:
-      navbar:
-        show: "Informations"
       show:
         title: "Votre compte"
       form_administrator:

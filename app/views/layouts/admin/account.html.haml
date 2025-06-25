@@ -1,10 +1,7 @@
 - content_for :content do
   .container-fluid
     .row
-      %aside.col-md-2.d-none.d-md-block.bg-white.sidebar
-        .sidebar-sticky
-          = render '/admin/accounts/navbar'
-      %main.col-md-9.ml-sm-auto.col-lg-10{role: 'main'}
+      %main.col-12.ml-sm-auto{role: 'main'}
         %nav.navbar.navbar-dark.bg-secondary.mb-5
           %span.navbar-text#step_1= t('admin.accounts.show.title')
         .container

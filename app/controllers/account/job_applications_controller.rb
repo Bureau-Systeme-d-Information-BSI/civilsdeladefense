@@ -14,10 +14,6 @@ class Account::JobApplicationsController < Account::BaseController
     render layout: "account/job_application_display"
   end
 
-  def profile
-    render layout: "account/job_application_display"
-  end
-
   # GET /account/job_applications/1
   # GET /account/job_applications/1.json
   def show

@@ -49,19 +49,4 @@ RSpec.describe "Account::JobApplications" do
       expect(job_offer_request).to render_template(:job_offer)
     end
   end
-
-  describe "GET /espace-candidat/mes-candidatures/:id/profile" do
-    subject(:profile_request) { get profile_account_job_application_path(job_application) }
-
-    let(:job_application) { create(:job_application, user: user) }
-
-    it "is successful" do
-      profile_request
-      expect(response).to be_successful
-    end
-
-    it "renders the template" do
-      expect(profile_request).to render_template(:profile)
-    end
-  end
 end

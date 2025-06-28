@@ -28,11 +28,6 @@
             = link_to [:job_offer, :account, @job_application], class: 'rf-tabs__tab', aria: {controls: 'tabpanel-job-offer', selected: job_offer_tab}, role: 'tab', tabindex: job_offer_tab ? 0 : -1, title: t('.nav_offer') do
               = t('.nav_offer')
 
-          %li{role: "presentation"}
-          - profile_tab = controller.controller_name == 'job_applications' && controller.action_name  == 'profile'
-          = link_to [:profile, :account, @job_application], class: 'rf-tabs__tab', aria: {controls: 'tabpanel-job-offer', selected: profile_tab}, role: 'tab', tabindex: profile_tab ? 0 : -1, title: t('.nav_profile') do
-            = t('.nav_profile')
-        
         - if emails_tab
           #tabpanel-emails.rf-tabs__panel{role: :tabpanel, aria_labelledby: "tabpanel-emails", 'data-rf-tab-management-target' => 'panel', tabindex: emails_tab ? 0 : -1, class: emails_tab ? 'rf-tabs__panel--selected' : nil}
             = yield
@@ -43,10 +38,6 @@
 
         - if job_offer_tab
           #tabpanel-job-offer.rf-tabs__panel{role: :tabpanel, aria_labelledby: "tabpanel-job-offer", 'data-rf-tab-management-target' => 'panel', tabindex: job_offer_tab ? 0 : -1, class: job_offer_tab ? 'rf-tabs__panel--selected' : nil}
-            = yield
-        
-        - if profile_tab
-          #tabpanel-job-offer.rf-tabs__panel{role: :tabpanel, aria_labelledby: "tabpanel-profile", 'data-rf-tab-management-target' => 'panel', tabindex: profile_tab ? 0 : -1, class: profile_tab ? 'rf-tabs__panel--selected' : nil}
             = yield
 
 = render template: "layouts/account"

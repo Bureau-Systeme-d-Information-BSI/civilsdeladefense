@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class DownloadsController < ApplicationController
+  skip_before_action :redirect_to_maintenance_mode, :redirect_permanently
   before_action :authenticate_request
 
   def show = send_data(attribute.read, filename: attribute.filename, type: attribute.content_type)

@@ -21,13 +21,8 @@ namespace :migrate_data do
 
   def secure_contents(model)
     entries = model.where(secured_content_file_name: nil)
-    Rails.logger.info("Migration start for #{entries.count} entries")
-
-    entries.find_each do |securable|
-      Rails.logger.info("Securing #{securable.id}")
-      securable.secure_content!
-    end
-
-    Rails.logger.info("All done!")
+    puts("Migration start for #{entries.count} entries")
+    entries.find_each { |securable| SecureContentJob.perform_later(id: securable.id) }
+    puts("All done!")
   end
 end

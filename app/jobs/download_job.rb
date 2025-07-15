@@ -18,7 +18,5 @@ class DownloadJob < ApplicationJob
     content = URI.open(url, "X-Download-Secret-Key" => ENV["DOWNLOAD_SECRET_KEY"]).read.force_encoding("UTF-8") # rubocop:disable Security/Open
     File.write(file_name, content)
     File.open(file_name)
-  rescue OpenURI::HTTPError
-    nil
   end
 end

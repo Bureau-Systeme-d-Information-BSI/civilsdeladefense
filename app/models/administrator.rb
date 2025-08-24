@@ -88,7 +88,7 @@ class Administrator < ApplicationRecord
   attr_accessor :ensure_employer_is_set
 
   # As 'role' attribute has been removed from model, we use 'roles' attribute instead
-  # 'role' attribute has been deprecated on 2025-04-26 and should be remove from schema
+  # 'role' attribute has been deprecated on 2025-04-26 and should be removed from schema
   def admin? = role == 0 || functional_administrator?
 
   def employer? = role == 1 || employer_recruiter?

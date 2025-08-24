@@ -1,0 +1,31 @@
+= simple_form_for(resource, as: resource_name, url: update_administrator_confirmation_path, html: {method: :patch}) do |f|
+  %fieldset.my-3
+    %legend
+      = @page_title = t('.title')
+  - if @requires_password
+    .form-inputs
+      .row
+        .col-12.col-md-6
+          = f.input :first_name, placeholder: true, hint: false, required: true
+        .col-12.col-md-6
+          = f.input :last_name, placeholder: true, hint: false, required: true
+      = f.input :title, placeholder: true, hint: true, required: true
+      = f.input :password, placeholder: true, required: true
+      = f.input :password_confirmation, placeholder: true, required: true
+      - if resource.employer?
+        - %i(supervisor_administrator grand_employer_administrator).each do |submodel|
+          .my-2= t(".mention_#{submodel}_html")
+          = f.simple_fields_for(submodel, (resource.send(submodel) || Administrator.new)) do |submodel_form|
+            - submodel_form.object.ensure_employer_is_set = true
+            = submodel_form.input :ensure_employer_is_set, as: :hidden
+            .row
+              .col-12.col-md-8
+                = submodel_form.input :email, required: true, label: false, placeholder: true
+              .col-12.col-md-4
+                - if submodel == :grand_employer_administrator
+                  = submodel_form.association :employer, collection: [resource.employer.parent], label: false, include_blank: false, input_html: {class: 'custom-select'}
+                - else
+                  = submodel_form.association :employer, collection: [resource.employer], label: false, include_blank: false, input_html: {class: 'custom-select'}
+  = hidden_field_tag :confirmation_token, @confirmation_token
+  .form-actions
+    = f.button :submit, t(".activate"), class: 'btn btn-primary btn-raised'

@@ -194,9 +194,8 @@ fr:
   platform_mailer:
     confirmation_instructions_admin:
       greeting: Bonjour,
-      instruction: "Vous avez été notifié comme « %{roles} » dans une offre d’emploi sur le site de recrutement %{site}. Pour y accéder, veuillez confirmer votre compte en cliquant sur le lien suivant :"
-      instruction_no_roles: "Vous avez été ajouté sur le site de recrutement %{site}. Pour y accéder, veuillez confirmer votre compte en cliquant sur le lien suivant :"
-      instruction_1: Votre compte ne sera pas activé tant que toutes les étapes de création de votre compte ou de confirmation de votre compte ne seront pas finalisées dans l’application.
+      instruction: "Un compte a été créé sur le site de recrutement des agents contractuels du Ministère des Armées %{site}. Pour y accéder, veuillez confirmer votre compte en cliquant sur le lien suivant :"
+      instruction_1: Votre compte ne sera pas activé tant que toutes les étapes de confirmation de votre compte ne seront pas finalisées dans l’application.
       team: L'équipe de recrutement de %{service_name}
       action: Je confirme mon courriel
   shared:

@@ -14,12 +14,7 @@ class PlatformMailer < Devise::Mailer
       "devise.mailer.confirmation_instructions.subject",
       service_name: record.organization.service_name
     )
-
-    if record.is_a?(Administrator)
-      opts[:template_name] = "confirmation_instructions_admin"
-      @roles = roles(record)
-    end
-
+    opts[:template_name] = "confirmation_instructions_admin" if record.is_a?(Administrator)
     super
   end
 

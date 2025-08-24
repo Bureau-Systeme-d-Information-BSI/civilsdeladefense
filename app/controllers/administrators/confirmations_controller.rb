@@ -61,7 +61,7 @@ class Administrators::ConfirmationsController < Devise::ConfirmationsController
     @confirmation_token = params[:confirmation_token]
     @requires_password = true
     self.resource = @confirmable
-    render "devise/confirmations/show" # Change this if you don't have the views on default path
+    render "devise/confirmations/show_admin" # Change this if you don't have the views on default path
   end
 
   def do_confirm

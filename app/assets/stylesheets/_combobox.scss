@@ -1,0 +1,16 @@
+.hw-combobox {
+  // the fieldset container, wraps the whole component
+  width: 100%;
+}
+
+.hw-combobox__main__wrapper {
+  // wraps the input (combobox) and options list (listbox)
+  @extend .form-control;
+
+  width: 100%;
+  border-radius: revert;
+}
+
+.hw-combobox__handle {
+  display: none;
+}

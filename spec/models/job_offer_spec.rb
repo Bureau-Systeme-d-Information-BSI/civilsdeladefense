@@ -49,6 +49,22 @@ RSpec.describe JobOffer do
     it { is_expected.to delegate_method(:name).to(:contract_type).with_prefix(true).with_arguments(allow_nil: true) }
   end
 
+  describe "#already_applied?" do
+    subject { job_offer.already_applied?(user) }
+
+    let(:user) { create(:user) }
+
+    context "when user has already applied" do
+      before { create(:job_application, job_offer: job_offer, user:) }
+
+      it { is_expected.to be true }
+    end
+
+    context "when user has not applied" do
+      it { is_expected.to be false }
+    end
+  end
+
   describe "#contract_duration_name" do
     subject { job_offer.contract_duration_name }
 

@@ -15,7 +15,7 @@ if (jobApplicationModal !== null) {
 
 var cardNode = document.getElementById('<%= dom_id(@job_application) %>')
 if (cardNode !== null) {
-  var html = '<%= j render(partial: '/admin/job_applications/job_application', locals: { job_application: @job_application, with_header: false }) %>'
+  var html = '<%= j render(partial: '/admin/job_applications/job_application', locals: { job_application: @job_application, preselection: false }) %>'
   var frag = document.createRange().createContextualFragment(html)
   cardNode.replaceWith(frag)
 }

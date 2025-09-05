@@ -557,7 +557,7 @@ fr:
       shared:
         navbar:
           admin: "Administration"
-          administrators: "Comptes admin"
+          administrators: "Comptes utilisateurs"
           benefits: "Avantages"
           drawbacks: "Contraintes"
           bops: "BOPs"
@@ -603,8 +603,8 @@ fr:
           no_role: "Aucun rôle"
           lock_explanation: "Ce compte est bloqué car trop de tentatives infructueuses de se connecter"
         index:
-          title: "Comptes admin"
-          add: "Ajouter un compte admin"
+          title: "Comptes utilisateurs"
+          add: "Ajouter un compte utilisateur"
           table:
             photo: "Avatar"
             name: "Nom"
@@ -614,19 +614,19 @@ fr:
             last_sign_in_at: "Dernière connexion"
             created_at: "Créé le"
           account_active:
-            zero: "Aucun compte admin actif"
+            zero: "Aucun compte actif"
             one: "Compte actif (1)"
             other: "Comptes actifs (%{count})"
           account_inactive:
-            zero: "Aucun compte admin désactivé"
+            zero: "Aucun compte désactivé"
             one: "Compte désactivé (1)"
             other: "Comptes désactivés (%{count})"
           card_title:
-            zero: "Aucun compte admin"
-            one: "1 compte admin"
-            other: "%{count} comptes admin"
+            zero: "Aucun compte"
+            one: "1 compte"
+            other: "%{count} comptes"
         new:
-          title: "Inviter un nouveau compte admin"
+          title: "Inviter un nouveau compte utilisateur"
         create:
           success: "Invitation envoyée !"
         update:
@@ -634,7 +634,7 @@ fr:
         destroy:
           success: "Compte supprimé !"
         edit:
-          title: "Modifier un compte admin"
+          title: "Modifier un compte utilisateur"
           transfer: "Transférer les offres"
           submit: "Transférer"
           list: "Liste des offres"

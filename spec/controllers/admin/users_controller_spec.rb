@@ -30,9 +30,18 @@ RSpec.describe Admin::UsersController do
     context "with invalid params" do
       let(:user_params) { {phone: ""} }
 
-      it "returns a success response (i.e. to display the 'edit' template)" do
-        update
-        expect(response).to be_successful
+      before { update }
+
+      context "when format is HTML" do
+        let(:format) { :html }
+
+        it { expect(response).to be_successful }
+      end
+
+      context "when format is JS" do
+        let(:format) { :js }
+
+        it { expect(response).to have_http_status(:unprocessable_content) }
       end
     end
   end

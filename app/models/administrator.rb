@@ -178,6 +178,7 @@ class Administrator < ApplicationRecord
     administrator = Administrator.find_by(email: email.downcase) || Administrator.new(email: email)
     administrator.inviter ||= self
     administrator.organization = organization
+    administrator.roles = roles
     if administrator.save
       job_offer_actors.update_all(administrator_id: administrator.id) # rubocop:disable Rails/SkipsModelValidations
       owned_job_offers.update_all(owner_id: administrator.id) # rubocop:disable Rails/SkipsModelValidations

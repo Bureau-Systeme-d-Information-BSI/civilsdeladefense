@@ -50,72 +50,109 @@ RSpec.describe "Admin::Settings::Administrators" do
   end
 
   describe "POST /admin/parametres/administrateurs" do
-    subject(:create_request) { post admin_settings_administrators_path, params: params }
+    subject(:create_request) { post admin_settings_administrators_path, params: }
 
     context "when the admin is valid" do
       let(:params) {
         {
-          administrator: attributes_for(:administrator)
+          administrator: {
+            title: "title",
+            first_name: "first_name",
+            last_name: "last_name",
+            email: "email@example.com",
+            roles: ["", "employer_recruiter", "hr_manager"],
+            employer_ids: ["", first_employer.id, second_employer.id],
+            ace: 1,
+            ate: 0
+          }
         }
       }
+      let(:employer_ids) { [first_employer.id, second_employer.id] }
+      let(:first_employer) { create(:employer) }
+      let(:second_employer) { create(:employer) }
 
-      it "creates the administrator" do
-        expect { create_request }.to change(Administrator, :count).by(1)
+      it { expect { create_request }.to change(Administrator, :count).by(1) }
+
+      describe "created administrator" do
+        let(:admin) { Administrator.order(:created_at).last }
+
+        before { create_request }
+
+        it { expect(admin.title).to eq("title") }
+
+        it { expect(admin.first_name).to eq("first_name") }
+
+        it { expect(admin.last_name).to eq("last_name") }
+
+        it { expect(admin.email).to eq("email@example.com") }
+
+        it { expect(admin.roles).to contain_exactly(:employer_recruiter, :hr_manager) }
+
+        it { expect(admin.employers).to contain_exactly(first_employer, second_employer) }
+
+        it { expect(admin.ace).to be_truthy }
+
+        it { expect(admin.ate).to be_falsey }
       end
 
-      it "redirects to admin settings" do
-        expect(create_request).to redirect_to(admin_settings_root_path)
-      end
+      it { expect(create_request).to redirect_to(admin_settings_root_path) }
     end
 
     context "when the admin is invalid" do
-      let(:params) {
-        {
-          administrator: {title: "title"}
-        }
-      }
+      let(:params) { {administrator: {title: "title"}} }
 
-      it "doesn't create the administrator" do
-        expect { create_request }.not_to change(Administrator, :count)
-      end
+      it { expect { create_request }.not_to change(Administrator, :count) }
 
-      it "renders the new template" do
-        expect(create_request).to render_template(:new)
-      end
+      it { expect(create_request).to render_template(:new) }
     end
   end
 
   describe "PUT /admin/parametres/administrateurs/:id" do
-    subject(:update_request) { put admin_settings_administrator_path(administrator), params: params }
+    subject(:update_request) { put admin_settings_administrator_path(administrator), params: }
 
     let(:administrator) { create(:administrator) }
     let(:new_employer) { create(:employer) }
     let(:params) {
       {
-        administrator: {employer_id: new_employer.id}
+        administrator: {
+          first_name: "first",
+          last_name: "last",
+          email: "email@example.com",
+          title: "title",
+          roles: [:employer_recruiter, :hr_manager],
+          employer_ids: [new_employer.id],
+          ace: 1,
+          ate: 0
+        }
       }
     }
 
     context "when the administrator is valid" do
-      it "updates the administrator" do
-        expect { update_request }.to change { administrator.reload.employer }.to(new_employer)
-      end
+      it { expect { update_request }.to change { administrator.reload.title }.to("title") }
 
-      it "redirects to admin settings" do
-        expect(update_request).to redirect_to(admin_settings_root_path)
-      end
+      it { expect { update_request }.to change { administrator.reload.first_name }.to("first") }
+
+      it { expect { update_request }.to change { administrator.reload.last_name }.to("last") }
+
+      it { expect { update_request }.to change { administrator.reload.unconfirmed_email }.to("email@example.com") }
+
+      it { expect { update_request }.to change { administrator.reload.roles }.to([:employer_recruiter, :hr_manager]) }
+
+      it { expect { update_request }.to change { administrator.reload.employers }.to([new_employer]) }
+
+      it { expect { update_request }.to change { administrator.reload.ace }.to(true) }
+
+      it { expect { update_request }.not_to change { administrator.reload.ate } }
+
+      it { expect(update_request).to redirect_to(admin_settings_root_path) }
     end
 
     context "when the administrator is invalid" do
       before { allow_any_instance_of(Administrator).to receive(:update).and_return(false) }
 
-      it "doesn't update the administrator" do
-        expect { update_request }.not_to change { administrator.reload.role }
-      end
+      it { expect { update_request }.not_to change { administrator.reload.role } }
 
-      it "renders the edit template" do
-        expect(update_request).to render_template(:edit)
-      end
+      it { expect(update_request).to render_template(:edit) }
     end
   end
 
@@ -180,25 +217,22 @@ RSpec.describe "Admin::Settings::Administrators" do
   end
 
   describe "POST /admin/parametres/administrateurs/:id/transfer" do
-    subject(:transfer_request) {
-      post transfer_admin_settings_administrator_path(administrator), params: {transfer_email: transfer_email}
-    }
-
-    let(:administrator) { create(:administrator) }
-    let(:transfer_email) { "an.email.adress@example.com" }
-
-    context "when the transfer persisted" do
-      it "redirects to admin settings" do
-        expect(transfer_request).to redirect_to(admin_settings_root_path)
-      end
+    subject(:transfer_request) do
+      post transfer_admin_settings_administrator_path(administrator), params: {transfer_email:}
     end
 
-    context "when the transfer did not persist" do
-      before { allow_any_instance_of(Administrator).to receive(:persisted?).and_return(false) }
+    let(:administrator) { create(:administrator) }
 
-      it "redirects to the edit administrator settings" do
-        expect(transfer_request).to redirect_to(edit_admin_settings_administrator_path(administrator))
-      end
+    context "when the transfer is successful" do
+      let(:transfer_email) { create(:administrator).email }
+
+      it { expect(transfer_request).to redirect_to(admin_settings_root_path) }
+    end
+
+    context "when the transfer is not successful" do
+      let(:transfer_email) { "an.email.adress@example.com" }
+
+      it { expect(transfer_request).to redirect_to(edit_admin_settings_administrator_path(administrator)) }
     end
   end
 

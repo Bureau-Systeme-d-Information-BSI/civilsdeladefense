@@ -5,11 +5,76 @@ require "rails_helper"
 RSpec.describe Administrator do
   let(:administrator) { create(:administrator) }
 
-  it { is_expected.to have_many(:invitees).inverse_of(:inviter) }
-  it { is_expected.to have_many(:owned_job_offers).inverse_of(:owner) }
+  describe "associations" do
+    it { is_expected.to have_many(:invitees).inverse_of(:inviter) }
 
-  it "is valid with valid attributes" do
-    expect(administrator).to be_valid
+    it { is_expected.to have_many(:owned_job_offers).inverse_of(:owner) }
+
+    it { is_expected.to have_many(:administrator_employers).dependent(:destroy) }
+
+    it { is_expected.to have_many(:employers).through(:administrator_employers) }
+  end
+
+  describe "validations" do
+    it { expect(administrator).to be_valid }
+
+    it { is_expected.to validate_presence_of(:first_name) }
+
+    it { is_expected.to validate_presence_of(:last_name) }
+
+    it { is_expected.to validate_presence_of(:title) }
+
+    it { is_expected.to validate_presence_of(:roles) }
+
+    describe "roles_inclusion" do
+      subject { administrator.valid? }
+
+      let(:administrator) { build(:administrator) }
+
+      context "when roles are empty" do
+        before { administrator.roles = [] }
+
+        it { is_expected.to be_falsey }
+      end
+
+      context "when roles are invalid" do
+        before { administrator.roles = ["invalid_role"] }
+
+        it { is_expected.to be_falsey }
+      end
+
+      context "when roles are valid" do
+        before { administrator.roles = ["functional_administrator", "hr_manager"] }
+
+        it { is_expected.to be_truthy }
+      end
+    end
+  end
+
+  describe "before_validation callbacks" do
+    describe "#set_first_name" do
+      subject(:save) { administrator.save! }
+
+      let(:administrator) { build(:administrator, first_name: nil, email: "john.doe@example.com") }
+
+      it { expect { save }.to change(administrator, :first_name).from(nil).to("John") }
+    end
+
+    describe "#set_last_name" do
+      subject(:save) { administrator.save! }
+
+      let(:administrator) { build(:administrator, last_name: nil, email: "john.doe@example.com") }
+
+      it { expect { save }.to change(administrator, :last_name).from(nil).to("Doe") }
+    end
+
+    describe "#set_title" do
+      subject(:save) { administrator.save! }
+
+      let(:administrator) { build(:administrator, title: nil) }
+
+      it { expect { save }.to change(administrator, :title).from(nil).to("-") }
+    end
   end
 
   it "has a unique email" do
@@ -41,14 +106,17 @@ RSpec.describe Administrator do
     employer = create(:employer)
 
     attrs = {
+      first_name: "Supervisor",
+      last_name: "Supervisor",
       email: "supervisor@gmail.com",
+      roles: [:employer_recruiter],
       ensure_employer_is_set: true,
       employer_id: employer.id
     }
 
     expect {
       administrator.supervisor_administrator_attributes = attrs
-      administrator.save
+      administrator.save!
     }.to change(described_class, :count).by(2)
 
     expect(administrator.supervisor_administrator.email).to eq("supervisor@gmail.com")
@@ -60,14 +128,17 @@ RSpec.describe Administrator do
     administrator = build(:administrator)
 
     attrs = {
+      first_name: "Supervisor",
+      last_name: "Supervisor",
       email: supervisor_administrator.email,
+      roles: [:employer_recruiter],
       ensure_employer_is_set: true,
       employer_id: employer.id
     }
 
     expect {
       administrator.supervisor_administrator_attributes = attrs
-      administrator.save
+      administrator.save!
     }.to change(described_class, :count).by(1)
 
     expect(administrator.supervisor_administrator.email).to eq(supervisor_administrator.email)
@@ -78,14 +149,17 @@ RSpec.describe Administrator do
     employer = create(:employer)
 
     attrs = {
+      first_name: "Grand Employer",
+      last_name: "Grand Employer",
       email: "grand.employer@gmail.com",
+      roles: [:employer_recruiter],
       ensure_employer_is_set: true,
       employer_id: employer.id
     }
 
     expect {
       administrator.grand_employer_administrator_attributes = attrs
-      administrator.save
+      administrator.save!
     }.to change(described_class, :count).by(2)
 
     expect(administrator.grand_employer_administrator.email).to eq("grand.employer@gmail.com")
@@ -117,13 +191,19 @@ RSpec.describe Administrator do
     employer2 = create(:employer)
 
     attrs1 = {
+      first_name: "Supervisor",
+      last_name: "Supervisor",
       email: "supervisor@gmail.com",
+      roles: [:employer_recruiter],
       ensure_employer_is_set: true,
       employer_id: employer1.id
     }
 
     attrs2 = {
+      first_name: "Grand Employer",
+      last_name: "Grand Employer",
       email: "grand.employer@gmail.com",
+      roles: [:employer_recruiter],
       ensure_employer_is_set: true,
       employer_id: employer2.id
     }
@@ -131,7 +211,7 @@ RSpec.describe Administrator do
     expect {
       administrator.supervisor_administrator_attributes = attrs1
       administrator.grand_employer_administrator_attributes = attrs2
-      administrator.save
+      administrator.save!
     }.to change(described_class, :count).by(3)
   end
 
@@ -216,50 +296,26 @@ RSpec.describe Administrator do
   end
 
   describe "#transfer" do
-    let(:email) { "any@email.org" }
+    subject(:transfer) { administrator.transfer(email) }
+
+    let(:administrator) { create(:administrator) }
     let!(:job_offer) { create(:job_offer, owner: administrator) }
 
     context "when the new administrator exists" do
-      let!(:new_administrator) { create(:administrator, email: email) }
+      let!(:new_administrator) { create(:administrator) }
+      let(:email) { new_administrator.email }
 
-      it "returns a persisted administrator" do
-        expect(administrator.transfer(email).persisted?).to be(true)
-      end
+      it { is_expected.to be(true) }
 
-      it "doesn't create an administrator" do
-        expect { administrator.transfer(email) }.not_to change(described_class, :count)
-      end
-
-      it "transfers the job offers to the new administrator" do
-        expect { administrator.transfer(email) }.to change { job_offer.reload.owner }.to(new_administrator)
-      end
+      it { expect { transfer }.to change { job_offer.reload.owner }.to(new_administrator) }
     end
 
     context "when the new administrator does not exist" do
-      it "returns a persisted administrator" do
-        expect(administrator.transfer(email).persisted?).to be(true)
-      end
+      let(:email) { "any@email.org" }
 
-      it "creates a new administrator" do
-        expect { administrator.transfer(email) }.to change(described_class, :count).by(1)
-      end
+      it { is_expected.to be(false) }
 
-      it "transfers the job offers to the new administrator" do
-        expect { administrator.transfer(email) }.to change { job_offer.reload.owner }
-      end
-    end
-
-    context "when the organization has an administrator email suffix which isn't used by the new administrator" do
-      before { administrator.organization.update!(administrator_email_suffix: "example.com") }
-
-      it "returns a unpersisted administrator with errors" do
-        expect(administrator.transfer(email).persisted?).to be(false)
-        expect(administrator.transfer(email).errors).to be_present
-      end
-
-      it "doesn't transfer the job offers" do
-        expect { administrator.transfer(email) }.not_to change { job_offer.reload.owner }
-      end
+      it { expect { transfer }.not_to change { job_offer.reload.owner } }
     end
   end
 end
@@ -269,6 +325,8 @@ end
 # Table name: administrators
 #
 #  id                              :uuid             not null, primary key
+#  ace                             :boolean          default(FALSE)
+#  ate                             :boolean          default(FALSE)
 #  confirmation_sent_at            :datetime
 #  confirmation_token              :string
 #  confirmed_at                    :datetime
@@ -291,6 +349,7 @@ end
 #  reset_password_sent_at          :datetime
 #  reset_password_token            :string
 #  role                            :integer
+#  roles                           :integer          default([]), not null
 #  sign_in_count                   :integer          default(0), not null
 #  title                           :string
 #  unconfirmed_email               :string

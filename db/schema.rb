@@ -46,6 +46,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_07_061120) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "administrator_employers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "administrator_id", null: false
+    t.uuid "employer_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["administrator_id"], name: "index_administrator_employers_on_administrator_id"
+    t.index ["employer_id"], name: "index_administrator_employers_on_employer_id"
+  end
+
   create_table "administrators", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "first_name"
@@ -81,6 +90,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_07_061120) do
     t.uuid "grand_employer_administrator_id"
     t.uuid "organization_id"
     t.date "marked_for_deactivation_on"
+    t.integer "roles", default: 0, null: false
+    t.boolean "ace", default: false
+    t.boolean "ate", default: false
     t.index ["confirmation_token"], name: "index_administrators_on_confirmation_token", unique: true
     t.index ["email"], name: "index_administrators_on_email", unique: true
     t.index ["employer_id"], name: "index_administrators_on_employer_id"
@@ -400,6 +412,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_07_061120) do
     t.uuid "rejection_reason_id"
     t.uuid "organization_id"
     t.uuid "category_id"
+    t.boolean "rejected", default: false
     t.integer "preselection", default: 0
     t.index ["category_id"], name: "index_job_applications_on_category_id"
     t.index ["employer_id"], name: "index_job_applications_on_employer_id"
@@ -826,6 +839,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_07_061120) do
   end
 
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "administrator_employers", "administrators"
+  add_foreign_key "administrator_employers", "employers"
   add_foreign_key "administrators", "administrators", column: "grand_employer_administrator_id"
   add_foreign_key "administrators", "administrators", column: "inviter_id"
   add_foreign_key "administrators", "administrators", column: "supervisor_administrator_id"

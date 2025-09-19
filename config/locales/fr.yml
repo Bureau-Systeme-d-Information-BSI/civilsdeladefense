@@ -175,6 +175,10 @@ fr:
   applicant_notifications_mailer:
     send_job_offer:
       subject: "Nouvelle offre"
+    notify_new_state:
+      subject: "Votre candidature : nouvelle étape"
+    notify_rejected:
+      subject: "Votre candidature a été refusée"
   notifications_mailer:
     daily_summary:
       subject: "[%{service_name}] Rapport journalier"
@@ -266,26 +270,15 @@ fr:
         destroy: "Je veux supprimer mon compte"
   admin:
     accounts:
-      navbar:
-        show: "Informations"
-        change_password: "Mot de passe"
-        change_email: "Courriel"
       show:
         title: "Votre compte"
       form_administrator:
         title: "Vos informations"
         mention_supervisor_administrator_html: "Courriel et entité de votre <strong>Employeur Superviseur</strong>"
         mention_grand_employer_administrator_html: "Courriel et entité de votre <strong>Grand Employeur</strong>"
-      change_password:
-        title: "Changement de mot de passe"
-      update_password:
-        success: "Mot de passe modifié !"
-      change_email:
-        title: "Changement de courriel"
-      update_email:
-        success: "Nouveau courriel ajouté, en attente de confirmation !"
       update:
         success: "Vos informations ont été mises à jour"
+        success_new_email: "Votre courriel a bien été modifié. Vérifiez votre boîte pour confirmer votre nouveau courriel."
     job_applications:
       show:
         user_deleted: Ce compte candidat a été supprimé
@@ -366,6 +359,7 @@ fr:
         submit: "Transférer"
       transfer:
         success: "Annonce transférée !"
+        error: "L'annonce n'a pas pu être transférée, veuillez vérifier l'email du nouveau propriétaire"
       send_to_list:
         success: "Annonce diffusées !"
       feature:
@@ -600,7 +594,6 @@ fr:
           last_connection: "Dernière conn. :"
           invited_by: "Invité par"
           never_connected: "Jamais connecté"
-          no_role: "Aucun rôle"
           lock_explanation: "Ce compte est bloqué car trop de tentatives infructueuses de se connecter"
         index:
           title: "Comptes utilisateurs"
@@ -608,9 +601,8 @@ fr:
           table:
             photo: "Avatar"
             name: "Nom"
-            employer: "Employeur"
-            role: "Rôle"
-            job_offer_actor_roles: "Rôles sur les offres"
+            employer: "Chaîne d'emploi"
+            roles: "Rôles"
             last_sign_in_at: "Dernière connexion"
             created_at: "Créé le"
           account_active:
@@ -636,6 +628,7 @@ fr:
         edit:
           title: "Modifier un compte utilisateur"
           transfer: "Transférer les offres"
+          transfer_email_label: "Email du nouveau propriétaire des offres"
           submit: "Transférer"
           list: "Liste des offres"
         deactivate:
@@ -1198,6 +1191,12 @@ fr:
         employer: "Employeur"
         grand_employer: "Grand Employeur"
         brh: "RH"
+      administrator/roles:
+        functional_administrator: "Administrateur fonctionnel"
+        employer_recruiter: "Employeur recruteur"
+        employment_authority: "Autorité d'emploi"
+        hr_manager: "Gestionnaire RH"
+        payroll_manager: "Gestionnaire GA PAIE"
       email_template:
         title: "Titre"
       employer:

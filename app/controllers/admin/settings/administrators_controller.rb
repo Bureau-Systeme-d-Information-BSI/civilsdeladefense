@@ -121,11 +121,10 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
 
   # POST /admin/settings/administrators/1/transfer
   def transfer
-    transfer = @administrator.transfer(params[:transfer_email])
-    if transfer.persisted?
+    if @administrator.transfer(params[:transfer_email])
       redirect_to %i[admin settings root], notice: t(".success")
     else
-      redirect_to edit_admin_settings_administrator_path(@administrator), notice: transfer.errors.full_messages.to_sentence
+      redirect_to edit_admin_settings_administrator_path(@administrator), notice: t(".error")
     end
   end
 
@@ -141,16 +140,10 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
     @administrators_inactive = @q.result.inactive.includes(:employer)
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
   def administrator_params
-    params.require(:administrator).permit(permitted_fields)
-  end
-
-  def permitted_fields
-    ary = %i[title first_name last_name email]
-    ary += %i[employer_id] if current_administrator.admin?
-    ary += %i[role] if current_administrator.admin? || current_administrator.employer?
-    ary
+    params
+      .require(:administrator)
+      .permit(:title, :first_name, :last_name, :email, :employer_id, :ace, :ate, roles: [], employer_ids: [])
   end
 
   def set_role_and_employer
@@ -159,7 +152,7 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
 
   def permitted_params
     params.permit(
-      q: [:employer_id_eq, :first_name_or_last_name_or_email_cont, :role_eq, :s]
+      q: [:employers_id_in, :first_name_or_last_name_or_email_cont, :role_eq, :s]
     )
   end
 end

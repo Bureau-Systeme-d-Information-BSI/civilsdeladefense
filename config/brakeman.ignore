@@ -76,7 +76,7 @@
       "check_name": "LinkToHref",
       "message": "Potentially unsafe model attribute in `link_to` href",
       "file": "app/views/account/_navbar.html.haml",
-      "line": 18,
+      "line": 25,
       "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
       "code": "link_to(UserMenuLink.new.name, UserMenuLink.new.url, :class => \"rf-sidemenu__link\", :target => \"_blank\")",
       "render_path": [
@@ -137,6 +137,29 @@
       "note": ""
     },
     {
+      "warning_type": "Mass Assignment",
+      "warning_code": 105,
+      "fingerprint": "d44077bedc5855016293b1a79e117e863c95476db1b22fd180e5a2ef84b50a33",
+      "check_name": "PermitAttributes",
+      "message": "Potentially dangerous key allowed for mass assignment",
+      "file": "app/controllers/admin/settings/administrators_controller.rb",
+      "line": 148,
+      "link": "https://brakemanscanner.org/docs/warning_types/mass_assignment/",
+      "code": "params.require(:administrator).permit(:title, :first_name, :last_name, :email, :employer_id, :role, :employer_ids => ([]))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Admin::Settings::AdministratorsController",
+        "method": "administrator_params"
+      },
+      "user_input": ":role",
+      "confidence": "Medium",
+      "cwe_id": [
+        915
+      ],
+      "note": ""
+    },
+    {
       "warning_type": "Missing Authorization",
       "warning_code": 129,
       "fingerprint": "f223c687859ca3bc99281cc996ed99233ab6d586f7390a322779ee05270009b5",
@@ -160,6 +183,6 @@
       "note": ""
     }
   ],
-  "updated": "2024-02-22 20:16:44 +0100",
+  "updated": "2025-04-27 09:06:18 +0200",
   "brakeman_version": "6.1.1"
 }

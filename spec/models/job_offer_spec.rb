@@ -270,7 +270,7 @@ RSpec.describe JobOffer do
 
   it "is visible by actors" do
     brh = create(:administrator, role: nil, employer: employer)
-    other_admin = create(:administrator, role: nil, employer: employer)
+    other_admin = create(:administrator, role: nil, roles: [:employer_recruiter], employer: employer)
 
     create(:job_offer_actor, role: "brh", administrator: brh, job_offer: job_offer)
 

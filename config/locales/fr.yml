@@ -270,26 +270,15 @@ fr:
         destroy: "Je veux supprimer mon compte"
   admin:
     accounts:
-      navbar:
-        show: "Informations"
-        change_password: "Mot de passe"
-        change_email: "Courriel"
       show:
         title: "Votre compte"
       form_administrator:
         title: "Vos informations"
         mention_supervisor_administrator_html: "Courriel et entité de votre <strong>Employeur Superviseur</strong>"
         mention_grand_employer_administrator_html: "Courriel et entité de votre <strong>Grand Employeur</strong>"
-      change_password:
-        title: "Changement de mot de passe"
-      update_password:
-        success: "Mot de passe modifié !"
-      change_email:
-        title: "Changement de courriel"
-      update_email:
-        success: "Nouveau courriel ajouté, en attente de confirmation !"
       update:
         success: "Vos informations ont été mises à jour"
+        success_new_email: "Votre courriel a bien été modifié. Vérifiez votre boîte pour confirmer votre nouveau courriel."
     job_applications:
       show:
         user_deleted: Ce compte candidat a été supprimé

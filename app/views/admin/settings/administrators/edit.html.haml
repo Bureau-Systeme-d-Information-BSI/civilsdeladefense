@@ -9,8 +9,8 @@
         .row
           .col-12.col-md-6
             .form-group.rf-input-group
-              = f.label :transfer_email, "Email du nouveau propriétaire de l'offre", class: "form-control-label rf-label"
-              = f.email_field :transfer_email, placeholder: 'Email', class: "form-control rf-input string optional"
+              = f.label :transfer_email, t('.transfer_email_label'), class: "form-control-label rf-label"
+              = combobox_tag "transfer_email", admin_administrator_emails_path, placeholder: t('simple_form.labels.defaults.email')
         .form-actions.text-right.mt-4
           = f.submit t('.submit'), class: 'btn btn-primary btn-raised'
 .card.mt-2

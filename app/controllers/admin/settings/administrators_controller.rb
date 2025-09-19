@@ -121,11 +121,10 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
 
   # POST /admin/settings/administrators/1/transfer
   def transfer
-    transfer = @administrator.transfer(params[:transfer_email])
-    if transfer.persisted?
+    if @administrator.transfer(params[:transfer_email])
       redirect_to %i[admin settings root], notice: t(".success")
     else
-      redirect_to edit_admin_settings_administrator_path(@administrator), notice: transfer.errors.full_messages.to_sentence
+      redirect_to edit_admin_settings_administrator_path(@administrator), notice: t(".error")
     end
   end
 

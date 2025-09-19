@@ -6,7 +6,8 @@ FactoryBot.define do
     first_name { Faker::Name.first_name }
     last_name { Faker::Name.last_name }
     email { Faker::Internet.unique.safe_email }
-    role { "admin" }
+    title { Faker::Job.title }
+    roles { %w[functional_administrator] }
     very_first_account { true }
     password { "f4k3p455w0rD!!" }
     confirmed_at { DateTime.now }
@@ -31,6 +32,8 @@ end
 # Table name: administrators
 #
 #  id                              :uuid             not null, primary key
+#  ace                             :boolean          default(FALSE)
+#  ate                             :boolean          default(FALSE)
 #  confirmation_sent_at            :datetime
 #  confirmation_token              :string
 #  confirmed_at                    :datetime
@@ -53,6 +56,7 @@ end
 #  reset_password_sent_at          :datetime
 #  reset_password_token            :string
 #  role                            :integer
+#  roles                           :integer          default([]), not null
 #  sign_in_count                   :integer          default(0), not null
 #  title                           :string
 #  unconfirmed_email               :string

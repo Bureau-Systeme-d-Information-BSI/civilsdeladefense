@@ -2,36 +2,38 @@
 
 # Recruiter on the platform
 class Administrator < ApplicationRecord
-  devise :database_authenticatable,
-    :recoverable, :trackable, :validatable, :confirmable, :lockable,
-    :timeoutable
+  devise :database_authenticatable, :recoverable, :trackable, :validatable, :confirmable, :lockable, :timeoutable
 
   include DeactivationFlow
-  before_save :remove_mark_for_deactivation
 
   include PgSearch::Model
   pg_search_scope :search_email, against: :email, using: {tsearch: {prefix: true}}
 
-  #####################################
-  # Relationships
-  belongs_to :organization
-  belongs_to :employer, optional: true
-  validates :employer, presence: true, if: proc { |a| a.employer? || a.ensure_employer_is_set }
-  belongs_to :inviter, optional: true, class_name: "Administrator"
-  has_many :invitees, class_name: "Administrator", foreign_key: "inviter_id", inverse_of: :inviter, dependent: :nullify
+  ROLES = {
+    functional_administrator: 0,
+    employer_recruiter: 1,
+    employment_authority: 2,
+    hr_manager: 3,
+    payroll_manager: 4
+  }
 
+  belongs_to :organization
+  belongs_to :employer, optional: true # Deprecated on 2025-04-26, replaced by employers
+  belongs_to :inviter, optional: true, class_name: "Administrator"
+  belongs_to :supervisor_administrator, optional: true, class_name: "Administrator"
+  belongs_to :grand_employer_administrator, optional: true, class_name: "Administrator" # Deprecated on 2025-04-26, replaced by employers
+
+  has_many :invitees, class_name: "Administrator", foreign_key: "inviter_id", inverse_of: :inviter, dependent: :nullify
   has_many :owned_job_offers, class_name: "JobOffer", foreign_key: "owner_id", inverse_of: :owner, dependent: :nullify
   has_many :job_offer_actors, dependent: :destroy
   has_many :job_offers, through: :job_offer_actors
-
-  belongs_to :supervisor_administrator, optional: true, class_name: "Administrator"
-  belongs_to :grand_employer_administrator, optional: true, class_name: "Administrator"
+  has_many :preferred_users, through: :preferred_users_list
+  has_many :preferred_users_lists, dependent: :destroy
+  has_many :administrator_employers, dependent: :destroy
+  has_many :employers, through: :administrator_employers
 
   accepts_nested_attributes_for :supervisor_administrator
   accepts_nested_attributes_for :grand_employer_administrator
-
-  has_many :preferred_users, through: :preferred_users_list
-  has_many :preferred_users_lists, dependent: :destroy
 
   def supervisor_administrator_attributes=(attributes)
     return if attributes[:email].blank?
@@ -63,41 +65,33 @@ class Administrator < ApplicationRecord
 
   mount_uploader :photo, PhotoUploader, mount_on: :photo_file_name
 
-  #####################################
-  # Validations
-
-  validates :photo,
-    file_size: {less_than: 1.megabytes}
+  validates :photo, file_size: {less_than: 1.megabytes}
   validate :password_complexity
   validate :email_conformance
   validates :email, presence: true, uniqueness: true
-  validates :employer, presence: true, if: proc { |a| %w[employer grand_employer].include?(a.role) }
+  validates :first_name, :last_name, :title, presence: true
   validates :inviter, presence: true, unless: proc { |a| a.very_first_account }, on: :create
-  validates :role,
-    inclusion: {in: lambda { |a|
-      if a.very_first_account
-        a.class.roles.keys
-      else
-        a.inviter&.authorized_roles_to_confer || a.class.roles.keys.last
-      end
-    },
-                allow_blank: true,
-                message: :non_compliant_role,
-                on: :create}
+  validates :roles, presence: true
+  validate :roles_inclusion
 
-  ####################################
-  # Scope
+  before_validation :set_first_name, if: -> { first_name.blank? && email.present? }
+  before_validation :set_last_name, if: -> { last_name.blank? && email.present? }
+  before_validation :set_title, if: -> { title.blank? && email.present? }
+  before_validation :normalize_roles, unless: -> { roles.empty? }
+  before_save :remove_mark_for_deactivation
+
   scope :active, -> { where(deleted_at: nil) }
   scope :inactive, -> { where.not(deleted_at: nil) }
 
-  #####################################
-  # Enums
-  enum role: {
-    admin: 0,
-    employer: 1
-  }
+  enummer roles: ROLES
 
   attr_accessor :ensure_employer_is_set
+
+  # As 'role' attribute has been removed from model, we use 'roles' attribute instead
+  # 'role' attribute has been deprecated on 2025-04-26 and should be remove from schema
+  def admin? = role == 0 || functional_administrator?
+
+  def employer? = role == 1 || employer_recruiter?
 
   # ensure user account is active
   def active_for_authentication?
@@ -149,7 +143,7 @@ class Administrator < ApplicationRecord
   end
 
   def email_conformance
-    suffixes = organization.administrator_email_suffix&.split("\r\n")
+    suffixes = organization&.administrator_email_suffix&.split("\r\n")
     return if suffixes.blank? || suffixes.map { |suffix| email.ends_with?(suffix) }.any?
 
     msg = I18n.t("activerecord.errors.messages.invalid_suffix", suffixes: suffixes.join(" ou "))
@@ -174,9 +168,9 @@ class Administrator < ApplicationRecord
 
   def authorized_roles_to_confer
     if admin?
-      self.class.roles.map(&:first)
+      self.class::ROLES.keys
     elsif employer?
-      %w[employer]
+      self.class::ROLES.keys - [:functional_administrator]
     end
   end
 
@@ -184,6 +178,7 @@ class Administrator < ApplicationRecord
     administrator = Administrator.find_by(email: email.downcase) || Administrator.new(email: email)
     administrator.inviter ||= self
     administrator.organization = organization
+    administrator.roles = roles
     if administrator.save
       job_offer_actors.update_all(administrator_id: administrator.id) # rubocop:disable Rails/SkipsModelValidations
       owned_job_offers.update_all(owner_id: administrator.id) # rubocop:disable Rails/SkipsModelValidations
@@ -202,6 +197,24 @@ class Administrator < ApplicationRecord
   def remove_mark_for_deactivation
     self.marked_for_deactivation_on = nil
   end
+
+  private
+
+  def set_first_name = self.first_name = first_name_from(email)
+
+  def set_last_name = self.last_name = last_name_from(email)
+
+  def first_name_from(email) = email.split("@").first.split(".").first.capitalize
+
+  def last_name_from(email) = email.split("@").first.split(".").last.capitalize
+
+  def set_title = self.title = "-"
+
+  def normalize_roles = self.roles = roles.compact - [:""]
+
+  def roles_inclusion
+    errors.add(:roles, :invalid) if roles.empty? || !roles.all? { |role| Administrator::ROLES.key?(role) }
+  end
 end
 
 # == Schema Information
@@ -209,6 +222,8 @@ end
 # Table name: administrators
 #
 #  id                              :uuid             not null, primary key
+#  ace                             :boolean          default(FALSE)
+#  ate                             :boolean          default(FALSE)
 #  confirmation_sent_at            :datetime
 #  confirmation_token              :string
 #  confirmed_at                    :datetime
@@ -231,6 +246,7 @@ end
 #  reset_password_sent_at          :datetime
 #  reset_password_token            :string
 #  role                            :integer
+#  roles                           :integer          default([]), not null
 #  sign_in_count                   :integer          default(0), not null
 #  title                           :string
 #  unconfirmed_email               :string

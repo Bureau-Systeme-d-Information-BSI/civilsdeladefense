@@ -47,7 +47,8 @@ Rails.application.routes.draw do
       mount Sidekiq::Web => "/sidekiq"
       mount MaintenanceTasks::Engine => "/maintenance_tasks"
     end
-
+    resources :cities, only: [:index, :show]
+    resources :administrator_emails, only: :index
     resource :account do
       member do
         get :change_email, :change_password, :photo
@@ -90,6 +91,8 @@ Rails.application.routes.draw do
           get :files
           get :emails
         end
+        resource :favorite, only: %i[create destroy]
+        resource :unfavorite, only: %i[create destroy]
       end
       resources :archives, only: [:new, :create]
       resources :multiple_recipients_emails, only: %i[new create]
@@ -212,7 +215,6 @@ Rails.application.routes.draw do
       resources :job_applications, path: "mes-candidatures" do
         member do
           get :job_offer, path: "offre"
-          get :profile
         end
         resources :job_application_files, path: "documents"
         resources :emails, only: %i[index create] do

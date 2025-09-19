@@ -172,7 +172,6 @@ fr:
         nav_emails: "Mes échanges"
         nav_files: "Mes documents"
         nav_offer: "L'offre"
-        nav_profile: "Mon profil"
   applicant_notifications_mailer:
     send_job_offer:
       subject: "Nouvelle offre"
@@ -558,7 +557,7 @@ fr:
       shared:
         navbar:
           admin: "Administration"
-          administrators: "Comptes admin"
+          administrators: "Comptes utilisateurs"
           benefits: "Avantages"
           drawbacks: "Contraintes"
           bops: "BOPs"
@@ -566,13 +565,13 @@ fr:
           levels: "Catégories / Niveaux de l'offre"
           cmgs: "Liste des CMG"
           company: "Entreprise"
-          configuration: "Configuration"
+          configuration: "Page d'accueil"
           contract_types: "Types de contrat"
           email_templates: "Courriels"
-          employers: "Employeurs"
+          employers: "Liste des employeurs"
           experience_levels: "Expériences"
           job_application_file_types: "Types de fichier"
-          job_applications: "Candidatures"
+          job_applications: "Candidats et offres"
           organization: "Paramètres généraux"
           organization_security: "Paramètres de sécurité"
           organization_defaults: "Valeurs par défaut"
@@ -582,8 +581,7 @@ fr:
           salary_ranges: "Estimations salariales"
           sectors: "Secteurs / Filières"
           study_levels: "Niveaux d'études"
-          templates: "Modèles"
-          writing_job_offers: "Rédaction offres d'emploi"
+          writing_job_offers: "Rédaction des offres d'emploi"
           contract_durations: "Durées de contrat"
           foreign_languages: "Langue étrangères"
           foreign_language_levels: "Niveaux de langues étrangères"
@@ -605,8 +603,8 @@ fr:
           no_role: "Aucun rôle"
           lock_explanation: "Ce compte est bloqué car trop de tentatives infructueuses de se connecter"
         index:
-          title: "Comptes admin"
-          add: "Ajouter un compte admin"
+          title: "Comptes utilisateurs"
+          add: "Ajouter un compte utilisateur"
           table:
             photo: "Avatar"
             name: "Nom"
@@ -616,19 +614,19 @@ fr:
             last_sign_in_at: "Dernière connexion"
             created_at: "Créé le"
           account_active:
-            zero: "Aucun compte admin actif"
+            zero: "Aucun compte actif"
             one: "Compte actif (1)"
             other: "Comptes actifs (%{count})"
           account_inactive:
-            zero: "Aucun compte admin désactivé"
+            zero: "Aucun compte désactivé"
             one: "Compte désactivé (1)"
             other: "Comptes désactivés (%{count})"
           card_title:
-            zero: "Aucun compte admin"
-            one: "1 compte admin"
-            other: "%{count} comptes admin"
+            zero: "Aucun compte"
+            one: "1 compte"
+            other: "%{count} comptes"
         new:
-          title: "Inviter un nouveau compte admin"
+          title: "Inviter un nouveau compte utilisateur"
         create:
           success: "Invitation envoyée !"
         update:
@@ -636,7 +634,7 @@ fr:
         destroy:
           success: "Compte supprimé !"
         edit:
-          title: "Modifier un compte admin"
+          title: "Modifier un compte utilisateur"
           transfer: "Transférer les offres"
           submit: "Transférer"
           list: "Liste des offres"

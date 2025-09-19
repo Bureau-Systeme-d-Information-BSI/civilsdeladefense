@@ -76,7 +76,7 @@ class Admin::JobOffersController < Admin::BaseController
   def add_actor
     job_offer_id = params[:job_offer_id]
     @job_offer = job_offer_id.present? ? JobOffer.find(job_offer_id) : JobOffer.new
-    @administrator = find_attach_or_build_administrator
+    @administrator = find_and_attach_administrator
     @administrator.organization = current_organization
     if @administrator.valid?
       render action: "add_actor", layout: false
@@ -240,12 +240,9 @@ class Admin::JobOffersController < Admin::BaseController
     fields << {job_offer_actors_attributes: job_offer_actors_attributes}
   end
 
-  def find_attach_or_build_administrator
-    existing_administrator = Administrator.find_by(email: params[:email].downcase)
+  def find_and_attach_administrator
+    existing_administrator = Administrator.find_by!(email: params[:email].downcase)
     root_object = @job_offer.job_offer_actors.build(role: params[:role])
-    admin = root_object.administrator = existing_administrator if existing_administrator
-    admin ||= root_object.build_administrator(email: params[:email])
-    admin.inviter ||= current_administrator
-    admin
+    root_object.administrator = existing_administrator
   end
 end

@@ -3,7 +3,17 @@
 require "rails_helper"
 
 RSpec.describe Employer do
-  it { is_expected.to validate_presence_of(:name) }
+  describe "associations" do
+    it { is_expected.to have_many(:job_offers).dependent(:nullify) }
+
+    it { is_expected.to have_many(:administrator_employers).dependent(:destroy) }
+
+    it { is_expected.to have_many(:administrators).through(:administrator_employers) }
+  end
+
+  describe "validations" do
+    it { is_expected.to validate_presence_of(:name) }
+  end
 end
 
 # == Schema Information

@@ -31,9 +31,7 @@
       %li.nav-item.mr-2
         .d-flex.flex-column.justify-content-center.align-items-end
           %span.font-weight-bold= current_administrator.full_name
-          - ary = current_administrator.role? ? [Administrator.human_attribute_name("role.#{current_administrator.role}")] : []
-          - ary.unshift(current_administrator.employer.code) if !current_administrator.admin? && current_administrator.employer?
-          %small.text-muted= ary.join(' - ')
+          %small.text-muted= [roles(current_administrator), employers(current_administrator)].compact.join(' - ')
       %li.nav-item.dropdown
         = button_tag(class: "nav-link dropdown-toggle py-0 btn mb-0", role: :button, data: {toggle: :dropdown}, aria: {haspopup: true, expanded: false}) do
           = image_user_tag current_administrator.photo, width: 40

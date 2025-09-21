@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "rails_helper"
-# TODO: @sebastiencarceles fix this spec
+
 RSpec.describe "Admin::Stats::JobOffers" do
   before { sign_in create(:administrator) }
 

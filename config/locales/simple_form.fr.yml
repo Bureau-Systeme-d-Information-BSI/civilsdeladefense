@@ -68,7 +68,7 @@ fr:
         job_applications_count: "Candidatures"
       administrator:
         current_password: "Mot de passe actuel"
-        password: "Nouveau mot de passe"
+        password: "Mot de passe"
         password_confirmation: "Confirmation du mot de passe"
         employers: "Chaîne d'emploi"
         employer: "Employeur"
@@ -77,6 +77,10 @@ fr:
         ace: ACE
         ate: ATE
         ace_ate: "Autorité d'emploi"
+        first_name: "Prénom"
+        last_name: "Nom"
+        title: "Fonction"
+        email: "Courriel"
       category:
         parent_id: "Catégorie parente"
       email:
@@ -202,12 +206,10 @@ fr:
       user:
         password: "Mot de passe"
       administrator:
-        first_name: "Prénom"
-        last_name: "Nom"
-        email: "prenom.nom@intradef.gouv.fr"
-        name: "Nom complet"
-        password: ""
-        password_confirmation: "Confirmation du mot de passe"
+        first_name: "Mélodie"
+        last_name: "Deschamps"
+        email: "melodie.deschamps@intradef.gouv.fr"
+        name: "Mélodie Deschamps"
         email_grand_employer: "Courriel"
         email_brh: "Courriel"
         supervisor_administrator:

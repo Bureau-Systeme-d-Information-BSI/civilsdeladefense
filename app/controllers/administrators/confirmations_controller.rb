@@ -75,12 +75,7 @@ class Administrators::ConfirmationsController < Devise::ConfirmationsController
       :password,
       :password_confirmation,
       :first_name,
-      :last_name,
-      :title,
-      {
-        supervisor_administrator_attributes: %i[email employer_id ensure_employer_is_set]
-      },
-      grand_employer_administrator_attributes: %i[email employer_id ensure_employer_is_set]
+      :last_name
     )
   end
 end

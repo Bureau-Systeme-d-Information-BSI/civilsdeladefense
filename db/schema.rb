@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_06_07_061120) do
+ActiveRecord::Schema[7.1].define(version: 2025_10_27_081555) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -99,6 +99,17 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_07_061120) do
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_age_ranges_on_name"
     t.index ["position"], name: "index_age_ranges_on_position"
+  end
+
+  create_table "altcha_solutions", force: :cascade do |t|
+    t.string "algorithm"
+    t.string "challenge"
+    t.string "salt"
+    t.string "signature"
+    t.integer "number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["algorithm", "challenge", "salt", "signature", "number"], name: "index_altcha_solutions", unique: true
   end
 
   create_table "archiving_reasons", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|

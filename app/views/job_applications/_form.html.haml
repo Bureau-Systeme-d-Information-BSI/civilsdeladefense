@@ -1,6 +1,8 @@
 - unless user_signed_in?
   = render "devise/shared/france_connect"
 = simple_form_for(@job_application, url: [:send_application, @job_offer], method: :post, data: { turbo: true, controller: "form-save", form_save_target: "form", action: "change->form-save#saveFormData submit->form-save#clearFormData" }) do |f|
+  %altcha-widget{challengeurl: altcha_url, delay: 500, overlay: true, hidelogo: true, hidefooter: true}
+
   .form-inputs.mt-3
     - if f.object.errors["user.profile.base"].present?
       = f.error_notification message: f.object.errors["user.profile.base"].to_sentence

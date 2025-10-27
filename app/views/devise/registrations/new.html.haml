@@ -5,6 +5,8 @@
   = render "devise/shared/france_connect"
 
 = simple_form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+  %altcha-widget{challengeurl: altcha_url, delay: 500, overlay: true, hidelogo: true, hidefooter: true}
+
   = f.error_notification
   = f.input :email, required: true, autofocus: true
   %div{data: {controller: "password-visibility password-rules"}}

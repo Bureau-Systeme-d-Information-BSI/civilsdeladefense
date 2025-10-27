@@ -27,6 +27,7 @@ gem "bootsnap", ">= 1.4.2", require: false
 
 gem "aasm"
 gem "acts_as_list"
+gem "altcha-rails"
 gem "audited"
 gem "awesome_nested_set"
 gem "cancancan"

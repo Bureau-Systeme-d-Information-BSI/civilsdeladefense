@@ -1,6 +1,8 @@
 .rf-text--lead.rf-mb-3w
   = @page_title = t(".forgot_your_password")
 = simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f|
+  %altcha-widget{challengeurl: altcha_url, delay: 500, overlay: true, hidelogo: true, hidefooter: true}
+
   = f.error_notification
   = f.input :email, required: true, autofocus: true, label: false, placeholder: true
   .rf-input-group

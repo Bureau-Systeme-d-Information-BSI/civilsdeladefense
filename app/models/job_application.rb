@@ -205,7 +205,7 @@ class JobApplication < ApplicationRecord
   end
 
   def compute_emails_count
-    ary = emails.reload.each_with_object([0, 0]) { |obj, memo|
+    ary = emails.reload.includes(:sender).each_with_object([0, 0]) { |obj, memo|
       if obj.is_unread?
         memo[0] += 1 if obj.sender.is_a?(User)
         memo[1] += 1 if obj.sender.is_a?(Administrator)

@@ -2,6 +2,8 @@
 
 # Recruiter on the platform
 class Administrator < ApplicationRecord
+  PASSWORD_REGEX = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[\\\/<>{}()#¤:;,.?!•·|"'`´~@£¨µ§²$€%^&*+=_-]).{12,70}$/
+
   devise :database_authenticatable,
     :recoverable, :trackable, :validatable, :confirmable, :lockable,
     :timeoutable
@@ -203,9 +205,7 @@ class Administrator < ApplicationRecord
   end
 
   def password_complexity
-    # Regexp extracted from https://stackoverflow.com/questions/19605150/regex-for-password-must-contain-at-least-eight-characters-at-least-one-number-a
-    regexp = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,70}$/
-    return if password.blank? || password =~ regexp
+    return if password.blank? || password =~ PASSWORD_REGEX
 
     errors.add :password, :not_strong_enough
   end

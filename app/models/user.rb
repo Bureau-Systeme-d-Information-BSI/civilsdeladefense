@@ -73,6 +73,54 @@ class User < ApplicationRecord
     %i[concerned by_category by_experience_level]
   end
 
+  def self.ransackable_attributes(auth_object = nil)
+    [
+      "address",
+      "city",
+      "confirmation_sent_at",
+      "confirmation_token",
+      "confirmed_at",
+      "created_at",
+      "current_position",
+      "current_sign_in_at",
+      "current_sign_in_ip",
+      "email",
+      "failed_attempts",
+      "first_name",
+      "id",
+      "id_value",
+      "job_applications_count",
+      "last_name",
+      "last_sign_in_at",
+      "last_sign_in_ip",
+      "locked_at",
+      "marked_for_deletion_on",
+      "organization_id",
+      "phone",
+      "photo_content_type",
+      "photo_file_name",
+      "photo_file_size",
+      "photo_is_validated",
+      "photo_updated_at",
+      "postal_code",
+      "receive_job_offer_mails"
+    ]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    [
+      "bookmarks",
+      "job_application_files",
+      "job_applications",
+      "job_offers",
+      "omniauth_informations",
+      "organization",
+      "preferred_users",
+      "preferred_users_lists",
+      "profile"
+    ]
+  end
+
   def full_name
     if is_deleted
       "Compte candidat supprimé"

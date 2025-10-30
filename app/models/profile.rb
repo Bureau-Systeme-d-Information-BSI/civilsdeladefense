@@ -47,6 +47,40 @@ class Profile < ApplicationRecord
     other: 3
   }
 
+  def self.ransackable_attributes(auth_object = nil)
+    [
+      "age_range_id",
+      "availability_range_id",
+      "created_at",
+      "experience_level_id",
+      "gender",
+      "has_corporate_experience",
+      "id",
+      "id_value",
+      "is_currently_employed",
+      "profileable_id",
+      "profileable_type",
+      "resume_file_name",
+      "study_level_id",
+      "updated_at"
+    ]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    [
+      "age_range",
+      "availability_range",
+      "category_experience_levels",
+      "department_profiles",
+      "departments",
+      "experience_level",
+      "job_application",
+      "profile_foreign_languages",
+      "profileable",
+      "study_level"
+    ]
+  end
+
   private
 
   def add_none_department = departments << Department.none

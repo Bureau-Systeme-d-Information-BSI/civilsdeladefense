@@ -2,6 +2,18 @@ class ProfileForeignLanguage < ApplicationRecord
   belongs_to :profile
   belongs_to :foreign_language
   belongs_to :foreign_language_level
+
+  def self.ransackable_attributes(auth_object = nil)
+    [
+      "created_at",
+      "foreign_language_id",
+      "foreign_language_level_id",
+      "id",
+      "id_value",
+      "profile_id",
+      "updated_at"
+    ]
+  end
 end
 
 # == Schema Information

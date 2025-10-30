@@ -69,7 +69,7 @@ class Admin::JobOffersController < Admin::BaseController
   # GET /admin/job_offers/1/board
   # GET /admin/job_offers/1/board.json
   def board
-    @job_applications = @job_offer.job_applications.group_by(&:state)
+    @job_applications = @job_offer.job_applications.includes(:user).group_by(&:state)
     request.xhr? && render(layout: false)
   end
 

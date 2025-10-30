@@ -32,7 +32,7 @@ RSpec.describe "Account::Users" do
 
     it "shows the administrator photo" do
       photo_request
-      expect(response.headers["Content-Type"]).to eq("image/jpg")
+      expect(response.headers["Content-Type"]).to eq("image/jpeg")
     end
   end
 

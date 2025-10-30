@@ -4,6 +4,19 @@ class Department < ApplicationRecord
 
   default_scope { order(:code) }
 
+  def self.ransackable_attributes(auth_object = nil)
+    [
+      "code",
+      "code_region",
+      "created_at",
+      "id",
+      "id_value",
+      "name",
+      "name_region",
+      "updated_at"
+    ]
+  end
+
   def label = none? ? name : code_name_region
 
   def short_label = none? ? name : code_name

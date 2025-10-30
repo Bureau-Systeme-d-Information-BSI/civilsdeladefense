@@ -1,71 +1,286 @@
 {
   "ignored_warnings": [
     {
-      "warning_type": "Missing Authorization",
-      "warning_code": 129,
-      "fingerprint": "1761fb2857cf939128f1a474949912cbaacee5d3469b245a5c622b0fdb80e588",
-      "check_name": "Ransack",
-      "message": "Unrestricted search using `ransack` library called with parameter value. Limit search by defining `ransackable_attributes` and `ransackable_associations` methods in class or upgrade Ransack to version 4.0.0 or newer",
-      "file": "app/controllers/admin/settings/salary_ranges_controller.rb",
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "13b41b8331932ed50d0921e13341230645abc9dda8bdc27eea3e8f00f0f54ae9",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/admin/users/_user.html.haml",
+      "line": 9,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "::Haml::AttributeBuilder.build_id(true, dom_id((Unresolved Model).new.user))",
+      "render_path": [
+        {
+          "type": "template",
+          "name": "admin/job_applications/index",
+          "line": 30,
+          "file": "app/views/admin/job_applications/index.html.haml",
+          "rendered": {
+            "name": "admin/job_applications/_job_application",
+            "file": "app/views/admin/job_applications/_job_application.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "admin/job_applications/_job_application",
+          "line": 1,
+          "file": "app/views/admin/job_applications/_job_application.html.haml",
+          "rendered": {
+            "name": "admin/users/_user",
+            "file": "app/views/admin/users/_user.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "admin/users/_user"
+      },
+      "user_input": "(Unresolved Model).new.user",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "3f5b56f0ff7076416959e23faf00c09ac8844ba6df57cc9e214c29ea28431c6e",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/admin/job_offers/_job_offer.html.haml",
+      "line": 6,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "::Haml::AttributeBuilder.build_class(true, \"card job-offer mt-3\", \"card-state-#{(Unresolved Model).new.state}\")",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Admin::JobOffersController",
+          "method": "featured",
+          "line": 26,
+          "file": "app/controllers/admin/job_offers_controller.rb",
+          "rendered": {
+            "name": "admin/job_offers/featured",
+            "file": "app/views/admin/job_offers/featured.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "admin/job_offers/featured",
+          "line": 33,
+          "file": "app/views/admin/job_offers/featured.html.haml",
+          "rendered": {
+            "name": "admin/job_offers/_job_offer",
+            "file": "app/views/admin/job_offers/_job_offer.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "admin/job_offers/_job_offer"
+      },
+      "user_input": "(Unresolved Model).new.state",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "59a781da5fbac07c57920f89dc6292587d989662e510f8f72043195261ee4643",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/layouts/application.html.haml",
+      "line": 16,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "::Haml::AttributeBuilder.build_data(true, \"'\", :controller => \"timeoutable\", :timeoutable_timeout_in_value => current_user.timeout_in.in_milliseconds)",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "ApplicationController",
+          "method": "set_timeout_in",
+          "line": null,
+          "file": "app/controllers/concerns/timeoutable.rb",
+          "rendered": {
+            "name": "layouts/application",
+            "file": "app/views/layouts/application.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "layouts/application"
+      },
+      "user_input": "current_user.timeout_in.in_milliseconds",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "6ebbe5389305a8fb272a42c58a9f201e3866d00a6457b5f5ee6206cdebaab91c",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/admin/job_offers/_job_application.html.haml",
+      "line": 3,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "::Haml::AttributeBuilder.build_class(true, \"card job-application\", \"job-application--state-#{(Unresolved Model).new.state}\")",
+      "render_path": [
+        {
+          "type": "template",
+          "name": "admin/job_offers/_board_column",
+          "line": 10,
+          "file": "app/views/admin/job_offers/_board_column.html.haml",
+          "rendered": {
+            "name": "admin/job_offers/_job_application",
+            "file": "app/views/admin/job_offers/_job_application.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "admin/job_offers/_job_application"
+      },
+      "user_input": "(Unresolved Model).new.state",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "9f1b907114e19d9f72cd4fbd1e729b2ef46c0054493a3c9925ad70726fec42cf",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/admin/emails/_email.html.haml",
+      "line": 4,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "::Haml::AttributeBuilder.build_id(true, dom_id((Unresolved Model).new))",
+      "render_path": [
+        {
+          "type": "template",
+          "name": "admin/emails/create",
+          "line": 2,
+          "file": "app/views/admin/emails/create.js.erb",
+          "rendered": {
+            "name": "admin/job_applications/emails",
+            "file": "app/views/admin/job_applications/emails.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "admin/job_applications/emails",
+          "line": 6,
+          "file": "app/views/admin/job_applications/emails.html.haml",
+          "rendered": {
+            "name": "admin/emails/_email",
+            "file": "app/views/admin/emails/_email.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "admin/emails/_email"
+      },
+      "user_input": "(Unresolved Model).new",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "a94426eb42803b787c7ad8c7b6621641ccf09c4cea5997c2502fea5d9df530a9",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/admin/profiles/_personal_profile.html.haml",
+      "line": 2,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "::Haml::AttributeBuilder.build_id(true, dom_id((@job_application.user or User.new(:is_deleted => true)), \"profile\"))",
+      "render_path": [
+        {
+          "type": "template",
+          "name": "admin/job_applications/show",
+          "line": 16,
+          "file": "app/views/admin/job_applications/show.html.haml",
+          "rendered": {
+            "name": "admin/profiles/_personal_profile",
+            "file": "app/views/admin/profiles/_personal_profile.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "admin/profiles/_personal_profile"
+      },
+      "user_input": "User.new(:is_deleted => true)",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "b035de519ed847bd033a36e574c1faf2df69b14a378f2e7d6deca661b2421ac4",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/admin/job_application_files/_job_application_file.html.haml",
       "line": 8,
-      "link": "https://positive.security/blog/ransack-data-exfiltration",
-      "code": "SalaryRange.ransack(params[:q])",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "Admin::Settings::SalaryRangesController",
-        "method": "index"
-      },
-      "user_input": "params[:q]",
-      "confidence": "Medium",
-      "cwe_id": [
-        862
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "::Haml::AttributeBuilder.build_id(true, dom_id((Unresolved Model).new))",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Admin::JobApplicationFilesController",
+          "method": "create",
+          "line": 26,
+          "file": "app/controllers/admin/job_application_files_controller.rb",
+          "rendered": {
+            "name": "admin/job_application_files/file_operation_total",
+            "file": "app/views/admin/job_application_files/file_operation_total.js.erb"
+          }
+        },
+        {
+          "type": "template",
+          "name": "admin/job_application_files/file_operation_total",
+          "line": 3,
+          "file": "app/views/admin/job_application_files/file_operation_total.js.erb",
+          "rendered": {
+            "name": "admin/job_applications/files",
+            "file": "app/views/admin/job_applications/files.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "admin/job_applications/files",
+          "line": 13,
+          "file": "app/views/admin/job_applications/files.html.haml",
+          "rendered": {
+            "name": "admin/job_application_files/_job_application_file",
+            "file": "app/views/admin/job_application_files/_job_application_file.html.haml"
+          }
+        }
       ],
-      "note": ""
-    },
-    {
-      "warning_type": "Missing Authorization",
-      "warning_code": 129,
-      "fingerprint": "32133637917776f5023c7f2a8926810799d5921159c79311a9bd989919a016af",
-      "check_name": "Ransack",
-      "message": "Unrestricted search using `ransack` library called with parameter value. Limit search by defining `ransackable_attributes` and `ransackable_associations` methods in class or upgrade Ransack to version 4.0.0 or newer",
-      "file": "app/controllers/admin/preferred_users_lists_controller.rb",
-      "line": 11,
-      "link": "https://positive.security/blog/ransack-data-exfiltration",
-      "code": "@preferred_users_list.users.includes(:job_applications).ransack(params[:q])",
-      "render_path": null,
       "location": {
-        "type": "method",
-        "class": "Admin::PreferredUsersListsController",
-        "method": "show"
+        "type": "template",
+        "template": "admin/job_application_files/_job_application_file"
       },
-      "user_input": "params[:q]",
+      "user_input": "(Unresolved Model).new",
       "confidence": "Weak",
       "cwe_id": [
-        862
-      ],
-      "note": ""
-    },
-    {
-      "warning_type": "Missing Authorization",
-      "warning_code": 129,
-      "fingerprint": "36eca42deee0427098a82b8d3b1fbb6e066f9d37ceb1fb23108f701ce0e06f12",
-      "check_name": "Ransack",
-      "message": "Unrestricted search using `ransack` library called with parameter value. Limit search by defining `ransackable_attributes` and `ransackable_associations` methods in class or upgrade Ransack to version 4.0.0 or newer",
-      "file": "app/controllers/admin/job_applications_controller.rb",
-      "line": 12,
-      "link": "https://positive.security/blog/ransack-data-exfiltration",
-      "code": "@job_applications.includes(:job_offer, :user).ransack(params[:q])",
-      "render_path": null,
-      "location": {
-        "type": "method",
-        "class": "Admin::JobApplicationsController",
-        "method": "index"
-      },
-      "user_input": "params[:q]",
-      "confidence": "Weak",
-      "cwe_id": [
-        862
+        79
       ],
       "note": ""
     },
@@ -76,7 +291,7 @@
       "check_name": "LinkToHref",
       "message": "Potentially unsafe model attribute in `link_to` href",
       "file": "app/views/account/_navbar.html.haml",
-      "line": 18,
+      "line": 25,
       "link": "https://brakemanscanner.org/docs/warning_types/link_to_href",
       "code": "link_to(UserMenuLink.new.name, UserMenuLink.new.url, :class => \"rf-sidemenu__link\", :target => \"_blank\")",
       "render_path": [
@@ -114,52 +329,92 @@
       "note": ""
     },
     {
-      "warning_type": "Missing Authorization",
-      "warning_code": 129,
-      "fingerprint": "cd8f3a887b66fa1f962d31def4b2b1c212edd8c1f7650e2bd8c376fa615f95be",
-      "check_name": "Ransack",
-      "message": "Unrestricted search using `ransack` library called with parameter value. Limit search by defining `ransackable_attributes` and `ransackable_associations` methods in class or upgrade Ransack to version 4.0.0 or newer",
-      "file": "app/controllers/admin/job_offers_controller.rb",
-      "line": 214,
-      "link": "https://positive.security/blog/ransack-data-exfiltration",
-      "code": "(@job_offers.admin_index_featured or if (action_name == \"archived\") then\n  @job_offers.admin_index_archived\nelse\n  @job_offers.admin_index_active\nend).search_full_text(params[:s]).unscope(:order).ransack(params[:q])",
-      "render_path": null,
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "cd7f0d0004a2530f84271cccd2c9427b215c3d2e55b702875b41332d9ff5adbc",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/admin/job_offers/_job_offer.html.haml",
+      "line": 34,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "::Haml::AttributeBuilder.build_class(true, \"badge text-white text-uppercase text-nowrap mr-1\", badge_class((Unresolved Model).new.state.to_sym))",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Admin::JobOffersController",
+          "method": "featured",
+          "line": 26,
+          "file": "app/controllers/admin/job_offers_controller.rb",
+          "rendered": {
+            "name": "admin/job_offers/featured",
+            "file": "app/views/admin/job_offers/featured.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "admin/job_offers/featured",
+          "line": 33,
+          "file": "app/views/admin/job_offers/featured.html.haml",
+          "rendered": {
+            "name": "admin/job_offers/_job_offer",
+            "file": "app/views/admin/job_offers/_job_offer.html.haml"
+          }
+        }
+      ],
       "location": {
-        "type": "method",
-        "class": "Admin::JobOffersController",
-        "method": "set_job_offers"
+        "type": "template",
+        "template": "admin/job_offers/_job_offer"
       },
-      "user_input": "params[:q]",
+      "user_input": "(Unresolved Model).new.state",
       "confidence": "Weak",
       "cwe_id": [
-        862
+        79
       ],
       "note": ""
     },
     {
-      "warning_type": "Missing Authorization",
-      "warning_code": 129,
-      "fingerprint": "f223c687859ca3bc99281cc996ed99233ab6d586f7390a322779ee05270009b5",
-      "check_name": "Ransack",
-      "message": "Unrestricted search using `ransack` library called with parameter value. Limit search by defining `ransackable_attributes` and `ransackable_associations` methods in class or upgrade Ransack to version 4.0.0 or newer",
-      "file": "app/controllers/admin/users_controller.rb",
-      "line": 9,
-      "link": "https://positive.security/blog/ransack-data-exfiltration",
-      "code": "@users.ransack((params[:q] or {}))",
-      "render_path": null,
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "cea9afa6a109a8df16eb36f243cbf838a384189d69f753d805f60534d64822db",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/admin/users/_user.html.haml",
+      "line": 38,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "::Haml::AttributeBuilder.build_class(true, \"badge text-white text-uppercase text-nowrap mr-1\", badge_class((Unresolved Model).new.user.last_job_application.state.to_sym))",
+      "render_path": [
+        {
+          "type": "template",
+          "name": "admin/job_applications/index",
+          "line": 30,
+          "file": "app/views/admin/job_applications/index.html.haml",
+          "rendered": {
+            "name": "admin/job_applications/_job_application",
+            "file": "app/views/admin/job_applications/_job_application.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "admin/job_applications/_job_application",
+          "line": 1,
+          "file": "app/views/admin/job_applications/_job_application.html.haml",
+          "rendered": {
+            "name": "admin/users/_user",
+            "file": "app/views/admin/users/_user.html.haml"
+          }
+        }
+      ],
       "location": {
-        "type": "method",
-        "class": "Admin::UsersController",
-        "method": "index"
+        "type": "template",
+        "template": "admin/users/_user"
       },
-      "user_input": "params[:q]",
+      "user_input": "(Unresolved Model).new.user",
       "confidence": "Weak",
       "cwe_id": [
-        862
+        79
       ],
       "note": ""
     }
   ],
-  "updated": "2024-02-22 20:16:44 +0100",
-  "brakeman_version": "6.1.1"
+  "brakeman_version": "7.1.0"
 }

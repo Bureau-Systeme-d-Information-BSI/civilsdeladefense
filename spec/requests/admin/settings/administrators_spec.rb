@@ -232,7 +232,7 @@ RSpec.describe "Admin::Settings::Administrators" do
     context "when the transfer is not successful" do
       let(:transfer_email) { "an.email.adress@example.com" }
 
-      it { expect(transfer_request).to redirect_to(edit_admin_settings_administrator_path(administrator)) }
+      it { expect(transfer_request).to render_template(:edit) }
     end
   end
 

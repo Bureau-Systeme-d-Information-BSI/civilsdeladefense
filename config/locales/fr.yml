@@ -914,9 +914,9 @@ fr:
           title: "Disponibilités d'un·e candidat·e"
           add: "Ajouter"
           card_title:
-            zero: 'Aucune disponibilité pour le moment'
-            one: '1 disponibilité'
-            other: '%{count} disponibilités'
+            zero: "Aucune disponibilité pour le moment"
+            one: "1 disponibilité"
+            other: "%{count} disponibilités"
         new:
           title: "Ajouter une disponibilité"
         create:
@@ -1163,6 +1163,7 @@ fr:
           attributes:
             base:
               csp_or_mobilia: "CSP et/ou MOBILIA doit être rempli"
+              transfer_administrator_not_found: "Administrateur non trouvé"
             title:
               brackets: "ne doit pas contenir de parenthèse"
               f_h: "doit finir par F/H"

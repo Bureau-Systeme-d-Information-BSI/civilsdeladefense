@@ -1,0 +1,20 @@
+= simple_form_for(resource, as: resource_name, url: update_administrator_confirmation_path, html: {method: :patch}) do |f|
+  %fieldset.my-3
+    %legend
+      = @page_title = t('.title')
+  - if @requires_password
+    .form-inputs
+      .row
+        .col-12.col-md-6
+          = f.input :first_name, placeholder: true, hint: false, required: true
+        .col-12.col-md-6
+          = f.input :last_name, placeholder: true, hint: false, required: true
+      = f.input :email, required: true, disabled: true
+      = f.input :employers, as: :string, required: true, disabled: true, input_html: {value: resource.employers.pluck(:code).join(', ')}
+      = f.input :roles, as: :string, required: true, disabled: true, input_html: {value: resource.roles.map { |role| I18n.t("activerecord.attributes.administrator/roles.#{role}") }.join(', ')}
+      = f.input :title, required: true, disabled: true
+      = f.input :password, placeholder: true, required: true
+      = f.input :password_confirmation, placeholder: true, required: true
+  = hidden_field_tag :confirmation_token, @confirmation_token
+  .form-actions
+    = f.button :submit, t(".activate"), class: 'btn btn-primary btn-raised'

@@ -38,6 +38,9 @@ fr:
       show:
         title: "Confirmation de compte"
         activate: "Confirmer"
+      show_admin:
+        title: "Confirmation de compte"
+        activate: "Confirmer"
         mention_supervisor_administrator_html: "Courriel et entité de votre <strong>Employeur Superviseur</strong>"
         mention_grand_employer_administrator_html: "Courriel et entité de votre <strong>Grand Employeur</strong>"
       token_expired:

@@ -61,7 +61,7 @@ class Administrators::ConfirmationsController < Devise::ConfirmationsController
     @confirmation_token = params[:confirmation_token]
     @requires_password = true
     self.resource = @confirmable
-    render "devise/confirmations/show" # Change this if you don't have the views on default path
+    render "devise/confirmations/show_admin" # Change this if you don't have the views on default path
   end
 
   def do_confirm
@@ -75,12 +75,7 @@ class Administrators::ConfirmationsController < Devise::ConfirmationsController
       :password,
       :password_confirmation,
       :first_name,
-      :last_name,
-      :title,
-      {
-        supervisor_administrator_attributes: %i[email employer_id ensure_employer_is_set]
-      },
-      grand_employer_administrator_attributes: %i[email employer_id ensure_employer_is_set]
+      :last_name
     )
   end
 end

@@ -16,13 +16,21 @@ export default class extends Controller {
 
     if (this.getRoles().includes("functional_administrator")) {
       this.employersTarget.classList.add("d-none");
+      this.employersTarget.querySelector(
+        "#administrator_employer_ids",
+      ).required = false;
       this.aceAteTarget.classList.add("d-none");
     } else {
       this.employersTarget.classList.remove("d-none");
+      this.employersTarget.querySelector(
+        "#administrator_employer_ids",
+      ).required = true;
     }
   }
 
   getRoles() {
-    return Array.from(this.rolesTarget.selectedOptions).map(option => option.value);
+    return Array.from(this.rolesTarget.selectedOptions).map(
+      (option) => option.value,
+    );
   }
 }

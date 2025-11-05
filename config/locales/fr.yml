@@ -625,7 +625,7 @@ fr:
         destroy:
           success: "Compte supprimé !"
         edit:
-          title: "Modifier un compte utilisateur"
+          title: "Modifier un compte"
           transfer: "Transférer les offres"
           transfer_email_label: "Email du nouveau propriétaire des offres"
           submit: "Transférer"
@@ -914,9 +914,9 @@ fr:
           title: "Disponibilités d'un·e candidat·e"
           add: "Ajouter"
           card_title:
-            zero: 'Aucune disponibilité pour le moment'
-            one: '1 disponibilité'
-            other: '%{count} disponibilités'
+            zero: "Aucune disponibilité pour le moment"
+            one: "1 disponibilité"
+            other: "%{count} disponibilités"
         new:
           title: "Ajouter une disponibilité"
         create:

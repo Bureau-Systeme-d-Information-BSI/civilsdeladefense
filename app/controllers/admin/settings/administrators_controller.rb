@@ -124,7 +124,7 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
     if @administrator.transfer(params[:transfer_email])
       redirect_to %i[admin settings root], notice: t(".success")
     else
-      redirect_to edit_admin_settings_administrator_path(@administrator), notice: t(".error")
+      render :edit, status: :unprocessable_entity
     end
   end
 

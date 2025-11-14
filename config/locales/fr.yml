@@ -1145,7 +1145,7 @@ fr:
         administrator:
           attributes:
             base:
-              transfer_administrator_not_found: "Administrateur non trouvé"
+              transfer_administrator_not_found: 'Ce mail n’a pas de compte existant, veuillez envoyer une demande de création de compte via le lien suivant : <a href="https://demarches-simplifiees.intradef.gouv.fr/commencer/demande-creation-compte-erecrutement">https://demarches-simplifiees.intradef.gouv.fr/commencer/demande-creation-compte-erecrutement</a>'
         job_application:
           attributes:
             state:

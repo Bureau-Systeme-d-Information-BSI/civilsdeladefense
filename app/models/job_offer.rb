@@ -298,13 +298,15 @@ class JobOffer < ApplicationRecord
     end
   end
 
-  def transfer(email, current_administrator)
-    administrator = Administrator.find_by(email: email.downcase) || Administrator.new(email: email)
-    administrator.inviter ||= current_administrator
-    administrator.organization = current_administrator.organization
-    administrator.save!
-    job_offer_actors.where(administrator: owner).update_all(administrator_id: administrator.id) # rubocop:disable Rails/SkipsModelValidations
-    update!(owner: administrator)
+  def transfer(email)
+    administrator = Administrator.find_by(email:)
+    if administrator.present?
+      job_offer_actors.where(administrator: owner).update_all(administrator_id: administrator.id) # rubocop:disable Rails/SkipsModelValidations
+      update(owner: administrator)
+    else
+      errors.add(:base, :transfer_administrator_not_found)
+      false
+    end
   end
 
   def benefit

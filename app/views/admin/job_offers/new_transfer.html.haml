@@ -7,6 +7,12 @@
             .col-12.col-md-6
               .form-group.rf-input-group
                 = f.label :transfer_email, "Email du nouveau propriétaire de l'offre", class: "form-control-label rf-label"
-                = f.email_field :transfer_email, placeholder: 'Email', class: "form-control rf-input string optional"
+                = combobox_tag :transfer_email, admin_administrator_emails_path, placeholder: t('simple_form.placeholders.administrator.email')
+
+          - if @job_offer.errors.any?
+            .row
+              .col-12
+                .alert.alert-danger= @job_offer.errors.full_messages.to_sentence.html_safe
+
           .form-actions.text-right.mt-4
             = f.submit t('.submit'), class: 'btn btn-primary btn-raised'

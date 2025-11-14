@@ -416,6 +416,23 @@ RSpec.describe JobOffer do
       end
     end
   end
+
+  describe "#transfer" do
+    subject { job_offer.transfer(email) }
+
+    let(:job_offer) { create(:job_offer) }
+    let(:email) { "test@example.com" }
+
+    context "when email is used by an administrator" do
+      before { create(:administrator, email:) }
+
+      it { is_expected.to be(true) }
+    end
+
+    context "when email is not used by an administrator" do
+      it { is_expected.to be(false) }
+    end
+  end
 end
 
 # == Schema Information

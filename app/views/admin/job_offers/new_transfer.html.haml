@@ -12,7 +12,7 @@
           - if @job_offer.errors.any?
             .row
               .col-12
-                .alert.alert-danger= @job_offer.errors.full_messages.to_sentence
+                .alert.alert-danger= @job_offer.errors.full_messages.to_sentence.html_safe
 
           .form-actions.text-right.mt-4
             = f.submit t('.submit'), class: 'btn btn-primary btn-raised'

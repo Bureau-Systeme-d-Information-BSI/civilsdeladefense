@@ -1163,7 +1163,7 @@ fr:
           attributes:
             base:
               csp_or_mobilia: "CSP et/ou MOBILIA doit être rempli"
-              transfer_administrator_not_found: "Administrateur non trouvé"
+              transfer_administrator_not_found: 'Ce mail n’a pas de compte existant, veuillez envoyer une demande de création de compte via le lien suivant : <a href="https://demarches-simplifiees.intradef.gouv.fr/commencer/demande-creation-compte-erecrutement">https://demarches-simplifiees.intradef.gouv.fr/commencer/demande-creation-compte-erecrutement</a>'
             title:
               brackets: "ne doit pas contenir de parenthèse"
               f_h: "doit finir par F/H"

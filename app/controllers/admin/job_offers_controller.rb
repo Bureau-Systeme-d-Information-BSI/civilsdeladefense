@@ -148,9 +148,10 @@ class Admin::JobOffersController < Admin::BaseController
   # POST /admin/job_offers/1/transfer
   # POST /admin/job_offers/1/transfer.json
   def transfer
-    @job_offer.transfer(params[:transfer_email], current_administrator)
-    respond_to do |format|
-      format.html { redirect_to %i[admin job_offers], notice: t(".success") }
+    if @job_offer.transfer(params[:transfer_email])
+      redirect_to %i[admin job_offers], notice: t(".success")
+    else
+      render :new_transfer, status: :unprocessable_entity
     end
   end
 

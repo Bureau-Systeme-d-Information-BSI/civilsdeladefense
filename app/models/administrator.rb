@@ -202,6 +202,7 @@ class Administrator < ApplicationRecord
       owned_job_offers.update_all(owner_id: administrator.id) # rubocop:disable Rails/SkipsModelValidations
       true
     else
+      errors.add(:base, :transfer_administrator_not_found)
       false
     end
   end

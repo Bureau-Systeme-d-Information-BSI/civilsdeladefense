@@ -65,7 +65,6 @@ class Admin::AccountsController < Admin::BaseController
       :first_name,
       :last_name,
       :photo,
-      :email,
       :current_password,
       :password,
       :password_confirmation

@@ -43,7 +43,6 @@ RSpec.describe Admin::AccountsController do
       {
         administrator: {
           first_name:,
-          email:,
           current_password: attributes_for(:administrator)[:password],
           password: new_password,
           password_confirmation: new_password
@@ -51,7 +50,6 @@ RSpec.describe Admin::AccountsController do
       }
     end
     let(:first_name) { "Sebastien" }
-    let(:email) { "test@example.com" }
     let(:new_password) { "A perflectly plausible password 1234!" }
 
     it "redirects to admin_account_path" do
@@ -60,10 +58,6 @@ RSpec.describe Admin::AccountsController do
 
     it "updates the account" do
       expect { update_request }.to change { administrator.reload.first_name }.to(first_name)
-    end
-
-    it "updates the account email" do
-      expect { update_request }.to change { administrator.reload.unconfirmed_email }.to(email)
     end
 
     it "updates the administrator's password" do

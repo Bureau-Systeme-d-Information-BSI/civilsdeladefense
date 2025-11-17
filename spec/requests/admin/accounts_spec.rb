@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Admin::Accounts" do
+RSpec.describe Admin::AccountsController do
   let(:administrator) { create(:administrator) }
 
   before { sign_in administrator }

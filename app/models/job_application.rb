@@ -9,7 +9,7 @@ class JobApplication < ApplicationRecord
   audited except: %i[files_count files_unread_count emails_count
     emails_administrator_unread_count emails_user_unread_count
     administrator_notifications_count
-    skills_fit_job_offer experiences_fit_job_offer]
+    skills_fit_job_offer experiences_fit_job_offer preselection]
   has_associated_audits
 
   include PgSearch::Model
@@ -119,6 +119,31 @@ class JobApplication < ApplicationRecord
     [:contract_received, :affected]
   ]
 
+  def self.ransackable_attributes(auth_object = nil)
+    [
+      "category_id",
+      "employer_id",
+      "state"
+    ]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    [
+      "associated_audits",
+      "audits",
+      "category",
+      "emails",
+      "employer",
+      "job_application_files",
+      "job_offer",
+      "messages",
+      "organization",
+      "profile",
+      "rejection_reason",
+      "user"
+    ]
+  end
+
   def self.state_durations_map(scope)
     Rails.cache.fetch(scope.to_sql, expires_in: 24.hours) do
       query_state_durations_map(scope)
@@ -205,7 +230,7 @@ class JobApplication < ApplicationRecord
   end
 
   def compute_emails_count
-    ary = emails.reload.each_with_object([0, 0]) { |obj, memo|
+    ary = emails.reload.includes(:sender).each_with_object([0, 0]) { |obj, memo|
       if obj.is_unread?
         memo[0] += 1 if obj.sender.is_a?(User)
         memo[1] += 1 if obj.sender.is_a?(Administrator)

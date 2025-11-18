@@ -9,15 +9,17 @@
         .row
           .col-12.col-md-6
             = f.input :first_name
+
           .col-12.col-md-6
             = f.input :last_name
+
         .row
           .col-12.col-md-6
-            = f.input :title, placeholder: false, disabled: true
+            = f.input :email, placeholder: false, disabled: true
+
+        .row
           .col-12.col-md-6
             = f.input :photo
-
-        = f.input :email, placeholder: false, disabled: true
 
         .row
           .col-12.col-md-6
@@ -26,19 +28,30 @@
             .col-12.col-md-6
               %label
                 = t('simple_form.labels.administrator.ace_ate')
-              = f.input :ace, as: :boolean
-              = f.input :ate, as: :boolean
+              .d-flex
+                = f.input :ace, disabled: true, wrapper_html: {class: 'mr-3'}
+                = f.input :ate, disabled: true
 
         - unless @administrator.functional_administrator?
           .row
             .col-12.col-md-6
               = f.input :employers, as: :string, required: true, disabled: true, input_html: {value: @administrator.employers.pluck(:code).join(', ')}
 
-        = f.input :current_password, placeholder: false
+        .row
+          .col-12.col-md-6
+            = f.input :title, placeholder: false, disabled: true
 
-        = f.input :password, placeholder: false
+        .row
+          .col-12.col-md-6
+            = f.input :current_password, placeholder: false
 
-        = f.input :password_confirmation, placeholder: false
+        .row
+          .col-12.col-md-6
+            = f.input :password, placeholder: false
+
+        .row
+          .col-12.col-md-6
+            = f.input :password_confirmation, placeholder: false
 
       .form-actions.text-right.mt-4
         %ul.list-inline.mb-0

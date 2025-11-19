@@ -2,6 +2,17 @@ class CategoryExperienceLevel < ApplicationRecord
   belongs_to :category
   belongs_to :experience_level
   belongs_to :profile
+
+  def self.ransackable_attributes(auth_object = nil)
+    [
+      "category_id",
+      "created_at",
+      "experience_level_id",
+      "id",
+      "profile_id",
+      "updated_at"
+    ]
+  end
 end
 
 # == Schema Information

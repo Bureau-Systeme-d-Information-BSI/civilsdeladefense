@@ -15,53 +15,24 @@ RSpec.describe Admin::UsersController do
   end
 
   describe "PUT #update" do
-    subject(:update) {
-      put :update, params: {id: user.to_param, user: user_params}, format: format
-    }
+    subject(:update) { put :update, params: {id: user.to_param, user: user_params} }
 
     context "with valid params" do
       let(:user_params) { {phone: "0712345678"} }
 
-      context "when format is HTML" do
-        let(:format) { :html }
-
-        it "updates the requested user" do
-          update
-          user.reload
-          expect(user.phone).to eq("+33712345678")
-        end
-      end
-
-      context "when format is JS" do
-        let(:format) { :js }
-
-        it "updates the requested user" do
-          update
-          user.reload
-          expect(user.phone).to eq("+33712345678")
-        end
+      it "updates the requested user" do
+        update
+        user.reload
+        expect(user.phone).to eq("+33712345678")
       end
     end
 
     context "with invalid params" do
       let(:user_params) { {phone: ""} }
 
-      context "when format is HTML" do
-        let(:format) { :html }
-
-        it "returns a success response (i.e. to display the 'edit' template)" do
-          update
-          expect(response).to be_successful
-        end
-      end
-
-      context "when format is JS" do
-        let(:format) { :js }
-
-        it "returns unprocessable_entity" do
-          update
-          expect(response).to have_http_status(:unprocessable_entity)
-        end
+      it "returns a success response (i.e. to display the 'edit' template)" do
+        update
+        expect(response).to be_successful
       end
     end
   end

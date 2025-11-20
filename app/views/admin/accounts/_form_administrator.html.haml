@@ -9,34 +9,49 @@
         .row
           .col-12.col-md-6
             = f.input :first_name
+
           .col-12.col-md-6
             = f.input :last_name
+
         .row
           .col-12.col-md-6
-            = f.input :title, placeholder: false
+            = f.input :email, placeholder: false, disabled: true
+
+        .row
           .col-12.col-md-6
             = f.input :photo
 
-        - if @administrator.employer?
-          - %i(supervisor_administrator grand_employer_administrator).each do |submodel|
-            .my-2= t(".mention_#{submodel}_html")
-            = f.simple_fields_for(submodel, (@administrator.send(submodel) || Administrator.new)) do |submodel_form|
-              - submodel_form.object.ensure_employer_is_set = true
-              = submodel_form.input :ensure_employer_is_set, as: :hidden
-              .row
-                .col-12.col-md-8
-                  = submodel_form.input :email, required: true, label: false, placeholder: true
-                .col-12.col-md-4
-                  - if submodel == :grand_employer_administrator
-                    = submodel_form.association :employer, collection: [@administrator.employer.parent], label: false, include_blank: false, input_html: {class: 'custom-select'}
-                  - else
-                    = submodel_form.association :employer, collection: [@administrator.employer], label: false, include_blank: false, input_html: {class: 'custom-select'}
+        .row
+          .col-12.col-md-6
+            = f.input :roles, as: :string, required: true, disabled: true, input_html: {value: @administrator.roles.map { |role| I18n.t("activerecord.attributes.administrator/roles.#{role}") }.join(', ')}
+          - if @administrator.employment_authority?
+            .col-12.col-md-6
+              %label
+                = t('simple_form.labels.administrator.ace_ate')
+              .d-flex
+                = f.input :ace, disabled: true, wrapper_html: {class: 'mr-3'}
+                = f.input :ate, disabled: true
 
-        = f.input :email, placeholder: false
+        - unless @administrator.functional_administrator?
+          .row
+            .col-12.col-md-6
+              = f.input :employers, as: :string, required: true, disabled: true, input_html: {value: @administrator.employers.pluck(:code).join(', ')}
 
-        = f.input :current_password, placeholder: false
-        = f.input :password, placeholder: false
-        = f.input :password_confirmation, placeholder: false
+        .row
+          .col-12.col-md-6
+            = f.input :title, placeholder: false, disabled: true
+
+        .row
+          .col-12.col-md-6
+            = f.input :current_password, placeholder: false
+
+        .row
+          .col-12.col-md-6
+            = f.input :password, placeholder: false
+
+        .row
+          .col-12.col-md-6
+            = f.input :password_confirmation, placeholder: false
 
       .form-actions.text-right.mt-4
         %ul.list-inline.mb-0

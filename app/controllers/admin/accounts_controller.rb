@@ -62,11 +62,9 @@ class Admin::AccountsController < Admin::BaseController
 
   def administrator_params
     params.require(:administrator).permit(
-      :title,
       :first_name,
       :last_name,
       :photo,
-      :email,
       :current_password,
       :password,
       :password_confirmation

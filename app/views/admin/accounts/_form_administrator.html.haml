@@ -21,18 +21,18 @@
           .col-12.col-md-6
             = f.input :photo
 
-        .row
-          .col-12.col-md-6
-            = f.input :roles, as: :string, required: true, disabled: true, input_html: {value: @administrator.roles.map { |role| I18n.t("activerecord.attributes.administrator/roles.#{role}") }.join(', ')}
-          - if @administrator.employment_authority?
-            .col-12.col-md-6
-              %label
-                = t('simple_form.labels.administrator.ace_ate')
-              .d-flex
-                = f.input :ace, disabled: true, wrapper_html: {class: 'mr-3'}
-                = f.input :ate, disabled: true
-
         - unless @administrator.functional_administrator?
+          .row
+            .col-12.col-md-6
+              = f.input :roles, as: :string, required: true, disabled: true, input_html: {value: @administrator.roles.map { |role| I18n.t("activerecord.attributes.administrator/roles.#{role}") }.join(', ')}
+            - if @administrator.employment_authority?
+              .col-12.col-md-6
+                %label
+                  = t('simple_form.labels.administrator.ace_ate')
+                .d-flex
+                  = f.input :ace, disabled: true, wrapper_html: {class: 'mr-3'}
+                  = f.input :ate, disabled: true
+
           .row
             .col-12.col-md-6
               = f.input :employers, as: :string, required: true, disabled: true, input_html: {value: @administrator.employers.pluck(:code).join(', ')}

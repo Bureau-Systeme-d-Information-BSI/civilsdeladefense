@@ -15,7 +15,7 @@
 
         .row
           .col-12.col-md-6
-            = f.input :email, placeholder: false, disabled: true
+            = f.input :email, placeholder: false, disabled: !@administrator.functional_administrator?
 
         .row
           .col-12.col-md-6

@@ -39,7 +39,7 @@
 
         .row
           .col-12.col-md-6
-            = f.input :title, placeholder: false, disabled: true
+            = f.input :title, placeholder: false, disabled: !@administrator.functional_administrator?
 
         .row
           .col-12.col-md-6

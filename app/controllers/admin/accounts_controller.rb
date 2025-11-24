@@ -68,12 +68,13 @@ class Admin::AccountsController < Admin::BaseController
       :current_password,
       :password,
       :password_confirmation,
-      :email
+      :email,
+      :title
     )
     if @administrator.functional_administrator?
       admin_params
     else
-      admin_params.except(:email)
+      admin_params.except(:email, :title)
     end
   end
 

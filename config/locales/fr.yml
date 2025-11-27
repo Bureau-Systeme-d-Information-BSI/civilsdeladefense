@@ -82,6 +82,7 @@ fr:
     preview: "Aperçu"
     publish: "Publier"
     reactivate: "Réactiver"
+    reject: "Refuser"
     resend_confirmation_instructions: "Renvoyer le courriel d'activation"
     save: "Enregistrer"
     search: "Rechercher"
@@ -279,6 +280,8 @@ fr:
         success: "Vos informations ont été mises à jour"
         success_new_email: "Votre courriel a bien été modifié. Vérifiez votre boîte pour confirmer votre nouveau courriel."
     job_applications:
+      rejection_form:
+        confirm: "Confirmez-vous le refus ou désistement du candidat ?"
       show:
         user_deleted: Ce compte candidat a été supprimé
       index:
@@ -318,6 +321,7 @@ fr:
       job_application_activity:
         title: "Activité et commentaires"
         title_state: "État de la candidature"
+        title_rejection_reason: "Refus ou désistement"
         activities:
           creation_html: "<span class='user-name'>%{name}</span> a postulé"
           change_state_html: "<span class='user-name'>%{admin_name}</span> a déplacé <span class='user-name'>%{name}</span> dans la colonne “%{state_name}”"
@@ -353,6 +357,9 @@ fr:
         help: "Téléverser un fichier à la place de l'utilisateur"
       uncheck:
         success: "Fichier invalidé !"
+    rejections:
+      create:
+        success: "Candidature refusée ou désistée"
     job_offers:
       new_transfer:
         submit: "Transférer"
@@ -1152,6 +1159,7 @@ fr:
               cant_accept_before_delay: "Un délai de 30 jours après la publication de l'offre sur CSP doit être respecté avant d'accepter une candidature"
               complete_files_before_draft_contract: "Tous les documents doivent être téléversés et validés avant la rédaction du contrat"
               cant_be_accepted_twice: 'Cette action n''est pas possible. Ce candidat est déjà à l''état "Retenu" dans une offre d''emploi.'
+              immutable_rejected: "Cette candidature a été refusée, son état ne peut pas être modifié"
             cover_letter_content_type:
               invalid: "PDF uniquement, max 2Mo"
             resume_content_type:
@@ -1206,6 +1214,7 @@ fr:
       employer:
         code: "Libellé"
       job_application:
+        rejected: "Refusé·e"
         state: "État"
         state/start: "N'a encore aucune candidature"
         state/initial: "Nouveau"

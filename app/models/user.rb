@@ -62,6 +62,8 @@ class User < ApplicationRecord
       .where(category_experience_levels: {experience_level_id: experience_level_ids})
   }
 
+  scope :rejected, -> { joins(:job_applications).where(job_applications: {rejected: true}) }
+
   attr_accessor :is_deleted, :delete_photo
 
   before_validation :build_profile, if: -> { profile.nil? }
@@ -70,7 +72,7 @@ class User < ApplicationRecord
   before_destroy :mark_job_applications_as_read
 
   def self.ransackable_scopes(auth_object = nil)
-    %i[concerned by_category by_experience_level]
+    %i[concerned by_category by_experience_level rejected]
   end
 
   def full_name

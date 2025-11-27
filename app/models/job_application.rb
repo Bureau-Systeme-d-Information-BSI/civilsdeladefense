@@ -4,6 +4,7 @@
 class JobApplication < ApplicationRecord
   include Readable
   include Preselectable
+  include Rejectable
 
   include AASM
   audited except: %i[files_count files_unread_count emails_count
@@ -33,7 +34,6 @@ class JobApplication < ApplicationRecord
   belongs_to :organization
   belongs_to :user, optional: true
   accepts_nested_attributes_for :user
-  belongs_to :rejection_reason, optional: true
   belongs_to :employer
   belongs_to :category, optional: true
 
@@ -53,27 +53,20 @@ class JobApplication < ApplicationRecord
 
   before_validation :set_employer
   before_save :compute_notifications_counter
-  before_save :cleanup_rejection_reason, unless: proc { |ja| ja.rejected_state? }
   after_update :notify_new_state, if: -> { new_state_requires_notification? }
-  after_update :notify_rejected, if: -> { rejected_state_requires_notification? }
 
-  FINISHED_STATES = %w[rejected phone_meeting_rejected after_meeting_rejected affected].freeze
-  REJECTED_STATES = %w[rejected phone_meeting_rejected after_meeting_rejected].freeze
+  FINISHED_STATES = %w[affected].freeze
   PROCESSING_STATES = %w[initial phone_meeting to_be_met].freeze
-  FILLED_STATES = %w[
-    accepted contract_drafting contract_feedback_waiting contract_received affected
-  ].freeze
+  FILLED_STATES = %w[accepted contract_drafting contract_feedback_waiting contract_received affected].freeze
+
   NOTIFICATION_STATES = %w[
     phone_meeting to_be_met accepted contract_drafting contract_feedback_waiting contract_received affected
   ].freeze
 
   enum state: {
     initial: 0,
-    rejected: 1,
     phone_meeting: 2,
-    phone_meeting_rejected: 3,
     to_be_met: 5,
-    after_meeting_rejected: 6,
     accepted: 7,
     contract_drafting: 8,
     contract_feedback_waiting: 9,
@@ -83,28 +76,21 @@ class JobApplication < ApplicationRecord
 
   aasm column: :state, enum: true do
     state :initial, initial: true
-    state :rejected
     state :phone_meeting,
       before_enter: proc { notify_new_state(:phone_meeting) }
-    state :phone_meeting_rejected
     state :to_be_met
-    state :after_meeting_rejected
     state :accepted
     state :contract_drafting
     state :contract_feedback_waiting
     state :contract_received
     state :affected
-
-    event :reject do
-      transitions from: [:initial], to: :rejected
-    end
   end
 
   def self.end_user_states_regrouping
     @end_user_states_regrouping ||= [
-      %i[initial rejected],
-      %i[phone_meeting phone_meeting_rejected],
-      %i[to_be_met after_meeting_rejected],
+      %i[initial],
+      %i[phone_meeting],
+      %i[to_be_met],
       [:accepted],
       [:contract_drafting],
       [:contract_feedback_waiting],
@@ -114,11 +100,8 @@ class JobApplication < ApplicationRecord
   end
 
   STATE_DURATION = [
-    [:initial, :rejected],
     [:initial, :phone_meeting],
-    [:phone_meeting, :phone_meeting_rejected],
     [:phone_meeting, :to_be_met],
-    [:to_be_met, :after_meeting_rejected],
     [:to_be_met, :accepted],
     [:accepted, :contract_drafting],
     [:contract_drafting, :contract_feedback_waiting],
@@ -184,10 +167,6 @@ class JobApplication < ApplicationRecord
 
   def set_employer
     self.employer_id ||= job_offer.employer_id
-  end
-
-  def cleanup_rejection_reason
-    self.rejection_reason = nil
   end
 
   def compute_notifications_counter!
@@ -283,10 +262,6 @@ class JobApplication < ApplicationRecord
     ApplicantNotificationsMailer.new_email(email.id).deliver_now
   end
 
-  def rejected_state?
-    REJECTED_STATES.include?(state)
-  end
-
   def cant_accept_before_delay
     return if state.to_s != "accepted"
     return if state_was.to_s == "accepted"
@@ -315,21 +290,13 @@ class JobApplication < ApplicationRecord
 
   def new_state_requires_notification? = saved_change_to_state? && NOTIFICATION_STATES.include?(state.to_s)
 
-  def notify_rejected = ApplicantNotificationsMailer.with(user:, job_offer:).notify_rejected.deliver_later
-
-  def rejected_state_requires_notification? = saved_change_to_state? && REJECTED_STATES.include?(state.to_s)
-
   class << self
-    def rejected_states
-      REJECTED_STATES
-    end
-
     def processing_states
       PROCESSING_STATES
     end
 
     def selected_states
-      states.keys - %w[initial rejected]
+      states.keys - %w[initial]
     end
 
     def phone_meeting_gt_states

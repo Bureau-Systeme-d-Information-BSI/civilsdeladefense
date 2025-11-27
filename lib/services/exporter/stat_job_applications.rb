@@ -8,7 +8,6 @@ class Exporter::StatJobApplications < Exporter::Base
     )
     fill_filters
     fill_filling
-    fill_rejection
     fill_application
     fill_state_duration
   end
@@ -60,34 +59,6 @@ class Exporter::StatJobApplications < Exporter::Base
       I18n.t("#{i18n_key}.title_job_applications_affected_number_html"),
       stat_data[:per_state].values_at("affected").compact.sum
     )
-  end
-
-  def fill_rejection
-    add_row("Statistiques des candidats refusés")
-    add_row(
-      "",
-      I18n.t("#{i18n_key}.title_job_applications_all_rejected_number_html"),
-      stat_data[:per_state].values_at(*JobApplication.rejected_states).compact.sum
-    )
-    JobApplication.rejected_states.each do |rejected_state|
-      add_row(
-        "",
-        I18n.t("#{i18n_key}.title_job_applications_#{rejected_state}_number_html"),
-        stat_data[:per_state].values_at(rejected_state).compact.sum
-      )
-    end
-    add_row("", "Motif des refus")
-    total = stat_data[:per_rejection_reason].values.sum
-    stat_data[:per_rejection_reason].each_with_index do |(k, v), index|
-      txt = stat_data[:rejection_reasons].detect { |x| x.id == k }&.name || I18n.t("unknown")
-      percentage = (v * 100.0) / total
-      add_row(
-        "",
-        "",
-        txt,
-        number_to_percentage(percentage, precision: 2)
-      )
-    end
   end
 
   def fill_application

@@ -5,7 +5,7 @@
     - klasses = []
     - klasses << "active-step" if i <= current_number
     - klasses << "step-done" if i < current_number
-    - klasses << "step-rejected" if job_application.rejected_state? && i == current_number
+    - klasses << "step-rejected" if job_application.rejected && i == current_number
     .rf-stepper-step{class: klasses}
       .rf-stepper-circle
         %span= i

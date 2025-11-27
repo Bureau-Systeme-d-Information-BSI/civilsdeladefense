@@ -49,6 +49,9 @@ application.register("password-visibility", PasswordVisibilityController)
 import RegulationController from "./regulation_controller"
 application.register("regulation", RegulationController)
 
+import RejectionController from "./rejection_controller"
+application.register("rejection", RejectionController)
+
 import RemoveRecipientController from "./remove_recipient_controller"
 application.register("remove-recipient", RemoveRecipientController)
 

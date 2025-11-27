@@ -18,6 +18,23 @@ RSpec.describe User do
     it { is_expected.to have_many(:job_applications).inverse_of(:user) }
   end
 
+  describe "scopes" do
+    describe ".rejected" do
+      subject { described_class.rejected }
+
+      let!(:rejected_user) { create(:user) }
+      let!(:unrejected_user) { create(:user) }
+
+      before do
+        create(:job_application, user: rejected_user, rejected: true, rejection_reason: create(:rejection_reason))
+        create(:job_application, user: unrejected_user, rejected: false)
+      end
+
+      it { is_expected.to include(rejected_user) }
+      it { is_expected.not_to include(unrejected_user) }
+    end
+  end
+
   it "can be suspended" do
     text = "Bad guy"
     expect(user.suspended_at).to be_nil

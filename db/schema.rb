@@ -513,6 +513,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_02_02_153058) do
     t.uuid "archiving_reason_id"
     t.uuid "level_id"
     t.date "application_deadline"
+    t.integer "financial_estimate_job_applications_count", default: 0, null: false
     t.index ["archiving_reason_id"], name: "index_job_offers_on_archiving_reason_id"
     t.index ["bop_id"], name: "index_job_offers_on_bop_id"
     t.index ["category_id"], name: "index_job_offers_on_category_id"

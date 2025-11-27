@@ -1157,9 +1157,11 @@ fr:
           attributes:
             state:
               cant_accept_before_delay: "Un délai de 30 jours après la publication de l'offre sur CSP doit être respecté avant d'accepter une candidature"
+              cant_accept_remaining_initial_job_applications: "Toutes les nouvelles candidatures doivent être traitées avant d'accepter une candidature"
               complete_files_before_draft_contract: "Tous les documents doivent être téléversés et validés avant la rédaction du contrat"
               cant_be_accepted_twice: 'Cette action n''est pas possible. Ce candidat est déjà à l''état "Retenu" dans une offre d''emploi.'
               immutable_rejected: "Cette candidature a été refusée, son état ne peut pas être modifié"
+              cant_skip_state: "Impossible passer à l’étape supérieure sans la validation de l’étape précédente."
             cover_letter_content_type:
               invalid: "PDF uniquement, max 2Mo"
             resume_content_type:
@@ -1217,17 +1219,18 @@ fr:
         rejected: "Refusé·e"
         state: "État"
         state/start: "N'a encore aucune candidature"
-        state/initial: "Nouveau"
+        state/initial: "Nouvelle candidature"
         state/rejected: "Refusé·e"
         state/phone_meeting: "Entretien téléphonique"
         state/phone_meeting_rejected: "Refusé·e après e. tél."
-        state/to_be_met: "À rencontrer"
+        state/to_be_met: "Entretien d'embauche"
         state/after_meeting_rejected: "Rencontré·e mais refusé·e"
-        state/accepted: "Retenu·e"
-        state/contract_drafting: "Rédaction contrat"
-        state/contract_feedback_waiting: "Attente retour contrat"
-        state/contract_received: "Contrat reçu"
-        state/affected: "Affecté·e"
+        state/financial_estimate: "Estimation financière"
+        state/accepted: "Candidature retenue"
+        state/contract_drafting: "Validation dossier complet"
+        state/contract_feedback_waiting: "Contrat"
+        state/contract_received: "Dossier de paie"
+        state/affected: "Prise de poste"
         state/end_user_state_0: "Candidature soumise"
         state/end_user_state_1: "Examen candidature"
         state/end_user_state_2: "Entretien téléphonique"

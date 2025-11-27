@@ -3,17 +3,8 @@
 require "rails_helper"
 
 RSpec.describe Admin::JobApplicationsController do
-  # This should return the minimal set of attributes required to create a valid
-  # JobApplication. As you add validations to JobApplication, be sure to
-  # adjust the attributes here as well.
-  let(:valid_attributes) do
-    attributes_for(:job_application)
-  end
-
-  let(:invalid_attributes) do
-    {skills_fit_job_offer: nil}
-  end
-
+  let(:valid_attributes) { attributes_for(:job_application) }
+  let(:invalid_attributes) { {skills_fit_job_offer: nil} }
   let!(:job_application) { create(:job_application) }
 
   context "when logged in as 'admin' administrator" do
@@ -59,24 +50,22 @@ RSpec.describe Admin::JobApplicationsController do
     end
 
     describe "PUT #change_state" do
-      context "with valid params" do
-        it "updates the state of the requested job_application" do
-          put :change_state, params: {id: job_application.to_param, state: "affected"}
-          job_application.reload
-          expect(job_application.state).to eq("affected")
-        end
+      subject(:change_state) { put :change_state, params: {id: job_application.to_param, state:} }
 
-        it "redirects to the admin_job_application" do
-          put :change_state, params: {id: job_application.to_param, state: "affected"}
-          expect(response).to redirect_to([:admin, job_application])
-        end
+      before { change_state }
+
+      context "with valid params" do
+        let(:state) { "phone_meeting" }
+
+        it { expect(job_application.reload.state).to eq(state) }
+
+        it { expect(response).to redirect_to([:admin, job_application]) }
       end
 
       context "with invalid params" do
-        it "returns an error page" do
-          put :change_state, params: {id: job_application.to_param, state: "non_existing_state"}
-          expect(response).to have_http_status(:bad_request)
-        end
+        let(:state) { "non_existing_state" }
+
+        it { expect(response).to have_http_status(:bad_request) }
       end
     end
   end
@@ -128,28 +117,6 @@ RSpec.describe Admin::JobApplicationsController do
         it "redirects to the admin_job_application" do
           put :update, params: {id: job_application.to_param, job_application: valid_attributes}
           expect(response).to redirect_to([:admin, job_application])
-        end
-      end
-    end
-
-    describe "PUT #change_state" do
-      context "with valid params" do
-        it "updates the state of the requested job_application" do
-          put :change_state, params: {id: job_application.to_param, state: "affected"}
-          job_application.reload
-          expect(job_application.state).to eq("affected")
-        end
-
-        it "redirects to the admin_job_application" do
-          put :change_state, params: {id: job_application.to_param, state: "affected"}
-          expect(response).to redirect_to([:admin, job_application])
-        end
-      end
-
-      context "with invalid params" do
-        it "returns an error page" do
-          put :change_state, params: {id: job_application.to_param, state: "non_existing_state"}
-          expect(response).to have_http_status(:bad_request)
         end
       end
     end

@@ -3,22 +3,19 @@
   - if user
     - full_name = user.full_name
     .font-weight-bold.text-secondary.mb-3
-      = fa_icon('comments', class: 'text-secondary')
+      = fa_icon('square-poll-horizontal', class: 'text-secondary')
       = t('.title_state')
 
-    - if can? :manage, @job_application
-      - url = [:change_state, :admin, @job_application]
-      = simple_form_for url, method: :patch, wrapper: :inline_form, html: { class: 'edit_job_application_state form-inline auto-submit w-100 px-1 py-1', data: {flash: true}} do |f|
-        - opts = @job_application.aasm.states.map{ |state| [JobApplication.human_attribute_name("state/#{ state }"), state] }
-        = f.input :state, collection: opts, label: false, prompt: :translate, wrapper: :custom_multi_select_full_wide
-    - else
-      = link_to @job_application.aasm.human_state, "#", class: "btn btn-raised w-100 text-left"
+    - url = [:change_state, :admin, @job_application]
+    = simple_form_for url, method: :patch, wrapper: :inline_form, html: { class: 'edit_job_application_state form-inline auto-submit', data: {flash: true}} do |f|
+      - opts = @job_application.aasm.states.map{ |state| [JobApplication.human_attribute_name("state/#{ state }"), state] }
+      = f.input :state, collection: opts, label: false, prompt: :translate, wrapper: :custom_multi_select_full_wide, disabled: (@job_application.rejected || !can?(:manage, @job_application))
 
-    - if @job_application.rejected_state?
-      .my-3
-      - url = [:admin, @job_application]
-      = simple_form_for url, method: :patch, remote: true, wrapper: :inline_form, html: { class: 'form-inline auto-submit w-100 px-1 py-1', data: {flash: true}} do |f|
-        = f.input :rejection_reason_id, collection: RejectionReason.all, label: false, prompt: :translate, wrapper: :custom_multi_select_full_wide
+    .font-weight-bold.text-secondary.mb-3.mt-4
+      = fa_icon('xmark', class: 'text-secondary')
+      = t('.title_rejection_reason')
+
+    = render 'admin/job_applications/rejection_form', job_application: @job_application
 
     .font-weight-bold.text-secondary.mb-3.mt-4
       = fa_icon('comments', class: 'text-secondary')

@@ -17,7 +17,7 @@ FactoryBot.define do
     trait :with_photo do
       photo {
         Rack::Test::UploadedFile.new(
-          Rails.root.join("spec/fixtures/files/avatar.jpg"),
+          Rails.root.join("spec/fixtures/files/user.jpg"),
           "image/jpg"
         )
       }

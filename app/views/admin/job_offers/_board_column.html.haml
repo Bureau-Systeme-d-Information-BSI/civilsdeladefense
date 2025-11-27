@@ -1,7 +1,7 @@
 .list{id: "job-application--state-#{state_name}", data: {state: state_name}}
   %header
-    .d-flex.flex-row.justify-content-between 
-      %div 
+    .d-flex.flex-row.justify-content-between
+      %div
         = JobApplication.human_attribute_name("state/#{state_name}")
         = surround '(', ')' do
           %span.total= job_applications.size

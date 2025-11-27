@@ -15,7 +15,7 @@
     .statistic__name
       = t('.title_job_applications_processed_number_html')
     .statistic__value
-      - concerned_states = JobApplication.states.keys - JobApplication.rejected_states
+      - concerned_states = JobApplication.states.keys
       = @per_state.values_at(*concerned_states).compact.sum
   .col-12.col-md-3.statistic__block
     .statistic__name

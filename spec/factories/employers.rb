@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :employer do
     name { Faker::Company.unique.name }
-    code { SecureRandom.hex(3) }
+    code { Faker::Alphanumeric.unique.alpha(number: 10).upcase }
   end
 end
 

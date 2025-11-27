@@ -37,7 +37,6 @@ class Administrator < ApplicationRecord
   accepts_nested_attributes_for :supervisor_administrator
   accepts_nested_attributes_for :grand_employer_administrator
 
-<<<<<<< HEAD
   has_many :preferred_users, through: :preferred_users_list
   has_many :preferred_users_lists, dependent: :destroy
 
@@ -55,8 +54,6 @@ class Administrator < ApplicationRecord
     ["employer"]
   end
 
-=======
->>>>>>> 12369854 (Update administrators requirements (#2012))
   def supervisor_administrator_attributes=(attributes)
     return if attributes[:email].blank?
 

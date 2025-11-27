@@ -75,7 +75,7 @@ RSpec.describe Securable do
 
       context "when the content type is not pdf" do
         let(:content) {
-          Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/files/avatar.jpg"), "image/jpeg")
+          Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/files/user.jpg"), "image/jpeg")
         }
 
         it { expect { commit }.not_to have_enqueued_job { SecureContentJob } }

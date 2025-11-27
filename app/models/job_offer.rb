@@ -105,11 +105,8 @@ class JobOffer < ApplicationRecord
   enum most_advanced_job_applications_state: {
     start: -1,
     initial: 0,
-    rejected: 1,
     phone_meeting: 2,
-    phone_meeting_rejected: 3,
     to_be_met: 5,
-    after_meeting_rejected: 6,
     accepted: 7,
     contract_drafting: 8,
     contract_feedback_waiting: 9,

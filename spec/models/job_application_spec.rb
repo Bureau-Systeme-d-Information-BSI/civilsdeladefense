@@ -50,69 +50,11 @@ RSpec.describe JobApplication do
       end
 
       context "when the state is not a notification state" do
-        let(:state) { "phone_meeting_rejected" }
+        let(:state) { "initial" }
 
         it { expect { state_change }.not_to have_enqueued_mail(ApplicantNotificationsMailer, :notify_new_state) }
       end
     end
-
-    describe "#notify_rejected" do
-      subject(:rejection) { job_application.update!(state:) }
-
-      described_class::REJECTED_STATES.each do |rejected_state|
-        context "when the state is a rejected state (#{rejected_state})" do
-          let(:state) { rejected_state }
-
-          it { expect { rejection }.to have_enqueued_mail(ApplicantNotificationsMailer, :notify_rejected) }
-        end
-      end
-
-      context "when the state is not a rejected state" do
-        let(:state) { "phone_meeting" }
-
-        it { expect { rejection }.not_to have_enqueued_mail(ApplicantNotificationsMailer, :notify_rejected) }
-      end
-    end
-  end
-
-  it "correcties tell rejected state" do
-    expect(job_application.rejected_state?).to be(false)
-
-    job_application.reject!
-    expect(job_application.rejected_state?).to be(true)
-
-    job_application.phone_meeting!
-    expect(job_application.rejected_state?).to be(false)
-
-    job_application.phone_meeting_rejected!
-    expect(job_application.rejected_state?).to be(true)
-
-    job_application.to_be_met!
-    expect(job_application.rejected_state?).to be(false)
-
-    job_application.after_meeting_rejected!
-    expect(job_application.rejected_state?).to be(true)
-
-    job_offer.update(published_at: 40.days.before)
-    job_application.accepted!
-    expect(job_application.rejected_state?).to be(false)
-
-    job_application.contract_drafting!
-    expect(job_application.rejected_state?).to be(false)
-
-    job_application.contract_feedback_waiting!
-    expect(job_application.rejected_state?).to be(false)
-
-    job_application.contract_received!
-    expect(job_application.rejected_state?).to be(false)
-
-    job_application.affected!
-    expect(job_application.rejected_state?).to be(false)
-  end
-
-  it "correcties tell rejected states from JobOffer class" do
-    ary = %w[rejected phone_meeting_rejected after_meeting_rejected]
-    expect(described_class.rejected_states).to match_array(ary)
   end
 
   describe "files_to_be_provided" do

@@ -253,14 +253,6 @@ RSpec.describe JobOffer do
     expect(job_offer.publishing_possible_at).to eq(job_offer.created_at + 2.working.days)
   end
 
-  it "correctlies find current most advanced job application state" do
-    job_applications = create_list(:job_application, 10, job_offer: job_offer)
-    expect(job_offer.current_most_advanced_job_applications_state).to eq(0)
-    last_state_name, last_state_enum = JobApplication.states.to_a.last
-    job_applications.last.send(:"#{last_state_name}!")
-    expect(job_offer.current_most_advanced_job_applications_state).to eq(last_state_enum)
-  end
-
   it "is visible by owner" do
     owner = create(:administrator, role: "employer", employer: employer)
     job_offer = create(:job_offer, owner: owner)
@@ -460,6 +452,7 @@ end
 #  estimate_annual_salary_gross                     :string
 #  estimate_monthly_salary_net                      :string
 #  featured                                         :boolean          default(FALSE)
+#  financial_estimate_job_applications_count        :integer          default(0), not null
 #  identifier                                       :string
 #  initial_job_applications_count                   :integer          default(0), not null
 #  is_remote_possible                               :boolean

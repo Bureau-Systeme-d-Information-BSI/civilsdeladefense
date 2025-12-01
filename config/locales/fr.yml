@@ -849,9 +849,9 @@ fr:
             one: "1 type de fichier"
             other: "%{count} types de fichier"
         new:
-          title: "Ajouter un nouveau type de fichier"
+          title: "Paramétrage du fichier"
         edit:
-          title: "Modifier le type de fichier '%{name}'"
+          title: "Paramétrage du fichier '%{name}'"
         create:
           success: "Type de fichier créé !"
         update:

@@ -100,7 +100,7 @@ fr:
       job_application_file_type:
         kind: "Type"
         content: "Fichier"
-        from_state: "État à partir duquel ce type de fichier est visible"
+        from_state: "État de début"
         by_default: "Visible dès que l'état défini précédemment est atteint ?"
       job_offer:
         title: "Intitulé du poste"

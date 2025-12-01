@@ -64,7 +64,6 @@ fr:
         foreign_language_level: Niveau de langue étrangère
         category_html: "<span>Domaine professionnel <abbr title='obligatoire'>*</abbr></span>"
         level: "Categorie / Niveau de l'offre"
-        spontaneous: "Candidature spontanée"
         job_applications_count: "Candidatures"
       administrator:
         current_password: "Mot de passe actuel"

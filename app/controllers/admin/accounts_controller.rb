@@ -61,14 +61,21 @@ class Admin::AccountsController < Admin::BaseController
   end
 
   def administrator_params
-    params.require(:administrator).permit(
+    admin_params = params.require(:administrator).permit(
       :first_name,
       :last_name,
       :photo,
       :current_password,
       :password,
-      :password_confirmation
+      :password_confirmation,
+      :email,
+      :title
     )
+    if @administrator.functional_administrator?
+      admin_params
+    else
+      admin_params.except(:email, :title)
+    end
   end
 
   def administrator_params_without_password

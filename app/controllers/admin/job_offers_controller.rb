@@ -74,14 +74,12 @@ class Admin::JobOffersController < Admin::BaseController
   end
 
   def add_actor
-    job_offer_id = params[:job_offer_id]
-    @job_offer = job_offer_id.present? ? JobOffer.find(job_offer_id) : JobOffer.new
-    @administrator = find_and_attach_administrator
-    @administrator.organization = current_organization
-    if @administrator.valid?
+    @job_offer = params[:job_offer_id].present? ? JobOffer.find(params[:job_offer_id]) : JobOffer.new
+    @administrator = find_administrator_and_build_job_offer_actor(@job_offer, params[:email].downcase, params[:role])
+    if @administrator.present?
       render action: "add_actor", layout: false
     else
-      render json: @administrator.errors, status: :unprocessable_entity
+      render :add_actor_error
     end
   end
 
@@ -241,9 +239,12 @@ class Admin::JobOffersController < Admin::BaseController
     fields << {job_offer_actors_attributes: job_offer_actors_attributes}
   end
 
-  def find_and_attach_administrator
-    existing_administrator = Administrator.find_by!(email: params[:email].downcase)
-    root_object = @job_offer.job_offer_actors.build(role: params[:role])
-    root_object.administrator = existing_administrator
+  def find_administrator_and_build_job_offer_actor(job_offer, email, role)
+    return nil if email.blank?
+
+    administrator = Administrator.find_by!(email:)
+    job_offer_actor = job_offer.job_offer_actors.build(role:)
+    job_offer_actor.administrator = administrator
+    administrator
   end
 end

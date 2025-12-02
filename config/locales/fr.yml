@@ -361,6 +361,8 @@ fr:
       create:
         success: "Candidature refusée ou désistée"
     job_offers:
+      add_actor:
+        admin_not_found_html: 'Ce mail n’a pas de compte existant, veuillez envoyer une demande de création de compte via le lien suivant : <a href="https://demarches-simplifiees.intradef.gouv.fr/commencer/demande-creation-compte-erecrutement">https://demarches-simplifiees.intradef.gouv.fr/commencer/demande-creation-compte-erecrutement</a>'
       new_transfer:
         submit: "Transférer"
       transfer:

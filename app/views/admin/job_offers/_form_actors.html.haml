@@ -6,6 +6,7 @@
       .card
         .card-header.with-subheader
           .card-title= t('.card_subtitle')
+          .alert.alert-danger.d-none{id: "admin-not-found"}= t('admin.job_offers.add_actor.admin_not_found_html')
         - JobOfferActor.roles.each do |actor_role, weight|
           .card-subheader
             .card-title

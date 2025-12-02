@@ -45,12 +45,16 @@ RSpec.describe Admin::AccountsController do
           first_name:,
           current_password: attributes_for(:administrator)[:password],
           password: new_password,
-          password_confirmation: new_password
+          password_confirmation: new_password,
+          email:,
+          title:
         }
       }
     end
     let(:first_name) { "Sebastien" }
     let(:new_password) { "A perflectly plausible password 1234!" }
+    let(:email) { "new_email@example.com" }
+    let(:title) { "Functional Administrator" }
 
     it "redirects to admin_account_path" do
       expect(update_request).to redirect_to(admin_account_path)
@@ -68,6 +72,30 @@ RSpec.describe Admin::AccountsController do
       allow_any_instance_of(Administrator).to receive(:update).and_return(false)
 
       expect(update_request).to render_template(:show)
+    end
+
+    describe "email update" do
+      context "when the admin is functional administrator" do
+        it { expect { update_request }.to change { administrator.reload.unconfirmed_email }.to(email) }
+      end
+
+      context "when the admin is not functional administrator" do
+        before { administrator.update!(roles: [:payroll_manager]) }
+
+        it { expect { update_request }.not_to change { administrator.reload.unconfirmed_email } }
+      end
+    end
+
+    describe "title update" do
+      context "when the admin is functional administrator" do
+        it { expect { update_request }.to change { administrator.reload.title }.to(title) }
+      end
+
+      context "when the admin is not functional administrator" do
+        before { administrator.update!(roles: [:payroll_manager]) }
+
+        it { expect { update_request }.not_to change { administrator.reload.title } }
+      end
     end
   end
 end

@@ -8,7 +8,6 @@ module JobOfferStateActions
     @job_offer = JobOffer.new(job_offer_params)
     @job_offer.owner = current_administrator
     @job_offer.organization = current_organization
-    @job_offer.employer = current_administrator.employer unless current_administrator.admin?
     @job_offer.job_offer_actors.each do |job_offer_actor|
       if job_offer_actor.administrator
         job_offer_actor.administrator.inviter ||= current_administrator

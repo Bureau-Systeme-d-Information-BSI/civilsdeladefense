@@ -1,5 +1,5 @@
 - job_application_files = @job_application.job_application_files.to_a
-- job_application_file_types = JobApplicationFileType.by_default_before(@job_application.state)
+- job_application_file_types = JobApplicationFileType.for_states_around(@job_application.state)
 - job_application_file_types.each do |job_application_file_type|
   - job_application_file = job_application_files.detect { |x| x.job_application_file_type == job_application_file_type }
   - job_application_file ||= @job_application.job_application_files.build(job_application_file_type: job_application_file_type)

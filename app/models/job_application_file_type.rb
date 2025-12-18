@@ -13,7 +13,7 @@ class JobApplicationFileType < ApplicationRecord
   #####################################
   # Validations
 
-  validates :name, :kind, :from_state, presence: true
+  validates :name, :kind, :from_state, :to_state, presence: true
 
   #####################################
   # Enums
@@ -25,10 +25,12 @@ class JobApplicationFileType < ApplicationRecord
   }
 
   enum from_state: JobApplication.states
+  enum to_state: JobApplication.states, _prefix: true
 
-  scope :by_default_before, ->(state) {
+  scope :for_states_around, ->(state) {
     where(by_default: true, kind: :applicant_provided)
       .where("from_state <= ?", JobApplication.states[state])
+      .where("to_state > ?", JobApplication.states[state])
   }
 
   scope :by_default, ->(state) {
@@ -61,6 +63,7 @@ end
 #  name              :string
 #  notification      :boolean          default(TRUE)
 #  position          :integer
+#  to_state          :integer          default("affected")
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #

@@ -4,6 +4,7 @@ FactoryBot.define do
   factory :job_application_file_type do
     name { "CV" }
     from_state { :initial }
+    to_state { :phone_meeting }
     kind { :applicant_provided }
     by_default { true }
   end
@@ -22,6 +23,7 @@ end
 #  name              :string
 #  notification      :boolean          default(TRUE)
 #  position          :integer
+#  to_state          :integer          default("affected")
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #

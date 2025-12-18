@@ -353,18 +353,21 @@ cover_letter = JobApplicationFileType.create!(
   name: "Lettre de Motivation",
   kind: :applicant_provided,
   from_state: :initial,
+  to_state: :accepted,
   by_default: true
 )
 JobApplicationFileType.create!(
   name: "Copie des diplômes",
   kind: :applicant_provided,
   from_state: :accepted,
+  to_state: :contract_received,
   by_default: true
 )
 JobApplicationFileType.create!(
   name: "Justificatif de domicile de moins de 6 mois",
   kind: :applicant_provided,
   from_state: :accepted,
+  to_state: :contract_received,
   by_default: true
 )
 JobApplicationFileType.create!(
@@ -372,6 +375,7 @@ JobApplicationFileType.create!(
   description: "Carte nationale d’identité recto/verso ou passeport",
   kind: :applicant_provided,
   from_state: :accepted,
+  to_state: :affected,
   by_default: true
 )
 description = "Attestation de carte vitale ou copie de carte vitale " \
@@ -381,6 +385,7 @@ JobApplicationFileType.create!(
   description: description,
   kind: :applicant_provided,
   from_state: :accepted,
+  to_state: :contract_received,
   by_default: true
 )
 description = "Certificat médical d’aptitude fourni par le médecin de l’établissement" \
@@ -390,6 +395,7 @@ JobApplicationFileType.create!(
   description: description,
   kind: :applicant_provided,
   from_state: :accepted,
+  to_state: :contract_received,
   by_default: true
 )
 description = "RIB original au format BIC/IBAN comportant le logo de la banque au nom du " \
@@ -399,6 +405,7 @@ JobApplicationFileType.create!(
   description: description,
   kind: :applicant_provided,
   from_state: :accepted,
+  to_state: :affected,
   by_default: true
 )
 name = "Copie d'un titre de transport (si vous postulez en Île-de-france)"
@@ -406,6 +413,7 @@ JobApplicationFileType.create!(
   name: name,
   kind: :applicant_provided,
   from_state: :accepted,
+  to_state: :contract_feedback_waiting,
   by_default: true
 )
 description = "Fiche de poste comportant le code poste ALLIANCE actif et vacant au moment " \
@@ -415,18 +423,21 @@ JobApplicationFileType.create!(
   description: description,
   kind: :manager_provided,
   from_state: :accepted,
+  to_state: :contract_feedback_waiting,
   by_default: true
 )
 JobApplicationFileType.create!(
   name: "FICE transmis à officier sécurité",
   kind: :check_only_admin_only,
   from_state: :accepted,
+  to_state: :affected,
   by_default: true
 )
 JobApplicationFileType.create!(
   name: "Demande de B2",
   kind: :check_only_admin_only,
   from_state: :accepted,
+  to_state: :affected,
   by_default: true
 )
 JobApplicationFileType.create!(
@@ -434,6 +445,7 @@ JobApplicationFileType.create!(
   description: "Seulement si marié",
   kind: :applicant_provided,
   from_state: :accepted,
+  to_state: :contract_feedback_waiting,
   by_default: false
 )
 

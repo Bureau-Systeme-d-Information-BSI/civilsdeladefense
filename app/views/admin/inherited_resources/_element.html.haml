@@ -10,6 +10,8 @@
     %td
       = JobApplication.human_attribute_name("state/#{element.from_state}")
     %td
+      = JobApplication.human_attribute_name("state/#{element.to_state}")
+    %td
       = JobApplicationFileType.human_attribute_name("kind/#{element.kind}")
     %td
       = element.by_default? ? t('.affirmative') : t('.negative')

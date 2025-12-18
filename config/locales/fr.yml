@@ -1249,8 +1249,6 @@ fr:
         kind/applicant_provided: "Fourni par le candidat"
         kind/manager_provided: "Fourni par le gestionnaire"
         kind/employer_provided: "Fourni par l'employeur"
-        kind/template: "Modèle de fichiers"
-        kind/admin_only: "Seulement admin"
         kind/check_only_admin_only: "Fichier géré hors outil"
       job_offer:
         title: "Intitulé du poste"

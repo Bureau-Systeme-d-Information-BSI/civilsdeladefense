@@ -21,23 +21,19 @@ class JobApplicationFileType < ApplicationRecord
     applicant_provided: 10,
     manager_provided: 11,
     employer_provided: 12,
-    template: 20,
-    admin_only: 30,
     check_only_admin_only: 40
   }
 
   enum from_state: JobApplication.states
 
   scope :by_default_before, ->(state) {
-    where(
-      by_default: true, kind: %i[applicant_provided template]
-    ).where("from_state <= ?", JobApplication.states[state])
+    where(by_default: true, kind: :applicant_provided)
+      .where("from_state <= ?", JobApplication.states[state])
   }
 
   scope :by_default, ->(state) {
-    where(
-      by_default: true, kind: %i[applicant_provided template]
-    ).where(from_state: JobApplication.states[state])
+    where(by_default: true, kind: :applicant_provided)
+      .where(from_state: JobApplication.states[state])
   }
 
   #####################################

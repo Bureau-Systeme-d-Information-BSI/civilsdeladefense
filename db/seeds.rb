@@ -413,7 +413,7 @@ description = "Fiche de poste comportant le code poste ALLIANCE actif et vacant 
 JobApplicationFileType.create!(
   name: "Fiche de poste",
   description: description,
-  kind: :admin_only,
+  kind: :manager_provided,
   from_state: :accepted,
   by_default: true
 )

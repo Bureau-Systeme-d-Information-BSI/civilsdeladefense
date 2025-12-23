@@ -1245,6 +1245,7 @@ fr:
       job_application_file_type:
         from_state: "État de début"
         to_state: "État de fin"
+        required: "Obligatoire"
         kind: "Type"
         by_default: "Par défaut"
         kind/applicant_provided: "Fourni par le candidat"

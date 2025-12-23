@@ -37,6 +37,7 @@ end
 #  name              :string
 #  notification      :boolean          default(TRUE)
 #  position          :integer
+#  required          :boolean          default(FALSE), not null
 #  to_state          :integer
 #  to_state          :integer          default("affected")
 #  created_at        :datetime         not null

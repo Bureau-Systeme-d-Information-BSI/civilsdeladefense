@@ -88,7 +88,7 @@ class JobApplication < ApplicationRecord
     initial: 0,
     phone_meeting: 2,
     to_be_met: 5,
-    financial_estimate: 12,
+    financial_estimate: 6,
     accepted: 7,
     contract_drafting: 8,
     contract_feedback_waiting: 9,

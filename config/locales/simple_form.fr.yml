@@ -102,6 +102,8 @@ fr:
         from_state: "État de début"
         to_state: "État de fin"
         required: "Obligatoire"
+        required_from_state: "Obligatoire à partir de l'état"
+        required_to_state: "Plus obligatoire à partir de l'état"
       job_offer:
         title: "Intitulé du poste"
         professional_category: "Catégorie professionnelle"
@@ -248,6 +250,8 @@ fr:
       job_application_file_type:
         from_state: "État à partir duquel le fichier sera visible"
         to_state: "État à partir duquel le fichier ne sera plus visible"
+        required_from_state: "Si le fichier n’est pas inséré, vous ne pourrez pas faire passer le candidat à l'étape suivante"
+        required_to_state: "Le fichier ne sera plus visible"
       organization:
         privacy_policy_url: "Ce lien est utilisé dans le formulaire de soumission d'une candidature"
         days_before_publishing: "Indiquez un nombre de jours ouvrés. Laissez à 0 ou vide pour supprimer complètement le délai avant publication"

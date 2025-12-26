@@ -14,6 +14,7 @@ class JobApplicationFileType < ApplicationRecord
   # Validations
 
   validates :name, :kind, :from_state, :to_state, presence: true
+  validates :required_from_state, :required_to_state, if: -> { required? }, presence: true
 
   #####################################
   # Enums
@@ -26,6 +27,8 @@ class JobApplicationFileType < ApplicationRecord
 
   enum from_state: JobApplication.states
   enum to_state: JobApplication.states, _prefix: true
+  enum required_from_state: JobApplication.states, _prefix: true
+  enum required_to_state: JobApplication.states, _prefix: true
 
   scope :for_states_around, ->(state) {
     where(kind: :applicant_provided)
@@ -34,6 +37,11 @@ class JobApplicationFileType < ApplicationRecord
   }
 
   scope :for_applicant, ->(state) { where(kind: :applicant_provided, from_state: JobApplication.states[state]) }
+  scope :required, ->(state) {
+    where(required: true)
+      .where("required_from_state < ?", JobApplication.states[state])
+      .where("required_to_state > ?", JobApplication.states[state])
+  }
 
   #####################################
   # Relations
@@ -51,16 +59,18 @@ end
 #
 # Table name: job_application_file_types
 #
-#  id                :uuid             not null, primary key
-#  content_file_name :string
-#  description       :string
-#  from_state        :integer
-#  kind              :integer
-#  name              :string
-#  notification      :boolean          default(TRUE)
-#  position          :integer
-#  to_state          :integer          default("affected")
-#  required          :boolean          default(FALSE), not null
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
+#  id                  :uuid             not null, primary key
+#  content_file_name   :string
+#  description         :string
+#  from_state          :integer
+#  kind                :integer
+#  name                :string
+#  notification        :boolean          default(TRUE)
+#  position            :integer
+#  required            :boolean          default(FALSE), not null
+#  required_from_state :integer          default(0)
+#  required_to_state   :integer          default(11)
+#  to_state            :integer          default("affected")
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
 #

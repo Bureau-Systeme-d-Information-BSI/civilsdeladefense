@@ -170,6 +170,25 @@ RSpec.describe JobApplication do
         expect(job_application.contract_drafting!).to be(true)
       end
     end
+
+    describe "complete_required_files" do
+      subject(:chante_state) { job_application.to_be_met! }
+
+      let!(:job_application) { create(:job_application, state: :phone_meeting) }
+      let!(:job_application_file_type) do
+        create(:job_application_file_type, required: true, required_from_state: :phone_meeting, required_to_state: :accepted)
+      end
+
+      context "when required files are present" do
+        before { create(:job_application_file, job_application:, job_application_file_type:) }
+
+        it { is_expected.to be(true) }
+      end
+
+      context "when required files are missing" do
+        it { expect { chante_state }.to raise_error(ActiveRecord::RecordInvalid) }
+      end
+    end
   end
 end
 

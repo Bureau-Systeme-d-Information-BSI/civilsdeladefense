@@ -85,6 +85,9 @@ application.register("subcheckbox", SubcheckboxController)
 import TimeoutableController from "./timeoutable_controller"
 application.register("timeoutable", TimeoutableController)
 
+import ToggleVisibilityController from "./toggle_visibility_controller"
+application.register("toggle-visibility", ToggleVisibilityController)
+
 import TrixEditorController from "./trix_editor_controller"
 application.register("trix-editor", TrixEditorController)
 

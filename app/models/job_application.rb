@@ -51,6 +51,7 @@ class JobApplication < ApplicationRecord
   validate :cant_accept_remaining_initial_job_applications
   validate :cant_skip_state, on: :update
   validate :complete_files_before_draft_contract
+  validate :complete_required_files
   validate :cant_be_accepted_twice, if: -> { accepted? }, unless: -> { has_accepted_other_job_application? }
 
   before_validation :set_employer
@@ -327,6 +328,12 @@ class JobApplication < ApplicationRecord
     return if (default_types - validated_types).blank?
 
     errors.add(:state, :complete_files_before_draft_contract)
+  end
+
+  def complete_required_files
+    required_types = JobApplicationFileType.required(state)
+    files = job_application_files.where(job_application_file_type: required_types)
+    errors.add(:state, :required_files_missing) if required_types.count != files.count
   end
 
   def cant_be_accepted_twice = errors.add(:state, :cant_be_accepted_twice)

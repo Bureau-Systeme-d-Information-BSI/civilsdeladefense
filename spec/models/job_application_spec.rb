@@ -79,18 +79,9 @@ RSpec.describe JobApplication do
 
   describe "files_to_be_provided" do
     before do
-      create(
-        :job_application_file_type,
-        name: "CV", from_state: :initial, kind: :applicant_provided, by_default: true
-      )
-      create(
-        :job_application_file_type,
-        name: "LM", from_state: :initial, kind: :applicant_provided, by_default: true
-      )
-      create(
-        :job_application_file_type,
-        name: "FILE", from_state: :to_be_met, kind: :applicant_provided, by_default: true
-      )
+      create(:job_application_file_type, name: "CV", from_state: :initial, kind: :applicant_provided)
+      create(:job_application_file_type, name: "LM", from_state: :initial, kind: :applicant_provided)
+      create(:job_application_file_type, name: "FILE", from_state: :to_be_met, kind: :applicant_provided)
     end
 
     let(:job_application) { create(:job_application, job_offer:, state: :phone_meeting) }
@@ -140,23 +131,10 @@ RSpec.describe JobApplication do
   describe "complete_files_before_draft_contract" do
     let(:job_application) { create(:job_application, state: :accepted) }
     let!(:jaft_1) do
-      create(
-        :job_application_file_type,
-        name: "File 1", from_state: :accepted, kind: :applicant_provided, by_default: true
-      )
+      create(:job_application_file_type, name: "File 1", from_state: :accepted, kind: :applicant_provided)
     end
     let!(:jaft_2) do
-      create(
-        :job_application_file_type,
-        name: "File 2", from_state: :to_be_met, kind: :applicant_provided, by_default: true
-      )
-    end
-
-    before do
-      create(
-        :job_application_file_type,
-        name: "File 3", from_state: :accepted, kind: :applicant_provided, by_default: false
-      )
+      create(:job_application_file_type, name: "File 2", from_state: :to_be_met, kind: :applicant_provided)
     end
 
     context "when no files are filled" do
@@ -167,14 +145,8 @@ RSpec.describe JobApplication do
 
     context "when files are fill but not validated" do
       before do
-        create(
-          :job_application_file,
-          job_application: job_application, job_application_file_type: jaft_1
-        )
-        create(
-          :job_application_file,
-          job_application: job_application, job_application_file_type: jaft_2
-        )
+        create(:job_application_file, job_application: job_application, job_application_file_type: jaft_1)
+        create(:job_application_file, job_application: job_application, job_application_file_type: jaft_2)
       end
 
       it "cant pass to contract_drafting" do
@@ -194,7 +166,7 @@ RSpec.describe JobApplication do
         )
       end
 
-      it "cant pass to contract_drafting" do
+      it "can pass to contract_drafting" do
         expect(job_application.contract_drafting!).to be(true)
       end
     end

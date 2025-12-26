@@ -6,6 +6,6 @@ class Admin::Settings::JobApplicationFileTypesController < Admin::Settings::Inhe
   protected
 
   def permitted_fields
-    %i[name description kind content from_state to_state required by_default notification]
+    %i[name description kind content from_state to_state required notification]
   end
 end

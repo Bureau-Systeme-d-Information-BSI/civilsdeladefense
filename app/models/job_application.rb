@@ -246,7 +246,7 @@ class JobApplication < ApplicationRecord
 
       if existing_file
         result[:must_be_provided_files] << existing_file
-      elsif (current_state_as_val >= from_state_as_val) && file_type.by_default
+      elsif current_state_as_val >= from_state_as_val
         virgin = job_application_files.build(job_application_file_type: file_type)
         result[:must_be_provided_files] << virgin
       else
@@ -321,7 +321,7 @@ class JobApplication < ApplicationRecord
   def complete_files_before_draft_contract
     return if state.to_s != "contract_drafting"
 
-    default_types = JobApplicationFileType.by_default(:accepted).pluck(:id)
+    default_types = JobApplicationFileType.for_applicant(:accepted).pluck(:id)
     validated_types = job_application_files.where(is_validated: true).pluck(:job_application_file_type_id)
 
     return if (default_types - validated_types).blank?

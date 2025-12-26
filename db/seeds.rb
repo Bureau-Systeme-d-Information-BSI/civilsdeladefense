@@ -353,30 +353,26 @@ cover_letter = JobApplicationFileType.create!(
   name: "Lettre de Motivation",
   kind: :applicant_provided,
   from_state: :initial,
-  to_state: :accepted,
-  by_default: true
+  to_state: :accepted
 )
 JobApplicationFileType.create!(
   name: "Copie des diplômes",
   kind: :applicant_provided,
   from_state: :accepted,
-  to_state: :contract_received,
-  by_default: true
+  to_state: :contract_received
 )
 JobApplicationFileType.create!(
   name: "Justificatif de domicile de moins de 6 mois",
   kind: :applicant_provided,
   from_state: :accepted,
-  to_state: :contract_received,
-  by_default: true
+  to_state: :contract_received
 )
 JobApplicationFileType.create!(
   name: "Carte d'identité",
   description: "Carte nationale d’identité recto/verso ou passeport",
   kind: :applicant_provided,
   from_state: :accepted,
-  to_state: :affected,
-  by_default: true
+  to_state: :affected
 )
 description = "Attestation de carte vitale ou copie de carte vitale " \
   "(mentionnant le n° INSEE)"
@@ -385,8 +381,7 @@ JobApplicationFileType.create!(
   description: description,
   kind: :applicant_provided,
   from_state: :accepted,
-  to_state: :contract_received,
-  by_default: true
+  to_state: :contract_received
 )
 description = "Certificat médical d’aptitude fourni par le médecin de l’établissement" \
   " ou à défaut par un médecin agréé"
@@ -395,8 +390,7 @@ JobApplicationFileType.create!(
   description: description,
   kind: :applicant_provided,
   from_state: :accepted,
-  to_state: :contract_received,
-  by_default: true
+  to_state: :contract_received
 )
 description = "RIB original au format BIC/IBAN comportant le logo de la banque au nom du " \
   " signataire du contrat (les RIB sur compte épargne ne sont pas acceptés)"
@@ -405,16 +399,14 @@ JobApplicationFileType.create!(
   description: description,
   kind: :applicant_provided,
   from_state: :accepted,
-  to_state: :affected,
-  by_default: true
+  to_state: :affected
 )
 name = "Copie d'un titre de transport (si vous postulez en Île-de-france)"
 JobApplicationFileType.create!(
   name: name,
   kind: :applicant_provided,
   from_state: :accepted,
-  to_state: :contract_feedback_waiting,
-  by_default: true
+  to_state: :contract_feedback_waiting
 )
 description = "Fiche de poste comportant le code poste ALLIANCE actif et vacant au moment " \
   "de la date d’effet du recrutement"
@@ -423,30 +415,26 @@ JobApplicationFileType.create!(
   description: description,
   kind: :manager_provided,
   from_state: :accepted,
-  to_state: :contract_feedback_waiting,
-  by_default: true
+  to_state: :contract_feedback_waiting
 )
 JobApplicationFileType.create!(
   name: "FICE transmis à officier sécurité",
   kind: :check_only_admin_only,
   from_state: :accepted,
-  to_state: :affected,
-  by_default: true
+  to_state: :affected
 )
 JobApplicationFileType.create!(
   name: "Demande de B2",
   kind: :check_only_admin_only,
   from_state: :accepted,
-  to_state: :affected,
-  by_default: true
+  to_state: :affected
 )
 JobApplicationFileType.create!(
   name: "Copie du livret de famille",
   description: "Seulement si marié",
   kind: :applicant_provided,
   from_state: :accepted,
-  to_state: :contract_feedback_waiting,
-  by_default: false
+  to_state: :contract_feedback_waiting
 )
 
 job_offer = JobOffer.new { |j|

@@ -6,7 +6,6 @@ FactoryBot.define do
     from_state { :initial }
     to_state { :phone_meeting }
     kind { :applicant_provided }
-    by_default { true }
   end
 end
 
@@ -15,7 +14,6 @@ end
 # Table name: job_application_file_types
 #
 #  id                :uuid             not null, primary key
-#  by_default        :boolean          default(FALSE)
 #  content_file_name :string
 #  description       :string
 #  from_state        :integer

@@ -102,7 +102,6 @@ fr:
         from_state: "État de début"
         to_state: "État de fin"
         required: "Obligatoire"
-        by_default: "Visible dès que l'état défini précédemment est atteint ?"
       job_offer:
         title: "Intitulé du poste"
         professional_category: "Catégorie professionnelle"

@@ -28,15 +28,12 @@ class JobApplicationFileType < ApplicationRecord
   enum to_state: JobApplication.states, _prefix: true
 
   scope :for_states_around, ->(state) {
-    where(by_default: true, kind: :applicant_provided)
+    where(kind: :applicant_provided)
       .where("from_state <= ?", JobApplication.states[state])
       .where("to_state > ?", JobApplication.states[state])
   }
 
-  scope :by_default, ->(state) {
-    where(by_default: true, kind: :applicant_provided)
-      .where(from_state: JobApplication.states[state])
-  }
+  scope :for_applicant, ->(state) { where(kind: :applicant_provided, from_state: JobApplication.states[state]) }
 
   #####################################
   # Relations
@@ -55,7 +52,6 @@ end
 # Table name: job_application_file_types
 #
 #  id                :uuid             not null, primary key
-#  by_default        :boolean          default(FALSE)
 #  content_file_name :string
 #  description       :string
 #  from_state        :integer

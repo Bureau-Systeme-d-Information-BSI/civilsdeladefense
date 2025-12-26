@@ -15,7 +15,6 @@
           = f.input :from_state, collection: states, prompt: true
           = f.input :to_state, collection: states, prompt: true
           = f.input :required, as: :radio_buttons
-          = f.input :by_default
           = f.input :notification
         - elsif resource.is_a?(Cmg)
           = f.input :email

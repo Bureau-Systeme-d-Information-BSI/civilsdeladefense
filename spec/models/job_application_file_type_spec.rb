@@ -29,7 +29,6 @@ end
 # Table name: job_application_file_types
 #
 #  id                :uuid             not null, primary key
-#  by_default        :boolean          default(FALSE)
 #  content_file_name :string
 #  description       :string
 #  from_state        :integer

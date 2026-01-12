@@ -218,70 +218,87 @@ Employer.create!(name: "DRH-MD", code: "DRH-MD", parent: other_employer_parent)
 
 super_admin = Administrator.new(
   email: "admin@example.com",
-  first_name: "Admin",
-  last_name: "e-recrutement",
-  password: ENV["SEED_PASSWORD"],
-  password_confirmation: ENV["SEED_PASSWORD"],
+  first_name: "Functional",
+  last_name: "Administrator",
+  password: "Password1234!",
+  password_confirmation: "Password1234!",
   very_first_account: true,
   role: "admin",
   roles: ["functional_administrator"],
   organization: organization,
-  title: "Administrateur"
+  title: "Administrateur fonctionnel"
 )
 super_admin.skip_confirmation_notification!
 super_admin.save!
 super_admin.confirm
 
-employer_admin_1 = Administrator.new(
-  email: "employeur1@example.com",
-  first_name: "Employeur 1",
-  last_name: "e-recrutement",
-  password: ENV["SEED_PASSWORD"],
-  password_confirmation: ENV["SEED_PASSWORD"],
+employer_recruiter = Administrator.new(
+  email: "employer@example.com",
+  first_name: "Employer",
+  last_name: "Recruiter",
+  password: "Password1234!",
+  password_confirmation: "Password1234!",
   very_first_account: true,
   role: "employer",
   roles: ["employer_recruiter"],
   employers: [employer],
   organization: organization,
-  title: "Employeur"
+  title: "Employeur recruteur"
 )
-employer_admin_1.skip_confirmation_notification!
-employer_admin_1.save!
-employer_admin_1.confirm
+employer_recruiter.skip_confirmation_notification!
+employer_recruiter.save!
+employer_recruiter.confirm
 
-employer_admin_2 = Administrator.new(
-  email: "employeur2@example.com",
-  first_name: "Employeur 2",
-  last_name: "e-recrutement",
-  password: ENV["SEED_PASSWORD"],
-  password_confirmation: ENV["SEED_PASSWORD"],
+employment_authority = Administrator.new(
+  email: "authority@example.com",
+  first_name: "Employment",
+  last_name: "Authority",
+  password: "Password1234!",
+  password_confirmation: "Password1234!",
   very_first_account: true,
   role: "employer",
-  roles: ["employer_recruiter"],
+  roles: ["employment_authority"],
   employers: [employer],
   organization: organization,
-  title: "Employeur"
+  title: "Autorité d'emploi"
 )
-employer_admin_2.skip_confirmation_notification!
-employer_admin_2.save!
-employer_admin_2.confirm
+employment_authority.skip_confirmation_notification!
+employment_authority.save!
+employment_authority.confirm
 
-brh_admin = Administrator.new(
-  email: "brh@example.com",
-  first_name: "BRH",
-  last_name: "e-recrutement",
-  password: ENV["SEED_PASSWORD"],
-  password_confirmation: ENV["SEED_PASSWORD"],
+hr_manager = Administrator.new(
+  email: "hr@example.com",
+  first_name: "HR",
+  last_name: "manager",
+  password: "Password1234!",
+  password_confirmation: "Password1234!",
   very_first_account: true,
-  role: "employer",
-  roles: ["employer_recruiter"],
+  role: "brh",
+  roles: ["hr_manager"],
   employers: [employer],
   organization: organization,
-  title: "BRH"
+  title: "Gestionnaire RH"
 )
-brh_admin.skip_confirmation_notification!
-brh_admin.save!
-brh_admin.confirm
+hr_manager.skip_confirmation_notification!
+hr_manager.save!
+hr_manager.confirm
+
+payroll_manager = Administrator.new(
+  email: "payroll@example.com",
+  first_name: "Payroll",
+  last_name: "Manager",
+  password: "Password1234!",
+  password_confirmation: "Password1234!",
+  very_first_account: true,
+  role: "brh",
+  roles: ["payroll_manager"],
+  employers: [employer],
+  organization: organization,
+  title: "Gestionnaire GA PAIE"
+)
+payroll_manager.skip_confirmation_notification!
+payroll_manager.save!
+payroll_manager.confirm
 
 Category.create!(name: "Administration")
 Category.create!(name: "Archives")
@@ -498,14 +515,14 @@ job_offer = JobOffer.new { |j|
   j.sector = Sector.first
   j.estimate_monthly_salary_net = "2500 - 3000€"
   j.estimate_annual_salary_gross = "39000 - 46000€"
-  j.job_offer_actors.build(administrator: employer_admin_1, role: :employer)
-  j.job_offer_actors.build(administrator: brh_admin, role: :brh)
+  j.job_offer_actors.build(administrator: employer_recruiter, role: :employer)
+  j.job_offer_actors.build(administrator: hr_manager, role: :brh)
 }
 job_offer.save!
 
 job_offer2 = job_offer.dup
 job_offer2.title = "Conducteur·rice d’Opérations F/H"
-job_offer2.owner = employer_admin_1
+job_offer2.owner = employer_recruiter
 job_offer2.contract_type = ContractType.where(name: "CDI").first
 job_offer2.contract_duration = nil
 job_offer2.contract_start_on = 2.months.since
@@ -513,12 +530,12 @@ job_offer2.category = sub_sub_infrastructure
 job_offer2.level = level_2
 job_offer2.identifier = nil
 job_offer2.sequential_id = nil
-job_offer2.job_offer_actors.build(administrator: employer_admin_1, role: :employer)
-job_offer2.job_offer_actors.build(administrator: brh_admin, role: :brh)
+job_offer2.job_offer_actors.build(administrator: employer_recruiter, role: :employer)
+job_offer2.job_offer_actors.build(administrator: hr_manager, role: :brh)
 job_offer2.save!
 
 job_offer3 = job_offer.dup
-job_offer3.owner = employer_admin_2
+job_offer3.owner = employment_authority
 job_offer3.contract_start_on = 3.months.since
 job_offer3.title = "Administrateur Systèmes et Réseaux F/H"
 job_offer3.category = sub_sub_infrastructure
@@ -526,12 +543,12 @@ job_offer3.level = level_1
 job_offer3.location = "Brest, FR"
 job_offer3.identifier = nil
 job_offer3.sequential_id = nil
-job_offer3.job_offer_actors.build(administrator: employer_admin_2, role: :employer)
-job_offer3.job_offer_actors.build(administrator: brh_admin, role: :brh)
+job_offer3.job_offer_actors.build(administrator: employment_authority, role: :employer)
+job_offer3.job_offer_actors.build(administrator: hr_manager, role: :brh)
 job_offer3.save!
 
 job_offer4 = job_offer.dup
-job_offer4.owner = employer_admin_2
+job_offer4.owner = employment_authority
 job_offer4.contract_start_on = 4.months.since
 job_offer4.title = "Responsable Exploitation Réseaux F/H"
 job_offer4.category = sub_sub_infrastructure
@@ -539,12 +556,12 @@ job_offer4.level = level_2
 job_offer4.location = "Brest, FR"
 job_offer4.identifier = nil
 job_offer4.sequential_id = nil
-job_offer4.job_offer_actors.build(administrator: employer_admin_2, role: :employer)
-job_offer4.job_offer_actors.build(administrator: brh_admin, role: :brh)
+job_offer4.job_offer_actors.build(administrator: employment_authority, role: :employer)
+job_offer4.job_offer_actors.build(administrator: hr_manager, role: :brh)
 job_offer4.save!
 
 job_offer5 = job_offer.dup
-job_offer5.owner = employer_admin_2
+job_offer5.owner = employment_authority
 job_offer5.contract_start_on = 5.months.since
 job_offer5.title = "Responsable conduite de projets F/H"
 job_offer5.category = sub_sub_infrastructure
@@ -552,12 +569,12 @@ job_offer5.level = level_1
 job_offer5.location = "Brest, FR"
 job_offer5.identifier = nil
 job_offer5.sequential_id = nil
-job_offer5.job_offer_actors.build(administrator: employer_admin_2, role: :employer)
-job_offer5.job_offer_actors.build(administrator: brh_admin, role: :brh)
+job_offer5.job_offer_actors.build(administrator: employment_authority, role: :employer)
+job_offer5.job_offer_actors.build(administrator: hr_manager, role: :brh)
 job_offer5.save!
 
 job_offer6 = job_offer.dup
-job_offer6.owner = employer_admin_2
+job_offer6.owner = employment_authority
 job_offer6.contract_start_on = 6.months.since
 job_offer6.title = "Data analyst F/H"
 job_offer6.category = sub_sub_infrastructure
@@ -565,8 +582,8 @@ job_offer6.level = level_1
 job_offer6.location = "Rennes, FR"
 job_offer6.identifier = nil
 job_offer6.sequential_id = nil
-job_offer6.job_offer_actors.build(administrator: employer_admin_2, role: :employer)
-job_offer6.job_offer_actors.build(administrator: brh_admin, role: :brh)
+job_offer6.job_offer_actors.build(administrator: employment_authority, role: :employer)
+job_offer6.job_offer_actors.build(administrator: hr_manager, role: :brh)
 job_offer6.save!
 
 job_offer.publish!
@@ -584,8 +601,8 @@ user = User.new(
   first_name: "Colin",
   last_name: "Pan",
   organization: organization,
-  password: ENV["SEED_PASSWORD"],
-  password_confirmation: ENV["SEED_PASSWORD"],
+  password: "Password1234!",
+  password_confirmation: "Password1234!",
   terms_of_service: true,
   certify_majority: true,
   photo: photo,
@@ -643,8 +660,8 @@ user_candidate_of_all = User.new(
   organization: organization,
   first_name: "Nicolas",
   last_name: "Agoini",
-  password: ENV["SEED_PASSWORD"],
-  password_confirmation: ENV["SEED_PASSWORD"],
+  password: "Password1234!",
+  password_confirmation: "Password1234!",
   terms_of_service: true,
   certify_majority: true,
   current_position: "Développeur",
@@ -690,8 +707,8 @@ JobOffer.where.not(contract_duration_id: nil).where.not(id: [job_offer4.id, job_
       organization: organization,
       first_name: Faker::Name.first_name,
       last_name: Faker::Name.last_name,
-      password: ENV["SEED_PASSWORD"],
-      password_confirmation: ENV["SEED_PASSWORD"],
+      password: "Password1234!",
+      password_confirmation: "Password1234!",
       terms_of_service: true,
       certify_majority: true,
       current_position: "Développeur",

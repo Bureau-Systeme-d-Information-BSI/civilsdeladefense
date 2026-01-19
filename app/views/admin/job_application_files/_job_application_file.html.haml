@@ -40,8 +40,9 @@
       = link_to [:uncheck, :admin, @job_application, file], class: klasses, title: t('.uncheck'), remote: true, method: :post do
         = fa_icon "xmark"
       = render partial: "/admin/job_application_files/job_application_file_upload", locals: {job_application: job_application, job_application_file: file, file_type: type}
-      - url = [:admin, job_application, file, {format: :pdf}]
-      = link_to t('.download'), url, target: "_blank", class: "btn btn-primary btn-raised btn-sm mb-0"
+      - if file.downloadable?
+        - url = [:admin, job_application, file, {format: :pdf}]
+        = link_to t('.download'), url, target: "_blank", class: "btn btn-primary btn-raised btn-sm mb-0"
     - elsif file.persisted?
       = render partial: "/admin/job_application_files/job_application_file_upload", locals: {job_application: job_application, job_application_file: file, file_type: type}
       - url = [:admin, job_application, file]

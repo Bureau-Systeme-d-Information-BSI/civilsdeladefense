@@ -1161,7 +1161,7 @@ fr:
               cant_accept_before_delay: "Un délai de 30 jours après la publication de l'offre sur CSP doit être respecté avant d'accepter une candidature"
               cant_accept_remaining_initial_job_applications: "Toutes les nouvelles candidatures doivent être traitées avant d'accepter une candidature"
               complete_files_before_draft_contract: "Tous les documents doivent être téléversés et validés avant la rédaction du contrat"
-              required_files_missing: "Des documents obligatoires sont manquants"
+              required_files_missing: "Des documents obligatoires sont manquants ou non validés"
               cant_be_accepted_twice: 'Cette action n''est pas possible. Ce candidat est déjà à l''état "Retenu" dans une offre d''emploi.'
               immutable_rejected: "Cette candidature a été refusée, son état ne peut pas être modifié"
               cant_skip_state: "Impossible passer à l’étape supérieure sans la validation de l’étape précédente."

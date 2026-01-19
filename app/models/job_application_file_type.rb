@@ -39,7 +39,7 @@ class JobApplicationFileType < ApplicationRecord
   scope :for_applicant, ->(state) { where(kind: :applicant_provided, from_state: JobApplication.states[state]) }
   scope :required, ->(state) {
     where(required: true)
-      .where("required_from_state < ?", JobApplication.states[state])
+      .where("required_from_state <= ?", JobApplication.states[state])
       .where("required_to_state > ?", JobApplication.states[state])
   }
 

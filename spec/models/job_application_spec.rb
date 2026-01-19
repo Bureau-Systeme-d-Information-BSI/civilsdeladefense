@@ -171,7 +171,7 @@ RSpec.describe JobApplication do
       end
     end
 
-    describe "complete_required_files" do
+    describe "required_files_are_validated" do
       subject(:chante_state) { job_application.to_be_met! }
 
       let!(:job_application) { create(:job_application, state: :phone_meeting) }
@@ -179,10 +179,16 @@ RSpec.describe JobApplication do
         create(:job_application_file_type, required: true, required_from_state: :phone_meeting, required_to_state: :accepted)
       end
 
-      context "when required files are present" do
-        before { create(:job_application_file, job_application:, job_application_file_type:) }
+      context "when required files are present and validated" do
+        before { create(:job_application_file, job_application:, job_application_file_type:).check! }
 
         it { is_expected.to be(true) }
+      end
+
+      context "when required files are present but not validated" do
+        before { create(:job_application_file, job_application:, job_application_file_type:).uncheck! }
+
+        it { expect { chante_state }.to raise_error(ActiveRecord::RecordInvalid) }
       end
 
       context "when required files are missing" do

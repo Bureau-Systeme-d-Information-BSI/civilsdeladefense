@@ -197,6 +197,18 @@ class Administrator < ApplicationRecord
     self.marked_for_deactivation_on = nil
   end
 
+  def can_upload?(job_application_file_type)
+    if functional_administrator?
+      true
+    elsif (hr_manager? || payroll_manager?) && job_application_file_type.manager_provided?
+      true
+    elsif employer_recruiter? && job_application_file_type.employer_provided?
+      true
+    else
+      false
+    end
+  end
+
   private
 
   def set_first_name = self.first_name = first_name_from(email)

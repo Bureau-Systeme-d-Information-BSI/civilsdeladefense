@@ -354,7 +354,7 @@ fr:
         download: "Télécharger"
         do_not_ask: "Ne plus demander"
       job_application_file_upload:
-        help: "Téléverser un fichier à la place de l'utilisateur"
+        help: "Téléverser un fichier"
       uncheck:
         success: "Fichier invalidé !"
     rejections:

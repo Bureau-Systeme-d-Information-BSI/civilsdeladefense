@@ -1,10 +1,6 @@
 - file = job_application_file
 - type = file.job_application_file_type
 - job_application = file.job_application
-- # binding.pry if type.name == "CV"
-- # binding.pry if type.name == "Carte "
-- # binding.pry if type.name == "Pièce facultatif"
-- # binding.pry if type.name == "Bulletins paie "
 .d-flex.align-items-center.border.py-1.px-2.file{id: dom_id(file)}
   - if file.document_content.present?
     .text-truncate= type.name

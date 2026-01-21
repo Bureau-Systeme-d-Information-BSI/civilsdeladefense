@@ -4,8 +4,8 @@ FactoryBot.define do
   factory :job_application_file_type do
     name { "CV" }
     from_state { :initial }
+    to_state { :phone_meeting }
     kind { :applicant_provided }
-    by_default { true }
   end
 end
 
@@ -13,16 +13,18 @@ end
 #
 # Table name: job_application_file_types
 #
-#  id                :uuid             not null, primary key
-#  by_default        :boolean          default(FALSE)
-#  content_file_name :string
-#  description       :string
-#  from_state        :integer
-#  kind              :integer
-#  name              :string
-#  notification      :boolean          default(TRUE)
-#  position          :integer
-#  spontaneous       :boolean          default(FALSE)
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
+#  id                  :uuid             not null, primary key
+#  content_file_name   :string
+#  description         :string
+#  from_state          :integer
+#  kind                :integer
+#  name                :string
+#  notification        :boolean          default(TRUE)
+#  position            :integer
+#  required            :boolean          default(FALSE), not null
+#  required_from_state :integer          default(0)
+#  required_to_state   :integer          default(11)
+#  to_state            :integer          default("affected")
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
 #

@@ -14,6 +14,8 @@ class JobApplicationFile < ApplicationRecord
   validates :content, presence: true, unless: proc { |file| file.do_not_provide_immediately }
   validates :job_application_file_type_id, uniqueness: {scope: :job_application_id} # rubocop:disable Rails/UniqueValidationWithoutIndex
 
+  delegate :state, to: :job_application, prefix: true
+
   before_validation do
     if job_application_file_existing_id
       existing = JobApplicationFile.find_by(id: job_application_file_existing_id)
@@ -40,6 +42,12 @@ class JobApplicationFile < ApplicationRecord
   def waiting_validation?
     is_validated == 0
   end
+
+  def downloadable? = job_application_state < max_downloadable_state
+
+  private
+
+  def max_downloadable_state = job_application_file_type.required_to_state
 end
 
 # == Schema Information

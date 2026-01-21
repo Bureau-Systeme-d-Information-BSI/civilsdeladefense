@@ -382,13 +382,15 @@ ActiveRecord::Schema[7.2].define(version: 2026_02_02_153058) do
     t.string "description"
     t.integer "kind"
     t.string "content_file_name"
-    t.boolean "by_default", default: false
     t.integer "position"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.integer "from_state"
     t.boolean "notification", default: true
-    t.boolean "spontaneous", default: false
+    t.integer "to_state", default: 11
+    t.boolean "required", default: false, null: false
+    t.integer "required_from_state", default: 0
+    t.integer "required_to_state", default: 11
   end
 
   create_table "job_application_files", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|

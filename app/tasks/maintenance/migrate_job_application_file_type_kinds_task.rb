@@ -12,7 +12,7 @@ module Maintenance
       "46769401-af7e-42a4-b657-389c487b1dc9" => :applicant_provided, # "Arrêté de détachement de l'administration d'origine", "template"
       "d22929e0-0da4-4846-a79a-d11f1797df99" => :manager_provided # "Formulaire \"Prise en charge transport\" à compléter", "template"
     }
-    def collection = JobApplicationFileType.where(id: JAFT.keys)
+    def collection = JobApplicationFileType.where(id: JAFT.keys).to_a
 
     def process(element) = element.update!(kind: JAFT[element.id])
   end

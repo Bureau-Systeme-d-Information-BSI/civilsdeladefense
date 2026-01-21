@@ -51,6 +51,7 @@ class JobApplication < ApplicationRecord
   validate :cant_accept_remaining_initial_job_applications
   validate :cant_skip_state, on: :update
   validate :complete_files_before_draft_contract
+  validate :required_files_not_validated, unless: -> { required_files_validated? }
   validate :cant_be_accepted_twice, if: -> { accepted? }, unless: -> { has_accepted_other_job_application? }
 
   before_validation :set_employer
@@ -88,7 +89,7 @@ class JobApplication < ApplicationRecord
     initial: 0,
     phone_meeting: 2,
     to_be_met: 5,
-    financial_estimate: 12,
+    financial_estimate: 6,
     accepted: 7,
     contract_drafting: 8,
     contract_feedback_waiting: 9,
@@ -246,7 +247,7 @@ class JobApplication < ApplicationRecord
 
       if existing_file
         result[:must_be_provided_files] << existing_file
-      elsif (current_state_as_val >= from_state_as_val) && file_type.by_default
+      elsif current_state_as_val >= from_state_as_val
         virgin = job_application_files.build(job_application_file_type: file_type)
         result[:must_be_provided_files] << virgin
       else
@@ -321,12 +322,20 @@ class JobApplication < ApplicationRecord
   def complete_files_before_draft_contract
     return if state.to_s != "contract_drafting"
 
-    default_types = JobApplicationFileType.by_default(:accepted).pluck(:id)
+    default_types = JobApplicationFileType.for_applicant(:accepted).pluck(:id)
     validated_types = job_application_files.where(is_validated: true).pluck(:job_application_file_type_id)
 
     return if (default_types - validated_types).blank?
 
     errors.add(:state, :complete_files_before_draft_contract)
+  end
+
+  def required_files_not_validated = errors.add(:state, :required_files_missing)
+
+  def required_files_validated?
+    required_types = JobApplicationFileType.required(state_was)
+    validated_files = job_application_files.where(job_application_file_type: required_types).select(&:validated?)
+    required_types.count == validated_files.count
   end
 
   def cant_be_accepted_twice = errors.add(:state, :cant_be_accepted_twice)

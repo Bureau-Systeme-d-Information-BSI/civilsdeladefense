@@ -318,6 +318,75 @@ RSpec.describe Administrator do
       it { expect { transfer }.not_to change { job_offer.reload.owner } }
     end
   end
+
+  describe "#can_upload?" do
+    subject(:can_upload?) { administrator.can_upload?(job_application_file_type) }
+
+    let(:administrator) { build(:administrator, roles: [role]) }
+    let(:job_application_file_type) { build(:job_application_file_type, kind:) }
+
+    context "when the administrator role is functional_adminitrator" do
+      let(:role) { :functional_administrator }
+      let(:kind) { :manager_provided }
+
+      it { is_expected.to be(true) }
+    end
+
+    context "when the administrator role is hr_manager" do
+      let(:role) { :hr_manager }
+
+      context "when the job application file type is manager provided" do
+        let(:kind) { :manager_provided }
+
+        it { is_expected.to be(true) }
+      end
+
+      context "when the job application file type is something else" do
+        let(:kind) { :employer_provided }
+
+        it { is_expected.to be(false) }
+      end
+    end
+
+    context "when the administrator role is payroll_manager" do
+      let(:role) { :payroll_manager }
+
+      context "when the job application file type is manager provided" do
+        let(:kind) { :manager_provided }
+
+        it { is_expected.to be(true) }
+      end
+
+      context "when the job application file type is something else" do
+        let(:kind) { :employer_provided }
+
+        it { is_expected.to be(false) }
+      end
+    end
+
+    context "when the administrator role is employer_recruiter" do
+      let(:role) { :employer_recruiter }
+
+      context "when the job application file type is employer_provided" do
+        let(:kind) { :employer_provided }
+
+        it { is_expected.to be(true) }
+      end
+
+      context "when the job application file type is something else" do
+        let(:kind) { :applicant_provided }
+
+        it { is_expected.to be(false) }
+      end
+    end
+
+    context "when the administrator role is something else" do
+      let(:role) { :employment_authority }
+      let(:kind) { :manager_provided }
+
+      it { is_expected.to be(false) }
+    end
+  end
 end
 
 # == Schema Information

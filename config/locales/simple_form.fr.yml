@@ -64,7 +64,6 @@ fr:
         foreign_language_level: Niveau de langue étrangère
         category_html: "<span>Domaine professionnel <abbr title='obligatoire'>*</abbr></span>"
         level: "Categorie / Niveau de l'offre"
-        spontaneous: "Candidature spontanée"
         job_applications_count: "Candidatures"
       administrator:
         current_password: "Mot de passe actuel"
@@ -100,8 +99,11 @@ fr:
       job_application_file_type:
         kind: "Type"
         content: "Fichier"
-        from_state: "État à partir duquel ce type de fichier est visible"
-        by_default: "Visible dès que l'état défini précédemment est atteint ?"
+        from_state: "État de début"
+        to_state: "État de fin"
+        required: "Obligatoire"
+        required_from_state: "Obligatoire à partir de l'état"
+        required_to_state: "Plus obligatoire à partir de l'état"
       job_offer:
         title: "Intitulé du poste"
         professional_category: "Catégorie professionnelle"
@@ -245,6 +247,11 @@ fr:
         resume: "Format PDF, max. 2Mo"
         cover_letter: "Format PDF, max. 2Mo"
         website_url: "LinkedIn, Viadeo, portfolio, etc."
+      job_application_file_type:
+        from_state: "État à partir duquel le fichier sera visible"
+        to_state: "État à partir duquel le fichier ne sera plus visible"
+        required_from_state: "Si le fichier n’est pas inséré, vous ne pourrez pas faire passer le candidat à l'étape suivante"
+        required_to_state: "Le fichier ne sera plus visible"
       organization:
         privacy_policy_url: "Ce lien est utilisé dans le formulaire de soumission d'une candidature"
         days_before_publishing: "Indiquez un nombre de jours ouvrés. Laissez à 0 ou vide pour supprimer complètement le délai avant publication"

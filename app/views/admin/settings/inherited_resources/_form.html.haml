@@ -1,7 +1,7 @@
 - resource.parent_id = params[:parent_id] if params[:parent_id].present? && resource.new_record?
 .card
   .card-body
-    = simple_form_for([:admin, :settings, resource]) do |f|
+    = simple_form_for([:admin, :settings, resource], html: { data: {controller: "toggle-visibility" } }) do |f|
       = f.error_notification
       = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
       .form-inputs
@@ -13,9 +13,11 @@
           = f.input :content
           - states = JobApplication.states.map {|k, v| [ JobApplication.human_attribute_name("state/#{k}"), k] }
           = f.input :from_state, collection: states, prompt: true
-          = f.input :by_default
+          = f.input :to_state, collection: states, prompt: true
+          = f.input :required, as: :radio_buttons, input_html: { data: { action: "toggle-visibility#toggle" } }, wrapper_html: { data: { toggle_visibility_target: "radioWrapper" } }
+          = f.input :required_from_state, required: true, collection: states, prompt: true, wrapper_html: { data: { toggle_visibility_target: "toggleable" } }
+          = f.input :required_to_state, required: true, collection: states, prompt: true, wrapper_html: { data: { toggle_visibility_target: "toggleable" } }
           = f.input :notification
-          = f.input :spontaneous, as: :boolean
         - elsif resource.is_a?(Cmg)
           = f.input :email
         - elsif resource.is_a?(EmailTemplate)

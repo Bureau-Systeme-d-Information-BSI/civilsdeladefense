@@ -354,7 +354,7 @@ fr:
         download: "Télécharger"
         do_not_ask: "Ne plus demander"
       job_application_file_upload:
-        help: "Téléverser un fichier à la place de l'utilisateur"
+        help: "Téléverser un fichier"
       uncheck:
         success: "Fichier invalidé !"
     rejections:
@@ -849,9 +849,9 @@ fr:
             one: "1 type de fichier"
             other: "%{count} types de fichier"
         new:
-          title: "Ajouter un nouveau type de fichier"
+          title: "Paramétrage du fichier"
         edit:
-          title: "Modifier le type de fichier '%{name}'"
+          title: "Paramétrage du fichier '%{name}'"
         create:
           success: "Type de fichier créé !"
         update:
@@ -1161,6 +1161,7 @@ fr:
               cant_accept_before_delay: "Un délai de 30 jours après la publication de l'offre sur CSP doit être respecté avant d'accepter une candidature"
               cant_accept_remaining_initial_job_applications: "Toutes les nouvelles candidatures doivent être traitées avant d'accepter une candidature"
               complete_files_before_draft_contract: "Tous les documents doivent être téléversés et validés avant la rédaction du contrat"
+              required_files_missing: "Des documents obligatoires sont manquants ou non validés"
               cant_be_accepted_twice: 'Cette action n''est pas possible. Ce candidat est déjà à l''état "Retenu" dans une offre d''emploi.'
               immutable_rejected: "Cette candidature a été refusée, son état ne peut pas être modifié"
               cant_skip_state: "Impossible passer à l’étape supérieure sans la validation de l’étape précédente."
@@ -1243,12 +1244,15 @@ fr:
         state/end_user_state_7: "Contrat reçu"
         state/end_user_state_8: "Affectée"
       job_application_file_type:
-        from_state: "État"
+        from_state: "État de début"
+        to_state: "État de fin"
+        required: "Obligatoire"
+        required_from_state: "Obligatoire à partir de l'état"
+        required_to_state: "Plus obligatoire à partir de l'état"
         kind: "Type"
-        by_default: "Par défaut"
         kind/applicant_provided: "Fourni par le candidat"
-        kind/template: "Modèle de fichiers"
-        kind/admin_only: "Seulement admin"
+        kind/manager_provided: "Fourni par le gestionnaire"
+        kind/employer_provided: "Fourni par l'employeur"
         kind/check_only_admin_only: "Fichier géré hors outil"
       job_offer:
         title: "Intitulé du poste"

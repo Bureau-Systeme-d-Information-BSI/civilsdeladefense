@@ -13,29 +13,34 @@ class JobApplicationFileType < ApplicationRecord
   #####################################
   # Validations
 
-  validates :name, :kind, :from_state, presence: true
+  validates :name, :kind, :from_state, :to_state, presence: true
+  validates :required_from_state, :required_to_state, if: -> { required? }, presence: true
 
   #####################################
   # Enums
   enum kind: {
     applicant_provided: 10,
-    template: 20,
-    admin_only: 30,
+    manager_provided: 11,
+    employer_provided: 12,
     check_only_admin_only: 40
   }
 
   enum from_state: JobApplication.states
+  enum to_state: JobApplication.states, _prefix: true
+  enum required_from_state: JobApplication.states, _prefix: true
+  enum required_to_state: JobApplication.states, _prefix: true
 
-  scope :by_default_before, ->(state) {
-    where(
-      by_default: true, kind: %i[applicant_provided template]
-    ).where("from_state <= ?", JobApplication.states[state])
+  scope :for_states_around, ->(state) {
+    where(kind: :applicant_provided)
+      .where("from_state <= ?", JobApplication.states[state])
+      .where("to_state > ?", JobApplication.states[state])
   }
 
-  scope :by_default, ->(state) {
-    where(
-      by_default: true, kind: %i[applicant_provided template]
-    ).where(from_state: JobApplication.states[state])
+  scope :for_applicant, ->(state) { where(kind: :applicant_provided, from_state: JobApplication.states[state]) }
+  scope :required, ->(state) {
+    where(required: true)
+      .where("required_from_state <= ?", JobApplication.states[state])
+      .where("required_to_state > ?", JobApplication.states[state])
   }
 
   #####################################
@@ -54,16 +59,18 @@ end
 #
 # Table name: job_application_file_types
 #
-#  id                :uuid             not null, primary key
-#  by_default        :boolean          default(FALSE)
-#  content_file_name :string
-#  description       :string
-#  from_state        :integer
-#  kind              :integer
-#  name              :string
-#  notification      :boolean          default(TRUE)
-#  position          :integer
-#  spontaneous       :boolean          default(FALSE)
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
+#  id                  :uuid             not null, primary key
+#  content_file_name   :string
+#  description         :string
+#  from_state          :integer
+#  kind                :integer
+#  name                :string
+#  notification        :boolean          default(TRUE)
+#  position            :integer
+#  required            :boolean          default(FALSE), not null
+#  required_from_state :integer          default(0)
+#  required_to_state   :integer          default(11)
+#  to_state            :integer          default("affected")
+#  created_at          :datetime         not null
+#  updated_at          :datetime         not null
 #

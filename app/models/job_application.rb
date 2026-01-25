@@ -51,7 +51,7 @@ class JobApplication < ApplicationRecord
   validate :cant_accept_remaining_initial_job_applications
   validate :cant_skip_state, on: :update
   validate :complete_files_before_draft_contract
-  validate :required_files_not_validated, unless: -> { required_files_validated? }
+  validate :required_files_not_validated, if: -> { state_changed? }, unless: -> { required_files_validated? }
   validate :cant_be_accepted_twice, if: -> { accepted? }, unless: -> { has_accepted_other_job_application? }
 
   before_validation :set_employer

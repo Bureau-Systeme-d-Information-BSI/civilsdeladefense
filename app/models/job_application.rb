@@ -190,6 +190,8 @@ class JobApplication < ApplicationRecord
   scope :between, ->(a, b) { where(created_at: b..a) }
   scope :with_user, -> { where.not(user: nil) }
 
+  delegate :employer_recruiters, to: :job_offer, prefix: true
+
   def set_employer
     self.employer_id ||= job_offer.employer_id
   end

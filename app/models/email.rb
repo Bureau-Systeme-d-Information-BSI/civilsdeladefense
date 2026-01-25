@@ -20,6 +20,12 @@ class Email < ApplicationRecord
   before_validation :fill_attachments
   after_save :compute_job_application_notifications_counter
 
+  def send_from_user
+    return false unless save
+    notify_employer_recruiters if job_application.phone_meeting? || job_application.to_be_met?
+    true
+  end
+
   def compute_job_application_notifications_counter
     job_application.compute_notifications_counter!
   end
@@ -40,6 +46,18 @@ class Email < ApplicationRecord
 
   def mark_as_unread!
     update!(is_unread: true)
+  end
+
+  private
+
+  def notify_employer_recruiters
+    job_application.job_offer_employer_recruiters.each do |administrator|
+      notify_employer_recruiter(administrator)
+    end
+  end
+
+  def notify_employer_recruiter(administrator)
+    NotificationsMailer.with(administrator:, job_application:).new_email.deliver_later
   end
 end
 

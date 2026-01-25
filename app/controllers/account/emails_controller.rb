@@ -16,7 +16,7 @@ class Account::EmailsController < Account::BaseController
     @email = @job_application.emails.build(email_params)
 
     respond_to do |format|
-      if @email.save
+      if @email.send_from_user
         format.turbo_stream do
           s = turbo_stream.prepend("emails") {
             view_context.render partial: "email", locals: {email: @email}

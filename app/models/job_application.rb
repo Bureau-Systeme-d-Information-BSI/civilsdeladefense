@@ -56,7 +56,7 @@ class JobApplication < ApplicationRecord
 
   before_validation :set_employer
   before_save :compute_notifications_counter
-  after_update :notify_new_state, if: -> { new_state_requires_notification? }
+  after_update :notify_applicant_new_state, if: -> { new_state_requires_applicant_notification? }
 
   FINISHED_STATES = %w[affected].freeze
   PROCESSING_STATES = %w[initial phone_meeting to_be_met financial_estimate].freeze
@@ -99,7 +99,7 @@ class JobApplication < ApplicationRecord
 
   aasm column: :state, enum: true do
     state :initial, initial: true
-    state :phone_meeting, before_enter: proc { notify_new_state(:phone_meeting) }
+    state :phone_meeting, before_enter: proc { notify_applicant_new_state(:phone_meeting) }
     state :to_be_met
     state :financial_estimate
     state :accepted
@@ -344,9 +344,11 @@ class JobApplication < ApplicationRecord
 
   def has_accepted_other_job_application? = user.job_applications.where(state: "accepted").where.not(id: id).empty?
 
-  def notify_new_state = ApplicantNotificationsMailer.with(user:, job_offer:, state:).notify_new_state.deliver_later
+  def notify_applicant_new_state
+    ApplicantNotificationsMailer.with(user:, job_offer:, state:).notify_new_state.deliver_later
+  end
 
-  def new_state_requires_notification? = saved_change_to_state? && NOTIFICATION_STATES.include?(state.to_s)
+  def new_state_requires_applicant_notification? = saved_change_to_state? && NOTIFICATION_STATES.include?(state.to_s)
 
   class << self
     def processing_states

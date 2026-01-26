@@ -183,6 +183,8 @@ fr:
   notifications_mailer:
     new_email:
       subject: "[%{service_name}] Notification « Employeur » - Etape %{state}"
+    contract_drafting:
+      subject: "[%{service_name}] Notification « Gestionnaire » - Validation dossier complet"
     daily_summary:
       subject: "[%{service_name}] Rapport journalier"
       generic_title: "Candidatures %{state}"

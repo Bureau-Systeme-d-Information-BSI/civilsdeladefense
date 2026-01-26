@@ -57,6 +57,7 @@ class JobApplication < ApplicationRecord
   before_validation :set_employer
   before_save :compute_notifications_counter
   after_update :notify_applicant_new_state, if: -> { new_state_requires_applicant_notification? }
+  after_update :notify_hr_managers_contract_drafting, if: -> { saved_change_to_state? && contract_drafting? }
 
   FINISHED_STATES = %w[affected].freeze
   PROCESSING_STATES = %w[initial phone_meeting to_be_met financial_estimate].freeze
@@ -190,7 +191,7 @@ class JobApplication < ApplicationRecord
   scope :between, ->(a, b) { where(created_at: b..a) }
   scope :with_user, -> { where.not(user: nil) }
 
-  delegate :employer_recruiters, to: :job_offer, prefix: true
+  delegate :employer_recruiters, :hr_managers, to: :job_offer, prefix: true
 
   def set_employer
     self.employer_id ||= job_offer.employer_id
@@ -349,6 +350,16 @@ class JobApplication < ApplicationRecord
   end
 
   def new_state_requires_applicant_notification? = saved_change_to_state? && NOTIFICATION_STATES.include?(state.to_s)
+
+  def notify_hr_managers_contract_drafting
+    job_offer_hr_managers.each do |administrator|
+      notify_hr_manager_contract_drafting(administrator)
+    end
+  end
+
+  def notify_hr_manager_contract_drafting(administrator)
+    NotificationsMailer.with(administrator:, job_application: self).contract_drafting.deliver_later
+  end
 
   class << self
     def processing_states

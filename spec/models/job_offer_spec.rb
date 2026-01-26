@@ -47,6 +47,8 @@ RSpec.describe JobOffer do
     it { is_expected.to have_many(:administrators).through(:job_offer_actors) }
 
     it { is_expected.to have_many(:employer_recruiters).through(:job_offer_actors) }
+
+    it { is_expected.to have_many(:hr_managers).through(:job_offer_actors) }
   end
 
   describe "delegations" do

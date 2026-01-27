@@ -3,13 +3,13 @@
 </p>
 
 <p>
-  Vous êtes notifié comme « Employeur » sur la plateforme E-recrutement sur l’offre <%= link_to(@job_offer.title, @job_offer) %>.
+  Vous êtes notifié comme « Employeur » sur la plateforme E-recrutement sur l’offre <%= link_to @job_offer.title, [:admin, @job_offer] %>.
 </p>
 
 <p>
   Le/la candidat(e) <%= @job_application.user.full_name %> a répondu à votre proposition d’entretien.
 <br>
-  Pour y accéder, cliquez sur le lien suivant : <%= link_to(@job_offer.title, @job_offer) %>
+  Pour y accéder, cliquez sur le lien suivant : <%= link_to @job_offer.title, [:admin, @job_offer] %>
 </p>
 
 <p>

@@ -9,6 +9,8 @@ class OmniauthInformation < ApplicationRecord
   validates :uid, :email, :provider, presence: true
   validates :uid, uniqueness: {scope: :provider}
   validates :provider, inclusion: {in: AVAILABLE_PROVIDERS}
+
+  def name_editable? = provider != "france_connect"
 end
 
 # == Schema Information

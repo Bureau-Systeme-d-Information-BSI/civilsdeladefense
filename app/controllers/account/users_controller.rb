@@ -138,6 +138,8 @@ class Account::UsersController < Account::BaseController
       profile_attributes: %i[id gender]
     )
 
+    filtered_params = filtered_params.except(:first_name, :last_name) unless @user.name_editable?
+
     if filtered_params[:photo].present? || filtered_params[:delete_photo] == "0"
       filtered_params.except(:delete_photo)
     else

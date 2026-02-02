@@ -84,6 +84,7 @@ class Administrator < ApplicationRecord
   scope :inactive, -> { where.not(deleted_at: nil) }
   scope :employer_recruiters, -> { where("roles & ? != 0", 1 << ROLES[:employer_recruiter]) }
   scope :hr_managers, -> { where("roles & ? != 0", 1 << ROLES[:hr_manager]) }
+  scope :payroll_managers, -> { where("roles & ? != 0", 1 << ROLES[:payroll_manager]) }
 
   enummer roles: ROLES
 

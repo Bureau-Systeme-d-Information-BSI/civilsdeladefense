@@ -284,7 +284,7 @@ Devise.setup do |config|
       identifier: ENV["FRANCE_CONNECT_APP_ID"],
       secret: ENV["FRANCE_CONNECT_APP_SECRET"],
       redirect_uri: "#{ENV["DEFAULT_HOST"]}/users/auth/france_connect/callback",
-      post_logout_redirect_uri: "/"
+      post_logout_redirect_uri: ENV["DEFAULT_HOST"]
     }
   }
 

@@ -57,6 +57,7 @@ class JobOffer < ApplicationRecord
   has_many :administrators, through: :job_offer_actors
   has_many :employer_recruiters, -> { merge(Administrator.employer_recruiters) }, through: :job_offer_actors, source: :administrator
   has_many :hr_managers, -> { merge(Administrator.hr_managers) }, through: :job_offer_actors, source: :administrator
+  has_many :payroll_managers, -> { merge(Administrator.payroll_managers) }, through: :job_offer_actors, source: :administrator
 
   accepts_nested_attributes_for :job_offer_actors
 

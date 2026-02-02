@@ -59,6 +59,7 @@ class JobApplication < ApplicationRecord
   after_update :notify_applicant_new_state, if: -> { new_state_requires_applicant_notification? }
   after_update :notify_hr_managers_contract_drafting, if: -> { saved_change_to_state? && contract_drafting? }
   after_update :notify_hr_managers_contract_feedback_waiting, if: -> { saved_change_to_state? && contract_feedback_waiting? }
+  after_update :notify_payroll_managers_contract_received, if: -> { saved_change_to_state? && contract_received? }
 
   FINISHED_STATES = %w[affected].freeze
   PROCESSING_STATES = %w[initial phone_meeting to_be_met financial_estimate].freeze
@@ -192,7 +193,7 @@ class JobApplication < ApplicationRecord
   scope :between, ->(a, b) { where(created_at: b..a) }
   scope :with_user, -> { where.not(user: nil) }
 
-  delegate :employer_recruiters, :hr_managers, to: :job_offer, prefix: true
+  delegate :employer_recruiters, :hr_managers, :payroll_managers, to: :job_offer, prefix: true
 
   def set_employer
     self.employer_id ||= job_offer.employer_id
@@ -370,6 +371,16 @@ class JobApplication < ApplicationRecord
 
   def notify_hr_manager_contract_feedback_waiting(administrator)
     NotificationsMailer.with(administrator:, job_application: self).contract_feedback_waiting.deliver_later
+  end
+
+  def notify_payroll_managers_contract_received
+    job_offer_payroll_managers.each do |administrator|
+      notify_payroll_manager_contract_received(administrator)
+    end
+  end
+
+  def notify_payroll_manager_contract_received(administrator)
+    NotificationsMailer.with(administrator:, job_application: self).contract_received.deliver_later
   end
 
   class << self

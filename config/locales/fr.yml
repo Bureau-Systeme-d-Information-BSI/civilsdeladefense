@@ -189,6 +189,8 @@ fr:
       subject: "[%{service_name}] Notification « Gestionnaire » - Contrat"
     contract_received:
       subject: "[%{service_name}] Notification « Gestionnaire » - Dossier de paie"
+    affected:
+      subject: "[%{service_name}] Notification « Gestionnaire » - Prise de poste"
     daily_summary:
       subject: "[%{service_name}] Rapport journalier"
       generic_title: "Candidatures %{state}"

@@ -60,6 +60,7 @@ class JobApplication < ApplicationRecord
   after_update :notify_hr_managers_contract_drafting, if: -> { saved_change_to_state? && contract_drafting? }
   after_update :notify_hr_managers_contract_feedback_waiting, if: -> { saved_change_to_state? && contract_feedback_waiting? }
   after_update :notify_payroll_managers_contract_received, if: -> { saved_change_to_state? && contract_received? }
+  after_update :notify_managers_affected, if: -> { saved_change_to_state? && affected? }
 
   FINISHED_STATES = %w[affected].freeze
   PROCESSING_STATES = %w[initial phone_meeting to_be_met financial_estimate].freeze
@@ -381,6 +382,16 @@ class JobApplication < ApplicationRecord
 
   def notify_payroll_manager_contract_received(administrator)
     NotificationsMailer.with(administrator:, job_application: self).contract_received.deliver_later
+  end
+
+  def notify_managers_affected
+    (job_offer_hr_managers + job_offer_payroll_managers).each do |administrator|
+      notify_manager_affected(administrator)
+    end
+  end
+
+  def notify_manager_affected(administrator)
+    NotificationsMailer.with(administrator:, job_application: self).affected.deliver_later
   end
 
   class << self

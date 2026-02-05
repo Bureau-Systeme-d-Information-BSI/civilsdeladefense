@@ -7,13 +7,12 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def france_connect
     auth = request.env["omniauth.auth"]
 
-    @omniauth_info = OmniauthInformation.find_or_initialize_by(
-      uid: auth.uid, provider: :france_connect
-    )
+    @omniauth_info = OmniauthInformation.find_or_initialize_by(uid: auth.uid, provider: :france_connect)
     @omniauth_info.assign_attributes(
       email: auth.info.email,
       first_name: auth.info.first_name,
-      last_name: auth.info.last_name
+      last_name: auth.info.last_name,
+      id_token: auth.credentials.id_token
     )
 
     retrieve_user

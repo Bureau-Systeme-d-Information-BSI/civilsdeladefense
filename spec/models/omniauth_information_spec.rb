@@ -15,6 +15,24 @@ RSpec.describe OmniauthInformation do
       end
     end
   end
+
+  describe "#name_editable?" do
+    subject(:name_editable) { omniauth_information.name_editable? }
+
+    let(:omniauth_information) { build(:omniauth_information, provider:) }
+
+    context "when provider is france_connect" do
+      let(:provider) { "france_connect" }
+
+      it { is_expected.to be false }
+    end
+
+    context "when provider is not france_connect" do
+      let(:provider) { "other" }
+
+      it { is_expected.to be true }
+    end
+  end
 end
 
 # == Schema Information
@@ -24,6 +42,7 @@ end
 #  id         :uuid             not null, primary key
 #  email      :string           not null
 #  first_name :string
+#  id_token   :text
 #  last_name  :string
 #  provider   :string           not null
 #  uid        :string           not null

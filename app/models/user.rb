@@ -129,6 +129,8 @@ class User < ApplicationRecord
     end
   end
 
+  def name_editable? = omniauth_informations.all?(&:name_editable?)
+
   def password_complexity
     return if password.blank? || password =~ PASSWORD_REGEX
 

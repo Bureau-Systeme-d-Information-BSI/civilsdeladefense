@@ -268,22 +268,23 @@ Devise.setup do |config|
     scope: %i[openid email family_name given_name],
     response_type: :code,
     uid_field: "sub",
-    issuer: "https://#{ENV["FRANCE_CONNECT_HOST"]}",
+    issuer: "https://#{ENV["FRANCE_CONNECT_HOST"]}/api/v2",
     client_auth_method: :secret,
-    client_signing_alg: :HS256,
+    client_signing_alg: :ES256,
     nonce: proc { SecureRandom.hex(32) },
     client_options: {
       port: 443,
       scheme: "https",
       host: ENV["FRANCE_CONNECT_HOST"],
-      authorization_endpoint: "/api/v1/authorize?acr_values=eidas1",
-      token_endpoint: "/api/v1/token",
-      userinfo_endpoint: "/api/v1/userinfo",
-      end_session_endpoint: "/api/v1/logout",
+      authorization_endpoint: "/api/v2/authorize?acr_values=eidas1",
+      token_endpoint: "/api/v2/token",
+      userinfo_endpoint: "/api/v2/userinfo",
+      end_session_endpoint: "/api/v2/session/end",
+      jwks_uri: "https://#{ENV["FRANCE_CONNECT_HOST"]}/api/v2/jwks",
       identifier: ENV["FRANCE_CONNECT_APP_ID"],
       secret: ENV["FRANCE_CONNECT_APP_SECRET"],
       redirect_uri: "#{ENV["DEFAULT_HOST"]}/users/auth/france_connect/callback",
-      post_logout_redirect_uri: "/"
+      post_logout_redirect_uri: ENV["DEFAULT_HOST"]
     }
   }
 

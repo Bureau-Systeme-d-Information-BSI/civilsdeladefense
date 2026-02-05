@@ -18,6 +18,7 @@ end
 #  id         :uuid             not null, primary key
 #  email      :string           not null
 #  first_name :string
+#  id_token   :text
 #  last_name  :string
 #  provider   :string           not null
 #  uid        :string           not null

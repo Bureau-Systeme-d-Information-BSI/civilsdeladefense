@@ -65,7 +65,7 @@ gem "clockwork" # simulate cron on Scalingo
 
 gem "faker", require: false
 
-gem "omniauth_openid_connect", "~> 0.4.0"
+gem "omniauth_openid_connect", "~> 0.8.0"
 gem "omniauth-rails_csrf_protection"
 
 gem "prawn" # PDF generation

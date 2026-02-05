@@ -18,6 +18,39 @@ RSpec.describe User do
     it { is_expected.to have_many(:job_applications).inverse_of(:user) }
   end
 
+  describe "#name_editable?" do
+    subject { user.name_editable? }
+
+    context "when user has no omniauth_informations" do
+      it { is_expected.to be true }
+    end
+
+    context "when user has only france_connect omniauth_informations" do
+      before { create(:omniauth_information, user:, provider: "france_connect") }
+
+      it { is_expected.to be false }
+    end
+
+    context "when user has only non-france_connect omniauth_informations" do
+      before do
+        omniauth = create(:omniauth_information, user:)
+        omniauth.update_columns(provider: "other_provider") # rubocop:disable Rails/SkipsModelValidations
+      end
+
+      it { is_expected.to be true }
+    end
+
+    context "when user has mixed omniauth_informations" do
+      before do
+        create(:omniauth_information, user:, provider: "france_connect")
+        omniauth = create(:omniauth_information, user:)
+        omniauth.update_columns(provider: "other_provider") # rubocop:disable Rails/SkipsModelValidations
+      end
+
+      it { is_expected.to be false }
+    end
+  end
+
   it "can be suspended" do
     text = "Bad guy"
     expect(user.suspended_at).to be_nil

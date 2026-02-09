@@ -16,10 +16,12 @@ class Ability
     can :read, EmailTemplate
     cannot :manage, PreferredUsersList
 
-    if administrator.admin?
+    if administrator.functional_administrator?
       ability_admin(administrator)
-    elsif administrator.employer?
-      ability_employer(administrator)
+    elsif administrator.employment_authority?
+      ability_employment_authority(administrator)
+    elsif administrator.employer_recruiter?
+      ability_employer_recruiter(administrator)
     else
       can :read, JobOffer, job_offer_actors: {administrator_id: administrator.id}
       can :read, JobApplication, job_application_read_query(administrator)
@@ -37,7 +39,17 @@ class Ability
     can :manage, PreferredUsersList, administrator_id: administrator.id
   end
 
-  def ability_employer(administrator)
+  def ability_employment_authority(administrator)
+    can :read, JobOffer, job_offer_actors: {administrator_id: administrator.id}
+    cannot :transfer, JobOffer, job_offer_actors: {administrator_id: administrator.id}
+    can :read, JobApplication, job_application_read_query(administrator)
+    can :read, JobApplicationFile
+    can :read, Message
+    can :read, Email
+    can :read, User
+  end
+
+  def ability_employer_recruiter(administrator)
     can :create, JobOffer
     can :manage, JobOffer, job_offer_actors: {administrator_id: administrator.id}
     can :manage, JobOffer, owner_id: administrator.id

@@ -200,6 +200,7 @@ class Admin::JobOffersController < Admin::BaseController
     @job_offers_active = @job_offers.admin_index_active
     @job_offers_featured = @job_offers.admin_index_featured
     @job_offers_archived = @job_offers.admin_index_archived
+
     @job_offers_unfiltered = if action_name == "featured"
       @job_offers_featured
     elsif action_name == "archived"

@@ -94,7 +94,9 @@ class JobOffer < ApplicationRecord
 
   ## Scopes
   default_scope { order(created_at: :desc) }
-  scope :admin_index, -> { includes(:bop, :contract_type, :employer, :job_offer_actors) }
+  scope :admin_index, ->(administrator) {
+    includes(:bop, :contract_type, :employer, :job_offer_actors)
+  }
   scope :admin_index_active, -> { admin_index.where.not(state: :archived) }
   scope :admin_index_archived, -> { admin_index.archived }
   scope :admin_index_featured, -> { admin_index.where(featured: true) }

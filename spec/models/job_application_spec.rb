@@ -204,6 +204,7 @@ end
 #
 #  id                                :uuid             not null, primary key
 #  administrator_notifications_count :integer          default(0)
+#  dar                               :boolean
 #  emails_administrator_unread_count :integer          default(0)
 #  emails_count                      :integer          default(0)
 #  emails_unread_count               :integer          default(0)
@@ -211,7 +212,7 @@ end
 #  experiences_fit_job_offer         :boolean
 #  files_count                       :integer          default(0)
 #  files_unread_count                :integer          default(0)
-#  preselection                      :integer          default(0)
+#  preselection                      :integer          default("pending")
 #  rejected                          :boolean          default(FALSE)
 #  skills_fit_job_offer              :boolean
 #  state                             :integer

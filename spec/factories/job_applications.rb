@@ -24,6 +24,7 @@ end
 #
 #  id                                :uuid             not null, primary key
 #  administrator_notifications_count :integer          default(0)
+#  dar                               :boolean
 #  emails_administrator_unread_count :integer          default(0)
 #  emails_count                      :integer          default(0)
 #  emails_unread_count               :integer          default(0)

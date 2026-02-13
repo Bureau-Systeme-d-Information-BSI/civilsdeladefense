@@ -1,0 +1,13 @@
+- if can? :validate_dar, job_application
+  = simple_form_for job_application, url: admin_job_application_dar_path(job_application), namespace: "dar_#{job_application.id}", html: { class: 'mx-3', data: { controller: 'auto-submit' } } do |f|
+    = f.input :dar, as: :radio_buttons, input_html: { data: { action: 'change->auto-submit#submit' } }
+- else
+  .mx-3
+    %fieldset.form-group.rf-input-group.rf-fieldset.radio_buttons{disabled: true}
+      %legend.col-form-label.pt-0= t('simple_form.labels.job_application.dar')
+      .form-check.form-check-inline
+        = radio_button_tag "dar_#{job_application.id}_readonly", "true", job_application.dar == true, class: "form-check-input", disabled: true
+        = label_tag nil, t("true"), class: "form-check-label"
+      .form-check.form-check-inline
+        = radio_button_tag "dar_#{job_application.id}_readonly", "false", job_application.dar == false, class: "form-check-input", disabled: true
+        = label_tag nil, t("false"), class: "form-check-label"

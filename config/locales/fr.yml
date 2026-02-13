@@ -357,6 +357,9 @@ fr:
         help: "Téléverser un fichier"
       uncheck:
         success: "Fichier invalidé !"
+    dars:
+      update:
+        success: "Validation DAR mise à jour avec succès"
     rejections:
       create:
         success: "Candidature refusée ou désistée"

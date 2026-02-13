@@ -25,6 +25,7 @@ class Ability
     else
       can :read, JobOffer, job_offer_actors: {administrator_id: administrator.id}
       can :read, JobApplication, job_application_read_query(administrator)
+      cannot :validate_dar, JobApplication
       can :manage, JobApplication, brh_job_application_manage_query(administrator)
       can :manage, JobApplicationFile
       can :manage, Message
@@ -37,12 +38,14 @@ class Ability
   def ability_admin(administrator)
     can :manage, :all
     can :manage, PreferredUsersList, administrator_id: administrator.id
+    cannot :validate_dar, JobApplication
   end
 
   def ability_employment_authority(administrator)
     can :read, JobOffer, job_offer_actors: {administrator_id: administrator.id}
     cannot :transfer, JobOffer, job_offer_actors: {administrator_id: administrator.id}
     can :read, JobApplication, job_application_read_query(administrator)
+    can :validate_dar, JobApplication, job_application_read_query(administrator)
     can :read, JobApplicationFile
     can :read, Message
     can :read, Email
@@ -56,6 +59,7 @@ class Ability
     cannot :transfer, JobOffer, job_offer_actors: {administrator_id: administrator.id}
     can :transfer, JobOffer, owner_id: administrator.id
     can :manage, JobApplication, job_application_read_query(administrator)
+    cannot :validate_dar, JobApplication
     can :manage, JobApplicationFile
     can :manage, Message
     can :manage, Email

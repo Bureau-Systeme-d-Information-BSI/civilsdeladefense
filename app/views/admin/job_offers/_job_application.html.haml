@@ -1,49 +1,51 @@
-- job_offer = job_application.job_offer
-- change_state_url = url_for([:change_state, :admin, job_application, {state: job_application.state}])
-.card.job-application{id: dom_id(job_application), class: "job-application--state-#{job_application.state}", data: {state: job_application.state, change: {state: {url: change_state_url}}}}
-  - if job_application.administrator_notifications_count > 0
-    .notification= job_application.administrator_notifications_count
+= turbo_frame_tag dom_id(job_application), target: '_top' do
+  - job_offer = job_application.job_offer
+  - change_state_url = url_for([:change_state, :admin, job_application, {state: job_application.state}])
+  .card.job-application{id: dom_id(job_application), class: "job-application--state-#{job_application.state}", data: {state: job_application.state, change: {state: {url: change_state_url}}}}
+    - if job_application.administrator_notifications_count > 0
+      .notification= job_application.administrator_notifications_count
 
-  .card-body
-    - if can?(:manage, job_application)
-      - if job_application.user.blank?
-        = render "/admin/job_applications/job_application_card_body", job_application:
+    .card-body
+      - if can?(:manage, job_application)
+        - if job_application.user.blank?
+          = render "/admin/job_applications/job_application_card_body", job_application:
+        - else
+          .d-flex.justify-content-start.align-items-start
+            = link_to [:admin, @job_offer, job_application], class: "d-flex" do
+              = image_user_tag job_application.user.photo, width: 40, class: 'mr-2'
+              .d-flex.flex-column
+                %strong.text-secondary= job_application.user.full_name
+                %strong.small.text-muted= job_application.user.current_position
+            .ml-auto
+            - if preselection
+              .d-flex
+                - if job_application.preselection == "favorite"
+                  = button_to admin_job_offer_job_application_favorite_path(job_offer, job_application), method: :delete, class: "btn btn-sm btn-link btn-success" do
+                    = fa_icon('thumbs-up', flavor: 'solid')
+                - else
+                  = button_to admin_job_offer_job_application_favorite_path(job_offer, job_application), method: :post, class: "btn btn-sm btn-link" do
+                    = fa_icon('thumbs-up', flavor: 'regular')
+
+                - if job_application.preselection == "unfavorite"
+                  = button_to admin_job_offer_job_application_unfavorite_path(job_offer, job_application), method: :delete, class: "btn btn-sm btn-link btn-warning" do
+                    = fa_icon('thumbs-down', flavor: 'solid')
+                - else
+                  = button_to admin_job_offer_job_application_unfavorite_path(job_offer, job_application), method: :post, class: "btn btn-sm btn-link" do
+                    = fa_icon('thumbs-down', flavor: 'regular')
       - else
-        .d-flex.justify-content-start.align-items-start
-          = link_to [:admin, @job_offer, job_application], class: "d-flex" do
-            = image_user_tag job_application.user.photo, width: 40, class: 'mr-2'
-            .d-flex.flex-column
-              %strong.text-secondary= job_application.user.full_name
-              %strong.small.text-muted= job_application.user.current_position
-          .ml-auto
+        .job-application-modal-link
+          = render "/admin/job_applications/job_application_card_body", job_application:
 
-          - if preselection
-            .d-flex
-              - if job_application.preselection == "favorite"
-                = button_to admin_job_offer_job_application_favorite_path(job_offer, job_application), method: :delete, class: "btn btn-sm btn-link btn-success" do
-                  = fa_icon('thumbs-up', flavor: 'solid')
-              - else
-                = button_to admin_job_offer_job_application_favorite_path(job_offer, job_application), method: :post, class: "btn btn-sm btn-link" do
-                  = fa_icon('thumbs-up', flavor: 'regular')
+    - if dar
+      = render "/admin/job_applications/job_application_dar", job_application:
 
-              - if job_application.preselection == "unfavorite"
-                = button_to admin_job_offer_job_application_unfavorite_path(job_offer, job_application), method: :delete, class: "btn btn-sm btn-link btn-warning" do
-                  = fa_icon('thumbs-down', flavor: 'solid')
-              - else
-                = button_to admin_job_offer_job_application_unfavorite_path(job_offer, job_application), method: :post, class: "btn btn-sm btn-link" do
-                  = fa_icon('thumbs-down', flavor: 'regular')
-
-    - else
-      .job-application-modal-link
-        = render "/admin/job_applications/job_application_card_body", job_application:
-
-  .card-footer.d-flex.flex-column.flex-md-row.align-items-center
-    .mr-auto= t('admin.job_applications.job_application.applied_on', date: I18n.l(job_application.created_at.to_date))
-    - klasses = %w(emails-count badge job-application-modal-link mr-2)
-    = link_to emails_admin_job_offer_job_application_url(job_offer, job_application), class: klasses do
-      = fa_icon 'envelope', style: "width: 0.8rem; height: auto; vertical-align: -0.15rem;"
-      = job_application.emails_count
-    - klasses = %w(emails-count badge job-application-modal-link mr-0)
-    = link_to files_admin_job_offer_job_application_url(job_offer, job_application), class: klasses do
-      = fa_icon "link", style: "width: 0.8rem; height: auto; vertical-align: -0.15rem;"
-      = job_application.files_count
+    .card-footer.d-flex.flex-column.flex-md-row.align-items-center
+      .mr-auto= t('admin.job_applications.job_application.applied_on', date: I18n.l(job_application.created_at.to_date))
+      - klasses = %w(emails-count badge job-application-modal-link mr-2)
+      = link_to emails_admin_job_offer_job_application_url(job_offer, job_application), class: klasses do
+        = fa_icon 'envelope', style: "width: 0.8rem; height: auto; vertical-align: -0.15rem;"
+        = job_application.emails_count
+      - klasses = %w(emails-count badge job-application-modal-link mr-0)
+      = link_to files_admin_job_offer_job_application_url(job_offer, job_application), class: klasses do
+        = fa_icon "link", style: "width: 0.8rem; height: auto; vertical-align: -0.15rem;"
+        = job_application.files_count

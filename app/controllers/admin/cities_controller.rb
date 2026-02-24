@@ -3,7 +3,7 @@ class Admin::CitiesController < Admin::BaseController
 
   def index = @cities = query? ? convert_raw_data_to_cities(search_for_cities) : []
 
-  def show = render json: search_for_cities.first { |c| c["id"] == params[:id] }
+  def show = render json: search_for_cities.find { |c| c["id"] == params[:id] }
 
   private
 

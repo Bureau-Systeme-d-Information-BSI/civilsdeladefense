@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Admin::JobOffersController < Admin::BaseController
+  before_action :set_employers, only: %i[index archived featured]
   before_action :set_job_offers, only: %i[index archived featured]
   layout :choose_layout
 
@@ -191,8 +192,11 @@ class Admin::JobOffersController < Admin::BaseController
 
   private
 
-  def set_job_offers
+  def set_employers
     @employers = Employer.tree
+  end
+
+  def set_job_offers
     @job_offers_active = @job_offers.admin_index_active
     @job_offers_featured = @job_offers.admin_index_featured
     @job_offers_archived = @job_offers.admin_index_archived
@@ -205,7 +209,8 @@ class Admin::JobOffersController < Admin::BaseController
     end
     job_offers_nearly_filtered = @job_offers_unfiltered
     if params[:s].present?
-      job_offers_nearly_filtered = job_offers_nearly_filtered.search_full_text(params[:s])
+      job_offers_nearly_filtered = job_offers_nearly_filtered
+        .search_full_text(params[:s])
         .unscope(:order)
     end
     @q = job_offers_nearly_filtered.ransack(params[:q])

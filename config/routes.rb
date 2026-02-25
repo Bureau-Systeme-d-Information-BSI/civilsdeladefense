@@ -127,6 +127,7 @@ Rails.application.routes.draw do
         end
       end
       resources :rejections, only: %i[create]
+      resource :dar, only: %i[update]
       resources :messages, only: %i[create]
       resources :emails, only: %i[create] do
         member do

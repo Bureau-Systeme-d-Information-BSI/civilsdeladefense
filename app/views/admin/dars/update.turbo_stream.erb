@@ -1,0 +1,9 @@
+<%= turbo_stream.replace @job_application,
+                         partial: "admin/job_offers/job_application",
+                         locals: {
+                           job_application: @job_application,
+                           preselection: false,
+                           dar: true
+                         } %>
+
+<turbo-stream action="notify" message="<%= flash[:notice] %>"><template></template></turbo-stream>

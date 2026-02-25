@@ -325,6 +325,8 @@ fr:
         activities:
           creation_html: "<span class='user-name'>%{name}</span> a postulé"
           change_state_html: "<span class='user-name'>%{admin_name}</span> a déplacé <span class='user-name'>%{name}</span> dans la colonne “%{state_name}”"
+          dar_change_true_html: "<span class='user-name'>%{admin_name}</span> a validé le DAR"
+          dar_change_false_html: "<span class='user-name'>%{admin_name}</span> a invalidé le DAR"
           message_html: "<span class='user-name'>%{admin_name}</span> a commenté la candidature de <span class='user-name'>%{name}</span>"
           email_html: "<span class='user-name'>%{admin_name}</span> a envoyé un courriel à <span class='user-name'>%{name}</span>"
           email_simple_html: "<span class='user-name'>%{from_name}</span> a envoyé un courriel"
@@ -357,6 +359,9 @@ fr:
         help: "Téléverser un fichier"
       uncheck:
         success: "Fichier invalidé !"
+    dars:
+      update:
+        success: "Validation DAR mise à jour avec succès"
     rejections:
       create:
         success: "Candidature refusée ou désistée"

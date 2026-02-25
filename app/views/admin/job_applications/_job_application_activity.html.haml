@@ -44,6 +44,9 @@
                   - state_name = JobApplication.states.find { |k, v| v == state_index }&.first
                   - state_name_i18n = JobApplication.human_attribute_name("state/#{state_name}")
                   = t('.activities.change_state_html', admin_name: whodunnit, name: full_name, state_name: state_name_i18n)
+                - elsif audited_changes.key?('dar')
+                  - key = audited_changes['dar'].last ? '.activities.dar_change_true_html' : '.activities.dar_change_false_html'
+                  = t(key, admin_name: whodunnit)
                 - elsif audit.auditable_type == "Message"
                   = t('.activities.message_html', admin_name: whodunnit, name: full_name)
                   .card.my-2

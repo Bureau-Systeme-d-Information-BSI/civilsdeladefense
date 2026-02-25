@@ -49,7 +49,7 @@ class JobApplication < ApplicationRecord
   validates :user_id, uniqueness: {scope: :job_offer_id}, on: :create, allow_nil: true # rubocop:disable Rails/UniqueValidationWithoutIndex
   validate :cant_accept_before_delay
   validate :cant_accept_remaining_initial_job_applications
-  validate :cant_skip_state, on: :update
+  validate :cant_skip_mandatory_state, on: :update
   validate :complete_files_before_draft_contract
   validate :required_files_not_validated, if: -> { state_changed? }, unless: -> { required_files_validated? }
   validate :cant_be_accepted_twice, if: -> { accepted? }, unless: -> { has_accepted_other_job_application? }
@@ -83,7 +83,12 @@ class JobApplication < ApplicationRecord
     contract_feedback_waiting
     contract_received
     affected
-  ]
+  ].freeze
+
+  SKIPPABLE_STATES = %w[
+    phone_meeting
+    to_be_met
+  ].freeze
 
   enum state: {
     initial: 0,
@@ -304,7 +309,7 @@ class JobApplication < ApplicationRecord
     errors.add(:state, :cant_accept_remaining_initial_job_applications)
   end
 
-  def cant_skip_state
+  def cant_skip_mandatory_state
     return if new_state_immediatly_after?
     return if new_state_before?
 
@@ -315,9 +320,11 @@ class JobApplication < ApplicationRecord
 
   def new_state_before? = current_state_index <= previous_state_index
 
-  def current_state_index = ORDERED_STATES.index(state)
+  def current_state_index = mandatory_states.index(state)
 
-  def previous_state_index = ORDERED_STATES.index(state_was)
+  def previous_state_index = mandatory_states.index(state_was)
+
+  def mandatory_states = ORDERED_STATES.reject { |s| SKIPPABLE_STATES.include?(s) && s != state && s != state_was }
 
   def complete_files_before_draft_contract
     return if state.to_s != "contract_drafting"

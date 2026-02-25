@@ -42,21 +42,43 @@ RSpec.describe JobApplication do
     describe "#cant_skip_state" do
       subject(:state_change) { job_application.update!(state:) }
 
-      let(:job_application) { create(:job_application, state: :phone_meeting) }
-
       context "when the state is immediatly after the previous state" do
+        let(:job_application) { create(:job_application, state: :phone_meeting) }
         let(:state) { "to_be_met" }
 
         it { is_expected.to be(true) }
       end
 
       context "when the state is before the previous state" do
+        let(:job_application) { create(:job_application, state: :phone_meeting) }
         let(:state) { "initial" }
 
         it { is_expected.to be(true) }
       end
 
-      context "when the state is after the previous state" do
+      context "when skipping non-mandatory states (phone_meeting and to_be_met)" do
+        let(:job_application) { create(:job_application, state: :initial) }
+        let(:state) { "financial_estimate" }
+
+        it { is_expected.to be(true) }
+      end
+
+      context "when skipping only phone_meeting" do
+        let(:job_application) { create(:job_application, state: :initial) }
+        let(:state) { "to_be_met" }
+
+        it { is_expected.to be(true) }
+      end
+
+      context "when skipping only to_be_met" do
+        let(:job_application) { create(:job_application, state: :phone_meeting) }
+        let(:state) { "financial_estimate" }
+
+        it { is_expected.to be(true) }
+      end
+
+      context "when skipping a mandatory state" do
+        let(:job_application) { create(:job_application, state: :initial) }
         let(:state) { "accepted" }
 
         it { expect { state_change }.to raise_error(ActiveRecord::RecordInvalid) }

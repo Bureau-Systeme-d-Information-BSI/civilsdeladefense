@@ -18,6 +18,8 @@ class Ability
 
     if administrator.functional_administrator?
       ability_admin(administrator)
+    elsif administrator.hr_manager?
+      ability_hr_manager(administrator)
     elsif administrator.employment_authority?
       ability_employment_authority(administrator)
     elsif administrator.employer_recruiter?
@@ -39,6 +41,17 @@ class Ability
     can :manage, :all
     can :manage, PreferredUsersList, administrator_id: administrator.id
     cannot :validate_dar, JobApplication
+  end
+
+  def ability_hr_manager(administrator)
+    can :read, JobOffer, job_offer_actors: {administrator_id: administrator.id}
+    cannot :transfer, JobOffer, job_offer_actors: {administrator_id: administrator.id}
+    can :read, JobApplication, job_application_read_query(administrator)
+    cannot :validate_dar, JobApplication
+    can :read, JobApplicationFile
+    can :read, Message
+    can :read, Email
+    can :read, User
   end
 
   def ability_employment_authority(administrator)

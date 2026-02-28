@@ -1,0 +1,53 @@
+<p>
+  Bonjour <%= @administrator.full_name %>,
+</p>
+
+<p>
+  Vous êtes notifié comme « <%= @roles %> » sur la plateforme E-recrutement sur l’offre <%= link_to @job_offer.title, @job_offer %>.
+</p>
+
+<p>
+  Le/la candidat(e) <%= @job_application.user.full_name %> est passé(e) à l'étape Prise de poste.
+</p>
+
+<% if @employer_recruiters.any? || @hr_managers.any? %>
+  <p>
+    Pour information, les personnes liées à cette offre sont :
+  </p>
+
+  <% if @employer_recruiters.any? %>
+    <p>
+      Employeur(s) :
+    </p>
+
+    <ul>
+      <% @employer_recruiters.each do |administrator| %>
+        <li><%= administrator.full_name %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <% if @hr_managers.any? %>
+    <p>
+      Gestionnaire(s) :
+    </p>
+
+    <ul>
+      <% @hr_managers.each do |administrator| %>
+        <li><%= administrator.full_name %></li>
+      <% end %>
+    </ul>
+  <% end %>
+<% end %>
+
+<p>
+  Pour y accéder et procéder à une action, cliquez sur le lien suivant : <%= link_to(@job_offer.title, [:admin, @job_offer]) %>
+</p>
+
+<p>
+  Cordialement,
+</p>
+
+<p>
+  L'équipe <%= @service_name %>
+</p>

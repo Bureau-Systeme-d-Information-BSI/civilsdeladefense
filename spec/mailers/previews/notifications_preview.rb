@@ -14,5 +14,11 @@ class NotificationsPreview < ActionMailer::Preview
     NotificationsMailer.with(administrator:, job_application:).contract_drafting
   end
 
+  def contract_feedback_waiting
+    job_application = JobApplication.find_by(state: :contract_feedback_waiting) || JobApplication.first
+    administrator = Administrator.hr_managers.first || Administrator.first
+    NotificationsMailer.with(administrator:, job_application:).contract_feedback_waiting
+  end
+
   def daily_summary = NotificationsMailer.daily_summary
 end

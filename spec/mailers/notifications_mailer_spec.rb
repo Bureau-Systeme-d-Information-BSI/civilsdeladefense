@@ -99,6 +99,6 @@ RSpec.describe NotificationsMailer do
 
     it { expect(mail.to).to match([administrator.email]) }
 
-    it { expect(mail.body.encoded).to match(/à l'étape dossier de paie/) }
+    it { expect(mail.body.encoded).to match(/à l'étape Dossier de paie/) }
   end
 end

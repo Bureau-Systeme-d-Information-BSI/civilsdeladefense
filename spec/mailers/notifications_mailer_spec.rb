@@ -39,6 +39,6 @@ RSpec.describe NotificationsMailer do
 
     it { expect(mail.to).to match([administrator.email]) }
 
-    it { expect(mail.body.encoded).to match(/à l'étape validation dossier complet/) }
+    it { expect(mail.body.encoded).to match(/à l'étape Validation dossier complet/) }
   end
 end

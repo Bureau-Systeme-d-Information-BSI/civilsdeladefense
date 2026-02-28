@@ -19,6 +19,26 @@ RSpec.describe NotificationsMailer do
 
     it { expect(mail.to).to match([administrator.email]) }
 
-    it { expect(mail.body.encoded).to match(/Vous êtes notifié comme/) }
+    it { expect(mail.body.encoded).to match(/a répondu à votre proposition d’entretien/) }
+  end
+
+  describe "contract_drafting" do
+    subject(:mail) { described_class.with(administrator:, job_application:).contract_drafting }
+
+    let(:administrator) { create(:administrator) }
+    let(:job_application) { create(:job_application) }
+
+    it {
+      expect(mail.subject).to eq(
+        I18n.t(
+          "notifications_mailer.contract_drafting.subject",
+          service_name: administrator.organization.service_name
+        )
+      )
+    }
+
+    it { expect(mail.to).to match([administrator.email]) }
+
+    it { expect(mail.body.encoded).to match(/à l'étape Validation dossier complet/) }
   end
 end

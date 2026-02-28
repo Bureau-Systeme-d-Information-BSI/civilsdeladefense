@@ -8,6 +8,8 @@ RSpec.describe JobApplication do
 
   describe "delegations" do
     it { is_expected.to delegate_method(:employer_recruiters).to(:job_offer).with_prefix(true) }
+
+    it { is_expected.to delegate_method(:hr_managers).to(:job_offer).with_prefix(true) }
   end
 
   describe "validations" do
@@ -197,6 +199,47 @@ RSpec.describe JobApplication do
 
       context "when required files are missing" do
         it { expect { chante_state }.to raise_error(ActiveRecord::RecordInvalid) }
+      end
+    end
+  end
+
+  describe "after_update callbacks" do
+    describe "#notify_hr_managers_contract_drafting" do
+      subject(:contract_drafting) { job_application.contract_drafting! }
+
+      let(:job_application) { create(:job_application, state: :accepted) }
+
+      context "when the job application has at least one hr_manager" do
+        let(:administrator) { create(:administrator, roles: [:hr_manager]) }
+        let(:mailer_double) { instance_double(ActionMailer::MessageDelivery, deliver_later: true) }
+
+        before do
+          create(:job_offer_actor, job_offer: job_application.job_offer, administrator:, role: :employer)
+          allow(NotificationsMailer).to receive_messages(
+            with: NotificationsMailer,
+            contract_drafting: mailer_double
+          )
+          contract_drafting
+        end
+
+        it { expect(NotificationsMailer).to have_received(:with).with(administrator:, job_application:) }
+
+        it { expect(NotificationsMailer).to have_received(:contract_drafting) }
+      end
+
+      context "when the job application doesn't have any hr managers" do
+        let(:administrator) { create(:administrator, roles: [:hr_manager]) }
+        let(:mailer_double) { instance_double(ActionMailer::MessageDelivery, deliver_later: true) }
+
+        before do
+          allow(NotificationsMailer).to receive_messages(
+            with: NotificationsMailer,
+            contract_drafting: mailer_double
+          )
+          contract_drafting
+        end
+
+        it { expect(NotificationsMailer).not_to have_received(:with) }
       end
     end
   end

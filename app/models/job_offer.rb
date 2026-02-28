@@ -55,6 +55,8 @@ class JobOffer < ApplicationRecord
   has_many :job_applications, dependent: :destroy
   has_many :job_offer_actors, inverse_of: :job_offer, dependent: :destroy
   has_many :administrators, through: :job_offer_actors
+  has_many :employer_recruiters, -> { merge(Administrator.employer_recruiters) }, through: :job_offer_actors, source: :administrator
+
   accepts_nested_attributes_for :job_offer_actors
 
   %i[employer grand_employer supervisor_employer brh].each do |actor_role|

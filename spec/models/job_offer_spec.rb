@@ -43,6 +43,10 @@ RSpec.describe JobOffer do
     it { is_expected.to have_many(:drawback_job_offers).dependent(:destroy) }
 
     it { is_expected.to have_many(:drawbacks).through(:drawback_job_offers) }
+
+    it { is_expected.to have_many(:administrators).through(:job_offer_actors) }
+
+    it { is_expected.to have_many(:employer_recruiters).through(:job_offer_actors) }
   end
 
   describe "delegations" do

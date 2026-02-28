@@ -281,6 +281,45 @@ RSpec.describe JobApplication do
         it { expect(NotificationsMailer).not_to have_received(:with) }
       end
     end
+
+    describe "#notify_payroll_managers_contract_received" do
+      subject(:contract_received) { job_application.contract_received! }
+
+      let(:job_application) { create(:job_application, state: :contract_feedback_waiting) }
+
+      context "when the job application has at least one payroll_manager" do
+        let(:administrator) { create(:administrator, roles: [:payroll_manager]) }
+        let(:mailer_double) { instance_double(ActionMailer::MessageDelivery, deliver_later: true) }
+
+        before do
+          create(:job_offer_actor, job_offer: job_application.job_offer, administrator:, role: :employer)
+          allow(NotificationsMailer).to receive_messages(
+            with: NotificationsMailer,
+            contract_received: mailer_double
+          )
+          contract_received
+        end
+
+        it { expect(NotificationsMailer).to have_received(:with).with(administrator:, job_application:) }
+
+        it { expect(NotificationsMailer).to have_received(:contract_received) }
+      end
+
+      context "when the job application doesn't have any payroll managers" do
+        let(:administrator) { create(:administrator, roles: [:payroll_manager]) }
+        let(:mailer_double) { instance_double(ActionMailer::MessageDelivery, deliver_later: true) }
+
+        before do
+          allow(NotificationsMailer).to receive_messages(
+            with: NotificationsMailer,
+            contract_received: mailer_double
+          )
+          contract_received
+        end
+
+        it { expect(NotificationsMailer).not_to have_received(:with) }
+      end
+    end
   end
 end
 

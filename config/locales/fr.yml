@@ -187,6 +187,8 @@ fr:
       subject: "[%{service_name}] Notification « Gestionnaire » - Validation dossier complet"
     contract_feedback_waiting:
       subject: "[%{service_name}] Notification « Gestionnaire » - Contrat"
+    contract_received:
+      subject: "[%{service_name}] Notification « Gestionnaire » - Dossier de paie"
     daily_summary:
       subject: "[%{service_name}] Rapport journalier"
       generic_title: "Candidatures %{state}"

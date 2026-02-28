@@ -99,6 +99,6 @@ RSpec.describe NotificationsMailer do
 
     it { expect(mail.to).to match([administrator.email]) }
 
-    it { expect(mail.body.encoded).to match(/à l'étape prise de poste/) }
+    it { expect(mail.body.encoded).to match(/à l'étape Prise de poste/) }
   end
 end

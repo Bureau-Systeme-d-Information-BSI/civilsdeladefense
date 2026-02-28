@@ -3,11 +3,11 @@
 </p>
 
 <p>
-  Vous êtes notifié comme « <%= @roles %> » sur la plateforme E-recrutement sur l’offre <%= link_to @job_offer.title, [:admin, @job_offer] %>.
+  Vous êtes notifié comme « <%= @roles %> » sur la plateforme E-recrutement sur l’offre <%= link_to @job_offer.title, @job_offer %>.
 </p>
 
 <p>
-  Le/la candidat(e) <%= @job_application.user.full_name %> est passé(e) à l'étape prise de poste.
+  Le/la candidat(e) <%= @job_application.user.full_name %> est passé(e) à l'étape Prise de poste.
 </p>
 
 <% if @employer_recruiters.any? || @hr_managers.any? %>

@@ -65,6 +65,6 @@ RSpec.describe ApplicantNotificationsMailer do
 
     it { expect(notify_rejected.subject).to eq("Votre candidature a été refusée") }
 
-    it { expect(notify_rejected.body.encoded).to match(/nous ne pourrons pas y donner une suite favorable/) }
+    it { expect(notify_rejected.body.encoded).to match(/nous ne pouvons pas actuellement y donner une suite favorable/) }
   end
 end

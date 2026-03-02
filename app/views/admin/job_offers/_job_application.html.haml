@@ -6,46 +6,51 @@
       .notification= job_application.administrator_notifications_count
 
     .card-body
-      - if can?(:manage, job_application)
-        - if job_application.user.blank?
-          = render "/admin/job_applications/job_application_card_body", job_application:
-        - else
-          .d-flex.justify-content-start.align-items-start
-            = link_to [:admin, @job_offer, job_application], class: "d-flex" do
-              = image_user_tag job_application.user.photo, width: 40, class: 'mr-2'
-              .d-flex.flex-column
-                %strong.text-secondary= job_application.user.full_name
-                %strong.small.text-muted= job_application.user.current_position
-            .ml-auto
-            - if preselection
-              .d-flex
-                - if job_application.preselection == "favorite"
-                  = button_to admin_job_offer_job_application_favorite_path(job_offer, job_application), method: :delete, class: "btn btn-sm btn-link btn-success" do
-                    = fa_icon('thumbs-up', flavor: 'solid')
-                - else
-                  = button_to admin_job_offer_job_application_favorite_path(job_offer, job_application), method: :post, class: "btn btn-sm btn-link" do
-                    = fa_icon('thumbs-up', flavor: 'regular')
+      = link_to (can?(:manage, job_application) ? [:admin, @job_offer, job_application] : nil) do
+        - user = job_application.user || User.new(is_deleted: true)
+        .d-flex.justify-content-start
+          = image_user_tag user.photo, width: 40, class: 'mr-2'
+          .d-flex.flex-column
+            %strong.text-secondary= user.full_name
+            %strong.small.text-muted= user.current_position
+          .ml-auto
+          - if preselection && can?(:manage, job_application) && user.persisted?
+            .d-flex
+              - if job_application.preselection == "favorite"
+                = button_to admin_job_offer_job_application_favorite_path(job_offer, job_application), method: :delete, class: "btn btn-sm btn-link btn-success" do
+                  = fa_icon('thumbs-up', flavor: 'solid')
+              - else
+                = button_to admin_job_offer_job_application_favorite_path(job_offer, job_application), method: :post, class: "btn btn-sm btn-link" do
+                  = fa_icon('thumbs-up', flavor: 'regular')
 
-                - if job_application.preselection == "unfavorite"
-                  = button_to admin_job_offer_job_application_unfavorite_path(job_offer, job_application), method: :delete, class: "btn btn-sm btn-link btn-warning" do
-                    = fa_icon('thumbs-down', flavor: 'solid')
-                - else
-                  = button_to admin_job_offer_job_application_unfavorite_path(job_offer, job_application), method: :post, class: "btn btn-sm btn-link" do
-                    = fa_icon('thumbs-down', flavor: 'regular')
-      - else
-        .job-application-modal-link
-          = render "/admin/job_applications/job_application_card_body", job_application:
-
+              - if job_application.preselection == "unfavorite"
+                = button_to admin_job_offer_job_application_unfavorite_path(job_offer, job_application), method: :delete, class: "btn btn-sm btn-link btn-warning" do
+                  = fa_icon('thumbs-down', flavor: 'solid')
+              - else
+                = button_to admin_job_offer_job_application_unfavorite_path(job_offer, job_application), method: :post, class: "btn btn-sm btn-link" do
+                  = fa_icon('thumbs-down', flavor: 'regular')
     - if dar
-      = render "/admin/job_applications/job_application_dar", job_application:
+      - if can?(:validate_dar, job_application)
+        = simple_form_for job_application, url: admin_job_application_dar_path(job_application), namespace: "dar_#{job_application.id}", html: { class: 'mx-3', data: { controller: 'auto-submit' } } do |f|
+          = f.input :dar, as: :radio_buttons, input_html: { data: { action: 'change->auto-submit#submit' } }
+      - else
+        .mx-3
+          %fieldset.form-group.rf-input-group.rf-fieldset.radio_buttons{disabled: true}
+            %legend.col-form-label.pt-0= t('simple_form.labels.job_application.dar')
+            .form-check.form-check-inline
+              = radio_button_tag "dar_#{job_application.id}_readonly", "true", job_application.dar == true, class: "form-check-input", disabled: true
+              = label_tag nil, t("true"), class: "form-check-label"
+            .form-check.form-check-inline
+              = radio_button_tag "dar_#{job_application.id}_readonly", "false", job_application.dar == false, class: "form-check-input", disabled: true
+              = label_tag nil, t("false"), class: "form-check-label"
 
     .card-footer.d-flex.flex-column.flex-md-row.align-items-center
       .mr-auto= t('admin.job_applications.job_application.applied_on', date: I18n.l(job_application.created_at.to_date))
       - klasses = %w(emails-count badge job-application-modal-link mr-2)
-      = link_to emails_admin_job_offer_job_application_url(job_offer, job_application), class: klasses do
+      = link_to (can?(:manage, job_application) ? emails_admin_job_offer_job_application_url(job_offer, job_application) : nil), class: klasses do
         = fa_icon 'envelope', style: "width: 0.8rem; height: auto; vertical-align: -0.15rem;"
         = job_application.emails_count
       - klasses = %w(emails-count badge job-application-modal-link mr-0)
-      = link_to files_admin_job_offer_job_application_url(job_offer, job_application), class: klasses do
+      = link_to (can?(:manage, job_application) ? files_admin_job_offer_job_application_url(job_offer, job_application) : nil), class: klasses do
         = fa_icon "link", style: "width: 0.8rem; height: auto; vertical-align: -0.15rem;"
         = job_application.files_count

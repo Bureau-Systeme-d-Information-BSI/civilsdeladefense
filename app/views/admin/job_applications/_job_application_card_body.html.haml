@@ -1,7 +1,0 @@
-- user = job_application.user || User.new(is_deleted: true)
-.d-flex.justify-content-start
-  = image_user_tag user.photo, width: 40, class: 'mr-2'
-  .d-flex.flex-column
-    %strong.text-secondary= user.full_name
-    %strong.small.text-muted= user.current_position
-  .ml-auto

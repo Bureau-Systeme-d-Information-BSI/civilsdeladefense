@@ -6,7 +6,7 @@
       .notification= job_application.administrator_notifications_count
 
     .card-body
-      = link_to (can?(:manage, job_application) ? [:admin, @job_offer, job_application] : nil) do
+      = link_to (can?(:manage, job_application) || can?(:read, job_application) ? [:admin, @job_offer, job_application] : nil) do
         - user = job_application.user || User.new(is_deleted: true)
         .d-flex.justify-content-start
           = image_user_tag user.photo, width: 40, class: 'mr-2'

@@ -7,7 +7,7 @@ class Ability
   def initialize(administrator)
     return unless administrator
 
-    alias_action :archived, :stats, :board, :cvlm, :export, :multi_select, :export, :send_job_offer, to: :read
+    alias_action :archived, :stats, :board, :cvlm, :files, :export, :multi_select, :export, :send_job_offer, to: :read
     alias_action :listing, :update_listing, to: :read
     alias_action :suspend, to: :destroy
 
@@ -18,6 +18,8 @@ class Ability
 
     if administrator.functional_administrator?
       ability_admin(administrator)
+    elsif administrator.hr_manager?
+      ability_hr_manager(administrator)
     elsif administrator.employment_authority?
       ability_employment_authority(administrator)
     elsif administrator.employer_recruiter?
@@ -39,6 +41,17 @@ class Ability
     can :manage, :all
     can :manage, PreferredUsersList, administrator_id: administrator.id
     cannot :validate_dar, JobApplication
+  end
+
+  def ability_hr_manager(administrator)
+    can :read, JobOffer, job_offer_actors: {administrator_id: administrator.id}
+    cannot :transfer, JobOffer, job_offer_actors: {administrator_id: administrator.id}
+    can :read, JobApplication, job_application_read_query(administrator)
+    cannot :validate_dar, JobApplication
+    can :manage, JobApplicationFile
+    can :read, Message
+    can :read, Email
+    can :read, User
   end
 
   def ability_employment_authority(administrator)

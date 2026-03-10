@@ -1266,6 +1266,7 @@ fr:
         kind/applicant_provided: "Fourni par le candidat"
         kind/manager_provided: "Fourni par le gestionnaire"
         kind/employer_provided: "Fourni par l'employeur"
+        kind/employment_authority_provided: "Fourni par l'autorité d'emploi"
         kind/check_only_admin_only: "Fichier géré hors outil"
       job_offer:
         title: "Intitulé du poste"

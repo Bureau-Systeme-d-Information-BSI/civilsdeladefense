@@ -20,6 +20,7 @@ class JobApplicationFileType < ApplicationRecord
   # Enums
   enum kind: {
     applicant_provided: 10,
+    employment_authority_provided: 13,
     manager_provided: 11,
     employer_provided: 12,
     check_only_admin_only: 40

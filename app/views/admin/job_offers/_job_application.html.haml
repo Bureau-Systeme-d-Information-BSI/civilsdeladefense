@@ -37,7 +37,8 @@
           = render "/admin/job_applications/job_application_card_body", job_application:
 
     - if dar
-      = render "/admin/job_applications/job_application_dar", job_application:
+      = simple_form_for job_application, url: admin_job_application_dar_path(job_application), namespace: "dar_#{job_application.id}", html: { class: 'mx-3', data: { controller: 'auto-submit' } } do |f|
+        = f.input :dar, input_html: { data: { action: 'change->auto-submit#submit' } }, disabled: cannot?(:validate_dar, job_application)
 
     .card-footer.d-flex.flex-column.flex-md-row.align-items-center
       .mr-auto= t('admin.job_applications.job_application.applied_on', date: I18n.l(job_application.created_at.to_date))

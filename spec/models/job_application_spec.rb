@@ -54,6 +54,24 @@ RSpec.describe JobApplication do
         it { is_expected.to be(true) }
       end
     end
+
+    describe "#dar_validated" do
+      subject(:contract_drafting) { job_application.contract_drafting! }
+
+      let(:job_application) { create(:job_application, state: :accepted, dar:) }
+
+      context "when the dar is validated" do
+        let(:dar) { true }
+
+        it { is_expected.to be(true) }
+      end
+
+      context "when the dar is not validated" do
+        let(:dar) { false }
+
+        it { expect { contract_drafting }.to raise_error(ActiveRecord::RecordInvalid) }
+      end
+    end
   end
 
   describe "scopes" do

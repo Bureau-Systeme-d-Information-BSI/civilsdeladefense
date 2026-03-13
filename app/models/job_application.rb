@@ -53,6 +53,7 @@ class JobApplication < ApplicationRecord
   validate :complete_files_before_draft_contract
   validate :required_files_not_validated, if: -> { state_changed? }, unless: -> { required_files_validated? }
   validate :cant_be_accepted_twice, if: -> { accepted? }, unless: -> { has_accepted_other_job_application? }
+  validate :dar_validated, if: -> { state_changed? && contract_drafting? }, unless: :dar?
 
   before_validation :set_employer
   before_save :compute_notifications_counter
@@ -346,6 +347,8 @@ class JobApplication < ApplicationRecord
   end
 
   def cant_be_accepted_twice = errors.add(:state, :cant_be_accepted_twice)
+
+  def dar_validated = errors.add(:state, :dar_unvalidated)
 
   def has_accepted_other_job_application? = user.job_applications.where(state: "accepted").where.not(id: id).empty?
 

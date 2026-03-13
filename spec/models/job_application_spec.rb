@@ -150,8 +150,26 @@ RSpec.describe JobApplication do
     end
   end
 
+  describe "#dar_validated" do
+    subject(:contract_drafting) { job_application.contract_drafting! }
+
+    let(:job_application) { create(:job_application, state: :accepted, dar:) }
+
+    context "when dar is false" do
+      let(:dar) { false }
+
+      it { expect { contract_drafting }.to raise_error(ActiveRecord::RecordInvalid) }
+    end
+
+    context "when dar is true" do
+      let(:dar) { true }
+
+      it { is_expected.to be(true) }
+    end
+  end
+
   describe "complete_files_before_draft_contract" do
-    let(:job_application) { create(:job_application, state: :accepted) }
+    let(:job_application) { create(:job_application, state: :accepted, dar: true) }
     let!(:jaft_1) do
       create(:job_application_file_type, name: "File 1", from_state: :accepted, kind: :applicant_provided)
     end

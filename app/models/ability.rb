@@ -7,7 +7,7 @@ class Ability
   def initialize(administrator)
     return unless administrator
 
-    alias_action :archived, :stats, :board, :cvlm, :export, :multi_select, :export, :send_job_offer, to: :read
+    alias_action :archived, :stats, :board, :cvlm, :emails, :files, :export, :multi_select, :export, :send_job_offer, to: :read
     alias_action :listing, :update_listing, to: :read
     alias_action :suspend, to: :destroy
 
@@ -48,7 +48,7 @@ class Ability
     can :validate_dar, JobApplication, job_application_read_query(administrator)
     can :read, JobApplicationFile
     can :read, Message
-    can :read, Email
+    can :manage, Email
     can :read, User
   end
 

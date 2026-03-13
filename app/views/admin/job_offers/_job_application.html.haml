@@ -32,6 +32,9 @@
                 - else
                   = button_to admin_job_offer_job_application_unfavorite_path(job_offer, job_application), method: :post, class: "btn btn-sm btn-link" do
                     = fa_icon('thumbs-down', flavor: 'regular')
+      - elsif can?(:read, job_application)
+        = link_to [:admin, @job_offer, job_application] do
+          = render "/admin/job_applications/job_application_card_body", job_application:
       - else
         .job-application-modal-link
           = render "/admin/job_applications/job_application_card_body", job_application:

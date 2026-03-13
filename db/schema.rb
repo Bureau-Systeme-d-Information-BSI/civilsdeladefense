@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_02_10_072230) do
+ActiveRecord::Schema[7.1].define(version: 2026_03_13_070254) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -416,7 +416,7 @@ ActiveRecord::Schema[7.1].define(version: 2026_02_10_072230) do
     t.uuid "category_id"
     t.boolean "rejected", default: false
     t.integer "preselection", default: 0
-    t.boolean "dar"
+    t.boolean "dar", default: false
     t.index ["category_id"], name: "index_job_applications_on_category_id"
     t.index ["employer_id"], name: "index_job_applications_on_employer_id"
     t.index ["job_offer_id"], name: "index_job_applications_on_job_offer_id"

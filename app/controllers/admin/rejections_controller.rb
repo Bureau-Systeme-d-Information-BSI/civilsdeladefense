@@ -3,6 +3,8 @@ class Admin::RejectionsController < Admin::BaseController
 
   def create
     @job_application = JobApplication.find(params[:job_application_id])
+    authorize!(:manage, @job_application)
+
     @job_application.reject!(rejection_reason:)
     redirect_to admin_job_application_path(@job_application), notice: t(".success")
   end

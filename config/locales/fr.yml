@@ -1223,7 +1223,7 @@ fr:
         state: "État"
         state/start: "N'a encore aucune candidature"
         state/initial: "Nouvelle candidature"
-        state/rejected: "Refusé·e"
+        state/rejected: "Refusée"
         state/phone_meeting: "Entretien téléphonique"
         state/phone_meeting_rejected: "Refusé·e après e. tél."
         state/to_be_met: "Entretien d'embauche"

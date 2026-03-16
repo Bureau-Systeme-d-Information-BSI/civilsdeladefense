@@ -1,10 +1,18 @@
 class Admin::RejectionsController < Admin::BaseController
   skip_load_and_authorize_resource
 
+  def new
+    @job_application = JobApplication.find(params[:job_application_id])
+    render layout: false if request.xhr?
+  end
+
   def create
     @job_application = JobApplication.find(params[:job_application_id])
     @job_application.reject!(rejection_reason:)
-    redirect_to admin_job_application_path(@job_application), notice: t(".success")
+    respond_to do |format|
+      format.html { redirect_to admin_job_application_path(@job_application), notice: t(".success") }
+      format.js
+    end
   end
 
   private

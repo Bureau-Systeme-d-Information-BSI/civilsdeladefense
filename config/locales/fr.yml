@@ -358,6 +358,8 @@ fr:
       uncheck:
         success: "Fichier invalidé !"
     rejections:
+      new:
+        title: "Refus ou désistement"
       create:
         success: "Candidature refusée ou désistée"
     job_offers:

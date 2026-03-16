@@ -40,20 +40,49 @@ export function boardManagement() {
             var oldState = item.getAttribute('data-state')
             var to = evt.to
             var newState = to.getAttribute('data-state')
-            var changeStateUrl = item.getAttribute('data-change-state-url')
-            var newChangeStateUrl = changeStateUrl.replace(`state=${oldState}`, `state=${newState}`)
 
-            Rails.ajax({
-              type: 'PATCH',
-              url: newChangeStateUrl,
-              dataType: 'script',
-              success: (response) => {
-              },
-              error: (response) => {
-                console.log('error boardManagement')
-                console.log(response)
-              }
-            })
+            if (newState === 'rejected') {
+              var rejectionUrl = item.getAttribute('data-rejection-url')
+              Rails.ajax({
+                type: 'GET',
+                url: rejectionUrl,
+                dataType: 'html',
+                success: (response) => {
+                  var modal = document.getElementById('remoteContentModal')
+                  var modalBody = modal.querySelector('.modal-body')
+                  modalBody.innerHTML = response.body ? response.body.innerHTML : response.documentElement.innerHTML
+                  var form = modalBody.querySelector('form')
+                  if (form) {
+                    form.setAttribute('data-remote', 'true')
+                  }
+                  new BSN.Modal(modal).show()
+                  modal.addEventListener('hidden.bs.modal', function onHidden() {
+                    modal.removeEventListener('hidden.bs.modal', onHidden)
+                    boardRedraw()
+                  })
+                },
+                error: (response) => {
+                  console.log('error loading rejection form')
+                  console.log(response)
+                  boardRedraw()
+                }
+              })
+            } else {
+              var changeStateUrl = item.getAttribute('data-change-state-url')
+              var newChangeStateUrl = changeStateUrl.replace(`state=${oldState}`, `state=${newState}`)
+
+              Rails.ajax({
+                type: 'PATCH',
+                url: newChangeStateUrl,
+                dataType: 'script',
+                success: (response) => {
+                },
+                error: (response) => {
+                  console.log('error boardManagement')
+                  console.log(response)
+                }
+              })
+            }
           }
         })
       })

@@ -2,7 +2,7 @@
   .card-header
     = t('.title')
   .card-body
-    = simple_form_for @job_application, url: admin_job_application_rejections_path(@job_application), method: :post, remote: true, html: { data: { controller: "rejection" } } do |f|
+    = simple_form_for @job_application, url: admin_job_application_rejection_path(@job_application), method: :post, remote: true, html: { data: { controller: "rejection" } } do |f|
       = f.input :rejection_reason_id, collection: RejectionReason.all, label: false, prompt: :translate, input_html: { data: { action: "rejection#reasonChanged"} }
       .form-actions
         = f.submit t('buttons.reject'), class: 'btn btn-primary btn-raised', disabled: true, data: { rejection_target: "submit" }

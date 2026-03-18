@@ -104,6 +104,18 @@ RSpec.describe JobApplication::Rejectable do
     end
   end
 
+  describe "#unreject!" do
+    subject(:unreject) { job_application.unreject! }
+
+    let(:job_application) { create(:job_application, state: :to_be_met, rejected: true, rejection_reason: create(:rejection_reason)) }
+
+    it { expect { unreject }.to change(job_application, :rejected).to(false) }
+
+    it { expect { unreject }.to change(job_application, :rejection_reason).to(nil) }
+
+    it { expect { unreject }.to change(job_application, :state).to("initial") }
+  end
+
   describe "#reject!" do
     subject(:reject) { job_application.reject!(rejection_reason:) }
 

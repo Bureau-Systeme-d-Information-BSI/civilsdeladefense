@@ -5,7 +5,6 @@ module JobApplication::Rejectable
     belongs_to :rejection_reason, optional: true
 
     validate :missing_rejection_reason, if: -> { rejected && rejection_reason.blank? }
-    validate :immutable_state, if: -> { state_changed? && rejected }, on: :update
 
     before_save :cleanup_rejection_reason, unless: -> { rejected }
     after_update :notify_rejected, if: -> { saved_change_to_rejected? && rejected }
@@ -16,6 +15,8 @@ module JobApplication::Rejectable
 
   def reject!(rejection_reason:) = update!(rejected: true, rejection_reason:)
 
+  def unreject! = update!(state: :initial, rejected: false, rejection_reason: nil)
+
   private
 
   def missing_rejection_reason = errors.add(:rejection_reason, :blank)
@@ -23,6 +24,4 @@ module JobApplication::Rejectable
   def cleanup_rejection_reason = self.rejection_reason = nil
 
   def notify_rejected = ApplicantNotificationsMailer.with(user:, job_offer:).notify_rejected.deliver_later
-
-  def immutable_state = errors.add(:state, :immutable_rejected)
 end

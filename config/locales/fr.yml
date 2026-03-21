@@ -1185,6 +1185,11 @@ fr:
             photo:
               file_size_is_less_than_or_equal_to: "Est trop volumineuse (ne doit pas dépasser %{count})"
               allowed_file_content_types: "au mauvais format (seuls les formats JPG et PNG sont acceptés)"
+        job_application_file_type:
+          attributes:
+            visibility_rules:
+              must_have_administrator: "doit contenir au moins une règle pour le back office"
+              must_have_user: "doit contenir au moins une règle pour le front office"
         job_application_file:
           attributes:
             content:
@@ -1257,6 +1262,8 @@ fr:
         state/end_user_state_7: "Contrat reçu"
         state/end_user_state_8: "Affectée"
       job_application_file_type:
+        visibility_rules_for_administrator: "Étapes où le fichier sera accessible et visible en back office"
+        visibility_rules_for_user: "Étapes où le fichier sera accessible et visible en front office"
         from_state: "État de début"
         to_state: "État de fin"
         required: "Obligatoire"

@@ -41,15 +41,18 @@ class JobApplicationFileType < ApplicationRecord
 
   has_many :job_application_files, dependent: :nullify
   has_many :visibility_rules, dependent: :destroy
+  accepts_nested_attributes_for :visibility_rules, allow_destroy: true
 
   private
 
   def must_have_administrator_visibility_rule
-    errors.add(:visibility_rules, :must_have_administrator) unless visibility_rules.any?(&:administrator?)
+    rules = visibility_rules.reject(&:marked_for_destruction?)
+    errors.add(:visibility_rules, :must_have_administrator) unless rules.any?(&:administrator?)
   end
 
   def must_have_user_visibility_rule
-    errors.add(:visibility_rules, :must_have_user) unless visibility_rules.any?(&:user?)
+    rules = visibility_rules.reject(&:marked_for_destruction?)
+    errors.add(:visibility_rules, :must_have_user) unless rules.any?(&:user?)
   end
 
   public

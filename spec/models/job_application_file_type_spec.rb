@@ -16,6 +16,24 @@ RSpec.describe JobApplicationFileType do
       it { is_expected.to validate_presence_of(:required_from_state) }
       it { is_expected.to validate_presence_of(:required_to_state) }
     end
+
+    context "without an administrator visibility rule" do
+      subject(:jaft) { build(:job_application_file_type) }
+
+      before { jaft.visibility_rules.target.reject!(&:administrator?) }
+
+      it { is_expected.not_to be_valid }
+      it { expect(jaft.tap(&:valid?).errors[:visibility_rules]).to be_present }
+    end
+
+    context "without a user visibility rule" do
+      subject(:jaft) { build(:job_application_file_type) }
+
+      before { jaft.visibility_rules.target.reject!(&:user?) }
+
+      it { is_expected.not_to be_valid }
+      it { expect(jaft.tap(&:valid?).errors[:visibility_rules]).to be_present }
+    end
   end
 
   describe "scopes" do

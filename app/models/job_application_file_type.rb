@@ -6,18 +6,13 @@ class JobApplicationFileType < ApplicationRecord
   acts_as_list
   default_scope -> { order(position: :asc) }
 
-  #####################################
-  # File uploads
   mount_uploader :content, DocumentUploader, mount_on: :content_file_name
-
-  #####################################
-  # Validations
 
   validates :name, :kind, :from_state, :to_state, presence: true
   validates :required_from_state, :required_to_state, if: -> { required? }, presence: true
+  validate :must_have_administrator_visibility_rule
+  validate :must_have_user_visibility_rule
 
-  #####################################
-  # Enums
   enum kind: {
     applicant_provided: 10,
     employment_authority_provided: 13,
@@ -44,9 +39,20 @@ class JobApplicationFileType < ApplicationRecord
       .where("required_to_state > ?", JobApplication.states[state])
   }
 
-  #####################################
-  # Relations
   has_many :job_application_files, dependent: :nullify
+  has_many :visibility_rules, dependent: :destroy
+
+  private
+
+  def must_have_administrator_visibility_rule
+    errors.add(:visibility_rules, :must_have_administrator) unless visibility_rules.any?(&:administrator?)
+  end
+
+  def must_have_user_visibility_rule
+    errors.add(:visibility_rules, :must_have_user) unless visibility_rules.any?(&:user?)
+  end
+
+  public
 
   def is_mandatory?(state)
     from_state_as_val = JobApplication.states[from_state]

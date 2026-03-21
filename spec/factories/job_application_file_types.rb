@@ -6,6 +6,11 @@ FactoryBot.define do
     from_state { :initial }
     to_state { :phone_meeting }
     kind { :applicant_provided }
+
+    after(:build) do |jaft|
+      jaft.visibility_rules.build(by: :administrator, state: :initial)
+      jaft.visibility_rules.build(by: :user, state: :initial)
+    end
   end
 end
 

@@ -331,7 +331,7 @@ class JobApplication < ApplicationRecord
   def complete_files_before_draft_contract
     return if state.to_s != "contract_drafting"
 
-    default_types = JobApplicationFileType.for_applicant(:accepted).pluck(:id)
+    default_types = JobApplicationFileType.visible_by_user(:accepted).pluck(:id)
     validated_types = job_application_files.where(is_validated: true).pluck(:job_application_file_type_id)
 
     return if (default_types - validated_types).blank?

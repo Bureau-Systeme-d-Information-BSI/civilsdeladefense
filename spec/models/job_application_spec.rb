@@ -122,9 +122,12 @@ RSpec.describe JobApplication do
       expect(must_be_provided_files.size).to eq(2)
       expect(optional_file_types.size).to eq(1)
 
-      job_application.job_application_files.each do |file|
-        file.content = fixture_file_upload("document.pdf", "application/pdf")
+      JobApplicationFileType.required(:phone_meeting).each do |jaft|
+        file = job_application.job_application_files.find_by(job_application_file_type: jaft) ||
+          create(:job_application_file, job_application:, job_application_file_type: jaft)
+        file.check!
       end
+      job_application.reload
       job_application.to_be_met!
 
       result = job_application.files_to_be_provided
@@ -204,11 +207,18 @@ RSpec.describe JobApplication do
 
       let!(:job_application) { create(:job_application, state: :phone_meeting) }
       let!(:job_application_file_type) do
-        create(:job_application_file_type, required: true, required_from_state: :phone_meeting, required_to_state: :accepted)
+        create(:job_application_file_type).tap do |jaft|
+          jaft.visibility_rules.create!(by: :administrator, state: :phone_meeting)
+        end
       end
 
       context "when required files are present and validated" do
-        before { create(:job_application_file, job_application:, job_application_file_type:).check! }
+        before do
+          JobApplicationFileType.required(:phone_meeting).each do |jaft|
+            create(:job_application_file, job_application:, job_application_file_type: jaft).check!
+          end
+          job_application.reload
+        end
 
         it { is_expected.to be(true) }
       end

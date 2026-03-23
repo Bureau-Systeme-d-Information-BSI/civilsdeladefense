@@ -26,17 +26,27 @@ class JobApplicationFileType < ApplicationRecord
   enum required_from_state: JobApplication.states, _prefix: true
   enum required_to_state: JobApplication.states, _prefix: true
 
-  scope :for_states_around, ->(state) {
+  scope :visible_by_user, ->(state) {
     where(kind: :applicant_provided)
-      .where("from_state <= ?", JobApplication.states[state])
-      .where("to_state > ?", JobApplication.states[state])
+      .joins(:visibility_rules)
+      .where(visibility_rules: {by: :user, state:})
   }
 
-  scope :for_applicant, ->(state) { where(kind: :applicant_provided, from_state: JobApplication.states[state]) }
+  scope :visible_by_user_up_to, ->(state) {
+    where(kind: :applicant_provided)
+      .joins(:visibility_rules)
+      .where(visibility_rules: {by: :user})
+      .where("visibility_rules.state <= ?", JobApplication.states[state])
+      .distinct
+  }
+
   scope :required, ->(state) {
-    where(required: true)
-      .where("required_from_state <= ?", JobApplication.states[state])
-      .where("required_to_state > ?", JobApplication.states[state])
+    where(
+      id: VisibilityRule.where(by: :administrator)
+        .group(:job_application_file_type_id)
+        .having("MAX(state) <= ?", JobApplication.states[state])
+        .select(:job_application_file_type_id)
+    )
   }
 
   has_many :job_application_files, dependent: :nullify
@@ -53,15 +63,6 @@ class JobApplicationFileType < ApplicationRecord
   def must_have_user_visibility_rule
     rules = visibility_rules.reject(&:marked_for_destruction?)
     errors.add(:visibility_rules, :must_have_user) unless rules.any?(&:user?)
-  end
-
-  public
-
-  def is_mandatory?(state)
-    from_state_as_val = JobApplication.states[from_state]
-    current_state_as_val = JobApplication.states[state]
-
-    current_state_as_val >= from_state_as_val
   end
 end
 

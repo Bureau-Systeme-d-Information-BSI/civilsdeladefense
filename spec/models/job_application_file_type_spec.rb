@@ -6,12 +6,6 @@ RSpec.describe JobApplicationFileType do
   describe "validations" do
     it { is_expected.to validate_presence_of(:name) }
 
-    context "when required" do
-      subject { build(:job_application_file_type, required: true) }
-
-      it { is_expected.to validate_presence_of(:required_to_state) }
-    end
-
     context "without an administrator visibility rule" do
       subject(:jaft) { build(:job_application_file_type) }
 

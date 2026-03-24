@@ -4,14 +4,14 @@
 # The list of names/types is managed by the administrators of the platform.
 class JobApplicationFileType < ApplicationRecord
   # TODO: @sebastiencarceles remove these columns from DB after v2
-  self.ignored_columns += %i[from_state required_from_state]
+  self.ignored_columns += %i[from_state required_from_state to_state]
 
   acts_as_list
   default_scope -> { order(position: :asc) }
 
   mount_uploader :content, DocumentUploader, mount_on: :content_file_name
 
-  validates :name, :kind, :to_state, presence: true
+  validates :name, :kind, presence: true
   validates :required_to_state, if: -> { required? }, presence: true
   validate :must_have_administrator_visibility_rule
   validate :must_have_user_visibility_rule
@@ -24,7 +24,6 @@ class JobApplicationFileType < ApplicationRecord
     check_only_admin_only: 40
   }
 
-  enum to_state: JobApplication.states, _prefix: true
   enum required_to_state: JobApplication.states, _prefix: true
 
   scope :visible_by_user, ->(state) {

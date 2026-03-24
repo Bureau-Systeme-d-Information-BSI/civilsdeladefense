@@ -3,7 +3,6 @@
 FactoryBot.define do
   factory :job_application_file_type do
     name { "CV" }
-    to_state { :phone_meeting }
     kind { :applicant_provided }
 
     after(:build) do |jaft|

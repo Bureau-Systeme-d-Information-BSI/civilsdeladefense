@@ -11,7 +11,6 @@
       - else
         %th= resource_class.human_attribute_name(:name)
         - if resource_class == JobApplicationFileType
-          %th= resource_class.human_attribute_name(:to_state)
           %th= resource_class.human_attribute_name(:kind)
           %th= resource_class.human_attribute_name(:required)
         - if resource_class == Employer

@@ -381,59 +381,59 @@ job_application_file_type_with_visibility_rules = ->(attrs, from_state, to_state
 }
 
 cover_letter = job_application_file_type_with_visibility_rules.call(
-  {name: "Lettre de Motivation", kind: :applicant_provided, to_state: :accepted},
+  {name: "Lettre de Motivation", kind: :applicant_provided},
   :initial, :accepted
 )
 job_application_file_type_with_visibility_rules.call(
-  {name: "Copie des diplômes", kind: :applicant_provided, to_state: :contract_received},
+  {name: "Copie des diplômes", kind: :applicant_provided},
   :accepted, :contract_received
 )
 job_application_file_type_with_visibility_rules.call(
-  {name: "Justificatif de domicile de moins de 6 mois", kind: :applicant_provided, to_state: :contract_received},
+  {name: "Justificatif de domicile de moins de 6 mois", kind: :applicant_provided},
   :accepted, :contract_received
 )
 job_application_file_type_with_visibility_rules.call(
-  {name: "Carte d’identité", description: "Carte nationale d’identité recto/verso ou passeport", kind: :applicant_provided, to_state: :affected},
+  {name: "Carte d’identité", description: "Carte nationale d’identité recto/verso ou passeport", kind: :applicant_provided},
   :accepted, :affected
 )
 description = "Attestation de carte vitale ou copie de carte vitale " \
   "(mentionnant le n° INSEE)"
 job_application_file_type_with_visibility_rules.call(
-  {name: "Carte Vitale", description: description, kind: :applicant_provided, to_state: :contract_received},
+  {name: "Carte Vitale", description: description, kind: :applicant_provided},
   :accepted, :contract_received
 )
 description = "Certificat médical d’aptitude fourni par le médecin de l’établissement" \
   " ou à défaut par un médecin agréé"
 job_application_file_type_with_visibility_rules.call(
-  {name: "Certificat Médical", description: description, kind: :applicant_provided, to_state: :contract_received},
+  {name: "Certificat Médical", description: description, kind: :applicant_provided},
   :accepted, :contract_received
 )
 description = "RIB original au format BIC/IBAN comportant le logo de la banque au nom du " \
   " signataire du contrat (les RIB sur compte épargne ne sont pas acceptés)"
 job_application_file_type_with_visibility_rules.call(
-  {name: "Relevé d’identité bancaire", description: description, kind: :applicant_provided, to_state: :affected},
+  {name: "Relevé d’identité bancaire", description: description, kind: :applicant_provided},
   :accepted, :affected
 )
 job_application_file_type_with_visibility_rules.call(
-  {name: "Copie d’un titre de transport (si vous postulez en Île-de-france)", kind: :applicant_provided, to_state: :contract_feedback_waiting},
+  {name: "Copie d’un titre de transport (si vous postulez en Île-de-france)", kind: :applicant_provided},
   :accepted, :contract_feedback_waiting
 )
 description = "Fiche de poste comportant le code poste ALLIANCE actif et vacant au moment " \
   "de la date d’effet du recrutement"
 job_application_file_type_with_visibility_rules.call(
-  {name: "Fiche de poste", description: description, kind: :manager_provided, to_state: :contract_feedback_waiting},
+  {name: "Fiche de poste", description: description, kind: :manager_provided},
   :accepted, :contract_feedback_waiting
 )
 job_application_file_type_with_visibility_rules.call(
-  {name: "FICE transmis à officier sécurité", kind: :check_only_admin_only, to_state: :affected},
+  {name: "FICE transmis à officier sécurité", kind: :check_only_admin_only},
   :accepted, :affected
 )
 job_application_file_type_with_visibility_rules.call(
-  {name: "Demande de B2", kind: :check_only_admin_only, to_state: :affected},
+  {name: "Demande de B2", kind: :check_only_admin_only},
   :accepted, :affected
 )
 job_application_file_type_with_visibility_rules.call(
-  {name: "Copie du livret de famille", description: "Seulement si marié", kind: :applicant_provided, to_state: :contract_feedback_waiting},
+  {name: "Copie du livret de famille", description: "Seulement si marié", kind: :applicant_provided},
   :accepted, :contract_feedback_waiting
 )
 

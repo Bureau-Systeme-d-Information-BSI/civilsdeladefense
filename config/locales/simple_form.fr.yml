@@ -101,7 +101,6 @@ fr:
         content: "Fichier"
         to_state: "État de fin"
         required: "Obligatoire"
-        required_from_state: "Obligatoire à partir de l'état"
         required_to_state: "Plus obligatoire à partir de l'état"
       job_offer:
         title: "Intitulé du poste"
@@ -248,7 +247,6 @@ fr:
         website_url: "LinkedIn, Viadeo, portfolio, etc."
       job_application_file_type:
         to_state: "État à partir duquel le fichier ne sera plus visible"
-        required_from_state: "Si le fichier n’est pas inséré, vous ne pourrez pas faire passer le candidat à l'étape suivante"
         required_to_state: "Le fichier ne sera plus visible"
       organization:
         privacy_policy_url: "Ce lien est utilisé dans le formulaire de soumission d'une candidature"

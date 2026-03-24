@@ -11,7 +11,6 @@ RSpec.describe JobApplicationFileType do
     context "when required" do
       subject { build(:job_application_file_type, required: true) }
 
-      it { is_expected.to validate_presence_of(:required_from_state) }
       it { is_expected.to validate_presence_of(:required_to_state) }
     end
 

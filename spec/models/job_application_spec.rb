@@ -107,9 +107,13 @@ RSpec.describe JobApplication do
 
   describe "files_to_be_provided" do
     before do
-      create(:job_application_file_type, name: "CV", from_state: :initial, kind: :applicant_provided)
-      create(:job_application_file_type, name: "LM", from_state: :initial, kind: :applicant_provided)
-      create(:job_application_file_type, name: "FILE", from_state: :to_be_met, kind: :applicant_provided)
+      create(:job_application_file_type, name: "CV", kind: :applicant_provided)
+      create(:job_application_file_type, name: "LM", kind: :applicant_provided)
+      create(:job_application_file_type, name: "FILE", kind: :applicant_provided) do |jaft|
+        jaft.visibility_rules.destroy_all
+        jaft.visibility_rules.create!(by: :administrator, state: :to_be_met)
+        jaft.visibility_rules.create!(by: :user, state: :to_be_met)
+      end
     end
 
     let(:job_application) { create(:job_application, job_offer:, state: :phone_meeting) }
@@ -162,10 +166,18 @@ RSpec.describe JobApplication do
   describe "complete_files_before_draft_contract" do
     let(:job_application) { create(:job_application, state: :accepted) }
     let!(:jaft_1) do
-      create(:job_application_file_type, name: "File 1", from_state: :accepted, kind: :applicant_provided)
+      create(:job_application_file_type, name: "File 1", kind: :applicant_provided) do |jaft|
+        jaft.visibility_rules.destroy_all
+        jaft.visibility_rules.create!(by: :administrator, state: :accepted)
+        jaft.visibility_rules.create!(by: :user, state: :accepted)
+      end
     end
     let!(:jaft_2) do
-      create(:job_application_file_type, name: "File 2", from_state: :to_be_met, kind: :applicant_provided)
+      create(:job_application_file_type, name: "File 2", kind: :applicant_provided) do |jaft|
+        jaft.visibility_rules.destroy_all
+        jaft.visibility_rules.create!(by: :administrator, state: :to_be_met)
+        jaft.visibility_rules.create!(by: :user, state: :to_be_met)
+      end
     end
 
     context "when no files are filled" do

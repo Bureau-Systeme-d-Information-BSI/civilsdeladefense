@@ -1266,7 +1266,6 @@ fr:
         visibility_rules_for_user: "Étapes où le fichier sera accessible et visible en front office"
         to_state: "État de fin"
         required: "Obligatoire"
-        required_from_state: "Obligatoire à partir de l'état"
         required_to_state: "Plus obligatoire à partir de l'état"
         kind: "Type"
         kind/applicant_provided: "Fourni par le candidat"

@@ -42,7 +42,6 @@ class Admin::Settings::JobApplicationFileTypesController < Admin::Settings::Inhe
       :content,
       :to_state,
       :required,
-      :required_from_state,
       :required_to_state,
       :notification,
       visibility_rules_attributes: [:id, :by, :state, :_destroy]

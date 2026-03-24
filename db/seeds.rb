@@ -366,92 +366,75 @@ AvailabilityRange.create!(name: "Disponible sous 1 mois")
 AvailabilityRange.create!(name: "Disponible sous 2 mois")
 AvailabilityRange.create!(name: "Disponible sous 3 mois ou plus")
 
-cover_letter = JobApplicationFileType.create!(
-  name: "Lettre de Motivation",
-  kind: :applicant_provided,
-  from_state: :initial,
-  to_state: :accepted
+all_states = JobApplication.states.keys.map(&:to_sym)
+
+job_application_file_type_with_visibility_rules = ->(attrs, from_state, to_state) {
+  jaft = JobApplicationFileType.new(attrs)
+  from_idx = all_states.index(from_state)
+  to_idx = all_states.index(to_state)
+  all_states[from_idx...to_idx].each do |s|
+    jaft.visibility_rules.build(by: :administrator, state: s)
+    jaft.visibility_rules.build(by: :user, state: s)
+  end
+  jaft.save!
+  jaft
+}
+
+cover_letter = job_application_file_type_with_visibility_rules.call(
+  {name: "Lettre de Motivation", kind: :applicant_provided, from_state: :initial, to_state: :accepted},
+  :initial, :accepted
 )
-JobApplicationFileType.create!(
-  name: "Copie des diplômes",
-  kind: :applicant_provided,
-  from_state: :accepted,
-  to_state: :contract_received
+job_application_file_type_with_visibility_rules.call(
+  {name: "Copie des diplômes", kind: :applicant_provided, from_state: :accepted, to_state: :contract_received},
+  :accepted, :contract_received
 )
-JobApplicationFileType.create!(
-  name: "Justificatif de domicile de moins de 6 mois",
-  kind: :applicant_provided,
-  from_state: :accepted,
-  to_state: :contract_received
+job_application_file_type_with_visibility_rules.call(
+  {name: "Justificatif de domicile de moins de 6 mois", kind: :applicant_provided, from_state: :accepted, to_state: :contract_received},
+  :accepted, :contract_received
 )
-JobApplicationFileType.create!(
-  name: "Carte d'identité",
-  description: "Carte nationale d’identité recto/verso ou passeport",
-  kind: :applicant_provided,
-  from_state: :accepted,
-  to_state: :affected
+job_application_file_type_with_visibility_rules.call(
+  {name: "Carte d’identité", description: "Carte nationale d’identité recto/verso ou passeport", kind: :applicant_provided, from_state: :accepted, to_state: :affected},
+  :accepted, :affected
 )
 description = "Attestation de carte vitale ou copie de carte vitale " \
   "(mentionnant le n° INSEE)"
-JobApplicationFileType.create!(
-  name: "Carte Vitale",
-  description: description,
-  kind: :applicant_provided,
-  from_state: :accepted,
-  to_state: :contract_received
+job_application_file_type_with_visibility_rules.call(
+  {name: "Carte Vitale", description: description, kind: :applicant_provided, from_state: :accepted, to_state: :contract_received},
+  :accepted, :contract_received
 )
 description = "Certificat médical d’aptitude fourni par le médecin de l’établissement" \
   " ou à défaut par un médecin agréé"
-JobApplicationFileType.create!(
-  name: "Certificat Médical",
-  description: description,
-  kind: :applicant_provided,
-  from_state: :accepted,
-  to_state: :contract_received
+job_application_file_type_with_visibility_rules.call(
+  {name: "Certificat Médical", description: description, kind: :applicant_provided, from_state: :accepted, to_state: :contract_received},
+  :accepted, :contract_received
 )
 description = "RIB original au format BIC/IBAN comportant le logo de la banque au nom du " \
   " signataire du contrat (les RIB sur compte épargne ne sont pas acceptés)"
-JobApplicationFileType.create!(
-  name: "Relevé d'identité bancaire",
-  description: description,
-  kind: :applicant_provided,
-  from_state: :accepted,
-  to_state: :affected
+job_application_file_type_with_visibility_rules.call(
+  {name: "Relevé d’identité bancaire", description: description, kind: :applicant_provided, from_state: :accepted, to_state: :affected},
+  :accepted, :affected
 )
-name = "Copie d'un titre de transport (si vous postulez en Île-de-france)"
-JobApplicationFileType.create!(
-  name: name,
-  kind: :applicant_provided,
-  from_state: :accepted,
-  to_state: :contract_feedback_waiting
+job_application_file_type_with_visibility_rules.call(
+  {name: "Copie d’un titre de transport (si vous postulez en Île-de-france)", kind: :applicant_provided, from_state: :accepted, to_state: :contract_feedback_waiting},
+  :accepted, :contract_feedback_waiting
 )
 description = "Fiche de poste comportant le code poste ALLIANCE actif et vacant au moment " \
   "de la date d’effet du recrutement"
-JobApplicationFileType.create!(
-  name: "Fiche de poste",
-  description: description,
-  kind: :manager_provided,
-  from_state: :accepted,
-  to_state: :contract_feedback_waiting
+job_application_file_type_with_visibility_rules.call(
+  {name: "Fiche de poste", description: description, kind: :manager_provided, from_state: :accepted, to_state: :contract_feedback_waiting},
+  :accepted, :contract_feedback_waiting
 )
-JobApplicationFileType.create!(
-  name: "FICE transmis à officier sécurité",
-  kind: :check_only_admin_only,
-  from_state: :accepted,
-  to_state: :affected
+job_application_file_type_with_visibility_rules.call(
+  {name: "FICE transmis à officier sécurité", kind: :check_only_admin_only, from_state: :accepted, to_state: :affected},
+  :accepted, :affected
 )
-JobApplicationFileType.create!(
-  name: "Demande de B2",
-  kind: :check_only_admin_only,
-  from_state: :accepted,
-  to_state: :affected
+job_application_file_type_with_visibility_rules.call(
+  {name: "Demande de B2", kind: :check_only_admin_only, from_state: :accepted, to_state: :affected},
+  :accepted, :affected
 )
-JobApplicationFileType.create!(
-  name: "Copie du livret de famille",
-  description: "Seulement si marié",
-  kind: :applicant_provided,
-  from_state: :accepted,
-  to_state: :contract_feedback_waiting
+job_application_file_type_with_visibility_rules.call(
+  {name: "Copie du livret de famille", description: "Seulement si marié", kind: :applicant_provided, from_state: :accepted, to_state: :contract_feedback_waiting},
+  :accepted, :contract_feedback_waiting
 )
 
 job_offer = JobOffer.new { |j|

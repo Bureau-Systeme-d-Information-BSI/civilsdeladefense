@@ -43,11 +43,13 @@ class JobApplicationFile < ApplicationRecord
     is_validated == 0
   end
 
-  def downloadable? = job_application_state < max_downloadable_state
+  def downloadable? = JobApplication.states[job_application_state] < max_downloadable_state
 
   private
 
-  def max_downloadable_state = job_application_file_type.required_to_state
+  def max_downloadable_state
+    job_application_file_type.visibility_rules.where(by: :administrator).maximum(:state)
+  end
 end
 
 # == Schema Information

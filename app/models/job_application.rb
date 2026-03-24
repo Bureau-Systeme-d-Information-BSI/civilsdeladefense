@@ -246,17 +246,16 @@ class JobApplication < ApplicationRecord
     result[:must_be_provided_files] = []
     result[:optional_file_types] = []
 
+    visible_file_type_ids = JobApplicationFileType.visible_by_user_up_to(state).reorder(nil).pluck(:id).to_set
+
     JobApplicationFileType.all.find_each do |file_type|
       existing_file = job_application_files.detect { |file|
         file.job_application_file_type == file_type
       }
 
-      from_state_as_val = JobApplication.states[file_type.from_state]
-      current_state_as_val = JobApplication.states[state]
-
       if existing_file
         result[:must_be_provided_files] << existing_file
-      elsif current_state_as_val >= from_state_as_val
+      elsif visible_file_type_ids.include?(file_type.id)
         virgin = job_application_files.build(job_application_file_type: file_type)
         result[:must_be_provided_files] << virgin
       else

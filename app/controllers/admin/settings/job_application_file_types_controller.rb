@@ -40,7 +40,6 @@ class Admin::Settings::JobApplicationFileTypesController < Admin::Settings::Inhe
       :description,
       :kind,
       :content,
-      :from_state,
       :to_state,
       :required,
       :required_from_state,

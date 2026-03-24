@@ -1264,7 +1264,6 @@ fr:
       job_application_file_type:
         visibility_rules_for_administrator: "Étapes où le fichier sera accessible et visible en back office"
         visibility_rules_for_user: "Étapes où le fichier sera accessible et visible en front office"
-        from_state: "État de début"
         to_state: "État de fin"
         required: "Obligatoire"
         required_from_state: "Obligatoire à partir de l'état"

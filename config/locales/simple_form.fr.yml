@@ -99,7 +99,6 @@ fr:
       job_application_file_type:
         kind: "Type"
         content: "Fichier"
-        from_state: "État de début"
         to_state: "État de fin"
         required: "Obligatoire"
         required_from_state: "Obligatoire à partir de l'état"
@@ -248,7 +247,6 @@ fr:
         cover_letter: "Format PDF, max. 2Mo"
         website_url: "LinkedIn, Viadeo, portfolio, etc."
       job_application_file_type:
-        from_state: "État à partir duquel le fichier sera visible"
         to_state: "État à partir duquel le fichier ne sera plus visible"
         required_from_state: "Si le fichier n’est pas inséré, vous ne pourrez pas faire passer le candidat à l'étape suivante"
         required_to_state: "Le fichier ne sera plus visible"

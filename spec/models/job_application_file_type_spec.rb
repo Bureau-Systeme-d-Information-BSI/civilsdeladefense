@@ -6,8 +6,6 @@ RSpec.describe JobApplicationFileType do
   describe "validations" do
     it { is_expected.to validate_presence_of(:name) }
 
-    it { is_expected.to validate_presence_of(:from_state) }
-
     it { is_expected.to validate_presence_of(:to_state) }
 
     context "when required" do

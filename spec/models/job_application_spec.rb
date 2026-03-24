@@ -205,7 +205,8 @@ RSpec.describe JobApplication do
     describe "required_files_are_validated" do
       subject(:chante_state) { job_application.to_be_met! }
 
-      let!(:job_application) { create(:job_application, state: :phone_meeting) }
+      let!(:job_application) { create(:job_application, state: initial_state) }
+      let(:initial_state) { :phone_meeting }
       let!(:job_application_file_type) do
         create(:job_application_file_type).tap do |jaft|
           jaft.visibility_rules.create!(by: :administrator, state: :phone_meeting)
@@ -231,6 +232,12 @@ RSpec.describe JobApplication do
 
       context "when required files are missing" do
         it { expect { chante_state }.to raise_error(ActiveRecord::RecordInvalid) }
+      end
+
+      context "when state moves downward" do
+        let(:initial_state) { :financial_estimate }
+
+        it { is_expected.to be(true) }
       end
     end
   end

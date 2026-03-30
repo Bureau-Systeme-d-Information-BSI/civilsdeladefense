@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_03_13_070254) do
+ActiveRecord::Schema[7.1].define(version: 2026_03_30_080442) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -364,6 +364,23 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_13_070254) do
     t.index ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type"
     t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
     t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
+  end
+
+  create_table "job_application_action_rules", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.integer "role", null: false
+    t.integer "state", null: false
+    t.integer "to_state"
+    t.boolean "read", default: false, null: false
+    t.boolean "manage_user_info", default: false, null: false
+    t.boolean "manage_state", default: false, null: false
+    t.boolean "manage_file", default: false, null: false
+    t.boolean "reject", default: false, null: false
+    t.boolean "comment", default: false, null: false
+    t.boolean "send_email", default: false, null: false
+    t.boolean "validate_dar", default: false, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["role", "state"], name: "index_job_application_action_rules_on_role_and_state", unique: true
   end
 
   create_table "job_application_file_types", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|

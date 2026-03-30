@@ -15,6 +15,8 @@ RSpec.describe "Admin::Dars" do
     context "when the administrator is employment authority" do
       let(:admin) { create(:administrator, roles: [:employment_authority]) }
 
+      before { create(:job_application_action_rule, role: :employment_authority, state: job_application.state, validate_dar: true) }
+
       it "changes the dar value" do
         expect { update_dar }.to change { job_application.reload.dar }.from(false).to(true)
         expect(response.media_type).to eq("text/vnd.turbo-stream.html")

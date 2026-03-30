@@ -42,14 +42,48 @@ class Ability
   end
 
   def ability_employment_authority(administrator)
+    rules = JobApplicationActionRule.where(role: :employment_authority)
+
     can :read, JobOffer, job_offer_actors: {administrator_id: administrator.id}
     cannot :transfer, JobOffer, job_offer_actors: {administrator_id: administrator.id}
-    can :read, JobApplication, job_application_read_query(administrator)
-    can :validate_dar, JobApplication, job_application_read_query(administrator)
-    can :read, JobApplicationFile
-    can :read, Message
-    can :manage, Email
     can :read, User
+    can :read, JobApplication, job_application_read_query(administrator)
+    can :read, JobApplicationFile
+
+    manage_state_rules = rules.where(manage_state: true)
+    can :change_state, JobApplication do |ja|
+      manage_state_rules.any? { |r| JobApplication.states[r.state] == JobApplication.states[ja.state] }
+    end
+
+    comment_states = rules.where(comment: true).pluck(:state)
+    can :manage, Message do |message|
+      comment_states.include?(message.job_application.state)
+    end
+
+    send_email_states = rules.where(send_email: true).pluck(:state)
+    can :manage, Email do |email|
+      send_email_states.include?(email.job_application.state)
+    end
+
+    validate_dar_states = rules.where(validate_dar: true).pluck(:state)
+    can :validate_dar, JobApplication do |ja|
+      validate_dar_states.include?(ja.state)
+    end
+
+    manage_file_states = rules.where(manage_file: true).pluck(:state)
+    can :manage, JobApplicationFile do |file|
+      manage_file_states.include?(file.job_application.state)
+    end
+
+    reject_states = rules.where(reject: true).pluck(:state)
+    can :reject, JobApplication do |ja|
+      reject_states.include?(ja.state)
+    end
+
+    manage_user_info_states = rules.where(manage_user_info: true).pluck(:state)
+    can :manage_user_info, JobApplication do |ja|
+      manage_user_info_states.include?(ja.state)
+    end
   end
 
   def ability_employer_recruiter(administrator)

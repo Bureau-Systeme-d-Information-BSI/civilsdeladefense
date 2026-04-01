@@ -6,7 +6,7 @@ RSpec.describe "Admin::Rejections" do
   before { sign_in administrator }
 
   describe "POST /admin/job_applications/:id/rejections" do
-    subject(:rejection) { post admin_job_application_rejections_path(job_application), params: }
+    subject(:rejection) { post admin_job_application_rejection_path(job_application), params: }
 
     let(:job_application) { create(:job_application) }
     let(:params) { {job_application: {rejection_reason_id: create(:rejection_reason).id}} }

@@ -69,7 +69,8 @@ class Admin::JobOffersController < Admin::BaseController
   # GET /admin/job_offers/1/board
   # GET /admin/job_offers/1/board.json
   def board
-    @job_applications = @job_offer.job_applications.includes(:user).group_by(&:state)
+    @job_applications = @job_offer.job_applications.not_rejecteds.includes(:user).group_by(&:state)
+    @rejecteds = @job_offer.job_applications.rejecteds
     request.xhr? && render(layout: false)
   end
 

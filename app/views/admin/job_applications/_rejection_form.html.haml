@@ -1,4 +1,4 @@
-= simple_form_for job_application, url: admin_job_application_rejections_path(job_application), method: :post, html: { data: {flash: true, controller: "rejection"}} do |f|
+= simple_form_for job_application, url: admin_job_application_rejection_path(job_application), method: :post, html: { data: {flash: true, controller: "rejection"}} do |f|
   .form-inputs
     = f.input :rejection_reason_id, collection: RejectionReason.all, label: false, prompt: :translate, wrapper: :custom_multi_select_full_wide, disabled: job_application.rejected, input_html: { data: { action: "rejection#reasonChanged"} }
   - unless job_application.rejected

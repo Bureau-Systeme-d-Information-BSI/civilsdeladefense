@@ -358,8 +358,12 @@ fr:
       uncheck:
         success: "Fichier invalidé !"
     rejections:
+      new:
+        title: "Refus ou désistement"
       create:
         success: "Candidature refusée ou désistée"
+      destroy:
+        success: "La candidature a été dé-refusée"
     job_offers:
       add_actor:
         admin_not_found_html: 'Ce mail n’a pas de compte existant, veuillez envoyer une demande de création de compte via le lien suivant : <a href="https://demarches-simplifiees.intradef.gouv.fr/commencer/demande-creation-compte-erecrutement">https://demarches-simplifiees.intradef.gouv.fr/commencer/demande-creation-compte-erecrutement</a>'
@@ -1163,7 +1167,6 @@ fr:
               complete_files_before_draft_contract: "Tous les documents doivent être téléversés et validés avant la rédaction du contrat"
               required_files_missing: "Des documents obligatoires sont manquants ou non validés"
               cant_be_accepted_twice: 'Cette action n''est pas possible. Ce candidat est déjà à l''état "Retenu" dans une offre d''emploi.'
-              immutable_rejected: "Cette candidature a été refusée, son état ne peut pas être modifié"
               cant_skip_state: "Impossible passer à l’étape supérieure sans la validation de l’étape précédente."
             cover_letter_content_type:
               invalid: "PDF uniquement, max 2Mo"
@@ -1223,7 +1226,7 @@ fr:
         state: "État"
         state/start: "N'a encore aucune candidature"
         state/initial: "Nouvelle candidature"
-        state/rejected: "Refusé·e"
+        state/rejected: "Refusée"
         state/phone_meeting: "Entretien téléphonique"
         state/phone_meeting_rejected: "Refusé·e après e. tél."
         state/to_be_met: "Entretien d'embauche"

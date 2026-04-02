@@ -247,7 +247,7 @@ class JobOffer < ApplicationRecord
     }
   end
 
-  def already_applied?(user) = job_applications.exists?(user:)
+  def already_applied?(user) = user && job_applications.exists?(user:)
 
   def delay_before_publishing_over?
     delay = organization&.days_before_publishing

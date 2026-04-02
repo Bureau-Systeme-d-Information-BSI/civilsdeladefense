@@ -82,4 +82,8 @@ module JobOffersHelper
       "Non"
     end
   end
+
+  def show_apply_button?(job_offer)
+    job_offer.published? && controller.action_name != "apply" && !job_offer.already_applied?(current_user)
+  end
 end

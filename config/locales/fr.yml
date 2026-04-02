@@ -181,6 +181,8 @@ fr:
     notify_rejected:
       subject: "Votre candidature a été refusée"
   notifications_mailer:
+    new_email:
+      subject: "[%{service_name}] Notification « Employeur » - Etape %{state}"
     daily_summary:
       subject: "[%{service_name}] Rapport journalier"
       generic_title: "Candidatures %{state}"

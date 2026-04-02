@@ -51,6 +51,19 @@ RSpec.describe Administrator do
     end
   end
 
+  describe "scopes" do
+    describe "#employer_recruiters" do
+      subject(:employer_recruiters) { described_class.employer_recruiters }
+
+      let!(:matching) { create(:administrator, roles: [:functional_administrator, :employer_recruiter]) }
+      let!(:unmatching) { create(:administrator, roles: [:hr_manager, :payroll_manager]) }
+
+      it { is_expected.to match([matching]) }
+
+      it { is_expected.not_to include(unmatching) }
+    end
+  end
+
   describe "before_validation callbacks" do
     describe "#set_first_name" do
       subject(:save) { administrator.save! }

@@ -6,6 +6,10 @@ RSpec.describe JobApplication do
   let(:job_offer) { create(:job_offer) }
   let(:job_application) { create(:job_application, job_offer:) }
 
+  describe "delegations" do
+    it { is_expected.to delegate_method(:employer_recruiters).to(:job_offer).with_prefix(true) }
+  end
+
   describe "validations" do
     describe "#cant_be_accepted_twice" do
       subject(:acceptance) { job_application.accepted! }

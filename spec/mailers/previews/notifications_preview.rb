@@ -4,7 +4,14 @@
 class NotificationsPreview < ActionMailer::Preview
   def new_email
     job_application = JobApplication.find_by(state: :phone_meeting) || JobApplication.first
-    NotificationsMailer.with(administrator: Administrator.first, job_application:).new_email
+    administrator = Administrator.employer_recruiters.first || Administrator.first
+    NotificationsMailer.with(administrator:, job_application:).new_email
+  end
+
+  def contract_drafting
+    job_application = JobApplication.find_by(state: :contract_drafting) || JobApplication.first
+    administrator = Administrator.hr_managers.first || Administrator.first
+    NotificationsMailer.with(administrator:, job_application:).contract_drafting
   end
 
   def daily_summary = NotificationsMailer.daily_summary

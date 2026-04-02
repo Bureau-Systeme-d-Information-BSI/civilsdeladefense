@@ -62,6 +62,17 @@ RSpec.describe Administrator do
 
       it { is_expected.not_to include(unmatching) }
     end
+
+    describe "#hr_managers" do
+      subject(:hr_managers) { described_class.hr_managers }
+
+      let!(:matching) { create(:administrator, roles: [:functional_administrator, :hr_manager]) }
+      let!(:unmatching) { create(:administrator, roles: [:employer_recruiter, :payroll_manager]) }
+
+      it { is_expected.to match([matching]) }
+
+      it { is_expected.not_to include(unmatching) }
+    end
   end
 
   describe "before_validation callbacks" do

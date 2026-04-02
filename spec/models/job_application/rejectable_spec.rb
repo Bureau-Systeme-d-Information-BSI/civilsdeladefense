@@ -95,7 +95,7 @@ RSpec.describe JobApplication::Rejectable do
   end
 
   describe "after_update callbacks" do
-    describe "#notify_rejected" do
+    describe "#notify_applicant_rejected" do
       subject(:rejection) { job_application.update!(rejected: true, rejection_reason: create(:rejection_reason)) }
 
       let(:job_application) { create(:job_application) }

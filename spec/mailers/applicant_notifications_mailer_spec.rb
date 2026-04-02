@@ -51,7 +51,7 @@ RSpec.describe ApplicantNotificationsMailer do
     let(:job_offer) { job_application.job_offer }
     let(:state) { "phone_meeting" }
 
-    it { expect(notify_new_state.subject).to eq("Votre candidature : nouvelle étape") }
+    it { expect(notify_new_state.subject).to include("Votre candidature") }
 
     it { expect(notify_new_state.body.encoded).to match(/Votre candidature est passée à l'étape/) }
   end

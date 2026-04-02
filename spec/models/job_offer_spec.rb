@@ -55,12 +55,18 @@ RSpec.describe JobOffer do
     let(:user) { create(:user) }
 
     context "when user has already applied" do
-      before { create(:job_application, job_offer: job_offer, user:) }
+      before { create(:job_application, job_offer:, user:) }
 
       it { is_expected.to be true }
     end
 
     context "when user has not applied" do
+      it { is_expected.to be false }
+    end
+
+    context "when user is nil" do
+      before { create(:job_application, job_offer:, user: nil) }
+
       it { is_expected.to be false }
     end
   end

@@ -131,6 +131,62 @@ RSpec.describe JobOffersHelper do
     end
   end
 
+  describe ".show_apply_button?" do
+    subject { helper.show_apply_button?(job_offer) }
+
+    let(:job_offer) { create(:job_offer, state: :published) }
+
+    before { allow(controller).to receive(:action_name).and_return("show") }
+
+    context "when user is signed in" do
+      let(:current_user) { create(:user) }
+
+      before { allow(helper).to receive(:current_user).and_return(current_user) }
+
+      context "when the job offer is published and the user has not applied" do
+        it { is_expected.to be(true) }
+      end
+
+      context "when the job offer is not published" do
+        let(:job_offer) { create(:job_offer, state: :draft) }
+
+        it { is_expected.to be(false) }
+      end
+
+      context "when the action is apply" do
+        before { allow(controller).to receive(:action_name).and_return("apply") }
+
+        it { is_expected.to be(false) }
+      end
+
+      context "when the user has already applied" do
+        before { create(:job_application, job_offer:, user: current_user) }
+
+        it { is_expected.to be(false) }
+      end
+    end
+
+    context "when user is not signed in" do
+      before { allow(helper).to receive(:current_user).and_return(nil) }
+
+      context "when the job offer is published and the user has not applied" do
+        it { is_expected.to be(true) }
+      end
+
+      context "when the job offer is not published" do
+        let(:job_offer) { create(:job_offer, state: :draft) }
+
+        it { is_expected.to be(false) }
+      end
+
+      context "when the action is apply" do
+        before { allow(controller).to receive(:action_name).and_return("apply") }
+
+        it { is_expected.to be(false) }
+      end
+    end
+  end
+
   describe ".job_offer_start_display" do
     subject { job_offer_start_display(job_offer) }
 

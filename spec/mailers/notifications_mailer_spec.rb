@@ -62,26 +62,6 @@ RSpec.describe NotificationsMailer do
     it { expect(mail.body.encoded).to match(/à l'étape Contrat/) }
   end
 
-  describe "contract_feedback_waiting" do
-    subject(:mail) { described_class.with(administrator:, job_application:).contract_feedback_waiting }
-
-    let(:administrator) { create(:administrator) }
-    let(:job_application) { create(:job_application) }
-
-    it {
-      expect(mail.subject).to eq(
-        I18n.t(
-          "notifications_mailer.contract_feedback_waiting.subject",
-          service_name: administrator.organization.service_name
-        )
-      )
-    }
-
-    it { expect(mail.to).to match([administrator.email]) }
-
-    it { expect(mail.body.encoded).to match(/à l'étape contrat/) }
-  end
-
   describe "contract_received" do
     subject(:mail) { described_class.with(administrator:, job_application:).contract_received }
 

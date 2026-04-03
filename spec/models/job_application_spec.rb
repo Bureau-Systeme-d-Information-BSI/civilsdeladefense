@@ -43,6 +43,12 @@ RSpec.describe JobApplication do
 
         it { expect { acceptance }.to raise_error(ActiveRecord::RecordInvalid) }
       end
+
+      context "when the job offer has initial but rejected job applications" do
+        before { create(:job_application, :rejected, job_offer:, state: :initial) }
+
+        it { is_expected.to be(true) }
+      end
     end
 
     describe "#cant_skip_state" do
@@ -93,6 +99,17 @@ RSpec.describe JobApplication do
   end
 
   describe "scopes" do
+    describe ".not_rejected" do
+      subject { described_class.not_rejected }
+
+      let(:matching) { create(:job_application, rejected: false) }
+      let(:unmatching) { create(:job_application, :rejected) }
+
+      it { is_expected.to include(matching) }
+
+      it { is_expected.not_to include(unmatching) }
+    end
+
     describe ".with_category" do
       subject { described_class.with_category }
 

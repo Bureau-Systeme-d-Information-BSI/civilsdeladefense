@@ -43,6 +43,12 @@ RSpec.describe JobApplication do
 
         it { expect { acceptance }.to raise_error(ActiveRecord::RecordInvalid) }
       end
+
+      context "when the job offer has initial but rejected job applications" do
+        before { create(:job_application, job_offer:, state: :initial, rejected: true, rejection_reason: create(:rejection_reason)) }
+
+        it { is_expected.to be(true) }
+      end
     end
 
     describe "#cant_skip_state" do

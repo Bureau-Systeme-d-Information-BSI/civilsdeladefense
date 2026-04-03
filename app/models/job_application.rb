@@ -307,7 +307,7 @@ class JobApplication < ApplicationRecord
   def cant_accept_remaining_initial_job_applications
     return if state.to_s != "accepted"
     return if state_was.to_s == "accepted"
-    return if job_offer.job_applications.where(state: "initial").where.not(id: id).empty?
+    return if job_offer.job_applications.not_rejected.where(state: "initial").where.not(id: id).empty?
 
     errors.add(:state, :cant_accept_remaining_initial_job_applications)
   end

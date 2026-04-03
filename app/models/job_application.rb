@@ -193,6 +193,7 @@ class JobApplication < ApplicationRecord
   scope :finished, -> { where(state: FINISHED_STATES) }
   scope :not_finished, -> { where.not(state: FINISHED_STATES) }
   scope :between, ->(a, b) { where(created_at: b..a) }
+  scope :not_rejected, -> { where(rejected: false) }
   scope :with_user, -> { where.not(user: nil) }
 
   delegate :employer_recruiters, :hr_managers, :payroll_managers, to: :job_offer, prefix: true

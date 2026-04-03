@@ -193,6 +193,7 @@ class JobApplication < ApplicationRecord
   scope :finished, -> { where(state: FINISHED_STATES) }
   scope :not_finished, -> { where.not(state: FINISHED_STATES) }
   scope :between, ->(a, b) { where(created_at: b..a) }
+  scope :not_rejected, -> { where(rejected: false) }
   scope :with_user, -> { where.not(user: nil) }
 
   delegate :employer_recruiters, :hr_managers, :payroll_managers, to: :job_offer, prefix: true
@@ -306,7 +307,7 @@ class JobApplication < ApplicationRecord
   def cant_accept_remaining_initial_job_applications
     return if state.to_s != "accepted"
     return if state_was.to_s == "accepted"
-    return if job_offer.job_applications.where(state: "initial").where.not(id: id).empty?
+    return if job_offer.job_applications.not_rejected.where(state: "initial").where.not(id: id).empty?
 
     errors.add(:state, :cant_accept_remaining_initial_job_applications)
   end

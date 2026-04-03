@@ -7,6 +7,11 @@ FactoryBot.define do
     user
   end
 
+  trait :rejected do
+    rejected { true }
+    rejection_reason
+  end
+
   trait :with_employer do
     employer
   end

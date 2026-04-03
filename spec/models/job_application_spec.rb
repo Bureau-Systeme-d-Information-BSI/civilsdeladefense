@@ -45,7 +45,7 @@ RSpec.describe JobApplication do
       end
 
       context "when the job offer has initial but rejected job applications" do
-        before { create(:job_application, job_offer:, state: :initial, rejected: true, rejection_reason: create(:rejection_reason)) }
+        before { create(:job_application, :rejected, job_offer:, state: :initial) }
 
         it { is_expected.to be(true) }
       end
@@ -103,7 +103,7 @@ RSpec.describe JobApplication do
       subject { described_class.not_rejected }
 
       let(:matching) { create(:job_application, rejected: false) }
-      let(:unmatching) { create(:job_application, rejected: true, rejection_reason: create(:rejection_reason)) }
+      let(:unmatching) { create(:job_application, :rejected) }
 
       it { is_expected.to include(matching) }
 

@@ -105,6 +105,38 @@ RSpec.describe JobApplication do
     end
   end
 
+  describe "#create_required_job_application_files" do
+    let(:job_application) { create(:job_application, job_offer:, state: :phone_meeting) }
+    let!(:required_file_type) do
+      create(:job_application_file_type, required: true).tap do |jaft|
+        jaft.visibility_rules.where(by: :administrator).destroy_all
+        jaft.visibility_rules.create!(by: :administrator, state: :to_be_met)
+      end
+    end
+    let!(:not_yet_required_file_type) do
+      create(:job_application_file_type, required: true).tap do |jaft|
+        jaft.visibility_rules.where(by: :administrator).destroy_all
+        jaft.visibility_rules.create!(by: :administrator, state: :contract_drafting)
+      end
+    end
+
+    context "when state moves forward" do
+      it "creates job application files for newly required file types" do
+        expect { job_application.to_be_met! }.to change { job_application.job_application_files.count }.by(1)
+        expect(job_application.job_application_files.map(&:job_application_file_type)).to include(required_file_type)
+        expect(job_application.job_application_files.map(&:job_application_file_type)).not_to include(not_yet_required_file_type)
+      end
+    end
+
+    context "when the file type is already requested" do
+      before { create(:job_application_file, job_application:, job_application_file_type: required_file_type) }
+
+      it "does not create a duplicate" do
+        expect { job_application.to_be_met! }.not_to change { job_application.job_application_files.count }
+      end
+    end
+  end
+
   describe "cant_accept_before_delay" do
     subject(:acceptance) { job_application.accepted! }
 
@@ -182,7 +214,7 @@ RSpec.describe JobApplication do
       let!(:job_application) { create(:job_application, state: initial_state) }
       let(:initial_state) { :phone_meeting }
       let!(:job_application_file_type) do
-        create(:job_application_file_type).tap do |jaft|
+        create(:job_application_file_type, required: true).tap do |jaft|
           jaft.visibility_rules.create!(by: :administrator, state: :phone_meeting)
         end
       end

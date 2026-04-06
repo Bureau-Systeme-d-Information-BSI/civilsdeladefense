@@ -45,12 +45,12 @@ class JobApplicationFileType < ApplicationRecord
   }
 
   scope :required, ->(state) {
-    where(
-      id: VisibilityRule.where(by: :administrator)
-        .group(:job_application_file_type_id)
-        .having("MAX(state) <= ?", JobApplication.states[state])
-        .select(:job_application_file_type_id)
-    )
+    where(required: true)
+      .joins(:visibility_rules)
+      .where(visibility_rules: {by: :administrator})
+      .where("visibility_rules.state <= ?", JobApplication.states[state])
+      .reorder(nil)
+      .distinct
   }
 
   has_many :job_application_files, dependent: :nullify

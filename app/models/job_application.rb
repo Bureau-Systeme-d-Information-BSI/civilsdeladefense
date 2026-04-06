@@ -59,6 +59,12 @@ class JobApplication < ApplicationRecord
 
   before_validation :set_employer
   before_save :compute_notifications_counter
+  after_save :create_required_job_application_files,
+    if: -> {
+      saved_change_to_state? &&
+        state_previously_was.present? &&
+        JobApplication.states[state] > JobApplication.states[state_previously_was]
+    }
 
   FINISHED_STATES = %w[affected].freeze
   PROCESSING_STATES = %w[initial phone_meeting to_be_met financial_estimate].freeze
@@ -324,6 +330,13 @@ class JobApplication < ApplicationRecord
     required_types = JobApplicationFileType.required(state_was)
     validated_type_ids = job_application_files.where(job_application_file_type: required_types).select(&:validated?).map(&:job_application_file_type_id)
     required_types.where.not(id: validated_type_ids).pluck(:name).join(", ")
+  end
+
+  def create_required_job_application_files
+    existing_type_ids = job_application_files.reload.pluck(:job_application_file_type_id)
+    JobApplicationFileType.required(state).where.not(id: existing_type_ids).find_each do |file_type|
+      job_application_files.create!(job_application_file_type: file_type, do_not_provide_immediately: true)
+    end
   end
 
   def cant_be_accepted_twice = errors.add(:state, :cant_be_accepted_twice)

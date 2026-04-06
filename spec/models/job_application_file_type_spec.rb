@@ -111,20 +111,36 @@ RSpec.describe JobApplicationFileType do
       subject { described_class.required(:to_be_met) }
 
       let!(:jaft_required) do
-        create(:job_application_file_type).tap do |jaft|
+        create(:job_application_file_type, required: true).tap do |jaft|
           jaft.visibility_rules.where(by: :administrator).destroy_all
           jaft.visibility_rules.create!(by: :administrator, state: :to_be_met)
         end
       end
       let!(:jaft_last_state_after) do
-        create(:job_application_file_type).tap do |jaft|
+        create(:job_application_file_type, required: true).tap do |jaft|
           jaft.visibility_rules.where(by: :administrator).destroy_all
+          jaft.visibility_rules.create!(by: :administrator, state: :contract_drafting)
+        end
+      end
+      let!(:jaft_not_required) do
+        create(:job_application_file_type, required: false).tap do |jaft|
+          jaft.visibility_rules.where(by: :administrator).destroy_all
+          jaft.visibility_rules.create!(by: :administrator, state: :to_be_met)
+        end
+      end
+
+      let!(:jaft_with_rules_before_and_after) do
+        create(:job_application_file_type, required: true).tap do |jaft|
+          jaft.visibility_rules.where(by: :administrator).destroy_all
+          jaft.visibility_rules.create!(by: :administrator, state: :initial)
           jaft.visibility_rules.create!(by: :administrator, state: :contract_drafting)
         end
       end
 
       it { is_expected.to include(jaft_required) }
+      it { is_expected.to include(jaft_with_rules_before_and_after) }
       it { is_expected.not_to include(jaft_last_state_after) }
+      it { is_expected.not_to include(jaft_not_required) }
     end
   end
 end

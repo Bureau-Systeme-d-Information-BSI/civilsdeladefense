@@ -37,6 +37,13 @@ class JobApplicationFileType < ApplicationRecord
       .distinct
   }
 
+  scope :visible_by_administrator, ->(state) {
+    joins(:visibility_rules)
+      .where(visibility_rules: {by: :administrator})
+      .where("visibility_rules.state <= ?", JobApplication.states[state])
+      .distinct
+  }
+
   scope :required, ->(state) {
     where(
       id: VisibilityRule.where(by: :administrator)

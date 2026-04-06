@@ -80,6 +80,33 @@ RSpec.describe JobApplicationFileType do
       it { is_expected.not_to include(jaft_admin_only_before) }
     end
 
+    describe "#visible_by_administrator" do
+      subject { described_class.visible_by_administrator(:to_be_met) }
+
+      let!(:jaft_before) do
+        create(:job_application_file_type).tap do |jaft|
+          jaft.visibility_rules.where(by: :administrator).destroy_all
+          jaft.visibility_rules.create!(by: :administrator, state: :phone_meeting)
+        end
+      end
+      let!(:jaft_exact) do
+        create(:job_application_file_type).tap do |jaft|
+          jaft.visibility_rules.where(by: :administrator).destroy_all
+          jaft.visibility_rules.create!(by: :administrator, state: :to_be_met)
+        end
+      end
+      let!(:jaft_after) do
+        create(:job_application_file_type).tap do |jaft|
+          jaft.visibility_rules.where(by: :administrator).destroy_all
+          jaft.visibility_rules.create!(by: :administrator, state: :contract_drafting)
+        end
+      end
+
+      it { is_expected.to include(jaft_before) }
+      it { is_expected.to include(jaft_exact) }
+      it { is_expected.not_to include(jaft_after) }
+    end
+
     describe "#required" do
       subject { described_class.required(:to_be_met) }
 

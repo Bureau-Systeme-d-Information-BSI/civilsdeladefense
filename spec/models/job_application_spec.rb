@@ -105,44 +105,6 @@ RSpec.describe JobApplication do
     end
   end
 
-  describe "files_to_be_provided" do
-    before do
-      create(:job_application_file_type, name: "CV", kind: :applicant_provided)
-      create(:job_application_file_type, name: "LM", kind: :applicant_provided)
-      create(:job_application_file_type, name: "FILE", kind: :applicant_provided) do |jaft|
-        jaft.visibility_rules.destroy_all
-        jaft.visibility_rules.create!(by: :administrator, state: :to_be_met)
-        jaft.visibility_rules.create!(by: :user, state: :to_be_met)
-      end
-    end
-
-    let(:job_application) { create(:job_application, job_offer:, state: :phone_meeting) }
-
-    it "computes files to be provided" do
-      result = job_application.files_to_be_provided
-      must_be_provided_files = result[:must_be_provided_files]
-      optional_file_types = result[:optional_file_types]
-
-      expect(must_be_provided_files.size).to eq(2)
-      expect(optional_file_types.size).to eq(1)
-
-      JobApplicationFileType.required(:phone_meeting).each do |jaft|
-        file = job_application.job_application_files.find_by(job_application_file_type: jaft) ||
-          create(:job_application_file, job_application:, job_application_file_type: jaft)
-        file.check!
-      end
-      job_application.reload
-      job_application.to_be_met!
-
-      result = job_application.files_to_be_provided
-      must_be_provided_files = result[:must_be_provided_files]
-      optional_file_types = result[:optional_file_types]
-
-      expect(must_be_provided_files.size).to eq(3)
-      expect(optional_file_types.size).to eq(0)
-    end
-  end
-
   describe "cant_accept_before_delay" do
     subject(:acceptance) { job_application.accepted! }
 

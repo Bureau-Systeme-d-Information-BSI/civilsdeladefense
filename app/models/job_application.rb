@@ -238,34 +238,6 @@ class JobApplication < ApplicationRecord
     self.administrator_notifications_count = emails_administrator_unread_count + files_unread_count
   end
 
-  # Return two arrays
-  # First with JobApplicationFile already existing or that need to be fill
-  # Second with JobApplicationFileType where no instance exist in first array
-  def files_to_be_provided
-    result = {}
-    result[:must_be_provided_files] = []
-    result[:optional_file_types] = []
-
-    visible_file_type_ids = JobApplicationFileType.visible_by_user_up_to(state).reorder(nil).pluck(:id).to_set
-
-    JobApplicationFileType.all.find_each do |file_type|
-      existing_file = job_application_files.detect { |file|
-        file.job_application_file_type == file_type
-      }
-
-      if existing_file
-        result[:must_be_provided_files] << existing_file
-      elsif visible_file_type_ids.include?(file_type.id)
-        virgin = job_application_files.build(job_application_file_type: file_type)
-        result[:must_be_provided_files] << virgin
-      else
-        result[:optional_file_types] << file_type
-      end
-    end
-
-    result
-  end
-
   def send_confirmation_email
     job_offer_identifier = job_offer.identifier
     service_name = job_offer.organization.service_name

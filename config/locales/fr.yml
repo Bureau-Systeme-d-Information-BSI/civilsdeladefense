@@ -1261,8 +1261,8 @@ fr:
         state/end_user_state_7: "Contrat reçu"
         state/end_user_state_8: "Affectée"
       job_application_file_type:
-        visibility_rules_for_administrator: "Étapes où le fichier sera accessible et visible en back office"
-        visibility_rules_for_user: "Étapes où le fichier sera accessible et visible en front office"
+        visibility_rules_for_administrator: "États où le fichier sera accessible et visible en back office"
+        visibility_rules_for_user: "États où le fichier sera accessible et visible en front office"
         required: "Obligatoire"
         required/true: "Par défaut pour tous les candidats"
         required/false: "Uniquement si l'un des acteurs notifiés dans l'offre en fait la demande dans l'onglet « Documents »"

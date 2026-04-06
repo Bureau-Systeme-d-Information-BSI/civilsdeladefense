@@ -142,6 +142,47 @@ RSpec.describe JobApplicationFileType do
       it { is_expected.not_to include(jaft_last_state_after) }
       it { is_expected.not_to include(jaft_not_required) }
     end
+
+    describe "#mandatory" do
+      subject { described_class.mandatory(:financial_estimate) }
+
+      let!(:jaft_required_visible_before) do
+        create(:job_application_file_type, required: true).tap do |jaft|
+          jaft.visibility_rules.where(by: :administrator).destroy_all
+          jaft.visibility_rules.create!(by: :administrator, state: :to_be_met)
+        end
+      end
+      let!(:jaft_required_visible_after) do
+        create(:job_application_file_type, required: true).tap do |jaft|
+          jaft.visibility_rules.where(by: :administrator).destroy_all
+          jaft.visibility_rules.create!(by: :administrator, state: :accepted)
+        end
+      end
+      let!(:jaft_non_required_past_visibility) do
+        create(:job_application_file_type, required: false).tap do |jaft|
+          jaft.visibility_rules.where(by: :administrator).destroy_all
+          jaft.visibility_rules.create!(by: :administrator, state: :to_be_met)
+        end
+      end
+      let!(:jaft_non_required_still_visible) do
+        create(:job_application_file_type, required: false).tap do |jaft|
+          jaft.visibility_rules.where(by: :administrator).destroy_all
+          jaft.visibility_rules.create!(by: :administrator, state: :financial_estimate)
+        end
+      end
+      let!(:jaft_non_required_visible_after) do
+        create(:job_application_file_type, required: false).tap do |jaft|
+          jaft.visibility_rules.where(by: :administrator).destroy_all
+          jaft.visibility_rules.create!(by: :administrator, state: :accepted)
+        end
+      end
+
+      it { is_expected.to include(jaft_required_visible_before) }
+      it { is_expected.not_to include(jaft_required_visible_after) }
+      it { is_expected.to include(jaft_non_required_past_visibility) }
+      it { is_expected.not_to include(jaft_non_required_still_visible) }
+      it { is_expected.not_to include(jaft_non_required_visible_after) }
+    end
   end
 end
 

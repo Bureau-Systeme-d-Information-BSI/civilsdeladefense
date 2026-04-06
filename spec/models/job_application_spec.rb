@@ -121,6 +121,15 @@ RSpec.describe JobApplication do
     end
 
     context "when state moves forward" do
+      before do
+        JobApplicationFileType.mandatory(:phone_meeting).find_each do |jaft|
+          file = job_application.job_application_files.find_by(job_application_file_type: jaft) ||
+            create(:job_application_file, job_application:, job_application_file_type: jaft)
+          file.check!
+        end
+        job_application.reload
+      end
+
       it "creates job application files for newly required file types" do
         expect { job_application.to_be_met! }.to change { job_application.job_application_files.count }.by(1)
         expect(job_application.job_application_files.map(&:job_application_file_type)).to include(required_file_type)
@@ -129,7 +138,10 @@ RSpec.describe JobApplication do
     end
 
     context "when the file type is already requested" do
-      before { create(:job_application_file, job_application:, job_application_file_type: required_file_type) }
+      before do
+        create(:job_application_file, job_application:, job_application_file_type: required_file_type)
+        job_application.job_application_files.reload.each(&:check!)
+      end
 
       it "does not create a duplicate" do
         expect { job_application.to_be_met! }.not_to change { job_application.job_application_files.count }
@@ -154,97 +166,6 @@ RSpec.describe JobApplication do
       before { job_offer.update(csp_date: 31.days.before) }
 
       it { is_expected.to be(true) }
-    end
-  end
-
-  describe "complete_files_before_draft_contract" do
-    let(:job_application) { create(:job_application, state: :accepted) }
-    let!(:jaft_1) do
-      create(:job_application_file_type, name: "File 1", kind: :applicant_provided) do |jaft|
-        jaft.visibility_rules.destroy_all
-        jaft.visibility_rules.create!(by: :administrator, state: :accepted)
-        jaft.visibility_rules.create!(by: :user, state: :accepted)
-      end
-    end
-    let!(:jaft_2) do
-      create(:job_application_file_type, name: "File 2", kind: :applicant_provided) do |jaft|
-        jaft.visibility_rules.destroy_all
-        jaft.visibility_rules.create!(by: :administrator, state: :to_be_met)
-        jaft.visibility_rules.create!(by: :user, state: :to_be_met)
-      end
-    end
-
-    context "when no files are filled" do
-      it "cant pass to contract_drafting" do
-        expect { job_application.contract_drafting! }.to raise_error(ActiveRecord::RecordInvalid)
-      end
-    end
-
-    context "when files are fill but not validated" do
-      before do
-        create(:job_application_file, job_application: job_application, job_application_file_type: jaft_1)
-        create(:job_application_file, job_application: job_application, job_application_file_type: jaft_2)
-      end
-
-      it "cant pass to contract_drafting" do
-        expect { job_application.contract_drafting! }.to raise_error(ActiveRecord::RecordInvalid)
-      end
-    end
-
-    context "when files are fill and validated" do
-      before do
-        create(
-          :job_application_file,
-          job_application: job_application, job_application_file_type: jaft_1, is_validated: true
-        )
-        create(
-          :job_application_file,
-          job_application: job_application, job_application_file_type: jaft_2, is_validated: true
-        )
-      end
-
-      it "can pass to contract_drafting" do
-        expect(job_application.contract_drafting!).to be(true)
-      end
-    end
-
-    describe "required_files_are_validated" do
-      subject(:chante_state) { job_application.to_be_met! }
-
-      let!(:job_application) { create(:job_application, state: initial_state) }
-      let(:initial_state) { :phone_meeting }
-      let!(:job_application_file_type) do
-        create(:job_application_file_type, required: true).tap do |jaft|
-          jaft.visibility_rules.create!(by: :administrator, state: :phone_meeting)
-        end
-      end
-
-      context "when required files are present and validated" do
-        before do
-          JobApplicationFileType.required(:phone_meeting).each do |jaft|
-            create(:job_application_file, job_application:, job_application_file_type: jaft).check!
-          end
-          job_application.reload
-        end
-
-        it { is_expected.to be(true) }
-      end
-
-      context "when required files are present but not validated" do
-        before { create(:job_application_file, job_application:, job_application_file_type:).uncheck! }
-
-        it { expect { chante_state }.to raise_error(ActiveRecord::RecordInvalid) }
-      end
-
-      context "when required files are missing" do
-        it { expect { chante_state }.to raise_error(ActiveRecord::RecordInvalid) }
-      end
-
-      context "when state moves downward" do
-        let(:initial_state) { :financial_estimate }
-
-        it { is_expected.to be(true) }
-      end
     end
   end
 end

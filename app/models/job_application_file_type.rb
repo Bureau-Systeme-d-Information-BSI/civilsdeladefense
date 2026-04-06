@@ -53,6 +53,25 @@ class JobApplicationFileType < ApplicationRecord
       .distinct
   }
 
+  scope :mandatory, ->(state) {
+    state_value = JobApplication.states[state]
+
+    where(
+      required: true,
+      id: VisibilityRule.where(by: :administrator)
+        .where("state <= ?", state_value)
+        .select(:job_application_file_type_id)
+    ).or(
+      where(
+        required: false,
+        id: VisibilityRule.where(by: :administrator)
+          .group(:job_application_file_type_id)
+          .having("MAX(state) < ?", state_value)
+          .select(:job_application_file_type_id)
+      )
+    )
+  }
+
   has_many :job_application_files, dependent: :nullify
   has_many :visibility_rules, dependent: :destroy
   accepts_nested_attributes_for :visibility_rules, allow_destroy: true

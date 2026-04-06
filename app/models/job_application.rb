@@ -340,12 +340,18 @@ class JobApplication < ApplicationRecord
     errors.add(:state, :complete_files_before_draft_contract)
   end
 
-  def required_files_not_validated = errors.add(:state, :required_files_missing)
+  def required_files_not_validated = errors.add(:state, :required_files_missing, documents: required_files)
 
   def required_files_validated?
     required_types = JobApplicationFileType.required(state_was)
     validated_files = job_application_files.where(job_application_file_type: required_types).select(&:validated?)
     required_types.count == validated_files.count
+  end
+
+  def required_files
+    required_types = JobApplicationFileType.required(state_was)
+    validated_type_ids = job_application_files.where(job_application_file_type: required_types).select(&:validated?).map(&:job_application_file_type_id)
+    required_types.where.not(id: validated_type_ids).pluck(:name).join(", ")
   end
 
   def cant_be_accepted_twice = errors.add(:state, :cant_be_accepted_twice)

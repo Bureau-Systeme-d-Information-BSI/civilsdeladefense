@@ -1265,6 +1265,8 @@ fr:
         visibility_rules_for_administrator: "Étapes où le fichier sera accessible et visible en back office"
         visibility_rules_for_user: "Étapes où le fichier sera accessible et visible en front office"
         required: "Obligatoire"
+        required/true: "Par défaut pour tous les candidats"
+        required/false: "Uniquement si l'un des acteurs notifiés dans l'offre en fait la demande dans l'onglet « Documents »"
         kind: "Type"
         kind/applicant_provided: "Fourni par le candidat"
         kind/manager_provided: "Fourni par le gestionnaire"

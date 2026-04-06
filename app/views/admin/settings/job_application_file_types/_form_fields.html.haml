@@ -3,7 +3,8 @@
 - kinds = JobApplicationFileType.kinds.map {|k, v| [ JobApplicationFileType.human_attribute_name("kind/#{k}"), k] }
 = f.input :kind, collection: kinds, prompt: true
 = f.input :content
-= f.input :required, as: :radio_buttons, input_html: { data: { action: "toggle-visibility#toggle" } }, wrapper_html: { data: { toggle_visibility_target: "radioWrapper" } }
+- required_options = [[JobApplicationFileType.human_attribute_name("required/true"), true], [JobApplicationFileType.human_attribute_name("required/false"), false]]
+= f.input :required, as: :select, collection: required_options, input_html: { data: { action: "toggle-visibility#toggle" } }, wrapper_html: { data: { toggle_visibility_target: "radioWrapper" } }
 - if f.object.errors[:visibility_rules].present?
   .alert.alert-danger= f.object.errors[:visibility_rules].to_sentence
 .form-group

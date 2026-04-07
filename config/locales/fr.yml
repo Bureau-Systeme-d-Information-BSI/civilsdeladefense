@@ -1272,6 +1272,12 @@ fr:
         kind/employer_provided: "Fourni par l'employeur"
         kind/employment_authority_provided: "Fourni par l'autorité d'emploi"
         kind/check_only_admin_only: "Fichier géré hors outil"
+        notification_recipients: "Notifications (sélection des destinataires)"
+        notify_user: "Candidat"
+        notify_employer_recruiter: "Employeur recruteur"
+        notify_employment_authority: "Autorité d'emploi"
+        notify_hr_manager: "Gestionnaire RH"
+        notify_payroll_manager: "Gestionnaire GA / Paie"
       job_offer:
         title: "Intitulé du poste"
         job_applications_count: "Nombre de candidatures: %{count}"

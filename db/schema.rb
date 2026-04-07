@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_03_21_000000) do
+ActiveRecord::Schema[7.1].define(version: 2026_04_07_063610) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -380,6 +380,11 @@ ActiveRecord::Schema[7.1].define(version: 2026_03_21_000000) do
     t.boolean "required", default: false, null: false
     t.integer "required_from_state", default: 0
     t.integer "required_to_state", default: 11
+    t.boolean "notify_user", default: false, null: false
+    t.boolean "notify_employer_recruiter", default: false, null: false
+    t.boolean "notify_employment_authority", default: false, null: false
+    t.boolean "notify_hr_manager", default: false, null: false
+    t.boolean "notify_payroll_manager", default: false, null: false
   end
 
   create_table "job_application_files", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|

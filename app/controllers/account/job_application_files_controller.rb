@@ -29,8 +29,7 @@ class Account::JobApplicationFilesController < Account::BaseController
     file_type = @job_application_file.job_application_file_type
 
     respond_to do |format|
-      if @job_application_file.save
-        @job_application.compute_notifications_counter!
+      if @job_application_file.record_by_user
         format.turbo_stream do
           str = turbo_stream.replace(file_type,
             partial: "file_name_upload",
@@ -54,18 +53,13 @@ class Account::JobApplicationFilesController < Account::BaseController
     file_type = @job_application_file.job_application_file_type
 
     respond_to do |format|
-      if @job_application_file.update(job_application_file_params.merge(is_validated: 0))
-        @job_application.compute_notifications_counter!
-        format.turbo_stream do
-          render turbo_stream: turbo_stream_update_response(file_type)
-        end
+      @job_application_file.assign_attributes(job_application_file_params.merge(is_validated: 0))
+      if @job_application_file.record_by_user
         format.html { redirect_to redirect_back_location, notice: t(".success") }
       else
-        format.turbo_stream do
-          render turbo_stream: turbo_stream_update_response(file_type)
-        end
         format.html { redirect_to redirect_back_location, notice: t(".error") }
       end
+      format.turbo_stream { render turbo_stream: turbo_stream_update_response(file_type) }
     end
   end
 

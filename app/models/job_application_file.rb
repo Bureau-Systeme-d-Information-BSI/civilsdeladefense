@@ -23,6 +23,15 @@ class JobApplicationFile < ApplicationRecord
     end
   end
 
+  def record_by_user
+    if save
+      job_application.compute_notifications_counter!
+      true
+    else
+      false
+    end
+  end
+
   def check!
     update_column :is_validated, 1 # rubocop:disable Rails/SkipsModelValidations
   end

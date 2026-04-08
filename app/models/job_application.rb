@@ -203,7 +203,7 @@ class JobApplication < ApplicationRecord
   scope :not_rejected, -> { where(rejected: false) }
   scope :with_user, -> { where.not(user: nil) }
 
-  delegate :employer_recruiters, :hr_managers, :payroll_managers, to: :job_offer, prefix: true
+  delegate :employer_recruiters, :employment_authorities, :hr_managers, :payroll_managers, to: :job_offer, prefix: true
 
   def set_employer
     self.employer_id ||= job_offer.employer_id

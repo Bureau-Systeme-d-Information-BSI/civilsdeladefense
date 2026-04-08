@@ -63,6 +63,17 @@ RSpec.describe Administrator do
       it { is_expected.not_to include(unmatching) }
     end
 
+    describe "#employment_authorities" do
+      subject(:employment_authorities) { described_class.employment_authorities }
+
+      let!(:matching) { create(:administrator, roles: [:functional_administrator, :employment_authority]) }
+      let!(:unmatching) { create(:administrator, roles: [:employer_recruiter, :hr_manager]) }
+
+      it { is_expected.to match([matching]) }
+
+      it { is_expected.not_to include(unmatching) }
+    end
+
     describe "#hr_managers" do
       subject(:hr_managers) { described_class.hr_managers }
 

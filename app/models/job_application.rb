@@ -51,12 +51,19 @@ class JobApplication < ApplicationRecord
   validate :cant_accept_before_delay
   validate :cant_accept_remaining_initial_job_applications
   validate :cant_skip_mandatory_state, on: :update
-  validate :complete_files_before_draft_contract
-  validate :required_files_not_validated, if: -> { state_changed? }, unless: -> { required_files_validated? }
+  validate :requested_files_not_validated,
+    if: -> { state_changed? && state_was.present? && JobApplication.states[state] > JobApplication.states[state_was] },
+    unless: -> { requested_files_validated? }
   validate :cant_be_accepted_twice, if: -> { accepted? }, unless: -> { has_accepted_other_job_application? }
 
   before_validation :set_employer
   before_save :compute_notifications_counter
+  after_save :create_required_job_application_files,
+    if: -> {
+      saved_change_to_state? &&
+        state_previously_was.present? &&
+        JobApplication.states[state] > JobApplication.states[state_previously_was]
+    }
 
   FINISHED_STATES = %w[affected].freeze
   PROCESSING_STATES = %w[initial phone_meeting to_be_met financial_estimate].freeze
@@ -262,35 +269,6 @@ class JobApplication < ApplicationRecord
     self.administrator_notifications_count = emails_administrator_unread_count + files_unread_count
   end
 
-  # Return two arrays
-  # First with JobApplicationFile already existing or that need to be fill
-  # Second with JobApplicationFileType where no instance exist in first array
-  def files_to_be_provided
-    result = {}
-    result[:must_be_provided_files] = []
-    result[:optional_file_types] = []
-
-    JobApplicationFileType.all.find_each do |file_type|
-      existing_file = job_application_files.detect { |file|
-        file.job_application_file_type == file_type
-      }
-
-      from_state_as_val = JobApplication.states[file_type.from_state]
-      current_state_as_val = JobApplication.states[state]
-
-      if existing_file
-        result[:must_be_provided_files] << existing_file
-      elsif current_state_as_val >= from_state_as_val
-        virgin = job_application_files.build(job_application_file_type: file_type)
-        result[:must_be_provided_files] << virgin
-      else
-        result[:optional_file_types] << file_type
-      end
-    end
-
-    result
-  end
-
   def send_confirmation_email
     job_offer_identifier = job_offer.identifier
     service_name = job_offer.organization.service_name
@@ -354,23 +332,29 @@ class JobApplication < ApplicationRecord
 
   def mandatory_states = ORDERED_STATES.reject { |s| SKIPPABLE_STATES.include?(s) && s != state && s != state_was }
 
-  def complete_files_before_draft_contract
-    return if state.to_s != "contract_drafting"
+  def requested_files_not_validated = errors.add(:state, :requested_files_missing, documents: requested_files)
 
-    default_types = JobApplicationFileType.for_applicant(:accepted).pluck(:id)
-    validated_types = job_application_files.where(is_validated: true).pluck(:job_application_file_type_id)
-
-    return if (default_types - validated_types).blank?
-
-    errors.add(:state, :complete_files_before_draft_contract)
+  def requested_files_validated?
+    mandatory_type_ids = JobApplicationFileType.mandatory(state).pluck(:id).to_set
+    requested_type_ids = job_application_files.pluck(:job_application_file_type_id).to_set
+    types_to_validate = mandatory_type_ids & requested_type_ids
+    validated_type_ids = job_application_files.select(&:validated?).map(&:job_application_file_type_id).to_set
+    types_to_validate.subset?(validated_type_ids)
   end
 
-  def required_files_not_validated = errors.add(:state, :required_files_missing)
+  def requested_files
+    mandatory_type_ids = JobApplicationFileType.mandatory(state).pluck(:id).to_set
+    requested_type_ids = job_application_files.pluck(:job_application_file_type_id).to_set
+    validated_type_ids = job_application_files.select(&:validated?).map(&:job_application_file_type_id).to_set
+    unvalidated_ids = (mandatory_type_ids & requested_type_ids) - validated_type_ids
+    JobApplicationFileType.where(id: unvalidated_ids).pluck(:name).join(", ")
+  end
 
-  def required_files_validated?
-    required_types = JobApplicationFileType.required(state_was)
-    validated_files = job_application_files.where(job_application_file_type: required_types).select(&:validated?)
-    required_types.count == validated_files.count
+  def create_required_job_application_files
+    existing_type_ids = job_application_files.reload.pluck(:job_application_file_type_id)
+    JobApplicationFileType.required(state).where.not(id: existing_type_ids).find_each do |file_type|
+      job_application_files.create!(job_application_file_type: file_type, do_not_provide_immediately: true)
+    end
   end
 
   def cant_be_accepted_twice = errors.add(:state, :cant_be_accepted_twice)

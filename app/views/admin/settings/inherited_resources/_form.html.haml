@@ -6,18 +6,7 @@
       = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
       .form-inputs
         - if resource.is_a?(JobApplicationFileType)
-          = f.input :name
-          = f.input :description
-          - kinds = JobApplicationFileType.kinds.map {|k, v| [ JobApplicationFileType.human_attribute_name("kind/#{k}"), k] }
-          = f.input :kind, collection: kinds, prompt: true
-          = f.input :content
-          - states = JobApplication.states.map {|k, v| [ JobApplication.human_attribute_name("state/#{k}"), k] }
-          = f.input :from_state, collection: states, prompt: true
-          = f.input :to_state, collection: states, prompt: true
-          = f.input :required, as: :radio_buttons, input_html: { data: { action: "toggle-visibility#toggle" } }, wrapper_html: { data: { toggle_visibility_target: "radioWrapper" } }
-          = f.input :required_from_state, required: true, collection: states, prompt: true, wrapper_html: { data: { toggle_visibility_target: "toggleable" } }
-          = f.input :required_to_state, required: true, collection: states, prompt: true, wrapper_html: { data: { toggle_visibility_target: "toggleable" } }
-          = f.input :notification
+          = render "admin/settings/job_application_file_types/form_fields", f: f
         - elsif resource.is_a?(Cmg)
           = f.input :email
         - elsif resource.is_a?(EmailTemplate)

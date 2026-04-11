@@ -1,0 +1,28 @@
+= f.input :name
+= f.input :description
+- kinds = JobApplicationFileType.kinds.map {|k, v| [ JobApplicationFileType.human_attribute_name("kind/#{k}"), k] }
+= f.input :kind, collection: kinds, prompt: true
+= f.input :content
+- required_options = [[JobApplicationFileType.human_attribute_name("required/true"), true], [JobApplicationFileType.human_attribute_name("required/false"), false]]
+= f.input :required, as: :select, collection: required_options, input_html: { data: { action: "toggle-visibility#toggle" } }, wrapper_html: { data: { toggle_visibility_target: "radioWrapper" } }
+- if f.object.errors[:visibility_rules].present?
+  .alert.alert-danger= f.object.errors[:visibility_rules].to_sentence
+.form-group
+  %label= t("activerecord.attributes.job_application_file_type.visibility_rules_for_administrator")
+  - @visibility_rules_for_administrator.each do |vr|
+    = f.fields_for :visibility_rules, vr do |vrf|
+      = vrf.hidden_field :by
+      = vrf.hidden_field :state
+      .form-check
+        = vrf.check_box :_destroy, { class: "form-check-input", checked: vr.persisted? }, "0", "1"
+        %label.form-check-label= JobApplication.human_attribute_name("state/#{vr.state}")
+.form-group
+  %label= t("activerecord.attributes.job_application_file_type.visibility_rules_for_user")
+  - @visibility_rules_for_user.each do |vr|
+    = f.fields_for :visibility_rules, vr do |vrf|
+      = vrf.hidden_field :by
+      = vrf.hidden_field :state
+      .form-check
+        = vrf.check_box :_destroy, { class: "form-check-input", checked: vr.persisted? }, "0", "1"
+        %label.form-check-label= JobApplication.human_attribute_name("state/#{vr.state}")
+= f.input :notification

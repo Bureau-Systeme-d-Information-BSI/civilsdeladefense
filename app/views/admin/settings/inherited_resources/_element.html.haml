@@ -21,10 +21,6 @@
     %td
       = element.name
     %td
-      = JobApplication.human_attribute_name("state/#{element.from_state}")
-    %td
-      = JobApplication.human_attribute_name("state/#{element.to_state}")
-    %td
       = JobApplicationFileType.human_attribute_name("kind/#{element.kind}")
     %td
       = element.required? ? t('.affirmative') : t('.negative')

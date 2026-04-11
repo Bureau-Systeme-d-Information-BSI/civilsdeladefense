@@ -37,6 +37,14 @@ class JobApplicationFileType < ApplicationRecord
       .distinct
   }
 
+  scope :notifiable_by_user_at, ->(state) {
+    where(notify_user: true)
+      .joins(:visibility_rules)
+      .where(visibility_rules: {by: :user, state:})
+      .reorder(nil)
+      .distinct
+  }
+
   scope :visible_by_administrator, ->(state) {
     joins(:visibility_rules)
       .where(visibility_rules: {by: :administrator})

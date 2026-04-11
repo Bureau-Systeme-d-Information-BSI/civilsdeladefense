@@ -45,4 +45,10 @@ module JobApplication::Notifiable
   def notify_admin_new_state(administrator, state)
     NotificationsMailer.with(administrator:, job_application: self).send(state).deliver_later
   end
+
+  def notify_user_new_documents
+    if (document_names = JobApplicationFileType.notifiable_by_user_at(state).pluck(:name)).any?
+      ApplicantNotificationsMailer.with(user:, job_offer:, document_names:).notify_new_documents.deliver_later
+    end
+  end
 end

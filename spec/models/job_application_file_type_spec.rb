@@ -80,6 +80,31 @@ RSpec.describe JobApplicationFileType do
       it { is_expected.not_to include(jaft_admin_only_before) }
     end
 
+    describe "#notifiable_by_user_at" do
+      subject { described_class.notifiable_by_user_at(:to_be_met) }
+
+      let!(:jaft_matching) do
+        create(:job_application_file_type, notify_user: true).tap do |jaft|
+          jaft.visibility_rules.create!(by: :user, state: :to_be_met)
+        end
+      end
+      let!(:jaft_wrong_state) do
+        create(:job_application_file_type, notify_user: true).tap do |jaft|
+          jaft.visibility_rules.where(by: :user).destroy_all
+          jaft.visibility_rules.create!(by: :user, state: :phone_meeting)
+        end
+      end
+      let!(:jaft_not_notifiable) do
+        create(:job_application_file_type, notify_user: false).tap do |jaft|
+          jaft.visibility_rules.create!(by: :user, state: :to_be_met)
+        end
+      end
+
+      it { is_expected.to include(jaft_matching) }
+      it { is_expected.not_to include(jaft_wrong_state) }
+      it { is_expected.not_to include(jaft_not_notifiable) }
+    end
+
     describe "#visible_by_administrator" do
       subject { described_class.visible_by_administrator(:to_be_met) }
 

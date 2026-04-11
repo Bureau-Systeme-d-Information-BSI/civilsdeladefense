@@ -178,6 +178,8 @@ fr:
       subject: "Nouvelle offre"
     notify_new_state:
       subject: "Votre candidature à l'offre %{job_offer_identifier} sur %{service_name}"
+    notify_new_documents:
+      subject: "Nouveaux documents à consulter"
     notify_rejected:
       subject: "Votre candidature a été refusée"
   notifications_mailer:

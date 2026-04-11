@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_12_26_084435) do
+ActiveRecord::Schema[7.1].define(version: 2026_03_21_000000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -835,6 +835,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_26_084435) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  create_table "visibility_rules", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "job_application_file_type_id", null: false
+    t.string "by", default: "administrator", null: false
+    t.integer "state", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["job_application_file_type_id"], name: "index_visibility_rules_on_job_application_file_type_id"
+  end
+
   create_table "zip_files", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -899,4 +908,5 @@ ActiveRecord::Schema[7.1].define(version: 2025_12_26_084435) do
   add_foreign_key "salary_ranges", "experience_levels"
   add_foreign_key "salary_ranges", "professional_categories"
   add_foreign_key "salary_ranges", "sectors"
+  add_foreign_key "visibility_rules", "job_application_file_types"
 end

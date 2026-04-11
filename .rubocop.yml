@@ -12,10 +12,10 @@ require:
 AllCops:
   NewCops: enable
   Exclude:
-    - 'bin/{bundle,rails,rake,setup,spring,update}'
+    - "bin/{bundle,rails,rake,setup,spring,update}"
     - "db/**/*"
-    - 'node_modules/**/*'
-    - 'vendor/bundle/**/*'
+    - "node_modules/**/*"
+    - "vendor/bundle/**/*"
 
 RSpec/ExampleLength:
   Enabled: false
@@ -24,7 +24,7 @@ RSpec/MultipleExpectations:
   Enabled: false
 
 RSpec/NestedGroups:
-  Max: 4
+  Max: 5
 
 RSpec/FilePath:
   Enabled: false

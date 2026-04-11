@@ -3,55 +3,89 @@
 # The name/type of file attached to a job application.
 # The list of names/types is managed by the administrators of the platform.
 class JobApplicationFileType < ApplicationRecord
+  # TODO: @sebastiencarceles remove these columns from DB after v2
+  self.ignored_columns += %i[from_state required_from_state to_state required_to_state]
+
   acts_as_list
   default_scope -> { order(position: :asc) }
 
-  #####################################
-  # File uploads
   mount_uploader :content, DocumentUploader, mount_on: :content_file_name
 
-  #####################################
-  # Validations
+  validates :name, :kind, presence: true
+  validate :must_have_administrator_visibility_rule
+  validate :must_have_user_visibility_rule
 
-  validates :name, :kind, :from_state, :to_state, presence: true
-  validates :required_from_state, :required_to_state, if: -> { required? }, presence: true
-
-  #####################################
-  # Enums
   enum kind: {
     applicant_provided: 10,
+    employment_authority_provided: 13,
     manager_provided: 11,
     employer_provided: 12,
     check_only_admin_only: 40
   }
 
-  enum from_state: JobApplication.states
-  enum to_state: JobApplication.states, _prefix: true
-  enum required_from_state: JobApplication.states, _prefix: true
-  enum required_to_state: JobApplication.states, _prefix: true
-
-  scope :for_states_around, ->(state) {
+  scope :visible_by_user, ->(state) {
     where(kind: :applicant_provided)
-      .where("from_state <= ?", JobApplication.states[state])
-      .where("to_state > ?", JobApplication.states[state])
+      .joins(:visibility_rules)
+      .where(visibility_rules: {by: :user, state:})
   }
 
-  scope :for_applicant, ->(state) { where(kind: :applicant_provided, from_state: JobApplication.states[state]) }
+  scope :visible_by_user_up_to, ->(state) {
+    where(kind: :applicant_provided)
+      .joins(:visibility_rules)
+      .where(visibility_rules: {by: :user})
+      .where("visibility_rules.state <= ?", JobApplication.states[state])
+      .distinct
+  }
+
+  scope :visible_by_administrator, ->(state) {
+    joins(:visibility_rules)
+      .where(visibility_rules: {by: :administrator})
+      .where("visibility_rules.state <= ?", JobApplication.states[state])
+      .distinct
+  }
+
   scope :required, ->(state) {
     where(required: true)
-      .where("required_from_state <= ?", JobApplication.states[state])
-      .where("required_to_state > ?", JobApplication.states[state])
+      .joins(:visibility_rules)
+      .where(visibility_rules: {by: :administrator})
+      .where("visibility_rules.state <= ?", JobApplication.states[state])
+      .reorder(nil)
+      .distinct
   }
 
-  #####################################
-  # Relations
+  scope :mandatory, ->(state) {
+    state_value = JobApplication.states[state]
+
+    where(
+      required: true,
+      id: VisibilityRule.where(by: :administrator)
+        .where("state <= ?", state_value)
+        .select(:job_application_file_type_id)
+    ).or(
+      where(
+        required: false,
+        id: VisibilityRule.where(by: :administrator)
+          .group(:job_application_file_type_id)
+          .having("MAX(state) < ?", state_value)
+          .select(:job_application_file_type_id)
+      )
+    )
+  }
+
   has_many :job_application_files, dependent: :nullify
+  has_many :visibility_rules, dependent: :destroy
+  accepts_nested_attributes_for :visibility_rules, allow_destroy: true
 
-  def is_mandatory?(state)
-    from_state_as_val = JobApplication.states[from_state]
-    current_state_as_val = JobApplication.states[state]
+  private
 
-    current_state_as_val >= from_state_as_val
+  def must_have_administrator_visibility_rule
+    rules = visibility_rules.reject(&:marked_for_destruction?)
+    errors.add(:visibility_rules, :must_have_administrator) unless rules.any?(&:administrator?)
+  end
+
+  def must_have_user_visibility_rule
+    rules = visibility_rules.reject(&:marked_for_destruction?)
+    errors.add(:visibility_rules, :must_have_user) unless rules.any?(&:user?)
   end
 end
 

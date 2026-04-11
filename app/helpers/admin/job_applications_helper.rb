@@ -67,9 +67,12 @@ module Admin::JobApplicationsHelper
   def job_application_resume_url(job_application)
     return unless job_application
 
-    target_state = JobApplication.states["initial"]
-    target_file_type = JobApplicationFileType.where(from_state: target_state, kind: :applicant_provided)
-    job_application_files = job_application.job_application_files.where(job_application_file_type: target_file_type).joins(:job_application_file_type).order("job_application_file_types.position")
+    target_file_type = JobApplicationFileType.visible_by_user(:initial)
+    job_application_files = job_application
+      .job_application_files
+      .where(job_application_file_type: target_file_type)
+      .joins(:job_application_file_type)
+      .order("job_application_file_types.position")
     job_application_file = job_application_files.limit(1).first
     if job_application_file&.document_content&.present?
       url_for([:admin, job_application, job_application_file, {format: :pdf}])

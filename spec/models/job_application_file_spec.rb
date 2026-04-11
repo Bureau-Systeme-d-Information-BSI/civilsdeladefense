@@ -10,18 +10,24 @@ RSpec.describe JobApplicationFile do
 
     let(:job_application_file) { build(:job_application_file, job_application:, job_application_file_type:) }
     let(:job_application) { build(:job_application, state: current_state) }
-    let(:job_application_file_type) { build(:job_application_file_type, required_to_state: max_downloadable_state) }
+    let(:job_application_file_type) { create(:job_application_file_type) }
 
-    context "when the current state is before the max downloadable state" do
+    context "when the current state is before the max administrator visibility rule" do
       let(:current_state) { :initial }
-      let(:max_downloadable_state) { :phone_meeting }
+
+      before { job_application_file_type.visibility_rules.create!(by: :administrator, state: :phone_meeting) }
 
       it { is_expected.to be(true) }
     end
 
-    context "when the current state is afterr the max downloadable state" do
+    context "when the current state equals the max administrator visibility rule" do
+      let(:current_state) { :initial }
+
+      it { is_expected.to be(false) }
+    end
+
+    context "when the current state is after the max administrator visibility rule" do
       let(:current_state) { :phone_meeting }
-      let(:max_downloadable_state) { :phone_meeting }
 
       it { is_expected.to be(false) }
     end

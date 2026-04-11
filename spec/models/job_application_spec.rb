@@ -122,34 +122,47 @@ RSpec.describe JobApplication do
     end
   end
 
-  describe "files_to_be_provided" do
-    before do
-      create(:job_application_file_type, name: "CV", from_state: :initial, kind: :applicant_provided)
-      create(:job_application_file_type, name: "LM", from_state: :initial, kind: :applicant_provided)
-      create(:job_application_file_type, name: "FILE", from_state: :to_be_met, kind: :applicant_provided)
+  describe "#create_required_job_application_files" do
+    let(:job_application) { create(:job_application, job_offer:, state: :phone_meeting) }
+    let!(:required_file_type) do
+      create(:job_application_file_type, required: true).tap do |jaft|
+        jaft.visibility_rules.where(by: :administrator).destroy_all
+        jaft.visibility_rules.create!(by: :administrator, state: :to_be_met)
+      end
+    end
+    let!(:not_yet_required_file_type) do
+      create(:job_application_file_type, required: true).tap do |jaft|
+        jaft.visibility_rules.where(by: :administrator).destroy_all
+        jaft.visibility_rules.create!(by: :administrator, state: :contract_drafting)
+      end
     end
 
-    let(:job_application) { create(:job_application, job_offer:, state: :phone_meeting) }
-
-    it "computes files to be provided" do
-      result = job_application.files_to_be_provided
-      must_be_provided_files = result[:must_be_provided_files]
-      optional_file_types = result[:optional_file_types]
-
-      expect(must_be_provided_files.size).to eq(2)
-      expect(optional_file_types.size).to eq(1)
-
-      job_application.job_application_files.each do |file|
-        file.content = fixture_file_upload("document.pdf", "application/pdf")
+    context "when state moves forward" do
+      before do
+        JobApplicationFileType.mandatory(:phone_meeting).find_each do |jaft|
+          file = job_application.job_application_files.find_by(job_application_file_type: jaft) ||
+            create(:job_application_file, job_application:, job_application_file_type: jaft)
+          file.check!
+        end
+        job_application.reload
       end
-      job_application.to_be_met!
 
-      result = job_application.files_to_be_provided
-      must_be_provided_files = result[:must_be_provided_files]
-      optional_file_types = result[:optional_file_types]
+      it "creates job application files for newly required file types" do
+        expect { job_application.to_be_met! }.to change { job_application.job_application_files.count }.by(1)
+        expect(job_application.job_application_files.map(&:job_application_file_type)).to include(required_file_type)
+        expect(job_application.job_application_files.map(&:job_application_file_type)).not_to include(not_yet_required_file_type)
+      end
+    end
 
-      expect(must_be_provided_files.size).to eq(3)
-      expect(optional_file_types.size).to eq(0)
+    context "when the file type is already requested" do
+      before do
+        create(:job_application_file, job_application:, job_application_file_type: required_file_type)
+        job_application.job_application_files.reload.each(&:check!)
+      end
+
+      it "does not create a duplicate" do
+        expect { job_application.to_be_met! }.not_to change { job_application.job_application_files.count }
+      end
     end
   end
 
@@ -170,75 +183,6 @@ RSpec.describe JobApplication do
       before { job_offer.update(csp_date: 31.days.before) }
 
       it { is_expected.to be(true) }
-    end
-  end
-
-  describe "complete_files_before_draft_contract" do
-    let(:job_application) { create(:job_application, state: :accepted) }
-    let!(:jaft_1) do
-      create(:job_application_file_type, name: "File 1", from_state: :accepted, kind: :applicant_provided)
-    end
-    let!(:jaft_2) do
-      create(:job_application_file_type, name: "File 2", from_state: :to_be_met, kind: :applicant_provided)
-    end
-
-    context "when no files are filled" do
-      it "cant pass to contract_drafting" do
-        expect { job_application.contract_drafting! }.to raise_error(ActiveRecord::RecordInvalid)
-      end
-    end
-
-    context "when files are fill but not validated" do
-      before do
-        create(:job_application_file, job_application: job_application, job_application_file_type: jaft_1)
-        create(:job_application_file, job_application: job_application, job_application_file_type: jaft_2)
-      end
-
-      it "cant pass to contract_drafting" do
-        expect { job_application.contract_drafting! }.to raise_error(ActiveRecord::RecordInvalid)
-      end
-    end
-
-    context "when files are fill and validated" do
-      before do
-        create(
-          :job_application_file,
-          job_application: job_application, job_application_file_type: jaft_1, is_validated: true
-        )
-        create(
-          :job_application_file,
-          job_application: job_application, job_application_file_type: jaft_2, is_validated: true
-        )
-      end
-
-      it "can pass to contract_drafting" do
-        expect(job_application.contract_drafting!).to be(true)
-      end
-    end
-
-    describe "required_files_are_validated" do
-      subject(:chante_state) { job_application.to_be_met! }
-
-      let!(:job_application) { create(:job_application, state: :phone_meeting) }
-      let!(:job_application_file_type) do
-        create(:job_application_file_type, required: true, required_from_state: :phone_meeting, required_to_state: :accepted)
-      end
-
-      context "when required files are present and validated" do
-        before { create(:job_application_file, job_application:, job_application_file_type:).check! }
-
-        it { is_expected.to be(true) }
-      end
-
-      context "when required files are present but not validated" do
-        before { create(:job_application_file, job_application:, job_application_file_type:).uncheck! }
-
-        it { expect { chante_state }.to raise_error(ActiveRecord::RecordInvalid) }
-      end
-
-      context "when required files are missing" do
-        it { expect { chante_state }.to raise_error(ActiveRecord::RecordInvalid) }
-      end
     end
   end
 end

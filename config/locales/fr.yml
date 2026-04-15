@@ -1193,6 +1193,8 @@ fr:
             visibility_rules:
               must_have_administrator: "doit contenir au moins une règle pour le back office"
               must_have_user: "doit contenir au moins une règle pour le front office"
+            base:
+              must_have_at_least_one_validator: "Vous devez sélectionner au moins un acteur autorisé à valider la pièce"
         job_application_file:
           attributes:
             content:

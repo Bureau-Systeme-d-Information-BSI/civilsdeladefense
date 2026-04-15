@@ -15,6 +15,25 @@ RSpec.describe JobApplicationFileType do
       it { expect(jaft.tap(&:valid?).errors[:visibility_rules]).to be_present }
     end
 
+    context "without any validator" do
+      subject(:jaft) do
+        build(:job_application_file_type,
+          validate_by_employer_recruiter: false,
+          validate_by_employment_authority: false,
+          validate_by_hr_manager: false,
+          validate_by_payroll_manager: false)
+      end
+
+      it { is_expected.not_to be_valid }
+      it { expect(jaft.tap(&:valid?).errors[:base]).to be_present }
+    end
+
+    context "with at least one validator" do
+      subject(:jaft) { build(:job_application_file_type, validate_by_hr_manager: true) }
+
+      it { is_expected.to be_valid }
+    end
+
     context "without a user visibility rule" do
       subject(:jaft) { build(:job_application_file_type) }
 
@@ -22,6 +41,36 @@ RSpec.describe JobApplicationFileType do
 
       it { is_expected.not_to be_valid }
       it { expect(jaft.tap(&:valid?).errors[:visibility_rules]).to be_present }
+    end
+  end
+
+  describe "#can_validate?" do
+    subject { file_type.can_validate?(administrator) }
+
+    let(:file_type) do
+      build(:job_application_file_type,
+        validate_by_employer_recruiter: true,
+        validate_by_hr_manager: true,
+        validate_by_employment_authority: false,
+        validate_by_payroll_manager: false)
+    end
+
+    context "when administrator has a matching role" do
+      let(:administrator) { build(:administrator, roles: [:employer_recruiter]) }
+
+      it { is_expected.to be(true) }
+    end
+
+    context "when administrator has another matching role" do
+      let(:administrator) { build(:administrator, roles: [:hr_manager]) }
+
+      it { is_expected.to be(true) }
+    end
+
+    context "when administrator has no matching role" do
+      let(:administrator) { build(:administrator, roles: [:payroll_manager]) }
+
+      it { is_expected.to be(false) }
     end
   end
 

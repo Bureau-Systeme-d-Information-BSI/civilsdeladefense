@@ -14,6 +14,7 @@ class JobApplicationFileType < ApplicationRecord
   validates :name, :kind, presence: true
   validate :must_have_administrator_visibility_rule
   validate :must_have_user_visibility_rule
+  validate :must_have_at_least_one_validator
 
   enum kind: {
     applicant_provided: 10,
@@ -80,9 +81,20 @@ class JobApplicationFileType < ApplicationRecord
     )
   }
 
+  VALIDATOR_ROLE_MAPPING = {
+    validate_by_employer_recruiter: :employer_recruiter?,
+    validate_by_employment_authority: :employment_authority?,
+    validate_by_hr_manager: :hr_manager?,
+    validate_by_payroll_manager: :payroll_manager?
+  }.freeze
+
   has_many :job_application_files, dependent: :nullify
   has_many :visibility_rules, dependent: :destroy
   accepts_nested_attributes_for :visibility_rules, allow_destroy: true
+
+  def can_validate?(administrator)
+    VALIDATOR_ROLE_MAPPING.any? { |flag, role_method| self[flag] && administrator.public_send(role_method) }
+  end
 
   private
 
@@ -94,6 +106,14 @@ class JobApplicationFileType < ApplicationRecord
   def must_have_user_visibility_rule
     rules = visibility_rules.reject(&:marked_for_destruction?)
     errors.add(:visibility_rules, :must_have_user) unless rules.any?(&:user?)
+  end
+
+  def must_have_at_least_one_validator
+    at_least_one_validator = validate_by_employer_recruiter? ||
+      validate_by_employment_authority? ||
+      validate_by_hr_manager? ||
+      validate_by_payroll_manager?
+    errors.add(:base, :must_have_at_least_one_validator) unless at_least_one_validator
   end
 end
 

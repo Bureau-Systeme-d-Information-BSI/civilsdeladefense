@@ -4,6 +4,7 @@ FactoryBot.define do
   factory :job_application_file_type do
     name { "CV" }
     kind { :applicant_provided }
+    validate_by_employer_recruiter { true }
 
     after(:build) do |jaft|
       jaft.visibility_rules.build(by: :administrator, state: :initial)

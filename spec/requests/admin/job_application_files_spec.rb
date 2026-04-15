@@ -6,7 +6,7 @@ RSpec.describe "Admin::JobApplicationFiles" do
   let(:job_application) { create(:job_application) }
   let(:job_application_file) { create(:job_application_file, job_application: job_application) }
 
-  before { sign_in create(:administrator) }
+  before { sign_in create(:administrator, roles: [:functional_administrator, :employer_recruiter]) }
 
   describe "POST /admin/candidatures/:job_application_id/job_application_files" do
     let(:job_application_file_type) { create(:job_application_file_type) }
@@ -166,7 +166,7 @@ RSpec.describe "Admin::JobApplicationFiles" do
   end
 
   describe "POST /admin/candidatures/:job_application_id/job_application_files/:id/check" do
-    before { job_application_file.uncheck! }
+    before { job_application_file.update_column(:is_validated, 2) } # rubocop:disable Rails/SkipsModelValidations
 
     context "when format is html" do
       subject(:check_request) {
@@ -200,7 +200,7 @@ RSpec.describe "Admin::JobApplicationFiles" do
   end
 
   describe "POST /admin/candidatures/:job_application_id/job_application_files/:id/uncheck" do
-    before { job_application_file.check! }
+    before { job_application_file.update_column(:is_validated, 1) } # rubocop:disable Rails/SkipsModelValidations
 
     context "when format is html" do
       subject(:uncheck_request) {

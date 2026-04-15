@@ -33,11 +33,15 @@ class JobApplicationFile < ApplicationRecord
     end
   end
 
-  def check!
+  def check!(administrator)
+    return false unless job_application_file_type.can_validate?(administrator)
+
     update_column :is_validated, 1 # rubocop:disable Rails/SkipsModelValidations
   end
 
-  def uncheck!
+  def uncheck!(administrator)
+    return false unless job_application_file_type.can_validate?(administrator)
+
     update_column :is_validated, 2 # rubocop:disable Rails/SkipsModelValidations
   end
 

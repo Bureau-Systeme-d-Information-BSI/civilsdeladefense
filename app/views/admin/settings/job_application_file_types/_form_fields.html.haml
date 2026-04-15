@@ -25,7 +25,6 @@
       .form-check
         = vrf.check_box :_destroy, { class: "form-check-input", checked: vr.persisted? }, "0", "1"
         %label.form-check-label= JobApplication.human_attribute_name("state/#{vr.state}")
-= f.input :notification
 %fieldset.form-group
   %label= t("activerecord.attributes.job_application_file_type.notification_recipients")
   .form-check
@@ -43,3 +42,4 @@
   .form-check
     = f.check_box :notify_payroll_manager, class: "form-check-input"
     %label.form-check-label= t("activerecord.attributes.job_application_file_type.notify_payroll_manager")
+= f.input :notification

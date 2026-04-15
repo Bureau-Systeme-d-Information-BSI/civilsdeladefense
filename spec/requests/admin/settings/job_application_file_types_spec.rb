@@ -151,6 +151,30 @@ RSpec.describe "Admin::Settings::JobApplicationFileTypes" do
       end
     end
 
+    context "when updating validation recipients" do
+      subject(:update_request) { patch admin_settings_job_application_file_type_path(job_application_file_type), params: }
+
+      let(:params) do
+        {
+          job_application_file_type: {
+            validate_by_employer_recruiter: true,
+            validate_by_employment_authority: false,
+            validate_by_hr_manager: true,
+            validate_by_payroll_manager: false
+          }
+        }
+      end
+
+      it "updates the validation recipients" do
+        update_request
+        job_application_file_type.reload
+        expect(job_application_file_type.validate_by_employer_recruiter).to be(true)
+        expect(job_application_file_type.validate_by_employment_authority).to be(false)
+        expect(job_application_file_type.validate_by_hr_manager).to be(true)
+        expect(job_application_file_type.validate_by_payroll_manager).to be(false)
+      end
+    end
+
     context "when destroying a visibility rule" do
       subject(:update_request) { patch admin_settings_job_application_file_type_path(job_application_file_type), params: }
 

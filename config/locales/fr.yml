@@ -1199,6 +1199,8 @@ fr:
           attributes:
             content:
               file_size_is_less_than: "Fichier trop volumineux, doit être max. 2Mo"
+            base:
+              not_authorized_to_validate: "Vous n'êtes pas autorisé(e) à valider ou invalider ce type de pièce"
         job_offer:
           attributes:
             base:
@@ -1284,6 +1286,11 @@ fr:
         notify_employment_authority: "Autorité d'emploi"
         notify_hr_manager: "Gestionnaire RH"
         notify_payroll_manager: "Gestionnaire GA / Paie"
+        validation_recipients: "Acteurs notifiés dans l'offre autorisés à valider la pièce"
+        validate_by_employer_recruiter: "Employeur recruteur"
+        validate_by_employment_authority: "Autorité d'emploi"
+        validate_by_hr_manager: "Gestionnaire RH"
+        validate_by_payroll_manager: "Gestionnaire GA / Paie"
       job_offer:
         title: "Intitulé du poste"
         job_applications_count: "Nombre de candidatures: %{count}"

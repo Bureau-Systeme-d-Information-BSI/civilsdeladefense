@@ -58,6 +58,11 @@ RSpec.describe JobApplicationFile do
       it { expect(check).to be(false) }
 
       it { expect { check }.not_to change { job_application_file.reload.is_validated } }
+
+      it "adds an error on base" do
+        check
+        expect(job_application_file.errors[:base]).to be_present
+      end
     end
   end
 
@@ -81,6 +86,11 @@ RSpec.describe JobApplicationFile do
       it { expect(uncheck).to be(false) }
 
       it { expect { uncheck }.not_to change { job_application_file.reload.is_validated } }
+
+      it "adds an error on base" do
+        uncheck
+        expect(job_application_file.errors[:base]).to be_present
+      end
     end
   end
 

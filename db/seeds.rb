@@ -369,7 +369,7 @@ AvailabilityRange.create!(name: "Disponible sous 3 mois ou plus")
 all_states = JobApplication.states.keys.map(&:to_sym)
 
 job_application_file_type_with_visibility_rules = ->(attrs, from_state, to_state) {
-  jaft = JobApplicationFileType.new(attrs)
+  jaft = JobApplicationFileType.new({validate_by_employer_recruiter: true}.merge(attrs))
   from_idx = all_states.index(from_state)
   to_idx = all_states.index(to_state)
   all_states[from_idx...to_idx].each do |s|

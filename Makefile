@@ -70,6 +70,3 @@ clock:
 
 tests:
 	$(COMPOSE_CMD) exec web rspec $(T_ARGS)
-
-generate:
-	$(COMPOSE_CMD) exec --user $(id -u):$(id -g) web bin/rails g $(G_ARGS)

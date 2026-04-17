@@ -1,7 +1,7 @@
 module JobApplicationFile::Validatable
   extend ActiveSupport::Concern
 
-  def check!(administrator)
+  def mark_as_valid!(administrator)
     unless job_application_file_type.can_validate?(administrator)
       errors.add(:base, :not_authorized_to_validate)
       return false
@@ -10,7 +10,7 @@ module JobApplicationFile::Validatable
     update_column :is_validated, 1 # rubocop:disable Rails/SkipsModelValidations
   end
 
-  def uncheck!(administrator)
+  def mark_as_invalid!(administrator)
     unless job_application_file_type.can_validate?(administrator)
       errors.add(:base, :not_authorized_to_validate)
       return false

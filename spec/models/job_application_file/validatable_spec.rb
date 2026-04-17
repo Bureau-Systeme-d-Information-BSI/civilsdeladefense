@@ -1,8 +1,8 @@
 require "rails_helper"
 
 RSpec.describe JobApplicationFile::Validatable do
-  describe "#check!" do
-    subject(:check) { job_application_file.check!(administrator) }
+  describe "#mark_as_valid!" do
+    subject(:mark_as_valid) { job_application_file.mark_as_valid!(administrator) }
 
     let(:job_application_file) { create(:job_application_file, job_application:) }
     let(:job_application) { create(:job_application) }
@@ -10,25 +10,25 @@ RSpec.describe JobApplicationFile::Validatable do
     context "when administrator is authorized" do
       let(:administrator) { build(:administrator, roles: [:employer_recruiter]) }
 
-      it { expect { check }.to change { job_application_file.reload.validated? }.to(true) }
+      it { expect { mark_as_valid }.to change { job_application_file.reload.validated? }.to(true) }
     end
 
     context "when administrator is not authorized" do
       let(:administrator) { build(:administrator, roles: [:payroll_manager]) }
 
-      it { expect(check).to be(false) }
+      it { expect(mark_as_valid).to be(false) }
 
-      it { expect { check }.not_to change { job_application_file.reload.is_validated } }
+      it { expect { mark_as_valid }.not_to change { job_application_file.reload.is_validated } }
 
       it "adds an error on base" do
-        check
+        mark_as_valid
         expect(job_application_file.errors[:base]).to be_present
       end
     end
   end
 
-  describe "#uncheck!" do
-    subject(:uncheck) { job_application_file.uncheck!(administrator) }
+  describe "#mark_as_invalid!" do
+    subject(:mark_as_invalid) { job_application_file.mark_as_invalid!(administrator) }
 
     let(:job_application_file) { create(:job_application_file, job_application:) }
     let(:job_application) { create(:job_application) }
@@ -38,18 +38,18 @@ RSpec.describe JobApplicationFile::Validatable do
     context "when administrator is authorized" do
       let(:administrator) { build(:administrator, roles: [:employer_recruiter]) }
 
-      it { expect { uncheck }.to change { job_application_file.reload.rejected? }.to(true) }
+      it { expect { mark_as_invalid }.to change { job_application_file.reload.rejected? }.to(true) }
     end
 
     context "when administrator is not authorized" do
       let(:administrator) { build(:administrator, roles: [:payroll_manager]) }
 
-      it { expect(uncheck).to be(false) }
+      it { expect(mark_as_invalid).to be(false) }
 
-      it { expect { uncheck }.not_to change { job_application_file.reload.is_validated } }
+      it { expect { mark_as_invalid }.not_to change { job_application_file.reload.is_validated } }
 
       it "adds an error on base" do
-        uncheck
+        mark_as_invalid
         expect(job_application_file.errors[:base]).to be_present
       end
     end

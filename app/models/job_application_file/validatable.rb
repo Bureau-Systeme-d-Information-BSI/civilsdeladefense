@@ -8,6 +8,7 @@ module JobApplicationFile::Validatable
     end
 
     update_column :is_validated, 1 # rubocop:disable Rails/SkipsModelValidations
+    job_application.compute_notifications_counter!
   end
 
   def mark_as_invalid!(administrator)
@@ -17,6 +18,7 @@ module JobApplicationFile::Validatable
     end
 
     update_column :is_validated, 2 # rubocop:disable Rails/SkipsModelValidations
+    job_application.compute_notifications_counter!
   end
 
   def validated?

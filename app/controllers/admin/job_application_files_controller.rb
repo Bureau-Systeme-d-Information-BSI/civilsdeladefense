@@ -76,7 +76,6 @@ class Admin::JobApplicationFilesController < Admin::BaseController
 
   def check
     if @job_application_file.mark_as_valid!(current_administrator)
-      @job_application.compute_notifications_counter!
       @notification = t(".success")
       respond_to do |format|
         format.html { redirect_back_or_to location, notice: @notification }
@@ -95,7 +94,6 @@ class Admin::JobApplicationFilesController < Admin::BaseController
 
   def uncheck
     if @job_application_file.mark_as_invalid!(current_administrator)
-      @job_application.compute_notifications_counter!
       @notification = t(".success")
       respond_to do |format|
         format.html { redirect_back_or_to location, notice: @notification }

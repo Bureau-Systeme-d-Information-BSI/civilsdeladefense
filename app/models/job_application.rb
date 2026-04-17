@@ -64,6 +64,7 @@ class JobApplication < ApplicationRecord
         state_previously_was.present? &&
         JobApplication.states[state] > JobApplication.states[state_previously_was]
     }
+  after_save :notify_user_new_documents, if: -> { saved_change_to_state? } # Keep it after create_required_job_application_files
 
   FINISHED_STATES = %w[affected].freeze
   PROCESSING_STATES = %w[initial phone_meeting to_be_met financial_estimate].freeze
@@ -228,7 +229,7 @@ class JobApplication < ApplicationRecord
   scope :not_rejected, -> { where(rejected: false) }
   scope :with_user, -> { where.not(user: nil) }
 
-  delegate :employer_recruiters, :hr_managers, :payroll_managers, to: :job_offer, prefix: true
+  delegate :employer_recruiters, :employment_authorities, :hr_managers, :payroll_managers, to: :job_offer, prefix: true
 
   def set_employer
     self.employer_id ||= job_offer.employer_id

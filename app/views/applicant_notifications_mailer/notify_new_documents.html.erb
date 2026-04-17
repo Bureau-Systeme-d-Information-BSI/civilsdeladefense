@@ -1,0 +1,26 @@
+<p>
+  Bonjour <%= @user.full_name %>,
+</p>
+
+<p>
+  Vous avez de nouveaux documents à consulter :
+</p>
+
+<ul>
+  <% @document_names.each do |name| %>
+    <li><%= name %></li>
+  <% end %>
+</ul>
+
+<p>
+  Pour y accéder et procéder à une action, cliquez sur le lien suivant :
+  <a href="<%= account_job_applications_url %>">Mes candidatures</a>.
+</p>
+
+<p>
+  Cordialement,
+</p>
+
+<p>
+  L'équipe <%= @service_name %>
+</p>

@@ -101,4 +101,24 @@ RSpec.describe NotificationsMailer do
 
     it { expect(mail.body.encoded).to match(/à l'étape Prise de poste/) }
   end
+
+  describe "new_document" do
+    subject(:mail) { described_class.with(administrator:, job_application:).new_document }
+
+    let(:administrator) { create(:administrator) }
+    let(:job_application) { create(:job_application) }
+
+    it {
+      expect(mail.subject).to eq(
+        I18n.t(
+          "notifications_mailer.new_document.subject",
+          service_name: administrator.organization.service_name
+        )
+      )
+    }
+
+    it { expect(mail.to).to match([administrator.email]) }
+
+    it { expect(mail.body.encoded).to match(/nouveau document à consulter/) }
+  end
 end

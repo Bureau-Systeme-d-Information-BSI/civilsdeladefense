@@ -23,6 +23,16 @@ class JobApplicationFile < ApplicationRecord
     end
   end
 
+  def record_by_user
+    if save
+      job_application.compute_notifications_counter!
+      notify_administrators
+      true
+    else
+      false
+    end
+  end
+
   def check!
     update_column :is_validated, 1 # rubocop:disable Rails/SkipsModelValidations
   end
@@ -49,6 +59,18 @@ class JobApplicationFile < ApplicationRecord
 
   def max_downloadable_state
     job_application_file_type.visibility_rules.where(by: :administrator).maximum(:state)
+  end
+
+  def notify_administrators
+    file_type = job_application_file_type
+    admins_to_notify = []
+    admins_to_notify.concat(job_application.job_offer_employer_recruiters) if file_type.notify_employer_recruiter
+    admins_to_notify.concat(job_application.job_offer_employment_authorities) if file_type.notify_employment_authority
+    admins_to_notify.concat(job_application.job_offer_hr_managers) if file_type.notify_hr_manager
+    admins_to_notify.concat(job_application.job_offer_payroll_managers) if file_type.notify_payroll_manager
+    admins_to_notify.uniq.each do |administrator|
+      NotificationsMailer.with(administrator:, job_application:).new_document.deliver_later
+    end
   end
 end
 

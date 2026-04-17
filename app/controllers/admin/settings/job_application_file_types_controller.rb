@@ -42,6 +42,11 @@ class Admin::Settings::JobApplicationFileTypesController < Admin::Settings::Inhe
       :content,
       :required,
       :notification,
+      :notify_user,
+      :notify_employer_recruiter,
+      :notify_employment_authority,
+      :notify_hr_manager,
+      :notify_payroll_manager,
       visibility_rules_attributes: [:id, :by, :state, :_destroy]
     ]
   end

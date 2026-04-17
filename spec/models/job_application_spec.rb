@@ -9,7 +9,11 @@ RSpec.describe JobApplication do
   describe "delegations" do
     it { is_expected.to delegate_method(:employer_recruiters).to(:job_offer).with_prefix(true) }
 
+    it { is_expected.to delegate_method(:employment_authorities).to(:job_offer).with_prefix(true) }
+
     it { is_expected.to delegate_method(:hr_managers).to(:job_offer).with_prefix(true) }
+
+    it { is_expected.to delegate_method(:payroll_managers).to(:job_offer).with_prefix(true) }
   end
 
   describe "validations" do

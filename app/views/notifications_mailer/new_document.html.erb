@@ -1,0 +1,17 @@
+<p>
+  Bonjour <%= @administrator.full_name %>,
+</p>
+
+<p>
+  Vous avez un nouveau document à consulter.
+<br>
+  Pour y accéder et procéder à une action, cliquez sur le lien suivant : <%= link_to @job_offer.title, [:admin, @job_offer] %>.
+</p>
+
+<p>
+  Cordialement,
+</p>
+
+<p>
+  L'équipe <%= @service_name %>
+</p>

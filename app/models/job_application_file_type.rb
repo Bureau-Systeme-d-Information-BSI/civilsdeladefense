@@ -37,6 +37,14 @@ class JobApplicationFileType < ApplicationRecord
       .distinct
   }
 
+  scope :notifiable_by_user_at, ->(state) {
+    where(notify_user: true)
+      .joins(:visibility_rules)
+      .where(visibility_rules: {by: :user, state:})
+      .reorder(nil)
+      .distinct
+  }
+
   scope :visible_by_administrator, ->(state) {
     joins(:visibility_rules)
       .where(visibility_rules: {by: :administrator})
@@ -93,18 +101,19 @@ end
 #
 # Table name: job_application_file_types
 #
-#  id                  :uuid             not null, primary key
-#  content_file_name   :string
-#  description         :string
-#  from_state          :integer
-#  kind                :integer
-#  name                :string
-#  notification        :boolean          default(TRUE)
-#  position            :integer
-#  required            :boolean          default(FALSE), not null
-#  required_from_state :integer          default(0)
-#  required_to_state   :integer          default(11)
-#  to_state            :integer          default("affected")
-#  created_at          :datetime         not null
-#  updated_at          :datetime         not null
+#  id                          :uuid             not null, primary key
+#  content_file_name           :string
+#  description                 :string
+#  kind                        :integer
+#  name                        :string
+#  notification                :boolean          default(TRUE)
+#  notify_employer_recruiter   :boolean          default(FALSE), not null
+#  notify_employment_authority :boolean          default(FALSE), not null
+#  notify_hr_manager           :boolean          default(FALSE), not null
+#  notify_payroll_manager      :boolean          default(FALSE), not null
+#  notify_user                 :boolean          default(FALSE), not null
+#  position                    :integer
+#  required                    :boolean          default(FALSE), not null
+#  created_at                  :datetime         not null
+#  updated_at                  :datetime         not null
 #

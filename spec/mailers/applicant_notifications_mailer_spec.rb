@@ -56,6 +56,25 @@ RSpec.describe ApplicantNotificationsMailer do
     it { expect(notify_new_state.body.encoded).to match(/Votre candidature est passée à l'étape/) }
   end
 
+  describe "notify_new_documents" do
+    subject(:mail) { described_class.with(user:, job_offer:, document_names:).notify_new_documents }
+
+    let(:job_application) { build_stubbed(:job_application) }
+    let(:user) { job_application.user }
+    let(:job_offer) { job_application.job_offer }
+    let(:document_names) { ["CV", "Lettre de motivation"] }
+
+    it { expect(mail.subject).to eq("Nouveaux documents à consulter") }
+
+    it { expect(mail.to).to match([user.email]) }
+
+    it { expect(mail.body.encoded).to match(/nouveaux documents à consulter/) }
+
+    it { expect(mail.body.encoded).to match(/CV/) }
+
+    it { expect(mail.body.encoded).to match(/Lettre de motivation/) }
+  end
+
   describe "notify_rejected" do
     subject(:notify_rejected) { described_class.with(user:, job_offer:).notify_rejected }
 

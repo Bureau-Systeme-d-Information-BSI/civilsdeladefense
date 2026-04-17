@@ -5,6 +5,41 @@ RSpec.describe JobApplicationFile do
     it { is_expected.to delegate_method(:state).to(:job_application).with_prefix(true) }
   end
 
+  describe "#record_by_user" do
+    subject(:record_by_user) { job_application_file.record_by_user }
+
+    let(:job_application_file) { build(:job_application_file, job_application:) }
+    let(:job_application) { create(:job_application) }
+
+    context "when the file is valid" do
+      it { is_expected.to be(true) }
+
+      it { expect { record_by_user }.to change { job_application.job_application_files.count }.by(1) }
+
+      context "when the file type has notification recipients" do
+        let(:job_application_file_type) { create(:job_application_file_type, notify_hr_manager: true) }
+        let(:job_application_file) { build(:job_application_file, job_application:, job_application_file_type:) }
+        let!(:hr_manager) { create(:administrator, roles: [:hr_manager]) }
+
+        before { create(:job_offer_actor, job_offer: job_application.job_offer, administrator: hr_manager) }
+
+        it { expect { record_by_user }.to have_enqueued_mail(NotificationsMailer, :new_document) }
+      end
+
+      context "when the file type has no notification recipients" do
+        it { expect { record_by_user }.not_to have_enqueued_mail(NotificationsMailer, :new_document) }
+      end
+    end
+
+    context "when the file is invalid" do
+      before { job_application_file.content = nil }
+
+      it { is_expected.to be(false) }
+
+      it { expect { record_by_user }.not_to change { job_application.job_application_files.count } }
+    end
+  end
+
   describe "#downloadable?" do
     subject(:downloadable) { job_application_file.downloadable? }
 

@@ -125,6 +125,32 @@ RSpec.describe "Admin::Settings::JobApplicationFileTypes" do
       end
     end
 
+    context "when updating notification recipients" do
+      subject(:update_request) { patch admin_settings_job_application_file_type_path(job_application_file_type), params: }
+
+      let(:params) do
+        {
+          job_application_file_type: {
+            notify_user: true,
+            notify_employer_recruiter: true,
+            notify_employment_authority: false,
+            notify_hr_manager: true,
+            notify_payroll_manager: false
+          }
+        }
+      end
+
+      it "updates the notification recipients" do
+        update_request
+        job_application_file_type.reload
+        expect(job_application_file_type.notify_user).to be(true)
+        expect(job_application_file_type.notify_employer_recruiter).to be(true)
+        expect(job_application_file_type.notify_employment_authority).to be(false)
+        expect(job_application_file_type.notify_hr_manager).to be(true)
+        expect(job_application_file_type.notify_payroll_manager).to be(false)
+      end
+    end
+
     context "when destroying a visibility rule" do
       subject(:update_request) { patch admin_settings_job_application_file_type_path(job_application_file_type), params: }
 

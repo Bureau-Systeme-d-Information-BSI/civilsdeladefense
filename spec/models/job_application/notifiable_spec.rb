@@ -179,4 +179,24 @@ RSpec.describe JobApplication::Notifiable do
       end
     end
   end
+
+  describe "#notify_user_new_documents" do
+    subject(:change_state) { job_application.to_be_met! }
+
+    let(:job_application) { create(:job_application, state: :phone_meeting) }
+
+    context "when there are notifiable file types at the new state" do
+      before do
+        create(:job_application_file_type, notify_user: true).tap do |jaft|
+          jaft.visibility_rules.create!(by: :user, state: :to_be_met)
+        end
+      end
+
+      it { expect { change_state }.to have_enqueued_mail(ApplicantNotificationsMailer, :notify_new_documents) }
+    end
+
+    context "when there are no notifiable file types at the new state" do
+      it { expect { change_state }.not_to have_enqueued_mail(ApplicantNotificationsMailer, :notify_new_documents) }
+    end
+  end
 end

@@ -178,6 +178,8 @@ fr:
       subject: "Nouvelle offre"
     notify_new_state:
       subject: "Votre candidature à l'offre %{job_offer_identifier} sur %{service_name}"
+    notify_new_documents:
+      subject: "Nouveaux documents à consulter"
     notify_rejected:
       subject: "Votre candidature a été refusée"
   notifications_mailer:
@@ -191,6 +193,8 @@ fr:
       subject: "[%{service_name}] Notification « Gestionnaire » - Dossier de paie"
     affected:
       subject: "[%{service_name}] Notification « Gestionnaire » - Prise de poste"
+    new_document:
+      subject: "[%{service_name}] Nouveau document à consulter"
     daily_summary:
       subject: "[%{service_name}] Rapport journalier"
       generic_title: "Candidatures %{state}"
@@ -1272,6 +1276,12 @@ fr:
         kind/employer_provided: "Fourni par l'employeur"
         kind/employment_authority_provided: "Fourni par l'autorité d'emploi"
         kind/check_only_admin_only: "Fichier géré hors outil"
+        notification_recipients: "Notifications (sélection des destinataires)"
+        notify_user: "Candidat"
+        notify_employer_recruiter: "Employeur recruteur"
+        notify_employment_authority: "Autorité d'emploi"
+        notify_hr_manager: "Gestionnaire RH"
+        notify_payroll_manager: "Gestionnaire GA / Paie"
       job_offer:
         title: "Intitulé du poste"
         job_applications_count: "Nombre de candidatures: %{count}"

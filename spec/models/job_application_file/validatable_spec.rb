@@ -38,7 +38,7 @@ RSpec.describe JobApplicationFile::Validatable do
     context "when administrator is authorized" do
       let(:administrator) { build(:administrator, roles: [:employer_recruiter]) }
 
-      it { expect { mark_as_invalid }.to change { job_application_file.reload.rejected? }.to(true) }
+      it { expect { mark_as_invalid }.to change { job_application_file.reload.invalidated? }.to(true) }
     end
 
     context "when administrator is not authorized" do
@@ -79,8 +79,8 @@ RSpec.describe JobApplicationFile::Validatable do
     end
   end
 
-  describe "#rejected?" do
-    subject { job_application_file.rejected? }
+  describe "#invalidated?" do
+    subject { job_application_file.invalidated? }
 
     let(:job_application_file) { build(:job_application_file, is_validated:) }
 

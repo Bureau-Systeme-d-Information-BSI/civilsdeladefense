@@ -25,7 +25,7 @@ module JobApplicationFile::Validatable
     is_validated == 1
   end
 
-  def rejected?
+  def invalidated?
     is_validated == 2
   end
 

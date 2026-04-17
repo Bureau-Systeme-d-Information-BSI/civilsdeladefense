@@ -6,7 +6,7 @@ RSpec.describe "Admin::JobApplicationFiles" do
   let(:job_application) { create(:job_application) }
   let(:job_application_file) { create(:job_application_file, job_application: job_application) }
 
-  before { sign_in create(:administrator) }
+  before { sign_in create(:administrator, roles: [:functional_administrator, :employer_recruiter]) }
 
   describe "POST /admin/candidatures/:job_application_id/job_application_files" do
     let(:job_application_file_type) { create(:job_application_file_type) }
@@ -166,7 +166,7 @@ RSpec.describe "Admin::JobApplicationFiles" do
   end
 
   describe "POST /admin/candidatures/:job_application_id/job_application_files/:id/check" do
-    before { job_application_file.uncheck! }
+    before { job_application_file.update_column(:is_validated, 2) } # rubocop:disable Rails/SkipsModelValidations
 
     context "when format is html" do
       subject(:check_request) {
@@ -197,10 +197,52 @@ RSpec.describe "Admin::JobApplicationFiles" do
         expect { check_request }.to change { job_application_file.reload.validated? }.to(true)
       end
     end
+
+    context "when administrator is not authorized to validate" do
+      let(:unauthorized_file_type) do
+        create(:job_application_file_type,
+          validate_by_employer_recruiter: false,
+          validate_by_hr_manager: true)
+      end
+      let(:job_application_file) do
+        create(:job_application_file, job_application: job_application, job_application_file_type: unauthorized_file_type)
+      end
+
+      before { job_application_file.update_column(:is_validated, 2) } # rubocop:disable Rails/SkipsModelValidations
+
+      context "when format is html" do
+        subject(:check_request) {
+          post check_admin_job_application_job_application_file_path(job_application, job_application_file)
+        }
+
+        it "redirects with alert" do
+          check_request
+          expect(flash[:alert]).to be_present
+        end
+
+        it "does not check the job application file" do
+          expect { check_request }.not_to change { job_application_file.reload.is_validated }
+        end
+      end
+
+      context "when format is js" do
+        subject(:check_request) {
+          post check_admin_job_application_job_application_file_path(job_application, job_application_file), xhr: true
+        }
+
+        it "renders the template" do
+          expect(check_request).to render_template(:file_operation)
+        end
+
+        it "does not check the job application file" do
+          expect { check_request }.not_to change { job_application_file.reload.is_validated }
+        end
+      end
+    end
   end
 
   describe "POST /admin/candidatures/:job_application_id/job_application_files/:id/uncheck" do
-    before { job_application_file.check! }
+    before { job_application_file.update_column(:is_validated, 1) } # rubocop:disable Rails/SkipsModelValidations
 
     context "when format is html" do
       subject(:uncheck_request) {
@@ -229,6 +271,48 @@ RSpec.describe "Admin::JobApplicationFiles" do
 
       it "unchecks the job application file" do
         expect { uncheck_request }.to change { job_application_file.reload.validated? }.to(false)
+      end
+    end
+
+    context "when administrator is not authorized to validate" do
+      let(:unauthorized_file_type) do
+        create(:job_application_file_type,
+          validate_by_employer_recruiter: false,
+          validate_by_hr_manager: true)
+      end
+      let(:job_application_file) do
+        create(:job_application_file, job_application: job_application, job_application_file_type: unauthorized_file_type)
+      end
+
+      before { job_application_file.update_column(:is_validated, 1) } # rubocop:disable Rails/SkipsModelValidations
+
+      context "when format is html" do
+        subject(:uncheck_request) {
+          post uncheck_admin_job_application_job_application_file_path(job_application, job_application_file)
+        }
+
+        it "redirects with alert" do
+          uncheck_request
+          expect(flash[:alert]).to be_present
+        end
+
+        it "does not uncheck the job application file" do
+          expect { uncheck_request }.not_to change { job_application_file.reload.is_validated }
+        end
+      end
+
+      context "when format is js" do
+        subject(:uncheck_request) {
+          post uncheck_admin_job_application_job_application_file_path(job_application, job_application_file), xhr: true
+        }
+
+        it "renders the template" do
+          expect(uncheck_request).to render_template(:file_operation)
+        end
+
+        it "does not uncheck the job application file" do
+          expect { uncheck_request }.not_to change { job_application_file.reload.is_validated }
+        end
       end
     end
   end

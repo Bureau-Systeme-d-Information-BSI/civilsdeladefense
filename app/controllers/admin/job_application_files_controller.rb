@@ -91,20 +91,22 @@ class Admin::JobApplicationFilesController < Admin::BaseController
   protected
 
   def check_and_uncheck
-    @job_application_file.send(:"#{action_name}!") if %w[check uncheck].include?(action_name)
-    @job_application.compute_notifications_counter!
     location = [:admin, @job_application, @job_application_file]
-    @notification = t(".success")
 
-    respond_to do |format|
-      format.html do
-        redirect_back(fallback_location: location, notice: @notification)
+    if %w[check uncheck].include?(action_name) && @job_application_file.send(:"#{action_name}!", current_administrator)
+      @job_application.compute_notifications_counter!
+      @notification = t(".success")
+      respond_to do |format|
+        format.html { redirect_back(fallback_location: location, notice: @notification) }
+        format.js { render :file_operation }
+        format.json { render :show, status: :ok, location: location }
       end
-      format.js do
-        render :file_operation
-      end
-      format.json do
-        render :show, status: :ok, location: location
+    else
+      @notification = @job_application_file.errors.full_messages.to_sentence
+      respond_to do |format|
+        format.html { redirect_back(fallback_location: location, alert: @notification) }
+        format.js { render :file_operation }
+        format.json { render json: @job_application_file.errors, status: :unprocessable_entity }
       end
     end
   end

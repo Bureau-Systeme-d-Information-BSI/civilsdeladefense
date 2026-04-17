@@ -146,7 +146,7 @@ RSpec.describe JobApplication do
         JobApplicationFileType.mandatory(:phone_meeting).find_each do |jaft|
           file = job_application.job_application_files.find_by(job_application_file_type: jaft) ||
             create(:job_application_file, job_application:, job_application_file_type: jaft)
-          file.check!
+          file.update_column(:is_validated, 1) # rubocop:disable Rails/SkipsModelValidations
         end
         job_application.reload
       end
@@ -161,7 +161,7 @@ RSpec.describe JobApplication do
     context "when the file type is already requested" do
       before do
         create(:job_application_file, job_application:, job_application_file_type: required_file_type)
-        job_application.job_application_files.reload.each(&:check!)
+        job_application.job_application_files.reload.each { |f| f.update_column(:is_validated, 1) } # rubocop:disable Rails/SkipsModelValidations
       end
 
       it "does not create a duplicate" do

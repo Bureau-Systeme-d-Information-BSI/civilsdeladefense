@@ -42,4 +42,18 @@
   .form-check
     = f.check_box :notify_payroll_manager, class: "form-check-input"
     %label.form-check-label= t("activerecord.attributes.job_application_file_type.notify_payroll_manager")
+%fieldset.form-group
+  %label= t("activerecord.attributes.job_application_file_type.validation_recipients")
+  .form-check
+    = f.check_box :validate_by_employer_recruiter, class: "form-check-input"
+    %label.form-check-label= t("activerecord.attributes.job_application_file_type.validate_by_employer_recruiter")
+  .form-check
+    = f.check_box :validate_by_employment_authority, class: "form-check-input"
+    %label.form-check-label= t("activerecord.attributes.job_application_file_type.validate_by_employment_authority")
+  .form-check
+    = f.check_box :validate_by_hr_manager, class: "form-check-input"
+    %label.form-check-label= t("activerecord.attributes.job_application_file_type.validate_by_hr_manager")
+  .form-check
+    = f.check_box :validate_by_payroll_manager, class: "form-check-input"
+    %label.form-check-label= t("activerecord.attributes.job_application_file_type.validate_by_payroll_manager")
 = f.input :notification

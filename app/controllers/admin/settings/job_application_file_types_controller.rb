@@ -47,6 +47,10 @@ class Admin::Settings::JobApplicationFileTypesController < Admin::Settings::Inhe
       :notify_employment_authority,
       :notify_hr_manager,
       :notify_payroll_manager,
+      :validate_by_employer_recruiter,
+      :validate_by_employment_authority,
+      :validate_by_hr_manager,
+      :validate_by_payroll_manager,
       visibility_rules_attributes: [:id, :by, :state, :_destroy]
     ]
   end

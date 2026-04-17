@@ -93,6 +93,8 @@ class JobApplicationFileType < ApplicationRecord
   accepts_nested_attributes_for :visibility_rules, allow_destroy: true
 
   def can_validate?(administrator)
+    return true if administrator.functional_administrator?
+
     VALIDATOR_ROLE_MAPPING.any? { |flag, role_method| self[flag] && administrator.public_send(role_method) }
   end
 

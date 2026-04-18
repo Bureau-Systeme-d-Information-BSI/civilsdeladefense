@@ -332,6 +332,10 @@ fr:
       update:
         success: "Profil mis à jour !"
         failure: "Erreur dans la mise à jour du profil"
+      users:
+        update:
+          success: "Profil mis à jour !"
+          failure: "Erreur dans la mise à jour du profil"
       job_application_activity:
         title: "Activité et commentaires"
         title_state: "État de la candidature"
@@ -568,9 +572,6 @@ fr:
         nav_files: "Documents"
         nav_overview: "Candidature"
         nav_profile: "Profil"
-      update:
-        success: "Profil mis à jour !"
-        failure: "Erreur dans la mise à jour du profil"
     settings:
       destroy:
         failure:

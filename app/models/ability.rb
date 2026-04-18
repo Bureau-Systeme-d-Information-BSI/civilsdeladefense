@@ -62,6 +62,7 @@ class Ability
   def ability_other_administrators(administrator)
     can :read, JobOffer, job_offer_actors: {administrator_id: administrator.id}
     can :manage, JobApplication, job_application_read_query(administrator)
+    can :manage, JobApplicationFile
     can :manage, Message
     can :manage, Email
   end

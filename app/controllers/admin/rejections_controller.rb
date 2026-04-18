@@ -8,17 +8,27 @@ class Admin::RejectionsController < Admin::BaseController
   end
 
   def create
-    @job_application.reject!(rejection_reason:)
+    if current_administrator.can?(:update_application_rejected, @job_application)
+      @job_application.reject!(rejection_reason:)
+      @notification = t(".success")
+    else
+      @notification = t(".unauthorized")
+    end
     respond_to do |format|
-      format.html { redirect_to admin_job_application_path(@job_application), notice: t(".success") }
+      format.html { redirect_to admin_job_application_path(@job_application), notice: @notification }
       format.js
     end
   end
 
   def destroy
-    @job_application.unreject!
+    if current_administrator.can?(:update_application_rejected, @job_application)
+      @job_application.unreject!
+      @notification = t(".success")
+    else
+      @notification = t(".unauthorized")
+    end
     respond_to do |format|
-      format.html { redirect_to admin_job_application_path(@job_application), notice: t(".success") }
+      format.html { redirect_to admin_job_application_path(@job_application), notice: @notification }
       format.js
     end
   end

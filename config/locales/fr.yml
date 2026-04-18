@@ -376,8 +376,10 @@ fr:
         title: "Refus ou désistement"
       create:
         success: "Candidature refusée ou désistée"
+        unauthorized: "Vous n'êtes pas autorisé(e) à refuser cette candidature."
       destroy:
         success: "La candidature a été dé-refusée"
+        unauthorized: "Vous n'êtes pas autorisé(e) à annuler le refus de cette candidature."
     job_offers:
       add_actor:
         admin_not_found_html: 'Ce mail n’a pas de compte existant, veuillez envoyer une demande de création de compte via le lien suivant : <a href="https://demarches-simplifiees.intradef.gouv.fr/commencer/demande-creation-compte-erecrutement">https://demarches-simplifiees.intradef.gouv.fr/commencer/demande-creation-compte-erecrutement</a>'

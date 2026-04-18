@@ -1,6 +1,6 @@
 - job_offer = job_application.job_offer
 - change_state_url = url_for([:change_state, :admin, job_application, {state: job_application.state}])
-- rejection_url = new_admin_job_application_rejection_path(job_application)
+- rejection_url = current_administrator.can?(:update_application_rejected, job_application) ? new_admin_job_application_rejection_path(job_application) : "#"
 .card.job-application{id: dom_id(job_application), class: "job-application--state-#{job_application.state}", data: {state: job_application.state, rejected: job_application.rejected.to_s, change: {state: {url: change_state_url}}, rejection: {url: rejection_url}}}
   - if job_application.administrator_notifications_count > 0
     .notification= job_application.administrator_notifications_count

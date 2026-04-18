@@ -8,7 +8,7 @@
 
     - url = [:change_state, :admin, @job_application]
     = simple_form_for url, method: :patch, wrapper: :inline_form, html: { class: 'edit_job_application_state form-inline auto-submit', data: {flash: true}} do |f|
-      = f.input :state, collection: change_state_options(@job_application, current_administrator), label: false, prompt: :translate, wrapper: :custom_multi_select_full_wide, disabled: (@job_application.rejected || !can?(:manage, @job_application) || !can_change_state?(@job_application, current_administrator))
+      = f.input :state, collection: change_state_options(@job_application, current_administrator), label: false, prompt: :translate, wrapper: :custom_multi_select_full_wide, disabled: (@job_application.rejected || !can_change_state?(@job_application, current_administrator))
 
     .font-weight-bold.text-secondary.mb-3.mt-4
       = fa_icon('xmark', class: 'text-secondary')

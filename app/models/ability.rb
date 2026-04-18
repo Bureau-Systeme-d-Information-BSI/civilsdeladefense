@@ -16,28 +16,24 @@ class Ability
     can :read, EmailTemplate
     cannot :manage, PreferredUsersList
 
-    if administrator.admin?
-      ability_admin(administrator)
-    elsif administrator.employer?
-      ability_employer(administrator)
+    if administrator.functional_administrator?
+      ability_functional_administrator(administrator)
+    elsif administrator.employer_recruiter?
+      ability_employer_recruiter(administrator)
     else
-      can :read, JobOffer, job_offer_actors: {administrator_id: administrator.id}
-      can :read, JobApplication, job_application_read_query(administrator)
-      can :manage, JobApplication, brh_job_application_manage_query(administrator)
-      can :manage, JobApplicationFile
-      can :manage, Message
-      can :manage, Email
+      ability_other_administrators(administrator)
     end
   end
 
   private
 
-  def ability_admin(administrator)
+  def ability_functional_administrator(administrator)
     can :manage, :all
     can :manage, PreferredUsersList, administrator_id: administrator.id
+    can :manage, JobApplication
   end
 
-  def ability_employer(administrator)
+  def ability_employer_recruiter(administrator)
     can :create, JobOffer
     can :manage, JobOffer, job_offer_actors: {administrator_id: administrator.id}
     can :manage, JobOffer, owner_id: administrator.id
@@ -50,6 +46,14 @@ class Ability
     can :update, User, employer_users_query(administrator)
     can :read, User
     can :manage, PreferredUsersList, administrator_id: administrator.id
+  end
+
+  def ability_other_administrators(administrator)
+    can :read, JobOffer, job_offer_actors: {administrator_id: administrator.id}
+    can :manage, JobApplication, job_application_read_query(administrator)
+    can :manage, JobApplicationFile
+    can :manage, Message
+    can :manage, Email
   end
 
   def job_application_read_query(administrator)
@@ -67,19 +71,6 @@ class Ability
       job_offers: {
         job_offer_actors: {
           administrator_id: administrator.id
-        }
-      }
-    }
-  end
-
-  def brh_job_application_manage_query(administrator)
-    role_brh = JobOfferActor.roles[:brh]
-    role_cmg = JobOfferActor.roles[:cmg]
-    {
-      job_offer: {
-        job_offer_actors: {
-          administrator_id: administrator.id,
-          role: [role_brh, role_cmg]
         }
       }
     }

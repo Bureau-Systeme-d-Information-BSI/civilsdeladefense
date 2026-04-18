@@ -62,4 +62,40 @@ RSpec.describe AdministratorPermissions do
       it { is_expected.to be(false) }
     end
   end
+
+  describe ".allows_state_transition?" do
+    subject(:allows_state_transition?) { described_class.allows_state_transition?(role:, state:, target_state:) }
+
+    context "when the target state is in the allowed list" do
+      let(:role) { :functional_administrator }
+      let(:state) { :initial }
+      let(:target_state) { :phone_meeting }
+
+      it { is_expected.to be(true) }
+    end
+
+    context "when the target state is not in the allowed list" do
+      let(:role) { :functional_administrator }
+      let(:state) { :initial }
+      let(:target_state) { :accepted }
+
+      it { is_expected.to be(false) }
+    end
+
+    context "when no transition is allowed for the state" do
+      let(:role) { :hr_manager }
+      let(:state) { :initial }
+      let(:target_state) { :phone_meeting }
+
+      it { is_expected.to be(false) }
+    end
+
+    context "when the role, state or target_state are passed as a string" do
+      let(:role) { "hr_manager" }
+      let(:state) { "contract_drafting" }
+      let(:target_state) { "contract_feedback_waiting" }
+
+      it { is_expected.to be(true) }
+    end
+  end
 end

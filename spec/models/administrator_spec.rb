@@ -480,6 +480,45 @@ RSpec.describe Administrator do
       it { is_expected.to be(false) }
     end
   end
+
+  describe "#can_change_state?" do
+    subject(:can_change_state?) { administrator.can_change_state?(job_application, target_state) }
+
+    let(:administrator) { build(:administrator, roles: roles) }
+    let(:job_application) { build(:job_application, state: state) }
+
+    context "when the target state is allowed for the administrator and current state" do
+      let(:roles) { [:functional_administrator] }
+      let(:state) { :initial }
+      let(:target_state) { :phone_meeting }
+
+      it { is_expected.to be(true) }
+    end
+
+    context "when the target state is not allowed for the administrator and current state" do
+      let(:roles) { [:functional_administrator] }
+      let(:state) { :initial }
+      let(:target_state) { :accepted }
+
+      it { is_expected.to be(false) }
+    end
+
+    context "when the administrator has no state transition allowed" do
+      let(:roles) { [:hr_manager] }
+      let(:state) { :initial }
+      let(:target_state) { :phone_meeting }
+
+      it { is_expected.to be(false) }
+    end
+
+    context "when one of the administrator roles allows the transition" do
+      let(:roles) { [:hr_manager, :functional_administrator] }
+      let(:state) { :initial }
+      let(:target_state) { :phone_meeting }
+
+      it { is_expected.to be(true) }
+    end
+  end
 end
 
 # == Schema Information

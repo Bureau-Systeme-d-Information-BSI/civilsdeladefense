@@ -65,16 +65,21 @@ class Admin::JobApplicationsController < Admin::BaseController
     known_aasm_state = @job_application.aasm.states.detect { |s| s.name.to_s == @state }
     raise ForbiddenState.new(state: @state) if known_aasm_state.nil?
 
-    @job_application.send(:"#{known_aasm_state.name}!")
-    @job_offer = @job_application.job_offer
     state_i18n = JobApplication.human_attribute_name("state/#{@state}")
 
-    current_max = @job_offer.current_most_advanced_job_applications_state
-    if @job_offer.most_advanced_job_applications_state_before_type_cast != current_max
-      @job_offer.update(most_advanced_job_applications_state: current_max)
-    end
+    if current_administrator.can_change_state?(@job_application, @state)
+      @job_application.send(:"#{known_aasm_state.name}!")
+      @job_offer = @job_application.job_offer
 
-    @notification = t(".success", state: state_i18n)
+      current_max = @job_offer.current_most_advanced_job_applications_state
+      if @job_offer.most_advanced_job_applications_state_before_type_cast != current_max
+        @job_offer.update(most_advanced_job_applications_state: current_max)
+      end
+
+      @notification = t(".success", state: state_i18n)
+    else
+      @notification = t(".failure", state: state_i18n)
+    end
     render_reponse
   rescue ActiveRecord::RecordInvalid
     @notification = @job_application.errors.messages[:state].join(" ")

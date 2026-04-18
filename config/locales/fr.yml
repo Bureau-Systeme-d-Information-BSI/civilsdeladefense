@@ -353,6 +353,7 @@ fr:
           rejection_reason_update_html: "<span class='user-name'>%{name}</span> a mis à jour le motif de refus à <span class='user-name'>%{current_name}</span>"
       change_state:
         success: "Candidature passée en statut %{state} !"
+        failure: "Vous n'êtes pas autorisé(e) à passer la candidature en statut %{state}."
     job_application_files:
       optional_job_application_file_type:
         action_name: "Demander"

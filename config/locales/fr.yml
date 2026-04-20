@@ -376,6 +376,10 @@ fr:
         help: "Téléverser un fichier"
       uncheck:
         success: "Fichier invalidé !"
+    dars:
+      update:
+        success: "Validation DAR mise à jour avec succès"
+        unauthorized: "Vous n'êtes pas autorisé(e) à valider ou invalider la DAR de cette candidature."
     rejections:
       new:
         title: "Refus ou désistement"

@@ -69,4 +69,4 @@ clock:
 	$(COMPOSE_CMD) exec web bundle exec clockwork clock.rb
 
 tests:
-	$(COMPOSE_CMD) exec web rspec $(T_ARGS)
+	$(COMPOSE_CMD) exec -e RAILS_ENV=test web bundle exec rspec $(T_ARGS)

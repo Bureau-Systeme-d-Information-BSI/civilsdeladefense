@@ -6,10 +6,18 @@ default: &default
 development:
   <<: *default
   database: civilsdeladefense_development
+  username: postgres
+  password: password
+  host: db
+  port: 5432
 
 test:
   <<: *default
   database: civilsdeladefense_test
+  username: postgres
+  password: password
+  host: db
+  port: 5432
 
 production:
   <<: *default

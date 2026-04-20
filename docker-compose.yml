@@ -4,6 +4,8 @@ services:
       context: .
     environment:
       - REDIS_URL=redis://redis:6379
+      - DB_HOST=db
+      - DB_PASSWORD=password
     command: bash -c "yarn build && yarn build:css && bundle exec rails server -b 0.0.0.0"
     ports:
       - "3000:3000"

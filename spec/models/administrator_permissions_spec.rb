@@ -9,7 +9,7 @@ RSpec.describe AdministratorPermissions do
     context "when the permission value is true" do
       let(:role) { :functional_administrator }
       let(:state) { :initial }
-      let(:action) { :show_application }
+      let(:action) { :update_application_rejected }
 
       it { is_expected.to be(true) }
     end

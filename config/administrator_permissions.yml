@@ -1,460 +1,235 @@
 ---
 functional_administrator:
   initial:
-    show_application: true
     update_application_state: [phone_meeting, to_be_met, financial_estimate]
     update_user_info: true
     update_application_rejected: true
     update_application_dar: false
-    update_file_validation: true
-    create_file: true
-    create_comment: true
-    create_email: true
   phone_meeting:
-    show_application: true
     update_application_state: [initial, to_be_met, financial_estimate]
     update_user_info: true
     update_application_rejected: true
     update_application_dar: false
-    update_file_validation: true
-    create_file: true
-    create_comment: true
-    create_email: true
   to_be_met:
-    show_application: true
     update_application_state: [phone_meeting, financial_estimate]
     update_user_info: true
     update_application_rejected: true
     update_application_dar: false
-    update_file_validation: true
-    create_file: true
-    create_comment: true
-    create_email: true
   financial_estimate:
-    show_application: true
     update_application_state: [to_be_met, accepted]
     update_user_info: true
     update_application_rejected: true
     update_application_dar: false
-    update_file_validation: true
-    create_file: true
-    create_comment: true
-    create_email: true
   accepted:
-    show_application: true
     update_application_state: [financial_estimate, contract_drafting]
     update_user_info: true
     update_application_rejected: true
     update_application_dar: true
-    update_file_validation: true
-    create_file: true
-    create_comment: true
-    create_email: true
   contract_drafting:
-    show_application: true
     update_application_state: [accepted, contract_feedback_waiting]
     update_user_info: true
     update_application_rejected: true
     update_application_dar: false
-    update_file_validation: true
-    create_file: true
-    create_comment: true
-    create_email: true
   contract_feedback_waiting:
-    show_application: true
     update_application_state: [contract_drafting, contract_received]
     update_user_info: true
     update_application_rejected: true
     update_application_dar: false
-    update_file_validation: true
-    create_file: true
-    create_comment: true
-    create_email: true
   contract_received:
-    show_application: true
     update_application_state: [contract_feedback_waiting, affected]
     update_user_info: true
     update_application_rejected: true
     update_application_dar: false
-    update_file_validation: true
-    create_file: true
-    create_comment: true
-    create_email: true
   affected:
-    show_application: true
     update_application_state: [contract_received]
     update_user_info: true
     update_application_rejected: true
     update_application_dar: false
-    update_file_validation: true
-    create_file: true
-    create_comment: true
-    create_email: true
 
 employer_recruiter:
   initial:
-    show_application: true
     update_application_state: [phone_meeting, to_be_met, financial_estimate]
     update_user_info: true
     update_application_rejected: true
     update_application_dar: false
-    update_file_validation: true
-    create_file: true
-    create_comment: true
-    create_email: true
   phone_meeting:
-    show_application: true
     update_application_state: [initial, to_be_met, financial_estimate]
     update_user_info: true
     update_application_rejected: true
     update_application_dar: false
-    update_file_validation: true
-    create_file: true
-    create_comment: true
-    create_email: true
   to_be_met:
-    show_application: true
     update_application_state: [phone_meeting, financial_estimate]
     update_user_info: true
     update_application_rejected: true
     update_application_dar: false
-    update_file_validation: true
-    create_file: true
-    create_comment: true
-    create_email: true
   financial_estimate:
-    show_application: true
     update_application_state: [to_be_met, accepted]
     update_user_info: true
     update_application_rejected: true
     update_application_dar: false
-    update_file_validation: true
-    create_file: true
-    create_comment: true
-    create_email: true
   accepted:
-    show_application: true
     update_application_state: [financial_estimate, contract_drafting]
     update_user_info: true
     update_application_rejected: true
     update_application_dar: false
-    update_file_validation: true
-    create_file: true
-    create_comment: true
-    create_email: true
   contract_drafting:
-    show_application: true
     update_application_state: [accepted, contract_feedback_waiting]
     update_user_info: true
     update_application_rejected: true
     update_application_dar: false
-    update_file_validation: true
-    create_file: true
-    create_comment: true
-    create_email: true
   contract_feedback_waiting:
-    show_application: true
     update_application_state: [contract_drafting, contract_received]
     update_user_info: true
     update_application_rejected: true
     update_application_dar: false
-    update_file_validation: true
-    create_file: true
-    create_comment: true
-    create_email: true
   contract_received:
-    show_application: true
     update_application_state: [contract_feedback_waiting, affected]
     update_user_info: true
     update_application_rejected: true
     update_application_dar: false
-    update_file_validation: true
-    create_file: true
-    create_comment: true
-    create_email: true
   affected:
-    show_application: true
     update_application_state: [contract_received]
     update_user_info: true
     update_application_rejected: true
     update_application_dar: false
-    update_file_validation: true
-    create_file: true
-    create_comment: true
-    create_email: true
 
 employment_authority:
   initial:
-    show_application: true
     update_application_state: false
     update_user_info: false
     update_application_rejected: false
     update_application_dar: false
-    update_file_validation: false
-    create_file: false
-    create_comment: true
-    create_email: true
   phone_meeting:
-    show_application: true
     update_application_state: false
     update_user_info: false
     update_application_rejected: false
     update_application_dar: false
-    update_file_validation: false
-    create_file: false
-    create_comment: true
-    create_email: true
   to_be_met:
-    show_application: true
     update_application_state: false
     update_user_info: false
     update_application_rejected: false
     update_application_dar: false
-    update_file_validation: false
-    create_file: false
-    create_comment: true
-    create_email: true
   financial_estimate:
-    show_application: true
     update_application_state: false
     update_user_info: false
     update_application_rejected: false
     update_application_dar: false
-    update_file_validation: false
-    create_file: false
-    create_comment: true
-    create_email: true
   accepted:
-    show_application: true
     update_application_state: [contract_drafting]
     update_user_info: false
     update_application_rejected: false
     update_application_dar: true
-    update_file_validation: false
-    create_file: false
-    create_comment: true
-    create_email: true
   contract_drafting:
-    show_application: true
     update_application_state: [accepted]
     update_user_info: false
     update_application_rejected: false
     update_application_dar: false
-    update_file_validation: false
-    create_file: false
-    create_comment: true
-    create_email: true
   contract_feedback_waiting:
-    show_application: true
     update_application_state: false
     update_user_info: false
     update_application_rejected: false
     update_application_dar: false
-    update_file_validation: false
-    create_file: false
-    create_comment: true
-    create_email: true
   contract_received:
-    show_application: true
     update_application_state: false
     update_user_info: false
     update_application_rejected: false
     update_application_dar: false
-    update_file_validation: false
-    create_file: false
-    create_comment: true
-    create_email: true
   affected:
-    show_application: true
     update_application_state: false
     update_user_info: false
     update_application_rejected: false
     update_application_dar: false
-    update_file_validation: false
-    create_file: false
-    create_comment: true
-    create_email: true
 
 hr_manager:
   initial:
-    show_application: true
     update_application_state: false
     update_user_info: false
     update_application_rejected: false
     update_application_dar: false
-    update_file_validation: false
-    create_file: false
-    create_comment: true
-    create_email: true
   phone_meeting:
-    show_application: true
     update_application_state: false
     update_user_info: false
     update_application_rejected: false
     update_application_dar: false
-    update_file_validation: false
-    create_file: false
-    create_comment: true
-    create_email: true
   to_be_met:
-    show_application: true
     update_application_state: false
     update_user_info: false
     update_application_rejected: false
     update_application_dar: false
-    update_file_validation: false
-    create_file: false
-    create_comment: true
-    create_email: true
   financial_estimate:
-    show_application: true
     update_application_state: false
     update_user_info: false
     update_application_rejected: false
     update_application_dar: false
-    update_file_validation: false
-    create_file: false
-    create_comment: true
-    create_email: true
   accepted:
-    show_application: true
     update_application_state: [contract_drafting]
     update_user_info: false
     update_application_rejected: false
     update_application_dar: false
-    update_file_validation: true
-    create_file: [manager_provided]
-    create_comment: true
-    create_email: true
   contract_drafting:
-    show_application: true
     update_application_state: [accepted, contract_feedback_waiting]
     update_user_info: false
     update_application_rejected: false
     update_application_dar: false
-    update_file_validation: true
-    create_file: [manager_provided]
-    create_comment: true
-    create_email: true
   contract_feedback_waiting:
-    show_application: true
     update_application_state: [contract_drafting, contract_received]
     update_user_info: false
     update_application_rejected: false
     update_application_dar: false
-    update_file_validation: true
-    create_file: [manager_provided]
-    create_comment: true
-    create_email: true
   contract_received:
-    show_application: true
     update_application_state: [contract_feedback_waiting, affected]
     update_user_info: false
     update_application_rejected: false
     update_application_dar: false
-    update_file_validation: true
-    create_file: [manager_provided]
-    create_comment: true
-    create_email: true
   affected:
-    show_application: true
     update_application_state: [contract_received]
     update_user_info: false
     update_application_rejected: false
     update_application_dar: false
-    update_file_validation: true
-    create_file: [manager_provided]
-    create_comment: true
-    create_email: true
 
 payroll_manager:
   initial:
-    show_application: true
     update_application_state: false
     update_user_info: false
     update_application_rejected: false
     update_application_dar: false
-    update_file_validation: false
-    create_file: false
-    create_comment: true
-    create_email: true
   phone_meeting:
-    show_application: true
     update_application_state: false
     update_user_info: false
     update_application_rejected: false
     update_application_dar: false
-    update_file_validation: false
-    create_file: false
-    create_comment: true
-    create_email: true
   to_be_met:
-    show_application: true
     update_application_state: false
     update_user_info: false
     update_application_rejected: false
     update_application_dar: false
-    update_file_validation: false
-    create_file: false
-    create_comment: true
-    create_email: true
   financial_estimate:
-    show_application: true
     update_application_state: false
     update_user_info: false
     update_application_rejected: false
     update_application_dar: false
-    update_file_validation: false
-    create_file: false
-    create_comment: true
-    create_email: true
   accepted:
-    show_application: true
     update_application_state: false
     update_user_info: false
     update_application_rejected: false
     update_application_dar: false
-    update_file_validation: false
-    create_file: false
-    create_comment: true
-    create_email: true
   contract_drafting:
-    show_application: true
     update_application_state: false
     update_user_info: false
     update_application_rejected: false
     update_application_dar: false
-    update_file_validation: false
-    create_file: false
-    create_comment: true
-    create_email: true
   contract_feedback_waiting:
-    show_application: true
     update_application_state: [contract_received]
     update_user_info: false
     update_application_rejected: false
     update_application_dar: false
-    update_file_validation: true
-    create_file: [manager_provided]
-    create_comment: true
-    create_email: true
   contract_received:
-    show_application: true
     update_application_state: [contract_feedback_waiting, affected]
     update_user_info: false
     update_application_rejected: false
     update_application_dar: false
-    update_file_validation: true
-    create_file: [manager_provided]
-    create_comment: true
-    create_email: true
   affected:
-    show_application: true
     update_application_state: [contract_received]
     update_user_info: false
     update_application_rejected: false
     update_application_dar: false
-    update_file_validation: true
-    create_file: [manager_provided]
-    create_comment: true
-    create_email: true

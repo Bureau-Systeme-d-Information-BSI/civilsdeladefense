@@ -1,5 +1,5 @@
 - requested_files = @job_application.job_application_files
-- other_file_types = JobApplicationFileType.visible_by_administrator(@job_application.state).where.not(id: requested_files.select(:job_application_file_type_id))
+- other_file_types = JobApplicationFileType.visible_by(current_administrator, @job_application.state).where.not(id: requested_files.select(:job_application_file_type_id))
 
 .card.job-application-files
   .card-header.with-subheader.bg-white.font-weight-bold.text-secondary

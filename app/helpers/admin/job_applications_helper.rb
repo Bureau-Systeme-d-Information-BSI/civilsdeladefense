@@ -74,6 +74,12 @@ module Admin::JobApplicationsHelper
     allowed_change_states(job_application, administrator).any? { |state| state.name.to_s != job_application.state }
   end
 
+  def requestable_file_types(job_application, administrator)
+    JobApplicationFileType
+      .visible_by(administrator, job_application.state)
+      .where.not(id: job_application.job_application_files.select(:job_application_file_type_id))
+  end
+
   def job_application_resume_url(job_application)
     return unless job_application
 

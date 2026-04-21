@@ -3,6 +3,42 @@
 require "rails_helper"
 
 RSpec.describe Admin::JobApplicationsHelper do
+  describe "#requestable_file_types" do
+    subject(:requestable_file_types) { helper.requestable_file_types(job_application, administrator) }
+
+    let(:job_application) { create(:job_application, state: :to_be_met) }
+    let!(:manager_file_type) do
+      create(:job_application_file_type, kind: :manager_provided).tap do |jaft|
+        jaft.visibility_rules.where(by: :administrator).destroy_all
+        jaft.visibility_rules.create!(by: :administrator, state: :phone_meeting)
+      end
+    end
+    let!(:employer_file_type) do
+      create(:job_application_file_type, kind: :employer_provided).tap do |jaft|
+        jaft.visibility_rules.where(by: :administrator).destroy_all
+        jaft.visibility_rules.create!(by: :administrator, state: :phone_meeting)
+      end
+    end
+
+    context "when administrator is not a hr_manager" do
+      let(:administrator) { build(:administrator, roles: %w[functional_administrator]) }
+
+      it { is_expected.to contain_exactly(manager_file_type, employer_file_type) }
+
+      context "when a file has already been requested" do
+        before { create(:job_application_file, job_application:, job_application_file_type: manager_file_type) }
+
+        it { is_expected.to contain_exactly(employer_file_type) }
+      end
+    end
+
+    context "when administrator is a hr_manager" do
+      let(:administrator) { build(:administrator, roles: %w[hr_manager]) }
+
+      it { is_expected.to contain_exactly(manager_file_type) }
+    end
+  end
+
   describe "#job_application_resume_url" do
     subject(:resume_url) { helper.job_application_resume_url(job_application) }
 

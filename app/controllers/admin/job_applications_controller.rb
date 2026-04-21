@@ -61,24 +61,22 @@ class Admin::JobApplicationsController < Admin::BaseController
   end
 
   def change_state
-    @state = params[:state] || params.dig(:job_application, :state)
-    known_aasm_state = @job_application.aasm.states.detect { |s| s.name.to_s == @state }
-    raise ForbiddenState.new(state: @state) if known_aasm_state.nil?
+    state = params[:state] || params.dig(:job_application, :state)
+    known_aasm_state = @job_application.aasm.states.detect { |s| s.name.to_s == state }
+    raise ForbiddenState.new(state:) if known_aasm_state.nil?
 
-    state_i18n = JobApplication.human_attribute_name("state/#{@state}")
-
-    if current_administrator.can_change_state?(@job_application, @state)
+    if current_administrator.can_change_state?(@job_application, state)
       @job_application.send(:"#{known_aasm_state.name}!")
-      @job_offer = @job_application.job_offer
 
-      current_max = @job_offer.current_most_advanced_job_applications_state
-      if @job_offer.most_advanced_job_applications_state_before_type_cast != current_max
-        @job_offer.update(most_advanced_job_applications_state: current_max)
+      job_offer = @job_application.job_offer
+      current_max = job_offer.current_most_advanced_job_applications_state
+      if job_offer.most_advanced_job_applications_state_before_type_cast != current_max
+        job_offer.update(most_advanced_job_applications_state: current_max)
       end
 
-      @notification = t(".success", state: state_i18n)
+      @notification = t(".success", state: JobApplication.human_attribute_name("state/#{state}"))
     else
-      @notification = t(".failure", state: state_i18n)
+      @notification = t(".failure", state: JobApplication.human_attribute_name("state/#{state}"))
     end
     render_reponse
   rescue ActiveRecord::RecordInvalid

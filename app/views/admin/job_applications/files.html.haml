@@ -1,6 +1,3 @@
-- requested_files = @job_application.job_application_files
-- other_file_types = JobApplicationFileType.visible_by(current_administrator, @job_application.state).where.not(id: requested_files.select(:job_application_file_type_id))
-
 .card.job-application-files
   .card-header.with-subheader.bg-white.font-weight-bold.text-secondary
     = fa_icon('file-lines', class: 'text-secondary')
@@ -8,6 +5,7 @@
   .card-subheader.bg-card-bg.font-weight-bold.text-muted
     = t('.subtitle_1')
   .card-body.bg-white.files-list
+    - requested_files = @job_application.job_application_files
     - if requested_files.any?
       = render partial: "/admin/job_application_files/job_application_file", collection: requested_files
     - else
@@ -16,6 +14,7 @@
     = t('.subtitle_2')
   .card-body.bg-white.files-list
     %small.text-italic.d-block.mb-3= t('.note')
+    - other_file_types = requestable_file_types(@job_application, current_administrator)
     - if other_file_types.any?
       = render partial: "/admin/job_application_files/optional_job_application_file_type", collection: other_file_types, as: :job_application_file_type, locals: {job_application: @job_application}
     - else

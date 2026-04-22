@@ -182,7 +182,7 @@ RSpec.describe JobApplicationFileType do
         end
       end
 
-      context "when administrator is not a hr_manager" do
+      context "when administrator is neither a hr_manager nor a payroll_manager" do
         let(:administrator) { build(:administrator, roles: %w[functional_administrator]) }
 
         it { is_expected.to include(jaft_before) }
@@ -193,6 +193,15 @@ RSpec.describe JobApplicationFileType do
 
       context "when administrator is a hr_manager" do
         let(:administrator) { build(:administrator, roles: %w[hr_manager]) }
+
+        it { is_expected.to include(jaft_before) }
+        it { is_expected.to include(jaft_exact) }
+        it { is_expected.not_to include(jaft_after) }
+        it { is_expected.not_to include(jaft_non_manager) }
+      end
+
+      context "when administrator is a payroll_manager" do
+        let(:administrator) { build(:administrator, roles: %w[payroll_manager]) }
 
         it { is_expected.to include(jaft_before) }
         it { is_expected.to include(jaft_exact) }

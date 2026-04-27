@@ -1,1 +1,18 @@
 = render partial: '/job_offers/job_offer_content', locals: {job_offer: @job_offer}
+- unless @job_application.affected? || @job_application.rejected?
+  .rf-input-group.rf-grid-row.justify-content-center.rf-mt-3w
+    %button.btn.rf-btn{aria: {controls: "withdraw-modal"}, data: {rf_opened: ""}}
+      = t('account.job_applications.job_offer.withdraw')
+  %dialog#withdraw-modal.rf-modal{aria: {labelledby: "withdraw-modal-title"}, role: :dialog}
+    .rf-container.rf-container--fluid.rf-grid-row.rf-grid-row--center
+      .rf-col-12.rf-col-md-8.rf-col-lg-6
+        .rf-modal__body
+          .rf-modal__header
+            %button.rf-link.rf-fi-close-line.rf-link--close{aria: {controls: "withdraw-modal"}, title: t('account.job_applications.job_offer.cancel')}
+              = t('account.job_applications.job_offer.cancel')
+          .rf-modal__content.text-center
+            %p#withdraw-modal-title= t('account.job_applications.job_offer.withdraw_confirmation')
+          .rf-modal__footer.justify-content-center
+            = button_to t('account.job_applications.job_offer.confirm'), account_job_application_withdrawal_path(@job_application), class: "btn rf-btn rf-mr-6w"
+            %button.btn.rf-btn.rf-btn--secondary{aria: {controls: "withdraw-modal"}}
+              = t('account.job_applications.job_offer.cancel')

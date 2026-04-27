@@ -225,6 +225,9 @@ fr:
       job_applications: "Mes candidatures"
       job_offers: "Nos offres"
       logout: "Déconnexion"
+  employer_recruiter_daily_report:
+    sections:
+      new_offers: "Nouvelle offre"
   account:
     job_application_files:
       update:

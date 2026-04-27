@@ -204,6 +204,8 @@ fr:
         title: "Nouvelles candidatures"
       published_job_offers:
         title: "Offres publiées récemment"
+    employer_recruiter_daily_report:
+      subject: "[%{service_name}] Rapport quotidien « Employeur »"
   platform_mailer:
     confirmation_instructions_admin:
       greeting: Bonjour,

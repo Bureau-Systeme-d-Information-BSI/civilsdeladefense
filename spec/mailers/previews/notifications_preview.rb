@@ -39,4 +39,9 @@ class NotificationsPreview < ActionMailer::Preview
   end
 
   def daily_summary = NotificationsMailer.daily_summary
+
+  def employer_recruiter_daily_report
+    administrator = Administrator.employer_recruiters.first || Administrator.first
+    NotificationsMailer.with(administrator:).employer_recruiter_daily_report
+  end
 end

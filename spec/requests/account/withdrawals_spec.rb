@@ -72,6 +72,14 @@ RSpec.describe "Account::Withdrawals" do
         withdrawal_request
         expect(response).to redirect_to(account_job_application_path(job_application))
       end
+
+      it "enqueues a notify_withdrawn email" do
+        expect { withdrawal_request }.to have_enqueued_mail(ApplicantNotificationsMailer, :notify_withdrawn)
+      end
+
+      it "does not enqueue a notify_rejected email" do
+        expect { withdrawal_request }.not_to have_enqueued_mail(ApplicantNotificationsMailer, :notify_rejected)
+      end
     end
   end
 end

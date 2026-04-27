@@ -24,6 +24,10 @@ module JobApplication::Rejectable
   def cleanup_rejection_reason = self.rejection_reason = nil
 
   def notify_applicant_rejected
-    ApplicantNotificationsMailer.with(user:, job_offer:).notify_rejected.deliver_later
+    if rejection_reason&.name == "Désistement du/de la candidat.e"
+      ApplicantNotificationsMailer.with(user:, job_offer:).notify_withdrawn.deliver_later
+    else
+      ApplicantNotificationsMailer.with(user:, job_offer:).notify_rejected.deliver_later
+    end
   end
 end

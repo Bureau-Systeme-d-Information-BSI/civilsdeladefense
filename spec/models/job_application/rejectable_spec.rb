@@ -96,11 +96,24 @@ RSpec.describe JobApplication::Rejectable do
 
   describe "after_update callbacks" do
     describe "#notify_applicant_rejected" do
-      subject(:rejection) { job_application.update!(rejected: true, rejection_reason: create(:rejection_reason)) }
-
       let(:job_application) { create(:job_application) }
 
-      it { expect { rejection }.to have_enqueued_mail(ApplicantNotificationsMailer, :notify_rejected) }
+      context "when rejection reason is a withdrawal" do
+        subject(:rejection) do
+          withdrawal_reason = create(:rejection_reason, name: "Désistement du/de la candidat.e")
+          job_application.update!(rejected: true, rejection_reason: withdrawal_reason)
+        end
+
+        it { expect { rejection }.to have_enqueued_mail(ApplicantNotificationsMailer, :notify_withdrawn) }
+        it { expect { rejection }.not_to have_enqueued_mail(ApplicantNotificationsMailer, :notify_rejected) }
+      end
+
+      context "when rejection reason is not a withdrawal" do
+        subject(:rejection) { job_application.update!(rejected: true, rejection_reason: create(:rejection_reason)) }
+
+        it { expect { rejection }.to have_enqueued_mail(ApplicantNotificationsMailer, :notify_rejected) }
+        it { expect { rejection }.not_to have_enqueued_mail(ApplicantNotificationsMailer, :notify_withdrawn) }
+      end
     end
   end
 

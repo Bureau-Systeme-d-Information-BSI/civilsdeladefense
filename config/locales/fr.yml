@@ -182,6 +182,8 @@ fr:
       subject: "Votre candidature à l'offre %{job_offer_title} sur %{service_name} – Nouveaux documents à consulter"
     notify_rejected:
       subject: "Votre candidature à l'offre %{job_offer_title} sur %{service_name}"
+    notify_withdrawn:
+      subject: "Confirmation de votre désistement"
   notifications_mailer:
     new_email:
       subject: "[%{service_name}] Notification « Employeur » - Etape %{state}"

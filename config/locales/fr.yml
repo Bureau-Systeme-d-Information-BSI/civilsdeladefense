@@ -1192,7 +1192,6 @@ fr:
               cant_be_accepted_twice: 'Cette action n''est pas possible. Ce candidat est déjà à l''état "Retenu" dans une offre d''emploi.'
               dar_unvalidated: 'Une autorité d''emploi affiliée à l''offre doit cocher la case "DAR validée" pour permettre la poursuite du processus de recrutement.'
               immutable_rejected: "Cette candidature a été refusée, son état ne peut pas être modifié"
-              cant_skip_state: "Impossible passer à l’étape suivante sans la validation de l’étape précédente."
             cover_letter_content_type:
               invalid: "PDF uniquement, max 2Mo"
             resume_content_type:

@@ -46,11 +46,13 @@ class JobApplicationFileType < ApplicationRecord
       .distinct
   }
 
-  scope :visible_by_administrator, ->(state) {
-    joins(:visibility_rules)
+  scope :visible_by, ->(administrator, state) {
+    scope = joins(:visibility_rules)
       .where(visibility_rules: {by: :administrator})
       .where("visibility_rules.state <= ?", JobApplication.states[state])
       .distinct
+    scope = scope.manager_provided if administrator.hr_manager? || administrator.payroll_manager?
+    scope
   }
 
   scope :required, ->(state) {

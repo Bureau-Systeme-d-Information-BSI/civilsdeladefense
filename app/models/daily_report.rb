@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-# Builds a snapshot of the job offers an employer_recruiter is involved in:
+# Builds a snapshot of the job offers an administrator is involved in:
 # offers published in the last 24 hours plus open applications grouped by state.
-class EmployerRecruiterDailyReport
+class DailyReport
   include Rails.application.routes.url_helpers
 
   Section = Struct.new(:key, :human_state, :count, :items, keyword_init: true)
@@ -22,7 +22,7 @@ class EmployerRecruiterDailyReport
     offers = @administrator.job_offers.recents
     Section.new(
       key: "new_offers",
-      human_state: I18n.t("employer_recruiter_daily_report.sections.new_offers"),
+      human_state: I18n.t("daily_report.sections.new_offers"),
       count: offers.size,
       items: offers.map { |offer| Item.new(title: offer.full_title, link: job_offer_url(offer)) }
     )

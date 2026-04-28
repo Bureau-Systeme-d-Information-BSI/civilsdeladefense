@@ -10,7 +10,7 @@ class ReportsMailer < ApplicationMailer
 
   def employer_recruiter_daily_report
     @administrator = params[:administrator]
-    @sections = EmployerRecruiterDailyReport.new(@administrator).sections
+    @sections = DailyReport.new(@administrator).sections
     @service_name = @administrator.organization.service_name
 
     mail to: @administrator.email, subject: t(".subject", service_name: @service_name)

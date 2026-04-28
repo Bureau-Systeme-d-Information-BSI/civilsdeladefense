@@ -47,6 +47,14 @@ export function boardManagement() {
 
                 if (newState === "rejected") {
                   var rejectionUrl = item.getAttribute("data-rejection-url");
+                  if (rejectionUrl === "#") {
+                    Snackbar.show({
+                      text: "Vous n'êtes pas autorisé(e) à refuser cette candidature.",
+                      showAction: false,
+                    });
+                    boardRedraw();
+                    return;
+                  }
                   Rails.ajax({
                     type: "GET",
                     url: rejectionUrl,
@@ -82,6 +90,14 @@ export function boardManagement() {
                 } else if (item.getAttribute("data-rejected") === "true") {
                   if (newState === "initial") {
                     var rejectionUrl = item.getAttribute("data-rejection-url");
+                    if (rejectionUrl === "#") {
+                      Snackbar.show({
+                        text: "Vous n'êtes pas autorisé(e) à annuler le refus de cette candidature.",
+                        showAction: false,
+                      });
+                      boardRedraw();
+                      return;
+                    }
                     var destroyUrl = rejectionUrl.replace("/new", "");
                     Rails.ajax({
                       type: "DELETE",

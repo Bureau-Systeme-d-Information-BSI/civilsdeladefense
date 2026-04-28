@@ -289,6 +289,13 @@ class JobOffer < ApplicationRecord
     ary.map(&:state_before_type_cast).max
   end
 
+  def refresh_most_advanced_job_applications_state!
+    current_max = current_most_advanced_job_applications_state
+    return if most_advanced_job_applications_state_before_type_cast == current_max
+
+    update(most_advanced_job_applications_state: current_max)
+  end
+
   def most_advanced_job_applications_state_as_number
     state = most_advanced_job_applications_state.to_sym
     JobApplication.aasm.states.index { |x| x.name == state }

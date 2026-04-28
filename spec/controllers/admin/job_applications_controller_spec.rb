@@ -52,10 +52,10 @@ RSpec.describe Admin::JobApplicationsController do
     describe "PUT #change_state" do
       subject(:change_state) { put :change_state, params: {id: job_application.to_param, state:} }
 
-      before { change_state }
-
       context "with valid params" do
         let(:state) { "phone_meeting" }
+
+        before { change_state }
 
         it { expect(job_application.reload.state).to eq(state) }
 
@@ -65,7 +65,24 @@ RSpec.describe Admin::JobApplicationsController do
       context "with invalid params" do
         let(:state) { "non_existing_state" }
 
+        before { change_state }
+
         it { expect(response).to have_http_status(:bad_request) }
+      end
+
+      context "when the administrator cannot change to the target state" do
+        let(:state) { "phone_meeting" }
+
+        before do
+          allow_any_instance_of(Administrator).to receive(:can_change_state?).and_return(false)
+          change_state
+        end
+
+        it { expect(response).to redirect_to([:admin, job_application]) }
+
+        it { expect(job_application.reload.state).not_to eq(state) }
+
+        it { expect(flash[:notice]).to eq(I18n.t("admin.job_applications.change_state.failure", state: JobApplication.human_attribute_name("state/#{state}"))) }
       end
     end
   end

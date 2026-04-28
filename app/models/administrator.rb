@@ -213,6 +213,16 @@ class Administrator < ApplicationRecord
     end
   end
 
+  def can?(action, job_application)
+    roles.any? { |role| AdministratorPermissions.allows?(role:, state: job_application.state, action:) }
+  end
+
+  def can_change_state?(job_application, target_state)
+    roles.any? do |role|
+      AdministratorPermissions.allows_state_transition?(role:, state: job_application.state, target_state:)
+    end
+  end
+
   private
 
   def set_first_name = self.first_name = first_name_from(email)

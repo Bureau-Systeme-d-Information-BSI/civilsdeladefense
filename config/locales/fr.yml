@@ -332,6 +332,10 @@ fr:
       update:
         success: "Profil mis à jour !"
         failure: "Erreur dans la mise à jour du profil"
+      users:
+        update:
+          success: "Profil mis à jour !"
+          failure: "Erreur dans la mise à jour du profil"
       job_application_activity:
         title: "Activité et commentaires"
         title_state: "État de la candidature"
@@ -349,6 +353,7 @@ fr:
           rejection_reason_update_html: "<span class='user-name'>%{name}</span> a mis à jour le motif de refus à <span class='user-name'>%{current_name}</span>"
       change_state:
         success: "Candidature passée en statut %{state} !"
+        failure: "Vous n'êtes pas autorisé(e) à faire passer la candidature en statut %{state}."
     job_application_files:
       optional_job_application_file_type:
         action_name: "Demander"
@@ -376,8 +381,10 @@ fr:
         title: "Refus ou désistement"
       create:
         success: "Candidature refusée ou désistée"
+        unauthorized: "Vous n'êtes pas autorisé(e) à refuser cette candidature."
       destroy:
         success: "La candidature a été dé-refusée"
+        unauthorized: "Vous n'êtes pas autorisé(e) à annuler le refus de cette candidature."
     job_offers:
       add_actor:
         admin_not_found_html: 'Ce mail n’a pas de compte existant, veuillez envoyer une demande de création de compte via le lien suivant : <a href="https://demarches-simplifiees.intradef.gouv.fr/commencer/demande-creation-compte-erecrutement">https://demarches-simplifiees.intradef.gouv.fr/commencer/demande-creation-compte-erecrutement</a>'
@@ -566,9 +573,6 @@ fr:
         nav_files: "Documents"
         nav_overview: "Candidature"
         nav_profile: "Profil"
-      update:
-        success: "Profil mis à jour !"
-        failure: "Erreur dans la mise à jour du profil"
     settings:
       destroy:
         failure:
@@ -1180,7 +1184,6 @@ fr:
               cant_accept_remaining_initial_job_applications: "Toutes les nouvelles candidatures doivent être traitées avant d'accepter une candidature"
               requested_files_missing: "Des documents obligatoires sont manquants ou non validés : %{documents}"
               cant_be_accepted_twice: 'Cette action n''est pas possible. Ce candidat est déjà à l''état "Retenu" dans une offre d''emploi.'
-              cant_skip_state: "Impossible passer à l’étape supérieure sans la validation de l’étape précédente."
             cover_letter_content_type:
               invalid: "PDF uniquement, max 2Mo"
             resume_content_type:

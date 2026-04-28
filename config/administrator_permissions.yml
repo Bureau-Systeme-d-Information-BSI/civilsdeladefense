@@ -1,0 +1,280 @@
+---
+functional_administrator:
+  initial:
+    update_application_state: [phone_meeting, to_be_met, financial_estimate]
+    update_application_preselection: true
+    update_user_info: true
+    update_application_rejected: true
+    update_application_dar: false
+  phone_meeting:
+    update_application_state: [to_be_met, financial_estimate]
+    update_application_preselection: true
+    update_user_info: true
+    update_application_rejected: true
+    update_application_dar: false
+  to_be_met:
+    update_application_state: [phone_meeting, financial_estimate]
+    update_application_preselection: true
+    update_user_info: true
+    update_application_rejected: true
+    update_application_dar: false
+  financial_estimate:
+    update_application_state: [phone_meeting, to_be_met, accepted]
+    update_application_preselection: true
+    update_user_info: true
+    update_application_rejected: true
+    update_application_dar: false
+  accepted:
+    update_application_state: [financial_estimate, contract_drafting]
+    update_application_preselection: true
+    update_user_info: true
+    update_application_rejected: true
+    update_application_dar: true
+  contract_drafting:
+    update_application_state: [contract_feedback_waiting]
+    update_application_preselection: true
+    update_user_info: true
+    update_application_rejected: true
+    update_application_dar: false
+  contract_feedback_waiting:
+    update_application_state: [contract_drafting, contract_received]
+    update_application_preselection: true
+    update_user_info: true
+    update_application_rejected: true
+    update_application_dar: false
+  contract_received:
+    update_application_state: [contract_feedback_waiting, affected]
+    update_application_preselection: true
+    update_user_info: true
+    update_application_rejected: true
+    update_application_dar: false
+  affected:
+    update_application_state: [contract_received]
+    update_application_preselection: true
+    update_user_info: true
+    update_application_rejected: true
+    update_application_dar: false
+
+employer_recruiter:
+  initial:
+    update_application_state: [phone_meeting, to_be_met, financial_estimate]
+    update_application_preselection: true
+    update_user_info: true
+    update_application_rejected: true
+    update_application_dar: false
+  phone_meeting:
+    update_application_state: [to_be_met, financial_estimate]
+    update_application_preselection: true
+    update_user_info: true
+    update_application_rejected: true
+    update_application_dar: false
+  to_be_met:
+    update_application_state: [phone_meeting, financial_estimate]
+    update_application_preselection: true
+    update_user_info: true
+    update_application_rejected: true
+    update_application_dar: false
+  financial_estimate:
+    update_application_state: [phone_meeting, to_be_met, accepted]
+    update_application_preselection: true
+    update_user_info: true
+    update_application_rejected: true
+    update_application_dar: false
+  accepted:
+    update_application_state: [financial_estimate, contract_drafting]
+    update_application_preselection: true
+    update_user_info: true
+    update_application_rejected: true
+    update_application_dar: false
+  contract_drafting:
+    update_application_state: [contract_feedback_waiting]
+    update_application_preselection: true
+    update_user_info: true
+    update_application_rejected: true
+    update_application_dar: false
+  contract_feedback_waiting:
+    update_application_state: [contract_drafting, contract_received]
+    update_application_preselection: true
+    update_user_info: true
+    update_application_rejected: true
+    update_application_dar: false
+  contract_received:
+    update_application_state: [contract_feedback_waiting, affected]
+    update_application_preselection: true
+    update_user_info: true
+    update_application_rejected: true
+    update_application_dar: false
+  affected:
+    update_application_state: [contract_received]
+    update_application_preselection: true
+    update_user_info: true
+    update_application_rejected: true
+    update_application_dar: false
+
+employment_authority:
+  initial:
+    update_application_state: false
+    update_application_preselection: false
+    update_user_info: false
+    update_application_rejected: false
+    update_application_dar: false
+  phone_meeting:
+    update_application_state: false
+    update_application_preselection: false
+    update_user_info: false
+    update_application_rejected: false
+    update_application_dar: false
+  to_be_met:
+    update_application_state: false
+    update_application_preselection: false
+    update_user_info: false
+    update_application_rejected: false
+    update_application_dar: false
+  financial_estimate:
+    update_application_state: false
+    update_application_preselection: false
+    update_user_info: false
+    update_application_rejected: false
+    update_application_dar: false
+  accepted:
+    update_application_state: [contract_drafting]
+    update_application_preselection: false
+    update_user_info: false
+    update_application_rejected: false
+    update_application_dar: true
+  contract_drafting:
+    update_application_state: [accepted]
+    update_application_preselection: false
+    update_user_info: false
+    update_application_rejected: false
+    update_application_dar: false
+  contract_feedback_waiting:
+    update_application_state: false
+    update_application_preselection: false
+    update_user_info: false
+    update_application_rejected: false
+    update_application_dar: false
+  contract_received:
+    update_application_state: false
+    update_application_preselection: false
+    update_user_info: false
+    update_application_rejected: false
+    update_application_dar: false
+  affected:
+    update_application_state: false
+    update_application_preselection: false
+    update_user_info: false
+    update_application_rejected: false
+    update_application_dar: false
+
+hr_manager:
+  initial:
+    update_application_state: false
+    update_application_preselection: false
+    update_user_info: false
+    update_application_rejected: false
+    update_application_dar: false
+  phone_meeting:
+    update_application_state: false
+    update_application_preselection: false
+    update_user_info: false
+    update_application_rejected: false
+    update_application_dar: false
+  to_be_met:
+    update_application_state: false
+    update_application_preselection: false
+    update_user_info: false
+    update_application_rejected: false
+    update_application_dar: false
+  financial_estimate:
+    update_application_state: false
+    update_application_preselection: false
+    update_user_info: false
+    update_application_rejected: false
+    update_application_dar: false
+  accepted:
+    update_application_state: [contract_drafting]
+    update_application_preselection: false
+    update_user_info: false
+    update_application_rejected: false
+    update_application_dar: false
+  contract_drafting:
+    update_application_state: [contract_feedback_waiting]
+    update_application_preselection: false
+    update_user_info: false
+    update_application_rejected: false
+    update_application_dar: false
+  contract_feedback_waiting:
+    update_application_state: [contract_drafting, contract_received]
+    update_application_preselection: false
+    update_user_info: false
+    update_application_rejected: false
+    update_application_dar: false
+  contract_received:
+    update_application_state: [contract_feedback_waiting, affected]
+    update_application_preselection: false
+    update_user_info: false
+    update_application_rejected: false
+    update_application_dar: false
+  affected:
+    update_application_state: [contract_received]
+    update_application_preselection: false
+    update_user_info: false
+    update_application_rejected: false
+    update_application_dar: false
+
+payroll_manager:
+  initial:
+    update_application_state: false
+    update_application_preselection: false
+    update_user_info: false
+    update_application_rejected: false
+    update_application_dar: false
+  phone_meeting:
+    update_application_state: false
+    update_application_preselection: false
+    update_user_info: false
+    update_application_rejected: false
+    update_application_dar: false
+  to_be_met:
+    update_application_state: false
+    update_application_preselection: false
+    update_user_info: false
+    update_application_rejected: false
+    update_application_dar: false
+  financial_estimate:
+    update_application_state: false
+    update_application_preselection: false
+    update_user_info: false
+    update_application_rejected: false
+    update_application_dar: false
+  accepted:
+    update_application_state: false
+    update_application_preselection: false
+    update_user_info: false
+    update_application_rejected: false
+    update_application_dar: false
+  contract_drafting:
+    update_application_state: false
+    update_application_preselection: false
+    update_user_info: false
+    update_application_rejected: false
+    update_application_dar: false
+  contract_feedback_waiting:
+    update_application_state: [contract_received]
+    update_application_preselection: false
+    update_user_info: false
+    update_application_rejected: false
+    update_application_dar: false
+  contract_received:
+    update_application_state: [contract_feedback_waiting, affected]
+    update_application_preselection: false
+    update_user_info: false
+    update_application_rejected: false
+    update_application_dar: false
+  affected:
+    update_application_state: [contract_received]
+    update_application_preselection: false
+    update_user_info: false
+    update_application_rejected: false
+    update_application_dar: false

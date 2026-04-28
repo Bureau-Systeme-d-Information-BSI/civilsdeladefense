@@ -1,5 +1,6 @@
 - input_html = disabled ? { disabled: true, readonly: true } : {}
-= simple_form_for [:admin, form_object], wrapper: :horizontal_form, remote: true, html: {class: 'form-horizontal auto-submit'}, defaults: { input_html: input_html } do |f|
+- form_url = local_assigns[:url] || [:admin, form_object]
+= simple_form_for form_object, url: form_url, method: :patch, wrapper: :horizontal_form, remote: true, html: {class: 'form-horizontal auto-submit'}, defaults: { input_html: input_html } do |f|
   - locals = {}
   - locals[:field] = field if local_variables.include?(:field)
   - locals[:association] = association if local_variables.include?(:association)

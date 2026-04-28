@@ -64,6 +64,16 @@ module Admin::JobApplicationsHelper
     end
   end
 
+  def change_state_options(job_application, administrator)
+    allowed_change_states(job_application, administrator).map do |state|
+      [JobApplication.human_attribute_name("state/#{state.name}"), state.name]
+    end
+  end
+
+  def can_change_state?(job_application, administrator)
+    allowed_change_states(job_application, administrator).any? { |state| state.name.to_s != job_application.state }
+  end
+
   def job_application_resume_url(job_application)
     return unless job_application
 
@@ -76,6 +86,14 @@ module Admin::JobApplicationsHelper
     job_application_file = job_application_files.limit(1).first
     if job_application_file&.document_content&.present?
       url_for([:admin, job_application, job_application_file, {format: :pdf}])
+    end
+  end
+
+  private
+
+  def allowed_change_states(job_application, administrator)
+    job_application.aasm.states.select do |state|
+      state.name.to_s == job_application.state || administrator.can_change_state?(job_application, state.name)
     end
   end
 end

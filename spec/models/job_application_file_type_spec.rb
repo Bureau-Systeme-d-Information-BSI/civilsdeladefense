@@ -160,31 +160,60 @@ RSpec.describe JobApplicationFileType do
       it { is_expected.not_to include(jaft_not_notifiable) }
     end
 
-    describe "#visible_by_administrator" do
-      subject { described_class.visible_by_administrator(:to_be_met) }
+    describe "#visible_by" do
+      subject { described_class.visible_by(administrator, :to_be_met) }
 
       let!(:jaft_before) do
-        create(:job_application_file_type).tap do |jaft|
+        create(:job_application_file_type, kind: :manager_provided).tap do |jaft|
           jaft.visibility_rules.where(by: :administrator).destroy_all
           jaft.visibility_rules.create!(by: :administrator, state: :phone_meeting)
         end
       end
       let!(:jaft_exact) do
-        create(:job_application_file_type).tap do |jaft|
+        create(:job_application_file_type, kind: :manager_provided).tap do |jaft|
           jaft.visibility_rules.where(by: :administrator).destroy_all
           jaft.visibility_rules.create!(by: :administrator, state: :to_be_met)
         end
       end
       let!(:jaft_after) do
-        create(:job_application_file_type).tap do |jaft|
+        create(:job_application_file_type, kind: :manager_provided).tap do |jaft|
           jaft.visibility_rules.where(by: :administrator).destroy_all
           jaft.visibility_rules.create!(by: :administrator, state: :contract_drafting)
         end
       end
+      let!(:jaft_non_manager) do
+        create(:job_application_file_type, kind: :employer_provided).tap do |jaft|
+          jaft.visibility_rules.where(by: :administrator).destroy_all
+          jaft.visibility_rules.create!(by: :administrator, state: :phone_meeting)
+        end
+      end
 
-      it { is_expected.to include(jaft_before) }
-      it { is_expected.to include(jaft_exact) }
-      it { is_expected.not_to include(jaft_after) }
+      context "when administrator is neither a hr_manager nor a payroll_manager" do
+        let(:administrator) { build(:administrator, roles: %w[functional_administrator]) }
+
+        it { is_expected.to include(jaft_before) }
+        it { is_expected.to include(jaft_exact) }
+        it { is_expected.not_to include(jaft_after) }
+        it { is_expected.to include(jaft_non_manager) }
+      end
+
+      context "when administrator is a hr_manager" do
+        let(:administrator) { build(:administrator, roles: %w[hr_manager]) }
+
+        it { is_expected.to include(jaft_before) }
+        it { is_expected.to include(jaft_exact) }
+        it { is_expected.not_to include(jaft_after) }
+        it { is_expected.not_to include(jaft_non_manager) }
+      end
+
+      context "when administrator is a payroll_manager" do
+        let(:administrator) { build(:administrator, roles: %w[payroll_manager]) }
+
+        it { is_expected.to include(jaft_before) }
+        it { is_expected.to include(jaft_exact) }
+        it { is_expected.not_to include(jaft_after) }
+        it { is_expected.not_to include(jaft_non_manager) }
+      end
     end
 
     describe "#required" do

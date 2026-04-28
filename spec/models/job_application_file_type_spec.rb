@@ -72,6 +72,12 @@ RSpec.describe JobApplicationFileType do
 
       it { is_expected.to be(false) }
     end
+
+    context "when administrator is a functional_administrator" do
+      let(:administrator) { build(:administrator, roles: [:functional_administrator]) }
+
+      it { is_expected.to be(true) }
+    end
   end
 
   describe "scopes" do

@@ -25,10 +25,7 @@ class Admin::JobApplicationFilesController < Admin::BaseController
           @notification = t(".success")
           render :file_operation_total
         end
-        format.json do
-          location = [:admin, @job_application, @job_application_file]
-          render :show, status: :ok, location: location
-        end
+        format.json { render :show, status: :ok, location: }
       else
         format.html { render :new }
         format.js do
@@ -49,10 +46,7 @@ class Admin::JobApplicationFilesController < Admin::BaseController
           @notification = t(".success")
           render :file_operation_total
         end
-        format.json do
-          location = [:admin, @job_application, @job_application_file]
-          render :show, status: :ok, location: location
-        end
+        format.json { render :show, status: :ok, location: }
       end
     else
       respond_to do |format|
@@ -81,30 +75,35 @@ class Admin::JobApplicationFilesController < Admin::BaseController
   end
 
   def check
-    check_and_uncheck
-  end
-
-  def uncheck
-    check_and_uncheck
-  end
-
-  protected
-
-  def check_and_uncheck
-    location = [:admin, @job_application, @job_application_file]
-
-    if %w[check uncheck].include?(action_name) && @job_application_file.send(:"#{action_name}!", current_administrator)
-      @job_application.compute_notifications_counter!
+    if @job_application_file.mark_as_valid!(current_administrator)
       @notification = t(".success")
       respond_to do |format|
-        format.html { redirect_back(fallback_location: location, notice: @notification) }
+        format.html { redirect_back_or_to location, notice: @notification }
         format.js { render :file_operation }
-        format.json { render :show, status: :ok, location: location }
+        format.json { render :show, status: :ok, location: }
       end
     else
       @notification = @job_application_file.errors.full_messages.to_sentence
       respond_to do |format|
-        format.html { redirect_back(fallback_location: location, alert: @notification) }
+        format.html { redirect_back_or_to location, alert: @notification }
+        format.js { render :file_operation }
+        format.json { render json: @job_application_file.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def uncheck
+    if @job_application_file.mark_as_invalid!(current_administrator)
+      @notification = t(".success")
+      respond_to do |format|
+        format.html { redirect_back_or_to location, notice: @notification }
+        format.js { render :file_operation }
+        format.json { render :show, status: :ok, location: }
+      end
+    else
+      @notification = @job_application_file.errors.full_messages.to_sentence
+      respond_to do |format|
+        format.html { redirect_back_or_to location, alert: @notification }
         format.js { render :file_operation }
         format.json { render json: @job_application_file.errors, status: :unprocessable_entity }
       end
@@ -113,10 +112,9 @@ class Admin::JobApplicationFilesController < Admin::BaseController
 
   private
 
-  # Never trust parameters from the scary internet, only allow the white list through.
   def job_application_file_params
-    params.require(:job_application_file).permit(:content,
-      :job_application_file_type_id,
-      :is_validated)
+    params.require(:job_application_file).permit(:content, :job_application_file_type_id, :is_validated)
   end
+
+  def location = [:admin, @job_application, @job_application_file]
 end

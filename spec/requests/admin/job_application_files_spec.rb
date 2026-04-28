@@ -208,7 +208,13 @@ RSpec.describe "Admin::JobApplicationFiles" do
         create(:job_application_file, job_application: job_application, job_application_file_type: unauthorized_file_type)
       end
 
-      before { job_application_file.update_column(:is_validated, 2) } # rubocop:disable Rails/SkipsModelValidations
+      let(:unauthorized_administrator) { create(:administrator, roles: [:employer_recruiter]) }
+
+      before do
+        job_application_file.update_column(:is_validated, 2) # rubocop:disable Rails/SkipsModelValidations
+        create(:job_offer_actor, job_offer: job_application.job_offer, administrator: unauthorized_administrator)
+        sign_in unauthorized_administrator
+      end
 
       context "when format is html" do
         subject(:check_request) {
@@ -284,7 +290,13 @@ RSpec.describe "Admin::JobApplicationFiles" do
         create(:job_application_file, job_application: job_application, job_application_file_type: unauthorized_file_type)
       end
 
-      before { job_application_file.update_column(:is_validated, 1) } # rubocop:disable Rails/SkipsModelValidations
+      let(:unauthorized_administrator) { create(:administrator, roles: [:employer_recruiter]) }
+
+      before do
+        job_application_file.update_column(:is_validated, 1) # rubocop:disable Rails/SkipsModelValidations
+        create(:job_offer_actor, job_offer: job_application.job_offer, administrator: unauthorized_administrator)
+        sign_in unauthorized_administrator
+      end
 
       context "when format is html" do
         subject(:uncheck_request) {

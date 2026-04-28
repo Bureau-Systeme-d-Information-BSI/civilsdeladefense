@@ -2,13 +2,10 @@
 
 class Account::WithdrawalsController < Account::BaseController
   skip_load_and_authorize_resource
+  before_action :set_job_application
+  before_action :redirect_to_job_application, if: :already_affected_or_rejected?
 
   def create
-    @job_application = JobApplication.find(params[:job_application_id])
-    if @job_application.affected? || @job_application.rejected?
-      return redirect_to account_job_application_path(@job_application), notice: t(".failure")
-    end
-
     @job_application.reject!(rejection_reason:)
     respond_to do |format|
       format.html { redirect_to account_job_application_path(@job_application), notice: t(".success") }
@@ -17,5 +14,17 @@ class Account::WithdrawalsController < Account::BaseController
 
   private
 
-  def rejection_reason = RejectionReason.find_by(name: "Désistement du/de la candidat.e")
+  def rejection_reason = RejectionReason.withdrawal_reason
+
+  def set_job_application
+    @job_application = JobApplication.find(params[:job_application_id])
+  end
+
+  def already_affected_or_rejected?
+    @job_application.affected? || @job_application.rejected?
+  end
+
+  def redirect_to_job_application
+    redirect_to account_job_application_path(@job_application), notice: t(".failure")
+  end
 end

@@ -100,7 +100,7 @@ RSpec.describe JobApplication::Rejectable do
 
       context "when rejection reason is a withdrawal" do
         subject(:rejection) do
-          withdrawal_reason = create(:rejection_reason, name: "Désistement du/de la candidat.e")
+          withdrawal_reason = create(:rejection_reason, name: RejectionReason::WITHDRAWAL_REASON)
           job_application.update!(rejected: true, rejection_reason: withdrawal_reason)
         end
 

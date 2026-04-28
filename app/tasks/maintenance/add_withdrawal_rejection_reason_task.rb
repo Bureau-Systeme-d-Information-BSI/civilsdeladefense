@@ -5,7 +5,9 @@ module Maintenance
     no_collection
 
     def process
-      RejectionReason.create!(name: "Désistement du/de la candidat.e")
+      return if RejectionReason.withdrawal_reason
+
+      RejectionReason.create!(name: RejectionReason::WITHDRAWAL_REASON)
     end
   end
 end

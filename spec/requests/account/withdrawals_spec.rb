@@ -51,7 +51,7 @@ RSpec.describe "Account::Withdrawals" do
     context "when the job application is not rejected or affected" do
       subject(:withdrawal_request) { post account_job_application_withdrawal_path(job_application) }
 
-      let!(:rejection_reason) { create(:rejection_reason, name: "Désistement du/de la candidat.e") }
+      let!(:rejection_reason) { create(:rejection_reason, name: RejectionReason::WITHDRAWAL_REASON) }
       let(:job_application) { create(:job_application, user: user) }
 
       it "updates the job_application state to rejected" do

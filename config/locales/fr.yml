@@ -343,6 +343,8 @@ fr:
         activities:
           creation_html: "<span class='user-name'>%{name}</span> a postulé"
           change_state_html: "<span class='user-name'>%{admin_name}</span> a déplacé <span class='user-name'>%{name}</span> dans la colonne “%{state_name}”"
+          dar_change_true_html: "<span class='user-name'>%{admin_name}</span> a validé le DAR"
+          dar_change_false_html: "<span class='user-name'>%{admin_name}</span> a invalidé le DAR"
           message_html: "<span class='user-name'>%{admin_name}</span> a commenté la candidature de <span class='user-name'>%{name}</span>"
           email_html: "<span class='user-name'>%{admin_name}</span> a envoyé un courriel à <span class='user-name'>%{name}</span>"
           email_simple_html: "<span class='user-name'>%{from_name}</span> a envoyé un courriel"
@@ -376,6 +378,10 @@ fr:
         help: "Téléverser un fichier"
       uncheck:
         success: "Fichier invalidé !"
+    dars:
+      update:
+        success: "Validation DAR mise à jour avec succès"
+        unauthorized: "Vous n'êtes pas autorisé(e) à valider ou invalider la DAR de cette candidature."
     rejections:
       new:
         title: "Refus ou désistement"
@@ -1184,6 +1190,9 @@ fr:
               cant_accept_remaining_initial_job_applications: "Toutes les nouvelles candidatures doivent être traitées avant d'accepter une candidature"
               requested_files_missing: "Des documents obligatoires sont manquants ou non validés : %{documents}"
               cant_be_accepted_twice: 'Cette action n''est pas possible. Ce candidat est déjà à l''état "Retenu" dans une offre d''emploi.'
+              dar_unvalidated: 'Une autorité d''emploi affiliée à l''offre doit cocher la case "DAR validée" pour permettre la poursuite du processus de recrutement.'
+              immutable_rejected: "Cette candidature a été refusée, son état ne peut pas être modifié"
+              cant_skip_state: "Impossible passer à l’étape suivante sans la validation de l’étape précédente."
             cover_letter_content_type:
               invalid: "PDF uniquement, max 2Mo"
             resume_content_type:

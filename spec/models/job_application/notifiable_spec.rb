@@ -5,7 +5,7 @@ RSpec.describe JobApplication::Notifiable do
     describe "#notify_hr_managers_contract_drafting" do
       subject(:contract_drafting) { job_application.contract_drafting! }
 
-      let(:job_application) { create(:job_application, state: :accepted) }
+      let(:job_application) { create(:job_application, state: :accepted, dar: true) }
 
       context "when the job application has at least one hr_manager" do
         let(:administrator) { create(:administrator, roles: [:hr_manager]) }
@@ -44,7 +44,7 @@ RSpec.describe JobApplication::Notifiable do
     describe "#notify_hr_managers_contract_feedback_waiting" do
       subject(:contract_feedback_waiting) { job_application.contract_feedback_waiting! }
 
-      let(:job_application) { create(:job_application, state: :contract_drafting) }
+      let(:job_application) { create(:job_application, state: :contract_drafting, dar: true) }
 
       context "when the job application has at least one hr_manager" do
         let(:administrator) { create(:administrator, roles: [:hr_manager]) }

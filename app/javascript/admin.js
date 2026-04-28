@@ -1,5 +1,11 @@
 import "@hotwired/turbo-rails"
+import { StreamActions } from "@hotwired/turbo"
 import "./controllers"
+
+StreamActions.notify = function () {
+  const message = this.getAttribute("message")
+  if (message) Snackbar.show({ showAction: false, text: message })
+}
 
 import Rails from '@rails/ujs'
 Rails.start()

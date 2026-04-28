@@ -38,7 +38,7 @@ module Clockwork
 
   every 1.day, "employer_recruiter_daily_report", at: "08:00" do
     Administrator.employer_recruiters.find_each do |administrator|
-      NotificationsMailer.with(administrator:).employer_recruiter_daily_report.deliver_later
+      ReportsMailer.with(administrator:).employer_recruiter_daily_report.deliver_later
     end
   end
 

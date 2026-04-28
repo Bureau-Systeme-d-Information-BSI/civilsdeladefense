@@ -37,11 +37,4 @@ class NotificationsPreview < ActionMailer::Preview
     administrator = Administrator.hr_managers.first || Administrator.first
     NotificationsMailer.with(administrator:, job_application:).new_document
   end
-
-  def daily_summary = NotificationsMailer.daily_summary
-
-  def employer_recruiter_daily_report
-    administrator = Administrator.employer_recruiters.first || Administrator.first
-    NotificationsMailer.with(administrator:).employer_recruiter_daily_report
-  end
 end

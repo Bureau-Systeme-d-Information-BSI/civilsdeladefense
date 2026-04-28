@@ -20,7 +20,7 @@ RSpec.describe Admin::JobApplicationsHelper do
       end
     end
 
-    context "when administrator is not a hr_manager" do
+    context "when administrator is neither a hr_manager nor a payroll_manager" do
       let(:administrator) { build(:administrator, roles: %w[functional_administrator]) }
 
       it { is_expected.to contain_exactly(manager_file_type, employer_file_type) }
@@ -34,6 +34,12 @@ RSpec.describe Admin::JobApplicationsHelper do
 
     context "when administrator is a hr_manager" do
       let(:administrator) { build(:administrator, roles: %w[hr_manager]) }
+
+      it { is_expected.to contain_exactly(manager_file_type) }
+    end
+
+    context "when administrator is a payroll_manager" do
+      let(:administrator) { build(:administrator, roles: %w[payroll_manager]) }
 
       it { is_expected.to contain_exactly(manager_file_type) }
     end

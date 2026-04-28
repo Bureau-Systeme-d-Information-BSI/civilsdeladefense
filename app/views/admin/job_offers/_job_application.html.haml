@@ -44,6 +44,10 @@
               - else
                 %span.btn.btn-sm.btn-link.disabled= fa_icon('thumbs-down', flavor: 'regular')
 
+  - if dar
+    = simple_form_for job_application, url: admin_job_application_dar_path(job_application), namespace: "dar_#{job_application.id}", html: { class: 'mx-3', data: { controller: 'auto-submit' } } do |f|
+      = f.input :dar, input_html: { data: { action: 'change->auto-submit#submit' } }, disabled: !current_administrator.can?(:update_application_dar, job_application)
+
   .card-footer.d-flex.flex-column.flex-md-row.align-items-center
     .mr-auto= t('admin.job_applications.job_application.applied_on', date: I18n.l(job_application.created_at.to_date))
     - klasses = %w(emails-count badge job-application-modal-link mr-2)

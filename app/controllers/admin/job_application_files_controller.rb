@@ -3,8 +3,9 @@
 class Admin::JobApplicationFilesController < Admin::BaseController
   include SendFileContent
 
+  skip_load_and_authorize_resource
   load_and_authorize_resource :job_application, except: :show
-  load_and_authorize_resource :job_application_file
+  load_resource :job_application_file
 
   def show
     if @job_application_file.document_content.blank?

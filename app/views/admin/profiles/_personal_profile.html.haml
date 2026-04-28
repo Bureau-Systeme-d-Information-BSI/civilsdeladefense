@@ -5,7 +5,7 @@
     Données personnelles
   .card-body.bg-white
     - %i[current_position phone website_url].each do |field|
-      - hsh = {form_object: user, field: field, disabled: is_archived}
+      - hsh = {form_object: user, field: field, disabled: is_archived || !current_administrator.can?(:update_user_info, job_application), url: admin_job_application_user_path(job_application)}
       = render partial: '/admin/profiles/profile_field', locals: hsh
     - if user&.profile.present?
       .row

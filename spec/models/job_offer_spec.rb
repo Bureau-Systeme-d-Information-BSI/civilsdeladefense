@@ -425,6 +425,30 @@ RSpec.describe JobOffer do
     end
   end
 
+  describe "#refresh_most_advanced_job_applications_state!" do
+    subject(:refresh) { job_offer.refresh_most_advanced_job_applications_state! }
+
+    let(:job_offer) { create(:job_offer) }
+
+    context "when the most advanced state has changed" do
+      before do
+        create(:job_application, job_offer:, state: :phone_meeting)
+        create(:job_application, job_offer:, state: :to_be_met)
+      end
+
+      it { expect { refresh }.to change { job_offer.reload.most_advanced_job_applications_state }.from("start").to("to_be_met") }
+    end
+
+    context "when the most advanced state is already up to date" do
+      before do
+        create(:job_application, job_offer:, state: :phone_meeting)
+        job_offer.update!(most_advanced_job_applications_state: :phone_meeting)
+      end
+
+      it { expect { refresh }.not_to change { job_offer.reload.most_advanced_job_applications_state } }
+    end
+  end
+
   describe "#transfer" do
     subject { job_offer.transfer(email) }
 

@@ -108,7 +108,7 @@ Rails.application.routes.draw do
       end
       resources :preferred_users
     end
-    resources :users, path: "candidats", except: %i[create] do
+    resources :users, path: "candidats", except: %i[create update] do
       resource :resume, only: %i[show]
       collection do
         post :multi_select
@@ -123,6 +123,7 @@ Rails.application.routes.draw do
       member do
         patch :change_state
       end
+      resource :user, module: :job_applications, only: %i[update]
       resources :job_application_files do
         member do
           post :check

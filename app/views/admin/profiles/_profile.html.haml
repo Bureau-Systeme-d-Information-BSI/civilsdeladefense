@@ -5,7 +5,7 @@
     Données Professionnelles et Statistiques
   .card-body.bg-white
     - %i[gender is_currently_employed age_range availability_range study_level has_corporate_experience].each do |field|
-      - hsh = {form_object: user, profile: profile, disabled: is_archived}
+      - hsh = {form_object: user, profile:, disabled: is_archived || !current_administrator.can?(:update_user_info, job_application), url: admin_job_application_user_path(job_application)}
       - hsh[:field] = field unless field =~ /_level|range/
       - hsh[:association] = field if field =~ /_level|range/
       - hsh[:choices] = choices_boolean if field == :is_currently_employed

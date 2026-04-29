@@ -98,6 +98,79 @@ RSpec.describe JobApplication do
     end
   end
 
+  describe "#file_types_for_user" do
+    subject(:file_types_for_user) { job_application.file_types_for_user }
+
+    let(:job_application) { create(:job_application, job_offer:, state: :phone_meeting) }
+    let!(:visible_type) do
+      create(:job_application_file_type).tap do |jaft|
+        jaft.visibility_rules.where(by: :user).destroy_all
+        jaft.visibility_rules.create!(by: :user, state: :phone_meeting)
+      end
+    end
+    let!(:hidden_type) do
+      create(:job_application_file_type).tap do |jaft|
+        jaft.visibility_rules.where(by: :user).destroy_all
+        jaft.visibility_rules.create!(by: :user, state: :financial_estimate)
+      end
+    end
+    let!(:already_uploaded_hidden_type) do
+      create(:job_application_file_type).tap do |jaft|
+        jaft.visibility_rules.where(by: :user).destroy_all
+        jaft.visibility_rules.create!(by: :user, state: :financial_estimate)
+      end
+    end
+
+    before do
+      create(:job_application_file, job_application:, job_application_file_type: already_uploaded_hidden_type)
+      job_application.reload
+    end
+
+    it { is_expected.to include(visible_type) }
+
+    it { is_expected.to include(already_uploaded_hidden_type) }
+
+    it { is_expected.not_to include(hidden_type) }
+
+    it "returns each type only once" do
+      create(:job_application_file, job_application:, job_application_file_type: visible_type)
+      job_application.reload
+      expect(file_types_for_user.count(visible_type)).to eq(1)
+    end
+
+    it "ignores placeholder files without uploaded content" do
+      empty_type = create(:job_application_file_type).tap do |jaft|
+        jaft.visibility_rules.where(by: :user).destroy_all
+        jaft.visibility_rules.create!(by: :user, state: :financial_estimate)
+      end
+      create(:job_application_file, job_application:, job_application_file_type: empty_type, content: nil, do_not_provide_immediately: true)
+      job_application.reload
+      expect(file_types_for_user).not_to include(empty_type)
+    end
+  end
+
+  describe "#file_for" do
+    subject(:file_for) { job_application.file_for(type) }
+
+    let(:job_application) { create(:job_application) }
+    let(:type) { create(:job_application_file_type) }
+
+    context "when a file already exists for the type" do
+      let!(:existing_file) { create(:job_application_file, job_application:, job_application_file_type: type) }
+
+      before { job_application.reload }
+
+      it { is_expected.to eq(existing_file) }
+    end
+
+    context "when no file exists for the type" do
+      it "builds a new unsaved file with the given type" do
+        expect(file_for).to be_new_record
+        expect(file_for.job_application_file_type).to eq(type)
+      end
+    end
+  end
+
   describe "#create_required_job_application_files" do
     let(:job_application) { create(:job_application, job_offer:, state: :phone_meeting) }
     let!(:required_file_type) do

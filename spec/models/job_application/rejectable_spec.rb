@@ -94,29 +94,6 @@ RSpec.describe JobApplication::Rejectable do
     end
   end
 
-  describe "after_update callbacks" do
-    describe "#notify_applicant_rejected" do
-      let(:job_application) { create(:job_application) }
-
-      context "when rejection reason is a withdrawal" do
-        subject(:rejection) do
-          withdrawal_reason = create(:rejection_reason, name: RejectionReason::WITHDRAWAL_REASON)
-          job_application.update!(rejected: true, rejection_reason: withdrawal_reason)
-        end
-
-        it { expect { rejection }.to have_enqueued_mail(ApplicantNotificationsMailer, :notify_withdrawn) }
-        it { expect { rejection }.not_to have_enqueued_mail(ApplicantNotificationsMailer, :notify_rejected) }
-      end
-
-      context "when rejection reason is not a withdrawal" do
-        subject(:rejection) { job_application.update!(rejected: true, rejection_reason: create(:rejection_reason)) }
-
-        it { expect { rejection }.to have_enqueued_mail(ApplicantNotificationsMailer, :notify_rejected) }
-        it { expect { rejection }.not_to have_enqueued_mail(ApplicantNotificationsMailer, :notify_withdrawn) }
-      end
-    end
-  end
-
   describe "#unreject!" do
     subject(:unreject) { job_application.unreject! }
 
@@ -130,13 +107,50 @@ RSpec.describe JobApplication::Rejectable do
   end
 
   describe "#reject!" do
-    subject(:reject) { job_application.reject!(rejection_reason:) }
-
     let(:rejection_reason) { create(:rejection_reason) }
     let(:job_application) { create(:job_application) }
 
-    it { expect { reject }.to change(job_application, :rejected).to(true) }
+    it "updates job application to rejected" do
+      expect { job_application.reject!(rejection_reason:) }.to change(job_application, :rejected).to(true)
+    end
 
-    it { expect { reject }.to change(job_application, :rejection_reason).to(rejection_reason) }
+    it "adds a rejection reason to job application" do
+      job_application.reject!(rejection_reason:)
+      expect(job_application.rejection_reason).to eq(rejection_reason)
+    end
+
+    context "when rejection is from user (withdrawal)" do
+      let(:rejection_reason) { create(:rejection_reason, name: RejectionReason::WITHDRAWAL_REASON) }
+
+      subject(:reject) { job_application.reject!(rejection_reason:, from_user: true) }
+
+      it "enqueues the notify_withdraw mailer" do
+        expect { reject }.to have_enqueued_mail(ApplicantNotificationsMailer, :notify_withdrawn)
+      end
+
+      it "does not enqueue notify_reject mailer" do
+        expect { reject }.not_to have_enqueued_mail(ApplicantNotificationsMailer, :notify_rejected)
+      end
+
+      context "when rejection_reason is not the withdrawal reason" do
+        let(:rejection_reason) { create(:rejection_reason) }
+
+        it "raises an ArgumentError" do
+          expect { reject }.to raise_error(ArgumentError)
+        end
+      end
+    end
+
+    context "when rejection is not from user (employer rejection)" do
+      subject(:reject) { job_application.reject!(rejection_reason:) }
+
+      it "enqueues the notify_reject mailer" do
+        expect { reject }.to have_enqueued_mail(ApplicantNotificationsMailer, :notify_rejected)
+      end
+
+      it "does not enqueue notify_withdrawn mailer" do
+        expect { reject }.not_to have_enqueued_mail(ApplicantNotificationsMailer, :notify_withdrawn)
+      end
+    end
   end
 end

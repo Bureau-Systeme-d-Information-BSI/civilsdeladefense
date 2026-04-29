@@ -41,16 +41,38 @@ module UsersHelper
     asset_path("default_user_avatar.svg")
   end
 
-  def hint_text_for_file(job_application, job_application_file)
-    link = [:account, job_application, job_application_file, {format: :pdf}]
-    fichier_text = link_to("fichier", link, target: "_blank", class: "text-dark-gray", rel: "noopener")
-    if job_application_file.is_validated == 1
-      "<span class=\"valid-text\">Ce #{fichier_text} a été validé !</span>".html_safe # rubocop:disable Rails/OutputSafety
-    elsif job_application_file.is_validated == 2
-      "<span class=\"error-text\">Votre #{fichier_text} n'est pas valide, veuillez en téléverser un nouveau.</span>".html_safe # rubocop:disable Rails/OutputSafety
-    elsif job_application_file.document_content.present?
-      "<span class=\"font-weight-bold\">Vous avez déjà téléversé ce #{fichier_text}</span>, il est en attente de validation.<br/>Pour téléverser une nouvelle version,
-              vous pouvez utiliser la zone ci-dessous.".html_safe # rubocop:disable Rails/OutputSafety
+  def file_hint(job_application_file)
+    if job_application_file.job_application_file_type.applicant_provided?
+      applicant_kind_file_hint(job_application_file, file_link(job_application_file))
+    else
+      not_applicant_kind_file_hint(file_link(job_application_file))
     end
+  end
+
+  private
+
+  def applicant_kind_file_hint(job_application_file, link)
+    if job_application_file.is_validated == 1
+      "<span class=\"valid-text\">Ce #{link} a été validé !</span>".html_safe # rubocop:disable Rails/OutputSafety
+    elsif job_application_file.is_validated == 2
+      "<span class=\"error-text\">Votre #{link} n'est pas valide, veuillez en téléverser un nouveau.</span>".html_safe # rubocop:disable Rails/OutputSafety
+    elsif job_application_file.document_content.present?
+      "<span class=\"font-weight-bold\">Vous avez déjà téléversé ce #{link}</span>, il est en attente de validation.
+      <br/>Pour téléverser une nouvelle version, vous pouvez utiliser la zone ci-dessous.".html_safe # rubocop:disable Rails/OutputSafety
+    end
+  end
+
+  def not_applicant_kind_file_hint(link)
+    "<span class=\"font-weight-bold\">Ce #{link}</span> a été téléversé par un tiers.".html_safe # rubocop:disable Rails/OutputSafety
+  end
+
+  def file_link(job_application_file)
+    link_to(
+      "fichier",
+      [:account, job_application_file.job_application, job_application_file, {format: :pdf}],
+      target: "_blank",
+      class: "text-dark-gray",
+      rel: "noopener"
+    )
   end
 end

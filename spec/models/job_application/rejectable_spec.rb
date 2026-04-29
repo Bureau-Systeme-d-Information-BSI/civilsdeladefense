@@ -120,9 +120,9 @@ RSpec.describe JobApplication::Rejectable do
     end
 
     context "when rejection is from user (withdrawal)" do
-      let(:rejection_reason) { create(:rejection_reason, name: RejectionReason::WITHDRAWAL_REASON) }
-
       subject(:reject) { job_application.reject!(rejection_reason:, from_user: true) }
+
+      let(:rejection_reason) { create(:rejection_reason, name: RejectionReason::WITHDRAWAL_REASON) }
 
       it "enqueues the notify_withdraw mailer" do
         expect { reject }.to have_enqueued_mail(ApplicantNotificationsMailer, :notify_withdrawn)

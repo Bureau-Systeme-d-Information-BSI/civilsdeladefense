@@ -5,7 +5,7 @@ require "rails_helper"
 module Maintenance
   RSpec.describe AddWithdrawalRejectionReasonTask do
     describe "#process" do
-      subject(:process) { described_class.process() }
+      subject(:process) { described_class.process }
 
       context "when the withdrawal rejection reason does not exist" do
         it "creates a RejectionReason" do

@@ -110,6 +110,37 @@ RSpec.describe "Admin::Job_Offers" do
       end
     end
 
+    context "when updating new attributes" do
+      subject(:update_request) { patch admin_job_offer_path(job_offer), params: params }
+
+      let(:params) do
+        {
+          job_offer: {
+            ict_tct: true,
+            asc: true,
+            cov_letter_required: true,
+            position_nb: 3
+          }
+        }
+      end
+
+      it "saves ict_tct" do
+        expect { update_request }.to change { job_offer.reload.ict_tct }.from(false).to(true)
+      end
+
+      it "saves asc" do
+        expect { update_request }.to change { job_offer.reload.asc }.from(false).to(true)
+      end
+
+      it "saves cov_letter_required" do
+        expect { update_request }.to change { job_offer.reload.cov_letter_required }.from(false).to(true)
+      end
+
+      it "saves position_nb" do
+        expect { update_request }.to change { job_offer.reload.position_nb }.from(1).to(3)
+      end
+    end
+
     context "when the job offer can't be updated and published" do
       let(:params) {
         {

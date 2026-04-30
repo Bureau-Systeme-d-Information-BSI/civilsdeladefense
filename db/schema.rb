@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2026_04_15_083311) do
+ActiveRecord::Schema[7.1].define(version: 2026_04_29_143417) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -515,6 +515,10 @@ ActiveRecord::Schema[7.1].define(version: 2026_04_15_083311) do
     t.uuid "level_id"
     t.date "application_deadline"
     t.integer "financial_estimate_job_applications_count", default: 0, null: false
+    t.boolean "ict_tct", default: false, null: false
+    t.boolean "asc", default: false, null: false
+    t.boolean "cov_letter_required", default: false, null: false
+    t.integer "position_nb", default: 1, null: false
     t.index ["archiving_reason_id"], name: "index_job_offers_on_archiving_reason_id"
     t.index ["bop_id"], name: "index_job_offers_on_bop_id"
     t.index ["category_id"], name: "index_job_offers_on_category_id"

@@ -102,10 +102,11 @@ fr:
         content: "Fichier"
         required: "Obligatoire"
       job_offer:
+        asc: "ASC"
         title: "Intitulé du poste"
         professional_category: "Catégorie professionnelle"
         location_search: "Localisation"
-        employer: "Employeur"
+        employer: "Chaîne d’emploi"
         description: "Descriptif des missions"
         required_profile: "Profil recherché"
         organization_description: "Descriptif de l'organisation"
@@ -116,7 +117,9 @@ fr:
         contract_type_id: "Type de contrat"
         contract_duration: "Durée du contrat"
         contract_start_on: "Prise de fonction souhaitée"
+        cov_letter_required: Lettre de motivation obligatoire pour cette offre d'emploi
         is_remote_possible: "Télétravail possible ?"
+        ict_tct: "ICT-TCT"
         sector: "Secteur / Filière"
         option_cover_letter: "Lettre de motivation"
         option_resume: "CV"
@@ -128,6 +131,8 @@ fr:
         mobilia_value: "Référence MOBILIA"
         mobilia_date: "Date de publication"
         application_deadline: "Date limite de candidature"
+        position_nb: "Nombre de postes"
+        spontaneous: Candidature spontanée
       organization:
         administrator_email_suffix: "Suffixes d'email obligatoire pour les comptes admin"
         brand_name: "Entité bloc marque"

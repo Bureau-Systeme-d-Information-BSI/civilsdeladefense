@@ -423,14 +423,14 @@ fr:
       edit:
         title: "Édition de l'offre %{job_offer_identifier}"
       form:
-        card_1_title_new: "1. Rédaction de l'offre"
+        card_1_title_new: "1. Création de l’offre d’emploi"
         card_1_title_edit: "1. Édition de l'offre %{job_offer_identifier}"
-        card_1_1_title: "1.1 Description de l'offre"
-        card_1_2_title: "1.2 Paramètres de l'offre"
+        card_1_1_title: "1.1 Informations générales"
+        card_1_2_title: "1.2 Description de l'offre"
         card_1_3_title: "1.3. Estimation rémunération salariale"
       form_actors:
-        card_title: "3. Notifications"
-        card_subtitle: "3.1 Acteurs du processus notifiés"
+        card_title: "2. Notifications"
+        card_subtitle: "2.1 Acteurs du processus notifiés"
       job_offer:
         follow: "Suivre"
         unfollow: "Ne plus suivre"
@@ -1327,6 +1327,8 @@ fr:
         csp_date: Date de publication CSP
         mobilia_date: Date de publication MOBILIA
         application_deadline: "Date limite de candidature"
+        cov_letter_required: "Lettre de motivation obligatoire"
+        position_nb: Nombre de postes
       job_offer_actor/role:
         employer: "Employeur"
         grand_employer: "Grand Employeur"

@@ -33,8 +33,10 @@ module JobOffersHelper
       job_offer_benefits_display(job_offer)
     when :drawbacks
       job_offer_drawbacks_display(job_offer)
-    when :is_remote_possible
-      job_offer_remote_display(job_offer)
+    when :is_remote_possible, :ict_tct, :asc, :cov_letter_required
+      boolean_attr(job_offer, attribute)
+    when :position_nb
+      job_offer.position_nb
     end
   end
 
@@ -75,8 +77,8 @@ module JobOffersHelper
     end
   end
 
-  def job_offer_remote_display(job_offer)
-    if job_offer.is_remote_possible
+  def boolean_attr(job_offer, attribute)
+    if job_offer.send(attribute)
       "Oui"
     else
       "Non"

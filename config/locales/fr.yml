@@ -393,7 +393,7 @@ fr:
         unauthorized: "Vous n'êtes pas autorisé(e) à annuler le refus de cette candidature."
     job_offers:
       add_actor:
-        admin_not_found_html: 'Ce mail n’a pas de compte existant, veuillez envoyer une demande de création de compte via le lien suivant : <a href="https://demarches-simplifiees.intradef.gouv.fr/commencer/demande-creation-compte-erecrutement">https://demarches-simplifiees.intradef.gouv.fr/commencer/demande-creation-compte-erecrutement</a>'
+        admin_not_found_html: 'Ce mail n’a pas de compte existant, veuillez envoyer une demande de création de compte via le lien suivant : <a href="https://demarche.numerique.gouv.fr/commencer/creation-maj-compte-e-recrutement">https://demarche.numerique.gouv.fr/commencer/creation-maj-compte-e-recrutement</a>'
       new_transfer:
         submit: "Transférer"
       transfer:
@@ -427,10 +427,11 @@ fr:
         card_1_title_edit: "1. Édition de l'offre %{job_offer_identifier}"
         card_1_1_title: "1.1 Informations générales"
         card_1_2_title: "1.2 Description de l'offre"
-        card_1_3_title: "1.3. Estimation rémunération salariale"
+        card_1_3_title: "1.3 Paramètres de l’offre"
+        card_1_4_title: "1.4 Estimation rémunération salariale"
       form_actors:
-        card_title: "2. Notifications"
-        card_subtitle: "2.1 Acteurs du processus notifiés"
+        card_title: "2. Rôles sur cette offre"
+        card_subtitle: "Les acteurs affiliés et notifiés"
       job_offer:
         follow: "Suivre"
         unfollow: "Ne plus suivre"
@@ -1182,7 +1183,7 @@ fr:
         administrator:
           attributes:
             base:
-              transfer_administrator_not_found: 'Ce mail n’a pas de compte existant, veuillez envoyer une demande de création de compte via le lien suivant : <a href="https://demarches-simplifiees.intradef.gouv.fr/commencer/demande-creation-compte-erecrutement">https://demarches-simplifiees.intradef.gouv.fr/commencer/demande-creation-compte-erecrutement</a>'
+              transfer_administrator_not_found: 'Ce mail n’a pas de compte existant, veuillez envoyer une demande de création de compte via le lien suivant : <a href="https://demarche.numerique.gouv.fr/commencer/creation-maj-compte-e-recrutement">https://demarche.numerique.gouv.fr/commencer/creation-maj-compte-e-recrutement</a>'
         job_application:
           attributes:
             state:
@@ -1216,7 +1217,7 @@ fr:
           attributes:
             base:
               csp_or_mobilia: "CSP et/ou MOBILIA doit être rempli"
-              transfer_administrator_not_found: 'Ce mail n’a pas de compte existant, veuillez envoyer une demande de création de compte via le lien suivant : <a href="https://demarches-simplifiees.intradef.gouv.fr/commencer/demande-creation-compte-erecrutement">https://demarches-simplifiees.intradef.gouv.fr/commencer/demande-creation-compte-erecrutement</a>'
+              transfer_administrator_not_found: 'Ce mail n’a pas de compte existant, veuillez envoyer une demande de création de compte via le lien suivant : <a href="https://demarche.numerique.gouv.fr/commencer/creation-maj-compte-e-recrutement">https://demarche.numerique.gouv.fr/commencer/creation-maj-compte-e-recrutement</a>'
             title:
               brackets: "ne doit pas contenir de parenthèse"
               f_h: "doit finir par F/H"

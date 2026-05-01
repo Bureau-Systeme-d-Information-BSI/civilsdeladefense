@@ -179,9 +179,9 @@ fr:
     notify_new_state:
       subject: "Votre candidature à l'offre %{job_offer_identifier} sur %{service_name}"
     notify_new_documents:
-      subject: "Nouveaux documents à consulter"
+      subject: "Votre candidature à l'offre %{job_offer_title} sur %{service_name} – Nouveaux documents à consulter"
     notify_rejected:
-      subject: "Votre candidature a été refusée"
+      subject: "Votre candidature à l'offre %{job_offer_title} sur %{service_name}"
   notifications_mailer:
     new_email:
       subject: "[%{service_name}] Notification « Employeur » - Etape %{state}"

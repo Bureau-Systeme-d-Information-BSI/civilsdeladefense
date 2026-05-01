@@ -37,8 +37,6 @@
                           = f.association :employer, collection: grouped_options, as: :grouped_select, group_method: :last, input_html: {class: 'custom-select'}
                         - else
                           = f.association :employer, collection: current_administrator.employers.map{|x| [x.code, x.id]}, disabled: @job_offer.persisted?, include_blank: false
-                      .col-12.col-md-3
-                        = f.association :bop
                     .row
                       .col-12.col-md-4
                         - options = ContractType.all.map { |ct| [ct.name, ct.id, {data: {duration: ct.duration}}] }
@@ -83,6 +81,13 @@
                     = f.input :description, as: :trix_editor_custom
                     = f.input :required_profile, as: :trix_editor_custom
                     = f.input :recruitment_process, as: :trix_editor_custom
+              .card.mt-5
+                .card-header
+                  .card-title= t('.card_1_3_title')
+                .card-body
+                  .form-inputs
+                    .col-12.col-md-3
+                      = f.association :bop
                     .row
                       .col-12.col-md-4
                         = f.input :csp_value
@@ -105,28 +110,25 @@
                         = f.input :is_remote_possible, as: :radio_buttons
               .card.mt-5
                 .card-header
-                  .card-title= t('.card_1_3_title')
+                  .card-title= t('.card_1_4_title')
                 .card-body
-                  .form-inputs
+                  .form-inputs    
                     .row
                       .col-12.col-md-6
-                        .row
-                          .col-12.col-md-6
-                            = f.association :professional_category, input_html: {data: {remote: true, type: :json, url: admin_salary_ranges_url}}
-                          .col-12.col-md-6
-                            = f.association :study_level
-                          .col-12.col-md-6
-                            = f.association :experience_level, input_html: {data: {remote: true, type: :json, url: admin_salary_ranges_url}}
-                          .col-12.col-md-6
-                            = f.association :sector, input_html: {data: {remote: true, type: :json, url: admin_salary_ranges_url}}
-                      .col-12.col-md-6.pl-md-5
-                        .row
-                          - salary_range = SalaryRange.where(professional_category_id: @job_offer.professional_category_id, experience_level_id: @job_offer.experience_level_id, sector_id: @job_offer.sector_id).first
-                          .col-12
-                            - estimate_monthly_salary_net = salary_range.try(:estimate_monthly_salary_net)
-                            = f.input :estimate_monthly_salary_net, readonly: true, input_html: {class: 'obviously-disabled'}
-                          .col-12
-                            - estimate_annual_salary_gross = salary_range.try(:estimate_annual_salary_gross)
-                            = f.input :estimate_annual_salary_gross, readonly: true, input_html: {class: 'obviously-disabled'}
+                        = f.association :professional_category, input_html: {data: {remote: true, type: :json, url: admin_salary_ranges_url}}
+                      .col-12.col-md-6
+                        = f.association :study_level
+                      .col-12.col-md-6
+                        = f.association :experience_level, input_html: {data: {remote: true, type: :json, url: admin_salary_ranges_url}}
+                      .col-12.col-md-6
+                        = f.association :sector, input_html: {data: {remote: true, type: :json, url: admin_salary_ranges_url}}
+                    .row
+                      - salary_range = SalaryRange.where(professional_category_id: @job_offer.professional_category_id, experience_level_id: @job_offer.experience_level_id, sector_id: @job_offer.sector_id).first
+                      .col-12
+                        - estimate_monthly_salary_net = salary_range.try(:estimate_monthly_salary_net)
+                        = f.input :estimate_monthly_salary_net, readonly: true, input_html: {class: 'obviously-disabled'}
+                      .col-12
+                        - estimate_annual_salary_gross = salary_range.try(:estimate_annual_salary_gross)
+                        = f.input :estimate_annual_salary_gross, readonly: true, input_html: {class: 'obviously-disabled'}
         = render partial: "form_actors", locals: {f: f}
         = render partial: "form_submit", locals: {f: f}

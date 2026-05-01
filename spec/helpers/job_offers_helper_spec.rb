@@ -179,6 +179,41 @@ RSpec.describe JobOffersHelper do
     end
   end
 
+  describe ".asc_ict_tct_badge" do
+    subject { asc_ict_tct_badge(job_offer) }
+
+    context "when neither asc nor ict_tct" do
+      let(:job_offer) { create(:job_offer, asc: false, ict_tct: false) }
+
+      it { is_expected.to eq("") }
+    end
+
+    context "when asc is true" do
+      let(:job_offer) { create(:job_offer, asc: true, ict_tct: false) }
+
+      it { is_expected.to include("ASC") }
+      it { is_expected.to include("rf-tag--warning") }
+      it { is_expected.not_to include("ICT-TCT") }
+    end
+
+    context "when ict_tct is true" do
+      let(:job_offer) { create(:job_offer, asc: false, ict_tct: true) }
+
+      it { is_expected.to include("ICT-TCT") }
+      it { is_expected.to include("rf-tag--info") }
+      it { is_expected.not_to include("ASC") }
+    end
+
+    context "when both asc and ict_tct are true" do
+      let(:job_offer) { create(:job_offer, asc: true, ict_tct: true) }
+
+      it { is_expected.to include("ASC") }
+      it { is_expected.to include("ICT-TCT") }
+      it { is_expected.to include("rf-tag--warning") }
+      it { is_expected.to include("rf-tag--info") }
+    end
+  end
+
   describe ".job_offer_start_display" do
     subject { job_offer_start_display(job_offer) }
 

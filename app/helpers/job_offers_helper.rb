@@ -84,4 +84,11 @@ module JobOffersHelper
       "Non"
     end
   end
+
+  def asc_ict_tct_badge(job_offer)
+    tags = []
+    tags << content_tag("span", "ASC", class: "rf-tag rf-tag--warning rf-mr-1w") if job_offer.asc
+    tags << content_tag("span", "ICT-TCT", class: "rf-tag rf-tag--info rf-mr-1w") if job_offer.ict_tct
+    safe_join(tags)
+  end
 end

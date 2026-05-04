@@ -40,6 +40,9 @@ application.register("job-offer-term", JobOfferTermController)
 import LocationController from "./location_controller"
 application.register("location", LocationController)
 
+import ModalController from "./modal_controller"
+application.register("modal", ModalController)
+
 import PasswordRulesController from "./password_rules_controller"
 application.register("password-rules", PasswordRulesController)
 

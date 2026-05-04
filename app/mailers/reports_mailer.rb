@@ -15,4 +15,13 @@ class ReportsMailer < ApplicationMailer
 
     mail to: @administrator.email, subject: t(".subject", service_name: @service_name)
   end
+
+  def employment_authority_weekly_report
+    @administrator = params[:administrator]
+    @sections = WeeklyReport.new(@administrator).sections
+    @service_name = @administrator.organization.service_name
+    @week_starts_on = 1.week.ago.beginning_of_week.to_date
+
+    mail to: @administrator.email, subject: t(".subject", service_name: @service_name)
+  end
 end

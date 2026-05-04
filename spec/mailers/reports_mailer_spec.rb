@@ -68,4 +68,54 @@ RSpec.describe ReportsMailer do
       end
     end
   end
+
+  describe "employment_authority_weekly_report" do
+    subject(:mail) { described_class.with(administrator:).employment_authority_weekly_report }
+
+    let(:administrator) { create(:administrator, roles: %w[employment_authority]) }
+
+    it "sets the subject with the service name" do
+      expect(mail.subject).to eq(
+        I18n.t(
+          "reports_mailer.employment_authority_weekly_report.subject",
+          service_name: administrator.organization.service_name
+        )
+      )
+    end
+
+    it { expect(mail.to).to match([administrator.email]) }
+
+    it "renders one section per state plus the new offers section" do
+      headings = mail.body.encoded.scan(%r{<h3>(.*?)</h3>}).flatten
+      expect(headings.size).to eq(WeeklyReport.new(administrator).sections.size)
+    end
+
+    it "renders the intro mentioning the employment authority role" do
+      expect(mail.body.encoded).to include("Bonjour #{administrator.full_name},")
+      expect(mail.body.encoded).to include("Autorité d'emploi")
+    end
+
+    it "mentions the start of last week" do
+      week_starts_on = 1.week.ago.beginning_of_week.strftime("%d/%m/%Y")
+      expect(mail.body.encoded).to include("semaine du #{week_starts_on}")
+    end
+
+    it "renders the outro" do
+      body = mail.body.encoded
+      expect(body).to include("Cordialement,")
+      expect(body).to include(administrator.organization.service_name)
+    end
+
+    context "with an offer published last week the authority is actor on" do
+      let(:job_offer) do
+        create(:published_job_offer, published_at: 1.week.ago.beginning_of_week + 1.day)
+      end
+
+      before { create(:job_offer_actor, job_offer:, administrator:, role: :employer) }
+
+      it "lists the offer in the mail body" do
+        expect(mail.body.encoded).to include(job_offer.full_title)
+      end
+    end
+  end
 end

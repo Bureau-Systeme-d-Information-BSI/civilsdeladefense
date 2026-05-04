@@ -8,7 +8,7 @@ class Account::WithdrawalsController < Account::BaseController
   def create
     @job_application.reject!(rejection_reason:, from_user: true)
     respond_to do |format|
-      format.html { redirect_to account_job_application_path(@job_application), notice: t(".success") }
+      format.html { redirect_to job_offer_account_job_application_path(@job_application), notice: t(".success") }
     end
   end
 
@@ -18,6 +18,7 @@ class Account::WithdrawalsController < Account::BaseController
 
   def set_job_application
     @job_application = JobApplication.find(params[:job_application_id])
+    @job_offer = @job_application.job_offer
   end
 
   def already_affected_or_rejected?

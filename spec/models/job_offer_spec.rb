@@ -24,7 +24,7 @@ RSpec.describe JobOffer do
       it { is_expected.not_to include(non_matching_job_offer) }
     end
 
-    describe ".last_day" do
+    describe ".last_day" do # rubocop:disable RSpec/MultipleMemoizedHelpers
       subject { described_class.last_day }
 
       let(:yesterday_start) { 1.day.ago.beginning_of_day }
@@ -49,7 +49,7 @@ RSpec.describe JobOffer do
       it { is_expected.not_to include(never_published) }
     end
 
-    describe ".last_week" do
+    describe ".last_week" do # rubocop:disable RSpec/MultipleMemoizedHelpers
       subject { described_class.last_week }
 
       let(:last_week_start) { 1.week.ago.beginning_of_week }

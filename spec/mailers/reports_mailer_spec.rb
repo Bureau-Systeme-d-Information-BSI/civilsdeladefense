@@ -46,7 +46,7 @@ RSpec.describe ReportsMailer do
 
     it "renders one section per state plus the new offers section" do
       headings = mail.body.encoded.scan(%r{<h3>(.*?)</h3>}).flatten
-      expect(headings.size).to eq(DailyReport.new(administrator).sections.size)
+      expect(headings.size).to eq(Reports::Daily.new(administrator).sections.size)
     end
 
     it "renders the intro and outro" do
@@ -87,7 +87,7 @@ RSpec.describe ReportsMailer do
 
     it "renders one section per state plus the new offers section" do
       headings = mail.body.encoded.scan(%r{<h3>(.*?)</h3>}).flatten
-      expect(headings.size).to eq(WeeklyReport.new(administrator).sections.size)
+      expect(headings.size).to eq(Reports::Weekly.new(administrator).sections.size)
     end
 
     it "renders the intro mentioning the employment authority role" do

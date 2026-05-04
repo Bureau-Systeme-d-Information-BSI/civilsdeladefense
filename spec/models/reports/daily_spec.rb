@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe DailyReport do
+RSpec.describe Reports::Daily do
   describe "#sections" do
     subject(:sections) { described_class.new(administrator).sections }
 

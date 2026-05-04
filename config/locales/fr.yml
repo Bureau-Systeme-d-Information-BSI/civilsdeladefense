@@ -235,10 +235,10 @@ fr:
   reports:
     daily:
       sections:
-        new_offers: "Nouvelle offre"
+        new_offers: "Nouvelles offres"
     weekly:
       sections:
-        new_offers: "Nouvelle offre"
+        new_offers: "Nouvelles offres"
   account:
     job_application_files:
       update:

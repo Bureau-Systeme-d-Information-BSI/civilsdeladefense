@@ -107,6 +107,7 @@ class JobOffer < ApplicationRecord
   scope :search_import, -> { includes(*SETTINGS) }
   scope :bookmarked, ->(user) { joins(:bookmarks).where(bookmarks: {user: user}) }
   scope :recents, -> { where(published_at: 24.hours.ago..) }
+  scope :last_week, -> { where(published_at: 1.week.ago.all_week) }
   scope :with_open_applications_in, ->(state) {
     joins(:job_applications)
       .where(job_applications: {state:, rejected: false})

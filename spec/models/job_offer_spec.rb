@@ -41,6 +41,31 @@ RSpec.describe JobOffer do
       it { is_expected.not_to include(never_published) }
     end
 
+    describe ".last_week" do
+      subject { described_class.last_week }
+
+      let(:last_week_start) { 1.week.ago.beginning_of_week }
+      let(:last_week_end) { 1.week.ago.end_of_week }
+      let!(:in_last_week) { create(:published_job_offer, published_at: last_week_start + 1.day) }
+      let!(:start_boundary) { create(:published_job_offer, published_at: last_week_start) }
+      let!(:end_boundary) { create(:published_job_offer, published_at: last_week_end) }
+      let!(:before_last_week) { create(:published_job_offer, published_at: last_week_start - 1.second) }
+      let!(:this_week) { create(:published_job_offer, published_at: Date.current.beginning_of_week) }
+      let!(:never_published) { create(:job_offer, state: :draft, published_at: nil) }
+
+      it { is_expected.to include(in_last_week) }
+
+      it { is_expected.to include(start_boundary) }
+
+      it { is_expected.to include(end_boundary) }
+
+      it { is_expected.not_to include(before_last_week) }
+
+      it { is_expected.not_to include(this_week) }
+
+      it { is_expected.not_to include(never_published) }
+    end
+
     describe ".with_open_applications_in" do # rubocop:disable RSpec/MultipleMemoizedHelpers
       subject(:scope) { described_class.with_open_applications_in(:phone_meeting) }
 

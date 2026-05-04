@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Builds a snapshot of the job offers an administrator is involved in:
-# offers published in the last 24 hours plus open applications grouped by state.
+# offers published the previous day plus open applications grouped by state.
 class DailyReport
   include Rails.application.routes.url_helpers
 
@@ -19,7 +19,7 @@ class DailyReport
   private
 
   def new_offers_section
-    offers = @administrator.job_offers.recents
+    offers = @administrator.job_offers.last_day
     Section.new(
       key: "new_offers",
       human_state: I18n.t("daily_report.sections.new_offers"),

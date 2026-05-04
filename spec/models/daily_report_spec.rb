@@ -25,24 +25,28 @@ RSpec.describe DailyReport do
     describe "new_offers section" do
       subject(:section) { sections.find { |s| s.key == "new_offers" } }
 
-      let!(:own_recent) do
-        create(:published_job_offer, published_at: 1.hour.ago).tap { |offer| link_admin_to(offer) }
+      let(:yesterday_start) { 1.day.ago.beginning_of_day }
+      let!(:own_in_yesterday) do
+        create(:published_job_offer, published_at: yesterday_start + 12.hours).tap { |offer| link_admin_to(offer) }
       end
 
       before do
-        create(:published_job_offer, published_at: 2.days.ago).tap do |offer|
+        create(:published_job_offer, published_at: yesterday_start - 1.second).tap do |offer|
           link_admin_to(offer)
-        end # too old
+        end # before yesterday
+        create(:published_job_offer, published_at: Date.current.beginning_of_day).tap do |offer|
+          link_admin_to(offer)
+        end # today
         create(:job_offer, state: :draft).tap do |offer|
           link_admin_to(offer)
         end # draft
-        create(:published_job_offer, published_at: 1.hour.ago).tap do |offer|
+        create(:published_job_offer, published_at: yesterday_start + 12.hours).tap do |offer|
           link_admin_to(offer, admin: other_administrator)
-        end # other
+        end # other admin
       end
 
-      it "lists only offers published in the last 24 hours the administrator is an actor on" do
-        expect(section.items.map(&:title)).to contain_exactly(own_recent.full_title)
+      it "lists only offers published yesterday the administrator is an actor on" do
+        expect(section.items.map(&:title)).to contain_exactly(own_in_yesterday.full_title)
       end
 
       it "reports the matching count" do

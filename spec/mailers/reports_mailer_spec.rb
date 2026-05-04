@@ -56,8 +56,8 @@ RSpec.describe ReportsMailer do
       expect(body).to include(administrator.organization.service_name)
     end
 
-    context "with a recently published offer the recruiter is actor on" do
-      let(:job_offer) { create(:published_job_offer, published_at: 1.hour.ago) }
+    context "with an offer published yesterday the recruiter is actor on" do
+      let(:job_offer) { create(:published_job_offer, published_at: 1.day.ago.beginning_of_day + 12.hours) }
 
       before do
         create(:job_offer_actor, job_offer:, administrator:, role: :employer)

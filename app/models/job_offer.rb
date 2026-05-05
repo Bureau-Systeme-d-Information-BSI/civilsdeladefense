@@ -74,7 +74,7 @@ class JobOffer < ApplicationRecord
   end
 
   ## Validations
-  validates :title, :description, :required_profile, :contract_start_on, presence: true
+  validates :title, :description, :required_profile, :organization_description, :recruitment_process, :contract_start_on, presence: true
   validates :contract_duration_id, presence: true, if: -> { contract_type&.duration }
   validates :contract_duration_id, absence: true, unless: -> { contract_type&.duration }
   validates :title, format: {with: %r{\A.*F/H\z}, message: :f_h}

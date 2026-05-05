@@ -308,6 +308,10 @@ RSpec.describe JobOffer do
 
     it { is_expected.to validate_presence_of(:mobilia_date) }
 
+    it { is_expected.to validate_presence_of(:organization_description) }
+
+    it { is_expected.to validate_presence_of(:recruitment_process) }
+
     describe "title" do
       it "is not valid with ( in title and no F/H at the end" do
         expect(build(:job_offer, title: "(")).not_to be_valid
@@ -381,7 +385,16 @@ RSpec.describe JobOffer do
 
   describe "publishing" do
     it "requires organization_description" do
-      job_offer = create(:job_offer, organization_description: nil)
+      job_offer = build(:job_offer, organization_description: nil)
+      job_offer.save(validate: false)
+
+      expect { job_offer.publish! }.not_to change { job_offer.reload.state }
+    end
+
+    it "requires recruitment_process" do
+      job_offer = build(:job_offer, recruitment_process: nil)
+      job_offer.save(validate: false)
+
       expect { job_offer.publish! }.not_to change { job_offer.reload.state }
     end
   end

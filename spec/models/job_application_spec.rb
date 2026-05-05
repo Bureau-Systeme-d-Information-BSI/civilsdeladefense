@@ -55,6 +55,55 @@ RSpec.describe JobApplication do
       end
     end
 
+    describe "#cant_exceed_position_nb" do
+      subject(:acceptance) { job_application.accepted! }
+
+      let(:job_offer) { create(:job_offer, position_nb: 1) }
+      let(:job_application) { create(:job_application, job_offer:, state: :financial_estimate) }
+
+      context "when no other advanced applications exist" do
+        it { is_expected.to be(true) }
+      end
+
+      context "when position_nb is not yet reached" do
+        let(:job_offer) { create(:job_offer, position_nb: 2) }
+
+        before { create(:job_application, job_offer:, state: :accepted) }
+
+        it { is_expected.to be(true) }
+      end
+
+      context "when position_nb is already reached" do
+        before { create(:job_application, job_offer:, state: :accepted) }
+
+        it { expect { acceptance }.to raise_error(ActiveRecord::RecordInvalid) }
+      end
+
+      context "when a non-accepted but advanced state (contract_drafting) counts toward position_nb" do
+        before { create(:job_application, job_offer:, state: :contract_drafting) }
+
+        it { expect { acceptance }.to raise_error(ActiveRecord::RecordInvalid) }
+      end
+
+      context "when advanced applications are rejected (should not count)" do
+        before { create(:job_application, :rejected, job_offer:, state: :accepted) }
+
+        it { is_expected.to be(true) }
+      end
+
+      context "when moving forward from an already advanced state (guard)" do
+        subject(:forward) { job_application.contract_drafting! }
+
+        let(:job_application) { create(:job_application, job_offer:, state: :accepted, dar: true) }
+
+        before { create(:job_application, job_offer:, state: :accepted) }
+
+        it "does not block forward progression" do
+          expect { forward }.not_to raise_error
+        end
+      end
+    end
+
     describe "#dar_validated" do
       subject(:contract_drafting) { job_application.contract_drafting! }
 

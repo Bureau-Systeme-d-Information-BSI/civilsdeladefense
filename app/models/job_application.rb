@@ -53,6 +53,7 @@ class JobApplication < ApplicationRecord
   validate :requested_files_not_validated,
     if: -> { state_changed? && state_was.present? && JobApplication.states[state] > JobApplication.states[state_was] },
     unless: -> { requested_files_validated? }
+  validate :cant_exceed_position_nb, if: -> { state_changed? && JobApplication.states[state] > JobApplication.states["financial_estimate"] }
   validate :cant_be_accepted_twice, if: -> { accepted? }, unless: -> { has_accepted_other_job_application? }
   validate :dar_validated, if: -> { state_changed? && contract_drafting? }, unless: :dar?
 
@@ -264,6 +265,14 @@ class JobApplication < ApplicationRecord
     return if job_offer.csp_date + 30.days < Time.zone.now
 
     errors.add(:state, :cant_accept_before_delay)
+  end
+
+  def cant_exceed_position_nb
+    return if JobApplication.states[state_was.to_s].to_i > JobApplication.states["financial_estimate"]
+
+    advanced_states = JobApplication.all_states_greater_than("financial_estimate")
+    advanced_count = job_offer.job_applications.not_rejected.where(state: advanced_states).where.not(id: id).count
+    errors.add(:state, :cant_exceed_position_nb) if advanced_count >= job_offer.position_nb
   end
 
   def cant_accept_remaining_initial_job_applications

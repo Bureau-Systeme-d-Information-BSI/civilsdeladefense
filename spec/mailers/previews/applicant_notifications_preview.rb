@@ -29,4 +29,11 @@ class ApplicantNotificationsPreview < ActionMailer::Preview
       job_offer: JobOffer.first
     ).notify_rejected
   end
+
+  def notify_withdrawn
+    ApplicantNotificationsMailer.with(
+      user: User.first,
+      job_offer: JobOffer.first
+    ).notify_withdrawn
+  end
 end

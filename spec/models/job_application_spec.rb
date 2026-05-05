@@ -80,7 +80,7 @@ RSpec.describe JobApplication do
       end
 
       context "when a non-accepted but advanced state (contract_drafting) counts toward position_nb" do
-        before { create(:job_application, job_offer:, state: :contract_drafting) }
+        before { create(:job_application, job_offer:, state: :contract_drafting, dar: true) }
 
         it { expect { acceptance }.to raise_error(ActiveRecord::RecordInvalid) }
       end
@@ -92,14 +92,10 @@ RSpec.describe JobApplication do
       end
 
       context "when moving forward from an already advanced state (guard)" do
-        subject(:forward) { job_application.contract_drafting! }
-
         let(:job_application) { create(:job_application, job_offer:, state: :accepted, dar: true) }
 
-        before { create(:job_application, job_offer:, state: :accepted) }
-
         it "does not block forward progression" do
-          expect { forward }.not_to raise_error
+          expect { job_application.contract_drafting! }.not_to raise_error
         end
       end
     end

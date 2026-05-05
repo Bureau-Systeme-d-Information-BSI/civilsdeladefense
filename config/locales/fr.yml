@@ -288,8 +288,8 @@ fr:
         title: "Votre compte"
       form_administrator:
         title: "Vos informations"
-        mention_supervisor_administrator_html: "Courriel et entité de votre <strong>Employeur Superviseur</strong>"
-        mention_grand_employer_administrator_html: "Courriel et entité de votre <strong>Grand Employeur</strong>"
+        mention_supervisor_administrator_html: "Courriel et entité de votre <strong>Autorité d’emploi</strong>"
+        mention_grand_employer_administrator_html: "Courriel et entité de votre <strong>Employeur recruteur</strong>"
       update:
         success: "Vos informations ont été mises à jour"
         success_new_email: "Votre courriel a bien été modifié. Vérifiez votre boîte pour confirmer votre nouveau courriel."
@@ -703,10 +703,10 @@ fr:
       employers:
         index:
           title: "Employeurs"
-          add_grand_employer: "Ajouter un grand employeur"
+          add_grand_employer: "Ajouter un Employeur recruteur"
           add_employer: "Ajouter un employeur"
           add: "Ajouter"
-          grand_employer: "Grand Employeur"
+          grand_employer: "Employeur recruteur"
           employer: "Employeur"
           card_title:
             zero: "Aucun employeur"
@@ -1244,8 +1244,8 @@ fr:
       administrator/role:
         admin: "Administrateur"
         employer: "Employeur"
-        grand_employer: "Grand Employeur"
-        brh: "RH"
+        grand_employer: "Employeur recruteur"
+        brh: "Gestionnaire RH"
       administrator/roles:
         functional_administrator: "Administrateur fonctionnel"
         employer_recruiter: "Employeur recruteur"
@@ -1333,10 +1333,10 @@ fr:
         position_nb: Nombre de postes
       job_offer_actor/role:
         employer: "Employeur"
-        grand_employer: "Grand Employeur"
-        supervisor_employer: "Employeur Superviseur"
-        brh: "RH"
-        cmg: "CMG"
+        grand_employer: "Employeur recruteur"
+        supervisor_employer: "Autorité d’emploi"
+        brh: "Gestionnaire RH"
+        cmg: "Gestionnaire PAIE"
       organization_default:
         kind: "Type"
         kind/job_offer_description: "Offre d'emploi / Description"

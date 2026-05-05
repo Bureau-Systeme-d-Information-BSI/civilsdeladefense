@@ -71,7 +71,7 @@ fr:
         password_confirmation: "Confirmation du mot de passe"
         employers: "Chaîne d'emploi"
         employer: "Employeur"
-        grand_employer: "Grand Employeur"
+        grand_employer: "Employeur recruteur"
         roles: "Rôles"
         role: "Rôle"
         ace: ACE
@@ -90,7 +90,7 @@ fr:
       employer:
         name: "Nom"
         code: "Libellé"
-        parent_id: "Grand Employeur"
+        parent_id: "Employeur recruteur"
       job_application:
         experiences_fit_job_offer: "Expérience pour l'offre"
         skills_fit_job_offer: "Adéquate pour l'offre"
@@ -218,9 +218,9 @@ fr:
         email_grand_employer: "Courriel"
         email_brh: "Courriel"
         supervisor_administrator:
-          email: "Courriel Employeur Superviseur"
+          email: "Courriel Autorité d’emploi"
         grand_employer_administrator:
-          email: "Courriel Grand Employeur"
+          email: "Courriel Employeur recruteur"
         title: "Chef·fe de département qualité"
       message:
         body: "Ce commentaire ne sera visible que par vous et les autres membres de votre équipe."

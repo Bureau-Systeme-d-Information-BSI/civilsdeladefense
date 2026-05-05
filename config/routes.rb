@@ -227,6 +227,7 @@ Rails.application.routes.draw do
             get :attachment
           end
         end
+        resource :withdrawal, path: "desistement", only: :create
       end
       resource :user, path: "mon-compte", only: %i[show destroy] do
         collection do

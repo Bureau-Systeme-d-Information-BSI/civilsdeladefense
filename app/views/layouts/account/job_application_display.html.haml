@@ -12,7 +12,7 @@
         = render partial: '/account/job_applications/state_stepper', locals: {job_application: @job_application}
     .rf-grid-row.rf-mt-3w
       .rf-tabs.w-100{data: {controller: 'rf-tab-management'}}
-        %ul.rf-tabs__list{"aria-label" => "[Candidature]", role: "tablist"}
+        %ul.rf-tabs__list{"aria-label" => "[Candidature]", role: "tablist", 'data-rf-tab-management-target' => 'tablist'}
           %li{role: "presentation"}
             - emails_tab = controller.controller_name == 'job_applications' && controller.action_name  == 'show'
             = link_to [:account, @job_application], class: 'rf-tabs__tab', aria: {controls: 'tabpanel-emails', selected: emails_tab}, role: 'tab', tabindex: emails_tab ? 0 : -1, title: t('.nav_emails') do

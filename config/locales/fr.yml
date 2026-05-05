@@ -182,6 +182,8 @@ fr:
       subject: "Votre candidature à l'offre %{job_offer_title} sur %{service_name} – Nouveaux documents à consulter"
     notify_rejected:
       subject: "Votre candidature à l'offre %{job_offer_title} sur %{service_name}"
+    notify_withdrawn:
+      subject: "Votre candidature à l'offre %{job_offer_title} sur %{service_name} – Confirmation de votre désistement"
   notifications_mailer:
     new_email:
       subject: "[%{service_name}] Notification « Employeur » - Etape %{state}"
@@ -242,6 +244,11 @@ fr:
         ongoing_none: "Aucune candidature en cours"
       job_application:
         created_at: "Candidaté il y a %{time_ago_in_words}"
+      job_offer:
+        withdraw: "Retirer ma candidature"
+        withdraw_confirmation: "Souhaitez-vous retirer votre candidature ?"
+        confirm: "Confirmer"
+        cancel: "Annuler"
     emails:
       create:
         success: "Courriel envoyé !"
@@ -282,6 +289,10 @@ fr:
       want_destroy:
         title: "Danger"
         destroy: "Je veux supprimer mon compte"
+    withdrawals:
+        create:
+          success: "Désistement enregistré"
+          failure: "Impossible de modifier cette candidature"
   admin:
     accounts:
       show:

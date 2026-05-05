@@ -160,6 +160,16 @@ class JobApplication < ApplicationRecord
     "end_user_state_#{end_user_state_number}"
   end
 
+  def file_types_for_user
+    uploaded_types = job_application_files.select { |f| f.document_content.present? }.map(&:job_application_file_type)
+    (JobApplicationFileType.visible_by_user(state) + uploaded_types).uniq
+  end
+
+  def file_for(type)
+    job_application_files.find { |f| f.job_application_file_type == type } ||
+      job_application_files.build(job_application_file_type: type)
+  end
+
   counter_culture :job_offer,
     column_name: proc { |model| "#{model.state}_job_applications_count" },
     column_names: aasm.states.each_with_object({}) { |obj, memo|

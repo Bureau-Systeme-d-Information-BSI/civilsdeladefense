@@ -1,5 +1,2 @@
-- job_application_files = @job_application.job_application_files.to_a
-- JobApplicationFileType.visible_by_user(@job_application.state).each do |job_application_file_type|
-  - job_application_file = job_application_files.detect { |x| x.job_application_file_type == job_application_file_type }
-  - job_application_file ||= @job_application.job_application_files.build(job_application_file_type: job_application_file_type)
-  = render partial: 'file_name_upload', locals: {job_application_file: job_application_file, job_application: @job_application}
+- @job_application.file_types_for_user.each do |type|
+  = render partial: 'file_name_upload', locals: {job_application_file: @job_application.file_for(type), job_application: @job_application}

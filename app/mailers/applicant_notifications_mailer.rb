@@ -106,4 +106,16 @@ class ApplicantNotificationsMailer < ApplicationMailer
       service_name: @service_name
     )
   end
+
+  def notify_withdrawn
+    @user = params[:user]
+    @job_offer = params[:job_offer]
+    @service_name = @job_offer.organization.service_name
+
+    mail to: @user.email, subject: t(
+      ".subject",
+      job_offer_title: @job_offer.title,
+      service_name: @service_name
+    )
+  end
 end

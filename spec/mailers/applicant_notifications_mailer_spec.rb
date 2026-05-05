@@ -64,7 +64,11 @@ RSpec.describe ApplicantNotificationsMailer do
     let(:job_offer) { job_application.job_offer }
     let(:document_names) { ["CV", "Lettre de motivation"] }
 
-    it { expect(mail.subject).to eq("Nouveaux documents à consulter") }
+    it {
+      expect(mail.subject).to eq(
+        "Votre candidature à l'offre #{job_offer.title} sur #{job_offer.organization.service_name} – Nouveaux documents à consulter"
+      )
+    }
 
     it { expect(mail.to).to match([user.email]) }
 
@@ -82,7 +86,11 @@ RSpec.describe ApplicantNotificationsMailer do
     let(:user) { job_application.user }
     let(:job_offer) { job_application.job_offer }
 
-    it { expect(notify_rejected.subject).to eq("Votre candidature a été refusée") }
+    it {
+      expect(notify_rejected.subject).to eq(
+        "Votre candidature à l'offre #{job_offer.title} sur #{job_offer.organization.service_name}"
+      )
+    }
 
     it { expect(notify_rejected.body.encoded).to match(/nous ne pouvons pas actuellement y donner une suite favorable/) }
   end

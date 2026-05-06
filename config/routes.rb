@@ -127,6 +127,7 @@ Rails.application.routes.draw do
           post :uncheck
         end
       end
+      resource :cover_letter, only: %i[show]
       resource :rejection, only: %i[new create destroy]
       resource :dar, only: %i[update]
       resources :messages, only: %i[create]

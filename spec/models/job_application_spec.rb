@@ -212,7 +212,9 @@ RSpec.describe JobApplication do
       context "with a cover letter" do
         let(:job_application) { build(:job_application, :with_cover_letter, job_offer:) }
 
-        it { is_expected.to be_valid }
+        it "is valid" do
+          expect(job_application).to be_valid
+        end
       end
     end
   end

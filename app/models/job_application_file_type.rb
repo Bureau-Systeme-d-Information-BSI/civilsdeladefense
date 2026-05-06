@@ -5,7 +5,7 @@
 class JobApplicationFileType < ApplicationRecord
   # TODO: @sebastiencarceles remove these columns from DB after v2
   self.ignored_columns += %i[from_state required_from_state to_state required_to_state]
-  
+
   COVER_LETTER_NAME = "Lettre de Motivation"
 
   acts_as_list

@@ -118,6 +118,7 @@ fr:
       your_account_creation: "Votre création de compte"
       resume: "CV"
       resume_html: "CV <abbr title='obligatoire'>*</abbr>"
+      cover_letter: "Lettre de motivation (PDF uniquement, max 2Mo)"
   job_offers:
     no_bookmarks:
       title: Vous n'avez pas encore d'offres favorites
@@ -317,6 +318,7 @@ fr:
         applied_on: "Candidaté le %{date}"
       files:
         title: "Documents du candidat"
+        cover_letter: "Lettre de motivation"
         subtitle_1: "Documents à fournir par le candidat"
         subtitle_2: "Documents complémentaires"
         none_atm: "Aucun fichiers demandés"

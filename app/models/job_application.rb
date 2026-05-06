@@ -45,6 +45,10 @@ class JobApplication < ApplicationRecord
   has_many :job_application_files, index_errors: true, dependent: :destroy
   accepts_nested_attributes_for :job_application_files
 
+  mount_uploader :cover_letter, DocumentUploader, mount_on: :cover_letter_file_name
+  validates :cover_letter, presence: true, if: -> { job_offer&.cov_letter_required? }
+  validates :cover_letter, file_size: {less_than: 2.megabytes}, if: -> { cover_letter.present? }
+
   scope :with_category, -> { where.not(category: nil) }
 
   validates :user_id, uniqueness: {scope: :job_offer_id}, on: :create, allow_nil: true # rubocop:disable Rails/UniqueValidationWithoutIndex
@@ -341,6 +345,7 @@ end
 #
 #  id                                :uuid             not null, primary key
 #  administrator_notifications_count :integer          default(0)
+#  cover_letter_file_name            :string
 #  dar                               :boolean          default(FALSE), not null
 #  emails_administrator_unread_count :integer          default(0)
 #  emails_count                      :integer          default(0)

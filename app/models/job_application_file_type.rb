@@ -5,6 +5,8 @@
 class JobApplicationFileType < ApplicationRecord
   # TODO: @sebastiencarceles remove these columns from DB after v2
   self.ignored_columns += %i[from_state required_from_state to_state required_to_state]
+  
+  COVER_LETTER_NAME = "Lettre de Motivation"
 
   acts_as_list
   default_scope -> { order(position: :asc) }
@@ -37,6 +39,8 @@ class JobApplicationFileType < ApplicationRecord
       .where("visibility_rules.state <= ?", JobApplication.states[state])
       .distinct
   }
+
+  scope :excluding_cover_letter, -> { where.not(name: COVER_LETTER_NAME) }
 
   scope :notifiable_by_user_at, ->(state) {
     where(notify_user: true)

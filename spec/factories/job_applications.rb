@@ -21,6 +21,15 @@ FactoryBot.define do
       job_application.job_application_files << build(:job_application_file)
     end
   end
+
+  trait :with_cover_letter do
+    cover_letter do
+      Rack::Test::UploadedFile.new(
+        Rails.root.join("spec/fixtures/files/document.pdf"),
+        "application/pdf"
+      )
+    end
+  end
 end
 
 # == Schema Information
@@ -29,6 +38,7 @@ end
 #
 #  id                                :uuid             not null, primary key
 #  administrator_notifications_count :integer          default(0)
+#  cover_letter_file_name            :string
 #  dar                               :boolean          default(FALSE), not null
 #  emails_administrator_unread_count :integer          default(0)
 #  emails_count                      :integer          default(0)

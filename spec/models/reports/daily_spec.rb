@@ -66,7 +66,7 @@ RSpec.describe Reports::Daily do
 
         let(:job_offer) { create(:published_job_offer).tap { |offer| link_admin_to(offer) } }
 
-        before { create(:job_application, job_offer:, state:) }
+        before { create(:job_application, job_offer:, state:, dar: true) }
 
         it "lists offers having applications in state :#{state}" do
           expect(section.items.map(&:title)).to contain_exactly(job_offer.full_title)

@@ -23,6 +23,52 @@ RSpec.describe JobOffer do
 
       it { is_expected.not_to include(non_matching_job_offer) }
     end
+
+    describe ".recents" do
+      subject { described_class.recents }
+
+      let!(:just_published) { create(:published_job_offer, published_at: 1.hour.ago) }
+      let!(:on_the_edge) { create(:published_job_offer, published_at: 23.hours.ago) }
+      let!(:too_old) { create(:published_job_offer, published_at: 25.hours.ago) }
+      let!(:never_published) { create(:job_offer, state: :draft, published_at: nil) }
+
+      it { is_expected.to include(just_published) }
+
+      it { is_expected.to include(on_the_edge) }
+
+      it { is_expected.not_to include(too_old) }
+
+      it { is_expected.not_to include(never_published) }
+    end
+
+    describe ".with_open_applications_in" do # rubocop:disable RSpec/MultipleMemoizedHelpers
+      subject(:scope) { described_class.with_open_applications_in(:phone_meeting) }
+
+      let!(:matching_offer) { create(:published_job_offer) }
+      let!(:wrong_state_offer) { create(:published_job_offer) }
+      let!(:rejected_only_offer) { create(:published_job_offer) }
+      let!(:multi_apps_offer) { create(:published_job_offer) }
+      let!(:no_apps_offer) { create(:published_job_offer) }
+
+      before do
+        create(:job_application, job_offer: matching_offer, state: :phone_meeting)
+        create(:job_application, job_offer: wrong_state_offer, state: :to_be_met)
+        create(:job_application, :rejected, job_offer: rejected_only_offer, state: :phone_meeting)
+        create_list(:job_application, 3, job_offer: multi_apps_offer, state: :phone_meeting)
+      end
+
+      it { is_expected.to include(matching_offer) }
+
+      it { is_expected.not_to include(wrong_state_offer) }
+
+      it { is_expected.not_to include(rejected_only_offer) }
+
+      it { is_expected.not_to include(no_apps_offer) }
+
+      it "lists offers having several matching applications only once" do
+        expect(scope.where(id: multi_apps_offer.id).count).to eq(1)
+      end
+    end
   end
 
   describe "associations" do
@@ -57,6 +103,16 @@ RSpec.describe JobOffer do
 
   describe "delegations" do
     it { is_expected.to delegate_method(:name).to(:contract_type).with_prefix(true).with_arguments(allow_nil: true) }
+  end
+
+  describe "#full_title" do
+    subject(:full_title) { job_offer.full_title }
+
+    let(:job_offer) { build(:job_offer, title: "Chef de projet F/H") }
+
+    before { allow(job_offer).to receive(:identifier).and_return("ABC123") }
+
+    it { is_expected.to eq("ABC123 Chef de projet F/H") }
   end
 
   describe "#already_applied?" do

@@ -71,13 +71,6 @@ class NotificationsMailer < ApplicationMailer
     mail to: @administrator.email, subject: t(".subject", service_name: @service_name)
   end
 
-  def daily_summary(administrator, data, service_name)
-    @data = data
-    subject = t(".subject", service_name: service_name)
-
-    mail to: administrator.email, subject: subject
-  end
-
   private
 
   def manager_roles(administrator)

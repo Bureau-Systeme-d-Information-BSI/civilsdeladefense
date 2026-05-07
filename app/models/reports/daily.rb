@@ -4,8 +4,6 @@ module Reports
   # Builds a snapshot of the job offers an administrator is involved in:
   # offers published the previous day plus open applications grouped by state.
   class Daily < Base
-    include Rails.application.routes.url_helpers
-
     private
 
     def new_offers_section

@@ -5,8 +5,6 @@ module Reports
   # offers published during the previous calendar week plus open applications
   # grouped by state.
   class Weekly < Base
-    include Rails.application.routes.url_helpers
-
     private
 
     def new_offers_section

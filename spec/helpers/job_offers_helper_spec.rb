@@ -154,25 +154,25 @@ RSpec.describe JobOffersHelper do
       end
     end
 
-    context "when the attribute is :cov_letter_required" do
-      let(:attribute) { :cov_letter_required }
+    context "when the attribute is :cover_lettre_required" do
+      let(:attribute) { :cover_lettre_required }
 
       it { is_expected.to eq("Non") }
 
-      context "when cov_letter_required is true" do
-        let(:job_offer) { create(:job_offer, application_deadline:, cov_letter_required: true) }
+      context "when cover_lettre_required is true" do
+        let(:job_offer) { create(:job_offer, application_deadline:, cover_lettre_required: true) }
 
         it { is_expected.to eq("Oui") }
       end
     end
 
-    context "when the attribute is :position_nb" do
-      let(:attribute) { :position_nb }
+    context "when the attribute is :positions_count" do
+      let(:attribute) { :positions_count }
 
       it { is_expected.to eq(1) }
 
-      context "when position_nb is set to a specific value" do
-        let(:job_offer) { create(:job_offer, application_deadline:, position_nb: 5) }
+      context "when positions_count is set to a specific value" do
+        let(:job_offer) { create(:job_offer, application_deadline:, positions_count: 5) }
 
         it { is_expected.to eq(5) }
       end

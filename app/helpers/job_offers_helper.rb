@@ -33,10 +33,10 @@ module JobOffersHelper
       job_offer_benefits_display(job_offer)
     when :drawbacks
       job_offer_drawbacks_display(job_offer)
-    when :is_remote_possible, :ict_tct, :asc, :cov_letter_required
+    when :is_remote_possible, :ict_tct, :asc, :cover_lettre_required
       boolean_attr(job_offer, attribute)
-    when :position_nb
-      job_offer.position_nb
+    when :positions_count
+      job_offer.positions_count
     end
   end
 

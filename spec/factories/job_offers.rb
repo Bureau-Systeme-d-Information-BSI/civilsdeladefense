@@ -70,7 +70,7 @@ end
 #  country_code                                     :string
 #  county                                           :string
 #  county_code                                      :integer
-#  cov_letter_required                              :boolean          default(FALSE), not null
+#  cover_lettre_required                            :boolean          default(FALSE), not null
 #  csp_date                                         :date
 #  csp_value                                        :string
 #  description                                      :text
@@ -93,7 +93,7 @@ end
 #  organization_description                         :text
 #  phone_meeting_job_applications_count             :integer          default(0), not null
 #  phone_meeting_rejected_job_applications_count    :integer          default(0), not null
-#  position_nb                                      :integer          default(1), not null
+#  positions_count                                  :integer          default(1), not null
 #  postcode                                         :string
 #  published_at                                     :datetime
 #  recruitment_process                              :text

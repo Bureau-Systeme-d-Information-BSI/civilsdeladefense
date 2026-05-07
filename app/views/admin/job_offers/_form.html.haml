@@ -60,10 +60,10 @@
                         = f.input :postcode, as: :hidden, input_html: { 'data-location-target' => :postcode }
                         = f.input :region, as: :hidden, input_html: { 'data-location-target' => :region }
                       .col-12.col-md-3
-                        = f.input :position_nb, as: :integer, input_html: { class: 'default-cursor', min: 1 }
+                        = f.input :positions_count, as: :integer, input_html: { class: 'default-cursor', min: 1 }
                     .row
                       .col-12.col-md-6
-                        = f.input :cov_letter_required
+                        = f.input :cover_lettre_required
                       - if current_administrator.admin?
                         .col-12.col-md-6
                           = f.input :spontaneous

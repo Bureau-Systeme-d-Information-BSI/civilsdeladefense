@@ -45,12 +45,12 @@
             - if profile_form.object.resume.present? && user_signed_in?
               = link_to profile_form.object.resume_file_name, account_profiles_resume_path, target: '_blank'
 
-    - if @job_offer.cov_letter_required?
+    - if @job_offer.cover_lettre_required?
       = f.input :cover_letter, as: :file, required: true, label: t('job_applications.form.cover_letter')
 
     - job_application_files = @job_application.job_application_files.to_a
     - file_types = JobApplicationFileType.visible_by_user_up_to(@job_application.state)
-    - file_types = file_types.excluding_cover_letter if @job_offer.cov_letter_required?
+    - file_types = file_types.excluding_cover_letter if @job_offer.cover_lettre_required?
     - file_types.each do |job_application_file_type, index|
       - job_application_file = job_application_files.detect{|x| x.job_application_file_type == job_application_file_type}
       - job_application_file ||= @job_application.job_application_files.build(job_application_file_type: job_application_file_type)

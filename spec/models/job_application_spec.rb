@@ -55,31 +55,31 @@ RSpec.describe JobApplication do
       end
     end
 
-    describe "#cant_exceed_position_nb" do
+    describe "#cant_exceed_positions_count" do
       subject(:acceptance) { job_application.accepted! }
 
-      let(:job_offer) { create(:job_offer, position_nb: 1) }
+      let(:job_offer) { create(:job_offer, positions_count: 1) }
       let(:job_application) { create(:job_application, job_offer:, state: :financial_estimate) }
 
       context "when no other advanced applications exist" do
         it { is_expected.to be(true) }
       end
 
-      context "when position_nb is not yet reached" do
-        let(:job_offer) { create(:job_offer, position_nb: 2) }
+      context "when positions_count is not yet reached" do
+        let(:job_offer) { create(:job_offer, positions_count: 2) }
 
         before { create(:job_application, job_offer:, state: :accepted) }
 
         it { is_expected.to be(true) }
       end
 
-      context "when position_nb is already reached" do
+      context "when positions_count is already reached" do
         before { create(:job_application, job_offer:, state: :accepted) }
 
         it { expect { acceptance }.to raise_error(ActiveRecord::RecordInvalid) }
       end
 
-      context "when a non-accepted but advanced state (contract_drafting) counts toward position_nb" do
+      context "when a non-accepted but advanced state (contract_drafting) counts toward positions_count" do
         before { create(:job_application, job_offer:, state: :contract_drafting, dar: true) }
 
         it { expect { acceptance }.to raise_error(ActiveRecord::RecordInvalid) }
@@ -189,7 +189,7 @@ RSpec.describe JobApplication do
 
   describe "cover_letter validations" do
     context "when job_offer does not require a cover letter" do
-      let(:job_offer) { create(:job_offer, cov_letter_required: false) }
+      let(:job_offer) { create(:job_offer, cover_lettre_required: false) }
       let(:job_application) { build(:job_application, job_offer:) }
 
       it "is valid without a cover letter" do
@@ -198,7 +198,7 @@ RSpec.describe JobApplication do
     end
 
     context "when job_offer requires a cover letter" do
-      let(:job_offer) { create(:job_offer, cov_letter_required: true) }
+      let(:job_offer) { create(:job_offer, cover_lettre_required: true) }
 
       context "without a cover letter" do
         let(:job_application) { build(:job_application, job_offer:) }

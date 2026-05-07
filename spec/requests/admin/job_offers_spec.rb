@@ -134,8 +134,8 @@ RSpec.describe "Admin::Job_Offers" do
           job_offer: {
             ict_tct: true,
             asc: true,
-            cov_letter_required: true,
-            position_nb: 3
+            cover_lettre_required: true,
+            positions_count: 3
           }
         }
       end
@@ -148,12 +148,12 @@ RSpec.describe "Admin::Job_Offers" do
         expect { update_request }.to change { job_offer.reload.asc }.from(false).to(true)
       end
 
-      it "saves cov_letter_required" do
-        expect { update_request }.to change { job_offer.reload.cov_letter_required }.from(false).to(true)
+      it "saves cover_lettre_required" do
+        expect { update_request }.to change { job_offer.reload.cover_lettre_required }.from(false).to(true)
       end
 
-      it "saves position_nb" do
-        expect { update_request }.to change { job_offer.reload.position_nb }.from(1).to(3)
+      it "saves positions_count" do
+        expect { update_request }.to change { job_offer.reload.positions_count }.from(1).to(3)
       end
     end
 

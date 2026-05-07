@@ -117,7 +117,7 @@ fr:
         contract_type_id: "Type de contrat"
         contract_duration: "Durée du contrat"
         contract_start_on: "Prise de fonction souhaitée"
-        cov_letter_required: Lettre de motivation obligatoire pour cette offre d'emploi
+        cover_lettre_required: Lettre de motivation obligatoire pour cette offre d'emploi
         is_remote_possible: "Télétravail possible ?"
         ict_tct: "ICT-TCT"
         sector: "Secteur / Filière"
@@ -131,7 +131,7 @@ fr:
         mobilia_value: "Référence MOBILIA"
         mobilia_date: "Date de publication"
         application_deadline: "Date limite de candidature"
-        position_nb: "Nombre de postes"
+        positions_count: "Nombre de postes"
         spontaneous: Candidature spontanée
       organization:
         administrator_email_suffix: "Suffixes d'email obligatoire pour les comptes admin"

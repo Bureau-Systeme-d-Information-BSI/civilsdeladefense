@@ -518,8 +518,8 @@ ActiveRecord::Schema[7.1].define(version: 2026_05_05_145800) do
     t.integer "financial_estimate_job_applications_count", default: 0, null: false
     t.boolean "ict_tct", default: false, null: false
     t.boolean "asc", default: false, null: false
-    t.boolean "cov_letter_required", default: false, null: false
-    t.integer "position_nb", default: 1, null: false
+    t.boolean "cover_lettre_required", default: false, null: false
+    t.integer "positions_count", default: 1, null: false
     t.index ["archiving_reason_id"], name: "index_job_offers_on_archiving_reason_id"
     t.index ["bop_id"], name: "index_job_offers_on_bop_id"
     t.index ["category_id"], name: "index_job_offers_on_category_id"

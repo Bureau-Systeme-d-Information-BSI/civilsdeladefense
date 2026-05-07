@@ -106,6 +106,12 @@ class JobOffer < ApplicationRecord
   scope :publicly_visible, -> { where(state: :published) }
   scope :search_import, -> { includes(*SETTINGS) }
   scope :bookmarked, ->(user) { joins(:bookmarks).where(bookmarks: {user: user}) }
+  scope :recents, -> { where(published_at: 24.hours.ago..) }
+  scope :with_open_applications_in, ->(state) {
+    joins(:job_applications)
+      .where(job_applications: {state:, rejected: false})
+      .distinct
+  }
 
   enum most_advanced_job_applications_state: {
     start: -1,
@@ -160,6 +166,8 @@ class JobOffer < ApplicationRecord
   end
 
   delegate :name, to: :contract_type, prefix: true, allow_nil: true
+
+  def full_title = "#{identifier} #{title}"
 
   def contract_duration_name
     return nil unless contract_type&.duration

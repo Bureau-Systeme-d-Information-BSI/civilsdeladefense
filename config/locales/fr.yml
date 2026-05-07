@@ -197,6 +197,7 @@ fr:
       subject: "[%{service_name}] Notification « Gestionnaire » - Prise de poste"
     new_document:
       subject: "[%{service_name}] Nouveau document à consulter"
+  reports_mailer:
     daily_summary:
       subject: "[%{service_name}] Rapport journalier"
       generic_title: "Candidatures %{state}"
@@ -206,6 +207,8 @@ fr:
         title: "Nouvelles candidatures"
       published_job_offers:
         title: "Offres publiées récemment"
+    employer_recruiter_daily_report:
+      subject: "[%{service_name}] Rapport quotidien « Employeur »"
   platform_mailer:
     confirmation_instructions_admin:
       greeting: Bonjour,
@@ -227,6 +230,9 @@ fr:
       job_applications: "Mes candidatures"
       job_offers: "Nos offres"
       logout: "Déconnexion"
+  daily_report:
+    sections:
+      new_offers: "Nouvelle offre"
   account:
     job_application_files:
       update:

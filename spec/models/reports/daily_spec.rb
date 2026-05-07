@@ -10,7 +10,7 @@ RSpec.describe Reports::Daily do
     let(:other_administrator) { create(:administrator, roles: %w[employer_recruiter]) }
 
     it "returns new_offers followed by every application state in order" do
-      expect(sections.map(&:key)).to eq(["new_offers"] + JobApplication::ORDERED_STATES)
+      expect(sections.map(&:key)).to eq(["new_offers"] + JobApplication.states.keys)
     end
 
     it "exposes count, human_state and items for each section" do
@@ -60,7 +60,7 @@ RSpec.describe Reports::Daily do
       end
     end
 
-    JobApplication::ORDERED_STATES.each do |state|
+    JobApplication.states.keys.each do |state|
       describe "#{state} section" do
         subject(:section) { sections.find { |s| s.key == state } }
 

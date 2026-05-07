@@ -45,6 +45,10 @@ class JobApplication < ApplicationRecord
   has_many :job_application_files, index_errors: true, dependent: :destroy
   accepts_nested_attributes_for :job_application_files
 
+  mount_uploader :cover_letter, DocumentUploader, mount_on: :cover_letter_file_name
+  validates :cover_letter, presence: true, if: -> { job_offer.cover_lettre_required? }
+  validates :cover_letter, file_size: {less_than: 2.megabytes}, if: -> { cover_letter.present? }
+
   scope :with_category, -> { where.not(category: nil) }
 
   validates :user_id, uniqueness: {scope: :job_offer_id}, on: :create, allow_nil: true # rubocop:disable Rails/UniqueValidationWithoutIndex
@@ -53,6 +57,7 @@ class JobApplication < ApplicationRecord
   validate :requested_files_not_validated,
     if: -> { state_changed? && state_was.present? && JobApplication.states[state] > JobApplication.states[state_was] },
     unless: -> { requested_files_validated? }
+  validate :cant_exceed_positions_count, if: -> { state_changed? && JobApplication.states[state] > JobApplication.states["financial_estimate"] }
   validate :cant_be_accepted_twice, if: -> { accepted? }, unless: -> { has_accepted_other_job_application? }
   validate :dar_validated, if: -> { state_changed? && contract_drafting? }, unless: :dar?
 
@@ -301,6 +306,14 @@ class JobApplication < ApplicationRecord
     errors.add(:state, :cant_accept_before_delay)
   end
 
+  def cant_exceed_positions_count
+    return if JobApplication.states[state_was.to_s].to_i > JobApplication.states["financial_estimate"]
+
+    advanced_states = JobApplication.all_states_greater_than("financial_estimate")
+    advanced_count = job_offer.job_applications.not_rejected.where(state: advanced_states).where.not(id: id).count
+    errors.add(:state, :cant_exceed_positions_count) if advanced_count >= job_offer.positions_count
+  end
+
   def cant_accept_remaining_initial_job_applications
     return if state.to_s != "accepted"
     return if state_was.to_s == "accepted"
@@ -367,6 +380,7 @@ end
 #
 #  id                                :uuid             not null, primary key
 #  administrator_notifications_count :integer          default(0)
+#  cover_letter_file_name            :string
 #  dar                               :boolean          default(FALSE), not null
 #  emails_administrator_unread_count :integer          default(0)
 #  emails_count                      :integer          default(0)

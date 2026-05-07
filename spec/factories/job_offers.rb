@@ -61,6 +61,7 @@ end
 #  after_meeting_rejected_job_applications_count    :integer          default(0), not null
 #  application_deadline                             :date
 #  archived_at                                      :datetime
+#  asc                                              :boolean          default(FALSE), not null
 #  city                                             :string
 #  contract_drafting_job_applications_count         :integer          default(0), not null
 #  contract_feedback_waiting_job_applications_count :integer          default(0), not null
@@ -69,6 +70,7 @@ end
 #  country_code                                     :string
 #  county                                           :string
 #  county_code                                      :integer
+#  cover_lettre_required                            :boolean          default(FALSE), not null
 #  csp_date                                         :date
 #  csp_value                                        :string
 #  description                                      :text
@@ -77,6 +79,7 @@ end
 #  estimate_monthly_salary_net                      :string
 #  featured                                         :boolean          default(FALSE)
 #  financial_estimate_job_applications_count        :integer          default(0), not null
+#  ict_tct                                          :boolean          default(FALSE), not null
 #  identifier                                       :string
 #  initial_job_applications_count                   :integer          default(0), not null
 #  is_remote_possible                               :boolean
@@ -90,6 +93,7 @@ end
 #  organization_description                         :text
 #  phone_meeting_job_applications_count             :integer          default(0), not null
 #  phone_meeting_rejected_job_applications_count    :integer          default(0), not null
+#  positions_count                                  :integer          default(1), not null
 #  postcode                                         :string
 #  published_at                                     :datetime
 #  recruitment_process                              :text

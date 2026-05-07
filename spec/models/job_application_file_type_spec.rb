@@ -292,6 +292,16 @@ RSpec.describe JobApplicationFileType do
       it { is_expected.not_to include(jaft_non_required_still_visible) }
       it { is_expected.not_to include(jaft_non_required_visible_after) }
     end
+
+    describe ".excluding_cover_letter" do
+      subject { described_class.excluding_cover_letter }
+
+      let!(:cover_letter_type) { create(:job_application_file_type, name: JobApplicationFileType::COVER_LETTER_NAME) }
+      let!(:other_type) { create(:job_application_file_type, name: "Autre document") }
+
+      it { is_expected.not_to include(cover_letter_type) }
+      it { is_expected.to include(other_type) }
+    end
   end
 end
 

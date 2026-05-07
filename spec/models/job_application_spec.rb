@@ -55,6 +55,51 @@ RSpec.describe JobApplication do
       end
     end
 
+    describe "#cant_exceed_positions_count" do
+      subject(:acceptance) { job_application.accepted! }
+
+      let(:job_offer) { create(:job_offer, positions_count: 1) }
+      let(:job_application) { create(:job_application, job_offer:, state: :financial_estimate) }
+
+      context "when no other advanced applications exist" do
+        it { is_expected.to be(true) }
+      end
+
+      context "when positions_count is not yet reached" do
+        let(:job_offer) { create(:job_offer, positions_count: 2) }
+
+        before { create(:job_application, job_offer:, state: :accepted) }
+
+        it { is_expected.to be(true) }
+      end
+
+      context "when positions_count is already reached" do
+        before { create(:job_application, job_offer:, state: :accepted) }
+
+        it { expect { acceptance }.to raise_error(ActiveRecord::RecordInvalid) }
+      end
+
+      context "when a non-accepted but advanced state (contract_drafting) counts toward positions_count" do
+        before { create(:job_application, job_offer:, state: :contract_drafting, dar: true) }
+
+        it { expect { acceptance }.to raise_error(ActiveRecord::RecordInvalid) }
+      end
+
+      context "when advanced applications are rejected (should not count)" do
+        before { create(:job_application, :rejected, job_offer:, state: :accepted) }
+
+        it { is_expected.to be(true) }
+      end
+
+      context "when moving forward from an already advanced state (guard)" do
+        let(:job_application) { create(:job_application, job_offer:, state: :accepted, dar: true) }
+
+        it "does not block forward progression" do
+          expect { job_application.contract_drafting! }.not_to raise_error
+        end
+      end
+    end
+
     describe "#dar_validated" do
       subject(:contract_drafting) { job_application.contract_drafting! }
 
@@ -215,6 +260,38 @@ RSpec.describe JobApplication do
     end
   end
 
+  describe "cover_letter validations" do
+    context "when job_offer does not require a cover letter" do
+      let(:job_offer) { create(:job_offer, cover_lettre_required: false) }
+      let(:job_application) { build(:job_application, job_offer:) }
+
+      it "is valid without a cover letter" do
+        expect(job_application).to be_valid
+      end
+    end
+
+    context "when job_offer requires a cover letter" do
+      let(:job_offer) { create(:job_offer, cover_lettre_required: true) }
+
+      context "without a cover letter" do
+        let(:job_application) { build(:job_application, job_offer:) }
+
+        it "is invalid" do
+          expect(job_application).not_to be_valid
+          expect(job_application.errors[:cover_letter]).to be_present
+        end
+      end
+
+      context "with a cover letter" do
+        let(:job_application) { build(:job_application, :with_cover_letter, job_offer:) }
+
+        it "is valid" do
+          expect(job_application).to be_valid
+        end
+      end
+    end
+  end
+
   describe "cant_accept_before_delay" do
     subject(:acceptance) { job_application.accepted! }
 
@@ -242,6 +319,7 @@ end
 #
 #  id                                :uuid             not null, primary key
 #  administrator_notifications_count :integer          default(0)
+#  cover_letter_file_name            :string
 #  dar                               :boolean          default(FALSE), not null
 #  emails_administrator_unread_count :integer          default(0)
 #  emails_count                      :integer          default(0)

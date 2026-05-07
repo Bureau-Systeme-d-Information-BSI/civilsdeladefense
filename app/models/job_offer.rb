@@ -74,7 +74,7 @@ class JobOffer < ApplicationRecord
   end
 
   ## Validations
-  validates :title, :description, :required_profile, :contract_start_on, presence: true
+  validates :title, :description, :required_profile, :organization_description, :recruitment_process, :contract_start_on, presence: true
   validates :contract_duration_id, presence: true, if: -> { contract_type&.duration }
   validates :contract_duration_id, absence: true, unless: -> { contract_type&.duration }
   validates :title, format: {with: %r{\A.*F/H\z}, message: :f_h}
@@ -82,7 +82,7 @@ class JobOffer < ApplicationRecord
   validates :title, format: {without: %r{\A.*\).*\z}, message: :brackets}
 
   with_options if: -> { published? } do
-    validates :title, length: {maximum: 70}
+    validates :title, length: {maximum: 100}
     validates :description, html_length: {maximum: 2000}
     validates :organization_description, html_length: {maximum: 1000}, presence: true
     validates :required_profile, html_length: {maximum: 1000}
@@ -423,6 +423,7 @@ end
 #  after_meeting_rejected_job_applications_count    :integer          default(0), not null
 #  application_deadline                             :date
 #  archived_at                                      :datetime
+#  asc                                              :boolean          default(FALSE), not null
 #  city                                             :string
 #  contract_drafting_job_applications_count         :integer          default(0), not null
 #  contract_feedback_waiting_job_applications_count :integer          default(0), not null
@@ -431,6 +432,7 @@ end
 #  country_code                                     :string
 #  county                                           :string
 #  county_code                                      :integer
+#  cover_lettre_required                            :boolean          default(FALSE), not null
 #  csp_date                                         :date
 #  csp_value                                        :string
 #  description                                      :text
@@ -439,6 +441,7 @@ end
 #  estimate_monthly_salary_net                      :string
 #  featured                                         :boolean          default(FALSE)
 #  financial_estimate_job_applications_count        :integer          default(0), not null
+#  ict_tct                                          :boolean          default(FALSE), not null
 #  identifier                                       :string
 #  initial_job_applications_count                   :integer          default(0), not null
 #  is_remote_possible                               :boolean
@@ -452,6 +455,7 @@ end
 #  organization_description                         :text
 #  phone_meeting_job_applications_count             :integer          default(0), not null
 #  phone_meeting_rejected_job_applications_count    :integer          default(0), not null
+#  positions_count                                  :integer          default(1), not null
 #  postcode                                         :string
 #  published_at                                     :datetime
 #  recruitment_process                              :text

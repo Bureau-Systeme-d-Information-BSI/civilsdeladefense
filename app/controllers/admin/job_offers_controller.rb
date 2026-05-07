@@ -235,6 +235,7 @@ class Admin::JobOffersController < Admin::BaseController
       sector_id estimate_monthly_salary_net estimate_annual_salary_gross
       location city county county_code country_code postcode region spontaneous
       organization_description mobilia_date mobilia_value csp_date csp_value application_deadline
+      ict_tct asc cover_lettre_required positions_count
     ]
     fields << {benefit_ids: []}
     fields << {drawback_ids: []}

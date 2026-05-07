@@ -148,6 +148,7 @@ class JobOffersController < ApplicationController
   def job_application_params
     params.require(:job_application).permit(
       :category_id,
+      :cover_letter,
       user_attributes: [
         :first_name,
         :last_name,

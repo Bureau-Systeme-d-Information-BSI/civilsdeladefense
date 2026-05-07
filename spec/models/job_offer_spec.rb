@@ -24,19 +24,52 @@ RSpec.describe JobOffer do
       it { is_expected.not_to include(non_matching_job_offer) }
     end
 
-    describe ".recents" do
-      subject { described_class.recents }
+    describe ".last_day" do # rubocop:disable RSpec/MultipleMemoizedHelpers
+      subject { described_class.last_day }
 
-      let!(:just_published) { create(:published_job_offer, published_at: 1.hour.ago) }
-      let!(:on_the_edge) { create(:published_job_offer, published_at: 23.hours.ago) }
-      let!(:too_old) { create(:published_job_offer, published_at: 25.hours.ago) }
+      let(:yesterday_start) { 1.day.ago.beginning_of_day }
+      let(:yesterday_end) { 1.day.ago.end_of_day }
+      let!(:in_yesterday) { create(:published_job_offer, published_at: yesterday_start + 12.hours) }
+      let!(:start_boundary) { create(:published_job_offer, published_at: yesterday_start) }
+      let!(:end_boundary) { create(:published_job_offer, published_at: yesterday_end) }
+      let!(:before_yesterday) { create(:published_job_offer, published_at: yesterday_start - 1.second) }
+      let!(:today) { create(:published_job_offer, published_at: Date.current.beginning_of_day) }
       let!(:never_published) { create(:job_offer, state: :draft, published_at: nil) }
 
-      it { is_expected.to include(just_published) }
+      it { is_expected.to include(in_yesterday) }
 
-      it { is_expected.to include(on_the_edge) }
+      it { is_expected.to include(start_boundary) }
 
-      it { is_expected.not_to include(too_old) }
+      it { is_expected.to include(end_boundary) }
+
+      it { is_expected.not_to include(before_yesterday) }
+
+      it { is_expected.not_to include(today) }
+
+      it { is_expected.not_to include(never_published) }
+    end
+
+    describe ".last_week" do # rubocop:disable RSpec/MultipleMemoizedHelpers
+      subject { described_class.last_week }
+
+      let(:last_week_start) { 1.week.ago.beginning_of_week }
+      let(:last_week_end) { 1.week.ago.end_of_week }
+      let!(:in_last_week) { create(:published_job_offer, published_at: last_week_start + 1.day) }
+      let!(:start_boundary) { create(:published_job_offer, published_at: last_week_start) }
+      let!(:end_boundary) { create(:published_job_offer, published_at: last_week_end) }
+      let!(:before_last_week) { create(:published_job_offer, published_at: last_week_start - 1.second) }
+      let!(:this_week) { create(:published_job_offer, published_at: Date.current.beginning_of_week) }
+      let!(:never_published) { create(:job_offer, state: :draft, published_at: nil) }
+
+      it { is_expected.to include(in_last_week) }
+
+      it { is_expected.to include(start_boundary) }
+
+      it { is_expected.to include(end_boundary) }
+
+      it { is_expected.not_to include(before_last_week) }
+
+      it { is_expected.not_to include(this_week) }
 
       it { is_expected.not_to include(never_published) }
     end

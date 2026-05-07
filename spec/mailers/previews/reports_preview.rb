@@ -7,4 +7,9 @@ class ReportsPreview < ActionMailer::Preview
     administrator = Administrator.employer_recruiters.first || Administrator.first
     ReportsMailer.with(administrator:).employer_recruiter_daily_report
   end
+
+  def employment_authority_weekly_report
+    administrator = Administrator.employment_authorities.first || Administrator.first
+    ReportsMailer.with(administrator:).employment_authority_weekly_report
+  end
 end

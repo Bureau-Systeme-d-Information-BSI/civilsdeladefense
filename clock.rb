@@ -42,6 +42,12 @@ module Clockwork
     end
   end
 
+  every 1.week, "employment_authority_weekly_report", at: "Monday 08:00" do
+    Administrator.employment_authorities.find_each do |administrator|
+      ReportsMailer.with(administrator:).employment_authority_weekly_report.deliver_later
+    end
+  end
+
   every 30.minutes, "warm_up_job_applications_stats_cache" do
     [
       (1.month.ago.to_date..1.day.ago.to_date),

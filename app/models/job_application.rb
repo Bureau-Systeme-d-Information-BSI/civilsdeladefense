@@ -47,7 +47,7 @@ class JobApplication < ApplicationRecord
 
   mount_uploader :cover_letter, DocumentUploader, mount_on: :cover_letter_file_name
   validates :cover_letter, presence: true, if: -> { job_offer.cover_lettre_required? }
-  validates :cover_letter, file_size: {less_than: 2.megabytes}, if: -> { cover_letter.present? }
+  validates :cover_letter, file_size: {less_than: 2.megabytes}, if: -> { cover_letter_file_name_changed? }
 
   scope :with_category, -> { where.not(category: nil) }
 

@@ -290,6 +290,17 @@ RSpec.describe JobApplication do
         end
       end
     end
+
+    context "when the cover letter is not being changed" do
+      let(:job_offer) { create(:job_offer, cover_lettre_required: true) }
+      let!(:job_application) { create(:job_application, :with_cover_letter, job_offer:) }
+
+      it "skips file_size validation" do
+        job_application.assign_attributes(rejected: true)
+        allow(job_application.cover_letter).to receive(:size).and_raise(NoMethodError)
+        expect { job_application.valid? }.not_to raise_error
+      end
+    end
   end
 
   describe "cant_accept_before_delay" do

@@ -98,7 +98,7 @@ RSpec.describe "Admin::Settings::JobApplicationFileTypes" do
 
       it "does not create the job application file type" do
         expect { create_request }.not_to change(JobApplicationFileType, :count)
-        expect(response).to have_http_status(:unprocessable_content)
+        expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end

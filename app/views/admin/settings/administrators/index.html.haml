@@ -49,7 +49,7 @@
           %td
             = f.input :employers_id_in, collection: Employer.all.map{|e| [e.name.truncate(10, separator: '…'), e.id]}, label: false
           %td
-            = f.input :role_eq, collection: Administrator.roles.map{|x,y| [Administrator.human_attribute_name("roles.#{ x }"), y]}, label: false, input_html: {class: 'w-100'}
+            = f.input :has_role_in, collection: Administrator.roles.map{|x,_| [Administrator.human_attribute_name("roles.#{ x }"), x]}, label: false, input_html: {class: 'w-100'}
           %td
           %td
           %td

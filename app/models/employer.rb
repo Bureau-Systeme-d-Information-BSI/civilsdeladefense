@@ -10,6 +10,10 @@ class Employer < ApplicationRecord
 
   acts_as_nested_set counter_cache: :children_count
 
+  def self.ransackable_attributes(auth_object = nil)
+    %w[id name code]
+  end
+
   def self.tree
     Employer.roots.map { |e| [e.name, e.children] }
   end

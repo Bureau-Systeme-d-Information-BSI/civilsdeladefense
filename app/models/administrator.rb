@@ -39,17 +39,17 @@ class Administrator < ApplicationRecord
   has_many :preferred_users_lists, dependent: :destroy
 
   def self.ransackable_attributes(auth_object = nil)
-    [
-      "first_name",
-      "last_name",
-      "email",
-      "employer_id",
-      "role"
-    ]
+    %w[first_name last_name email has_role]
   end
 
   def self.ransackable_associations(auth_object = nil)
-    ["employer"]
+    %w[employers]
+  end
+
+  ransacker :has_role, formatter: ->(role) {
+    Administrator.where("roles & ? != 0", 1 << ROLES[role.to_sym]).pluck(:id).presence
+  } do |parent|
+    parent.table[:id]
   end
 
   def supervisor_administrator_attributes=(attributes)

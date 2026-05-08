@@ -1,0 +1,22 @@
+<p>
+  Bonjour <%= @administrator.full_name %>,
+</p>
+
+<p>Vous êtes notifié comme « Employeur » sur la plateforme E-recrutement.</p>
+<p>Découvrez ci-dessous votre rapport journalier.</p>
+
+<% @sections.each do |section| %>
+  <h3><%= section.human_state %> : <%= section.count %></h3>
+  <% if section.items.any? %>
+    <ul>
+      <% section.items.each do |item| %>
+        <li>
+          <%= link_to item.title, item.link %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+<% end %>
+
+<p>Cordialement,</p>
+<p>L'équipe <%= @service_name %></p>

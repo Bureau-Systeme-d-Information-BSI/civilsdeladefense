@@ -1,5 +1,11 @@
 import "@hotwired/turbo-rails"
+import { StreamActions } from "@hotwired/turbo"
 import "./controllers"
+
+StreamActions.notify = function () {
+  const message = this.getAttribute("message")
+  if (message) Snackbar.show({ showAction: false, text: message })
+}
 
 import Rails from '@rails/ujs'
 Rails.start()
@@ -35,9 +41,8 @@ import displayCharts from './js/display-charts'
 
 import displaySnackbars from './js/display-snackbars'
 
-import { boardManagement, boardRedraw, boardShowRejectionModal } from './js/board'
+import { boardManagement, boardRedraw } from './js/board'
 window.boardRedraw = boardRedraw
-window.boardShowRejectionModal = boardShowRejectionModal
 
 import reloadWithTurbo from './js/reload-with-turbo'
 window.reloadWithTurbo = reloadWithTurbo

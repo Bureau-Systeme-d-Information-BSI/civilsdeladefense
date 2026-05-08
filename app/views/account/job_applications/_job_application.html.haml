@@ -12,5 +12,8 @@
           %span= job_offer_contract_type_display(job_offer)
           %em= job_offer.location
         .d-flex.flex-column.justify-content-center.align-items-center.text-center.ml-auto
-          %span= "Étape #{job_application.end_user_state_number}/#{JobApplication.end_user_states_regrouping.size}"
-          %em= JobApplication.human_attribute_name("state/#{job_application.end_user_state}")
+          - if job_application.rejected?
+            %span= "Refus ou désistement"
+          - else
+            %span= "Étape #{job_application.end_user_state_number}/#{JobApplication.end_user_states_regrouping.size}"
+            %em= JobApplication.human_attribute_name("state/#{job_application.end_user_state}")

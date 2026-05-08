@@ -3,8 +3,8 @@ fr:
     "yes": "Oui"
     "no": "Non"
     required:
-      text: 'obligatoire'
-      mark: '*'
+      text: "obligatoire"
+      mark: "*"
       # You can uncomment the line below if you need to overwrite the whole required html.
       # When using html, text and mark won't be used.
       # html: '<abbr title="required">*</abbr>'
@@ -64,15 +64,23 @@ fr:
         foreign_language_level: Niveau de langue étrangère
         category_html: "<span>Domaine professionnel <abbr title='obligatoire'>*</abbr></span>"
         level: "Categorie / Niveau de l'offre"
-        spontaneous: "Candidature spontanée"
         job_applications_count: "Candidatures"
       administrator:
-        current_password: 'Mot de passe actuel'
-        password: 'Nouveau mot de passe'
-        password_confirmation: 'Confirmation du mot de passe'
+        current_password: "Mot de passe actuel"
+        password: "Mot de passe"
+        password_confirmation: "Confirmation du mot de passe"
+        employers: "Chaîne d'emploi"
         employer: "Employeur"
-        grand_employer: "Grand Employeur"
+        grand_employer: "Employeur recruteur"
+        roles: "Rôles"
         role: "Rôle"
+        ace: ACE
+        ate: ATE
+        ace_ate: "Autorité d'emploi"
+        first_name: "Prénom"
+        last_name: "Nom"
+        title: "Fonction"
+        email: "Courriel"
       category:
         parent_id: "Catégorie parente"
       email:
@@ -82,22 +90,23 @@ fr:
       employer:
         name: "Nom"
         code: "Libellé"
-        parent_id: "Grand Employeur"
+        parent_id: "Employeur recruteur"
       job_application:
         experiences_fit_job_offer: "Expérience pour l'offre"
         skills_fit_job_offer: "Adéquate pour l'offre"
+        dar: "DAR validée"
       job_application_files:
         job_application_file_existing_id: Choisir un fichier existant
       job_application_file_type:
         kind: "Type"
         content: "Fichier"
-        from_state: "État à partir duquel ce type de fichier est visible"
-        by_default: "Visible dès que l'état défini précédemment est atteint ?"
+        required: "Obligatoire"
       job_offer:
+        asc: "ASC"
         title: "Intitulé du poste"
         professional_category: "Catégorie professionnelle"
         location_search: "Localisation"
-        employer: "Employeur"
+        employer: "Chaîne d’emploi"
         description: "Descriptif des missions"
         required_profile: "Profil recherché"
         organization_description: "Descriptif de l'organisation"
@@ -108,7 +117,9 @@ fr:
         contract_type_id: "Type de contrat"
         contract_duration: "Durée du contrat"
         contract_start_on: "Prise de fonction souhaitée"
+        cover_lettre_required: Lettre de motivation obligatoire pour cette offre d'emploi
         is_remote_possible: "Télétravail possible ?"
+        ict_tct: "ICT-TCT"
         sector: "Secteur / Filière"
         option_cover_letter: "Lettre de motivation"
         option_resume: "CV"
@@ -120,6 +131,8 @@ fr:
         mobilia_value: "Référence MOBILIA"
         mobilia_date: "Date de publication"
         application_deadline: "Date limite de candidature"
+        positions_count: "Nombre de postes"
+        spontaneous: Candidature spontanée
       organization:
         administrator_email_suffix: "Suffixes d'email obligatoire pour les comptes admin"
         brand_name: "Entité bloc marque"
@@ -181,8 +194,8 @@ fr:
         official_level: "Niveau officiel"
       user:
         certify_majority_html: "<span>Je certifie être majeur(e) et disposer de mes droits civiques <abbr title='obligatoire'>*</abbr></span>"
-        password: 'Mot de passe'
-        password_confirmation: 'Confirmation du mot de passe'
+        password: "Mot de passe"
+        password_confirmation: "Confirmation du mot de passe"
         preferred_users_list_ids: "Mes listes de candidats"
         receive_job_offer_mails: "J'accepte de recevoir de nouvelles offres d'emploi par email"
         suspension_reason: "Raison"
@@ -194,42 +207,40 @@ fr:
       defaults:
         first_name: "Prénom"
         last_name: "Nom"
-        email: 'Courriel'
+        email: "Courriel"
       user:
-        password: 'Mot de passe'
+        password: "Mot de passe"
       administrator:
-        name: 'Nom complet'
-        password: 'Mot de passe'
-        password_confirmation: 'Confirmation du mot de passe'
-        email_grand_employer: 'Courriel'
-        email_brh: 'Courriel'
+        first_name: "Mélodie"
+        last_name: "Deschamps"
+        email: "melodie.deschamps@intradef.gouv.fr"
+        name: "Mélodie Deschamps"
+        email_grand_employer: "Courriel"
+        email_brh: "Courriel"
         supervisor_administrator:
-          email: "Courriel Employeur Superviseur"
+          email: "Courriel Autorité d’emploi"
         grand_employer_administrator:
-          email: "Courriel Grand Employeur"
-        title: "Fonction"
+          email: "Courriel Employeur recruteur"
+        title: "Chef·fe de département qualité"
       message:
-        body: 'Ce commentaire ne sera visible que par vous et les autres membres de votre équipe.'
+        body: "Ce commentaire ne sera visible que par vous et les autres membres de votre équipe."
     prompts:
       administrator:
-        role: 'Sélectionner un rôle'
+        role: "Sélectionner un rôle"
       job_application:
-        rejection_reason_id: 'Choisissez un motif de refus'
+        rejection_reason_id: "Choisissez un motif de refus"
       job_offer:
         archiving_reason_id: "Choisissez un motif d'archivage"
     include_blanks:
       administrator:
-        role: 'Aucun rôle'
+        role: "Aucun rôle"
       job_offer:
-        archiving_reason_id: 'Aucune raison'
+        archiving_reason_id: "Aucune raison"
     hints:
       defaults:
-        current_position: "Si aucun poste occupé actuellement, saisir \"sans emploi\"."
+        current_position: 'Si aucun poste occupé actuellement, saisir "sans emploi".'
       administrator:
-        title: "Facultatif. Ex. : Chef de département Qualité"
-        first_name: "Facultatif"
-        last_name: "Facultatif"
-        employer_id: "Actif seulement si le rôle est \"Employeur\""
+        employer_id: 'Actif seulement si le rôle est "Employeur"'
         password: "12 caractères minimum, dont au moins 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial"
       employer:
         code: "Ce champ est utilisé pour construire l'identifiant unique d'une annonce."

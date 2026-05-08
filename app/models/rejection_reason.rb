@@ -2,10 +2,15 @@
 
 # Reasons when rejecting a job application. Manageable by admins.
 class RejectionReason < ApplicationRecord
+  WITHDRAWAL_REASON = "Désistement du/de la candidat·e"
   acts_as_list
   default_scope -> { order(position: :asc) }
 
   validates :name, presence: true
+
+  def self.withdrawal_reason
+    find_by(name: WITHDRAWAL_REASON)
+  end
 end
 
 # == Schema Information

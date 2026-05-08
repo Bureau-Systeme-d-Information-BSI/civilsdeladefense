@@ -5,10 +5,10 @@
     - klasses = []
     - klasses << "active-step" if i <= current_number
     - klasses << "step-done" if i < current_number
-    - klasses << "step-rejected" if job_application.rejected_state? && i == current_number
+    - klasses << "step-rejected" if job_application.rejected && i == current_number
     .rf-stepper-step{class: klasses}
       .rf-stepper-circle
-        %span= i
+        %span= i + 1
       .rf-stepper-title
         = JobApplication.human_attribute_name("state/end_user_state_#{i}")
       .rf-stepper-bar-left

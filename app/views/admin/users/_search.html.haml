@@ -27,6 +27,8 @@
             = render partial: 'filter_spontaneous'
           .col-12.col-md-6.col-lg-4
             = render partial: 'filter_concerned'
+          .col-12.col-md-6.col-lg-4
+            = render partial: 'filter_rejected'
         .d-flex.flex-row-reverse.align-items-center
           = submit_tag t('buttons.search'), name: nil, class: 'btn btn-primary btn-raised btn-small'
           = link_to 'Réinitialiser', url_for, class: 'mr-3 text-grey text-underline'

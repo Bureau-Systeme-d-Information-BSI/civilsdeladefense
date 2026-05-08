@@ -82,6 +82,7 @@ fr:
     preview: "Aperçu"
     publish: "Publier"
     reactivate: "Réactiver"
+    reject: "Refuser"
     resend_confirmation_instructions: "Renvoyer le courriel d'activation"
     save: "Enregistrer"
     search: "Rechercher"
@@ -117,6 +118,7 @@ fr:
       your_account_creation: "Votre création de compte"
       resume: "CV"
       resume_html: "CV <abbr title='obligatoire'>*</abbr>"
+      cover_letter: "Lettre de motivation (PDF uniquement, max 2Mo)"
   job_offers:
     no_bookmarks:
       title: Vous n'avez pas encore d'offres favorites
@@ -175,7 +177,28 @@ fr:
   applicant_notifications_mailer:
     send_job_offer:
       subject: "Nouvelle offre"
+    notify_new_state:
+      subject: "Votre candidature à l'offre %{job_offer_identifier} sur %{service_name}"
+    notify_new_documents:
+      subject: "Votre candidature à l'offre %{job_offer_title} sur %{service_name} – Nouveaux documents à consulter"
+    notify_rejected:
+      subject: "Votre candidature à l'offre %{job_offer_title} sur %{service_name}"
+    notify_withdrawn:
+      subject: "Votre candidature à l'offre %{job_offer_title} sur %{service_name} – Confirmation de votre désistement"
   notifications_mailer:
+    new_email:
+      subject: "[%{service_name}] Notification « Employeur » - Etape %{state}"
+    contract_drafting:
+      subject: "[%{service_name}] Notification « Gestionnaire » - Validation dossier complet"
+    contract_feedback_waiting:
+      subject: "[%{service_name}] Notification « Gestionnaire » - Contrat"
+    contract_received:
+      subject: "[%{service_name}] Notification « Gestionnaire » - Dossier de paie"
+    affected:
+      subject: "[%{service_name}] Notification « Gestionnaire » - Prise de poste"
+    new_document:
+      subject: "[%{service_name}] Nouveau document à consulter"
+  reports_mailer:
     daily_summary:
       subject: "[%{service_name}] Rapport journalier"
       generic_title: "Candidatures %{state}"
@@ -185,12 +208,15 @@ fr:
         title: "Nouvelles candidatures"
       published_job_offers:
         title: "Offres publiées récemment"
+    employer_recruiter_daily_report:
+      subject: "[%{service_name}] Rapport quotidien « Employeur »"
+    employment_authority_weekly_report:
+      subject: "[%{service_name}] Rapport hebdomadaire « Autorité d'emploi »"
   platform_mailer:
     confirmation_instructions_admin:
       greeting: Bonjour,
-      instruction: "Vous avez été notifié comme « %{roles} » dans une offre d’emploi sur le site de recrutement %{site}. Pour y accéder, veuillez confirmer votre compte en cliquant sur le lien suivant :"
-      instruction_no_roles: "Vous avez été ajouté sur le site de recrutement %{site}. Pour y accéder, veuillez confirmer votre compte en cliquant sur le lien suivant :"
-      instruction_1: Votre compte ne sera pas activé tant que toutes les étapes de création de votre compte ou de confirmation de votre compte ne seront pas finalisées dans l’application.
+      instruction: "Un compte a été créé sur le site de recrutement des agents contractuels du Ministère des Armées %{site}. Pour y accéder, veuillez confirmer votre compte en cliquant sur le lien suivant :"
+      instruction_1: Votre compte ne sera pas activé tant que toutes les étapes de confirmation de votre compte ne seront pas finalisées dans l’application.
       team: L'équipe de recrutement de %{service_name}
       action: Je confirme mon courriel
   shared:
@@ -207,6 +233,13 @@ fr:
       job_applications: "Mes candidatures"
       job_offers: "Nos offres"
       logout: "Déconnexion"
+  reports:
+    daily:
+      sections:
+        new_offers: "Nouvelles offres"
+    weekly:
+      sections:
+        new_offers: "Nouvelles offres"
   account:
     job_application_files:
       update:
@@ -224,6 +257,11 @@ fr:
         ongoing_none: "Aucune candidature en cours"
       job_application:
         created_at: "Candidaté il y a %{time_ago_in_words}"
+      job_offer:
+        withdraw: "Retirer ma candidature"
+        withdraw_confirmation: "Souhaitez-vous retirer votre candidature ?"
+        confirm: "Confirmer"
+        cancel: "Annuler"
     emails:
       create:
         success: "Courriel envoyé !"
@@ -264,29 +302,24 @@ fr:
       want_destroy:
         title: "Danger"
         destroy: "Je veux supprimer mon compte"
+    withdrawals:
+        create:
+          success: "Désistement enregistré"
+          failure: "Impossible de modifier cette candidature"
   admin:
     accounts:
-      navbar:
-        show: "Informations"
-        change_password: "Mot de passe"
-        change_email: "Courriel"
       show:
         title: "Votre compte"
       form_administrator:
         title: "Vos informations"
-        mention_supervisor_administrator_html: "Courriel et entité de votre <strong>Employeur Superviseur</strong>"
-        mention_grand_employer_administrator_html: "Courriel et entité de votre <strong>Grand Employeur</strong>"
-      change_password:
-        title: "Changement de mot de passe"
-      update_password:
-        success: "Mot de passe modifié !"
-      change_email:
-        title: "Changement de courriel"
-      update_email:
-        success: "Nouveau courriel ajouté, en attente de confirmation !"
+        mention_supervisor_administrator_html: "Courriel et entité de votre <strong>Autorité d’emploi</strong>"
+        mention_grand_employer_administrator_html: "Courriel et entité de votre <strong>Employeur recruteur</strong>"
       update:
         success: "Vos informations ont été mises à jour"
+        success_new_email: "Votre courriel a bien été modifié. Vérifiez votre boîte pour confirmer votre nouveau courriel."
     job_applications:
+      rejection_form:
+        confirm: "Confirmez-vous le refus ou désistement du candidat ?"
       show:
         user_deleted: Ce compte candidat a été supprimé
       index:
@@ -308,6 +341,7 @@ fr:
         applied_on: "Candidaté le %{date}"
       files:
         title: "Documents du candidat"
+        cover_letter: "Lettre de motivation"
         subtitle_1: "Documents à fournir par le candidat"
         subtitle_2: "Documents complémentaires"
         none_atm: "Aucun fichiers demandés"
@@ -323,12 +357,19 @@ fr:
       update:
         success: "Profil mis à jour !"
         failure: "Erreur dans la mise à jour du profil"
+      users:
+        update:
+          success: "Profil mis à jour !"
+          failure: "Erreur dans la mise à jour du profil"
       job_application_activity:
         title: "Activité et commentaires"
         title_state: "État de la candidature"
+        title_rejection_reason: "Refus ou désistement"
         activities:
           creation_html: "<span class='user-name'>%{name}</span> a postulé"
           change_state_html: "<span class='user-name'>%{admin_name}</span> a déplacé <span class='user-name'>%{name}</span> dans la colonne “%{state_name}”"
+          dar_change_true_html: "<span class='user-name'>%{admin_name}</span> a validé le DAR"
+          dar_change_false_html: "<span class='user-name'>%{admin_name}</span> a invalidé le DAR"
           message_html: "<span class='user-name'>%{admin_name}</span> a commenté la candidature de <span class='user-name'>%{name}</span>"
           email_html: "<span class='user-name'>%{admin_name}</span> a envoyé un courriel à <span class='user-name'>%{name}</span>"
           email_simple_html: "<span class='user-name'>%{from_name}</span> a envoyé un courriel"
@@ -339,6 +380,7 @@ fr:
           rejection_reason_update_html: "<span class='user-name'>%{name}</span> a mis à jour le motif de refus à <span class='user-name'>%{current_name}</span>"
       change_state:
         success: "Candidature passée en statut %{state} !"
+        failure: "Vous n'êtes pas autorisé(e) à faire passer la candidature en statut %{state}."
     job_application_files:
       optional_job_application_file_type:
         action_name: "Demander"
@@ -358,14 +400,30 @@ fr:
         download: "Télécharger"
         do_not_ask: "Ne plus demander"
       job_application_file_upload:
-        help: "Téléverser un fichier à la place de l'utilisateur"
+        help: "Téléverser un fichier"
       uncheck:
         success: "Fichier invalidé !"
+    dars:
+      update:
+        success: "Validation DAR mise à jour avec succès"
+        unauthorized: "Vous n'êtes pas autorisé(e) à valider ou invalider la DAR de cette candidature."
+    rejections:
+      new:
+        title: "Refus ou désistement"
+      create:
+        success: "Candidature refusée ou désistée"
+        unauthorized: "Vous n'êtes pas autorisé(e) à refuser cette candidature."
+      destroy:
+        success: "La candidature a été dé-refusée"
+        unauthorized: "Vous n'êtes pas autorisé(e) à annuler le refus de cette candidature."
     job_offers:
+      add_actor:
+        admin_not_found_html: 'Ce mail n’a pas de compte existant, veuillez envoyer une demande de création de compte via le lien suivant : <a href="https://demarche.numerique.gouv.fr/commencer/creation-maj-compte-e-recrutement">https://demarche.numerique.gouv.fr/commencer/creation-maj-compte-e-recrutement</a>'
       new_transfer:
         submit: "Transférer"
       transfer:
         success: "Annonce transférée !"
+        error: "L'annonce n'a pas pu être transférée, veuillez vérifier l'email du nouveau propriétaire"
       send_to_list:
         success: "Annonce diffusées !"
       feature:
@@ -390,14 +448,15 @@ fr:
       edit:
         title: "Édition de l'offre %{job_offer_identifier}"
       form:
-        card_1_title_new: "1. Rédaction de l'offre"
+        card_1_title_new: "1. Création de l’offre d’emploi"
         card_1_title_edit: "1. Édition de l'offre %{job_offer_identifier}"
-        card_1_1_title: "1.1 Description de l'offre"
-        card_1_2_title: "1.2 Paramètres de l'offre"
-        card_1_3_title: "1.3. Estimation rémunération salariale"
+        card_1_1_title: "1.1 Informations générales"
+        card_1_2_title: "1.2 Description de l'offre"
+        card_1_3_title: "1.3 Paramètres de l’offre"
+        card_1_4_title: "1.4 Estimation rémunération salariale"
       form_actors:
-        card_title: "3. Notifications"
-        card_subtitle: "3.1 Acteurs du processus notifiés"
+        card_title: "2. Rôles sur cette offre"
+        card_subtitle: "Les acteurs affiliés et notifiés"
       job_offer:
         follow: "Suivre"
         unfollow: "Ne plus suivre"
@@ -546,9 +605,6 @@ fr:
         nav_files: "Documents"
         nav_overview: "Candidature"
         nav_profile: "Profil"
-      update:
-        success: "Profil mis à jour !"
-        failure: "Erreur dans la mise à jour du profil"
     settings:
       destroy:
         failure:
@@ -600,7 +656,6 @@ fr:
           last_connection: "Dernière conn. :"
           invited_by: "Invité par"
           never_connected: "Jamais connecté"
-          no_role: "Aucun rôle"
           lock_explanation: "Ce compte est bloqué car trop de tentatives infructueuses de se connecter"
         index:
           title: "Comptes utilisateurs"
@@ -608,9 +663,8 @@ fr:
           table:
             photo: "Avatar"
             name: "Nom"
-            employer: "Employeur"
-            role: "Rôle"
-            job_offer_actor_roles: "Rôles sur les offres"
+            employer: "Chaîne d'emploi"
+            roles: "Rôles"
             last_sign_in_at: "Dernière connexion"
             created_at: "Créé le"
           account_active:
@@ -636,6 +690,7 @@ fr:
         edit:
           title: "Modifier un compte utilisateur"
           transfer: "Transférer les offres"
+          transfer_email_label: "Email du nouveau propriétaire des offres"
           submit: "Transférer"
           list: "Liste des offres"
         deactivate:
@@ -673,10 +728,10 @@ fr:
       employers:
         index:
           title: "Employeurs"
-          add_grand_employer: "Ajouter un grand employeur"
+          add_grand_employer: "Ajouter un Employeur recruteur"
           add_employer: "Ajouter un employeur"
           add: "Ajouter"
-          grand_employer: "Grand Employeur"
+          grand_employer: "Employeur recruteur"
           employer: "Employeur"
           card_title:
             zero: "Aucun employeur"
@@ -848,9 +903,9 @@ fr:
             one: "1 type de fichier"
             other: "%{count} types de fichier"
         new:
-          title: "Ajouter un nouveau type de fichier"
+          title: "Paramétrage du fichier"
         edit:
-          title: "Modifier le type de fichier '%{name}'"
+          title: "Paramétrage du fichier '%{name}'"
         create:
           success: "Type de fichier créé !"
         update:
@@ -922,9 +977,9 @@ fr:
           title: "Disponibilités d'un·e candidat·e"
           add: "Ajouter"
           card_title:
-            zero: 'Aucune disponibilité pour le moment'
-            one: '1 disponibilité'
-            other: '%{count} disponibilités'
+            zero: "Aucune disponibilité pour le moment"
+            one: "1 disponibilité"
+            other: "%{count} disponibilités"
         new:
           title: "Ajouter une disponibilité"
         create:
@@ -1150,12 +1205,20 @@ fr:
         not_strong_enough: "Pas assez complexe : doit avoir au moins 12 caractères, dont au moins 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial"
         spoofed_media_type: "Type de fichier incorrect"
       models:
+        administrator:
+          attributes:
+            base:
+              transfer_administrator_not_found: 'Ce mail n’a pas de compte existant, veuillez envoyer une demande de création de compte via le lien suivant : <a href="https://demarche.numerique.gouv.fr/commencer/creation-maj-compte-e-recrutement">https://demarche.numerique.gouv.fr/commencer/creation-maj-compte-e-recrutement</a>'
         job_application:
           attributes:
             state:
               cant_accept_before_delay: "Un délai de 30 jours après la publication de l'offre sur CSP doit être respecté avant d'accepter une candidature"
-              complete_files_before_draft_contract: "Tous les documents doivent être téléversés et validés avant la rédaction du contrat"
+              cant_accept_remaining_initial_job_applications: "Toutes les nouvelles candidatures doivent être traitées avant d'accepter une candidature"
+              cant_exceed_positions_count: "Le nombre de candidatures acceptées atteint déjà le nombre de postes disponibles pour cette offre"
+              requested_files_missing: "Des documents obligatoires sont manquants ou non validés : %{documents}"
               cant_be_accepted_twice: 'Cette action n''est pas possible. Ce candidat est déjà à l''état "Retenu" dans une offre d''emploi.'
+              dar_unvalidated: 'Une autorité d''emploi affiliée à l''offre doit cocher la case "DAR validée" pour permettre la poursuite du processus de recrutement.'
+              immutable_rejected: "Cette candidature a été refusée, son état ne peut pas être modifié"
             cover_letter_content_type:
               invalid: "PDF uniquement, max 2Mo"
             resume_content_type:
@@ -1163,14 +1226,24 @@ fr:
             photo:
               file_size_is_less_than_or_equal_to: "Est trop volumineuse (ne doit pas dépasser %{count})"
               allowed_file_content_types: "au mauvais format (seuls les formats JPG et PNG sont acceptés)"
+        job_application_file_type:
+          attributes:
+            visibility_rules:
+              must_have_administrator: "doit contenir au moins une règle pour le back office"
+              must_have_user: "doit contenir au moins une règle pour le front office"
+            base:
+              must_have_at_least_one_validator: "Vous devez sélectionner au moins un acteur autorisé à valider la pièce"
         job_application_file:
           attributes:
             content:
               file_size_is_less_than: "Fichier trop volumineux, doit être max. 2Mo"
+            base:
+              not_authorized_to_validate: "Vous n'êtes pas autorisé(e) à valider ou invalider ce type de pièce"
         job_offer:
           attributes:
             base:
               csp_or_mobilia: "CSP et/ou MOBILIA doit être rempli"
+              transfer_administrator_not_found: 'Ce mail n’a pas de compte existant, veuillez envoyer une demande de création de compte via le lien suivant : <a href="https://demarche.numerique.gouv.fr/commencer/creation-maj-compte-e-recrutement">https://demarche.numerique.gouv.fr/commencer/creation-maj-compte-e-recrutement</a>'
             title:
               brackets: "ne doit pas contenir de parenthèse"
               f_h: "doit finir par F/H"
@@ -1196,43 +1269,66 @@ fr:
       administrator/role:
         admin: "Administrateur"
         employer: "Employeur"
-        grand_employer: "Grand Employeur"
-        brh: "RH"
+        grand_employer: "Employeur recruteur"
+        brh: "Gestionnaire RH"
+      administrator/roles:
+        functional_administrator: "Administrateur fonctionnel"
+        employer_recruiter: "Employeur recruteur"
+        employment_authority: "Autorité d'emploi"
+        hr_manager: "Gestionnaire RH"
+        payroll_manager: "Gestionnaire GA PAIE"
       email_template:
         title: "Titre"
       employer:
         code: "Libellé"
       job_application:
+        rejected: "Refusé·e"
         state: "État"
         state/start: "N'a encore aucune candidature"
-        state/initial: "Nouveau"
-        state/rejected: "Refusé·e"
+        state/initial: "Nouvelle candidature"
+        state/rejected: "Refusée"
         state/phone_meeting: "Entretien téléphonique"
         state/phone_meeting_rejected: "Refusé·e après e. tél."
-        state/to_be_met: "À rencontrer"
+        state/to_be_met: "Entretien d'embauche"
         state/after_meeting_rejected: "Rencontré·e mais refusé·e"
-        state/accepted: "Retenu·e"
-        state/contract_drafting: "Rédaction contrat"
-        state/contract_feedback_waiting: "Attente retour contrat"
-        state/contract_received: "Contrat reçu"
-        state/affected: "Affecté·e"
-        state/end_user_state_0: "Candidature soumise"
-        state/end_user_state_1: "Examen candidature"
-        state/end_user_state_2: "Entretien téléphonique"
-        state/end_user_state_3: "Entretien physique"
-        state/end_user_state_4: "Documents à envoyer"
-        state/end_user_state_5: "Rédaction contrat"
-        state/end_user_state_6: "Contrat envoyé et à renvoyer signé"
-        state/end_user_state_7: "Contrat reçu"
-        state/end_user_state_8: "Affectée"
+        state/financial_estimate: "Estimation financière"
+        state/accepted: "Candidature retenue"
+        state/contract_drafting: "Validation dossier complet"
+        state/contract_feedback_waiting: "Contrat"
+        state/contract_received: "Dossier de paie"
+        state/affected: "Prise de poste"
+        state/end_user_state_0: "Nouvelle candidature"
+        state/end_user_state_1: "Entretien téléphonique"
+        state/end_user_state_2: "Entretien d’embauche"
+        state/end_user_state_3: "Estimation financière"
+        state/end_user_state_4: "Candidature retenue"
+        state/end_user_state_5: "Validation dossier complet"
+        state/end_user_state_6: "Contrat"
+        state/end_user_state_7: "Prise en charge financière"
+        state/end_user_state_8: "Prise de poste"
       job_application_file_type:
-        from_state: "État"
+        visibility_rules_for_administrator: "États où le fichier sera accessible et visible en back office"
+        visibility_rules_for_user: "États où le fichier sera accessible et visible en front office"
+        required: "Obligatoire"
+        required/true: "Par défaut pour tous les candidats"
+        required/false: "Uniquement si l'un des acteurs notifiés dans l'offre en fait la demande dans l'onglet « Documents »"
         kind: "Type"
-        by_default: "Par défaut"
         kind/applicant_provided: "Fourni par le candidat"
-        kind/template: "Modèle de fichiers"
-        kind/admin_only: "Seulement admin"
+        kind/manager_provided: "Fourni par le gestionnaire"
+        kind/employer_provided: "Fourni par l'employeur"
+        kind/employment_authority_provided: "Fourni par l'autorité d'emploi"
         kind/check_only_admin_only: "Fichier géré hors outil"
+        notification_recipients: "Notifications (sélection des destinataires)"
+        notify_user: "Candidat"
+        notify_employer_recruiter: "Employeur recruteur"
+        notify_employment_authority: "Autorité d'emploi"
+        notify_hr_manager: "Gestionnaire RH"
+        notify_payroll_manager: "Gestionnaire GA / Paie"
+        validation_recipients: "Acteurs notifiés dans l'offre autorisés à valider la pièce"
+        validate_by_employer_recruiter: "Employeur recruteur"
+        validate_by_employment_authority: "Autorité d'emploi"
+        validate_by_hr_manager: "Gestionnaire RH"
+        validate_by_payroll_manager: "Gestionnaire GA / Paie"
       job_offer:
         title: "Intitulé du poste"
         job_applications_count: "Nombre de candidatures: %{count}"
@@ -1258,12 +1354,14 @@ fr:
         csp_date: Date de publication CSP
         mobilia_date: Date de publication MOBILIA
         application_deadline: "Date limite de candidature"
+        cover_lettre_required: "Lettre de motivation obligatoire"
+        positions_count: Nombre de postes
       job_offer_actor/role:
         employer: "Employeur"
-        grand_employer: "Grand Employeur"
-        supervisor_employer: "Employeur Superviseur"
-        brh: "RH"
-        cmg: "CMG"
+        grand_employer: "Employeur recruteur"
+        supervisor_employer: "Autorité d’emploi"
+        brh: "Gestionnaire RH"
+        cmg: "Gestionnaire PAIE"
       organization_default:
         kind: "Type"
         kind/job_offer_description: "Offre d'emploi / Description"

@@ -210,64 +210,95 @@ organization.save!
 
 employer_parent = Employer.create!(name: "EMA", code: "EMA")
 employer = Employer.create!(name: "DIRISI", code: "DRI", parent: employer_parent)
+Employer.create!(name: "DMAé", code: "DMAE", parent: employer_parent)
+Employer.create!(name: "SIMU", code: "SIMU", parent: employer_parent)
+
+other_employer_parent = Employer.create!(name: "SGA", code: "SGA-GE")
+Employer.create!(name: "DRH-MD", code: "DRH-MD", parent: other_employer_parent)
 
 super_admin = Administrator.new(
   email: "admin@example.com",
-  first_name: "Admin",
-  last_name: "e-recrutement",
-  password: ENV["SEED_PASSWORD"],
-  password_confirmation: ENV["SEED_PASSWORD"],
+  first_name: "Functional",
+  last_name: "Administrator",
+  password: "Password1234!",
+  password_confirmation: "Password1234!",
   very_first_account: true,
   role: "admin",
-  organization: organization
+  roles: ["functional_administrator"],
+  organization: organization,
+  title: "Administrateur fonctionnel"
 )
 super_admin.skip_confirmation_notification!
 super_admin.save!
 super_admin.confirm
 
-employer_admin_1 = Administrator.new(
-  email: "employeur1@example.com",
-  first_name: "Employeur 1",
-  last_name: "e-recrutement",
-  password: ENV["SEED_PASSWORD"],
-  password_confirmation: ENV["SEED_PASSWORD"],
+employer_recruiter = Administrator.new(
+  email: "employer@example.com",
+  first_name: "Employer",
+  last_name: "Recruiter",
+  password: "Password1234!",
+  password_confirmation: "Password1234!",
   very_first_account: true,
   role: "employer",
-  employer: employer,
-  organization: organization
+  roles: ["employer_recruiter"],
+  employers: [employer],
+  organization: organization,
+  title: "Employeur recruteur"
 )
-employer_admin_1.skip_confirmation_notification!
-employer_admin_1.save!
-employer_admin_1.confirm
+employer_recruiter.skip_confirmation_notification!
+employer_recruiter.save!
+employer_recruiter.confirm
 
-employer_admin_2 = Administrator.new(
-  email: "employeur2@example.com",
-  first_name: "Employeur 2",
-  last_name: "e-recrutement",
-  password: ENV["SEED_PASSWORD"],
-  password_confirmation: ENV["SEED_PASSWORD"],
+employment_authority = Administrator.new(
+  email: "authority@example.com",
+  first_name: "Employment",
+  last_name: "Authority",
+  password: "Password1234!",
+  password_confirmation: "Password1234!",
   very_first_account: true,
   role: "employer",
-  employer: employer,
-  organization: organization
+  roles: ["employment_authority"],
+  employers: [employer],
+  organization: organization,
+  title: "Autorité d'emploi"
 )
-employer_admin_2.skip_confirmation_notification!
-employer_admin_2.save!
-employer_admin_2.confirm
+employment_authority.skip_confirmation_notification!
+employment_authority.save!
+employment_authority.confirm
 
-brh_admin = Administrator.new(
-  email: "brh@example.com",
-  first_name: "BRH",
-  last_name: "e-recrutement",
-  password: ENV["SEED_PASSWORD"],
-  password_confirmation: ENV["SEED_PASSWORD"],
+hr_manager = Administrator.new(
+  email: "hr@example.com",
+  first_name: "HR",
+  last_name: "manager",
+  password: "Password1234!",
+  password_confirmation: "Password1234!",
   very_first_account: true,
-  employer: employer,
-  organization: organization
+  role: "brh",
+  roles: ["hr_manager"],
+  employers: [employer],
+  organization: organization,
+  title: "Gestionnaire RH"
 )
-brh_admin.skip_confirmation_notification!
-brh_admin.save!
-brh_admin.confirm
+hr_manager.skip_confirmation_notification!
+hr_manager.save!
+hr_manager.confirm
+
+payroll_manager = Administrator.new(
+  email: "payroll@example.com",
+  first_name: "Payroll",
+  last_name: "Manager",
+  password: "Password1234!",
+  password_confirmation: "Password1234!",
+  very_first_account: true,
+  role: "brh",
+  roles: ["payroll_manager"],
+  employers: [employer],
+  organization: organization,
+  title: "Gestionnaire GA PAIE"
+)
+payroll_manager.skip_confirmation_notification!
+payroll_manager.save!
+payroll_manager.confirm
 
 Category.create!(name: "Administration")
 Category.create!(name: "Archives")
@@ -335,92 +366,75 @@ AvailabilityRange.create!(name: "Disponible sous 1 mois")
 AvailabilityRange.create!(name: "Disponible sous 2 mois")
 AvailabilityRange.create!(name: "Disponible sous 3 mois ou plus")
 
-cover_letter = JobApplicationFileType.create!(
-  name: "Lettre de Motivation",
-  kind: :applicant_provided,
-  from_state: :initial,
-  by_default: true
+all_states = JobApplication.states.keys.map(&:to_sym)
+
+job_application_file_type_with_visibility_rules = ->(attrs, from_state, to_state) {
+  jaft = JobApplicationFileType.new({validate_by_employer_recruiter: true}.merge(attrs))
+  from_idx = all_states.index(from_state)
+  to_idx = all_states.index(to_state)
+  all_states[from_idx...to_idx].each do |s|
+    jaft.visibility_rules.build(by: :administrator, state: s)
+    jaft.visibility_rules.build(by: :user, state: s)
+  end
+  jaft.save!
+  jaft
+}
+
+cover_letter = job_application_file_type_with_visibility_rules.call(
+  {name: "Lettre de Motivation", kind: :applicant_provided},
+  :initial, :accepted
 )
-JobApplicationFileType.create!(
-  name: "Copie des diplômes",
-  kind: :applicant_provided,
-  from_state: :accepted,
-  by_default: true
+job_application_file_type_with_visibility_rules.call(
+  {name: "Copie des diplômes", kind: :applicant_provided},
+  :accepted, :contract_received
 )
-JobApplicationFileType.create!(
-  name: "Justificatif de domicile de moins de 6 mois",
-  kind: :applicant_provided,
-  from_state: :accepted,
-  by_default: true
+job_application_file_type_with_visibility_rules.call(
+  {name: "Justificatif de domicile de moins de 6 mois", kind: :applicant_provided},
+  :accepted, :contract_received
 )
-JobApplicationFileType.create!(
-  name: "Carte d'identité",
-  description: "Carte nationale d’identité recto/verso ou passeport",
-  kind: :applicant_provided,
-  from_state: :accepted,
-  by_default: true
+job_application_file_type_with_visibility_rules.call(
+  {name: "Carte d’identité", description: "Carte nationale d’identité recto/verso ou passeport", kind: :applicant_provided},
+  :accepted, :affected
 )
 description = "Attestation de carte vitale ou copie de carte vitale " \
   "(mentionnant le n° INSEE)"
-JobApplicationFileType.create!(
-  name: "Carte Vitale",
-  description: description,
-  kind: :applicant_provided,
-  from_state: :accepted,
-  by_default: true
+job_application_file_type_with_visibility_rules.call(
+  {name: "Carte Vitale", description: description, kind: :applicant_provided},
+  :accepted, :contract_received
 )
 description = "Certificat médical d’aptitude fourni par le médecin de l’établissement" \
   " ou à défaut par un médecin agréé"
-JobApplicationFileType.create!(
-  name: "Certificat Médical",
-  description: description,
-  kind: :applicant_provided,
-  from_state: :accepted,
-  by_default: true
+job_application_file_type_with_visibility_rules.call(
+  {name: "Certificat Médical", description: description, kind: :applicant_provided},
+  :accepted, :contract_received
 )
 description = "RIB original au format BIC/IBAN comportant le logo de la banque au nom du " \
   " signataire du contrat (les RIB sur compte épargne ne sont pas acceptés)"
-JobApplicationFileType.create!(
-  name: "Relevé d'identité bancaire",
-  description: description,
-  kind: :applicant_provided,
-  from_state: :accepted,
-  by_default: true
+job_application_file_type_with_visibility_rules.call(
+  {name: "Relevé d’identité bancaire", description: description, kind: :applicant_provided},
+  :accepted, :affected
 )
-name = "Copie d'un titre de transport (si vous postulez en Île-de-france)"
-JobApplicationFileType.create!(
-  name: name,
-  kind: :applicant_provided,
-  from_state: :accepted,
-  by_default: true
+job_application_file_type_with_visibility_rules.call(
+  {name: "Copie d’un titre de transport (si vous postulez en Île-de-france)", kind: :applicant_provided},
+  :accepted, :contract_feedback_waiting
 )
 description = "Fiche de poste comportant le code poste ALLIANCE actif et vacant au moment " \
   "de la date d’effet du recrutement"
-JobApplicationFileType.create!(
-  name: "Fiche de poste",
-  description: description,
-  kind: :admin_only,
-  from_state: :accepted,
-  by_default: true
+job_application_file_type_with_visibility_rules.call(
+  {name: "Fiche de poste", description: description, kind: :manager_provided},
+  :accepted, :contract_feedback_waiting
 )
-JobApplicationFileType.create!(
-  name: "FICE transmis à officier sécurité",
-  kind: :check_only_admin_only,
-  from_state: :accepted,
-  by_default: true
+job_application_file_type_with_visibility_rules.call(
+  {name: "FICE transmis à officier sécurité", kind: :check_only_admin_only},
+  :accepted, :affected
 )
-JobApplicationFileType.create!(
-  name: "Demande de B2",
-  kind: :check_only_admin_only,
-  from_state: :accepted,
-  by_default: true
+job_application_file_type_with_visibility_rules.call(
+  {name: "Demande de B2", kind: :check_only_admin_only},
+  :accepted, :affected
 )
-JobApplicationFileType.create!(
-  name: "Copie du livret de famille",
-  description: "Seulement si marié",
-  kind: :applicant_provided,
-  from_state: :accepted,
-  by_default: false
+job_application_file_type_with_visibility_rules.call(
+  {name: "Copie du livret de famille", description: "Seulement si marié", kind: :applicant_provided},
+  :accepted, :contract_feedback_waiting
 )
 
 job_offer = JobOffer.new { |j|
@@ -432,9 +446,9 @@ job_offer = JobOffer.new { |j|
   j.professional_category = ProfessionalCategory.first
   j.location = "Rennes, FR"
   j.employer = Employer.last
-  j.mobilia_date = 1.day.ago
+  j.mobilia_date = 1.month.ago
   j.mobilia_value = "MOB#{rand(1000..9999)}"
-  j.csp_date = 1.day.ago
+  j.csp_date = 1.month.ago
   j.csp_value = "CSP#{rand(1000..9999)}"
   j.organization_description = "Description de l'organisation"
   j.description = <<~HEREDOC
@@ -484,14 +498,14 @@ job_offer = JobOffer.new { |j|
   j.sector = Sector.first
   j.estimate_monthly_salary_net = "2500 - 3000€"
   j.estimate_annual_salary_gross = "39000 - 46000€"
-  j.job_offer_actors.build(administrator: employer_admin_1, role: :employer)
-  j.job_offer_actors.build(administrator: brh_admin, role: :brh)
+  j.job_offer_actors.build(administrator: employer_recruiter, role: :employer)
+  j.job_offer_actors.build(administrator: hr_manager, role: :brh)
 }
 job_offer.save!
 
 job_offer2 = job_offer.dup
 job_offer2.title = "Conducteur·rice d’Opérations F/H"
-job_offer2.owner = employer_admin_1
+job_offer2.owner = employer_recruiter
 job_offer2.contract_type = ContractType.where(name: "CDI").first
 job_offer2.contract_duration = nil
 job_offer2.contract_start_on = 2.months.since
@@ -499,38 +513,38 @@ job_offer2.category = sub_sub_infrastructure
 job_offer2.level = level_2
 job_offer2.identifier = nil
 job_offer2.sequential_id = nil
-job_offer2.job_offer_actors.build(administrator: employer_admin_1, role: :employer)
-job_offer2.job_offer_actors.build(administrator: brh_admin, role: :brh)
+job_offer2.job_offer_actors.build(administrator: employer_recruiter, role: :employer)
+job_offer2.job_offer_actors.build(administrator: hr_manager, role: :brh)
 job_offer2.save!
 
 job_offer3 = job_offer.dup
-job_offer3.owner = employer_admin_2
+job_offer3.owner = employment_authority
 job_offer3.contract_start_on = 3.months.since
-job_offer3.title = "Responsable sécurité des systèmes d’information F/H"
+job_offer3.title = "Administrateur Systèmes et Réseaux F/H"
 job_offer3.category = sub_sub_infrastructure
 job_offer3.level = level_1
 job_offer3.location = "Brest, FR"
 job_offer3.identifier = nil
 job_offer3.sequential_id = nil
-job_offer3.job_offer_actors.build(administrator: employer_admin_2, role: :employer)
-job_offer3.job_offer_actors.build(administrator: brh_admin, role: :brh)
+job_offer3.job_offer_actors.build(administrator: employment_authority, role: :employer)
+job_offer3.job_offer_actors.build(administrator: hr_manager, role: :brh)
 job_offer3.save!
 
 job_offer4 = job_offer.dup
-job_offer4.owner = employer_admin_2
+job_offer4.owner = employment_authority
 job_offer4.contract_start_on = 4.months.since
-job_offer4.title = "Responsable achat d’infrastructures F/H"
+job_offer4.title = "Responsable Exploitation Réseaux F/H"
 job_offer4.category = sub_sub_infrastructure
 job_offer4.level = level_2
 job_offer4.location = "Brest, FR"
 job_offer4.identifier = nil
 job_offer4.sequential_id = nil
-job_offer4.job_offer_actors.build(administrator: employer_admin_2, role: :employer)
-job_offer4.job_offer_actors.build(administrator: brh_admin, role: :brh)
+job_offer4.job_offer_actors.build(administrator: employment_authority, role: :employer)
+job_offer4.job_offer_actors.build(administrator: hr_manager, role: :brh)
 job_offer4.save!
 
 job_offer5 = job_offer.dup
-job_offer5.owner = employer_admin_2
+job_offer5.owner = employment_authority
 job_offer5.contract_start_on = 5.months.since
 job_offer5.title = "Responsable conduite de projets F/H"
 job_offer5.category = sub_sub_infrastructure
@@ -538,12 +552,12 @@ job_offer5.level = level_1
 job_offer5.location = "Brest, FR"
 job_offer5.identifier = nil
 job_offer5.sequential_id = nil
-job_offer5.job_offer_actors.build(administrator: employer_admin_2, role: :employer)
-job_offer5.job_offer_actors.build(administrator: brh_admin, role: :brh)
+job_offer5.job_offer_actors.build(administrator: employment_authority, role: :employer)
+job_offer5.job_offer_actors.build(administrator: hr_manager, role: :brh)
 job_offer5.save!
 
 job_offer6 = job_offer.dup
-job_offer6.owner = employer_admin_2
+job_offer6.owner = employment_authority
 job_offer6.contract_start_on = 6.months.since
 job_offer6.title = "Data analyst F/H"
 job_offer6.category = sub_sub_infrastructure
@@ -551,8 +565,8 @@ job_offer6.level = level_1
 job_offer6.location = "Rennes, FR"
 job_offer6.identifier = nil
 job_offer6.sequential_id = nil
-job_offer6.job_offer_actors.build(administrator: employer_admin_2, role: :employer)
-job_offer6.job_offer_actors.build(administrator: brh_admin, role: :brh)
+job_offer6.job_offer_actors.build(administrator: employment_authority, role: :employer)
+job_offer6.job_offer_actors.build(administrator: hr_manager, role: :brh)
 job_offer6.save!
 
 job_offer.publish!
@@ -562,7 +576,7 @@ job_offer4.publish!
 job_offer5.publish!
 job_offer6.publish!
 
-photo = File.open(Rails.root.join("spec", "fixtures", "files", "avatar.jpg"))
+photo = File.open(Rails.root.join("spec", "fixtures", "files", "user.jpg"))
 file = File.open(Rails.root.join("spec", "fixtures", "files", "document.pdf"))
 
 user = User.new(
@@ -570,8 +584,8 @@ user = User.new(
   first_name: "Colin",
   last_name: "Pan",
   organization: organization,
-  password: ENV["SEED_PASSWORD"],
-  password_confirmation: ENV["SEED_PASSWORD"],
+  password: "Password1234!",
+  password_confirmation: "Password1234!",
   terms_of_service: true,
   certify_majority: true,
   photo: photo,
@@ -629,8 +643,8 @@ user_candidate_of_all = User.new(
   organization: organization,
   first_name: "Nicolas",
   last_name: "Agoini",
-  password: ENV["SEED_PASSWORD"],
-  password_confirmation: ENV["SEED_PASSWORD"],
+  password: "Password1234!",
+  password_confirmation: "Password1234!",
   terms_of_service: true,
   certify_majority: true,
   current_position: "Développeur",
@@ -670,14 +684,14 @@ user_candidate_of_all.confirm
 boolean_choices = [true, false, nil]
 
 JobOffer.where.not(contract_duration_id: nil).where.not(id: [job_offer4.id, job_offer5.id]).each do |job_offer|
-  15.times do |_i|
+  5.times do |_i|
     user = User.new(
       email: Faker::Internet.unique.email,
       organization: organization,
       first_name: Faker::Name.first_name,
       last_name: Faker::Name.last_name,
-      password: ENV["SEED_PASSWORD"],
-      password_confirmation: ENV["SEED_PASSWORD"],
+      password: "Password1234!",
+      password_confirmation: "Password1234!",
       terms_of_service: true,
       certify_majority: true,
       current_position: "Développeur",
@@ -808,5 +822,14 @@ ArchivingReason.create!(
   [
     { name: "Offre suspendue"},
     { name: "Candidat·e trouvé·e"}
+  ]
+)
+
+RejectionReason.create!(
+  [
+    { name: "Offre suspendue"},
+    { name: "Candidat·e trouvé·e"},
+    { name: "Candidat·e non qualifié·e"},
+    { name: "Candidat·e non disponible"}
   ]
 )

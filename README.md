@@ -114,6 +114,36 @@ Pour exécuter les jobs asynchrones :
 bundle exec sidekiq
 ```
 
+## docker
+
+Le projet est également dockerisé.
+Allez dans le répertoire (dir) du projet, lancez d'abord :
+```bash
+docker compose build
+docker compose up -d
+docker-compose exec web bash
+```
+
+Puis dans le container :
+```bash
+rails db:create
+rails db:schema:load db:seed
+```
+
+Un Makefile est à votre disposition pour lancer plus facilement les commandes docker. 
+Une fois que le container est _up_, vous pouvez :
+
+`make sidekiq` pour exécuter les jobs asynchrones sous docker. 
+
+`make clock` pour lancer clock (cron jobs).
+
+`make debug-web` pour voir les logs sur votre terminal (ou si vous êtes en mode debugger).
+
+Pour reset la db `make reset_db`, pour accéder à la console rails `make c` etc.
+(Consultez le Makefile pour une liste complète)
+
+Adaptez le Dockerfile à vos besoins si vous voulez vous en servir pour le déploiement.
+
 ## Déploiement en préproduction et production
 
 Les branches master et production sont déployées automatiquement grâce à Scalingo.

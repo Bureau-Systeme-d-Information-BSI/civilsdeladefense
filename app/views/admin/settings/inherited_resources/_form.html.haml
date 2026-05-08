@@ -1,21 +1,12 @@
 - resource.parent_id = params[:parent_id] if params[:parent_id].present? && resource.new_record?
 .card
   .card-body
-    = simple_form_for([:admin, :settings, resource]) do |f|
+    = simple_form_for([:admin, :settings, resource], html: { data: {controller: "toggle-visibility" } }) do |f|
       = f.error_notification
       = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
       .form-inputs
         - if resource.is_a?(JobApplicationFileType)
-          = f.input :name
-          = f.input :description
-          - kinds = JobApplicationFileType.kinds.map {|k, v| [ JobApplicationFileType.human_attribute_name("kind/#{k}"), k] }
-          = f.input :kind, collection: kinds, prompt: true
-          = f.input :content
-          - states = JobApplication.states.map {|k, v| [ JobApplication.human_attribute_name("state/#{k}"), k] }
-          = f.input :from_state, collection: states, prompt: true
-          = f.input :by_default
-          = f.input :notification
-          = f.input :spontaneous, as: :boolean
+          = render "admin/settings/job_application_file_types/form_fields", f: f
         - elsif resource.is_a?(Cmg)
           = f.input :email
         - elsif resource.is_a?(EmailTemplate)

@@ -3,13 +3,13 @@
 require "rails_helper"
 
 RSpec.describe ApplicantNotificationsMailer do
-  let(:job_offer) { create(:job_offer) }
-  let(:organization) { job_offer.organization }
-  let(:job_application) { create(:job_application, job_offer: job_offer) }
-  let(:email) { create(:email, job_application: job_application) }
-  let(:mail) { described_class.new_email(email.id) }
-
   describe "new_email" do
+    let(:job_offer) { create(:job_offer) }
+    let(:organization) { job_offer.organization }
+    let(:job_application) { create(:job_application, job_offer: job_offer) }
+    let(:email) { create(:email, job_application: job_application) }
+    let(:mail) { described_class.new_email(email.id) }
+
     context "when from organization without inbound email configured" do
       it "renders the headers" do
         expect(mail.subject).to eq("New email")
@@ -41,5 +41,57 @@ RSpec.describe ApplicantNotificationsMailer do
         expect(mail.body.encoded).to match(/vous pouvez répondre à cet email directement/)
       end
     end
+  end
+
+  describe "notify_new_state" do
+    subject(:notify_new_state) { described_class.with(user:, job_offer:, state:).notify_new_state }
+
+    let(:job_application) { build_stubbed(:job_application) }
+    let(:user) { job_application.user }
+    let(:job_offer) { job_application.job_offer }
+    let(:state) { "phone_meeting" }
+
+    it { expect(notify_new_state.subject).to include("Votre candidature") }
+
+    it { expect(notify_new_state.body.encoded).to match(/Votre candidature est passée à l'étape/) }
+  end
+
+  describe "notify_new_documents" do
+    subject(:mail) { described_class.with(user:, job_offer:, document_names:).notify_new_documents }
+
+    let(:job_application) { build_stubbed(:job_application) }
+    let(:user) { job_application.user }
+    let(:job_offer) { job_application.job_offer }
+    let(:document_names) { ["CV", "Lettre de motivation"] }
+
+    it {
+      expect(mail.subject).to eq(
+        "Votre candidature à l'offre #{job_offer.title} sur #{job_offer.organization.service_name} – Nouveaux documents à consulter"
+      )
+    }
+
+    it { expect(mail.to).to match([user.email]) }
+
+    it { expect(mail.body.encoded).to match(/nouveaux documents à consulter/) }
+
+    it { expect(mail.body.encoded).to match(/CV/) }
+
+    it { expect(mail.body.encoded).to match(/Lettre de motivation/) }
+  end
+
+  describe "notify_rejected" do
+    subject(:notify_rejected) { described_class.with(user:, job_offer:).notify_rejected }
+
+    let(:job_application) { build_stubbed(:job_application) }
+    let(:user) { job_application.user }
+    let(:job_offer) { job_application.job_offer }
+
+    it {
+      expect(notify_rejected.subject).to eq(
+        "Votre candidature à l'offre #{job_offer.title} sur #{job_offer.organization.service_name}"
+      )
+    }
+
+    it { expect(notify_rejected.body.encoded).to match(/nous ne pouvons pas actuellement y donner une suite favorable/) }
   end
 end

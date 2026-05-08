@@ -55,6 +55,11 @@ class JobOffer < ApplicationRecord
   has_many :job_applications, dependent: :destroy
   has_many :job_offer_actors, inverse_of: :job_offer, dependent: :destroy
   has_many :administrators, through: :job_offer_actors
+  has_many :employer_recruiters, -> { merge(Administrator.employer_recruiters) }, through: :job_offer_actors, source: :administrator
+  has_many :employment_authorities, -> { merge(Administrator.employment_authorities) }, through: :job_offer_actors, source: :administrator
+  has_many :hr_managers, -> { merge(Administrator.hr_managers) }, through: :job_offer_actors, source: :administrator
+  has_many :payroll_managers, -> { merge(Administrator.payroll_managers) }, through: :job_offer_actors, source: :administrator
+
   accepts_nested_attributes_for :job_offer_actors
 
   %i[employer grand_employer supervisor_employer brh].each do |actor_role|
@@ -69,7 +74,7 @@ class JobOffer < ApplicationRecord
   end
 
   ## Validations
-  validates :title, :description, :required_profile, :contract_start_on, presence: true
+  validates :title, :description, :required_profile, :organization_description, :recruitment_process, :contract_start_on, presence: true
   validates :contract_duration_id, presence: true, if: -> { contract_type&.duration }
   validates :contract_duration_id, absence: true, unless: -> { contract_type&.duration }
   validates :title, format: {with: %r{\A.*F/H\z}, message: :f_h}
@@ -77,7 +82,7 @@ class JobOffer < ApplicationRecord
   validates :title, format: {without: %r{\A.*\).*\z}, message: :brackets}
 
   with_options if: -> { published? } do
-    validates :title, length: {maximum: 70}
+    validates :title, length: {maximum: 100}
     validates :description, html_length: {maximum: 2000}
     validates :organization_description, html_length: {maximum: 1000}, presence: true
     validates :required_profile, html_length: {maximum: 1000}
@@ -101,15 +106,20 @@ class JobOffer < ApplicationRecord
   scope :publicly_visible, -> { where(state: :published) }
   scope :search_import, -> { includes(*SETTINGS) }
   scope :bookmarked, ->(user) { joins(:bookmarks).where(bookmarks: {user: user}) }
+  scope :last_day, -> { where(published_at: 1.day.ago.all_day) }
+  scope :last_week, -> { where(published_at: 1.week.ago.all_week) }
+  scope :with_open_applications_in, ->(state) {
+    joins(:job_applications)
+      .where(job_applications: {state:, rejected: false})
+      .distinct
+  }
 
   enum most_advanced_job_applications_state: {
     start: -1,
     initial: 0,
-    rejected: 1,
     phone_meeting: 2,
-    phone_meeting_rejected: 3,
     to_be_met: 5,
-    after_meeting_rejected: 6,
+    financial_estimate: 6,
     accepted: 7,
     contract_drafting: 8,
     contract_feedback_waiting: 9,
@@ -225,6 +235,8 @@ class JobOffer < ApplicationRecord
       "updated_at"
     ]
   end
+
+  def full_title = "#{identifier} #{title}"
 
   def contract_duration_name
     return nil unless contract_type&.duration
@@ -354,6 +366,13 @@ class JobOffer < ApplicationRecord
     ary.map(&:state_before_type_cast).max
   end
 
+  def refresh_most_advanced_job_applications_state!
+    current_max = current_most_advanced_job_applications_state
+    return if most_advanced_job_applications_state_before_type_cast == current_max
+
+    update(most_advanced_job_applications_state: current_max)
+  end
+
   def most_advanced_job_applications_state_as_number
     state = most_advanced_job_applications_state.to_sym
     JobApplication.aasm.states.index { |x| x.name == state }
@@ -366,13 +385,15 @@ class JobOffer < ApplicationRecord
     end
   end
 
-  def transfer(email, current_administrator)
-    administrator = Administrator.find_by(email: email.downcase) || Administrator.new(email: email)
-    administrator.inviter ||= current_administrator
-    administrator.organization = current_administrator.organization
-    administrator.save!
-    job_offer_actors.where(administrator: owner).update_all(administrator_id: administrator.id) # rubocop:disable Rails/SkipsModelValidations
-    update!(owner: administrator)
+  def transfer(email)
+    administrator = Administrator.find_by(email:)
+    if administrator.present?
+      job_offer_actors.where(administrator: owner).update_all(administrator_id: administrator.id) # rubocop:disable Rails/SkipsModelValidations
+      update(owner: administrator)
+    else
+      errors.add(:base, :transfer_administrator_not_found)
+      false
+    end
   end
 
   def benefit
@@ -402,6 +423,7 @@ end
 #  after_meeting_rejected_job_applications_count    :integer          default(0), not null
 #  application_deadline                             :date
 #  archived_at                                      :datetime
+#  asc                                              :boolean          default(FALSE), not null
 #  city                                             :string
 #  contract_drafting_job_applications_count         :integer          default(0), not null
 #  contract_feedback_waiting_job_applications_count :integer          default(0), not null
@@ -410,6 +432,7 @@ end
 #  country_code                                     :string
 #  county                                           :string
 #  county_code                                      :integer
+#  cover_lettre_required                            :boolean          default(FALSE), not null
 #  csp_date                                         :date
 #  csp_value                                        :string
 #  description                                      :text
@@ -417,6 +440,8 @@ end
 #  estimate_annual_salary_gross                     :string
 #  estimate_monthly_salary_net                      :string
 #  featured                                         :boolean          default(FALSE)
+#  financial_estimate_job_applications_count        :integer          default(0), not null
+#  ict_tct                                          :boolean          default(FALSE), not null
 #  identifier                                       :string
 #  initial_job_applications_count                   :integer          default(0), not null
 #  is_remote_possible                               :boolean
@@ -430,6 +455,7 @@ end
 #  organization_description                         :text
 #  phone_meeting_job_applications_count             :integer          default(0), not null
 #  phone_meeting_rejected_job_applications_count    :integer          default(0), not null
+#  positions_count                                  :integer          default(1), not null
 #  postcode                                         :string
 #  published_at                                     :datetime
 #  recruitment_process                              :text

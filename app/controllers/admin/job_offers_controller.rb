@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Admin::JobOffersController < Admin::BaseController
+  before_action :set_employers, only: %i[index archived featured]
   before_action :set_job_offers, only: %i[index archived featured]
   layout :choose_layout
 
@@ -69,19 +70,18 @@ class Admin::JobOffersController < Admin::BaseController
   # GET /admin/job_offers/1/board
   # GET /admin/job_offers/1/board.json
   def board
-    @job_applications = @job_offer.job_applications.includes(:user).group_by(&:state)
+    @job_applications = @job_offer.job_applications.not_rejecteds.includes(:user).group_by(&:state)
+    @rejecteds = @job_offer.job_applications.rejecteds
     request.xhr? && render(layout: false)
   end
 
   def add_actor
-    job_offer_id = params[:job_offer_id]
-    @job_offer = job_offer_id.present? ? JobOffer.find(job_offer_id) : JobOffer.new
-    @administrator = find_attach_or_build_administrator
-    @administrator.organization = current_organization
-    if @administrator.valid?
+    @job_offer = params[:job_offer_id].present? ? JobOffer.find(params[:job_offer_id]) : JobOffer.new
+    @administrator = find_administrator_and_build_job_offer_actor(@job_offer, params[:email].downcase, params[:role])
+    if @administrator.present?
       render action: "add_actor", layout: false
     else
-      render json: @administrator.errors, status: :unprocessable_entity
+      render :add_actor_error
     end
   end
 
@@ -94,7 +94,6 @@ class Admin::JobOffersController < Admin::BaseController
 
     @job_offer = JobOffer.new_from_source(params[:job_offer_id])
     @job_offer ||= JobOffer.new_from_scratch(current_administrator)
-    @job_offer.employer = current_administrator.employer unless current_administrator.admin?
     @job_offer.organization = current_organization
   end
 
@@ -107,7 +106,6 @@ class Admin::JobOffersController < Admin::BaseController
   def create
     @job_offer.owner = current_administrator
     @job_offer.organization = current_organization
-    @job_offer.employer = current_administrator.employer unless current_administrator.admin?
     @job_offer.cleanup_actor_administrator_dep(current_administrator, current_organization)
 
     respond_to do |format|
@@ -148,9 +146,10 @@ class Admin::JobOffersController < Admin::BaseController
   # POST /admin/job_offers/1/transfer
   # POST /admin/job_offers/1/transfer.json
   def transfer
-    @job_offer.transfer(params[:transfer_email], current_administrator)
-    respond_to do |format|
-      format.html { redirect_to %i[admin job_offers], notice: t(".success") }
+    if @job_offer.transfer(params[:transfer_email])
+      redirect_to %i[admin job_offers], notice: t(".success")
+    else
+      render :new_transfer, status: :unprocessable_entity
     end
   end
 
@@ -194,8 +193,11 @@ class Admin::JobOffersController < Admin::BaseController
 
   private
 
-  def set_job_offers
+  def set_employers
     @employers = Employer.tree
+  end
+
+  def set_job_offers
     @job_offers_active = @job_offers.admin_index_active
     @job_offers_featured = @job_offers.admin_index_featured
     @job_offers_archived = @job_offers.admin_index_archived
@@ -208,7 +210,8 @@ class Admin::JobOffersController < Admin::BaseController
     end
     job_offers_nearly_filtered = @job_offers_unfiltered
     if params[:s].present?
-      job_offers_nearly_filtered = job_offers_nearly_filtered.search_full_text(params[:s])
+      job_offers_nearly_filtered = job_offers_nearly_filtered
+        .search_full_text(params[:s])
         .unscope(:order)
     end
     @q = job_offers_nearly_filtered.ransack(params[:q])
@@ -232,6 +235,7 @@ class Admin::JobOffersController < Admin::BaseController
       sector_id estimate_monthly_salary_net estimate_annual_salary_gross
       location city county county_code country_code postcode region spontaneous
       organization_description mobilia_date mobilia_value csp_date csp_value application_deadline
+      ict_tct asc cover_lettre_required positions_count
     ]
     fields << {benefit_ids: []}
     fields << {drawback_ids: []}
@@ -240,12 +244,12 @@ class Admin::JobOffersController < Admin::BaseController
     fields << {job_offer_actors_attributes: job_offer_actors_attributes}
   end
 
-  def find_attach_or_build_administrator
-    existing_administrator = Administrator.find_by(email: params[:email].downcase)
-    root_object = @job_offer.job_offer_actors.build(role: params[:role])
-    admin = root_object.administrator = existing_administrator if existing_administrator
-    admin ||= root_object.build_administrator(email: params[:email])
-    admin.inviter ||= current_administrator
-    admin
+  def find_administrator_and_build_job_offer_actor(job_offer, email, role)
+    return nil if email.blank?
+
+    administrator = Administrator.find_by!(email:)
+    job_offer_actor = job_offer.job_offer_actors.build(role:)
+    job_offer_actor.administrator = administrator
+    administrator
   end
 end

@@ -68,4 +68,54 @@ class ApplicantNotificationsMailer < ApplicationMailer
 
     mail to: @user.email, subject: t(".subject")
   end
+
+  def notify_new_state
+    @user = params[:user]
+    @job_offer = params[:job_offer]
+    @state = JobApplication.human_attribute_name("state/#{params[:state]}")
+    @service_name = @job_offer.organization.service_name
+
+    mail to: @user.email, subject: t(
+      ".subject",
+      job_offer_identifier: @job_offer.identifier,
+      service_name: @job_offer.organization.service_name
+    )
+  end
+
+  def notify_new_documents
+    @user = params[:user]
+    @job_offer = params[:job_offer]
+    @document_names = params[:document_names]
+    @service_name = @job_offer.organization.service_name
+
+    mail to: @user.email, subject: t(
+      ".subject",
+      job_offer_title: @job_offer.title,
+      service_name: @service_name
+    )
+  end
+
+  def notify_rejected
+    @user = params[:user]
+    @job_offer = params[:job_offer]
+    @service_name = @job_offer.organization.service_name
+
+    mail to: @user.email, subject: t(
+      ".subject",
+      job_offer_title: @job_offer.title,
+      service_name: @service_name
+    )
+  end
+
+  def notify_withdrawn
+    @user = params[:user]
+    @job_offer = params[:job_offer]
+    @service_name = @job_offer.organization.service_name
+
+    mail to: @user.email, subject: t(
+      ".subject",
+      job_offer_title: @job_offer.title,
+      service_name: @service_name
+    )
+  end
 end

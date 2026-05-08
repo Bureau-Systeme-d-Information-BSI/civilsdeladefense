@@ -33,8 +33,10 @@ module JobOffersHelper
       job_offer_benefits_display(job_offer)
     when :drawbacks
       job_offer_drawbacks_display(job_offer)
-    when :is_remote_possible
-      job_offer_remote_display(job_offer)
+    when :is_remote_possible, :ict_tct, :asc, :cover_lettre_required
+      boolean_attr(job_offer, attribute)
+    when :positions_count
+      job_offer.positions_count
     end
   end
 
@@ -75,8 +77,8 @@ module JobOffersHelper
     end
   end
 
-  def job_offer_remote_display(job_offer)
-    if job_offer.is_remote_possible
+  def boolean_attr(job_offer, attribute)
+    if job_offer.send(attribute)
       "Oui"
     else
       "Non"
@@ -85,5 +87,12 @@ module JobOffersHelper
 
   def show_apply_button?(job_offer)
     job_offer.published? && controller.action_name != "apply" && !job_offer.already_applied?(current_user)
+  end
+
+  def asc_ict_tct_badge(job_offer)
+    tags = []
+    tags << content_tag("span", "ASC", class: "rf-tag rf-tag--warning rf-mr-1w") if job_offer.asc
+    tags << content_tag("span", "ICT-TCT", class: "rf-tag rf-tag--info rf-mr-1w") if job_offer.ict_tct
+    safe_join(tags)
   end
 end

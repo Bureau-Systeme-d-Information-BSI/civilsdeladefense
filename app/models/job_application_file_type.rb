@@ -3,50 +3,125 @@
 # The name/type of file attached to a job application.
 # The list of names/types is managed by the administrators of the platform.
 class JobApplicationFileType < ApplicationRecord
+  # TODO: @sebastiencarceles remove these columns from DB after v2
+  self.ignored_columns += %i[from_state required_from_state to_state required_to_state]
+
+  COVER_LETTER_NAME = "Lettre de Motivation"
+
   acts_as_list
   default_scope -> { order(position: :asc) }
 
-  #####################################
-  # File uploads
   mount_uploader :content, DocumentUploader, mount_on: :content_file_name
 
-  #####################################
-  # Validations
+  validates :name, :kind, presence: true
+  validate :must_have_administrator_visibility_rule
+  validate :must_have_user_visibility_rule
+  validate :must_have_at_least_one_validator
 
-  validates :name, :kind, :from_state, presence: true
-
-  #####################################
-  # Enums
   enum kind: {
     applicant_provided: 10,
-    template: 20,
-    admin_only: 30,
+    employment_authority_provided: 13,
+    manager_provided: 11,
+    employer_provided: 12,
     check_only_admin_only: 40
   }
 
-  enum from_state: JobApplication.states
-
-  scope :by_default_before, ->(state) {
-    where(
-      by_default: true, kind: %i[applicant_provided template]
-    ).where("from_state <= ?", JobApplication.states[state])
+  scope :visible_by_user, ->(state) {
+    where(kind: :applicant_provided)
+      .joins(:visibility_rules)
+      .where(visibility_rules: {by: :user, state:})
   }
 
-  scope :by_default, ->(state) {
-    where(
-      by_default: true, kind: %i[applicant_provided template]
-    ).where(from_state: JobApplication.states[state])
+  scope :visible_by_user_up_to, ->(state) {
+    where(kind: :applicant_provided)
+      .joins(:visibility_rules)
+      .where(visibility_rules: {by: :user})
+      .where("visibility_rules.state <= ?", JobApplication.states[state])
+      .distinct
   }
 
-  #####################################
-  # Relations
+  scope :excluding_cover_letter, -> { where.not(name: COVER_LETTER_NAME) }
+
+  scope :notifiable_by_user_at, ->(state) {
+    where(notify_user: true)
+      .joins(:visibility_rules)
+      .where(visibility_rules: {by: :user, state:})
+      .reorder(nil)
+      .distinct
+  }
+
+  scope :visible_by, ->(administrator, state) {
+    scope = joins(:visibility_rules)
+      .where(visibility_rules: {by: :administrator})
+      .where("visibility_rules.state <= ?", JobApplication.states[state])
+      .distinct
+    scope = scope.manager_provided if administrator.hr_manager? || administrator.payroll_manager?
+    scope
+  }
+
+  scope :required, ->(state) {
+    where(required: true)
+      .joins(:visibility_rules)
+      .where(visibility_rules: {by: :administrator})
+      .where("visibility_rules.state <= ?", JobApplication.states[state])
+      .reorder(nil)
+      .distinct
+  }
+
+  scope :mandatory, ->(state) {
+    state_value = JobApplication.states[state]
+
+    where(
+      required: true,
+      id: VisibilityRule.where(by: :administrator)
+        .where("state <= ?", state_value)
+        .select(:job_application_file_type_id)
+    ).or(
+      where(
+        required: false,
+        id: VisibilityRule.where(by: :administrator)
+          .group(:job_application_file_type_id)
+          .having("MAX(state) < ?", state_value)
+          .select(:job_application_file_type_id)
+      )
+    )
+  }
+
+  VALIDATOR_ROLE_MAPPING = {
+    validate_by_employer_recruiter: :employer_recruiter?,
+    validate_by_employment_authority: :employment_authority?,
+    validate_by_hr_manager: :hr_manager?,
+    validate_by_payroll_manager: :payroll_manager?
+  }.freeze
+
   has_many :job_application_files, dependent: :nullify
+  has_many :visibility_rules, dependent: :destroy
+  accepts_nested_attributes_for :visibility_rules, allow_destroy: true
 
-  def is_mandatory?(state)
-    from_state_as_val = JobApplication.states[from_state]
-    current_state_as_val = JobApplication.states[state]
+  def can_validate?(administrator)
+    return true if administrator.functional_administrator?
 
-    current_state_as_val >= from_state_as_val
+    VALIDATOR_ROLE_MAPPING.any? { |flag, role_method| self[flag] && administrator.public_send(role_method) }
+  end
+
+  private
+
+  def must_have_administrator_visibility_rule
+    rules = visibility_rules.reject(&:marked_for_destruction?)
+    errors.add(:visibility_rules, :must_have_administrator) unless rules.any?(&:administrator?)
+  end
+
+  def must_have_user_visibility_rule
+    rules = visibility_rules.reject(&:marked_for_destruction?)
+    errors.add(:visibility_rules, :must_have_user) unless rules.any?(&:user?)
+  end
+
+  def must_have_at_least_one_validator
+    at_least_one_validator = validate_by_employer_recruiter? ||
+      validate_by_employment_authority? ||
+      validate_by_hr_manager? ||
+      validate_by_payroll_manager?
+    errors.add(:base, :must_have_at_least_one_validator) unless at_least_one_validator
   end
 end
 
@@ -54,16 +129,23 @@ end
 #
 # Table name: job_application_file_types
 #
-#  id                :uuid             not null, primary key
-#  by_default        :boolean          default(FALSE)
-#  content_file_name :string
-#  description       :string
-#  from_state        :integer
-#  kind              :integer
-#  name              :string
-#  notification      :boolean          default(TRUE)
-#  position          :integer
-#  spontaneous       :boolean          default(FALSE)
-#  created_at        :datetime         not null
-#  updated_at        :datetime         not null
+#  id                               :uuid             not null, primary key
+#  content_file_name                :string
+#  description                      :string
+#  kind                             :integer
+#  name                             :string
+#  notification                     :boolean          default(TRUE)
+#  notify_employer_recruiter        :boolean          default(FALSE), not null
+#  notify_employment_authority      :boolean          default(FALSE), not null
+#  notify_hr_manager                :boolean          default(FALSE), not null
+#  notify_payroll_manager           :boolean          default(FALSE), not null
+#  notify_user                      :boolean          default(FALSE), not null
+#  position                         :integer
+#  required                         :boolean          default(FALSE), not null
+#  validate_by_employer_recruiter   :boolean          default(FALSE), not null
+#  validate_by_employment_authority :boolean          default(FALSE), not null
+#  validate_by_hr_manager           :boolean          default(FALSE), not null
+#  validate_by_payroll_manager      :boolean          default(FALSE), not null
+#  created_at                       :datetime         not null
+#  updated_at                       :datetime         not null
 #

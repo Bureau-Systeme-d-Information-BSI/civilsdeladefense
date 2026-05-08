@@ -46,6 +46,50 @@
     {
       "warning_type": "Cross-Site Scripting",
       "warning_code": 2,
+      "fingerprint": "2222879d951652d9fba878bba692e8baa8dc26330d0b32e89ca3bc8144c29a21",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/admin/profiles/_personal_profile.html.haml",
+      "line": 2,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "::Haml::AttributeBuilder.build_id(true, dom_id(JobApplication.find(params[:job_application_id]).user, \"profile\"))",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Admin::JobApplications::UsersController",
+          "method": "update",
+          "line": 24,
+          "file": "app/controllers/admin/job_applications/users_controller.rb",
+          "rendered": {
+            "name": "admin/job_applications/users/update",
+            "file": "app/views/admin/job_applications/users/update.js.erb"
+          }
+        },
+        {
+          "type": "template",
+          "name": "admin/job_applications/users/update",
+          "line": 4,
+          "file": "app/views/admin/job_applications/users/update.js.erb",
+          "rendered": {
+            "name": "admin/profiles/_personal_profile",
+            "file": "app/views/admin/profiles/_personal_profile.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "admin/profiles/_personal_profile"
+      },
+      "user_input": "JobApplication.find(params[:job_application_id]).user",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
       "fingerprint": "3f5b56f0ff7076416959e23faf00c09ac8844ba6df57cc9e214c29ea28431c6e",
       "check_name": "CrossSiteScripting",
       "message": "Unescaped model attribute",
@@ -58,7 +102,7 @@
           "type": "controller",
           "class": "Admin::JobOffersController",
           "method": "featured",
-          "line": 26,
+          "line": 27,
           "file": "app/controllers/admin/job_offers_controller.rb",
           "rendered": {
             "name": "admin/job_offers/featured",
@@ -94,7 +138,7 @@
       "check_name": "CrossSiteScripting",
       "message": "Unescaped model attribute",
       "file": "app/views/layouts/application.html.haml",
-      "line": 16,
+      "line": 17,
       "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
       "code": "::Haml::AttributeBuilder.build_data(true, \"'\", :controller => \"timeoutable\", :timeoutable_timeout_in_value => current_user.timeout_in.in_milliseconds)",
       "render_path": [
@@ -128,10 +172,31 @@
       "check_name": "CrossSiteScripting",
       "message": "Unescaped model attribute",
       "file": "app/views/admin/job_offers/_job_application.html.haml",
-      "line": 3,
+      "line": 4,
       "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
       "code": "::Haml::AttributeBuilder.build_class(true, \"card job-application\", \"job-application--state-#{(Unresolved Model).new.state}\")",
       "render_path": [
+        {
+          "type": "controller",
+          "class": "Admin::JobOffersController",
+          "method": "board",
+          "line": 75,
+          "file": "app/controllers/admin/job_offers_controller.rb",
+          "rendered": {
+            "name": "admin/job_offers/board",
+            "file": "app/views/admin/job_offers/board.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "admin/job_offers/board",
+          "line": 6,
+          "file": "app/views/admin/job_offers/board.html.haml",
+          "rendered": {
+            "name": "admin/job_offers/_board_column",
+            "file": "app/views/admin/job_offers/_board_column.html.haml"
+          }
+        },
         {
           "type": "template",
           "name": "admin/job_offers/_board_column",
@@ -200,44 +265,11 @@
     {
       "warning_type": "Cross-Site Scripting",
       "warning_code": 2,
-      "fingerprint": "a94426eb42803b787c7ad8c7b6621641ccf09c4cea5997c2502fea5d9df530a9",
-      "check_name": "CrossSiteScripting",
-      "message": "Unescaped model attribute",
-      "file": "app/views/admin/profiles/_personal_profile.html.haml",
-      "line": 2,
-      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
-      "code": "::Haml::AttributeBuilder.build_id(true, dom_id((@job_application.user or User.new(:is_deleted => true)), \"profile\"))",
-      "render_path": [
-        {
-          "type": "template",
-          "name": "admin/job_applications/show",
-          "line": 16,
-          "file": "app/views/admin/job_applications/show.html.haml",
-          "rendered": {
-            "name": "admin/profiles/_personal_profile",
-            "file": "app/views/admin/profiles/_personal_profile.html.haml"
-          }
-        }
-      ],
-      "location": {
-        "type": "template",
-        "template": "admin/profiles/_personal_profile"
-      },
-      "user_input": "User.new(:is_deleted => true)",
-      "confidence": "Weak",
-      "cwe_id": [
-        79
-      ],
-      "note": ""
-    },
-    {
-      "warning_type": "Cross-Site Scripting",
-      "warning_code": 2,
       "fingerprint": "b035de519ed847bd033a36e574c1faf2df69b14a378f2e7d6deca661b2421ac4",
       "check_name": "CrossSiteScripting",
       "message": "Unescaped model attribute",
       "file": "app/views/admin/job_application_files/_job_application_file.html.haml",
-      "line": 8,
+      "line": 4,
       "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
       "code": "::Haml::AttributeBuilder.build_id(true, dom_id((Unresolved Model).new))",
       "render_path": [
@@ -245,7 +277,7 @@
           "type": "controller",
           "class": "Admin::JobApplicationFilesController",
           "method": "create",
-          "line": 26,
+          "line": 27,
           "file": "app/controllers/admin/job_application_files_controller.rb",
           "rendered": {
             "name": "admin/job_application_files/file_operation_total",
@@ -265,7 +297,7 @@
         {
           "type": "template",
           "name": "admin/job_applications/files",
-          "line": 13,
+          "line": 23,
           "file": "app/views/admin/job_applications/files.html.haml",
           "rendered": {
             "name": "admin/job_application_files/_job_application_file",
@@ -343,7 +375,7 @@
           "type": "controller",
           "class": "Admin::JobOffersController",
           "method": "featured",
-          "line": 26,
+          "line": 27,
           "file": "app/controllers/admin/job_offers_controller.rb",
           "rendered": {
             "name": "admin/job_offers/featured",
@@ -379,7 +411,7 @@
       "check_name": "CrossSiteScripting",
       "message": "Unescaped model attribute",
       "file": "app/views/admin/users/_user.html.haml",
-      "line": 38,
+      "line": 42,
       "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
       "code": "::Haml::AttributeBuilder.build_class(true, \"badge text-white text-uppercase text-nowrap mr-1\", badge_class((Unresolved Model).new.user.last_job_application.state.to_sym))",
       "render_path": [

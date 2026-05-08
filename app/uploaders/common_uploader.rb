@@ -4,7 +4,7 @@ class CommonUploader < CarrierWave::Uploader::Base
   include CarrierWave::Compatibility::Paperclip
 
   def paperclip_path
-    self.class.mappings[:id_partition] = ->(u, _f) { u.model.id.scan(/.{3}/).first(3).join("/") }
+    self.class.mappings[:id_partition] = ->(u, _f) { u.model.id&.scan(/.{3}/)&.first(3)&.join("/") || "000/000/000" }
     fog = "CarrierWave::Storage::Fog".safe_constantize
     if self.class.storage == fog
       ":class/:attachment/:id_partition/:style/:basename.:extension"

@@ -2,7 +2,7 @@
 
 require "rails_helper"
 
-RSpec.describe "Admin::Accounts" do
+RSpec.describe Admin::AccountsController do
   let(:administrator) { create(:administrator) }
 
   before { sign_in administrator }
@@ -37,18 +37,35 @@ RSpec.describe "Admin::Accounts" do
   end
 
   describe "PATCH /admin/account/" do
-    subject(:update_request) {
-      patch admin_account_path, params: {administrator: {first_name: new_first_name}}
-    }
+    subject(:update_request) { patch admin_account_path, params: }
 
-    let(:new_first_name) { "Sebastien" }
+    let(:params) do
+      {
+        administrator: {
+          first_name:,
+          current_password: attributes_for(:administrator)[:password],
+          password: new_password,
+          password_confirmation: new_password,
+          email:,
+          title:
+        }
+      }
+    end
+    let(:first_name) { "Sebastien" }
+    let(:new_password) { "A perflectly plausible password 1234!" }
+    let(:email) { "new_email@example.com" }
+    let(:title) { "Functional Administrator" }
 
     it "redirects to admin_account_path" do
       expect(update_request).to redirect_to(admin_account_path)
     end
 
     it "updates the account" do
-      expect { update_request }.to change { administrator.reload.first_name }.to(new_first_name)
+      expect { update_request }.to change { administrator.reload.first_name }.to(first_name)
+    end
+
+    it "updates the administrator's password" do
+      expect { update_request }.to change { administrator.reload.password }
     end
 
     it "shows an error when the account is invalid" do
@@ -56,54 +73,28 @@ RSpec.describe "Admin::Accounts" do
 
       expect(update_request).to render_template(:show)
     end
-  end
 
-  describe "PATCH /admin/account/update_email" do
-    subject(:update_email_request) {
-      patch update_email_admin_account_path, params: {administrator: {email: new_email}}
-    }
-
-    let(:new_email) { "test@example.com" }
-
-    it "redirects to change_email_admin_account" do
-      expect(update_email_request).to redirect_to(change_email_admin_account_path)
-    end
-
-    it "updates the administrator's unconfirmed_email" do
-      expect { update_email_request }.to change { administrator.reload.unconfirmed_email }.to(new_email)
-    end
-
-    it "shows an error when the account is invalid" do
-      allow_any_instance_of(Administrator).to receive(:update).and_return(false)
-
-      expect(update_email_request).to render_template(:change_email)
-    end
-
-    describe "PATCH /admin/account/update_password" do
-      subject(:update_password_request) {
-        patch update_password_admin_account_path, params: {
-          administrator: {
-            current_password: attributes_for(:administrator)[:password],
-            password: new_password,
-            password_confirmation: new_password
-          }
-        }
-      }
-
-      let(:new_password) { "A perflectly plausible password 1234!" }
-
-      it "redirects to change_password_admin_account_path" do
-        expect(update_password_request).to redirect_to(change_password_admin_account_path)
+    describe "email update" do
+      context "when the admin is functional administrator" do
+        it { expect { update_request }.to change { administrator.reload.unconfirmed_email }.to(email) }
       end
 
-      it "updates the administrator's password" do
-        expect { update_password_request }.to change { administrator.reload.password }
+      context "when the admin is not functional administrator" do
+        before { administrator.update!(roles: [:payroll_manager]) }
+
+        it { expect { update_request }.not_to change { administrator.reload.unconfirmed_email } }
+      end
+    end
+
+    describe "title update" do
+      context "when the admin is functional administrator" do
+        it { expect { update_request }.to change { administrator.reload.title }.to(title) }
       end
 
-      it "shows an error when the account is invalid" do
-        allow_any_instance_of(Administrator).to receive(:update).and_return(false)
+      context "when the admin is not functional administrator" do
+        before { administrator.update!(roles: [:payroll_manager]) }
 
-        expect(update_password_request).to render_template(:change_password)
+        it { expect { update_request }.not_to change { administrator.reload.title } }
       end
     end
   end

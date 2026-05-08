@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_02_02_153058) do
+ActiveRecord::Schema[7.2].define(version: 2026_05_07_140000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -44,6 +44,15 @@ ActiveRecord::Schema[7.2].define(version: 2026_02_02_153058) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "administrator_employers", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "administrator_id", null: false
+    t.uuid "employer_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["administrator_id"], name: "index_administrator_employers_on_administrator_id"
+    t.index ["employer_id"], name: "index_administrator_employers_on_employer_id"
   end
 
   create_table "administrators", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
@@ -81,6 +90,9 @@ ActiveRecord::Schema[7.2].define(version: 2026_02_02_153058) do
     t.uuid "grand_employer_administrator_id"
     t.uuid "organization_id"
     t.date "marked_for_deactivation_on"
+    t.integer "roles", default: 0, null: false
+    t.boolean "ace", default: false
+    t.boolean "ate", default: false
     t.index ["confirmation_token"], name: "index_administrators_on_confirmation_token", unique: true
     t.index ["email"], name: "index_administrators_on_email", unique: true
     t.index ["employer_id"], name: "index_administrators_on_employer_id"
@@ -370,13 +382,24 @@ ActiveRecord::Schema[7.2].define(version: 2026_02_02_153058) do
     t.string "description"
     t.integer "kind"
     t.string "content_file_name"
-    t.boolean "by_default", default: false
     t.integer "position"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.integer "from_state"
     t.boolean "notification", default: true
-    t.boolean "spontaneous", default: false
+    t.integer "to_state", default: 11
+    t.boolean "required", default: false, null: false
+    t.integer "required_from_state", default: 0
+    t.integer "required_to_state", default: 11
+    t.boolean "notify_user", default: false, null: false
+    t.boolean "notify_employer_recruiter", default: false, null: false
+    t.boolean "notify_employment_authority", default: false, null: false
+    t.boolean "notify_hr_manager", default: false, null: false
+    t.boolean "notify_payroll_manager", default: false, null: false
+    t.boolean "validate_by_employer_recruiter", default: false, null: false
+    t.boolean "validate_by_employment_authority", default: false, null: false
+    t.boolean "validate_by_hr_manager", default: false, null: false
+    t.boolean "validate_by_payroll_manager", default: false, null: false
   end
 
   create_table "job_application_files", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
@@ -411,7 +434,10 @@ ActiveRecord::Schema[7.2].define(version: 2026_02_02_153058) do
     t.uuid "rejection_reason_id"
     t.uuid "organization_id"
     t.uuid "category_id"
+    t.boolean "rejected", default: false
     t.integer "preselection", default: 0
+    t.boolean "dar", default: false, null: false
+    t.string "cover_letter_file_name"
     t.index ["category_id"], name: "index_job_applications_on_category_id"
     t.index ["employer_id"], name: "index_job_applications_on_employer_id"
     t.index ["job_offer_id"], name: "index_job_applications_on_job_offer_id"
@@ -500,6 +526,11 @@ ActiveRecord::Schema[7.2].define(version: 2026_02_02_153058) do
     t.uuid "archiving_reason_id"
     t.uuid "level_id"
     t.date "application_deadline"
+    t.integer "financial_estimate_job_applications_count", default: 0, null: false
+    t.boolean "ict_tct", default: false, null: false
+    t.boolean "asc", default: false, null: false
+    t.boolean "cover_lettre_required", default: false, null: false
+    t.integer "positions_count", default: 1, null: false
     t.index ["archiving_reason_id"], name: "index_job_offers_on_archiving_reason_id"
     t.index ["bop_id"], name: "index_job_offers_on_bop_id"
     t.index ["category_id"], name: "index_job_offers_on_category_id"
@@ -831,6 +862,15 @@ ActiveRecord::Schema[7.2].define(version: 2026_02_02_153058) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  create_table "visibility_rules", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "job_application_file_type_id", null: false
+    t.string "by", default: "administrator", null: false
+    t.integer "state", default: 0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["job_application_file_type_id"], name: "index_visibility_rules_on_job_application_file_type_id"
+  end
+
   create_table "zip_files", id: :uuid, default: -> { "public.gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -838,6 +878,8 @@ ActiveRecord::Schema[7.2].define(version: 2026_02_02_153058) do
   end
 
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "administrator_employers", "administrators"
+  add_foreign_key "administrator_employers", "employers"
   add_foreign_key "administrators", "administrators", column: "grand_employer_administrator_id"
   add_foreign_key "administrators", "administrators", column: "inviter_id"
   add_foreign_key "administrators", "administrators", column: "supervisor_administrator_id"
@@ -893,4 +935,5 @@ ActiveRecord::Schema[7.2].define(version: 2026_02_02_153058) do
   add_foreign_key "salary_ranges", "experience_levels"
   add_foreign_key "salary_ranges", "professional_categories"
   add_foreign_key "salary_ranges", "sectors"
+  add_foreign_key "visibility_rules", "job_application_file_types"
 end

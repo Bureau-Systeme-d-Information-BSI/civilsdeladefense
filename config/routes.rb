@@ -54,8 +54,7 @@ Rails.application.routes.draw do
     resources :administrator_emails, only: :index
     resource :account do
       member do
-        get :change_email, :change_password, :photo
-        patch :update_email, :update_password
+        get :photo
       end
     end
     resources :salary_ranges, only: %i[index]
@@ -109,7 +108,7 @@ Rails.application.routes.draw do
       end
       resources :preferred_users
     end
-    resources :users, path: "candidats", except: %i[create] do
+    resources :users, path: "candidats", except: %i[create update] do
       resource :resume, only: %i[show]
       collection do
         post :multi_select
@@ -124,12 +123,16 @@ Rails.application.routes.draw do
       member do
         patch :change_state
       end
+      resource :user, module: :job_applications, only: %i[update]
       resources :job_application_files do
         member do
           post :check
           post :uncheck
         end
       end
+      resource :cover_letter, only: %i[show]
+      resource :rejection, only: %i[new create destroy]
+      resource :dar, only: %i[update]
       resources :messages, only: %i[create]
       resources :emails, only: %i[create] do
         member do
@@ -225,6 +228,7 @@ Rails.application.routes.draw do
             get :attachment
           end
         end
+        resource :withdrawal, path: "desistement", only: :create
       end
       resource :user, path: "mon-compte", only: %i[show destroy] do
         collection do

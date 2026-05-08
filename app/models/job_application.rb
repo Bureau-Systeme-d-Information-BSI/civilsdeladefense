@@ -2,8 +2,10 @@
 
 # Candidacy to a job offer
 class JobApplication < ApplicationRecord
+  include Notifiable
   include Readable
   include Preselectable
+  include Rejectable
 
   include AASM
   audited except: %i[files_count files_unread_count emails_count
@@ -33,7 +35,6 @@ class JobApplication < ApplicationRecord
   belongs_to :organization
   belongs_to :user, optional: true
   accepts_nested_attributes_for :user
-  belongs_to :rejection_reason, optional: true
   belongs_to :employer
   belongs_to :category, optional: true
 
@@ -44,30 +45,52 @@ class JobApplication < ApplicationRecord
   has_many :job_application_files, index_errors: true, dependent: :destroy
   accepts_nested_attributes_for :job_application_files
 
+  mount_uploader :cover_letter, DocumentUploader, mount_on: :cover_letter_file_name
+  validates :cover_letter, presence: true, if: -> { job_offer.cover_lettre_required? }
+  validates :cover_letter, file_size: {less_than: 2.megabytes}, if: -> { cover_letter_file_name_changed? }
+
   scope :with_category, -> { where.not(category: nil) }
 
   validates :user_id, uniqueness: {scope: :job_offer_id}, on: :create, allow_nil: true # rubocop:disable Rails/UniqueValidationWithoutIndex
   validate :cant_accept_before_delay
-  validate :complete_files_before_draft_contract
+  validate :cant_accept_remaining_initial_job_applications
+  validate :requested_files_not_validated,
+    if: -> { state_changed? && state_was.present? && JobApplication.states[state] > JobApplication.states[state_was] },
+    unless: -> { requested_files_validated? }
+  validate :cant_exceed_positions_count, if: -> { state_changed? && JobApplication.states[state] > JobApplication.states["financial_estimate"] }
   validate :cant_be_accepted_twice, if: -> { accepted? }, unless: -> { has_accepted_other_job_application? }
+  validate :dar_validated, if: -> { state_changed? && contract_drafting? }, unless: :dar?
 
   before_validation :set_employer
   before_save :compute_notifications_counter
-  before_save :cleanup_rejection_reason, unless: proc { |ja| ja.rejected_state? }
+  after_save :create_required_job_application_files,
+    if: -> {
+      saved_change_to_state? &&
+        state_previously_was.present? &&
+        JobApplication.states[state] > JobApplication.states[state_previously_was]
+    }
+  after_save :notify_user_new_documents, if: -> { saved_change_to_state? } # Keep it after create_required_job_application_files
 
-  FINISHED_STATES = %w[rejected phone_meeting_rejected after_meeting_rejected affected].freeze
-  REJECTED_STATES = %w[rejected phone_meeting_rejected after_meeting_rejected].freeze
-  PROCESSING_STATES = %w[initial phone_meeting to_be_met].freeze
-  FILLED_STATES = %w[
-    accepted contract_drafting contract_feedback_waiting contract_received affected
+  FINISHED_STATES = %w[affected].freeze
+  PROCESSING_STATES = %w[initial phone_meeting to_be_met financial_estimate].freeze
+  FILLED_STATES = %w[accepted contract_drafting contract_feedback_waiting contract_received affected].freeze
+
+  NOTIFICATION_STATES = %w[
+    phone_meeting
+    to_be_met
+    financial_estimate
+    accepted
+    contract_drafting
+    contract_feedback_waiting
+    contract_received
+    affected
   ].freeze
+
   enum state: {
     initial: 0,
-    rejected: 1,
     phone_meeting: 2,
-    phone_meeting_rejected: 3,
     to_be_met: 5,
-    after_meeting_rejected: 6,
+    financial_estimate: 6,
     accepted: 7,
     contract_drafting: 8,
     contract_feedback_waiting: 9,
@@ -77,27 +100,22 @@ class JobApplication < ApplicationRecord
 
   aasm column: :state, enum: true do
     state :initial, initial: true
-    state :rejected
-    state :phone_meeting
-    state :phone_meeting_rejected
+    state :phone_meeting, before_enter: proc { notify_applicant_new_state(:phone_meeting) }
     state :to_be_met
-    state :after_meeting_rejected
+    state :financial_estimate
     state :accepted
     state :contract_drafting
     state :contract_feedback_waiting
     state :contract_received
     state :affected
-
-    event :reject do
-      transitions from: [:initial], to: :rejected
-    end
   end
 
   def self.end_user_states_regrouping
     @end_user_states_regrouping ||= [
-      %i[initial rejected],
-      %i[phone_meeting phone_meeting_rejected],
-      %i[to_be_met after_meeting_rejected],
+      %i[initial],
+      %i[phone_meeting],
+      %i[to_be_met],
+      %i[financial_estimate],
       [:accepted],
       [:contract_drafting],
       [:contract_feedback_waiting],
@@ -107,12 +125,10 @@ class JobApplication < ApplicationRecord
   end
 
   STATE_DURATION = [
-    [:initial, :rejected],
     [:initial, :phone_meeting],
-    [:phone_meeting, :phone_meeting_rejected],
     [:phone_meeting, :to_be_met],
-    [:to_be_met, :after_meeting_rejected],
-    [:to_be_met, :accepted],
+    [:to_be_met, :financial_estimate],
+    [:financial_estimate, :accepted],
     [:accepted, :contract_drafting],
     [:contract_drafting, :contract_feedback_waiting],
     [:contract_feedback_waiting, :contract_received],
@@ -174,6 +190,16 @@ class JobApplication < ApplicationRecord
     "end_user_state_#{end_user_state_number}"
   end
 
+  def file_types_for_user
+    uploaded_types = job_application_files.select { |f| f.document_content.present? }.map(&:job_application_file_type)
+    (JobApplicationFileType.visible_by_user(state) + uploaded_types).uniq
+  end
+
+  def file_for(type)
+    job_application_files.find { |f| f.job_application_file_type == type } ||
+      job_application_files.build(job_application_file_type: type)
+  end
+
   counter_culture :job_offer,
     column_name: proc { |model| "#{model.state}_job_applications_count" },
     column_names: aasm.states.each_with_object({}) { |obj, memo|
@@ -198,14 +224,13 @@ class JobApplication < ApplicationRecord
   scope :finished, -> { where(state: FINISHED_STATES) }
   scope :not_finished, -> { where.not(state: FINISHED_STATES) }
   scope :between, ->(a, b) { where(created_at: b..a) }
+  scope :not_rejected, -> { where(rejected: false) }
   scope :with_user, -> { where.not(user: nil) }
+
+  delegate :employer_recruiters, :employment_authorities, :hr_managers, :payroll_managers, to: :job_offer, prefix: true
 
   def set_employer
     self.employer_id ||= job_offer.employer_id
-  end
-
-  def cleanup_rejection_reason
-    self.rejection_reason = nil
   end
 
   def compute_notifications_counter!
@@ -243,35 +268,6 @@ class JobApplication < ApplicationRecord
     self.administrator_notifications_count = emails_administrator_unread_count + files_unread_count
   end
 
-  # Return two arrays
-  # First with JobApplicationFile already existing or that need to be fill
-  # Second with JobApplicationFileType where no instance exist in first array
-  def files_to_be_provided
-    result = {}
-    result[:must_be_provided_files] = []
-    result[:optional_file_types] = []
-
-    JobApplicationFileType.all.find_each do |file_type|
-      existing_file = job_application_files.detect { |file|
-        file.job_application_file_type == file_type
-      }
-
-      from_state_as_val = JobApplication.states[file_type.from_state]
-      current_state_as_val = JobApplication.states[state]
-
-      if existing_file
-        result[:must_be_provided_files] << existing_file
-      elsif (current_state_as_val >= from_state_as_val) && file_type.by_default
-        virgin = job_application_files.build(job_application_file_type: file_type)
-        result[:must_be_provided_files] << virgin
-      else
-        result[:optional_file_types] << file_type
-      end
-    end
-
-    result
-  end
-
   def send_confirmation_email
     job_offer_identifier = job_offer.identifier
     service_name = job_offer.organization.service_name
@@ -301,10 +297,6 @@ class JobApplication < ApplicationRecord
     ApplicantNotificationsMailer.new_email(email.id).deliver_now
   end
 
-  def rejected_state?
-    REJECTED_STATES.include?(state)
-  end
-
   def cant_accept_before_delay
     return if state.to_s != "accepted"
     return if state_was.to_s == "accepted"
@@ -314,32 +306,60 @@ class JobApplication < ApplicationRecord
     errors.add(:state, :cant_accept_before_delay)
   end
 
-  def complete_files_before_draft_contract
-    return if state.to_s != "contract_drafting"
+  def cant_exceed_positions_count
+    return if JobApplication.states[state_was.to_s].to_i > JobApplication.states["financial_estimate"]
 
-    default_types = JobApplicationFileType.by_default(:accepted).pluck(:id)
-    validated_types = job_application_files.where(is_validated: true).pluck(:job_application_file_type_id)
+    advanced_states = JobApplication.all_states_greater_than("financial_estimate")
+    advanced_count = job_offer.job_applications.not_rejected.where(state: advanced_states).where.not(id: id).count
+    errors.add(:state, :cant_exceed_positions_count) if advanced_count >= job_offer.positions_count
+  end
 
-    return if (default_types - validated_types).blank?
+  def cant_accept_remaining_initial_job_applications
+    return if state.to_s != "accepted"
+    return if state_was.to_s == "accepted"
+    return if job_offer.job_applications.not_rejected.where(state: "initial").where.not(id: id).empty?
 
-    errors.add(:state, :complete_files_before_draft_contract)
+    errors.add(:state, :cant_accept_remaining_initial_job_applications)
+  end
+
+  def requested_files_not_validated = errors.add(:state, :requested_files_missing, documents: requested_files)
+
+  def requested_files_validated?
+    mandatory_type_ids = JobApplicationFileType.mandatory(state).pluck(:id).to_set
+    requested_type_ids = job_application_files.pluck(:job_application_file_type_id).to_set
+    types_to_validate = mandatory_type_ids & requested_type_ids
+    validated_type_ids = job_application_files.select(&:validated?).map(&:job_application_file_type_id).to_set
+    types_to_validate.subset?(validated_type_ids)
+  end
+
+  def requested_files
+    mandatory_type_ids = JobApplicationFileType.mandatory(state).pluck(:id).to_set
+    requested_type_ids = job_application_files.pluck(:job_application_file_type_id).to_set
+    validated_type_ids = job_application_files.select(&:validated?).map(&:job_application_file_type_id).to_set
+    unvalidated_ids = (mandatory_type_ids & requested_type_ids) - validated_type_ids
+    JobApplicationFileType.where(id: unvalidated_ids).pluck(:name).join(", ")
+  end
+
+  def create_required_job_application_files
+    existing_type_ids = job_application_files.reload.pluck(:job_application_file_type_id)
+    JobApplicationFileType.required(state).where.not(id: existing_type_ids).find_each do |file_type|
+      job_application_files.create!(job_application_file_type: file_type, do_not_provide_immediately: true)
+    end
   end
 
   def cant_be_accepted_twice = errors.add(:state, :cant_be_accepted_twice)
 
+  def dar_validated = errors.add(:state, :dar_unvalidated)
+
   def has_accepted_other_job_application? = user.job_applications.where(state: "accepted").where.not(id: id).empty?
 
   class << self
-    def rejected_states
-      REJECTED_STATES
-    end
-
     def processing_states
       PROCESSING_STATES
     end
 
     def selected_states
-      states.keys - %w[initial rejected]
+      states.keys - %w[initial]
     end
 
     def phone_meeting_gt_states
@@ -360,6 +380,8 @@ end
 #
 #  id                                :uuid             not null, primary key
 #  administrator_notifications_count :integer          default(0)
+#  cover_letter_file_name            :string
+#  dar                               :boolean          default(FALSE), not null
 #  emails_administrator_unread_count :integer          default(0)
 #  emails_count                      :integer          default(0)
 #  emails_unread_count               :integer          default(0)
@@ -368,6 +390,7 @@ end
 #  files_count                       :integer          default(0)
 #  files_unread_count                :integer          default(0)
 #  preselection                      :integer          default("pending")
+#  rejected                          :boolean          default(FALSE)
 #  skills_fit_job_offer              :boolean
 #  state                             :integer
 #  created_at                        :datetime         not null

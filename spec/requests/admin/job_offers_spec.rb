@@ -59,30 +59,46 @@ RSpec.describe "Admin::Job_Offers" do
     end
 
     context "when the job offer can't be published" do
-      let(:job_offer) { create(:job_offer, organization_description: nil) }
+      shared_examples "unpublishable job offer" do
+        context "when format is html" do
+          subject(:publish_request) { patch publish_admin_job_offer_path(job_offer) }
 
-      context "when format is html" do
-        subject(:publish_request) { patch publish_admin_job_offer_path(job_offer) }
+          it "doesn't publish the job offer" do
+            expect { publish_request }.not_to change { job_offer.reload.state }
+          end
 
-        it "doesn't publish the job offer" do
-          expect { publish_request }.not_to change { job_offer.reload.state }
+          it "redirects to job offers" do
+            expect(publish_request).to redirect_to(admin_job_offers_path)
+          end
         end
 
-        it "redirects to job offers" do
-          expect(publish_request).to redirect_to(admin_job_offers_path)
+        context "when format is js" do
+          subject(:publish_request) { patch publish_admin_job_offer_path(job_offer), xhr: true }
+
+          it "doesn't publish the job offer" do
+            expect { publish_request }.not_to change { job_offer.reload.state }
+          end
+
+          it "renders the template" do
+            expect(publish_request).to render_template(:state_unchanged)
+          end
         end
       end
 
-      context "when format is js" do
-        subject(:publish_request) { patch publish_admin_job_offer_path(job_offer), xhr: true }
-
-        it "doesn't publish the job offer" do
-          expect { publish_request }.not_to change { job_offer.reload.state }
+      context "when organization_description is missing" do
+        let(:job_offer) do
+          build(:job_offer, organization_description: nil).tap { |jo| jo.save(validate: false) }
         end
 
-        it "renders the template" do
-          expect(publish_request).to render_template(:state_unchanged)
+        include_examples "unpublishable job offer"
+      end
+
+      context "when recruitment_process is missing" do
+        let(:job_offer) do
+          build(:job_offer, recruitment_process: nil).tap { |jo| jo.save(validate: false) }
         end
+
+        include_examples "unpublishable job offer"
       end
     end
   end
@@ -107,6 +123,37 @@ RSpec.describe "Admin::Job_Offers" do
 
       it "redirects to job offers" do
         expect(update_and_publish_request).to redirect_to(admin_job_offers_path)
+      end
+    end
+
+    context "when updating new attributes" do
+      subject(:update_request) { patch admin_job_offer_path(job_offer), params: params }
+
+      let(:params) do
+        {
+          job_offer: {
+            ict_tct: true,
+            asc: true,
+            cover_lettre_required: true,
+            positions_count: 3
+          }
+        }
+      end
+
+      it "saves ict_tct" do
+        expect { update_request }.to change { job_offer.reload.ict_tct }.from(false).to(true)
+      end
+
+      it "saves asc" do
+        expect { update_request }.to change { job_offer.reload.asc }.from(false).to(true)
+      end
+
+      it "saves cover_lettre_required" do
+        expect { update_request }.to change { job_offer.reload.cover_lettre_required }.from(false).to(true)
+      end
+
+      it "saves positions_count" do
+        expect { update_request }.to change { job_offer.reload.positions_count }.from(1).to(3)
       end
     end
 

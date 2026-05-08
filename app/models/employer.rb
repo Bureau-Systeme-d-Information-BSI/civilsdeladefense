@@ -3,10 +3,16 @@
 # Top level organization regrouping recruiters
 class Employer < ApplicationRecord
   has_many :job_offers, dependent: :nullify
+  has_many :administrator_employers, dependent: :destroy
+  has_many :administrators, through: :administrator_employers
 
   validates :name, :code, presence: true, uniqueness: true
 
   acts_as_nested_set counter_cache: :children_count
+
+  def self.ransackable_attributes(auth_object = nil)
+    %w[id name code]
+  end
 
   def self.tree
     Employer.roots.map { |e| [e.name, e.children] }

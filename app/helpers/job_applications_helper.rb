@@ -7,7 +7,7 @@ module JobApplicationsHelper
       "light invisible"
     when :initial
       "purple"
-    when :rejected, :phone_meeting_rejected, :after_meeting_rejected, :draft, :archived, :suspended
+    when :draft, :archived, :suspended
       "light-gray"
     when :accepted, :published
       "success"

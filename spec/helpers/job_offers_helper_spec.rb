@@ -129,6 +129,89 @@ RSpec.describe JobOffersHelper do
 
       it { is_expected.to eq("Non") }
     end
+
+    context "when the attribute is :ict_tct" do
+      let(:attribute) { :ict_tct }
+
+      it { is_expected.to eq("Non") }
+
+      context "when ict_tct is true" do
+        let(:job_offer) { create(:job_offer, application_deadline:, ict_tct: true) }
+
+        it { is_expected.to eq("Oui") }
+      end
+    end
+
+    context "when the attribute is :asc" do
+      let(:attribute) { :asc }
+
+      it { is_expected.to eq("Non") }
+
+      context "when asc is true" do
+        let(:job_offer) { create(:job_offer, application_deadline:, asc: true) }
+
+        it { is_expected.to eq("Oui") }
+      end
+    end
+
+    context "when the attribute is :cover_lettre_required" do
+      let(:attribute) { :cover_lettre_required }
+
+      it { is_expected.to eq("Non") }
+
+      context "when cover_lettre_required is true" do
+        let(:job_offer) { create(:job_offer, application_deadline:, cover_lettre_required: true) }
+
+        it { is_expected.to eq("Oui") }
+      end
+    end
+
+    context "when the attribute is :positions_count" do
+      let(:attribute) { :positions_count }
+
+      it { is_expected.to eq(1) }
+
+      context "when positions_count is set to a specific value" do
+        let(:job_offer) { create(:job_offer, application_deadline:, positions_count: 5) }
+
+        it { is_expected.to eq(5) }
+      end
+    end
+  end
+
+  describe ".asc_ict_tct_badge" do
+    subject { asc_ict_tct_badge(job_offer) }
+
+    context "when neither asc nor ict_tct" do
+      let(:job_offer) { create(:job_offer, asc: false, ict_tct: false) }
+
+      it { is_expected.to eq("") }
+    end
+
+    context "when asc is true" do
+      let(:job_offer) { create(:job_offer, asc: true, ict_tct: false) }
+
+      it { is_expected.to include("ASC") }
+      it { is_expected.to include("rf-tag--warning") }
+      it { is_expected.not_to include("ICT-TCT") }
+    end
+
+    context "when ict_tct is true" do
+      let(:job_offer) { create(:job_offer, asc: false, ict_tct: true) }
+
+      it { is_expected.to include("ICT-TCT") }
+      it { is_expected.to include("rf-tag--info") }
+      it { is_expected.not_to include("ASC") }
+    end
+
+    context "when both asc and ict_tct are true" do
+      let(:job_offer) { create(:job_offer, asc: true, ict_tct: true) }
+
+      it { is_expected.to include("ASC") }
+      it { is_expected.to include("ICT-TCT") }
+      it { is_expected.to include("rf-tag--warning") }
+      it { is_expected.to include("rf-tag--info") }
+    end
   end
 
   describe ".show_apply_button?" do

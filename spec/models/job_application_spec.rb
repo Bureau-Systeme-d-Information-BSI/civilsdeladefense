@@ -4,13 +4,23 @@ require "rails_helper"
 
 RSpec.describe JobApplication do
   let(:job_offer) { create(:job_offer) }
-  let(:job_application) { create(:job_application, job_offer: job_offer) }
+  let(:job_application) { create(:job_application, job_offer:) }
+
+  describe "delegations" do
+    it { is_expected.to delegate_method(:employer_recruiters).to(:job_offer).with_prefix(true) }
+
+    it { is_expected.to delegate_method(:employment_authorities).to(:job_offer).with_prefix(true) }
+
+    it { is_expected.to delegate_method(:hr_managers).to(:job_offer).with_prefix(true) }
+
+    it { is_expected.to delegate_method(:payroll_managers).to(:job_offer).with_prefix(true) }
+  end
 
   describe "validations" do
     describe "#cant_be_accepted_twice" do
       subject(:acceptance) { job_application.accepted! }
 
-      let(:job_application) { create(:job_application) }
+      let(:job_application) { create(:job_application, state: :financial_estimate) }
 
       context "when the user has not been accepted for another job offer" do
         it { is_expected.to be(true) }
@@ -22,9 +32,105 @@ RSpec.describe JobApplication do
         it { expect { acceptance }.to raise_error(ActiveRecord::RecordInvalid) }
       end
     end
+
+    describe "#cant_accept_remaining_initial_job_applications" do
+      subject(:acceptance) { job_application.accepted! }
+
+      let(:job_application) { create(:job_application, job_offer:, state: :financial_estimate) }
+
+      context "when the job offer has no initial job applications" do
+        it { is_expected.to be(true) }
+      end
+
+      context "when the job offer has initial job applications" do
+        before { create(:job_application, job_offer:, state: :initial) }
+
+        it { expect { acceptance }.to raise_error(ActiveRecord::RecordInvalid) }
+      end
+
+      context "when the job offer has initial but rejected job applications" do
+        before { create(:job_application, :rejected, job_offer:, state: :initial) }
+
+        it { is_expected.to be(true) }
+      end
+    end
+
+    describe "#cant_exceed_positions_count" do
+      subject(:acceptance) { job_application.accepted! }
+
+      let(:job_offer) { create(:job_offer, positions_count: 1) }
+      let(:job_application) { create(:job_application, job_offer:, state: :financial_estimate) }
+
+      context "when no other advanced applications exist" do
+        it { is_expected.to be(true) }
+      end
+
+      context "when positions_count is not yet reached" do
+        let(:job_offer) { create(:job_offer, positions_count: 2) }
+
+        before { create(:job_application, job_offer:, state: :accepted) }
+
+        it { is_expected.to be(true) }
+      end
+
+      context "when positions_count is already reached" do
+        before { create(:job_application, job_offer:, state: :accepted) }
+
+        it { expect { acceptance }.to raise_error(ActiveRecord::RecordInvalid) }
+      end
+
+      context "when a non-accepted but advanced state (contract_drafting) counts toward positions_count" do
+        before { create(:job_application, job_offer:, state: :contract_drafting, dar: true) }
+
+        it { expect { acceptance }.to raise_error(ActiveRecord::RecordInvalid) }
+      end
+
+      context "when advanced applications are rejected (should not count)" do
+        before { create(:job_application, :rejected, job_offer:, state: :accepted) }
+
+        it { is_expected.to be(true) }
+      end
+
+      context "when moving forward from an already advanced state (guard)" do
+        let(:job_application) { create(:job_application, job_offer:, state: :accepted, dar: true) }
+
+        it "does not block forward progression" do
+          expect { job_application.contract_drafting! }.not_to raise_error
+        end
+      end
+    end
+
+    describe "#dar_validated" do
+      subject(:contract_drafting) { job_application.contract_drafting! }
+
+      let(:job_application) { create(:job_application, state: :accepted, dar:) }
+
+      context "when the dar is validated" do
+        let(:dar) { true }
+
+        it { is_expected.to be(true) }
+      end
+
+      context "when the dar is not validated" do
+        let(:dar) { false }
+
+        it { expect { contract_drafting }.to raise_error(ActiveRecord::RecordInvalid) }
+      end
+    end
   end
 
   describe "scopes" do
+    describe ".not_rejected" do
+      subject { described_class.not_rejected }
+
+      let(:matching) { create(:job_application, rejected: false) }
+      let(:unmatching) { create(:job_application, :rejected) }
+
+      it { is_expected.to include(matching) }
+
+      it { is_expected.not_to include(unmatching) }
+    end
+
     describe ".with_category" do
       subject { described_class.with_category }
 
@@ -37,162 +143,183 @@ RSpec.describe JobApplication do
     end
   end
 
-  it "correcties tell rejected state" do
-    expect(job_application.rejected_state?).to be(false)
+  describe "#file_types_for_user" do
+    subject(:file_types_for_user) { job_application.file_types_for_user }
 
-    job_application.reject!
-    expect(job_application.rejected_state?).to be(true)
-
-    job_application.phone_meeting!
-    expect(job_application.rejected_state?).to be(false)
-
-    job_application.phone_meeting_rejected!
-    expect(job_application.rejected_state?).to be(true)
-
-    job_application.to_be_met!
-    expect(job_application.rejected_state?).to be(false)
-
-    job_application.after_meeting_rejected!
-    expect(job_application.rejected_state?).to be(true)
-
-    job_offer.update(published_at: 40.days.before)
-    job_application.accepted!
-    expect(job_application.rejected_state?).to be(false)
-
-    job_application.contract_drafting!
-    expect(job_application.rejected_state?).to be(false)
-
-    job_application.contract_feedback_waiting!
-    expect(job_application.rejected_state?).to be(false)
-
-    job_application.contract_received!
-    expect(job_application.rejected_state?).to be(false)
-
-    job_application.affected!
-    expect(job_application.rejected_state?).to be(false)
-  end
-
-  it "correcties tell rejected states from JobOffer class" do
-    ary = %w[rejected phone_meeting_rejected after_meeting_rejected]
-    expect(described_class.rejected_states).to match_array(ary)
-  end
-
-  describe "files_to_be_provided" do
-    before do
-      create(
-        :job_application_file_type,
-        name: "CV", from_state: :initial, kind: :applicant_provided, by_default: true
-      )
-      create(
-        :job_application_file_type,
-        name: "LM", from_state: :initial, kind: :applicant_provided, by_default: true
-      )
-      create(
-        :job_application_file_type,
-        name: "FILE", from_state: :to_be_met, kind: :applicant_provided, by_default: true
-      )
+    let(:job_application) { create(:job_application, job_offer:, state: :phone_meeting) }
+    let!(:visible_type) do
+      create(:job_application_file_type).tap do |jaft|
+        jaft.visibility_rules.where(by: :user).destroy_all
+        jaft.visibility_rules.create!(by: :user, state: :phone_meeting)
+      end
+    end
+    let!(:hidden_type) do
+      create(:job_application_file_type).tap do |jaft|
+        jaft.visibility_rules.where(by: :user).destroy_all
+        jaft.visibility_rules.create!(by: :user, state: :financial_estimate)
+      end
+    end
+    let!(:already_uploaded_hidden_type) do
+      create(:job_application_file_type).tap do |jaft|
+        jaft.visibility_rules.where(by: :user).destroy_all
+        jaft.visibility_rules.create!(by: :user, state: :financial_estimate)
+      end
     end
 
-    it "computes files to be provided" do
-      result = job_application.files_to_be_provided
-      must_be_provided_files = result[:must_be_provided_files]
-      optional_file_types = result[:optional_file_types]
+    before do
+      create(:job_application_file, job_application:, job_application_file_type: already_uploaded_hidden_type)
+      job_application.reload
+    end
 
-      expect(must_be_provided_files.size).to eq(2)
-      expect(optional_file_types.size).to eq(1)
+    it { is_expected.to include(visible_type) }
 
-      job_application.job_application_files.each do |file|
-        file.content = fixture_file_upload("document.pdf", "application/pdf")
+    it { is_expected.to include(already_uploaded_hidden_type) }
+
+    it { is_expected.not_to include(hidden_type) }
+
+    it "returns each type only once" do
+      create(:job_application_file, job_application:, job_application_file_type: visible_type)
+      job_application.reload
+      expect(file_types_for_user.count(visible_type)).to eq(1)
+    end
+
+    it "ignores placeholder files without uploaded content" do
+      empty_type = create(:job_application_file_type).tap do |jaft|
+        jaft.visibility_rules.where(by: :user).destroy_all
+        jaft.visibility_rules.create!(by: :user, state: :financial_estimate)
       end
-      job_application.to_be_met!
+      create(:job_application_file, job_application:, job_application_file_type: empty_type, content: nil, do_not_provide_immediately: true)
+      job_application.reload
+      expect(file_types_for_user).not_to include(empty_type)
+    end
+  end
 
-      result = job_application.files_to_be_provided
-      must_be_provided_files = result[:must_be_provided_files]
-      optional_file_types = result[:optional_file_types]
+  describe "#file_for" do
+    subject(:file_for) { job_application.file_for(type) }
 
-      expect(must_be_provided_files.size).to eq(3)
-      expect(optional_file_types.size).to eq(0)
+    let(:job_application) { create(:job_application) }
+    let(:type) { create(:job_application_file_type) }
+
+    context "when a file already exists for the type" do
+      let!(:existing_file) { create(:job_application_file, job_application:, job_application_file_type: type) }
+
+      before { job_application.reload }
+
+      it { is_expected.to eq(existing_file) }
+    end
+
+    context "when no file exists for the type" do
+      it "builds a new unsaved file with the given type" do
+        expect(file_for).to be_new_record
+        expect(file_for.job_application_file_type).to eq(type)
+      end
+    end
+  end
+
+  describe "#create_required_job_application_files" do
+    let(:job_application) { create(:job_application, job_offer:, state: :phone_meeting) }
+    let!(:required_file_type) do
+      create(:job_application_file_type, required: true).tap do |jaft|
+        jaft.visibility_rules.where(by: :administrator).destroy_all
+        jaft.visibility_rules.create!(by: :administrator, state: :to_be_met)
+      end
+    end
+    let!(:not_yet_required_file_type) do
+      create(:job_application_file_type, required: true).tap do |jaft|
+        jaft.visibility_rules.where(by: :administrator).destroy_all
+        jaft.visibility_rules.create!(by: :administrator, state: :contract_drafting)
+      end
+    end
+
+    context "when state moves forward" do
+      before do
+        JobApplicationFileType.mandatory(:phone_meeting).find_each do |jaft|
+          file = job_application.job_application_files.find_by(job_application_file_type: jaft) ||
+            create(:job_application_file, job_application:, job_application_file_type: jaft)
+          file.update_column(:is_validated, 1) # rubocop:disable Rails/SkipsModelValidations
+        end
+        job_application.reload
+      end
+
+      it "creates job application files for newly required file types" do
+        expect { job_application.to_be_met! }.to change { job_application.job_application_files.count }.by(1)
+        expect(job_application.job_application_files.map(&:job_application_file_type)).to include(required_file_type)
+        expect(job_application.job_application_files.map(&:job_application_file_type)).not_to include(not_yet_required_file_type)
+      end
+    end
+
+    context "when the file type is already requested" do
+      before do
+        create(:job_application_file, job_application:, job_application_file_type: required_file_type)
+        job_application.job_application_files.reload.each { |f| f.update_column(:is_validated, 1) } # rubocop:disable Rails/SkipsModelValidations
+      end
+
+      it "does not create a duplicate" do
+        expect { job_application.to_be_met! }.not_to change { job_application.job_application_files.count }
+      end
+    end
+  end
+
+  describe "cover_letter validations" do
+    context "when job_offer does not require a cover letter" do
+      let(:job_offer) { create(:job_offer, cover_lettre_required: false) }
+      let(:job_application) { build(:job_application, job_offer:) }
+
+      it "is valid without a cover letter" do
+        expect(job_application).to be_valid
+      end
+    end
+
+    context "when job_offer requires a cover letter" do
+      let(:job_offer) { create(:job_offer, cover_lettre_required: true) }
+
+      context "without a cover letter" do
+        let(:job_application) { build(:job_application, job_offer:) }
+
+        it "is invalid" do
+          expect(job_application).not_to be_valid
+          expect(job_application.errors[:cover_letter]).to be_present
+        end
+      end
+
+      context "with a cover letter" do
+        let(:job_application) { build(:job_application, :with_cover_letter, job_offer:) }
+
+        it "is valid" do
+          expect(job_application).to be_valid
+        end
+      end
+    end
+
+    context "when the cover letter is not being changed" do
+      let(:job_offer) { create(:job_offer, cover_lettre_required: true) }
+      let!(:job_application) { create(:job_application, :with_cover_letter, job_offer:) }
+
+      it "skips file_size validation" do
+        job_application.assign_attributes(rejected: true)
+        allow(job_application.cover_letter).to receive(:size).and_raise(NoMethodError)
+        expect { job_application.valid? }.not_to raise_error
+      end
     end
   end
 
   describe "cant_accept_before_delay" do
+    subject(:acceptance) { job_application.accepted! }
+
+    let(:job_application) { create(:job_application, job_offer:, state: :financial_estimate) }
+
     context "when job_offer published 20 days before" do
       before { job_offer.update(csp_date: 20.days.before) }
 
       it "cant be accepted" do
-        expect { job_application.accepted! }.to raise_error(ActiveRecord::RecordInvalid)
+        expect { acceptance }.to raise_error(ActiveRecord::RecordInvalid)
       end
     end
 
     context "when job_offer published 31 days before" do
       before { job_offer.update(csp_date: 31.days.before) }
 
-      it "can be accepted" do
-        expect(job_application.accepted!).to be(true)
-      end
-    end
-  end
-
-  describe "complete_files_before_draft_contract" do
-    let(:job_application) { create(:job_application, state: :accepted) }
-    let!(:jaft_1) do
-      create(
-        :job_application_file_type,
-        name: "File 1", from_state: :accepted, kind: :applicant_provided, by_default: true
-      )
-    end
-    let!(:jaft_2) do
-      create(
-        :job_application_file_type,
-        name: "File 2", from_state: :to_be_met, kind: :applicant_provided, by_default: true
-      )
-    end
-
-    before do
-      create(
-        :job_application_file_type,
-        name: "File 3", from_state: :accepted, kind: :applicant_provided, by_default: false
-      )
-    end
-
-    context "when no files are filled" do
-      it "cant pass to contract_drafting" do
-        expect { job_application.contract_drafting! }.to raise_error(ActiveRecord::RecordInvalid)
-      end
-    end
-
-    context "when files are fill but not validated" do
-      before do
-        create(
-          :job_application_file,
-          job_application: job_application, job_application_file_type: jaft_1
-        )
-        create(
-          :job_application_file,
-          job_application: job_application, job_application_file_type: jaft_2
-        )
-      end
-
-      it "cant pass to contract_drafting" do
-        expect { job_application.contract_drafting! }.to raise_error(ActiveRecord::RecordInvalid)
-      end
-    end
-
-    context "when files are fill and validated" do
-      before do
-        create(
-          :job_application_file,
-          job_application: job_application, job_application_file_type: jaft_1, is_validated: true
-        )
-        create(
-          :job_application_file,
-          job_application: job_application, job_application_file_type: jaft_2, is_validated: true
-        )
-      end
-
-      it "cant pass to contract_drafting" do
-        expect(job_application.contract_drafting!).to be(true)
-      end
+      it { is_expected.to be(true) }
     end
   end
 end
@@ -203,6 +330,8 @@ end
 #
 #  id                                :uuid             not null, primary key
 #  administrator_notifications_count :integer          default(0)
+#  cover_letter_file_name            :string
+#  dar                               :boolean          default(FALSE), not null
 #  emails_administrator_unread_count :integer          default(0)
 #  emails_count                      :integer          default(0)
 #  emails_unread_count               :integer          default(0)
@@ -211,6 +340,7 @@ end
 #  files_count                       :integer          default(0)
 #  files_unread_count                :integer          default(0)
 #  preselection                      :integer          default("pending")
+#  rejected                          :boolean          default(FALSE)
 #  skills_fit_job_offer              :boolean
 #  state                             :integer
 #  created_at                        :datetime         not null

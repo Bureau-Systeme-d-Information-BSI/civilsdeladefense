@@ -23,6 +23,85 @@ RSpec.describe JobOffer do
 
       it { is_expected.not_to include(non_matching_job_offer) }
     end
+
+    describe ".last_day" do # rubocop:disable RSpec/MultipleMemoizedHelpers
+      subject { described_class.last_day }
+
+      let(:yesterday_start) { 1.day.ago.beginning_of_day }
+      let(:yesterday_end) { 1.day.ago.end_of_day }
+      let!(:in_yesterday) { create(:published_job_offer, published_at: yesterday_start + 12.hours) }
+      let!(:start_boundary) { create(:published_job_offer, published_at: yesterday_start) }
+      let!(:end_boundary) { create(:published_job_offer, published_at: yesterday_end) }
+      let!(:before_yesterday) { create(:published_job_offer, published_at: yesterday_start - 1.second) }
+      let!(:today) { create(:published_job_offer, published_at: Date.current.beginning_of_day) }
+      let!(:never_published) { create(:job_offer, state: :draft, published_at: nil) }
+
+      it { is_expected.to include(in_yesterday) }
+
+      it { is_expected.to include(start_boundary) }
+
+      it { is_expected.to include(end_boundary) }
+
+      it { is_expected.not_to include(before_yesterday) }
+
+      it { is_expected.not_to include(today) }
+
+      it { is_expected.not_to include(never_published) }
+    end
+
+    describe ".last_week" do # rubocop:disable RSpec/MultipleMemoizedHelpers
+      subject { described_class.last_week }
+
+      let(:last_week_start) { 1.week.ago.beginning_of_week }
+      let(:last_week_end) { 1.week.ago.end_of_week }
+      let!(:in_last_week) { create(:published_job_offer, published_at: last_week_start + 1.day) }
+      let!(:start_boundary) { create(:published_job_offer, published_at: last_week_start) }
+      let!(:end_boundary) { create(:published_job_offer, published_at: last_week_end) }
+      let!(:before_last_week) { create(:published_job_offer, published_at: last_week_start - 1.second) }
+      let!(:this_week) { create(:published_job_offer, published_at: Date.current.beginning_of_week) }
+      let!(:never_published) { create(:job_offer, state: :draft, published_at: nil) }
+
+      it { is_expected.to include(in_last_week) }
+
+      it { is_expected.to include(start_boundary) }
+
+      it { is_expected.to include(end_boundary) }
+
+      it { is_expected.not_to include(before_last_week) }
+
+      it { is_expected.not_to include(this_week) }
+
+      it { is_expected.not_to include(never_published) }
+    end
+
+    describe ".with_open_applications_in" do # rubocop:disable RSpec/MultipleMemoizedHelpers
+      subject(:scope) { described_class.with_open_applications_in(:phone_meeting) }
+
+      let!(:matching_offer) { create(:published_job_offer) }
+      let!(:wrong_state_offer) { create(:published_job_offer) }
+      let!(:rejected_only_offer) { create(:published_job_offer) }
+      let!(:multi_apps_offer) { create(:published_job_offer) }
+      let!(:no_apps_offer) { create(:published_job_offer) }
+
+      before do
+        create(:job_application, job_offer: matching_offer, state: :phone_meeting)
+        create(:job_application, job_offer: wrong_state_offer, state: :to_be_met)
+        create(:job_application, :rejected, job_offer: rejected_only_offer, state: :phone_meeting)
+        create_list(:job_application, 3, job_offer: multi_apps_offer, state: :phone_meeting)
+      end
+
+      it { is_expected.to include(matching_offer) }
+
+      it { is_expected.not_to include(wrong_state_offer) }
+
+      it { is_expected.not_to include(rejected_only_offer) }
+
+      it { is_expected.not_to include(no_apps_offer) }
+
+      it "lists offers having several matching applications only once" do
+        expect(scope.where(id: multi_apps_offer.id).count).to eq(1)
+      end
+    end
   end
 
   describe "associations" do
@@ -43,10 +122,30 @@ RSpec.describe JobOffer do
     it { is_expected.to have_many(:drawback_job_offers).dependent(:destroy) }
 
     it { is_expected.to have_many(:drawbacks).through(:drawback_job_offers) }
+
+    it { is_expected.to have_many(:administrators).through(:job_offer_actors) }
+
+    it { is_expected.to have_many(:employer_recruiters).through(:job_offer_actors) }
+
+    it { is_expected.to have_many(:employment_authorities).through(:job_offer_actors) }
+
+    it { is_expected.to have_many(:hr_managers).through(:job_offer_actors) }
+
+    it { is_expected.to have_many(:payroll_managers).through(:job_offer_actors) }
   end
 
   describe "delegations" do
     it { is_expected.to delegate_method(:name).to(:contract_type).with_prefix(true).with_arguments(allow_nil: true) }
+  end
+
+  describe "#full_title" do
+    subject(:full_title) { job_offer.full_title }
+
+    let(:job_offer) { build(:job_offer, title: "Chef de projet F/H") }
+
+    before { allow(job_offer).to receive(:identifier).and_return("ABC123") }
+
+    it { is_expected.to eq("ABC123 Chef de projet F/H") }
   end
 
   describe "#already_applied?" do
@@ -259,14 +358,6 @@ RSpec.describe JobOffer do
     expect(job_offer.publishing_possible_at).to eq(job_offer.created_at + 2.working.days)
   end
 
-  it "correctlies find current most advanced job application state" do
-    job_applications = create_list(:job_application, 10, job_offer: job_offer)
-    expect(job_offer.current_most_advanced_job_applications_state).to eq(0)
-    last_state_name, last_state_enum = JobApplication.states.to_a.last
-    job_applications.last.send(:"#{last_state_name}!")
-    expect(job_offer.current_most_advanced_job_applications_state).to eq(last_state_enum)
-  end
-
   it "is visible by owner" do
     owner = create(:administrator, role: "employer", employer: employer)
     job_offer = create(:job_offer, owner: owner)
@@ -276,7 +367,7 @@ RSpec.describe JobOffer do
 
   it "is visible by actors" do
     brh = create(:administrator, role: nil, employer: employer)
-    other_admin = create(:administrator, role: nil, employer: employer)
+    other_admin = create(:administrator, role: nil, roles: [:employer_recruiter], employer: employer)
 
     create(:job_offer_actor, role: "brh", administrator: brh, job_offer: job_offer)
 
@@ -311,6 +402,10 @@ RSpec.describe JobOffer do
     it { is_expected.to validate_presence_of(:mobilia_value) }
 
     it { is_expected.to validate_presence_of(:mobilia_date) }
+
+    it { is_expected.to validate_presence_of(:organization_description) }
+
+    it { is_expected.to validate_presence_of(:recruitment_process) }
 
     describe "title" do
       it "is not valid with ( in title and no F/H at the end" do
@@ -385,7 +480,16 @@ RSpec.describe JobOffer do
 
   describe "publishing" do
     it "requires organization_description" do
-      job_offer = create(:job_offer, organization_description: nil)
+      job_offer = build(:job_offer, organization_description: nil)
+      job_offer.save(validate: false)
+
+      expect { job_offer.publish! }.not_to change { job_offer.reload.state }
+    end
+
+    it "requires recruitment_process" do
+      job_offer = build(:job_offer, recruitment_process: nil)
+      job_offer.save(validate: false)
+
       expect { job_offer.publish! }.not_to change { job_offer.reload.state }
     end
   end
@@ -422,6 +526,47 @@ RSpec.describe JobOffer do
       end
     end
   end
+
+  describe "#refresh_most_advanced_job_applications_state!" do
+    subject(:refresh) { job_offer.refresh_most_advanced_job_applications_state! }
+
+    let(:job_offer) { create(:job_offer) }
+
+    context "when the most advanced state has changed" do
+      before do
+        create(:job_application, job_offer:, state: :phone_meeting)
+        create(:job_application, job_offer:, state: :to_be_met)
+      end
+
+      it { expect { refresh }.to change { job_offer.reload.most_advanced_job_applications_state }.from("start").to("to_be_met") }
+    end
+
+    context "when the most advanced state is already up to date" do
+      before do
+        create(:job_application, job_offer:, state: :phone_meeting)
+        job_offer.update!(most_advanced_job_applications_state: :phone_meeting)
+      end
+
+      it { expect { refresh }.not_to change { job_offer.reload.most_advanced_job_applications_state } }
+    end
+  end
+
+  describe "#transfer" do
+    subject { job_offer.transfer(email) }
+
+    let(:job_offer) { create(:job_offer) }
+    let(:email) { "test@example.com" }
+
+    context "when email is used by an administrator" do
+      before { create(:administrator, email:) }
+
+      it { is_expected.to be(true) }
+    end
+
+    context "when email is not used by an administrator" do
+      it { is_expected.to be(false) }
+    end
+  end
 end
 
 # == Schema Information
@@ -434,6 +579,7 @@ end
 #  after_meeting_rejected_job_applications_count    :integer          default(0), not null
 #  application_deadline                             :date
 #  archived_at                                      :datetime
+#  asc                                              :boolean          default(FALSE), not null
 #  city                                             :string
 #  contract_drafting_job_applications_count         :integer          default(0), not null
 #  contract_feedback_waiting_job_applications_count :integer          default(0), not null
@@ -442,6 +588,7 @@ end
 #  country_code                                     :string
 #  county                                           :string
 #  county_code                                      :integer
+#  cover_lettre_required                            :boolean          default(FALSE), not null
 #  csp_date                                         :date
 #  csp_value                                        :string
 #  description                                      :text
@@ -449,6 +596,8 @@ end
 #  estimate_annual_salary_gross                     :string
 #  estimate_monthly_salary_net                      :string
 #  featured                                         :boolean          default(FALSE)
+#  financial_estimate_job_applications_count        :integer          default(0), not null
+#  ict_tct                                          :boolean          default(FALSE), not null
 #  identifier                                       :string
 #  initial_job_applications_count                   :integer          default(0), not null
 #  is_remote_possible                               :boolean
@@ -462,6 +611,7 @@ end
 #  organization_description                         :text
 #  phone_meeting_job_applications_count             :integer          default(0), not null
 #  phone_meeting_rejected_job_applications_count    :integer          default(0), not null
+#  positions_count                                  :integer          default(1), not null
 #  postcode                                         :string
 #  published_at                                     :datetime
 #  recruitment_process                              :text

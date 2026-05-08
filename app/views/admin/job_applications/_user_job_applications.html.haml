@@ -30,6 +30,9 @@
                   = job_offer.title
             %td.border-0
               = link_to [:admin, job_offer, job_application] do
-                = JobApplication.human_attribute_name("state/#{job_application.state}")
+                - if job_application.rejected
+                  = t("activerecord.attributes.job_application.rejected")
+                - else
+                  = JobApplication.human_attribute_name("state/#{job_application.state}")
             %td.border-0.text-right
               = l job_application.created_at.to_date

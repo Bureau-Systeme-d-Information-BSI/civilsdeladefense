@@ -7,6 +7,9 @@ import { application } from "./application"
 import AddRecipientController from "./add_recipient_controller"
 application.register("add-recipient", AddRecipientController)
 
+import Administrators__RolesController from "./administrators/roles_controller"
+application.register("administrators--roles", Administrators__RolesController)
+
 import AutoSubmitController from "./auto_submit_controller"
 application.register("auto-submit", AutoSubmitController)
 
@@ -37,6 +40,9 @@ application.register("job-offer-term", JobOfferTermController)
 import LocationController from "./location_controller"
 application.register("location", LocationController)
 
+import ModalController from "./modal_controller"
+application.register("modal", ModalController)
+
 import PasswordRulesController from "./password_rules_controller"
 application.register("password-rules", PasswordRulesController)
 
@@ -45,6 +51,9 @@ application.register("password-visibility", PasswordVisibilityController)
 
 import RegulationController from "./regulation_controller"
 application.register("regulation", RegulationController)
+
+import RejectionController from "./rejection_controller"
+application.register("rejection", RejectionController)
 
 import RemoveRecipientController from "./remove_recipient_controller"
 application.register("remove-recipient", RemoveRecipientController)
@@ -78,6 +87,9 @@ application.register("subcheckbox", SubcheckboxController)
 
 import TimeoutableController from "./timeoutable_controller"
 application.register("timeoutable", TimeoutableController)
+
+import ToggleVisibilityController from "./toggle_visibility_controller"
+application.register("toggle-visibility", ToggleVisibilityController)
 
 import TrixEditorController from "./trix_editor_controller"
 application.register("trix-editor", TrixEditorController)

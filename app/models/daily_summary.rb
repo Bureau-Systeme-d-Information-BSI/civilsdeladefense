@@ -38,7 +38,7 @@ class DailySummary
     @concerned_administrators.each do |concerned_administrator|
       administrator = administrators.detect { |x| x.id == concerned_administrator.uuid }
       data = concerned_administrator.summary_infos
-      NotificationsMailer.daily_summary(administrator, data, service_name).deliver
+      ReportsMailer.daily_summary(administrator, data, service_name).deliver
     end
   end
 
@@ -72,7 +72,7 @@ class DailySummary
         concerned_administrator = DailySummaryConcernedAdministrator.new(uuid: administrator.id)
       end
       concerned_administrator.add_summary_info(
-        title: "#{job_offer.identifier} #{job_offer.title}",
+        title: job_offer.full_title,
         link: url_helpers.edit_admin_job_offer_url(job_offer),
         kind: kind
       )

@@ -48,26 +48,6 @@ class Admin::UsersController < Admin::InheritedResourcesController
     render layout: "admin/pool"
   end
 
-  def update
-    if @user.update(permitted_params)
-      respond_to do |format|
-        format.html { redirect_to [:admin, @user], notice: t(".success") }
-        format.js do
-          @notification = t(".success")
-          render :update
-        end
-      end
-    else
-      respond_to do |format|
-        format.html { render :edit }
-        format.js do
-          @notification = t(".failure")
-          render :update, status: :unprocessable_entity
-        end
-      end
-    end
-  end
-
   def listing
     render layout: "admin/pool"
   end
@@ -130,21 +110,9 @@ class Admin::UsersController < Admin::InheritedResourcesController
 
   protected
 
-  def permitted_params
-    fields_core = %i[first_name last_name current_position phone website_url]
-    fields_profile = %i[id gender is_currently_employed
-      availability_range_id study_level_id age_range_id
-      experience_level_id corporate_experience website_url
-      has_corporate_experience]
-    fields = fields_core << {profile_attributes: fields_profile}
-    params.require(:user).permit(fields)
-  end
-
   def permitted_params_listing
     params.require(:user).permit(preferred_users_list_ids: [])
   end
-
-  alias_method :resource_params, :permitted_params
 
   private
 

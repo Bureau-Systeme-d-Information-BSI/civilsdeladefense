@@ -4,7 +4,6 @@ require "clockwork"
 require "./config/boot"
 require "./config/environment"
 
-# Clockwork/cron-like rules definition
 module Clockwork
   error_handler do |error|
     RorVsWild.record_error(error)
@@ -34,6 +33,18 @@ module Clockwork
   if (ENV["SEND_DAILY_SUMMARY"] || ENV["CRON_DAILY_SUMMARY"]).present?
     every 1.day, "daily_summary", at: "08:00" do
       DailySummary.new(day: 1.day.ago).prepare_and_send
+    end
+  end
+
+  every 1.day, "employer_recruiter_daily_report", at: "08:00" do
+    Administrator.employer_recruiters.find_each do |administrator|
+      ReportsMailer.with(administrator:).employer_recruiter_daily_report.deliver_later
+    end
+  end
+
+  every 1.week, "employment_authority_weekly_report", at: "Monday 08:00" do
+    Administrator.employment_authorities.find_each do |administrator|
+      ReportsMailer.with(administrator:).employment_authority_weekly_report.deliver_later
     end
   end
 

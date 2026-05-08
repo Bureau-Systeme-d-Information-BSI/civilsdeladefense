@@ -1,24 +1,25 @@
 - job_offer = job_application.job_offer
 - change_state_url = url_for([:change_state, :admin, job_application, {state: job_application.state}])
-.card.job-application{id: dom_id(job_application), class: "job-application--state-#{job_application.state}", data: {state: job_application.state, change: {state: {url: change_state_url}}}}
+- rejection_url = current_administrator.can?(:update_application_rejected, job_application) ? new_admin_job_application_rejection_path(job_application) : "#"
+.card.job-application{id: dom_id(job_application), class: "job-application--state-#{job_application.state}", data: {state: job_application.state, rejected: job_application.rejected.to_s, change: {state: {url: change_state_url}}, rejection: {url: rejection_url}}}
   - if job_application.administrator_notifications_count > 0
     .notification= job_application.administrator_notifications_count
 
   .card-body
-    - if can?(:manage, job_application)
-      - if job_application.user.blank?
-        = render "/admin/job_applications/job_application_card_body", job_application:
-      - else
-        .d-flex.justify-content-start.align-items-start
-          = link_to [:admin, @job_offer, job_application], class: "d-flex" do
-            = image_user_tag job_application.user.photo, width: 40, class: 'mr-2'
-            .d-flex.flex-column
-              %strong.text-secondary= job_application.user.full_name
-              %strong.small.text-muted= job_application.user.current_position
-          .ml-auto
+    - if job_application.user.blank?
+      = render "/admin/job_applications/job_application_card_body", job_application:
+    - else
+      .d-flex.justify-content-start.align-items-start
+        = link_to [:admin, @job_offer, job_application], class: "d-flex" do
+          = image_user_tag job_application.user.photo, width: 40, class: 'mr-2'
+          .d-flex.flex-column
+            %strong.text-secondary= job_application.user.full_name
+            %strong.small.text-muted= job_application.user.current_position
+        .ml-auto
 
-          - if preselection
-            .d-flex
+        - if preselection
+          .d-flex
+            - if current_administrator.can?(:update_application_preselection, job_application)
               - if job_application.preselection == "favorite"
                 = button_to admin_job_offer_job_application_favorite_path(job_offer, job_application), method: :delete, class: "btn btn-sm btn-link btn-success" do
                   = fa_icon('thumbs-up', flavor: 'solid')
@@ -32,10 +33,20 @@
               - else
                 = button_to admin_job_offer_job_application_unfavorite_path(job_offer, job_application), method: :post, class: "btn btn-sm btn-link" do
                   = fa_icon('thumbs-down', flavor: 'regular')
+            - else
+              - if job_application.preselection == "favorite"
+                %span.btn.btn-sm.btn-link.btn-success.disabled= fa_icon('thumbs-up', flavor: 'solid')
+              - else
+                %span.btn.btn-sm.btn-link.disabled= fa_icon('thumbs-up', flavor: 'regular')
 
-    - else
-      .job-application-modal-link
-        = render "/admin/job_applications/job_application_card_body", job_application:
+              - if job_application.preselection == "unfavorite"
+                %span.btn.btn-sm.btn-link.btn-warning.disabled= fa_icon('thumbs-down', flavor: 'solid')
+              - else
+                %span.btn.btn-sm.btn-link.disabled= fa_icon('thumbs-down', flavor: 'regular')
+
+  - if dar
+    = simple_form_for job_application, url: admin_job_application_dar_path(job_application), namespace: "dar_#{job_application.id}", html: { class: 'mx-3', data: { controller: 'auto-submit' } } do |f|
+      = f.input :dar, input_html: { data: { action: 'change->auto-submit#submit' } }, disabled: !current_administrator.can?(:update_application_dar, job_application)
 
   .card-footer.d-flex.flex-column.flex-md-row.align-items-center
     .mr-auto= t('admin.job_applications.job_application.applied_on', date: I18n.l(job_application.created_at.to_date))

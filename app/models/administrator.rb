@@ -29,8 +29,6 @@ class Administrator < ApplicationRecord
   has_many :owned_job_offers, class_name: "JobOffer", foreign_key: "owner_id", inverse_of: :owner, dependent: :nullify
   has_many :job_offer_actors, dependent: :destroy
   has_many :job_offers, through: :job_offer_actors
-  has_many :preferred_users, through: :preferred_users_list
-  has_many :preferred_users_lists, dependent: :destroy
   has_many :administrator_employers, dependent: :destroy
   has_many :employers, through: :administrator_employers
 

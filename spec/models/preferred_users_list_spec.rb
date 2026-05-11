@@ -3,7 +3,17 @@
 require "rails_helper"
 
 RSpec.describe PreferredUsersList do
-  it { is_expected.to validate_presence_of(:name) }
+  describe "associations" do
+    it { is_expected.to belong_to(:administrator) }
+
+    it { is_expected.to have_many(:preferred_users).dependent(:destroy) }
+
+    it { is_expected.to have_many(:users).through(:preferred_users) }
+  end
+
+  describe "validations" do
+    it { is_expected.to validate_presence_of(:name) }
+  end
 end
 
 # == Schema Information

@@ -18,7 +18,16 @@ class Administrator < ApplicationRecord
   validates :employer, presence: true, if: proc { |a| a.employer? || a.ensure_employer_is_set }
   belongs_to :inviter, optional: true, class_name: "Administrator"
   has_many :invitees, class_name: "Administrator", foreign_key: "inviter_id", inverse_of: :inviter, dependent: :nullify
-
+  has_many :supervisees,
+    class_name: "Administrator",
+    foreign_key: "supervisor_administrator_id",
+    inverse_of: :supervisor_administrator,
+    dependent: :nullify
+  has_many :grand_employees,
+    class_name: "Administrator",
+    foreign_key: "grand_employer_administrator_id",
+    inverse_of: :grand_employer_administrator,
+    dependent: :nullify
   has_many :owned_job_offers, class_name: "JobOffer", foreign_key: "owner_id", inverse_of: :owner, dependent: :nullify
   has_many :job_offer_actors, dependent: :destroy
   has_many :job_offers, through: :job_offer_actors

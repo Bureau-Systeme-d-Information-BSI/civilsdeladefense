@@ -6,7 +6,30 @@ RSpec.describe Administrator do
   let(:administrator) { create(:administrator) }
 
   it { is_expected.to have_many(:invitees).inverse_of(:inviter) }
+
   it { is_expected.to have_many(:owned_job_offers).inverse_of(:owner) }
+
+  it { is_expected.to have_many(:supervisees).inverse_of(:supervisor_administrator).dependent(:nullify) }
+
+  it { is_expected.to have_many(:grand_employees).inverse_of(:grand_employer_administrator).dependent(:nullify) }
+
+  it { is_expected.to have_many(:administrator_employers).dependent(:destroy) }
+
+  it { is_expected.to have_many(:employers).through(:administrator_employers) }
+
+  describe "destroy behavior on self-referencing associations" do
+    let!(:administrator) { create(:administrator) }
+    let!(:supervisee) { create(:administrator, supervisor_administrator: administrator) }
+    let!(:grand_employee) { create(:administrator, grand_employer_administrator: administrator) }
+
+    it "nullifies the supervisor_administrator_id of supervisees" do
+      expect { administrator.destroy! }.to change { supervisee.reload.supervisor_administrator_id }.to(nil)
+    end
+
+    it "nullifies the grand_employer_administrator_id of grand_employees" do
+      expect { administrator.destroy! }.to change { grand_employee.reload.grand_employer_administrator_id }.to(nil)
+    end
+  end
 
   it "is valid with valid attributes" do
     expect(administrator).to be_valid

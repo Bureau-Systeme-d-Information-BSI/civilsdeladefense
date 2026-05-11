@@ -187,7 +187,7 @@ class JobApplication < ApplicationRecord
   end
 
   def end_user_state
-    "end_user_state_#{end_user_state_number}"
+    "end_user_state_#{end_user_state_number - 1}"
   end
 
   def file_types_for_user

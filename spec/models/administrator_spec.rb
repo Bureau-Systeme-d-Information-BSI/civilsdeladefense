@@ -16,6 +16,8 @@ RSpec.describe Administrator do
 
     it { is_expected.to have_many(:messages).dependent(:nullify) }
 
+    it { is_expected.to have_many(:preferred_users_lists).dependent(:destroy) }
+
     it { is_expected.to have_many(:administrator_employers).dependent(:destroy) }
 
     it { is_expected.to have_many(:employers).through(:administrator_employers) }
@@ -40,6 +42,16 @@ RSpec.describe Administrator do
 
       it "nullifies the administrator_id of authored messages" do
         expect { administrator.destroy! }.to change { message.reload.administrator_id }.to(nil)
+      end
+    end
+
+    describe "destroy behavior on owned preferred_users_lists" do
+      let!(:administrator) { create(:administrator) }
+
+      before { create(:preferred_users_list, administrator:) }
+
+      it "destroys owned preferred_users_lists" do
+        expect { administrator.destroy! }.to change(PreferredUsersList, :count).by(-1)
       end
     end
   end

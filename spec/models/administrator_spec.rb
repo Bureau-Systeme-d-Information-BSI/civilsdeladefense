@@ -14,6 +14,8 @@ RSpec.describe Administrator do
 
     it { is_expected.to have_many(:owned_job_offers).inverse_of(:owner) }
 
+    it { is_expected.to have_many(:messages).dependent(:nullify) }
+
     it { is_expected.to have_many(:administrator_employers).dependent(:destroy) }
 
     it { is_expected.to have_many(:employers).through(:administrator_employers) }
@@ -29,6 +31,15 @@ RSpec.describe Administrator do
 
       it "nullifies the grand_employer_administrator_id of grand_employees" do
         expect { administrator.destroy! }.to change { grand_employee.reload.grand_employer_administrator_id }.to(nil)
+      end
+    end
+
+    describe "destroy behavior on authored messages" do
+      let!(:administrator) { create(:administrator) }
+      let!(:message) { create(:message, administrator:) }
+
+      it "nullifies the administrator_id of authored messages" do
+        expect { administrator.destroy! }.to change { message.reload.administrator_id }.to(nil)
       end
     end
   end

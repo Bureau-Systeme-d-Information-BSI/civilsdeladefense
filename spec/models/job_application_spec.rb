@@ -303,6 +303,41 @@ RSpec.describe JobApplication do
     end
   end
 
+  describe "#end_user_state_number and #end_user_state" do
+    [
+      [:initial,                   1, "end_user_state_0"],
+      [:phone_meeting,             2, "end_user_state_1"],
+      [:to_be_met,                 3, "end_user_state_2"],
+      [:financial_estimate,        4, "end_user_state_3"],
+      [:accepted,                  5, "end_user_state_4"],
+      [:contract_drafting,         6, "end_user_state_5"],
+      [:contract_feedback_waiting, 7, "end_user_state_6"],
+      [:contract_received,         8, "end_user_state_7"],
+      [:affected,                  9, "end_user_state_8"]
+    ].each do |state, expected_number, expected_key|
+      context "when state is #{state}" do
+        subject(:job_application) { build(:job_application, state:) }
+
+        describe "#end_user_state_number" do
+          it { expect(job_application.end_user_state_number).to eq(expected_number) }
+        end
+
+        describe "#end_user_state" do
+          it { expect(job_application.end_user_state).to eq(expected_key) }
+        end
+      end
+    end
+
+    describe "i18n key resolution" do
+      it "every end_user_state key has a French translation" do
+        JobApplication.end_user_states_regrouping.each_with_index do |_, i|
+          key = "end_user_state_#{i}"
+          expect(JobApplication.human_attribute_name("state/#{key}")).not_to start_with("translation missing")
+        end
+      end
+    end
+  end
+
   describe "cant_accept_before_delay" do
     subject(:acceptance) { job_application.accepted! }
 

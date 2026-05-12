@@ -3,7 +3,7 @@
 # Internal messaging system exchanged by recruiters around a specific job application
 class Message < ApplicationRecord
   belongs_to :job_application
-  belongs_to :administrator
+  belongs_to :administrator, optional: true
 
   validates :body, presence: true
 

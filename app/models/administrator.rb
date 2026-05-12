@@ -26,7 +26,18 @@ class Administrator < ApplicationRecord
   belongs_to :grand_employer_administrator, optional: true, class_name: "Administrator" # Deprecated on 2025-04-26, replaced by employers
 
   has_many :invitees, class_name: "Administrator", foreign_key: "inviter_id", inverse_of: :inviter, dependent: :nullify
+  has_many :supervisees,
+    class_name: "Administrator",
+    foreign_key: "supervisor_administrator_id",
+    inverse_of: :supervisor_administrator,
+    dependent: :nullify
+  has_many :grand_employees,
+    class_name: "Administrator",
+    foreign_key: "grand_employer_administrator_id",
+    inverse_of: :grand_employer_administrator,
+    dependent: :nullify
   has_many :owned_job_offers, class_name: "JobOffer", foreign_key: "owner_id", inverse_of: :owner, dependent: :nullify
+  has_many :messages, dependent: :nullify
   has_many :job_offer_actors, dependent: :destroy
   has_many :job_offers, through: :job_offer_actors
   has_many :administrator_employers, dependent: :destroy

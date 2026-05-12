@@ -1330,6 +1330,7 @@ fr:
         validate_by_hr_manager: "Gestionnaire RH"
         validate_by_payroll_manager: "Gestionnaire GA / Paie"
       job_offer:
+        employer: "Chaîne d'emploi"
         title: "Intitulé du poste"
         job_applications_count: "Nombre de candidatures: %{count}"
         state: "État"
@@ -1340,6 +1341,7 @@ fr:
         contract_type: "Type de contrat"
         contract_start_on: "Prise de fonction souhaitée"
         contract_duration: "Durée du contrat"
+        contract_duration_id: "Durée du contrat"
         location: "Localisation"
         study_level: "Niveau d'études"
         category: "Domaine professionnel"

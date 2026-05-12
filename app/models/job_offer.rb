@@ -30,7 +30,8 @@ class JobOffer < ApplicationRecord
     },
     associated_against: SETTINGS.index_with { |obj|
       %i[name]
-    }
+    },
+    using: {tsearch: {prefix: true}}
 
   ## Relationships
   belongs_to :owner, class_name: "Administrator"

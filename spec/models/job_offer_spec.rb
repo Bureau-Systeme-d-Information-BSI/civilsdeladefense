@@ -74,6 +74,29 @@ RSpec.describe JobOffer do
       it { is_expected.not_to include(never_published) }
     end
 
+    describe ".search_full_text" do
+      let!(:matching) { create(:job_offer, title: "Ingénieur logiciel F/H") }
+      let!(:unmatching) { create(:job_offer, title: "Chef de projet F/H") }
+
+      it "matches by full word" do
+        result = described_class.search_full_text("ingénieur")
+        expect(result).to include(matching)
+        expect(result).not_to include(unmatching)
+      end
+
+      it "matches by prefix" do
+        result = described_class.search_full_text("ingé")
+        expect(result).to include(matching)
+        expect(result).not_to include(unmatching)
+      end
+
+      it "ignores accents in the query" do
+        result = described_class.search_full_text("ingenieur")
+        expect(result).to include(matching)
+        expect(result).not_to include(unmatching)
+      end
+    end
+
     describe ".with_open_applications_in" do # rubocop:disable RSpec/MultipleMemoizedHelpers
       subject(:scope) { described_class.with_open_applications_in(:phone_meeting) }
 

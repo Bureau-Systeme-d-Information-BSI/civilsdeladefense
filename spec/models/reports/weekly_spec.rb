@@ -22,8 +22,8 @@ RSpec.describe Reports::Weekly do
         end
       end
 
-      it "returns new_offers followed by every application state in order" do
-        expect(sections.map(&:key)).to eq(["new_offers"] + JobApplication.states.keys)
+      it "returns new_offers followed by every reported application state in order" do
+        expect(sections.map(&:key)).to eq(["new_offers"] + described_class::STATES)
       end
 
       it "exposes count, human_state and items for each section" do
@@ -74,7 +74,7 @@ RSpec.describe Reports::Weekly do
       end
     end
 
-    JobApplication.states.keys.each do |state|
+    described_class::STATES.each do |state|
       describe "#{state} section" do
         subject(:section) { sections.find { |s| s.key == state } }
 
@@ -93,29 +93,34 @@ RSpec.describe Reports::Weekly do
     end
 
     describe "application sections filtering" do
-      let(:job_offer) { create(:published_job_offer).tap { |offer| link_admin_to(offer) } }
-      let(:other_offer) { create(:published_job_offer).tap { |offer| link_admin_to(offer, admin: other_administrator) } }
+      let(:job_offer) { create(:published_job_offer, positions_count: 10).tap { |offer| link_admin_to(offer) } }
+      let(:other_offer) { create(:published_job_offer, positions_count: 10).tap { |offer| link_admin_to(offer, admin: other_administrator) } }
 
       it "excludes rejected applications" do
-        create(:job_application, :rejected, job_offer: job_offer, state: :phone_meeting)
-        expect(sections.find { |s| s.key == "phone_meeting" }).to be_nil
+        create(:job_application, :rejected, job_offer: job_offer, state: :accepted)
+        expect(sections.find { |s| s.key == "accepted" }).to be_nil
       end
 
       it "excludes applications on offers the administrator is not an actor on" do
-        create(:job_application, job_offer: other_offer, state: :phone_meeting)
-        expect(sections.find { |s| s.key == "phone_meeting" }).to be_nil
+        create(:job_application, job_offer: other_offer, state: :accepted)
+        expect(sections.find { |s| s.key == "accepted" }).to be_nil
       end
 
       it "lists an offer only once even when several applications share the same state" do
-        create_list(:job_application, 3, job_offer:, state: :phone_meeting)
-        section = sections.find { |s| s.key == "phone_meeting" }
+        create_list(:job_application, 3, job_offer:, state: :accepted)
+        section = sections.find { |s| s.key == "accepted" }
         expect(section.count).to eq(1)
         expect(section.items.size).to eq(1)
       end
 
       it "does not surface an offer in states where none of its applications match" do
+        create(:job_application, job_offer:, state: :accepted)
+        expect(sections.find { |s| s.key == "contract_drafting" }).to be_nil
+      end
+
+      it "ignores states not listed in the report" do
         create(:job_application, job_offer:, state: :phone_meeting)
-        expect(sections.find { |s| s.key == "to_be_met" }).to be_nil
+        expect(sections.find { |s| s.key == "phone_meeting" }).to be_nil
       end
     end
   end

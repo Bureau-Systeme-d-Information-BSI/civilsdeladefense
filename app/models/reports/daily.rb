@@ -29,5 +29,7 @@ module Reports
         items: offers.map { |offer| Item.new(title: offer.full_title, link: admin_job_offer_url(offer)) }
       )
     end
+
+    def states = JobApplication.states.keys
   end
 end

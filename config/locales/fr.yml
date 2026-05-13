@@ -209,7 +209,7 @@ fr:
       published_job_offers:
         title: "Offres publiées récemment"
     employer_recruiter_daily_report:
-      subject: "[%{service_name}] Rapport quotidien « Employeur »"
+      subject: "[%{service_name}] Rapport journalier « Employeur »"
     employment_authority_weekly_report:
       subject: "[%{service_name}] Rapport hebdomadaire « Autorité d'emploi »"
   platform_mailer:

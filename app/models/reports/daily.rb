@@ -8,6 +8,8 @@ module Reports
 
     def new_offers_section
       offers = @administrator.job_offers.last_day
+      return nil if offers.empty?
+
       Section.new(
         key: "new_offers",
         human_state: I18n.t("reports.daily.sections.new_offers"),
@@ -18,6 +20,8 @@ module Reports
 
     def applications_section(state)
       offers = @administrator.job_offers.with_open_applications_in(state)
+      return nil if offers.empty?
+
       Section.new(
         key: state,
         human_state: JobApplication.human_attribute_name("state/#{state}"),
@@ -25,5 +29,7 @@ module Reports
         items: offers.map { |offer| Item.new(title: offer.full_title, link: admin_job_offer_url(offer)) }
       )
     end
+
+    def states = JobApplication.states.keys
   end
 end

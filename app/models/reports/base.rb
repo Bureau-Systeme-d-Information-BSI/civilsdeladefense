@@ -12,7 +12,11 @@ module Reports
     end
 
     def sections
-      @sections ||= [new_offers_section] + JobApplication.states.keys.map { |state| applications_section(state) }
+      @sections ||= ([new_offers_section] + states.map { |state| applications_section(state) }).compact
     end
+
+    private
+
+    def states = raise NotImplementedError
   end
 end

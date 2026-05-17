@@ -94,7 +94,7 @@ class JobApplicationFileType < ApplicationRecord
     validate_by_payroll_manager: :payroll_manager?
   }.freeze
 
-  has_many :job_application_files, dependent: :nullify
+  has_many :job_application_files, dependent: :restrict_with_error
   has_many :visibility_rules, dependent: :destroy
   accepts_nested_attributes_for :visibility_rules, allow_destroy: true
 

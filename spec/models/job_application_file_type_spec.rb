@@ -44,6 +44,26 @@ RSpec.describe JobApplicationFileType do
     end
   end
 
+  describe "#destroy" do
+    subject(:destroy) { file_type.destroy }
+
+    let(:file_type) { create(:job_application_file_type) }
+
+    context "when no JobApplicationFile references the type" do
+      it { is_expected.to eq(file_type) }
+    end
+
+    context "when at least one JobApplicationFile references the type" do
+      before { create(:job_application_file, job_application_file_type: file_type) }
+
+      it "does not destroy and adds an error on the association" do
+        expect(destroy).to be(false)
+        expect(file_type).not_to be_destroyed
+        expect(file_type.errors[:base]).to be_present
+      end
+    end
+  end
+
   describe "#can_validate?" do
     subject { file_type.can_validate?(administrator) }
 

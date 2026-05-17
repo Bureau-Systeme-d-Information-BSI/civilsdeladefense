@@ -236,6 +236,10 @@ fr:
   reports:
     sections:
       application_step: "Étape « %{state} »"
+      applications_count:
+        zero: "Pas de candidature"
+        one: "1 candidature"
+        other: "%{count} candidatures"
     daily:
       sections:
         new_offers: "Nouvelles offres"

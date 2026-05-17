@@ -5,7 +5,7 @@ module Reports
     include Rails.application.routes.url_helpers
 
     Section = Struct.new(:key, :human_state, :count, :items, keyword_init: true)
-    Item = Struct.new(:title, :link, keyword_init: true)
+    Item = Struct.new(:title, :link, :applications_count, keyword_init: true)
 
     def initialize(administrator)
       @administrator = administrator

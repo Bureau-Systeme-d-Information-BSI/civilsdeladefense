@@ -25,6 +25,12 @@ module Reports
       offers = @administrator.job_offers.with_open_applications_in(state)
       return nil if offers.empty?
 
+      counts = JobApplication
+        .where(job_offer_id: offers.map(&:id), state:, rejected: false)
+        .reorder(nil)
+        .group(:job_offer_id)
+        .count
+
       Section.new(
         key: state,
         human_state: I18n.t(
@@ -32,7 +38,13 @@ module Reports
           state: JobApplication.human_attribute_name("state/#{state}")
         ),
         count: offers.size,
-        items: offers.map { |offer| Item.new(title: offer.full_title, link: admin_job_offer_url(offer)) }
+        items: offers.map do |offer|
+          Item.new(
+            title: offer.full_title,
+            link: admin_job_offer_url(offer),
+            applications_count: counts[offer.id] || 0
+          )
+        end
       )
     end
 

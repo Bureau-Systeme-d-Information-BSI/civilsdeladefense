@@ -72,6 +72,10 @@ RSpec.describe Reports::Daily do
         expect(link).to include("/offresdemploi/")
         expect(link).not_to include("/admin/")
       end
+
+      it "leaves applications_count nil on items" do
+        expect(section.items.first.applications_count).to be_nil
+      end
     end
 
     JobApplication.states.keys.each do |state|
@@ -111,6 +115,13 @@ RSpec.describe Reports::Daily do
         section = sections.find { |s| s.key == "phone_meeting" }
         expect(section.count).to eq(1)
         expect(section.items.size).to eq(1)
+      end
+
+      it "exposes the number of non-rejected applications per offer" do
+        create_list(:job_application, 2, job_offer:, state: :phone_meeting)
+        create(:job_application, :rejected, job_offer:, state: :phone_meeting)
+        section = sections.find { |s| s.key == "phone_meeting" }
+        expect(section.items.first.applications_count).to eq(2)
       end
 
       it "does not surface an offer in states where none of its applications match" do

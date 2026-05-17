@@ -6,7 +6,7 @@
 <p>Découvrez ci-dessous votre rapport journalier.</p>
 
 <% @sections.each do |section| %>
-  <h3><%= section.human_state %> : <%= section.count %></h3>
+  <h3><%= section.human_state %></h3>
   <% if section.items.any? %>
     <ul>
       <% section.items.each do |item| %>

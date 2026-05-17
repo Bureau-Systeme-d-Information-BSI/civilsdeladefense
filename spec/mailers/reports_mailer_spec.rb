@@ -56,6 +56,13 @@ RSpec.describe ReportsMailer do
       expect(body).to include(administrator.organization.service_name)
     end
 
+    context "when the administrator has no activity to report" do
+      it "skips delivery" do
+        expect(Reports::Daily.new(administrator).sections).to be_empty
+        expect(mail.perform_deliveries).to be(false)
+      end
+    end
+
     context "with an offer published yesterday the recruiter is actor on" do
       let(:job_offer) { create(:published_job_offer, published_at: 1.day.ago.beginning_of_day + 12.hours) }
 
@@ -65,6 +72,10 @@ RSpec.describe ReportsMailer do
 
       it "lists the offer in the mail body" do
         expect(mail.body.encoded).to include(job_offer.full_title)
+      end
+
+      it "delivers the mail" do
+        expect(mail.perform_deliveries).to be(true)
       end
     end
   end
@@ -106,6 +117,13 @@ RSpec.describe ReportsMailer do
       expect(body).to include(administrator.organization.service_name)
     end
 
+    context "when the administrator has no activity to report" do
+      it "skips delivery" do
+        expect(Reports::Weekly.new(administrator).sections).to be_empty
+        expect(mail.perform_deliveries).to be(false)
+      end
+    end
+
     context "with an offer published last week the authority is actor on" do
       let(:job_offer) do
         create(:published_job_offer, published_at: 1.week.ago.beginning_of_week + 1.day)
@@ -115,6 +133,10 @@ RSpec.describe ReportsMailer do
 
       it "lists the offer in the mail body" do
         expect(mail.body.encoded).to include(job_offer.full_title)
+      end
+
+      it "delivers the mail" do
+        expect(mail.perform_deliveries).to be(true)
       end
     end
   end

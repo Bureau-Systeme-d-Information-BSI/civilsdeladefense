@@ -24,7 +24,10 @@ module Reports
 
       Section.new(
         key: state,
-        human_state: JobApplication.human_attribute_name("state/#{state}"),
+        human_state: I18n.t(
+          "reports.sections.application_step",
+          state: JobApplication.human_attribute_name("state/#{state}")
+        ),
         count: offers.size,
         items: offers.map { |offer| Item.new(title: offer.full_title, link: admin_job_offer_url(offer)) }
       )

@@ -16,7 +16,6 @@ class JobApplicationFileType < ApplicationRecord
   validates :name, :kind, presence: true
   validate :must_have_administrator_visibility_rule
   validate :must_have_user_visibility_rule
-  validate :must_have_at_least_one_validator
 
   enum kind: {
     applicant_provided: 10,
@@ -114,14 +113,6 @@ class JobApplicationFileType < ApplicationRecord
   def must_have_user_visibility_rule
     rules = visibility_rules.reject(&:marked_for_destruction?)
     errors.add(:visibility_rules, :must_have_user) unless rules.any?(&:user?)
-  end
-
-  def must_have_at_least_one_validator
-    at_least_one_validator = validate_by_employer_recruiter? ||
-      validate_by_employment_authority? ||
-      validate_by_hr_manager? ||
-      validate_by_payroll_manager?
-    errors.add(:base, :must_have_at_least_one_validator) unless at_least_one_validator
   end
 end
 

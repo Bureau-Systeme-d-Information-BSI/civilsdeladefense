@@ -87,7 +87,7 @@
                         = fa_icon('star', class: 'mr-1')
                         Retirer de la une
                     - else
-                      = link_to [:feature, :admin, job_offer], class: "dropdown-item", method: :post do
+                      = link_to admin_job_offer_feature_path(job_offer), class: "dropdown-item", method: :post do
                         = fa_icon('star', class: 'mr-1')
                         Afficher à la une
                   - if can? :transfer, job_offer

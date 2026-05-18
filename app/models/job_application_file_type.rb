@@ -14,9 +14,6 @@ class JobApplicationFileType < ApplicationRecord
   mount_uploader :content, DocumentUploader, mount_on: :content_file_name
 
   validates :name, :kind, presence: true
-  validate :must_have_administrator_visibility_rule
-  validate :must_have_user_visibility_rule
-  validate :must_have_at_least_one_validator
 
   enum kind: {
     applicant_provided: 10,
@@ -102,26 +99,6 @@ class JobApplicationFileType < ApplicationRecord
     return true if administrator.functional_administrator?
 
     VALIDATOR_ROLE_MAPPING.any? { |flag, role_method| self[flag] && administrator.public_send(role_method) }
-  end
-
-  private
-
-  def must_have_administrator_visibility_rule
-    rules = visibility_rules.reject(&:marked_for_destruction?)
-    errors.add(:visibility_rules, :must_have_administrator) unless rules.any?(&:administrator?)
-  end
-
-  def must_have_user_visibility_rule
-    rules = visibility_rules.reject(&:marked_for_destruction?)
-    errors.add(:visibility_rules, :must_have_user) unless rules.any?(&:user?)
-  end
-
-  def must_have_at_least_one_validator
-    at_least_one_validator = validate_by_employer_recruiter? ||
-      validate_by_employment_authority? ||
-      validate_by_hr_manager? ||
-      validate_by_payroll_manager?
-    errors.add(:base, :must_have_at_least_one_validator) unless at_least_one_validator
   end
 end
 

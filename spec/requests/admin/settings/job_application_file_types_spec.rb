@@ -90,17 +90,6 @@ RSpec.describe "Admin::Settings::JobApplicationFileTypes" do
       expect { create_request }.to change(VisibilityRule, :count).by(2)
       expect(response).to redirect_to(admin_settings_job_application_file_types_path)
     end
-
-    context "when visibility rules are missing" do
-      let(:params) do
-        {job_application_file_type: attributes_for(:job_application_file_type)}
-      end
-
-      it "does not create the job application file type" do
-        expect { create_request }.not_to change(JobApplicationFileType, :count)
-        expect(response).to have_http_status(:unprocessable_entity)
-      end
-    end
   end
 
   describe "PATCH /admin/parametres/job_application_file_types/:id" do

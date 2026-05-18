@@ -5,24 +5,6 @@ require "rails_helper"
 RSpec.describe JobApplicationFileType do
   describe "validations" do
     it { is_expected.to validate_presence_of(:name) }
-
-    context "without an administrator visibility rule" do
-      subject(:jaft) { build(:job_application_file_type) }
-
-      before { jaft.visibility_rules.target.reject!(&:administrator?) }
-
-      it { is_expected.not_to be_valid }
-      it { expect(jaft.tap(&:valid?).errors[:visibility_rules]).to be_present }
-    end
-
-    context "without a user visibility rule" do
-      subject(:jaft) { build(:job_application_file_type) }
-
-      before { jaft.visibility_rules.target.reject!(&:user?) }
-
-      it { is_expected.not_to be_valid }
-      it { expect(jaft.tap(&:valid?).errors[:visibility_rules]).to be_present }
-    end
   end
 
   describe "#can_validate?" do

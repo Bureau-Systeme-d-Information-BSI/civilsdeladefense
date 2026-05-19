@@ -11,7 +11,10 @@ class Admin::JobOffers::FeaturesController < Admin::BaseController
     if @job_offer.update(featured: true)
       redirect_back(fallback_location: %i[admin job_offers], notice: t(".success"))
     else
-      redirect_back(fallback_location: %i[admin job_offers], notice: t(".error"))
+      redirect_back(
+        fallback_location: %i[admin job_offers],
+        notice: t(".error", message: @job_offer.errors.full_messages.to_sentence)
+      )
     end
   end
 
@@ -19,7 +22,10 @@ class Admin::JobOffers::FeaturesController < Admin::BaseController
     if @job_offer.update(featured: false)
       redirect_back(fallback_location: %i[admin job_offers], notice: t(".success"))
     else
-      redirect_back(fallback_location: %i[admin job_offers], notice: t(".error"))
+      redirect_back(
+        fallback_location: %i[admin job_offers],
+        notice: t(".error", message: @job_offer.errors.full_messages.to_sentence)
+      )
     end
   end
 

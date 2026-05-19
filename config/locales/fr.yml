@@ -429,11 +429,11 @@ fr:
       features:
         create:
           success: "Annonce mise à la une"
-          error: "L'offre n'a pa pu être mise à la une, veuillez vérifier la référence"
+          error: "L'offre n'a pas pu être mise à la une : %{message}"
           not_found: "Annonce introuvable, veuillez vérifier la référence"
         destroy:
           success: "Annonce retirée de la une"
-          error: "L'offre n'a pa pu être retirée de la une"
+          error: "L'offre n'a pas pu être retirée de la une : %{message}"
       administrator:
         new_record: 'Cliquer sur "Enregistrer" pour inviter'
         waiting: "En attente de confirmation"

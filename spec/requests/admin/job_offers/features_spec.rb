@@ -26,6 +26,21 @@ RSpec.describe "Admin::JobOffers::Features" do
         expect(response).to have_http_status(:forbidden)
       end
     end
+
+    context "when the update fails" do
+      before do
+        allow_any_instance_of(JobOffer).to receive(:update) do |instance, *|
+          instance.errors.add(:base, "Boom")
+          false
+        end
+      end
+
+      it "redirects back with the error notice including the validation message" do
+        feature_request
+        expect(response).to redirect_to(admin_job_offers_path)
+        expect(flash[:notice]).to eq(I18n.t("admin.job_offers.features.create.error", message: "Boom"))
+      end
+    end
   end
 
   describe "POST /admin/offresdemploi/feature" do
@@ -73,6 +88,21 @@ RSpec.describe "Admin::JobOffers::Features" do
       it "does not change the offer and responds with forbidden" do
         expect { unfeature_request }.not_to change { job_offer.reload.featured }
         expect(response).to have_http_status(:forbidden)
+      end
+    end
+
+    context "when the update fails" do
+      before do
+        allow_any_instance_of(JobOffer).to receive(:update) do |instance, *|
+          instance.errors.add(:base, "Boom")
+          false
+        end
+      end
+
+      it "redirects back with the error notice including the validation message" do
+        unfeature_request
+        expect(response).to redirect_to(admin_job_offers_path)
+        expect(flash[:notice]).to eq(I18n.t("admin.job_offers.features.destroy.error", message: "Boom"))
       end
     end
   end

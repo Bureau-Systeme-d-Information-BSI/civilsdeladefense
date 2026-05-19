@@ -3,10 +3,18 @@
 class Admin::JobOffers::FeaturesController < Admin::BaseController
   skip_load_and_authorize_resource
 
-  def create
-    authorize! :feature, :job_offer
+  before_action :check_authorized
 
+  def create
     if job_offer&.update(featured: true)
+      redirect_back(fallback_location: %i[admin job_offers], notice: t(".success"))
+    else
+      redirect_back(fallback_location: %i[admin job_offers], notice: t(".error"))
+    end
+  end
+
+  def destroy
+    if job_offer&.update(featured: false)
       redirect_back(fallback_location: %i[admin job_offers], notice: t(".success"))
     else
       redirect_back(fallback_location: %i[admin job_offers], notice: t(".error"))
@@ -22,4 +30,6 @@ class Admin::JobOffers::FeaturesController < Admin::BaseController
       JobOffer.find(params[:job_offer_id])
     end
   end
+
+  def check_authorized = authorize! :feature, :job_offer
 end

@@ -430,8 +430,9 @@ fr:
         create:
           success: "Annonce mise à la une"
           error: "L'offre n'a pa pu être mise à la une, veuillez vérifier la référence"
-      unfeature:
-        success: "Annonce retirée de la une"
+        destroy:
+          success: "Annonce retirée de la une"
+          error: "L'offre n'a pa pu être retirée de la une"
       administrator:
         new_record: 'Cliquer sur "Enregistrer" pour inviter'
         waiting: "En attente de confirmation"

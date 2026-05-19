@@ -26,15 +26,6 @@ class Admin::JobOffersController < Admin::BaseController
   def featured
   end
 
-  def unfeature
-    job_offer = JobOffer.find(params[:id])
-    if job_offer.update(featured: false)
-      redirect_back(fallback_location: %i[admin job_offers], notice: t(".success"))
-    else
-      render json: job_offer.errors, status: :unprocessable_entity
-    end
-  end
-
   def export
     job_offer = JobOffer.find(params[:id])
     file = Exporter::JobOffer.new({stats: export_data, job_offer: job_offer}, current_administrator).generate

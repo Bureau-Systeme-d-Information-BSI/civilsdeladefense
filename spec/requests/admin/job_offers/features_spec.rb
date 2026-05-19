@@ -54,4 +54,27 @@ RSpec.describe "Admin::JobOffers::Features" do
       end
     end
   end
+
+  describe "DELETE /admin/offresdemploi/:job_offer_id/feature" do
+    subject(:unfeature_request) { delete admin_job_offer_feature_path(job_offer) }
+
+    let(:job_offer) { create(:job_offer, featured: true) }
+
+    context "when administrator can feature" do
+      it "removes the featured flag and redirects back with the success notice" do
+        expect { unfeature_request }.to change { job_offer.reload.featured }.from(true).to(false)
+        expect(response).to redirect_to(admin_job_offers_path)
+        expect(flash[:notice]).to eq(I18n.t("admin.job_offers.features.destroy.success"))
+      end
+    end
+
+    context "when administrator cannot feature" do
+      before { allow_any_instance_of(Ability).to receive(:can?).and_return(false) }
+
+      it "does not change the offer and responds with forbidden" do
+        expect { unfeature_request }.not_to change { job_offer.reload.featured }
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
+  end
 end

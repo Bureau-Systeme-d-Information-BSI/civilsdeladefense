@@ -78,7 +78,7 @@ Rails.application.routes.draw do
       end
       member do
         get :export, :board, :stats, :new_transfer, :new_send
-        post :transfer, :unfeature, :send_to_list
+        post :transfer, :send_to_list
         JobOffer.aasm.events.map(&:name).each do |event_name|
           patch(event_name.to_sym)
           action_name = :"update_and_#{event_name}"
@@ -88,7 +88,7 @@ Rails.application.routes.draw do
           resources :readings, only: :create
         end
       end
-      resource :feature, only: :create, module: :job_offers
+      resource :feature, only: %i[create destroy], module: :job_offers
       resources :job_applications, path: "candidatures" do
         member do
           get :cvlm

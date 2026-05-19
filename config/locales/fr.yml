@@ -303,9 +303,9 @@ fr:
         title: "Danger"
         destroy: "Je veux supprimer mon compte"
     withdrawals:
-        create:
-          success: "Désistement enregistré"
-          failure: "Impossible de modifier cette candidature"
+      create:
+        success: "Désistement enregistré"
+        failure: "Impossible de modifier cette candidature"
   admin:
     accounts:
       show:
@@ -430,6 +430,7 @@ fr:
         create:
           success: "Annonce mise à la une"
           error: "L'offre n'a pa pu être mise à la une, veuillez vérifier la référence"
+          not_found: "Annonce introuvable, veuillez vérifier la référence"
         destroy:
           success: "Annonce retirée de la une"
           error: "L'offre n'a pa pu être retirée de la une"

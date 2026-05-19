@@ -46,11 +46,10 @@ RSpec.describe "Admin::JobOffers::Features" do
     context "when the identifier matches no offer" do
       let(:identifier) { "unknown-reference" }
 
-      it "does not change any offer and redirects back with the error notice" do
-        job_offer
+      it "does not change any offer and redirects back with the not_found notice" do
         expect { feature_request }.not_to change { job_offer.reload.featured }
         expect(response).to redirect_to(admin_job_offers_path)
-        expect(flash[:notice]).to eq(I18n.t("admin.job_offers.features.create.error"))
+        expect(flash[:notice]).to eq(I18n.t("admin.job_offers.features.create.not_found"))
       end
     end
   end

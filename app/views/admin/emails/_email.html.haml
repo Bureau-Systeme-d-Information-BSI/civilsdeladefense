@@ -21,14 +21,14 @@
         - klasses = %w(btn bmd-btn-icon)
         - if unread_by_administrator
           - klasses << 'opaque'
-          - url = [:mark_as_read, :admin, @job_application, email]
+          - http_method = :post
           - title = t('.mark_as_read')
           - icon = 'envelope'
         - else
-          - url = [:mark_as_unread, :admin, @job_application, email]
+          - http_method = :delete
           - title = t('.mark_as_unread')
           - icon = 'envelope-open'
-        = link_to url, method: :post, remote: true, class: klasses, title: title do
+        = link_to [:admin, @job_application, email, :reading], method: http_method, remote: true, class: klasses, title: title do
           = fa_icon icon
     .card-subheader.bg-card-bg.font-weight-bold.text-muted
       = sanitize(email.subject, tags: %w())

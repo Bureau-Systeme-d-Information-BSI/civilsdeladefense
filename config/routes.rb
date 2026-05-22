@@ -138,9 +138,9 @@ Rails.application.routes.draw do
       resources :messages, only: %i[create]
       resources :emails, only: %i[create] do
         member do
-          post :mark_as_read, :mark_as_unread
           get :attachment
         end
+        resource :reading, only: %i[create destroy], module: :emails
       end
     end
     resources :zip_files, only: :show

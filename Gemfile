@@ -3,7 +3,12 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.3.0"
+ruby "4.0.5"
+
+# Bundled gems en Ruby 4.0, non auto-chargées : à déclarer explicitement pour les
+# vieilles gems qui les requirent au top-level (json-2.7 → ostruct, spring-2.1 → mutex_m).
+gem "mutex_m"
+gem "ostruct"
 
 gem "rails", "~> 7.2.3.1"
 gem "rails-i18n"

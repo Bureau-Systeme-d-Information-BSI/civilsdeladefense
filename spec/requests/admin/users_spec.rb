@@ -409,5 +409,4 @@ RSpec.describe "Admin::Users" do
       end
     end
   end
-
 end

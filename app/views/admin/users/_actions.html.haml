@@ -22,7 +22,7 @@
           Raison :
           %em= user.suspension_reason.present? ? user.suspension_reason : 'Aucune raison donnée'
     - if can?(:suspend, user)
-      = link_to [:unsuspend, :admin, user], method: :post, data: {confirm: t('buttons.confirm')}, class: 'btn btn-primary mb-0' do
+      = link_to [:admin, user, :suspension], method: :delete, data: {confirm: t('buttons.confirm')}, class: 'btn btn-primary mb-0' do
         = t('buttons.unsuspend_user')
         = fa_icon('paper-plane', class: 'ml-1')
   - else
@@ -43,7 +43,7 @@
     .modal-dialog{role: :document}
       .modal-content
         .modal-body
-          = simple_form_for(user, url: [:suspend, :admin, user], method: :post) do |f|
+          = simple_form_for(user, url: [:admin, user, :suspension], method: :post) do |f|
             = f.input :suspension_reason, as: :text
             .form-actions.d-flex.mt-4
               %button{type: :button, class: 'btn btn-link mb-0', data: {dismiss: :modal}, aria: {label: t('buttons.close')}}

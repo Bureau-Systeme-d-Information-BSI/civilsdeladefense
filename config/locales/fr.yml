@@ -602,10 +602,11 @@ fr:
           other: "%{count} résultats de recherche"
       listing:
         title: "Ajouter/supprimer ce candidat de mes listes"
-      suspend:
-        success: "Utilisateur suspendu"
-      unsuspend:
-        success: "Utilisateur réactivé"
+      suspensions:
+        create:
+          success: "Utilisateur suspendu"
+        destroy:
+          success: "Utilisateur réactivé"
       user:
         my_preferred_user_lists: "Listes"
         remove_user: "Retirer"

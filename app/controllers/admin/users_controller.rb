@@ -68,18 +68,6 @@ class Admin::UsersController < Admin::InheritedResourcesController
     end
   end
 
-  def suspend
-    reason = params.require(:user).permit(:suspension_reason).fetch(:suspension_reason)
-    reason = nil if reason.blank?
-    @user.suspend!(reason)
-    redirect_back(fallback_location: [:admin, @user], notice: t(".success"))
-  end
-
-  def unsuspend
-    @user.unsuspend!
-    redirect_back(fallback_location: [:admin, @user], notice: t(".success"))
-  end
-
   def photo
     send_data(
       @user.photo.big.read,

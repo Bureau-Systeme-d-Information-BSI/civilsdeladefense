@@ -262,7 +262,7 @@ GEM
       activejob (>= 6.1)
     jsbundling-rails (1.3.0)
       railties (>= 6.0.0)
-    json (2.7.1)
+    json (2.19.5)
     json-jwt (1.17.0)
       activesupport (>= 4.2)
       aes_key_wrap
@@ -311,7 +311,6 @@ GEM
     minitest (5.27.0)
     msgpack (1.7.1)
     multi_json (1.15.0)
-    mutex_m (0.3.0)
     nenv (0.3.0)
     net-http (0.8.0)
       uri (>= 0.11.1)
@@ -391,7 +390,7 @@ GEM
     puma (6.4.3)
       nio4r (~> 2.0)
     racc (1.7.3)
-    rack (3.0.10)
+    rack (3.2.6)
     rack-attack (6.8.0)
       rack (>= 1.0, < 4)
     rack-cors (2.0.2)
@@ -552,10 +551,6 @@ GEM
     simple_form (5.2.0)
       actionpack (>= 5.2)
       activemodel (>= 5.2)
-    spring (2.1.1)
-    spring-watcher-listen (2.0.1)
-      listen (>= 2.7, < 4.0)
-      spring (>= 1.2, < 3.0)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
       rack (>= 2.2.4, < 4)
@@ -679,7 +674,6 @@ DEPENDENCIES
   mail
   maintenance_tasks
   mini_magick
-  mutex_m
   omniauth-rails_csrf_protection
   omniauth_openid_connect (~> 0.8.0)
   ostruct
@@ -709,8 +703,6 @@ DEPENDENCIES
   shoulda-matchers
   sidekiq (~> 7.1.6)
   simple_form
-  spring
-  spring-watcher-listen (~> 2.0.0)
   sprockets-rails
   standard
   stimulus-rails (~> 1.3)

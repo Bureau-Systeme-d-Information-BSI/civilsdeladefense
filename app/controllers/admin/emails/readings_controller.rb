@@ -10,7 +10,7 @@ class Admin::Emails::ReadingsController < Admin::BaseController
     @job_application.reload
 
     respond_to do |format|
-      format.html { redirect_back(fallback_location: [:admin, @job_application], notice: t(".success")) }
+      format.html { redirect_back_or_to([:admin, @job_application], notice: t(".success")) }
       format.js do
         @notification = t(".success")
         render "admin/emails/email_operation"
@@ -24,7 +24,7 @@ class Admin::Emails::ReadingsController < Admin::BaseController
     @job_application.reload
 
     respond_to do |format|
-      format.html { redirect_back(fallback_location: [:admin, @job_application], notice: t(".success")) }
+      format.html { redirect_back_or_to([:admin, @job_application], notice: t(".success")) }
       format.js do
         @notification = t(".success")
         render "admin/emails/email_operation"

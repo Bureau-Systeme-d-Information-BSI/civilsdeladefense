@@ -70,15 +70,22 @@ Rails.application.routes.draw do
         post :feature, to: "job_offers/features#create"
         post :init, to: "job_offers#new"
         get :init, to: "job_offer_terms#index"
-        get :add_actor, :featured, :archived
+        get :add_actor
+        get :featured
+        get :archived
         JobOffer.aasm.events.map(&:name).each do |event_name|
           action_name = :"create_and_#{event_name}"
           post :create, constraints: CommitParamConstraint.new(action_name), action: action_name
         end
       end
       member do
-        get :export, :board, :stats, :new_transfer, :new_send
-        post :transfer, :send_to_list
+        get :export
+        get :board
+        get :stats
+        get :new_transfer
+        get :new_send
+        post :transfer
+        post :send_to_list
         JobOffer.aasm.events.map(&:name).each do |event_name|
           patch(event_name.to_sym)
           action_name = :"update_and_#{event_name}"
@@ -116,7 +123,8 @@ Rails.application.routes.draw do
         post :multi_select
       end
       member do
-        get :listing, :photo
+        get :listing
+        get :photo
         put :update_listing
         post :send_job_offer
       end
@@ -155,24 +163,29 @@ Rails.application.routes.draw do
       resource :organization do
         member do
           get :edit_security
-          patch :update_general, :update_display, :update_security
+          patch :update_general
+          patch :update_display
+          patch :update_security
         end
       end
       resources :organization_defaults
       resources :frequently_asked_questions do
         member do
-          post :move_higher, :move_lower
+          post :move_higher
+          post :move_lower
         end
       end
 
       resources :pages do
         member do
-          post :move_higher, :move_lower
+          post :move_higher
+          post :move_lower
         end
       end
       resources :cmgs do
         member do
-          post :move_higher, :move_lower
+          post :move_higher
+          post :move_lower
         end
       end
       resources :administrators, path: "administrateurs" do
@@ -190,7 +203,8 @@ Rails.application.routes.draw do
       end
       resources :employers, :categories do
         member do
-          post :move_left, :move_right
+          post :move_left
+          post :move_right
         end
       end
       resources :salary_ranges
@@ -203,7 +217,8 @@ Rails.application.routes.draw do
       (JobOffer::SETTINGS + other_settings).each do |setting|
         resources setting.to_s.pluralize.to_sym, except: %i[show] do
           member do
-            post :move_higher, :move_lower
+            post :move_higher
+            post :move_lower
           end
         end
       end
@@ -239,8 +254,13 @@ Rails.application.routes.draw do
           patch :update
         end
         member do
-          get :change_email, :change_password, :photo
-          patch :update_email, :update_password, :unlink_france_connect, :set_password
+          get :change_email
+          get :change_password
+          get :photo
+          patch :update_email
+          patch :update_password
+          patch :unlink_france_connect
+          patch :set_password
         end
       end
     end

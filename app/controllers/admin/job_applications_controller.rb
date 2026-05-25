@@ -54,7 +54,7 @@ class Admin::JobApplicationsController < Admin::BaseController
         format.html { render :edit }
         format.js do
           @notification = t(".failure")
-          render :update, status: :unprocessable_entity
+          render :update, status: :unprocessable_content
         end
       end
     end
@@ -81,7 +81,7 @@ class Admin::JobApplicationsController < Admin::BaseController
   def render_reponse
     respond_to do |format|
       format.html do
-        redirect_back(fallback_location: [:admin, @job_application], notice: @notification)
+        redirect_back_or_to([:admin, @job_application], notice: @notification)
       end
       format.js do
         render :change_state

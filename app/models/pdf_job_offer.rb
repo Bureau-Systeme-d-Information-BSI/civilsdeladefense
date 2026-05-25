@@ -3,7 +3,7 @@ class PdfJobOffer < SimpleDelegator
   include JobOffersHelper
 
   def initialize(job_offer)
-    super(job_offer)
+    super
     build
   end
 

@@ -3,8 +3,8 @@
 class VisibilityRule < ApplicationRecord
   belongs_to :job_application_file_type
 
-  enum by: {administrator: "administrator", user: "user"}
-  enum state: JobApplication.states
+  enum :by, {administrator: "administrator", user: "user"}
+  enum :state, JobApplication.states
 
   validates :by, presence: true
   validates :state, presence: true

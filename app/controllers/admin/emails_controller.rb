@@ -28,7 +28,7 @@ class Admin::EmailsController < Admin::BaseController
           @notification = t(".unsuccess")
           render :create
         end
-        format.json { render json: @email.errors, status: :unprocessable_entity }
+        format.json { render json: @email.errors, status: :unprocessable_content }
       end
     end
   end

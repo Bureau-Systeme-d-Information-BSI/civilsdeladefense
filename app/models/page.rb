@@ -8,6 +8,7 @@ class Page < ApplicationRecord
   after_save :reinsert_previous_child
 
   extend FriendlyId
+
   friendly_id :title, use: %i[slugged history finders]
 
   validates :title, presence: true

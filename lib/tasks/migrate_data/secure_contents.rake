@@ -9,7 +9,7 @@ namespace :migrate_data do
 
   desc "Convert all PDF files (in the current directory) to images and back to PDF to secure them"
   task convert: :environment do
-    Dir.entries(".").select { _1.end_with?(".pdf") }.map { File.open(_1) }.each do |pdf|
+    Dir.entries(".").select { it.end_with?(".pdf") }.map { File.open(it) }.each do |pdf|
       puts "Converting #{pdf.path}"
       images = PdfUtils.convert_pdf_file_to_images(pdf)
       PdfUtils.convert_images_to_pdf(images, "converted_#{pdf.path}")

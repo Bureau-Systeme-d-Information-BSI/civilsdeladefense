@@ -1,5 +1,6 @@
 class Exporter::Administrator < Exporter::Base
   include AdministratorsHelper
+
   def fill_data
     fill_filters
     add_row

@@ -25,7 +25,7 @@ class Account::UsersController < Account::BaseController
       else
         format.html { render :edit }
         format.js {}
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        format.json { render json: @user.errors, status: :unprocessable_content }
       end
     end
   end
@@ -45,7 +45,7 @@ class Account::UsersController < Account::BaseController
           @user_for_deletion = User.new
           render :show
         end
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        format.json { render json: @user.errors, status: :unprocessable_content }
       end
     end
   end
@@ -65,7 +65,7 @@ class Account::UsersController < Account::BaseController
           @user_for_deletion = User.new
           render :show
         end
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        format.json { render json: @user.errors, status: :unprocessable_content }
       end
     end
   end
@@ -85,7 +85,7 @@ class Account::UsersController < Account::BaseController
           @user_for_email_change = @user
           render :show
         end
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        format.json { render json: @user.errors, status: :unprocessable_content }
       end
     end
   end

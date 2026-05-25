@@ -32,7 +32,7 @@ class Admin::AccountsController < Admin::BaseController
         format.json { render :show, status: :ok, location: @administrator }
       else
         format.html { render :show }
-        format.json { render json: @administrator.errors, status: :unprocessable_entity }
+        format.json { render json: @administrator.errors, status: :unprocessable_content }
       end
     end
   end

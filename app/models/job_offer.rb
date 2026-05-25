@@ -7,10 +7,12 @@ class JobOffer < ApplicationRecord
   ].freeze
 
   include AASM
+
   audited
   has_associated_audits
 
   extend FriendlyId
+
   friendly_id :title, use: %i[slugged finders history]
 
   ## Callbacks
@@ -20,6 +22,7 @@ class JobOffer < ApplicationRecord
   acts_as_sequenced scope: :employer_id
 
   include PgSearch::Model
+
   pg_search_scope :search_full_text,
     ignoring: :accents,
     against: {
@@ -115,7 +118,7 @@ class JobOffer < ApplicationRecord
       .distinct
   }
 
-  enum most_advanced_job_applications_state: {
+  enum :most_advanced_job_applications_state, {
     start: -1,
     initial: 0,
     phone_meeting: 2,
@@ -128,7 +131,7 @@ class JobOffer < ApplicationRecord
     affected: 11
   }
 
-  enum state: {
+  enum :state, {
     draft: 0,
     published: 1,
     suspended: 2,

@@ -38,7 +38,7 @@ class Admin::PreferredUsersListsController < Admin::InheritedResourcesController
       end
     else
       layout_choice = request.xhr? ? false : "admin/pool"
-      render action: "new", status: :unprocessable_entity, layout: layout_choice
+      render action: "new", status: :unprocessable_content, layout: layout_choice
     end
   end
 
@@ -52,7 +52,7 @@ class Admin::PreferredUsersListsController < Admin::InheritedResourcesController
       respond_to do |format|
         format.html do
           layout_choice = request.xhr? ? false : "admin/pool"
-          render action: "edit", status: :unprocessable_entity, layout: layout_choice
+          render action: "edit", status: :unprocessable_content, layout: layout_choice
         end
       end
     end
@@ -87,9 +87,9 @@ class Admin::PreferredUsersListsController < Admin::InheritedResourcesController
     job_offer = JobOffer.find_by(identifier: params["job_offer_identifier"])
 
     if job_offer&.send_to_users(preferred_users_list.users)
-      redirect_back(fallback_location: [:admin, preferred_users_list], notice: t(".success"))
+      redirect_back_or_to([:admin, preferred_users_list], notice: t(".success"))
     else
-      redirect_back(fallback_location: [:admin, preferred_users_list], notice: t(".error"))
+      redirect_back_or_to([:admin, preferred_users_list], notice: t(".error"))
     end
   end
 

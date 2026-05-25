@@ -5,6 +5,7 @@ inherit_gem:
 
 require:
   - standard
+plugins:
   - rubocop-rails
   - rubocop-rspec
   - rubocop-performance
@@ -25,9 +26,6 @@ RSpec/MultipleExpectations:
 
 RSpec/NestedGroups:
   Max: 5
-
-RSpec/FilePath:
-  Enabled: false
 
 RSpec/AnyInstance:
   Enabled: false

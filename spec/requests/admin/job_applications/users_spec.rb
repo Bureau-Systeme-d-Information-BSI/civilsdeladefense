@@ -44,7 +44,7 @@ RSpec.describe "Admin::JobApplication::Users" do
       context "when format is JS" do
         let(:xhr) { true }
 
-        it { expect(response).to have_http_status(:unprocessable_entity) }
+        it { expect(response).to have_http_status(:unprocessable_content) }
       end
     end
 

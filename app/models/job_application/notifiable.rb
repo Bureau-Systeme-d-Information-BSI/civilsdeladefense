@@ -1,5 +1,6 @@
 module JobApplication::Notifiable
   extend ActiveSupport::Concern
+
   included do
     after_update :notify_applicant_new_state, if: -> { new_state_requires_applicant_notification? }
     after_update :notify_hr_managers_contract_drafting, if: -> { saved_change_to_state? && contract_drafting? }

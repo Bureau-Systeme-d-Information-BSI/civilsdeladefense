@@ -37,9 +37,9 @@ class Admin::UsersController < Admin::InheritedResourcesController
       job_offer = JobOffer.find_by(identifier: params["job_offer_identifier"])
 
       if job_offer&.send_to_users(users)
-        redirect_back(fallback_location: [:admin, :users], notice: t(".success"))
+        redirect_back_or_to([:admin, :users], notice: t(".success"))
       else
-        redirect_back(fallback_location: [:admin, :users], notice: t(".error"))
+        redirect_back_or_to([:admin, :users], notice: t(".error"))
       end
     end
   end
@@ -78,10 +78,10 @@ class Admin::UsersController < Admin::InheritedResourcesController
 
   def destroy
     if @user.destroy
-      redirect_back(fallback_location: %i[admin users], notice: t(".success"))
+      redirect_back_or_to(%i[admin users], notice: t(".success"))
     else
       reason = @user.errors.full_messages.join(", ")
-      redirect_back(fallback_location: %i[admin users], notice: t(".failure", reason: reason))
+      redirect_back_or_to(%i[admin users], notice: t(".failure", reason: reason))
     end
   end
 
@@ -90,9 +90,9 @@ class Admin::UsersController < Admin::InheritedResourcesController
     job_offer = JobOffer.find_by(identifier: params["job_offer_identifier"])
 
     if job_offer&.send_to_users([user])
-      redirect_back(fallback_location: [:admin, user], notice: t(".success"))
+      redirect_back_or_to([:admin, user], notice: t(".success"))
     else
-      redirect_back(fallback_location: [:admin, user], notice: t(".error"))
+      redirect_back_or_to([:admin, user], notice: t(".error"))
     end
   end
 

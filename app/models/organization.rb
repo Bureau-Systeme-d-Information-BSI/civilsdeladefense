@@ -22,7 +22,7 @@ class Organization < ApplicationRecord
     image_background
   ].each do |field|
     mount_uploader field, LogoUploader, mount_on: :"#{field}_file_name"
-    validates field, file_size: {less_than: 1.megabytes}
+    validates field, file_size: {less_than: 1.megabyte}
   end
 
   mount_uploader :help_file, CommonUploader
@@ -33,7 +33,7 @@ class Organization < ApplicationRecord
     not_available: 0,
     catch_all: 20
   }.freeze
-  enum inbound_email_config: INBOUND_EMAIL_CONFIGS, _prefix: true
+  enum :inbound_email_config, INBOUND_EMAIL_CONFIGS, prefix: true
 
   def name
     service_name

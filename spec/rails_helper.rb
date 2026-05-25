@@ -37,8 +37,7 @@ require "support/shared_examples/movable_admin_setting"
 # If you are not using ActiveRecord, you can remove these lines.
 begin
   ActiveRecord::Migration.maintain_test_schema!
-rescue ActiveRecord::PendingMigrationError => e
-  puts e.to_s.strip
+rescue ActiveRecord::PendingMigrationError
   exit 1
 end
 
@@ -56,9 +55,9 @@ module DeviseRoutingHelpers
     warden = double
     allow_any_instance_of(ActionDispatch::Request).to(receive(:env))
       .and_wrap_original do |orig, *args|
-      env = orig.call(*args)
-      env["warden"] = warden
-      env
+        env = orig.call(*args)
+        env["warden"] = warden
+        env
     end
     allow(warden).to receive(:authenticate!).and_return(true)
   end

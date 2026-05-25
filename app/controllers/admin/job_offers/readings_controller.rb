@@ -7,6 +7,6 @@ class Admin::JobOffers::ReadingsController < Admin::BaseController
     @job_offer = JobOffer.friendly.find(params[:id])
     @job_offer.job_applications.map(&:mark_all_as_read!)
 
-    redirect_back(fallback_location: [:admin, @job_offer], notice: t(".success"))
+    redirect_back_or_to([:admin, @job_offer], notice: t(".success"))
   end
 end

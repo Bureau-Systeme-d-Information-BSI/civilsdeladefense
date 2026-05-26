@@ -704,10 +704,11 @@ fr:
           transfer_email_label: "Email du nouveau propriétaire des offres"
           submit: "Transférer"
           list: "Liste des offres"
-        deactivate:
-          success: "Compte désactivé"
-        reactivate:
-          success: "Compte réactivé"
+        activations:
+          create:
+            success: "Compte désactivé"
+          destroy:
+            success: "Compte réactivé"
         resend_confirmation_instructions:
           success: "Invitation renvoyée !"
       cmgs:

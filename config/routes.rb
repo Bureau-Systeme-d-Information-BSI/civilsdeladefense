@@ -183,10 +183,9 @@ Rails.application.routes.draw do
         member do
           post :resend_confirmation_instructions
           post :send_unlock_instructions
-          post :deactivate
-          post :reactivate
           post :transfer
         end
+        resource :activation, only: %i[create destroy], module: :administrators
       end
       resources :employers, :categories do
         member do

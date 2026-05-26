@@ -66,11 +66,16 @@ RSpec.describe Securable do
       let!(:securable) { build(:email_attachment, content: content) }
 
       context "when the content type is pdf" do
+        before { allow(ENV).to receive(:fetch).with("SECURE_CONTENT", false).and_return("1") }
+
         let(:content) {
           Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/files/document.pdf"), "application/pdf")
         }
 
-        it { expect { commit }.to have_enqueued_job { SecureContentJob }.with(securable.id) }
+        it do
+          commit
+          expect(SecureContentJob).to have_been_enqueued.with(id: securable.id)
+        end
       end
 
       context "when the content type is not pdf" do

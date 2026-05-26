@@ -85,26 +85,6 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
     end
   end
 
-  # POST /admin/settings/administrators/1/deactivate
-  # POST /admin/settings/administrators/1/deactivate.json
-  def deactivate
-    @administrator.deactivate
-    respond_to do |format|
-      format.html { redirect_to %i[admin settings root], notice: t(".success") }
-      format.json { head :no_content }
-    end
-  end
-
-  # POST /admin/settings/administrators/1/reactivate
-  # POST /admin/settings/administrators/1/reactivate.json
-  def reactivate
-    @administrator.reactivate
-    respond_to do |format|
-      format.html { redirect_to %i[admin settings root], notice: t(".success") }
-      format.json { head :no_content }
-    end
-  end
-
   # PATCH/PUT /admin/settings/administrators/1/resend_confirmation_instructions
   # PATCH/PUT /admin/settings/administrators/1/resend_confirmation_instructions.json
   def resend_confirmation_instructions

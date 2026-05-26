@@ -188,34 +188,6 @@ RSpec.describe "Admin::Settings::Administrators" do
     end
   end
 
-  describe "POST /admin/parametres/administrateurs/:id/deactivate" do
-    subject(:deactivate_request) { post deactivate_admin_settings_administrator_path(administrator) }
-
-    let(:administrator) { create(:administrator) }
-
-    it "deactivates the administrator" do
-      expect { deactivate_request }.to change { administrator.reload.inactive? }.to(true)
-    end
-
-    it "redirects to admin settings" do
-      expect(deactivate_request).to redirect_to(admin_settings_root_path)
-    end
-  end
-
-  describe "POST /admin/parametres/administrateurs/:id/reactivate" do
-    subject(:reactivate_request) { post reactivate_admin_settings_administrator_path(administrator) }
-
-    let(:administrator) { create(:administrator, :deactivated) }
-
-    it "reactivates the administrator" do
-      expect { reactivate_request }.to change { administrator.reload.active? }.to(true)
-    end
-
-    it "redirects to admin settings" do
-      expect(reactivate_request).to redirect_to(admin_settings_root_path)
-    end
-  end
-
   describe "POST /admin/parametres/administrateurs/:id/transfer" do
     subject(:transfer_request) do
       post transfer_admin_settings_administrator_path(administrator), params: {transfer_email:}

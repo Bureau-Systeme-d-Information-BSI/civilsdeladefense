@@ -10,6 +10,10 @@ gem "ostruct"
 gem "rails", "~> 7.2.3.1"
 gem "rails-i18n"
 
+# Pin connection_pool to 2.x: connection_pool 3.0 dropped the positional Hash
+# arg that Rails 7.2's ActiveSupport::Cache::RedisCacheStore still uses.
+gem "connection_pool", "~> 2.5"
+
 gem "sprockets-rails"
 
 gem "cssbundling-rails", "~> 1.4" # Bundles CSS files

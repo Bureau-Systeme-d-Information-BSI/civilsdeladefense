@@ -164,5 +164,4 @@ RSpec.describe "Admin::JobApplicationFiles" do
       end
     end
   end
-
 end

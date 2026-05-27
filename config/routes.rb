@@ -128,10 +128,7 @@ Rails.application.routes.draw do
       end
       resource :user, module: :job_applications, only: %i[update]
       resources :job_application_files do
-        member do
-          post :check
-          post :uncheck
-        end
+        resource :validation, only: %i[create destroy], module: :job_application_files
       end
       resource :cover_letter, only: %i[show]
       resource :rejection, only: %i[new create destroy]

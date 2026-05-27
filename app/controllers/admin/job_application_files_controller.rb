@@ -75,42 +75,6 @@ class Admin::JobApplicationFilesController < Admin::BaseController
     end
   end
 
-  def check
-    if @job_application_file.mark_as_valid!(current_administrator)
-      @notification = t(".success")
-      respond_to do |format|
-        format.html { redirect_back_or_to location, notice: @notification }
-        format.js { render :file_operation }
-        format.json { render :show, status: :ok, location: }
-      end
-    else
-      @notification = @job_application_file.errors.full_messages.to_sentence
-      respond_to do |format|
-        format.html { redirect_back_or_to location, alert: @notification }
-        format.js { render :file_operation }
-        format.json { render json: @job_application_file.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  def uncheck
-    if @job_application_file.mark_as_invalid!(current_administrator)
-      @notification = t(".success")
-      respond_to do |format|
-        format.html { redirect_back_or_to location, notice: @notification }
-        format.js { render :file_operation }
-        format.json { render :show, status: :ok, location: }
-      end
-    else
-      @notification = @job_application_file.errors.full_messages.to_sentence
-      respond_to do |format|
-        format.html { redirect_back_or_to location, alert: @notification }
-        format.js { render :file_operation }
-        format.json { render json: @job_application_file.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   private
 
   def job_application_file_params

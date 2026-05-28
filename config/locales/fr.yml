@@ -1370,7 +1370,7 @@ fr:
         supervisor_employer: "Autorité(s) d’emploi"
         brh: "Gestionnaire(s) RH"
         cmg: "CMG"
-        payroll_managers: Gestionnaire(s) paie
+        payroll_manager: Gestionnaire(s) paie
       organization_default:
         kind: "Type"
         kind/job_offer_description: "Offre d'emploi / Description"

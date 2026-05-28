@@ -446,7 +446,27 @@
         79
       ],
       "note": ""
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "a47870d6886183992ffa4ffc8f9bb41f73ef1aa8d899abe01d8f0186a772b0e0",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped parameter value",
+      "file": "app/views/admin/job_application_files/_job_application_file.html.haml",
+      "line": 4,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "::Haml::AttributeBuilder.build_id(true, dom_id(@job_application.job_application_files.find(params[:job_application_file_id])))",
+      "location": {
+        "type": "template",
+        "template": "admin/job_application_files/_job_application_file"
+      },
+      "user_input": "params[:job_application_file_id]",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": "False positive: params[:job_application_file_id] is used only as a DB lookup key in find(). The dom_id value comes from the record's own persisted ID, not from the param."
     }
-  ],
-  "brakeman_version": "7.1.0"
+  ]
 }

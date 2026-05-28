@@ -390,8 +390,6 @@ fr:
     job_application_files:
       optional_job_application_file_type:
         action_name: "Demander"
-      check:
-        success: "Fichier validé !"
       destroy:
         success: "Fichier supprimé de la liste"
       create:
@@ -407,8 +405,11 @@ fr:
         do_not_ask: "Ne plus demander"
       job_application_file_upload:
         help: "Téléverser un fichier"
-      uncheck:
-        success: "Fichier invalidé !"
+      validations:
+        create:
+          success: "Fichier validé !"
+        destroy:
+          success: "Fichier invalidé !"
     dars:
       update:
         success: "Validation DAR mise à jour avec succès"

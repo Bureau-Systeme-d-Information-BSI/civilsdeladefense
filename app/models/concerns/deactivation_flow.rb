@@ -15,9 +15,9 @@ module DeactivationFlow
 
     private
 
-    def deactivate_admins!(scope) = scope.find_each { deactivate_admin!(_1) }
+    def deactivate_admins!(scope) = scope.find_each { deactivate_admin!(it) }
 
-    def mark_admins_for_deactivation!(scope) = scope.find_each { mark_admin_for_deactivation!(_1) }
+    def mark_admins_for_deactivation!(scope) = scope.find_each { mark_admin_for_deactivation!(it) }
 
     def deactivate_admin!(administrator)
       administrator.deactivate

@@ -15,7 +15,7 @@ class JobApplicationFileType < ApplicationRecord
 
   validates :name, :kind, presence: true
 
-  enum kind: {
+  enum :kind, {
     applicant_provided: 10,
     employment_authority_provided: 13,
     manager_provided: 11,

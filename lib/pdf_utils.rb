@@ -4,7 +4,7 @@ module PdfUtils
       image = MiniMagick::Image.open(pdf_file.path)
       prefix = SecureRandom.base36
       image.pages.each_with_index { |page, index| PdfUtils.convert_pdf_page_to_image(prefix, page.path, index, density) }
-      Dir.entries(".").select { _1.start_with?(prefix) }.sort
+      Dir.entries(".").select { it.start_with?(prefix) }.sort
     rescue # ImageMagick failure: sometimes the pdf can't be opened
       []
     end
@@ -23,13 +23,13 @@ module PdfUtils
 
     def convert_images_to_pdf(image_filenames, filename)
       MiniMagick::Tool::Convert.new do |convert|
-        image_filenames.each { convert << _1 }
+        image_filenames.each { convert << it }
         convert << filename
       end
     end
 
     def delete_files(filenames)
-      filenames.select { File.exist?(_1) }.each { File.delete(_1) }
+      filenames.select { File.exist?(it) }.each { File.delete(it) }
     end
   end
 end

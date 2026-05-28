@@ -33,7 +33,7 @@ module ApplicationHelper
 
   def will_paginate(collection = nil, options = {})
     options[:renderer] ||= BootstrapRenderer
-    super(collection, options)
+    super
   end
 
   # Deactivate Turbo on form by default

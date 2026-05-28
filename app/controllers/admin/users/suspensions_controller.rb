@@ -9,12 +9,12 @@ class Admin::Users::SuspensionsController < Admin::BaseController
     reason = params.require(:user).permit(:suspension_reason).fetch(:suspension_reason)
     reason = nil if reason.blank?
     @user.suspend!(reason)
-    redirect_back(fallback_location: [:admin, @user], notice: t(".success"))
+    redirect_back_or_to([:admin, @user], notice: t(".success"))
   end
 
   def destroy
     @user.unsuspend!
-    redirect_back(fallback_location: [:admin, @user], notice: t(".success"))
+    redirect_back_or_to([:admin, @user], notice: t(".success"))
   end
 
   private

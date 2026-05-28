@@ -56,7 +56,7 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
         format.json { render :show, status: :created, location: @administrator }
       else
         format.html { render :new }
-        format.json { render json: @administrator.errors, status: :unprocessable_entity }
+        format.json { render json: @administrator.errors, status: :unprocessable_content }
       end
     end
   end
@@ -70,7 +70,7 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
         format.json { render :show, status: :ok, location: @administrator }
       else
         format.html { render :edit }
-        format.json { render json: @administrator.errors, status: :unprocessable_entity }
+        format.json { render json: @administrator.errors, status: :unprocessable_content }
       end
     end
   end
@@ -104,7 +104,7 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
     if @administrator.transfer(params[:transfer_email])
       redirect_to %i[admin settings root], notice: t(".success")
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 

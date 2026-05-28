@@ -9,22 +9,20 @@ class Admin::JobOffers::FeaturesController < Admin::BaseController
 
   def create
     if @job_offer.update(featured: true)
-      redirect_back(fallback_location: %i[admin job_offers], notice: t(".success"))
+      redirect_back_or_to(%i[admin job_offers], notice: t(".success"))
     else
-      redirect_back(
-        fallback_location: %i[admin job_offers],
-        notice: t(".error", message: @job_offer.errors.full_messages.to_sentence)
+      redirect_back_or_to(
+        %i[admin job_offers], notice: t(".error", message: @job_offer.errors.full_messages.to_sentence)
       )
     end
   end
 
   def destroy
     if @job_offer.update(featured: false)
-      redirect_back(fallback_location: %i[admin job_offers], notice: t(".success"))
+      redirect_back_or_to(%i[admin job_offers], notice: t(".success"))
     else
-      redirect_back(
-        fallback_location: %i[admin job_offers],
-        notice: t(".error", message: @job_offer.errors.full_messages.to_sentence)
+      redirect_back_or_to(
+        %i[admin job_offers], notice: t(".error", message: @job_offer.errors.full_messages.to_sentence)
       )
     end
   end
@@ -39,7 +37,7 @@ class Admin::JobOffers::FeaturesController < Admin::BaseController
     end
   end
 
-  def notice_not_found = redirect_back(fallback_location: %i[admin job_offers], notice: t(".not_found"))
+  def notice_not_found = redirect_back_or_to(%i[admin job_offers], notice: t(".not_found"))
 
   def check_authorized = authorize! :feature, :job_offer
 end

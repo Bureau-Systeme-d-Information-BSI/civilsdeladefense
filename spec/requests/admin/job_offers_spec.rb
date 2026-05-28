@@ -90,7 +90,7 @@ RSpec.describe "Admin::Job_Offers" do
           build(:job_offer, organization_description: nil).tap { |jo| jo.save(validate: false) }
         end
 
-        include_examples "unpublishable job offer"
+        it_behaves_like "unpublishable job offer"
       end
 
       context "when recruitment_process is missing" do
@@ -98,7 +98,7 @@ RSpec.describe "Admin::Job_Offers" do
           build(:job_offer, recruitment_process: nil).tap { |jo| jo.save(validate: false) }
         end
 
-        include_examples "unpublishable job offer"
+        it_behaves_like "unpublishable job offer"
       end
     end
   end

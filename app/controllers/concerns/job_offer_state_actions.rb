@@ -36,7 +36,7 @@ module JobOfferStateActions
   def state_action(event_name)
     if @job_offer.send(:"#{event_name}!")
       respond_to do |format|
-        format.html { redirect_back(fallback_location: %i[admin job_offers], notice: t(".success")) }
+        format.html { redirect_back_or_to(%i[admin job_offers], notice: t(".success")) }
         format.js do
           @notification = t(".success")
           render :state_change
@@ -45,7 +45,7 @@ module JobOfferStateActions
     else
       respond_to do |format|
         format.html do
-          redirect_back(fallback_location: %i[admin job_offers], notice: @job_offer.errors.full_messages.to_sentence)
+          redirect_back_or_to(%i[admin job_offers], notice: @job_offer.errors.full_messages.to_sentence)
         end
         format.js do
           @notification = @job_offer.errors.full_messages.to_sentence

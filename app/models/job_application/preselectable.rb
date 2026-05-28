@@ -4,7 +4,7 @@ module JobApplication::Preselectable
   extend ActiveSupport::Concern
 
   included do
-    enum preselection: {
+    enum :preselection, {
       pending: 0,
       favorite: 1,
       unfavorite: -1

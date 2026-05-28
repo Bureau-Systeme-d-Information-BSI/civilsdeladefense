@@ -25,7 +25,7 @@ class JobOfferActor < ApplicationRecord
 
   #####################################
   # Enums
-  enum role: {
+  enum :role, {
     employer: 0,
     grand_employer: 10,
     supervisor_employer: 20,

@@ -34,7 +34,7 @@ class Admin::JobApplicationFilesController < Admin::BaseController
           @notification = t(".failure", message: message)
           render :file_operation_total
         end
-        format.json { render json: @job_application_file.errors, status: :unprocessable_entity }
+        format.json { render json: @job_application_file.errors, status: :unprocessable_content }
       end
     end
   end
@@ -57,7 +57,7 @@ class Admin::JobApplicationFilesController < Admin::BaseController
           @notification = t(".failure", message: message)
           render :file_operation_total
         end
-        format.json { render json: @job_application_file.errors, status: :unprocessable_entity }
+        format.json { render json: @job_application_file.errors, status: :unprocessable_content }
       end
     end
   end

@@ -6,7 +6,7 @@ class JobOfferNotAvailableAnymore < StandardError
   attr_accessor :data
 
   def initialize(data)
-    super(data)
+    super
     @data = data
   end
 end

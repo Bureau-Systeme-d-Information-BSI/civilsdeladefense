@@ -31,8 +31,8 @@ class JobOfferActor < ApplicationRecord
     grand_employer: 10,
     supervisor_employer: 20,
     brh: 30,
-    cmg: 40,
-    payroll_manager: 50
+    payroll_manager: 50,
+    cmg: 40 # cmg should appear at the end of actors form, but the value is still 40
   }
 
   private

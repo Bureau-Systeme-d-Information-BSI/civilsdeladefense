@@ -90,6 +90,14 @@ Pour lancer les test RSpec :
 bundle exec rspec
 ```
 
+## Couverture de test
+
+La couverture de test est mesurée avec [SimpleCov](https://github.com/simplecov-ruby/simplecov). Après avoir exécuté toute la suite de tests avec `bundle exec rspec`, ouvrir le rapport généré :
+
+```
+open coverage/index.html
+```
+
 ## Style de code
 
 Pour lancer l'outil d'analyse statique de formatage Rubocop :

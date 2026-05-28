@@ -28,47 +28,7 @@ class Admin::EmailsController < Admin::BaseController
           @notification = t(".unsuccess")
           render :create
         end
-        format.json { render json: @email.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  def mark_as_read
-    @email.mark_as_read!
-    @job_application.reload
-
-    respond_to do |format|
-      format.html do
-        location = [:admin, @job_application]
-        redirect_back(fallback_location: location, notice: t(".success"))
-      end
-      format.js do
-        @notification = t(".success")
-        render :email_operation
-      end
-      format.json do
-        location = [:admin, @job_application]
-        render json: @email.to_json, status: :ok, location: location
-      end
-    end
-  end
-
-  def mark_as_unread
-    @email.mark_as_unread!
-    @job_application.reload
-
-    respond_to do |format|
-      format.html do
-        location = [:admin, @job_application]
-        redirect_back(fallback_location: location, notice: t(".success"))
-      end
-      format.js do
-        @notification = t(".success")
-        render :email_operation
-      end
-      format.json do
-        location = [:admin, @job_application]
-        render json: @email.to_json, status: :ok, location: location
+        format.json { render json: @email.errors, status: :unprocessable_content }
       end
     end
   end

@@ -234,6 +234,12 @@ fr:
       job_offers: "Nos offres"
       logout: "Déconnexion"
   reports:
+    sections:
+      application_step: "Étape « %{state} »"
+      applications_count:
+        zero: "Pas de candidature"
+        one: "1 candidature"
+        other: "%{count} candidatures"
     daily:
       sections:
         new_offers: "Nouvelles offres"
@@ -303,9 +309,9 @@ fr:
         title: "Danger"
         destroy: "Je veux supprimer mon compte"
     withdrawals:
-        create:
-          success: "Désistement enregistré"
-          failure: "Impossible de modifier cette candidature"
+      create:
+        success: "Désistement enregistré"
+        failure: "Impossible de modifier cette candidature"
   admin:
     accounts:
       show:
@@ -426,11 +432,14 @@ fr:
         error: "L'annonce n'a pas pu être transférée, veuillez vérifier l'email du nouveau propriétaire"
       send_to_list:
         success: "Annonce diffusées !"
-      feature:
-        success: "Annonce mise à la une"
-        error: "L'offre n'a pa pu être mise à la une, veuillez vérifier la référence"
-      unfeature:
-        success: "Annonce retirée de la une"
+      features:
+        create:
+          success: "Annonce mise à la une"
+          error: "L'offre n'a pas pu être mise à la une : %{message}"
+          not_found: "Annonce introuvable, veuillez vérifier la référence"
+        destroy:
+          success: "Annonce retirée de la une"
+          error: "L'offre n'a pas pu être retirée de la une : %{message}"
       administrator:
         new_record: 'Cliquer sur "Enregistrer" pour inviter'
         waiting: "En attente de confirmation"
@@ -550,10 +559,11 @@ fr:
         mark_as_read: "Marquer comme lu"
         mark_as_unread: "Marquer comme non lu"
         time_ago: "il y a %{time_ago_in_words}"
-      mark_as_read:
-        success: "Courriel marqué comme lu !"
-      mark_as_unread:
-        success: "Courriel marqué comme non lu !"
+      readings:
+        create:
+          success: "Courriel marqué comme lu !"
+        destroy:
+          success: "Courriel marqué comme non lu !"
     multiple_recipients_emails:
       new:
         title: "Envoyer un courriel à ces candidat·es"
@@ -592,10 +602,11 @@ fr:
           other: "%{count} résultats de recherche"
       listing:
         title: "Ajouter/supprimer ce candidat de mes listes"
-      suspend:
-        success: "Utilisateur suspendu"
-      unsuspend:
-        success: "Utilisateur réactivé"
+      suspensions:
+        create:
+          success: "Utilisateur suspendu"
+        destroy:
+          success: "Utilisateur réactivé"
       user:
         my_preferred_user_lists: "Listes"
         remove_user: "Retirer"
@@ -693,10 +704,11 @@ fr:
           transfer_email_label: "Email du nouveau propriétaire des offres"
           submit: "Transférer"
           list: "Liste des offres"
-        deactivate:
-          success: "Compte désactivé"
-        reactivate:
-          success: "Compte réactivé"
+        activations:
+          create:
+            success: "Compte désactivé"
+          destroy:
+            success: "Compte réactivé"
         resend_confirmation_instructions:
           success: "Invitation renvoyée !"
       cmgs:
@@ -1226,13 +1238,6 @@ fr:
             photo:
               file_size_is_less_than_or_equal_to: "Est trop volumineuse (ne doit pas dépasser %{count})"
               allowed_file_content_types: "au mauvais format (seuls les formats JPG et PNG sont acceptés)"
-        job_application_file_type:
-          attributes:
-            visibility_rules:
-              must_have_administrator: "doit contenir au moins une règle pour le back office"
-              must_have_user: "doit contenir au moins une règle pour le front office"
-            base:
-              must_have_at_least_one_validator: "Vous devez sélectionner au moins un acteur autorisé à valider la pièce"
         job_application_file:
           attributes:
             content:

@@ -26,28 +26,6 @@ class Admin::JobOffersController < Admin::BaseController
   def featured
   end
 
-  def feature
-    job_offer = if params[:job_offer_identifier]
-      JobOffer.find_by(identifier: params[:job_offer_identifier])
-    else
-      JobOffer.find(params[:id])
-    end
-    if job_offer&.update(featured: true)
-      redirect_back(fallback_location: %i[admin job_offers], notice: t(".success"))
-    else
-      redirect_back(fallback_location: %i[admin job_offers], notice: t(".error"))
-    end
-  end
-
-  def unfeature
-    job_offer = JobOffer.find(params[:id])
-    if job_offer.update(featured: false)
-      redirect_back(fallback_location: %i[admin job_offers], notice: t(".success"))
-    else
-      render json: job_offer.errors, status: :unprocessable_entity
-    end
-  end
-
   def export
     job_offer = JobOffer.find(params[:id])
     file = Exporter::JobOffer.new({stats: export_data, job_offer: job_offer}, current_administrator).generate
@@ -89,7 +67,7 @@ class Admin::JobOffersController < Admin::BaseController
   def new
     if current_organization.job_offer_term? && params[:job_offer_term_ids].blank?
       notice = "Au moins un critère est requis pour accéder à la création d'une offre"
-      return redirect_back(fallback_location: [:index, :job_offers], notice: notice)
+      return redirect_back_or_to([:index, :job_offers], notice: notice)
     end
 
     @job_offer = JobOffer.new_from_source(params[:job_offer_id])
@@ -114,7 +92,7 @@ class Admin::JobOffersController < Admin::BaseController
         format.json { render :show, status: :created, location: @job_offer }
       else
         format.html { render :new }
-        format.json { render json: @job_offer.errors, status: :unprocessable_entity }
+        format.json { render json: @job_offer.errors, status: :unprocessable_content }
       end
     end
   end
@@ -133,7 +111,7 @@ class Admin::JobOffersController < Admin::BaseController
         format.json { render :show, status: :ok, location: @job_offer }
       else
         format.html { render :edit }
-        format.json { render json: @job_offer.errors, status: :unprocessable_entity }
+        format.json { render json: @job_offer.errors, status: :unprocessable_content }
       end
     end
   end
@@ -149,7 +127,7 @@ class Admin::JobOffersController < Admin::BaseController
     if @job_offer.transfer(params[:transfer_email])
       redirect_to %i[admin job_offers], notice: t(".success")
     else
-      render :new_transfer, status: :unprocessable_entity
+      render :new_transfer, status: :unprocessable_content
     end
   end
 

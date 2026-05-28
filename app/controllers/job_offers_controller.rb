@@ -91,7 +91,7 @@ class JobOffersController < ApplicationController
           render turbo_stream: instruction
         end
         format.html { render :apply }
-        format.json { render json: @job_application.errors, status: :unprocessable_entity }
+        format.json { render json: @job_application.errors, status: :unprocessable_content }
       end
     end
   end

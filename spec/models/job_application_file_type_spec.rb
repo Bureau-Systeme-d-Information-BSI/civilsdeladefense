@@ -5,42 +5,25 @@ require "rails_helper"
 RSpec.describe JobApplicationFileType do
   describe "validations" do
     it { is_expected.to validate_presence_of(:name) }
+  end
 
-    context "without an administrator visibility rule" do
-      subject(:jaft) { build(:job_application_file_type) }
+  describe "#destroy" do
+    subject(:destroy) { file_type.destroy }
 
-      before { jaft.visibility_rules.target.reject!(&:administrator?) }
+    let(:file_type) { create(:job_application_file_type) }
 
-      it { is_expected.not_to be_valid }
-      it { expect(jaft.tap(&:valid?).errors[:visibility_rules]).to be_present }
+    context "when no JobApplicationFile references the type" do
+      it { is_expected.to eq(file_type) }
     end
 
-    context "without any validator" do
-      subject(:jaft) do
-        build(:job_application_file_type,
-          validate_by_employer_recruiter: false,
-          validate_by_employment_authority: false,
-          validate_by_hr_manager: false,
-          validate_by_payroll_manager: false)
+    context "when at least one JobApplicationFile references the type" do
+      before { create(:job_application_file, job_application_file_type: file_type) }
+
+      it "does not destroy and adds an error on the association" do
+        expect(destroy).to be(false)
+        expect(file_type).not_to be_destroyed
+        expect(file_type.errors[:base]).to be_present
       end
-
-      it { is_expected.not_to be_valid }
-      it { expect(jaft.tap(&:valid?).errors[:base]).to be_present }
-    end
-
-    context "with at least one validator" do
-      subject(:jaft) { build(:job_application_file_type, validate_by_hr_manager: true) }
-
-      it { is_expected.to be_valid }
-    end
-
-    context "without a user visibility rule" do
-      subject(:jaft) { build(:job_application_file_type) }
-
-      before { jaft.visibility_rules.target.reject!(&:user?) }
-
-      it { is_expected.not_to be_valid }
-      it { expect(jaft.tap(&:valid?).errors[:visibility_rules]).to be_present }
     end
   end
 

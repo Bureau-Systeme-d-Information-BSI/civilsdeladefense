@@ -56,7 +56,7 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
         format.json { render :show, status: :created, location: @administrator }
       else
         format.html { render :new }
-        format.json { render json: @administrator.errors, status: :unprocessable_entity }
+        format.json { render json: @administrator.errors, status: :unprocessable_content }
       end
     end
   end
@@ -70,7 +70,7 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
         format.json { render :show, status: :ok, location: @administrator }
       else
         format.html { render :edit }
-        format.json { render json: @administrator.errors, status: :unprocessable_entity }
+        format.json { render json: @administrator.errors, status: :unprocessable_content }
       end
     end
   end
@@ -79,26 +79,6 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
   # POST /admin/settings/administrators/1/send_unlock_instructions.json
   def send_unlock_instructions
     @administrator.send_unlock_instructions
-    respond_to do |format|
-      format.html { redirect_to %i[admin settings root], notice: t(".success") }
-      format.json { head :no_content }
-    end
-  end
-
-  # POST /admin/settings/administrators/1/deactivate
-  # POST /admin/settings/administrators/1/deactivate.json
-  def deactivate
-    @administrator.deactivate
-    respond_to do |format|
-      format.html { redirect_to %i[admin settings root], notice: t(".success") }
-      format.json { head :no_content }
-    end
-  end
-
-  # POST /admin/settings/administrators/1/reactivate
-  # POST /admin/settings/administrators/1/reactivate.json
-  def reactivate
-    @administrator.reactivate
     respond_to do |format|
       format.html { redirect_to %i[admin settings root], notice: t(".success") }
       format.json { head :no_content }
@@ -124,7 +104,7 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
     if @administrator.transfer(params[:transfer_email])
       redirect_to %i[admin settings root], notice: t(".success")
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 

@@ -8,6 +8,7 @@ class JobApplication < ApplicationRecord
   include Rejectable
 
   include AASM
+
   audited except: %i[files_count files_unread_count emails_count
     emails_administrator_unread_count emails_user_unread_count
     administrator_notifications_count
@@ -15,6 +16,7 @@ class JobApplication < ApplicationRecord
   has_associated_audits
 
   include PgSearch::Model
+
   pg_search_scope :search_full_text,
     against: [],
     ignoring: :accents,
@@ -86,7 +88,7 @@ class JobApplication < ApplicationRecord
     affected
   ].freeze
 
-  enum state: {
+  enum :state, {
     initial: 0,
     phone_meeting: 2,
     to_be_met: 5,

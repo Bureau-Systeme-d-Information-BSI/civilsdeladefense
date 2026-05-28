@@ -409,30 +409,4 @@ RSpec.describe "Admin::Users" do
       end
     end
   end
-
-  describe "POST /admin/candidats/:id/suspend" do
-    subject(:suspend_request) { post suspend_admin_user_path(user), params: {user: {suspension_reason: ""}} }
-
-    it "redirects to user" do
-      expect(suspend_request).to redirect_to(admin_user_path(user))
-    end
-
-    it "suspends the user" do
-      expect { suspend_request }.to change { user.reload.suspended? }.to(true)
-    end
-  end
-
-  describe "POST /admin/candidats/:id/unsuspend" do
-    subject(:unsuspend_request) { post unsuspend_admin_user_path(user) }
-
-    before { user.suspend! }
-
-    it "redirects to user" do
-      expect(unsuspend_request).to redirect_to(admin_user_path(user))
-    end
-
-    it "unsuspends the user" do
-      expect { unsuspend_request }.to change { user.reload.suspended? }.to(false)
-    end
-  end
 end

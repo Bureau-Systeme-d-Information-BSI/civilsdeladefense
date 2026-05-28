@@ -41,7 +41,7 @@ class Profile < ApplicationRecord
   after_save :add_none_department, if: -> { departments.empty? }
   after_save :dedupe_departments, if: -> { departments.any? }
 
-  enum gender: {
+  enum :gender, {
     female: 1,
     male: 2,
     other: 3

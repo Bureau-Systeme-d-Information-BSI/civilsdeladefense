@@ -26,7 +26,7 @@ class JobOfferActor < ApplicationRecord
   #####################################
   # Enums
   # NOTE: role is no more used to define access rights
-  enum role: {
+  enum :role, {
     employer: 0,
     grand_employer: 10,
     supervisor_employer: 20,

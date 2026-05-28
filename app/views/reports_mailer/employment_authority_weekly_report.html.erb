@@ -6,12 +6,16 @@
 <p>Découvrez ci-dessous votre rapport hebdomadaire – semaine du <%= l(@week_starts_on, format: "%d/%m/%Y") %>.</p>
 
 <% @sections.each do |section| %>
-  <h3><%= section.human_state %> : <%= section.count %></h3>
+  <h3><%= section.human_state %></h3>
   <% if section.items.any? %>
     <ul>
       <% section.items.each do |item| %>
         <li>
           <%= link_to item.title, item.link %>
+          <% if item.applications_count %>
+            <br>
+            <span style="color: #999;"><%= t("reports.sections.applications_count", count: item.applications_count) %></span>
+          <% end %>
         </li>
       <% end %>
     </ul>

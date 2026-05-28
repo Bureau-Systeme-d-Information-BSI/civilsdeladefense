@@ -17,6 +17,7 @@ class User < ApplicationRecord
   include Suspendable
   include DeletionFlow
   include PgSearch::Model
+
   pg_search_scope :search_full_text, against: [:first_name, :last_name], ignoring: :accents
 
   belongs_to :organization
@@ -37,7 +38,7 @@ class User < ApplicationRecord
 
   mount_uploader :photo, PhotoUploader, mount_on: :photo_file_name
 
-  validates :photo, file_size: {less_than: 1.megabytes}
+  validates :photo, file_size: {less_than: 1.megabyte}
   validates :first_name, :last_name, presence: true
   validates_plausible_phone :phone
   validates :phone, :current_position, presence: true, allow_nil: true

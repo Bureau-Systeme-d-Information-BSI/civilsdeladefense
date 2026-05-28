@@ -18,7 +18,7 @@ class Admin::JobApplicationFiles::ValidationsController < Admin::BaseController
       respond_to do |format|
         format.html { redirect_back_or_to location, alert: @notification }
         format.js { render "admin/job_application_files/file_operation" }
-        format.json { render json: @job_application_file.errors, status: :unprocessable_entity }
+        format.json { render json: @job_application_file.errors, status: :unprocessable_content }
       end
     end
   end
@@ -36,7 +36,7 @@ class Admin::JobApplicationFiles::ValidationsController < Admin::BaseController
       respond_to do |format|
         format.html { redirect_back_or_to location, alert: @notification }
         format.js { render "admin/job_application_files/file_operation" }
-        format.json { render json: @job_application_file.errors, status: :unprocessable_entity }
+        format.json { render json: @job_application_file.errors, status: :unprocessable_content }
       end
     end
   end

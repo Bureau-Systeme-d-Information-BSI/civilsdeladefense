@@ -8,7 +8,7 @@
     - requested_files = @job_application.job_application_files
     - if requested_files.any?
       - requested_files.each do |f|
-        - next if f.job_application_file_type.name == "Lettre de Motivation"
+        - next if f.job_application_file_type.name == JobApplicationFileType::COVER_LETTER_NAME
         = render partial: "/admin/job_application_files/job_application_file", locals: { job_application_file: f }
     - else
       %em= t('.none_atm')
@@ -19,7 +19,7 @@
     - other_file_types = requestable_file_types(@job_application, current_administrator)
     - if other_file_types.any?
       - other_file_types.each do |file_type|
-        - next if file_type.name == "Lettre de Motivation"
+        - next if file_type.name == JobApplicationFileType::COVER_LETTER_NAME
         = render partial: "/admin/job_application_files/optional_job_application_file_type", locals: {job_application_file_type: file_type, job_application: @job_application}
     - else
       %em= t('.none')

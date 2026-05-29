@@ -18,6 +18,8 @@
     %small.text-italic.d-block.mb-3= t('.note')
     - other_file_types = requestable_file_types(@job_application, current_administrator)
     - if other_file_types.any?
-      = render partial: "/admin/job_application_files/optional_job_application_file_type", collection: other_file_types, as: :job_application_file_type, locals: {job_application: @job_application}
+      - other_file_types.each do |file_type|
+        - next if file_type.name == "Lettre de Motivation"
+        = render partial: "/admin/job_application_files/optional_job_application_file_type", locals: {job_application_file_type: file_type, job_application: @job_application}
     - else
       %em= t('.none')

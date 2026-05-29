@@ -1,2 +1,16 @@
 - @job_application.file_types_for_user.each do |type|
+  - next if type.name == 'Lettre de Motivation'
   = render partial: 'file_name_upload', locals: {job_application_file: @job_application.file_for(type), job_application: @job_application}
+- if @job_application.cover_letter.present?
+  - cover_letter_url = account_job_application_cover_letter_path(@job_application)
+  .card
+    .card-header.with-subheader.bg-white.font-weight-bold.text-secondary.d-flex.align-items-center.justify-content-between
+      %div
+        = fa_icon('file-lines', class: 'text-secondary')
+        = t('.cover_letter')
+      %div
+        = link_to cover_letter_url, target: "_blank" do
+          = fa_icon('download', class: 'text-secondary')
+    .card-subheader.bg-secondary
+    %div
+      %object{data: cover_letter_url, type: "application/pdf", width: "100%", height: "500px"}

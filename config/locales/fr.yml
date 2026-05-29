@@ -254,6 +254,8 @@ fr:
       create:
         success: "Le document a bien été modifié"
         error: "Le fichier n'est pas valide, seuls les fichiers PDF de taille inférieure à 2Mo sont acceptés."
+      index:
+        cover_letter: "Lettre de motivation"
     job_applications:
       index:
         title: "Mes candidatures"
@@ -324,6 +326,8 @@ fr:
         success: "Vos informations ont été mises à jour"
         success_new_email: "Votre courriel a bien été modifié. Vérifiez votre boîte pour confirmer votre nouveau courriel."
     job_applications:
+      cvlm:
+        cover_letter: "Lettre de motivation"
       rejection_form:
         confirm: "Confirmez-vous le refus ou désistement du candidat ?"
       show:
@@ -347,7 +351,6 @@ fr:
         applied_on: "Candidaté le %{date}"
       files:
         title: "Documents du candidat"
-        cover_letter: "Lettre de motivation"
         subtitle_1: "Documents à fournir par le candidat"
         subtitle_2: "Documents complémentaires"
         none_atm: "Aucun fichiers demandés"

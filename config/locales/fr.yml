@@ -1366,10 +1366,11 @@ fr:
         positions_count: Nombre de postes
       job_offer_actor/role:
         employer: "Employeur"
-        grand_employer: "Employeur recruteur"
-        supervisor_employer: "Autorité d’emploi"
-        brh: "Gestionnaire RH"
-        cmg: "Gestionnaire PAIE"
+        grand_employer: "Employeur recruteur(s)"
+        supervisor_employer: "Autorité(s) d’emploi"
+        brh: "Gestionnaire(s) RH"
+        cmg: "CMG"
+        payroll_manager: Gestionnaire(s) paie
       organization_default:
         kind: "Type"
         kind/job_offer_description: "Offre d'emploi / Description"

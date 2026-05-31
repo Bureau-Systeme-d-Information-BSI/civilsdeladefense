@@ -6,9 +6,11 @@
     .text-truncate= type.name
   - else
     .text-truncate.text-muted= type.name
-  .ml-auto.d-flex
+  .ml-auto.d-flex.align-items-center
     - if type.check_only_admin_only?
-      - if file.new_record?
+      - if type.automatically_validated?
+        %span.badge.badge-light-gray.text-white= t('.automatically_validated')
+      - elsif file.new_record?
         - klasses = %w(btn btn-success btn-raised btn-sm mb-0 mr-1)
         - klasses << 'opaque' unless file.validated?
         = link_to [:admin, @job_application, :job_application_files, {job_application_file: {job_application_file_type_id: type.id, is_validated: 1}}], class: klasses, title: t('.check'), remote: true, method: :post do
@@ -27,14 +29,17 @@
         = link_to [:admin, @job_application, file, :validation], class: klasses, title: t('.uncheck'), remote: true, method: :delete do
           = fa_icon "xmark"
     - elsif file.document_content.present?
-      - klasses = %w(btn btn-success btn-raised btn-sm mb-0 mr-1)
-      - klasses << 'opaque' unless file.validated?
-      = link_to [:admin, @job_application, file, :validation], class: klasses, title: t('.check'), remote: true, method: :post do
-        = fa_icon "check"
-      - klasses = %w(btn btn-danger btn-raised btn-sm mb-0 mr-1)
-      - klasses << 'opaque' unless file.invalidated?
-      = link_to [:admin, @job_application, file, :validation], class: klasses, title: t('.uncheck'), remote: true, method: :delete do
-        = fa_icon "xmark"
+      - if type.automatically_validated?
+        %span.badge.badge-light-gray.text-white.mr-1= t('.automatically_validated')
+      - else
+        - klasses = %w(btn btn-success btn-raised btn-sm mb-0 mr-1)
+        - klasses << 'opaque' unless file.validated?
+        = link_to [:admin, @job_application, file, :validation], class: klasses, title: t('.check'), remote: true, method: :post do
+          = fa_icon "check"
+        - klasses = %w(btn btn-danger btn-raised btn-sm mb-0 mr-1)
+        - klasses << 'opaque' unless file.invalidated?
+        = link_to [:admin, @job_application, file, :validation], class: klasses, title: t('.uncheck'), remote: true, method: :delete do
+          = fa_icon "xmark"
       = render partial: "/admin/job_application_files/job_application_file_upload", locals: {job_application: job_application, job_application_file: file, file_type: type}
       - if file.downloadable?
         - url = [:admin, job_application, file, {format: :pdf}]

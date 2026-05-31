@@ -102,6 +102,8 @@ class JobApplicationFileType < ApplicationRecord
 
     VALIDATOR_ROLE_MAPPING.any? { |flag, role_method| self[flag] && administrator.public_send(role_method) }
   end
+
+  def automatically_validated? = VALIDATOR_ROLE_MAPPING.keys.none? { self[it] }
 end
 
 # == Schema Information

@@ -329,7 +329,8 @@ class JobApplication < ApplicationRecord
   def requested_files_validated?
     mandatory_type_ids = JobApplicationFileType.mandatory(state).pluck(:id).to_set
     requested_type_ids = job_application_files.pluck(:job_application_file_type_id).to_set
-    types_to_validate = mandatory_type_ids & requested_type_ids
+    auto_validated_ids = JobApplicationFileType.automatically_validated.pluck(:id).to_set
+    types_to_validate = (mandatory_type_ids & requested_type_ids) - auto_validated_ids
     validated_type_ids = job_application_files.select(&:validated?).map(&:job_application_file_type_id).to_set
     types_to_validate.subset?(validated_type_ids)
   end
@@ -337,8 +338,9 @@ class JobApplication < ApplicationRecord
   def requested_files
     mandatory_type_ids = JobApplicationFileType.mandatory(state).pluck(:id).to_set
     requested_type_ids = job_application_files.pluck(:job_application_file_type_id).to_set
+    auto_validated_ids = JobApplicationFileType.automatically_validated.pluck(:id).to_set
     validated_type_ids = job_application_files.select(&:validated?).map(&:job_application_file_type_id).to_set
-    unvalidated_ids = (mandatory_type_ids & requested_type_ids) - validated_type_ids
+    unvalidated_ids = ((mandatory_type_ids & requested_type_ids) - validated_type_ids) - auto_validated_ids
     JobApplicationFileType.where(id: unvalidated_ids).pluck(:name).join(", ")
   end
 

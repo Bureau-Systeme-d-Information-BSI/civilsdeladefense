@@ -285,6 +285,22 @@ RSpec.describe JobApplicationFileType do
       it { is_expected.not_to include(cover_letter_type) }
       it { is_expected.to include(other_type) }
     end
+
+    describe ".automatically_validated" do
+      subject { described_class.automatically_validated }
+
+      let!(:auto_validated) do
+        create(:job_application_file_type,
+          validate_by_employer_recruiter: false,
+          validate_by_employment_authority: false,
+          validate_by_hr_manager: false,
+          validate_by_payroll_manager: false)
+      end
+      let!(:manually_validated) { create(:job_application_file_type) }
+
+      it { is_expected.to include(auto_validated) }
+      it { is_expected.not_to include(manually_validated) }
+    end
   end
 end
 

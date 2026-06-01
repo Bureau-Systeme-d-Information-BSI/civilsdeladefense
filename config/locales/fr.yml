@@ -1245,6 +1245,7 @@ fr:
               file_size_is_less_than: "Fichier trop volumineux, doit être max. 2Mo"
             base:
               not_authorized_to_validate: "Vous n'êtes pas autorisé(e) à valider ou invalider ce type de pièce"
+              cant_unrequest: "Ce document est obligatoire et ne peut pas être retiré"
         job_offer:
           attributes:
             base:

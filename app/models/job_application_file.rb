@@ -39,6 +39,15 @@ class JobApplicationFile < ApplicationRecord
 
   def unrequestable? = !job_application_file_type.required?
 
+  def unrequest!
+    if unrequestable?
+      destroy
+    else
+      errors.add(:base, :cant_unrequest)
+      false
+    end
+  end
+
   private
 
   def max_downloadable_state

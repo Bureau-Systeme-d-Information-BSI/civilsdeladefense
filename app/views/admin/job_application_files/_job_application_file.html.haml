@@ -41,7 +41,8 @@
         = link_to t('.download'), url, target: "_blank", class: "btn btn-primary btn-raised btn-sm mb-0"
     - elsif file.persisted?
       = render partial: "/admin/job_application_files/job_application_file_upload", locals: {job_application: job_application, job_application_file: file, file_type: type}
-      - url = [:admin, job_application, file]
-      = link_to t('.do_not_ask'), url, method: :delete, remote: true, data: {confirm: t('buttons.confirm')}, class: "btn btn-primary btn-raised btn-sm mb-0 ml-1"
+      - if file.unrequestable?
+        - url = [:admin, job_application, file]
+        = link_to t('.do_not_ask'), url, method: :delete, remote: true, data: {confirm: t('buttons.confirm')}, class: "btn btn-primary btn-raised btn-sm mb-0 ml-1"
     - else
       = render partial: "/admin/job_application_files/job_application_file_upload", locals: {job_application: job_application, job_application_file: file, file_type: type}

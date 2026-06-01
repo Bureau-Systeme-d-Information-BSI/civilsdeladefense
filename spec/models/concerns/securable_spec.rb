@@ -87,4 +87,85 @@ RSpec.describe Securable do
       end
     end
   end
+
+  describe "#secure_content!" do
+    subject(:secure_content!) { securable.secure_content! }
+
+    context "when the file is already secured" do
+      let(:securable) { build(:job_application_file, :secured) }
+
+      before do
+        allow(PdfUtils).to receive(:convert_images_to_pdf)
+        secure_content!
+      end
+
+      it { expect(PdfUtils).not_to have_received(:convert_images_to_pdf) }
+    end
+
+    context "when the content is blank" do
+      let(:securable) { build(:job_application_file, content: nil) }
+
+      before do
+        allow(PdfUtils).to receive(:convert_images_to_pdf)
+        secure_content!
+      end
+
+      it { expect(PdfUtils).not_to have_received(:convert_images_to_pdf) }
+    end
+
+    context "when the content is not a pdf" do
+      let(:securable) do
+        build(
+          :job_application_file,
+          content: Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/files/user.jpg"), "image/jpeg")
+        )
+      end
+
+      before do
+        allow(PdfUtils).to receive(:convert_images_to_pdf)
+        secure_content!
+      end
+
+      it { expect(PdfUtils).not_to have_received(:convert_images_to_pdf) }
+    end
+
+    context "when the content type cannot be read" do
+      let(:securable) { build(:job_application_file) }
+
+      before do
+        allow(securable.content).to receive(:content_type).and_raise(StandardError)
+        allow(PdfUtils).to receive(:convert_images_to_pdf)
+        secure_content!
+      end
+
+      it { expect(PdfUtils).not_to have_received(:convert_images_to_pdf) }
+    end
+
+    context "when the pdf produces no image" do
+      let(:securable) { build(:job_application_file) }
+
+      before do
+        allow(PdfUtils).to receive(:convert_pdf_file_to_images).and_return([])
+        allow(PdfUtils).to receive(:convert_images_to_pdf)
+        secure_content!
+      end
+
+      it { expect(PdfUtils).not_to have_received(:convert_images_to_pdf) }
+    end
+
+    context "when the pdf is converted successfully" do
+      let(:securable) { create(:job_application_file) }
+
+      before do
+        allow(PdfUtils).to receive(:convert_pdf_file_to_images).and_return(["page-00000.png"])
+        allow(PdfUtils).to receive(:convert_images_to_pdf) { |_images, filename| FileUtils.cp(pdf_fixture, filename) }
+      end
+
+      it { expect { secure_content! }.to change(securable, :secured?).from(false).to(true) }
+    end
+  end
+
+  private
+
+  def pdf_fixture = Rails.root.join("spec/fixtures/files/document.pdf")
 end

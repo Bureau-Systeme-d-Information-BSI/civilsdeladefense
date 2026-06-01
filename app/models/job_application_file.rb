@@ -37,6 +37,8 @@ class JobApplicationFile < ApplicationRecord
 
   def downloadable? = JobApplication.states[job_application_state] < max_downloadable_state
 
+  def unrequestable? = !job_application_file_type.required?
+
   private
 
   def max_downloadable_state

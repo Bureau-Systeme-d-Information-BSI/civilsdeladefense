@@ -1,5 +1,5 @@
 - @job_application.file_types_for_user.each do |type|
-  - next if type.name == JobApplicationFileType::COVER_LETTER_NAME
+  - next if type.cover_letter?
   = render partial: 'file_name_upload', locals: {job_application_file: @job_application.file_for(type), job_application: @job_application}
 - if @job_application.cover_letter.present?
   - cover_letter_url = account_job_application_cover_letter_path(@job_application)

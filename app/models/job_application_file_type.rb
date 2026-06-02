@@ -7,6 +7,7 @@ class JobApplicationFileType < ApplicationRecord
   self.ignored_columns += %i[from_state required_from_state to_state required_to_state]
 
   COVER_LETTER_NAME = "Lettre de Motivation"
+  RESUME_NAME = "CV"
 
   acts_as_list
   default_scope -> { order(position: :asc) }
@@ -99,6 +100,14 @@ class JobApplicationFileType < ApplicationRecord
     return true if administrator.functional_administrator?
 
     VALIDATOR_ROLE_MAPPING.any? { |flag, role_method| self[flag] && administrator.public_send(role_method) }
+  end
+
+  def cover_letter?
+    name == COVER_LETTER_NAME
+  end
+
+  def resume?
+    name == RESUME_NAME
   end
 end
 

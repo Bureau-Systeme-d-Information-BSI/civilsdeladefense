@@ -249,16 +249,13 @@ class JobApplication < ApplicationRecord
 
   def compute_files_count
     ary_start = [0, 0]
-    files = if persisted?
-      job_application_files.reload.includes(:job_application_file_type)
-    else
-      job_application_files
-    end
-    ary = files.each_with_object(ary_start) { |job_application_file, memo|
+    ary = job_application_files.each_with_object(ary_start) { |job_application_file, memo|
+      next if job_application_file.job_application_file_type&.cover_letter?
+
       memo[0] += 1
       memo[1] += 1 if job_application_file.waiting_validation? &&
-        job_application_file.job_application_file_type&.notification &&
-        job_application_file.job_application_file_type&.name != JobApplicationFileType::COVER_LETTER_NAME
+        job_application_file.content_file_name.present? &&
+        job_application_file.job_application_file_type&.notification
     }
     self.files_count, self.files_unread_count = ary
   end

@@ -8,7 +8,6 @@
     - requested_files = @job_application.job_application_files
     - if requested_files.any?
       - requested_files.each do |f|
-        - next if f.job_application_file_type.name == JobApplicationFileType::COVER_LETTER_NAME
         = render partial: "/admin/job_application_files/job_application_file", locals: { job_application_file: f }
     - else
       %em= t('.none_atm')

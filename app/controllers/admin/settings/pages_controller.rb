@@ -16,18 +16,6 @@ class Admin::Settings::PagesController < Admin::Settings::InheritedResourcesCont
     end
   end
 
-  def move_higher
-    resource.move_higher
-
-    redirect_to action: :index
-  end
-
-  def move_lower
-    resource.move_lower
-
-    redirect_to action: :index
-  end
-
   protected
 
   def begin_of_association_chain

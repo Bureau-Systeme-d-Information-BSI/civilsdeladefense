@@ -67,6 +67,53 @@ RSpec.describe JobApplicationFile do
       it { is_expected.to be(false) }
     end
   end
+
+  describe "#unrequestable?" do
+    subject(:unrequestable) { job_application_file.unrequestable? }
+
+    let(:job_application_file) { build(:job_application_file, job_application_file_type:) }
+    let(:job_application_file_type) { build(:job_application_file_type, required:) }
+
+    context "when the file type is not required by default" do
+      let(:required) { false }
+
+      it { is_expected.to be(true) }
+    end
+
+    context "when the file type is required by default" do
+      let(:required) { true }
+
+      it { is_expected.to be(false) }
+    end
+  end
+
+  describe "#unrequest!" do
+    subject(:unrequest) { job_application_file.unrequest! }
+
+    let!(:job_application_file) { create(:job_application_file, job_application_file_type:) }
+    let(:job_application_file_type) { create(:job_application_file_type, required:) }
+
+    context "when the file type is not required by default" do
+      let(:required) { false }
+
+      it { is_expected.to be_truthy }
+
+      it { expect { unrequest }.to change(described_class, :count).by(-1) }
+    end
+
+    context "when the file type is required by default" do
+      let(:required) { true }
+
+      it { is_expected.to be(false) }
+
+      it { expect { unrequest }.not_to change(described_class, :count) }
+
+      it do
+        unrequest
+        expect(job_application_file.errors).to be_of_kind(:base, :cant_unrequest)
+      end
+    end
+  end
 end
 
 # == Schema Information

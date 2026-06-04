@@ -8,7 +8,7 @@ RSpec.shared_examples "a movable admin setting" do |class_name|
 
   describe "moving the #{class_name} setting higher" do
     subject(:move_higher_request) {
-      post send(:"move_higher_admin_settings_#{class_name}_path", setting)
+      post send(:"admin_settings_#{class_name}_higher_position_path", setting)
     }
 
     before {
@@ -27,7 +27,7 @@ RSpec.shared_examples "a movable admin setting" do |class_name|
 
   describe "moving the #{class_name} setting lower" do
     subject(:move_lower_request) {
-      post send(:"move_lower_admin_settings_#{class_name}_path", setting)
+      post send(:"admin_settings_#{class_name}_lower_position_path", setting)
     }
 
     before {

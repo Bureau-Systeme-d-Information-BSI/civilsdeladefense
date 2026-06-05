@@ -9,7 +9,7 @@
   .ml-auto.d-flex.align-items-center
     - if type.check_only_admin_only?
       - if type.automatically_validated?
-        %span.badge.badge-light-gray.text-white= t('.automatically_validated')
+        %span.badge.badge-light-gray.text-white= JobApplicationFileType.human_attribute_name("kind/#{type.kind}")
       - elsif file.new_record?
         - klasses = %w(btn btn-success btn-raised btn-sm mb-0 mr-1)
         - klasses << 'opaque' unless file.validated?
@@ -30,7 +30,7 @@
           = fa_icon "xmark"
     - elsif file.document_content.present?
       - if type.automatically_validated?
-        %span.badge.badge-light-gray.text-white.mr-1= t('.automatically_validated')
+        %span.badge.badge-light-gray.text-white.mr-1= JobApplicationFileType.human_attribute_name("kind/#{type.kind}")
       - else
         - klasses = %w(btn btn-success btn-raised btn-sm mb-0 mr-1)
         - klasses << 'opaque' unless file.validated?

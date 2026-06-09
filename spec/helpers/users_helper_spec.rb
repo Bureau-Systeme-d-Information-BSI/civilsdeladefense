@@ -59,4 +59,84 @@ RSpec.describe UsersHelper do
       it { is_expected.to include("a été téléversé par un tiers") }
     end
   end
+
+  describe "#blank_photo" do
+    subject(:blank_photo) { helper.blank_photo }
+
+    it { is_expected.to include("default_user_avatar") }
+  end
+
+  describe "#image_user_tag" do
+    subject(:image_user_tag) { helper.image_user_tag(nil, options) }
+
+    context "without options" do
+      let(:options) { nil }
+
+      it { is_expected.to include(%(class="rounded-circle w- h-")) }
+    end
+
+    context "when a class array is given" do
+      let(:options) { {width: 50, class: ["foo"]} }
+
+      it { is_expected.to include(%(class="rounded-circle w-50 h-50 foo")) }
+    end
+
+    context "when a single class is given" do
+      let(:options) { {height: 30, class: "bar"} }
+
+      it { is_expected.to include(%(class="rounded-circle w-30 h-30 bar")) }
+    end
+  end
+
+  describe "#image_user_url" do
+    subject(:image_user_url) { helper.image_user_url(photo) }
+
+    context "when the photo is blank" do
+      let(:photo) { nil }
+
+      it { is_expected.to include("default_user_avatar") }
+    end
+
+    context "when the current user has a photo" do
+      let(:photo) { double(blank?: false) }
+
+      before { allow(helper).to receive(:current_user).and_return(double(photo: "present")) }
+
+      it { is_expected.to eq("/espace-candidat/mon-compte/photo") }
+    end
+
+    context "when an administrator views a user photo" do
+      let(:user) { create(:user) }
+      let(:photo) { double(blank?: false, model: user) }
+
+      before { allow(helper).to receive_messages(current_user: nil, current_administrator: double) }
+
+      it { is_expected.to eq("/admin/candidats/#{user.id}/photo") }
+    end
+
+    context "when an administrator views an administrator photo" do
+      let(:administrator) { create(:administrator) }
+      let(:photo) { double(blank?: false, model: administrator) }
+
+      before { allow(helper).to receive_messages(current_user: nil, current_administrator: double) }
+
+      it { is_expected.to eq("/admin/account/photo?id=#{administrator.id}") }
+    end
+
+    context "when no rule matches" do
+      let(:photo) { double(blank?: false) }
+
+      before { allow(helper).to receive_messages(current_user: nil, current_administrator: nil) }
+
+      it { is_expected.to include("default_user_avatar") }
+    end
+
+    context "when resolving the photo raises an error" do
+      let(:photo) { Object.new }
+
+      before { allow(helper).to receive_messages(current_user: nil, current_administrator: double) }
+
+      it { is_expected.to include("default_user_avatar") }
+    end
+  end
 end

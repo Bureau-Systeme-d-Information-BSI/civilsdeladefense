@@ -192,8 +192,8 @@ Rails.application.routes.draw do
         resource :activation, only: %i[create destroy], module: :administrators
       end
       resources :employers, :categories do
-        resource :left_position, only: :create
-        resource :right_position, only: :create
+        resource :lefter_position, only: :create
+        resource :righter_position, only: :create
       end
       resources :salary_ranges
       resources :job_application_file_types

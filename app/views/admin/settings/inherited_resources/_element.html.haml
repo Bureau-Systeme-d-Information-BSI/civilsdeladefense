@@ -54,8 +54,8 @@
     .d-flex.flex-row.actions
       - if resource_class == Category
         = link_to fa_icon('plus', class: 'ml-1'), [:new, :admin, :settings, :category, {parent_id: element.id}], title: t('buttons.add_child')
-        = link_to fa_icon('arrow-up', class: 'ml-1'), [:admin, :settings, element, :left_position], method: :post, title: t('buttons.move_higher'), data: {confirm: t('buttons.confirm')}
-        = link_to fa_icon('arrow-down', class: 'ml-1'), [:admin, :settings, element, :right_position], method: :post, title: t('buttons.move_lower'), data: {confirm: t('buttons.confirm')}
+        = link_to fa_icon('arrow-up', class: 'ml-1'), [:admin, :settings, element, :lefter_position], method: :post, title: t('buttons.move_higher'), data: {confirm: t('buttons.confirm')}
+        = link_to fa_icon('arrow-down', class: 'ml-1'), [:admin, :settings, element, :righter_position], method: :post, title: t('buttons.move_lower'), data: {confirm: t('buttons.confirm')}
       - elsif resource_class == Page
         = link_to fa_icon('plus', class: 'ml-1'), [:new, :admin, :settings, :page, {parent_id: element.id}], title: t('buttons.add_page_child')
       - if (resource_class == Page && level != 0) || element.has_attribute?(:position)

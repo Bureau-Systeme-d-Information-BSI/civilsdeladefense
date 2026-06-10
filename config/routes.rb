@@ -167,23 +167,17 @@ Rails.application.routes.draw do
       end
       resources :organization_defaults
       resources :frequently_asked_questions do
-        member do
-          post :move_higher
-          post :move_lower
-        end
+        resource :higher_position, only: :create
+        resource :lower_position, only: :create
       end
 
       resources :pages do
-        member do
-          post :move_higher
-          post :move_lower
-        end
+        resource :higher_position, only: :create
+        resource :lower_position, only: :create
       end
       resources :cmgs do
-        member do
-          post :move_higher
-          post :move_lower
-        end
+        resource :higher_position, only: :create
+        resource :lower_position, only: :create
       end
       resources :administrators, path: "administrateurs" do
         collection do
@@ -198,10 +192,8 @@ Rails.application.routes.draw do
         resource :activation, only: %i[create destroy], module: :administrators
       end
       resources :employers, :categories do
-        member do
-          post :move_left
-          post :move_right
-        end
+        resource :lefter_position, only: :create
+        resource :righter_position, only: :create
       end
       resources :salary_ranges
       resources :job_application_file_types
@@ -212,10 +204,8 @@ Rails.application.routes.draw do
       ]
       (JobOffer::SETTINGS + other_settings).each do |setting|
         resources setting.to_s.pluralize.to_sym, except: %i[show] do
-          member do
-            post :move_higher
-            post :move_lower
-          end
+          resource :higher_position, only: :create
+          resource :lower_position, only: :create
         end
       end
       root to: "administrators#index"

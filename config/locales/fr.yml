@@ -256,6 +256,7 @@ fr:
         error: "Le fichier n'est pas valide, seuls les fichiers PDF de taille inférieure à 2Mo sont acceptés."
       index:
         cover_letter: "Lettre de motivation"
+        cover_letter_uploaded_html: "Vous avez déjà téléversé ce <a href=\"%{url}\" target=\"_blank\" class=\"text-dark-gray\" rel=\"noopener\">fichier</a>"
     job_applications:
       index:
         title: "Mes candidatures"

@@ -63,6 +63,28 @@ RSpec.describe JobApplicationFileType do
     end
   end
 
+  describe "#automatically_validated?" do
+    subject(:automatically_validated) { file_type.automatically_validated? }
+
+    context "when all validate_by_* flags are false" do
+      let(:file_type) do
+        build(:job_application_file_type,
+          validate_by_employer_recruiter: false,
+          validate_by_employment_authority: false,
+          validate_by_hr_manager: false,
+          validate_by_payroll_manager: false)
+      end
+
+      it { expect(automatically_validated).to be(true) }
+    end
+
+    context "when at least one validate_by_* flag is true" do
+      let(:file_type) { build(:job_application_file_type, validate_by_employer_recruiter: true) }
+
+      it { expect(automatically_validated).to be(false) }
+    end
+  end
+
   describe "scopes" do
     describe "#visible_by_user" do
       subject { described_class.visible_by_user(:phone_meeting) }
@@ -284,6 +306,22 @@ RSpec.describe JobApplicationFileType do
 
       it { is_expected.not_to include(cover_letter_type) }
       it { is_expected.to include(other_type) }
+    end
+
+    describe ".automatically_validated" do
+      subject { described_class.automatically_validated }
+
+      let!(:auto_validated) do
+        create(:job_application_file_type,
+          validate_by_employer_recruiter: false,
+          validate_by_employment_authority: false,
+          validate_by_hr_manager: false,
+          validate_by_payroll_manager: false)
+      end
+      let!(:manually_validated) { create(:job_application_file_type) }
+
+      it { is_expected.to include(auto_validated) }
+      it { is_expected.not_to include(manually_validated) }
     end
   end
 end

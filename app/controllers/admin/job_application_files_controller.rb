@@ -63,15 +63,25 @@ class Admin::JobApplicationFilesController < Admin::BaseController
   end
 
   def destroy
-    @job_application_file.destroy
-
-    respond_to do |format|
-      format.html { redirect_to([:admin, @job_application], notice: t(".success")) }
-      format.js do
-        @notification = t(".success")
-        render :file_operation_total
+    if @job_application_file.unrequest!
+      respond_to do |format|
+        format.html { redirect_to([:admin, @job_application], notice: t(".success")) }
+        format.js do
+          @notification = t(".success")
+          render :file_operation_total
+        end
+        format.json { head :no_content, location: [:admin, @job_application] }
       end
-      format.json { head :no_content, location: [:admin, @job_application] }
+    else
+      message = @job_application_file.errors.full_messages.join(", ")
+      respond_to do |format|
+        format.html { redirect_to([:admin, @job_application], alert: message) }
+        format.js do
+          @notification = message
+          render :file_operation_total
+        end
+        format.json { render json: @job_application_file.errors, status: :unprocessable_content }
+      end
     end
   end
 

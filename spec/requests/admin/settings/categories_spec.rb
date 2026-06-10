@@ -4,6 +4,7 @@ require "rails_helper"
 
 RSpec.describe "Admin::Settings::Categories" do
   it_behaves_like "an admin setting", :category, :name, "a new name"
+  it_behaves_like "a laterally movable admin setting", :category
 
   describe "Destroying a category" do
     subject(:destroy_request) { delete admin_settings_category_path(category) }

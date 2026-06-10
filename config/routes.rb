@@ -243,6 +243,7 @@ Rails.application.routes.draw do
           end
         end
         resource :withdrawal, path: "desistement", only: :create
+        resource :cover_letter, only: %i[show]
       end
       resource :user, path: "mon-compte", only: %i[show destroy] do
         collection do

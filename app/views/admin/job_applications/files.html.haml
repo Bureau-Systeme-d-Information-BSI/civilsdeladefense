@@ -2,25 +2,13 @@
   .card-header.with-subheader.bg-white.font-weight-bold.text-secondary
     = fa_icon('file-lines', class: 'text-secondary')
     = t('.title')
-  - if @job_application.cover_letter.present?
-    - cover_letter_url = admin_job_application_cover_letter_path(@job_application)
-    .card
-      .card-header.with-subheader.bg-white.font-weight-bold.text-secondary.d-flex.align-items-center.justify-content-between
-        %div
-          = fa_icon('file-lines', class: 'text-secondary')
-          = t('.cover_letter')
-        %div
-          = link_to cover_letter_url, target: "_blank" do
-            = fa_icon('download', class: 'text-secondary')
-      .card-subheader.bg-secondary
-      %div
-        %object{data: cover_letter_url, type: "application/pdf", width: "100%", height: "500px"}
   .card-subheader.bg-card-bg.font-weight-bold.text-muted
     = t('.subtitle_1')
   .card-body.bg-white.files-list
     - requested_files = @job_application.job_application_files
     - if requested_files.any?
-      = render partial: "/admin/job_application_files/job_application_file", collection: requested_files
+      - requested_files.each do |f|
+        = render partial: "/admin/job_application_files/job_application_file", locals: { job_application_file: f }
     - else
       %em= t('.none_atm')
   .card-subheader.bg-card-bg.font-weight-bold.text-muted
@@ -29,6 +17,8 @@
     %small.text-italic.d-block.mb-3= t('.note')
     - other_file_types = requestable_file_types(@job_application, current_administrator)
     - if other_file_types.any?
-      = render partial: "/admin/job_application_files/optional_job_application_file_type", collection: other_file_types, as: :job_application_file_type, locals: {job_application: @job_application}
+      - other_file_types.each do |file_type|
+        - next if file_type.name == JobApplicationFileType::COVER_LETTER_NAME
+        = render partial: "/admin/job_application_files/optional_job_application_file_type", locals: {job_application_file_type: file_type, job_application: @job_application}
     - else
       %em= t('.none')

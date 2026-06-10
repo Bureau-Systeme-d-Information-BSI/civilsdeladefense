@@ -103,6 +103,7 @@ end
 
 group :development do
   gem "letter_opener"
+  gem "nkf" # Provides `kconv`, required by letter_opener and removed from Ruby's default gems in 3.4+
   gem "annotate"
 
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.

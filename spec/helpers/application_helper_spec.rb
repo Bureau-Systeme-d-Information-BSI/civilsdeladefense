@@ -84,4 +84,62 @@ RSpec.describe ApplicationHelper do
       it { is_expected.to be_falsey }
     end
   end
+
+  describe "#time_ago_in_words_minimal" do
+    subject(:time_ago_in_words_minimal) { helper.time_ago_in_words_minimal(time) }
+
+    context "when the duration is expressed in minutes" do
+      let(:time) { 5.minutes.ago }
+
+      it { is_expected.to eq("5 min") }
+    end
+
+    context "when the duration is expressed in hours" do
+      let(:time) { 3.hours.ago }
+
+      it { is_expected.to eq("environ 3 h") }
+    end
+
+    context "when the duration is expressed in months" do
+      let(:time) { 2.months.ago }
+
+      it { is_expected.to eq("2 m") }
+    end
+
+    context "when the duration is expressed in another unit" do
+      let(:time) { 4.days.ago }
+
+      it { is_expected.to eq("4 jours") }
+    end
+  end
+
+  describe "#spinner_svg" do
+    subject(:spinner_svg) { helper.spinner_svg }
+
+    it { is_expected.to include("<svg") }
+  end
+
+  describe "#spinner" do
+    subject(:spinner) { helper.spinner }
+
+    it { is_expected.to be_html_safe }
+
+    it { is_expected.to include(%(<div class="indeterminate-circle mini text-primary">)) }
+  end
+
+  describe "#will_paginate" do
+    subject(:will_paginate) { helper.will_paginate(collection) }
+
+    let(:collection) { WillPaginate::Collection.create(1, 1, 3) { |pager| pager.replace([1]) } }
+
+    before { helper.controller.request.path_parameters = {controller: "job_offers", action: "index"} }
+
+    it { is_expected.to include("pagination") }
+  end
+
+  describe "#simple_form_for" do
+    subject(:simple_form_for) { helper.simple_form_for(JobOffer.new, url: "/job_offers") { |form| form.input(:title) } }
+
+    it { is_expected.to include(%(data-turbo="false")) }
+  end
 end

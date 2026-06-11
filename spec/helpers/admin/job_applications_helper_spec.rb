@@ -128,4 +128,123 @@ RSpec.describe Admin::JobApplicationsHelper do
       it { is_expected.to be(false) }
     end
   end
+
+  describe "#job_application_modal_section_classes" do
+    subject(:job_application_modal_section_classes) { helper.job_application_modal_section_classes(additional_class) }
+
+    context "when the additional class is pb-0" do
+      let(:additional_class) { "pb-0" }
+
+      it { is_expected.to eq(%w[px-4 pt-4 pb-0]) }
+    end
+
+    context "when no additional class is given" do
+      let(:additional_class) { nil }
+
+      it { is_expected.to eq(%w[px-4 py-4]) }
+    end
+  end
+
+  describe "#job_applications_tab_active" do
+    subject(:job_applications_tab_active) { helper.job_applications_tab_active }
+
+    before { allow(controller).to receive_messages(controller_name:, action_name:) }
+
+    context "when the controller is not job_applications" do
+      let(:controller_name) { "job_offers" }
+      let(:action_name) { "index" }
+
+      it { is_expected.to be_nil }
+    end
+
+    context "when on the show action" do
+      let(:controller_name) { "job_applications" }
+      let(:action_name) { "show" }
+
+      it { is_expected.to eq(:profile) }
+    end
+
+    context "when on the cvlm action" do
+      let(:controller_name) { "job_applications" }
+      let(:action_name) { "cvlm" }
+
+      it { is_expected.to eq(:cvlm) }
+    end
+
+    context "when on the emails action" do
+      let(:controller_name) { "job_applications" }
+      let(:action_name) { "emails" }
+
+      it { is_expected.to eq(:emails) }
+    end
+
+    context "when on the files action" do
+      let(:controller_name) { "job_applications" }
+      let(:action_name) { "files" }
+
+      it { is_expected.to eq(:files) }
+    end
+  end
+
+  describe "#in_place_edit_value_formatted" do
+    subject(:in_place_edit_value_formatted) { helper.in_place_edit_value_formatted(content, field) }
+
+    context "when the field is availability_date_in_month" do
+      let(:content) { "6" }
+      let(:field) { :availability_date_in_month }
+
+      it { is_expected.to eq("6 mois") }
+    end
+
+    context "when the field is a gender" do
+      let(:content) { "male" }
+      let(:field) { :gender }
+
+      it { is_expected.to eq("Homme") }
+    end
+
+    context "when the field is anything else" do
+      let(:content) { "free text" }
+      let(:field) { :other }
+
+      it { is_expected.to eq("free text") }
+    end
+  end
+
+  describe "#in_place_edit_value" do
+    subject(:in_place_edit_value) { helper.in_place_edit_value(obj, opts) }
+
+    context "when a field option is given" do
+      let(:obj) { double(full_name: "John Doe") }
+      let(:opts) { {field: :full_name} }
+
+      it { is_expected.to eq("John Doe") }
+    end
+
+    context "when an association option is given" do
+      let(:obj) { double(category: double(name: "Defense")) }
+      let(:opts) { {association: :category} }
+
+      it { is_expected.to eq("Defense") }
+    end
+
+    context "when the resolved value is blank" do
+      let(:obj) { double(full_name: "") }
+      let(:opts) { {field: :full_name} }
+
+      it { is_expected.to eq("<em>Non défini(e)</em>") }
+    end
+  end
+
+  describe "#choices_boolean" do
+    subject(:choices_boolean) { helper.choices_boolean }
+
+    it { is_expected.to eq([["En poste", true], ["Disponible immédiatement", false]]) }
+  end
+
+  describe "#choices_gender" do
+    subject(:choices_gender) { helper.choices_gender }
+
+    it { is_expected.to eq([["Femme", "female"], ["Homme", "male"], ["Autre", "other"]]) }
+  end
 end

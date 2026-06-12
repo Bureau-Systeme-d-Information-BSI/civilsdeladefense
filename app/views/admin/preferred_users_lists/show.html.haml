@@ -27,7 +27,7 @@
       .h5.text-primary.mr-auto
         = t('.preferred_users_filtered', count: @preferred_users_filtered.count)
       - klasses = %w[btn btn-link mb-0]
-      = sort_link(@q, :created_at, {}, {class: klasses}) do
+      = sort_link(@q, :created_at, {class: klasses}) do
         Date de création
         - unless @q.sorts.detect{|x| x.name == 'created_at'}
           &nbsp;▼

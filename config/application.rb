@@ -43,9 +43,6 @@ module Civilsdeladefense
       "align-justify"
     ]
 
-    # Don't disable deprecated singular associations names
-    config.active_record.allow_deprecated_singular_associations_name = true
-
     if Rails.env.production?
       # Cache assets for 1 year
       config.public_file_server.headers = {

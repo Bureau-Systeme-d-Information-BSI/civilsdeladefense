@@ -15,6 +15,24 @@ RSpec.describe Profile do
     end
   end
 
+  describe "resume file size" do
+    subject(:profile) { build(:profile, :with_resume) }
+
+    before { allow(profile.resume).to receive(:size).and_return(size) }
+
+    context "when smaller than 10 megabytes" do
+      let(:size) { 10.megabytes - 1 }
+
+      it { expect(profile).to be_valid }
+    end
+
+    context "when 10 megabytes or larger" do
+      let(:size) { 10.megabytes }
+
+      it { expect(profile.tap(&:valid?).errors[:resume]).to be_present }
+    end
+  end
+
   describe "associations" do
     it { is_expected.to belong_to(:profileable) }
 

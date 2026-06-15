@@ -14,4 +14,12 @@ describe Admin::AdministratorEmailsController do
 
     it { expect(response).to render_template(:index) }
   end
+
+  describe "GET #index without a query" do
+    subject(:index) { get admin_administrator_emails_path, as: :turbo_stream }
+
+    before { index }
+
+    it { expect(response).to be_successful }
+  end
 end

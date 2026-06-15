@@ -25,6 +25,33 @@ RSpec.describe "JobOffers" do
         expect { get job_offers_path(page: "") }.not_to raise_error
       end
     end
+
+    describe "filtering by contract_start_on" do
+      subject(:get_request) { get job_offers_path(contract_start_on: "2030-06-15") }
+
+      before { get_request }
+
+      it { expect(response).to have_http_status(:ok) }
+    end
+
+    describe "filtering by published_at" do
+      subject(:get_request) { get job_offers_path(published_at: "2024-01-15") }
+
+      before { get_request }
+
+      it { expect(response).to have_http_status(:ok) }
+    end
+
+    describe "filtering by category" do
+      subject(:get_request) { get job_offers_path(job_offers: {category_id: [parent.id, child.id]}) }
+
+      let(:parent) { create(:category) }
+      let(:child) { create(:category, parent:) }
+
+      before { get_request }
+
+      it { expect(response).to have_http_status(:ok) }
+    end
   end
 
   describe "GET /job_offers/:id" do
@@ -46,6 +73,24 @@ RSpec.describe "JobOffers" do
 
       it { expect(response.content_type).to eq("application/pdf") }
     end
+
+    context "when the job offer is not published anymore" do
+      subject(:get_request) { get job_offer_path(job_offer.slug) }
+
+      let(:job_offer) { create(:archived_job_offer) }
+
+      before { get_request }
+
+      it { expect(response).to have_http_status(:not_found) }
+    end
+  end
+
+  describe "GET /job_offers/:id/apply (old_apply)" do
+    subject(:get_request) { get apply_job_offer_path(job_offer.slug) }
+
+    let(:job_offer) { create(:published_job_offer) }
+
+    it { expect(get_request).to redirect_to(apply_job_offers_path(id: job_offer.slug)) }
   end
 
   describe "GET /job_offers/apply?id=:id" do
@@ -54,6 +99,27 @@ RSpec.describe "JobOffers" do
       job_offer.publish!
       get apply_job_offers_path(id: job_offer.slug)
       expect(response).to have_http_status(:ok)
+    end
+
+    context "when no id is given" do
+      subject(:get_request) { get apply_job_offers_path }
+
+      it { expect(get_request).to redirect_to(job_offers_url) }
+    end
+
+    context "when the user already has a previous job application" do
+      subject(:get_request) { get apply_job_offers_path(id: job_offer.slug) }
+
+      let(:user) { create(:confirmed_user) }
+      let(:job_offer) { create(:published_job_offer) }
+
+      before do
+        create(:job_application, user:)
+        sign_in user
+        get_request
+      end
+
+      it { expect(response).to have_http_status(:ok) }
     end
   end
 
@@ -363,5 +429,107 @@ RSpec.describe "JobOffers" do
         it { expect(profile.resume).to be_present }
       end
     end
+  end
+
+  describe "POST /job_offers/:id/send_application when the application is invalid" do
+    let(:job_offer) { create(:published_job_offer) }
+    let(:params) do
+      {
+        job_application: {
+          category_id: Category.first.id,
+          user_attributes: {
+            first_name: "Kambushka",
+            last_name: "Warldorf",
+            email: "not-an-email",
+            password: "Password1234!",
+            password_confirmation: "different",
+            terms_of_service: "1",
+            certify_majority: "1",
+            profile_attributes: {gender: "female"}
+          }
+        }
+      }
+    end
+
+    before { create(:job_application_file_type) }
+
+    context "when format is turbo_stream" do
+      subject(:post_request) { post send_application_job_offer_path(job_offer.slug), params:, as: :turbo_stream }
+
+      it { post_request and expect(response).to have_http_status(:ok) }
+
+      it { expect { post_request }.not_to change(JobApplication, :count) }
+    end
+
+    context "when format is html" do
+      subject(:post_request) { post send_application_job_offer_path(job_offer.slug), params: }
+
+      before { post_request }
+
+      it { expect(response).to render_template(:apply) }
+    end
+
+    context "when format is json" do
+      subject(:post_request) { post send_application_job_offer_path(job_offer.slug, format: :json), params: }
+
+      before { post_request }
+
+      it { expect(response).to have_http_status(:unprocessable_content) }
+    end
+  end
+
+  describe "POST /job_offers/:id/send_application as json when the application is valid" do
+    subject(:post_request) { post send_application_job_offer_path(job_offer.slug, format: :json), params: }
+
+    let(:job_offer) { create(:published_job_offer) }
+    let(:params) do
+      {
+        job_application: {
+          category_id: Category.first.id,
+          user_attributes: {
+            first_name: "Kambushka",
+            last_name: "Warldorf",
+            phone: "+33612345678",
+            website_url: "https://linkedin.com/in/Warldorf",
+            email: "k.warldorf@gmail.com",
+            password: "Password1234!",
+            password_confirmation: "Password1234!",
+            terms_of_service: "1",
+            certify_majority: "1",
+            receive_job_offer_mails: "1",
+            profile_attributes: {
+              gender: "female",
+              has_corporate_experience: "1",
+              availability_range_id: AvailabilityRange.first.id,
+              experience_level_id: ExperienceLevel.first.id,
+              study_level_id: StudyLevel.first.id,
+              resume: fixture_file_upload("document.pdf", "application/pdf"),
+              category_experience_levels_attributes: {
+                "0" => {
+                  category_id: Category.first.id,
+                  experience_level_id: ExperienceLevel.first.id
+                }
+              },
+              department_profiles_attributes: {"0" => {department_id: Department.last.id}}
+            }
+          },
+          job_application_files_attributes: {
+            "0" => {
+              job_application_file_type_id: JobApplicationFileType.first.id,
+              content: fixture_file_upload("document.pdf", "application/pdf")
+            }
+          }
+        }
+      }
+    end
+
+    before do
+      create(:department, :none)
+      create(:department, name: "Any", code: "01")
+      create(:job_application_file_type)
+      post_request
+    end
+
+    it { expect(response).to have_http_status(:created) }
   end
 end

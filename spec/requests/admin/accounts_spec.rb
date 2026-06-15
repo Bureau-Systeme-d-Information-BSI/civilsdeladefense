@@ -68,6 +68,12 @@ RSpec.describe Admin::AccountsController do
       expect { update_request }.to change { administrator.reload.password }
     end
 
+    context "when the password is not changed" do
+      let(:params) { {administrator: {first_name: "Updated"}} }
+
+      it { expect { update_request }.to change { administrator.reload.first_name }.to("Updated") }
+    end
+
     it "shows an error when the account is invalid" do
       allow_any_instance_of(Administrator).to receive(:update).and_return(false)
 

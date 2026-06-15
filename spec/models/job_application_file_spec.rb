@@ -5,6 +5,24 @@ RSpec.describe JobApplicationFile do
     it { is_expected.to delegate_method(:state).to(:job_application).with_prefix(true) }
   end
 
+  describe "content file size" do
+    subject(:job_application_file) { build(:job_application_file) }
+
+    before { allow(job_application_file.content).to receive(:size).and_return(size) }
+
+    context "when smaller than 10 megabytes" do
+      let(:size) { 10.megabytes - 1 }
+
+      it { expect(job_application_file).to be_valid }
+    end
+
+    context "when 10 megabytes or larger" do
+      let(:size) { 10.megabytes }
+
+      it { expect(job_application_file.tap(&:valid?).errors[:content]).to be_present }
+    end
+  end
+
   describe "#record_by_user" do
     subject(:record_by_user) { job_application_file.record_by_user }
 
@@ -65,6 +83,53 @@ RSpec.describe JobApplicationFile do
       let(:current_state) { :phone_meeting }
 
       it { is_expected.to be(false) }
+    end
+  end
+
+  describe "#unrequestable?" do
+    subject(:unrequestable) { job_application_file.unrequestable? }
+
+    let(:job_application_file) { build(:job_application_file, job_application_file_type:) }
+    let(:job_application_file_type) { build(:job_application_file_type, required:) }
+
+    context "when the file type is not required by default" do
+      let(:required) { false }
+
+      it { is_expected.to be(true) }
+    end
+
+    context "when the file type is required by default" do
+      let(:required) { true }
+
+      it { is_expected.to be(false) }
+    end
+  end
+
+  describe "#unrequest!" do
+    subject(:unrequest) { job_application_file.unrequest! }
+
+    let!(:job_application_file) { create(:job_application_file, job_application_file_type:) }
+    let(:job_application_file_type) { create(:job_application_file_type, required:) }
+
+    context "when the file type is not required by default" do
+      let(:required) { false }
+
+      it { is_expected.to be_truthy }
+
+      it { expect { unrequest }.to change(described_class, :count).by(-1) }
+    end
+
+    context "when the file type is required by default" do
+      let(:required) { true }
+
+      it { is_expected.to be(false) }
+
+      it { expect { unrequest }.not_to change(described_class, :count) }
+
+      it do
+        unrequest
+        expect(job_application_file.errors).to be_of_kind(:base, :cant_unrequest)
+      end
     end
   end
 end

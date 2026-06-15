@@ -91,6 +91,8 @@ class JobApplicationFileType < ApplicationRecord
     validate_by_payroll_manager: :payroll_manager?
   }.freeze
 
+  scope :automatically_validated, -> { where(VALIDATOR_ROLE_MAPPING.keys.index_with(false)) }
+
   has_many :job_application_files, dependent: :restrict_with_error
   has_many :visibility_rules, dependent: :destroy
   accepts_nested_attributes_for :visibility_rules, allow_destroy: true
@@ -100,6 +102,8 @@ class JobApplicationFileType < ApplicationRecord
 
     VALIDATOR_ROLE_MAPPING.any? { |flag, role_method| self[flag] && administrator.public_send(role_method) }
   end
+
+  def automatically_validated? = VALIDATOR_ROLE_MAPPING.keys.none? { self[it] }
 end
 
 # == Schema Information

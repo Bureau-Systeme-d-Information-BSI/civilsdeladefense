@@ -260,6 +260,122 @@ RSpec.describe JobApplication do
     end
   end
 
+  describe "#requested_files_validated?" do
+    subject(:requested_files_validated) { job_application.requested_files_validated? }
+
+    let(:job_application) { create(:job_application, job_offer:, state: :financial_estimate) }
+    let(:job_application_file_type) do
+      create(:job_application_file_type, required: true, **validators).tap do |jaft|
+        jaft.visibility_rules.where(by: :administrator).destroy_all
+        jaft.visibility_rules.create!(by: :administrator, state: :to_be_met)
+      end
+    end
+
+    before do
+      create(:job_application_file, job_application:, job_application_file_type:)
+      job_application.reload
+    end
+
+    context "when the file type has no designated validator" do
+      let(:validators) do
+        {
+          validate_by_employer_recruiter: false,
+          validate_by_employment_authority: false,
+          validate_by_hr_manager: false,
+          validate_by_payroll_manager: false
+        }
+      end
+
+      it { is_expected.to be(true) }
+    end
+
+    context "when the file type has at least one designated validator" do
+      let(:validators) { {validate_by_employer_recruiter: true} }
+
+      it { is_expected.to be(false) }
+    end
+
+    context "when the mandatory file has been validated" do
+      let(:validators) { {validate_by_employer_recruiter: true} }
+
+      before do
+        job_application.job_application_files.first.update_column(:is_validated, 1) # rubocop:disable Rails/SkipsModelValidations
+        job_application.reload
+      end
+
+      it { is_expected.to be(true) }
+    end
+  end
+
+  describe "#requested_files" do
+    subject(:requested_files) { job_application.requested_files }
+
+    let(:job_application) { create(:job_application, job_offer:, state: :financial_estimate) }
+    let(:job_application_file_type) do
+      create(:job_application_file_type, required: true, **validators).tap do |jaft|
+        jaft.visibility_rules.where(by: :administrator).destroy_all
+        jaft.visibility_rules.create!(by: :administrator, state: :to_be_met)
+      end
+    end
+
+    before do
+      create(:job_application_file, job_application:, job_application_file_type:)
+      job_application.reload
+    end
+
+    context "when the unvalidated file type has a designated validator" do
+      let(:validators) { {validate_by_employer_recruiter: true} }
+
+      it { is_expected.to eq("CV") }
+    end
+
+    context "when the unvalidated file type has no designated validator" do
+      let(:validators) do
+        {
+          validate_by_employer_recruiter: false,
+          validate_by_employment_authority: false,
+          validate_by_hr_manager: false,
+          validate_by_payroll_manager: false
+        }
+      end
+
+      it { is_expected.to eq("") }
+    end
+
+    context "when the mandatory file has been validated" do
+      let(:validators) { {validate_by_employer_recruiter: true} }
+
+      before do
+        job_application.job_application_files.first.update_column(:is_validated, 1) # rubocop:disable Rails/SkipsModelValidations
+        job_application.reload
+      end
+
+      it { is_expected.to eq("") }
+    end
+
+    context "with multiple unvalidated mandatory file types having a designated validator" do
+      let(:validators) { {validate_by_employer_recruiter: true} }
+      let(:other_file_type) do
+        create(
+          :job_application_file_type,
+          name: "Pièce d'identité",
+          required: true,
+          validate_by_employer_recruiter: true
+        ).tap do |jaft|
+          jaft.visibility_rules.where(by: :administrator).destroy_all
+          jaft.visibility_rules.create!(by: :administrator, state: :to_be_met)
+        end
+      end
+
+      before do
+        create(:job_application_file, job_application:, job_application_file_type: other_file_type)
+        job_application.reload
+      end
+
+      it { expect(requested_files.split(", ")).to contain_exactly("CV", "Pièce d'identité") }
+    end
+  end
+
   describe "cover_letter validations" do
     context "when job_offer does not require a cover letter" do
       let(:job_offer) { create(:job_offer, cover_lettre_required: false) }
@@ -299,6 +415,26 @@ RSpec.describe JobApplication do
         job_application.assign_attributes(rejected: true)
         allow(job_application.cover_letter).to receive(:size).and_raise(NoMethodError)
         expect { job_application.valid? }.not_to raise_error
+      end
+    end
+
+    context "when the cover letter approaches the size limit" do
+      subject(:job_application) { build(:job_application, :with_cover_letter, job_offer:) }
+
+      let(:job_offer) { create(:job_offer, cover_lettre_required: true) }
+
+      before { allow(job_application.cover_letter).to receive(:size).and_return(size) }
+
+      context "when smaller than 10 megabytes" do
+        let(:size) { 10.megabytes - 1 }
+
+        it { expect(job_application).to be_valid }
+      end
+
+      context "when 10 megabytes or larger" do
+        let(:size) { 10.megabytes }
+
+        it { expect(job_application.tap(&:valid?).errors[:cover_letter]).to be_present }
       end
     end
   end

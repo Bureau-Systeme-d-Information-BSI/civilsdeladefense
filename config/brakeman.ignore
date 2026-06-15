@@ -421,7 +421,7 @@
       "check_name": "EOLRails",
       "message": "Support for Rails 7.2.3.1 ends on 2026-08-09",
       "file": "Gemfile.lock",
-      "line": 418,
+      "line": 419,
       "link": "https://brakemanscanner.org/docs/warning_types/unmaintained_dependency/",
       "code": null,
       "render_path": null,
@@ -431,7 +431,7 @@
       "cwe_id": [
         1104
       ],
-      "note": "Rails 7.2 EOL on 2026-08-09. Upgrade to be scheduled."
+      "note": "Rails 7.2 reaches end-of-life on 2026-08-09; tracked for the Rails 8 upgrade, ignored until then"
     }
   ]
 }

@@ -38,7 +38,7 @@ class User < ApplicationRecord
 
   mount_uploader :photo, PhotoUploader, mount_on: :photo_file_name
 
-  validates :photo, file_size: {less_than: 1.megabyte}
+  validates :photo, file_size: {less_than: 10.megabytes}
   validates :first_name, :last_name, presence: true
   validates_plausible_phone :phone
   validates :phone, :current_position, presence: true, allow_nil: true

@@ -41,6 +41,12 @@ RSpec.describe ApplicantNotificationsMailer do
         expect(mail.body.encoded).to match(/vous pouvez répondre à cet email directement/)
       end
     end
+
+    context "when the email carries attachments" do
+      before { create(:email_attachment, email: email) }
+
+      it { expect(mail.attachments.map(&:filename)).to include("document.pdf") }
+    end
   end
 
   describe "notify_new_state" do
@@ -93,5 +99,90 @@ RSpec.describe ApplicantNotificationsMailer do
     }
 
     it { expect(notify_rejected.body.encoded).to match(/nous ne pouvons pas actuellement y donner une suite favorable/) }
+  end
+
+  describe "notify_withdrawn" do
+    subject(:notify_withdrawn) { described_class.with(user:, job_offer:).notify_withdrawn }
+
+    let(:job_application) { build_stubbed(:job_application) }
+    let(:user) { job_application.user }
+    let(:job_offer) { job_application.job_offer }
+
+    it {
+      expect(notify_withdrawn.subject).to eq(
+        "Votre candidature à l'offre #{job_offer.title} sur #{job_offer.organization.service_name} – Confirmation de votre désistement"
+      )
+    }
+
+    it { expect(notify_withdrawn.to).to match([user.email]) }
+
+    it { expect(notify_withdrawn.body.encoded).to match(/Le désistement suite à votre candidature/) }
+  end
+
+  describe "send_job_offer" do
+    subject(:send_job_offer) { described_class.send_job_offer(user, job_offer) }
+
+    let(:job_offer) { create(:job_offer) }
+
+    context "when the user accepts job offer mails" do
+      let(:user) { create(:user, receive_job_offer_mails: true) }
+
+      it { expect(send_job_offer.subject).to eq("Nouvelle offre") }
+
+      it { expect(send_job_offer.to).to eq([user.email]) }
+
+      it { expect(send_job_offer.body.encoded).to match(/Voici une nouvelle super offre/) }
+    end
+
+    context "when the user refuses job offer mails" do
+      let(:user) { create(:user, receive_job_offer_mails: false) }
+
+      it { expect(send_job_offer.message).to be_a(ActionMailer::Base::NullMail) }
+    end
+  end
+
+  describe "error_email" do
+    subject(:error_email) { described_class.error_email(user.email, "Sujet original") }
+
+    let(:user) { create(:user) }
+
+    it { expect(error_email.subject).to eq("[#{Organization.first.service_name}]") }
+
+    it { expect(error_email.to).to eq([user.email]) }
+
+    it { expect(error_email.body.encoded).to match(/Sujet original/) }
+  end
+
+  describe "notice_period_before_deletion" do
+    subject(:notice_period_before_deletion) { described_class.notice_period_before_deletion(user.id) }
+
+    let(:user) { create(:user) }
+
+    it {
+      expect(notice_period_before_deletion.subject).to eq(
+        "[#{user.organization.service_name}] Votre compte candidat : mise à jour nécessaire"
+      )
+    }
+
+    it { expect(notice_period_before_deletion.to).to eq([user.email]) }
+
+    it { expect(notice_period_before_deletion.body.encoded).to match(/sera supprimé automatiquement/) }
+  end
+
+  describe "deletion_notice" do
+    subject(:deletion_notice) { described_class.deletion_notice(user_email, "Jane Doe", organization.id) }
+
+    let(:organization) { Organization.first }
+    let(:user_email) { "candidat@example.com" }
+
+    it {
+      expect(deletion_notice.subject).to eq(
+        "[#{organization.service_name}] Votre compte candidat a été supprimé"
+      )
+    }
+
+    it { expect(deletion_notice.to).to eq([user_email]) }
+
+    it { expect(deletion_notice.body.encoded).to match(/suppression de votre compte candidat/) }
   end
 end

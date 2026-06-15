@@ -49,7 +49,7 @@ class JobApplication < ApplicationRecord
 
   mount_uploader :cover_letter, DocumentUploader, mount_on: :cover_letter_file_name
   validates :cover_letter, presence: true, if: -> { job_offer.cover_lettre_required? }
-  validates :cover_letter, file_size: {less_than: 2.megabytes}, if: -> { cover_letter_file_name_changed? }
+  validates :cover_letter, file_size: {less_than: 10.megabytes}, if: -> { cover_letter_file_name_changed? }
 
   scope :with_category, -> { where.not(category: nil) }
 
@@ -327,20 +327,21 @@ class JobApplication < ApplicationRecord
   def requested_files_not_validated = errors.add(:state, :requested_files_missing, documents: requested_files)
 
   def requested_files_validated?
-    mandatory_type_ids = JobApplicationFileType.mandatory(state).pluck(:id).to_set
-    requested_type_ids = job_application_files.pluck(:job_application_file_type_id).to_set
-    types_to_validate = mandatory_type_ids & requested_type_ids
-    validated_type_ids = job_application_files.select(&:validated?).map(&:job_application_file_type_id).to_set
+    types_to_validate = (mandatory_type_ids & requested_type_ids) - auto_validated_ids
     types_to_validate.subset?(validated_type_ids)
   end
 
-  def requested_files
-    mandatory_type_ids = JobApplicationFileType.mandatory(state).pluck(:id).to_set
-    requested_type_ids = job_application_files.pluck(:job_application_file_type_id).to_set
-    validated_type_ids = job_application_files.select(&:validated?).map(&:job_application_file_type_id).to_set
-    unvalidated_ids = (mandatory_type_ids & requested_type_ids) - validated_type_ids
-    JobApplicationFileType.where(id: unvalidated_ids).pluck(:name).join(", ")
-  end
+  def requested_files = JobApplicationFileType.where(id: unvalidated_ids).pluck(:name).join(", ")
+
+  def mandatory_type_ids = JobApplicationFileType.mandatory(state).pluck(:id).to_set
+
+  def requested_type_ids = job_application_files.pluck(:job_application_file_type_id).to_set
+
+  def auto_validated_ids = JobApplicationFileType.automatically_validated.pluck(:id).to_set
+
+  def validated_type_ids = job_application_files.select(&:validated?).map(&:job_application_file_type_id).to_set
+
+  def unvalidated_ids = ((mandatory_type_ids & requested_type_ids) - validated_type_ids) - auto_validated_ids
 
   def create_required_job_application_files
     existing_type_ids = job_application_files.reload.pluck(:job_application_file_type_id)

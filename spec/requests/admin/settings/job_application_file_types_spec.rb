@@ -90,6 +90,14 @@ RSpec.describe "Admin::Settings::JobApplicationFileTypes" do
       expect { create_request }.to change(VisibilityRule, :count).by(2)
       expect(response).to redirect_to(admin_settings_job_application_file_types_path)
     end
+
+    context "with invalid params" do
+      let(:params) { {job_application_file_type: {name: ""}} }
+
+      before { create_request }
+
+      it { expect(response).to render_template(:new) }
+    end
   end
 
   describe "PATCH /admin/parametres/job_application_file_types/:id" do
@@ -185,6 +193,16 @@ RSpec.describe "Admin::Settings::JobApplicationFileTypes" do
         expect { update_request }.to change { job_application_file_type.reload.visibility_rules.count }.by(-1)
         expect(response).to redirect_to(admin_settings_job_application_file_types_path)
       end
+    end
+
+    context "with invalid params" do
+      subject(:update_request) { patch admin_settings_job_application_file_type_path(job_application_file_type), params: }
+
+      let(:params) { {job_application_file_type: {name: ""}} }
+
+      before { update_request }
+
+      it { expect(response).to render_template(:edit) }
     end
   end
 end

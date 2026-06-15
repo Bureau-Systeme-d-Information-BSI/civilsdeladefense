@@ -417,6 +417,26 @@ RSpec.describe JobApplication do
         expect { job_application.valid? }.not_to raise_error
       end
     end
+
+    context "when the cover letter approaches the size limit" do
+      subject(:job_application) { build(:job_application, :with_cover_letter, job_offer:) }
+
+      let(:job_offer) { create(:job_offer, cover_lettre_required: true) }
+
+      before { allow(job_application.cover_letter).to receive(:size).and_return(size) }
+
+      context "when smaller than 10 megabytes" do
+        let(:size) { 10.megabytes - 1 }
+
+        it { expect(job_application).to be_valid }
+      end
+
+      context "when 10 megabytes or larger" do
+        let(:size) { 10.megabytes }
+
+        it { expect(job_application.tap(&:valid?).errors[:cover_letter]).to be_present }
+      end
+    end
   end
 
   describe "#end_user_state_number and #end_user_state" do

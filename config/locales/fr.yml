@@ -118,7 +118,7 @@ fr:
       your_account_creation: "Votre création de compte"
       resume: "CV"
       resume_html: "CV <abbr title='obligatoire'>*</abbr>"
-      cover_letter: "Lettre de motivation (PDF uniquement, max 2Mo)"
+      cover_letter: "Lettre de motivation (PDF uniquement, max 10Mo)"
   job_offers:
     no_bookmarks:
       title: Vous n'avez pas encore d'offres favorites
@@ -250,10 +250,10 @@ fr:
     job_application_files:
       update:
         success: "Le document a bien été modifié"
-        error: "Le fichier n'est pas valide, seuls les fichiers PDF de taille inférieure à 2Mo sont acceptés."
+        error: "Le fichier n'est pas valide, seuls les fichiers PDF de taille inférieure à 10Mo sont acceptés."
       create:
         success: "Le document a bien été modifié"
-        error: "Le fichier n'est pas valide, seuls les fichiers PDF de taille inférieure à 2Mo sont acceptés."
+        error: "Le fichier n'est pas valide, seuls les fichiers PDF de taille inférieure à 10Mo sont acceptés."
       index:
         cover_letter: "Lettre de motivation"
         cover_letter_uploaded_html: "Vous avez déjà téléversé ce <a href=\"%{url}\" target=\"_blank\" class=\"text-dark-gray\" rel=\"noopener\">fichier</a>"
@@ -284,8 +284,8 @@ fr:
     profiles:
       edit:
         title: "Mon profil candidat"
-        resume: "CV (PDF uniquement, max 2Mo)"
-        resume_html: "CV (PDF uniquement, max 2Mo) <abbr title='obligatoire'>*</abbr>"
+        resume: "CV (PDF uniquement, max 10Mo)"
+        resume_html: "CV (PDF uniquement, max 10Mo) <abbr title='obligatoire'>*</abbr>"
       update:
         success: "Profil mis à jour !"
     users:
@@ -1237,16 +1237,16 @@ fr:
               dar_unvalidated: 'Une autorité d''emploi affiliée à l''offre doit cocher la case "DAR validée" pour permettre la poursuite du processus de recrutement.'
               immutable_rejected: "Cette candidature a été refusée, son état ne peut pas être modifié"
             cover_letter_content_type:
-              invalid: "PDF uniquement, max 2Mo"
+              invalid: "PDF uniquement, max 10Mo"
             resume_content_type:
-              invalid: "PDF uniquement, max 2Mo"
+              invalid: "PDF uniquement, max 10Mo"
             photo:
               file_size_is_less_than_or_equal_to: "Est trop volumineuse (ne doit pas dépasser %{count})"
               allowed_file_content_types: "au mauvais format (seuls les formats JPG et PNG sont acceptés)"
         job_application_file:
           attributes:
             content:
-              file_size_is_less_than: "Fichier trop volumineux, doit être max. 2Mo"
+              file_size_is_less_than: "Fichier trop volumineux, doit être max. 10Mo"
             base:
               not_authorized_to_validate: "Vous n'êtes pas autorisé(e) à valider ou invalider ce type de pièce"
               cant_unrequest: "Ce document est obligatoire et ne peut pas être retiré"
@@ -1270,7 +1270,7 @@ fr:
               not_allowed_because_suspended: "impossible de supprimer un compte tant qu'il est suspendu"
             current_position: "Poste actuel"
             photo:
-              file_size_is_less_than: "Fichier trop volumineux, doit être max. 2Mo"
+              file_size_is_less_than: "Fichier trop volumineux, doit être max. 10Mo"
     models:
       job_offer: "Offre"
     attributes:

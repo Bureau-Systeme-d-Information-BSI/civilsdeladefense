@@ -277,4 +277,52 @@ RSpec.describe JobOffersHelper do
 
     it { is_expected.to eq(I18n.l(job_offer.contract_start_on)) }
   end
+
+  describe ".job_offer_icon_for_attribute" do
+    subject(:job_offer_icon_for_attribute) { helper.job_offer_icon_for_attribute(attribute) }
+
+    context "when the attribute is known" do
+      let(:attribute) { :location }
+
+      it { is_expected.to eq("map-pin-line") }
+    end
+
+    context "when the attribute is unknown" do
+      let(:attribute) { :unknown }
+
+      it { is_expected.to be_nil }
+    end
+  end
+
+  describe ".job_offer_benefits_display" do
+    subject(:job_offer_benefits_display) { helper.job_offer_benefits_display(job_offer) }
+
+    context "when the job offer has benefits" do
+      let(:job_offer) { create(:job_offer, benefits: [create(:benefit, name: "Télétravail")]) }
+
+      it { is_expected.to eq("Télétravail") }
+    end
+
+    context "when the job offer has no benefit" do
+      let(:job_offer) { create(:job_offer) }
+
+      it { is_expected.to eq("-") }
+    end
+  end
+
+  describe ".job_offer_drawbacks_display" do
+    subject(:job_offer_drawbacks_display) { helper.job_offer_drawbacks_display(job_offer) }
+
+    context "when the job offer has drawbacks" do
+      let(:job_offer) { create(:job_offer, drawbacks: [create(:drawback, name: "Astreintes")]) }
+
+      it { is_expected.to eq("Astreintes") }
+    end
+
+    context "when the job offer has no drawback" do
+      let(:job_offer) { create(:job_offer) }
+
+      it { is_expected.to eq("-") }
+    end
+  end
 end

@@ -5,6 +5,7 @@ require "rails_helper"
 RSpec.describe "ApplicationController" do
   describe "#basic_auth" do
     before do
+      allow(Altcha).to receive(:hmac_key).and_return("test-hmac-key")
       allow(ENV).to receive(:[]).and_call_original
       allow(ENV).to receive(:[]).with("BASIC_AUTH").and_return("user:secret")
       perform

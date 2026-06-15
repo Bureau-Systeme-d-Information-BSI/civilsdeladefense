@@ -101,6 +101,12 @@ RSpec.describe "Account::JobApplicationFiles" do
         allow_any_instance_of(JobApplicationFile).to receive(:update).and_return(false)
         expect { update_request }.not_to change(job_application_file, :job_application_file_type)
       end
+
+      context "when the record cannot be saved by the user" do
+        before { allow_any_instance_of(JobApplicationFile).to receive(:record_by_user).and_return(false) }
+
+        it { expect(update_request).to redirect_to(account_job_application_job_application_files_path(job_application)) }
+      end
     end
 
     context "when format is turbo_stream" do

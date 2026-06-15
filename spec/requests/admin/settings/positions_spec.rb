@@ -55,5 +55,13 @@ RSpec.describe Admin::Settings::PositionsController do
         it { expect(response).to have_http_status(:ok) }
       end
     end
+
+    context "when the resource class is not an application record" do
+      subject(:update_request) do
+        patch admin_settings_positions_path(resource_id: "1", resource_class: "NotAModel", position: 1)
+      end
+
+      it { expect { update_request }.to raise_error(ActionController::RoutingError) }
+    end
   end
 end

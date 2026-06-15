@@ -6,6 +6,14 @@ RSpec.describe "Admin::Rejections" do
 
   before { sign_in administrator }
 
+  describe "GET /admin/job_applications/:id/rejections/new" do
+    subject(:new_request) { get new_admin_job_application_rejection_path(job_application), xhr: true }
+
+    before { new_request }
+
+    it { expect(response).to be_successful }
+  end
+
   describe "POST /admin/job_applications/:id/rejections" do
     subject(:rejection) { post admin_job_application_rejection_path(job_application), params: }
 

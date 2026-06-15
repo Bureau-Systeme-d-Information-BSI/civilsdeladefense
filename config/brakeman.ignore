@@ -264,60 +264,6 @@
     },
     {
       "warning_type": "Cross-Site Scripting",
-      "warning_code": 2,
-      "fingerprint": "b035de519ed847bd033a36e574c1faf2df69b14a378f2e7d6deca661b2421ac4",
-      "check_name": "CrossSiteScripting",
-      "message": "Unescaped model attribute",
-      "file": "app/views/admin/job_application_files/_job_application_file.html.haml",
-      "line": 4,
-      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
-      "code": "::Haml::AttributeBuilder.build_id(true, dom_id((Unresolved Model).new))",
-      "render_path": [
-        {
-          "type": "controller",
-          "class": "Admin::JobApplicationFilesController",
-          "method": "create",
-          "line": 27,
-          "file": "app/controllers/admin/job_application_files_controller.rb",
-          "rendered": {
-            "name": "admin/job_application_files/file_operation_total",
-            "file": "app/views/admin/job_application_files/file_operation_total.js.erb"
-          }
-        },
-        {
-          "type": "template",
-          "name": "admin/job_application_files/file_operation_total",
-          "line": 3,
-          "file": "app/views/admin/job_application_files/file_operation_total.js.erb",
-          "rendered": {
-            "name": "admin/job_applications/files",
-            "file": "app/views/admin/job_applications/files.html.haml"
-          }
-        },
-        {
-          "type": "template",
-          "name": "admin/job_applications/files",
-          "line": 23,
-          "file": "app/views/admin/job_applications/files.html.haml",
-          "rendered": {
-            "name": "admin/job_application_files/_job_application_file",
-            "file": "app/views/admin/job_application_files/_job_application_file.html.haml"
-          }
-        }
-      ],
-      "location": {
-        "type": "template",
-        "template": "admin/job_application_files/_job_application_file"
-      },
-      "user_input": "(Unresolved Model).new",
-      "confidence": "Weak",
-      "cwe_id": [
-        79
-      ],
-      "note": ""
-    },
-    {
-      "warning_type": "Cross-Site Scripting",
       "warning_code": 4,
       "fingerprint": "bee8ff4f4d06d5734fa78fa0fae35ee869c7849558615be896377936572abd85",
       "check_name": "LinkToHref",

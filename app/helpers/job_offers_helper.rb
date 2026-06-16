@@ -86,7 +86,7 @@ module JobOffersHelper
   end
 
   def show_apply_button?(job_offer)
-    job_offer.published? && controller.action_name != "apply" && !job_offer.already_applied?(current_user)
+    job_offer.published? && controller.action_name != "new" && !job_offer.already_applied?(current_user)
   end
 
   def asc_ict_tct_badge(job_offer)

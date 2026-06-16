@@ -236,8 +236,8 @@ RSpec.describe JobOffersHelper do
         it { is_expected.to be(false) }
       end
 
-      context "when the action is apply" do
-        before { allow(controller).to receive(:action_name).and_return("apply") }
+      context "when the action is new" do
+        before { allow(controller).to receive(:action_name).and_return("new") }
 
         it { is_expected.to be(false) }
       end
@@ -262,8 +262,8 @@ RSpec.describe JobOffersHelper do
         it { is_expected.to be(false) }
       end
 
-      context "when the action is apply" do
-        before { allow(controller).to receive(:action_name).and_return("apply") }
+      context "when the action is new" do
+        before { allow(controller).to receive(:action_name).and_return("new") }
 
         it { is_expected.to be(false) }
       end

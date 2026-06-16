@@ -76,4 +76,17 @@ RSpec.describe "Admin::Emails" do
       end
     end
   end
+
+  describe "GET /admin/candidatures/:job_application_id/emails/:id/attachment" do
+    subject(:attachment_request) do
+      get attachment_admin_job_application_email_path(job_application, email, email_attachment_id: email_attachment.id)
+    end
+
+    let(:email) { create(:email, job_application:) }
+    let(:email_attachment) { create(:email_attachment, email:) }
+
+    before { attachment_request }
+
+    it { expect(response).to be_successful }
+  end
 end

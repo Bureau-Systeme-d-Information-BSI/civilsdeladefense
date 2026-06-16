@@ -63,6 +63,51 @@ Guidance for working in this repository.
   ```
 
   over defining the helper near the top of the example group.
+- In request and controller specs, trigger the subject in a `before` block and keep the `it` to a single line asserting on `response`, rather than calling the subject inside the `it`. For example, prefer:
+
+  ```ruby
+  describe "GET /admin/job_offers/:id/export" do
+    subject(:export_request) { get export_admin_job_offer_path(job_offer) }
+
+    before do
+      create(:job_application, job_offer:)
+      export_request
+    end
+
+    it { expect(response).to be_successful }
+  end
+  ```
+
+  over:
+
+  ```ruby
+  it "returns a successful response" do
+    export_request
+    expect(response).to be_successful
+  end
+  ```
+- When sibling `context` blocks under the same `describe` share an identical `before` that only triggers the subject, declare that `before` once at the `describe` level instead of repeating it in each `context` (each `context` keeps its own `subject`). For example, prefer:
+
+  ```ruby
+  describe "#resource_not_found" do
+    before { perform }
+
+    context "with xml format" do
+      subject(:perform) { get :raise_not_found, format: :xml }
+
+      it { expect(response).to have_http_status(:not_found) }
+    end
+
+    context "with json format" do
+      subject(:perform) { get :raise_not_found, format: :json }
+
+      it { expect(response).to have_http_status(:not_found) }
+    end
+  end
+  ```
+
+  over repeating `before { perform }` inside each `context`.
+- Use Ruby's hash shorthand: write `key:` instead of `key: key` when the value is a variable or method of the same name. For example, prefer `create(:job_application, job_offer:)` over `create(:job_application, job_offer: job_offer)` (keep the explicit form when key and value differ, e.g. `organization: current_organization`).
 
 ## Pull requests
 

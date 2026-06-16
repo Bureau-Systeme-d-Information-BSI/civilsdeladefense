@@ -1,0 +1,16 @@
+- @page_title = "Candidature reçue pour l'offre #{@job_offer.identifier} #{@job_offer.title} #{@job_offer.location}"
+%h2 Merci d’avoir soumis votre candidature !
+%p Votre demande a bien été prise en compte.
+
+- if current_user
+  %p Un e-mail de confirmation a été envoyé à l’adresse #{current_user.email} 📩
+- else
+  %p Un e-mail de confirmation a été envoyé à votre adresse 📩
+  %p Afin de finaliser votre inscription, veuillez cliquer sur le lien envoyé par e-mail. Vous pourrez ensuite accéder à votre espace candidat et suivre l’avancement de votre candidature.
+%p Pour votre information, un délai est parfois nécessaire avant la réception de l’e-mail de confirmation. Il arrive également que l’e-mail atterrisse dans vos courriers indésirables/spams.
+- contact_page = Page.contact
+- if contact_page
+  En cas de non réception ou pour toute autre question,
+  = link_to "contactez notre équipe !", page_path(contact_page)
+- else
+  %p En cas de non réception ou pour toute autre question, contactez notre équipe !

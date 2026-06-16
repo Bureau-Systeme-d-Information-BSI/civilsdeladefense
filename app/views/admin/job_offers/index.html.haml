@@ -19,11 +19,11 @@
       .d-flex.align-items-end{data: { controller: 'subcheckbox'}}
         %label.h5.text-primary.mr-auto
           = t('.job_offers_filtered', count: @job_offers_filtered.count)
-        = sort_link(@q, :created_at, {}, {class: %w[btn btn-link mb-0]}) do
+        = sort_link(@q, :created_at, {class: %w[btn btn-link mb-0]}) do
           Date de création
           - unless @q.sorts.detect{|x| x.name == 'created_at'}
             &nbsp;▼
-        = sort_link(@q, :job_applications_count, {}, {class: %w[btn btn-link mb-0]}) do
+        = sort_link(@q, :job_applications_count, {class: %w[btn btn-link mb-0]}) do
           Candidatures
           - unless @q.sorts.detect{|x| x.name == 'job_applications_count'}
             &nbsp;▼

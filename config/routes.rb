@@ -264,13 +264,8 @@ Rails.application.routes.draw do
   end
 
   resources :job_offers, path: "offresdemploi", only: %i[index show] do
-    collection do
-      get :apply
-    end
+    resource :job_application, only: %i[new create show], module: :job_offers, path: "candidature"
     member do
-      get :apply, to: "job_offers#old_apply"
-      post :send_application
-      get :successful
       resources :bookmarks, only: %i[create destroy], path: "favoris"
     end
   end

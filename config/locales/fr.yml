@@ -266,7 +266,8 @@ fr:
         ongoing_none: "Aucune candidature en cours"
       job_application:
         created_at: "Candidaté il y a %{time_ago_in_words}"
-      job_offer:
+    job_offers:
+      show:
         withdraw: "Retirer ma candidature"
         withdraw_confirmation: "Souhaitez-vous retirer votre candidature ?"
         confirm: "Confirmer"

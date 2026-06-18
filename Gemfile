@@ -7,7 +7,7 @@ ruby "4.0.5"
 
 gem "ostruct"
 
-gem "rails", "~> 8.0"
+gem "rails", "8.0.5"
 gem "rails-i18n"
 
 # Pin connection_pool to 2.x: connection_pool 3.0 dropped the positional Hash

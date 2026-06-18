@@ -698,7 +698,7 @@ DEPENDENCIES
   rack-attack (~> 6.8)
   rack-cors
   rack-rewrite
-  rails (~> 8.0)
+  rails (= 8.0.5)
   rails-controller-testing
   rails-i18n
   ransack

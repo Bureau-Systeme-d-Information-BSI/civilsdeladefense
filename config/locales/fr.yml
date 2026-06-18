@@ -608,6 +608,8 @@ fr:
           other: "%{count} résultats de recherche"
       listing:
         title: "Ajouter/supprimer ce candidat de mes listes"
+      update_listing:
+        success: "Liste mise à jour !"
       suspensions:
         create:
           success: "Utilisateur suspendu"
@@ -725,6 +727,12 @@ fr:
             zero: "Aucun CMG"
             one: "1 CMG"
             other: "%{count} CMGs"
+        create:
+          success: "CMG ajouté !"
+        update:
+          success: "CMG mis à jour !"
+        destroy:
+          success: "CMG supprimé !"
       frequently_asked_questions:
         index:
           title: "FAQ"
@@ -736,13 +744,13 @@ fr:
         new:
           title: "Ajouter une question"
         create:
-          success: "CMG ajouté !"
+          success: "Question ajoutée !"
         update:
-          success: "CMG mis à jour !"
+          success: "Question mise à jour !"
         destroy:
-          success: "CMG supprimé !"
+          success: "Question supprimée !"
         edit:
-          title: "Modifier le CMG"
+          title: "Modifier la question"
       employers:
         index:
           title: "Employeurs"

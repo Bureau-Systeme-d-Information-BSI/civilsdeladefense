@@ -233,9 +233,7 @@ Rails.application.routes.draw do
         end
       end
       resources :job_applications, path: "mes-candidatures" do
-        member do
-          get :job_offer, path: "offre"
-        end
+        resource :job_offer, only: :show, path: "offre"
         resources :job_application_files, path: "documents"
         resources :emails, only: %i[index create] do
           member do

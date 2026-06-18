@@ -70,7 +70,7 @@ RSpec.describe "Account::Withdrawals" do
 
       it "redirects to job application page" do
         withdrawal_request
-        expect(response).to redirect_to(job_offer_account_job_application_path(job_application))
+        expect(response).to redirect_to(account_job_application_job_offer_path(job_application))
       end
 
       it "enqueues a notify_withdrawn email" do

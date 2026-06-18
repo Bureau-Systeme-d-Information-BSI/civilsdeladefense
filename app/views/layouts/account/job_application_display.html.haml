@@ -24,8 +24,8 @@
               = t('.nav_files', count: 0)
 
           %li{role: "presentation"}
-            - job_offer_tab = controller.controller_name == 'job_applications' && controller.action_name  == 'job_offer'
-            = link_to [:job_offer, :account, @job_application], class: 'rf-tabs__tab', aria: {controls: 'tabpanel-job-offer', selected: job_offer_tab}, role: 'tab', tabindex: job_offer_tab ? 0 : -1, title: t('.nav_offer') do
+            - job_offer_tab = controller.controller_name == 'job_offers' && controller.action_name == 'show'
+            = link_to [:account, @job_application, :job_offer], class: 'rf-tabs__tab', aria: {controls: 'tabpanel-job-offer', selected: job_offer_tab}, role: 'tab', tabindex: job_offer_tab ? 0 : -1, title: t('.nav_offer') do
               = t('.nav_offer')
 
         - if emails_tab

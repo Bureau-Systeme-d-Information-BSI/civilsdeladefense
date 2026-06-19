@@ -247,12 +247,10 @@ Rails.application.routes.draw do
         resource :password, only: %i[create edit update], module: :users
         resource :email, only: %i[edit update], module: :users
         resource :france_connect_link, only: :destroy, module: :users
+        resource :photo, only: :show, module: :users
         collection do
           get :edit
           patch :update
-        end
-        member do
-          get :photo
         end
       end
     end

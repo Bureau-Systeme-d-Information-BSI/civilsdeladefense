@@ -26,50 +26,6 @@ require "rails_helper"
 # `rails-controller-testing` gem.
 
 RSpec.describe Account::UsersController do
-  describe "PATCH #update_email" do
-    login_user
-
-    context "with valid params" do
-      it "updates the email" do
-        old_email = subject.current_user.email # rubocop:disable RSpec/NamedSubject
-        new_email = "pipo@molo.fr"
-
-        hsh = {
-          email: new_email
-        }
-
-        post :update_email, params: {user: hsh}
-
-        expect(subject.current_user.email).to eq(old_email) # rubocop:disable RSpec/NamedSubject
-        expect(subject.current_user.unconfirmed_email).to eq(new_email) # rubocop:disable RSpec/NamedSubject
-      end
-
-      it "redirects to the account page" do
-        new_email = "pipo@molo.fr"
-
-        hsh = {
-          email: new_email
-        }
-
-        post :update_email, params: {user: hsh}
-
-        expect(response).to redirect_to(account_user_url)
-      end
-    end
-
-    context "with invalid params" do
-      it "returns a success response (i.e. to display the 'show' template)" do
-        hsh = {
-          email: "pipo"
-        }
-
-        post :update_email, params: {user: hsh}
-
-        expect(response).to be_successful
-      end
-    end
-  end
-
   describe "PATCH #unlink_france_connect" do
     login_user
 

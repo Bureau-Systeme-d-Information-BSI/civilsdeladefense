@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 class Account::UsersController < Account::BaseController
-  before_action :set_user, only: %i[
-    show change_email update update_email destroy edit
-  ]
+  before_action :set_user, only: %i[show update destroy edit]
 
   def show
     @user_for_password_change = User.new
@@ -23,26 +21,6 @@ class Account::UsersController < Account::BaseController
       else
         format.html { render :edit }
         format.js {}
-        format.json { render json: @user.errors, status: :unprocessable_content }
-      end
-    end
-  end
-
-  def change_email
-  end
-
-  def update_email
-    respond_to do |format|
-      if @user.update(user_email_params)
-        format.html { redirect_to %i[account user], notice: t(".success") }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html do
-          @user_for_password_change = User.new
-          @user_for_deletion = User.new
-          @user_for_email_change = @user
-          render :show
-        end
         format.json { render json: @user.errors, status: :unprocessable_content }
       end
     end
@@ -103,10 +81,6 @@ class Account::UsersController < Account::BaseController
     else
       filtered_params.except(:photo)
     end
-  end
-
-  def user_email_params
-    params.require(:user).permit(:email)
   end
 
   def user_destroy_params

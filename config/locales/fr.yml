@@ -293,8 +293,11 @@ fr:
       link_france_connect:
         title: Certifier mon compte FranceConnect
         unlink_france_connect: Dissocier mon compte de FranceConnect
-      change_email:
-        title: "Changement de courriel"
+      emails:
+        edit:
+          title: "Changement de courriel"
+        update:
+          success: "Votre adresse de courriel a bien été modifié"
       change_password:
         title: "Changement de mot de passe"
       passwords:
@@ -308,8 +311,6 @@ fr:
         success: "Votre compte a bien été supprimé"
       edit:
         title: "Mes informations personnelles"
-      update_email:
-        success: "Votre adresse de courriel a bien été modifié"
       update:
         success: "Vos informations ont bien été modifiées"
       want_destroy:

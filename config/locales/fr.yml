@@ -297,6 +297,9 @@ fr:
         title: "Changement de courriel"
       change_password:
         title: "Changement de mot de passe"
+      passwords:
+        update:
+          success: "Votre mot de passe a bien été modifié"
       set_password:
         title: "Choisir un mot de passe"
       destroy:
@@ -307,8 +310,6 @@ fr:
         success: "Votre adresse de courriel a bien été modifié"
       update:
         success: "Vos informations ont bien été modifiées"
-      update_password:
-        success: "Votre mot de passe a bien été modifié"
       want_destroy:
         title: "Danger"
         destroy: "Je veux supprimer mon compte"

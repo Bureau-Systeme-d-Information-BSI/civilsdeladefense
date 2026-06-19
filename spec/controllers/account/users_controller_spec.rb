@@ -26,69 +26,6 @@ require "rails_helper"
 # `rails-controller-testing` gem.
 
 RSpec.describe Account::UsersController do
-  describe "PATCH #update_password" do
-    context "with valid params" do
-      it "updates the password" do
-        request.env["devise.mapping"] = Devise.mappings[:user]
-        user = create(:user)
-        current_password = user.password
-        new_password = "#{current_password}**"
-        user.confirm
-        sign_in user
-
-        old_password = subject.current_user.encrypted_password # rubocop:disable RSpec/NamedSubject
-
-        hsh = {
-          current_password: current_password,
-          password: new_password,
-          password_confirmation: new_password
-        }
-
-        post :update_password, params: {user: hsh}
-
-        expect(subject.current_user.encrypted_password).not_to eq(old_password) # rubocop:disable RSpec/NamedSubject
-      end
-
-      it "redirects to the account page" do
-        request.env["devise.mapping"] = Devise.mappings[:user]
-        user = create(:user)
-        current_password = user.password
-        new_password = "#{current_password}**"
-        user.confirm
-        sign_in user
-
-        hsh = {
-          current_password: current_password,
-          password: new_password,
-          password_confirmation: new_password
-        }
-
-        post :update_password, params: {user: hsh}
-
-        expect(response).to redirect_to(account_user_url)
-      end
-    end
-
-    context "with invalid params" do
-      it "returns a success response (i.e. to display the 'show' template)" do
-        request.env["devise.mapping"] = Devise.mappings[:user]
-        user = create(:user)
-        user.confirm
-        sign_in user
-
-        hsh = {
-          current_password: "blabla",
-          password: "blabla",
-          password_confirmation: "blabla"
-        }
-
-        post :update_password, params: {user: hsh}
-
-        expect(response).to be_successful
-      end
-    end
-  end
-
   describe "PATCH #update_email" do
     login_user
 

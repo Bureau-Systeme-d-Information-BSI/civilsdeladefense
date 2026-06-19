@@ -244,16 +244,15 @@ Rails.application.routes.draw do
         resource :cover_letter, only: %i[show]
       end
       resource :user, path: "mon-compte", only: %i[show destroy] do
+        resource :password, only: %i[edit update], module: :users
         collection do
           get :edit
           patch :update
         end
         member do
           get :change_email
-          get :change_password
           get :photo
           patch :update_email
-          patch :update_password
           patch :unlink_france_connect
           patch :set_password
         end

@@ -38,12 +38,6 @@ class Account::UsersController < Account::BaseController
     end
   end
 
-  def unlink_france_connect
-    current_user.omniauth_informations.where(provider: :france_connect).destroy_all
-
-    redirect_to %i[account user], notice: t(".success")
-  end
-
   def photo
     send_data(
       current_user.photo.big.read,

@@ -246,13 +246,13 @@ Rails.application.routes.draw do
       resource :user, path: "mon-compte", only: %i[show destroy] do
         resource :password, only: %i[create edit update], module: :users
         resource :email, only: %i[edit update], module: :users
+        resource :france_connect_link, only: :destroy, module: :users
         collection do
           get :edit
           patch :update
         end
         member do
           get :photo
-          patch :unlink_france_connect
         end
       end
     end

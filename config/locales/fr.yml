@@ -293,6 +293,9 @@ fr:
       link_france_connect:
         title: Certifier mon compte FranceConnect
         unlink_france_connect: Dissocier mon compte de FranceConnect
+      france_connect_links:
+        destroy:
+          success: "Votre compte a bien été dissocié de FranceConnect"
       emails:
         edit:
           title: "Changement de courriel"

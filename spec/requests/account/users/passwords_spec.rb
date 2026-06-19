@@ -7,6 +7,32 @@ RSpec.describe "Account::Users::Passwords" do
 
   before { sign_in user }
 
+  describe "POST /espace-candidat/mon-compte/password" do
+    subject(:create_request) {
+      post account_user_password_path, params: {
+        user: {
+          password: new_password,
+          password_confirmation:
+        }
+      }
+    }
+
+    let(:new_password) { "An awesomly strong passw0rd!" }
+    let(:password_confirmation) { new_password }
+
+    it { is_expected.to redirect_to(account_user_path) }
+
+    it { expect { create_request }.to change { user.reload.encrypted_password } }
+
+    context "with a mismatched confirmation" do
+      let(:password_confirmation) { "something else" }
+
+      before { create_request }
+
+      it { expect(response).to render_template("account/users/show") }
+    end
+  end
+
   describe "GET /espace-candidat/mon-compte/password/edit" do
     subject(:edit_request) { get edit_account_user_password_path }
 

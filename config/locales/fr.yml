@@ -298,6 +298,8 @@ fr:
       change_password:
         title: "Changement de mot de passe"
       passwords:
+        create:
+          success: "Votre mot de passe a bien été enregistré"
         update:
           success: "Votre mot de passe a bien été modifié"
       set_password:

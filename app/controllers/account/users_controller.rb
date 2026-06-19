@@ -2,7 +2,7 @@
 
 class Account::UsersController < Account::BaseController
   before_action :set_user, only: %i[
-    show change_email update set_password update_email destroy edit
+    show change_email update update_email destroy edit
   ]
 
   def show
@@ -23,26 +23,6 @@ class Account::UsersController < Account::BaseController
       else
         format.html { render :edit }
         format.js {}
-        format.json { render json: @user.errors, status: :unprocessable_content }
-      end
-    end
-  end
-
-  def set_password
-    respond_to do |format|
-      if @user.update(user_password_params)
-        # Sign in the user by passing validation in case their password changed
-        bypass_sign_in(@user, scope: :user)
-
-        format.html { redirect_to %i[account user], notice: t(".success") }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html do
-          @user_for_password_change = @user
-          @user_for_email_change = User.new
-          @user_for_deletion = User.new
-          render :show
-        end
         format.json { render json: @user.errors, status: :unprocessable_content }
       end
     end
@@ -123,10 +103,6 @@ class Account::UsersController < Account::BaseController
     else
       filtered_params.except(:photo)
     end
-  end
-
-  def user_password_params
-    params.require(:user).permit(:current_password, :password, :password_confirmation)
   end
 
   def user_email_params

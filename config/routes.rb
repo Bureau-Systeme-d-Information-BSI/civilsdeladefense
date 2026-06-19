@@ -244,7 +244,7 @@ Rails.application.routes.draw do
         resource :cover_letter, only: %i[show]
       end
       resource :user, path: "mon-compte", only: %i[show destroy] do
-        resource :password, only: %i[edit update], module: :users
+        resource :password, only: %i[create edit update], module: :users
         collection do
           get :edit
           patch :update
@@ -254,7 +254,6 @@ Rails.application.routes.draw do
           get :photo
           patch :update_email
           patch :unlink_france_connect
-          patch :set_password
         end
       end
     end

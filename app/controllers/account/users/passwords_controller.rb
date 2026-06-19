@@ -3,8 +3,6 @@
 class Account::Users::PasswordsController < Account::BaseController
   def edit
     @user_for_password_change = current_user
-
-    render "account/users/change_password"
   end
 
   # Lets a FranceConnect (omniauth) user set a local password so they can also

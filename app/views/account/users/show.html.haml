@@ -4,7 +4,7 @@
       - if current_user.link_to_omniauth?
         = render template: '/account/users/set_password'
       - else
-        = render template: '/account/users/change_password'
+        = render template: '/account/users/passwords/edit'
     .rf-col-12
       = render template: '/account/users/emails/edit'
     .rf-col-12

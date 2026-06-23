@@ -130,7 +130,7 @@ GEM
       activesupport
       tzinfo
     coderay (1.1.3)
-    concurrent-ruby (1.3.6)
+    concurrent-ruby (1.3.7)
     connection_pool (2.5.5)
     counter_culture (3.5.0)
       activerecord (>= 4.2)

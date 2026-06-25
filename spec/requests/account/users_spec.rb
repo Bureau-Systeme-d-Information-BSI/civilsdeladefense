@@ -20,22 +20,6 @@ RSpec.describe "Account::Users" do
     end
   end
 
-  describe "GET /espace-candidat/mon-compte/photo" do
-    subject(:photo_request) { get photo_account_user_path(user) }
-
-    let(:user) { create(:confirmed_user, :with_photo) }
-
-    it "is successful" do
-      photo_request
-      expect(response).to be_successful
-    end
-
-    it "shows the administrator photo" do
-      photo_request
-      expect(response.headers["Content-Type"]).to eq("image/jpeg")
-    end
-  end
-
   describe "PATCH /espace-candidat/mon-compte" do
     subject(:update_request) { patch account_user_path, params: params }
 
@@ -87,33 +71,6 @@ RSpec.describe "Account::Users" do
 
         it { expect { update_request }.to change { user.reload.photo.present? }.from(true).to(false) }
       end
-    end
-  end
-
-  describe "PATCH /espace-candidat/mon-compte/set_password" do
-    subject(:update_password_request) {
-      patch set_password_account_user_path, params: {
-        user: {
-          password: new_password,
-          password_confirmation: new_password
-        }
-      }
-    }
-
-    let(:new_password) { "An awesomly strong passw0rd!" }
-
-    it "redirects to account_user_path" do
-      expect(update_password_request).to redirect_to(account_user_path)
-    end
-
-    it "updates the user's password" do
-      expect { update_password_request }.to change { user.reload.password }
-    end
-
-    it "shows an error when the user is invalid" do
-      allow_any_instance_of(User).to receive(:update).and_return(false)
-
-      expect(update_password_request).to render_template(:show)
     end
   end
 

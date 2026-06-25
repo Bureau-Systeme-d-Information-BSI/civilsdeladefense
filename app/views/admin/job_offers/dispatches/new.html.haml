@@ -1,7 +1,7 @@
 - content_for :card_inner do
   .card.mt-3
     .card-body
-      = form_with url: [:send_to_list, :admin, @job_offer] do |f|
+      = form_with url: [:admin, @job_offer, :dispatch] do |f|
         .form-inputs
           .row
             .col-12.col-md-6
@@ -18,4 +18,3 @@
                         = list.preferred_users_count
           .form-actions.text-right.mt-4
             = f.submit 'Envoyer', class: 'btn btn-primary btn-raised'
-

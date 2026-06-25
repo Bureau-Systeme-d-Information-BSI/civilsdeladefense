@@ -274,22 +274,6 @@ RSpec.describe "Admin::Job_Offers" do
     end
   end
 
-  describe "POST /admin/offresdemploi/:id/send_to_list" do
-    subject(:send_to_list_request) do
-      post send_to_list_admin_job_offer_path(job_offer),
-        params: {preferred_users_lists: [preferred_users_list.id]}
-    end
-
-    let(:job_offer) { create(:job_offer) }
-    let(:preferred_users_list) { create(:preferred_users_list, :with_users) }
-
-    it { expect(send_to_list_request).to redirect_to(admin_job_offers_path) }
-
-    it "sends the job offer to the list users" do
-      expect { send_to_list_request }.to change { ActionMailer::Base.deliveries.size }.by(3)
-    end
-  end
-
   describe "POST /admin/offresdemploi (create_and_publish with an administrator actor)" do
     subject(:create_and_publish_request) do
       post admin_job_offers_path, params: {job_offer: attributes, commit: "create_and_publish"}

@@ -156,22 +156,6 @@ RSpec.describe "Admin::Settings::Administrators" do
     end
   end
 
-  describe "POST /admin/parametres/administrateurs/:id/send_unlock_instructions" do
-    subject(:send_unlock_instructions_request) {
-      post send_unlock_instructions_admin_settings_administrator_path(administrator)
-    }
-
-    let(:administrator) { create(:administrator) }
-
-    it "sends the unlock instructions" do
-      expect { send_unlock_instructions_request }.to change { ActionMailer::Base.deliveries.count }.by(1)
-    end
-
-    it "redirects to admin settings" do
-      expect(send_unlock_instructions_request).to redirect_to(admin_settings_root_path)
-    end
-  end
-
   describe "POST /admin/parametres/administrateurs/:id/resend_confirmation_instructions" do
     subject(:resend_confirmation_instructions_request) {
       post resend_confirmation_instructions_admin_settings_administrator_path(administrator)

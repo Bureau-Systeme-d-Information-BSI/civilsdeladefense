@@ -41,7 +41,7 @@
       - unless administrator.confirmed_at.present?
         - if can?(:manage, administrator) && administrator.active?
           %li.list-inline-item
-            = link_to fa_icon('arrows-rotate'), [:resend_confirmation_instructions, :admin, :settings, administrator], method: :post, title: t('buttons.resend_confirmation_instructions'), data: {confirm: t('buttons.confirm')}
+            = link_to fa_icon('arrows-rotate'), [:admin, :settings, administrator, :confirmation_instruction], method: :post, title: t('buttons.resend_confirmation_instructions'), data: {confirm: t('buttons.confirm')}
       - if can?(:deactivate, administrator) && administrator.active?
         %li.list-inline-item
           = link_to fa_icon('close'), [:admin, :settings, administrator, :activation], method: :post, title: t('buttons.deactivate'), data: {confirm: t('buttons.confirm')}

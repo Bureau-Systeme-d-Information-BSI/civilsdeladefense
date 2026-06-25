@@ -717,8 +717,9 @@ fr:
             success: "Compte désactivé"
           destroy:
             success: "Compte réactivé"
-        resend_confirmation_instructions:
-          success: "Invitation renvoyée !"
+        confirmation_instructions:
+          create:
+            success: "Invitation renvoyée !"
       cmgs:
         index:
           title: "Liste des CMG"

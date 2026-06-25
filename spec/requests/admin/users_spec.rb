@@ -175,6 +175,12 @@ RSpec.describe "Admin::Users" do
     it "redirects to the user index when the user is not found" do
       expect(get(admin_user_path(-1))).to redirect_to(admin_users_path)
     end
+
+    context "when the user has a job application" do
+      before { create(:job_application, user:) }
+
+      it { expect(get(admin_user_path(user))).to render_template(:show) }
+    end
   end
 
   describe "GET /admin/candidats/:id/photo" do
@@ -381,32 +387,6 @@ RSpec.describe "Admin::Users" do
 
       destroy_request
       expect(response).to redirect_to(admin_users_path)
-    end
-  end
-
-  describe "POST /admin/candidats/:id/send_job_offer" do
-    context "when the job offer is present" do
-      subject(:send_job_offer_request) {
-        post send_job_offer_admin_user_path(user, job_offer_identifier: job_offer.identifier)
-      }
-
-      let!(:job_offer) { create(:job_offer) }
-
-      it "sends the job offer to the user" do
-        expect { send_job_offer_request }.to change { ActionMailer::Base.deliveries.count }.by(1)
-      end
-
-      it "redirects to user" do
-        expect(send_job_offer_request).to redirect_to(admin_user_path(user))
-      end
-    end
-
-    context "when the job offer is missing" do
-      subject(:send_job_offer_request) { post send_job_offer_admin_user_path(user) }
-
-      it "redirects to user" do
-        expect(send_job_offer_request).to redirect_to(admin_user_path(user))
-      end
     end
   end
 end

@@ -126,9 +126,9 @@ Rails.application.routes.draw do
         get :listing
         get :photo
         put :update_listing
-        post :send_job_offer
       end
       resource :suspension, only: %i[create destroy], module: :users
+      resource :job_offer_sending, only: %i[create], module: :users
     end
     resources :job_applications, path: "candidatures", only: %i[index show update] do
       member do

@@ -719,6 +719,9 @@ fr:
             success: "Compte réactivé"
         resend_confirmation_instructions:
           success: "Invitation renvoyée !"
+        unlock_instructions:
+          create:
+            success: "Instructions de déblocage envoyées"
       cmgs:
         index:
           title: "Liste des CMG"

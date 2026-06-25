@@ -1149,9 +1149,10 @@ fr:
         success: "Candidat·e retiré·e avec succès"
         error: "Une erreur s'est produite"
     preferred_users_lists:
-      send_job_offer:
-        success: "Offre envoyée aux candidats"
-        error: "L'offre n'a pa pu être envoyé, veuillez vérifier la référence"
+      job_offer_sendings:
+        create:
+          success: "Offre envoyée aux candidats"
+          error: "L'offre n'a pa pu être envoyé, veuillez vérifier la référence"
       form:
         title_new: "Ajout d'une nouvelle liste de candidats"
         title_edit: "Édition d'une liste de candidats"

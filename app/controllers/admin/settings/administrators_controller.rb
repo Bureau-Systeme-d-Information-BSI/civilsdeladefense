@@ -85,20 +85,6 @@ class Admin::Settings::AdministratorsController < Admin::Settings::BaseControlle
     end
   end
 
-  # PATCH/PUT /admin/settings/administrators/1/resend_confirmation_instructions
-  # PATCH/PUT /admin/settings/administrators/1/resend_confirmation_instructions.json
-  def resend_confirmation_instructions
-    respond_to do |format|
-      @administrator.send_confirmation_instructions
-      format.html { redirect_to %i[admin settings root], notice: t(".success") }
-      format.json do
-        render :resend_confirmation_instructions,
-          status: :ok,
-          location: @administrator
-      end
-    end
-  end
-
   # POST /admin/settings/administrators/1/transfer
   def transfer
     if @administrator.transfer(params[:transfer_email])

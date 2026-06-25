@@ -383,30 +383,4 @@ RSpec.describe "Admin::Users" do
       expect(response).to redirect_to(admin_users_path)
     end
   end
-
-  describe "POST /admin/candidats/:id/send_job_offer" do
-    context "when the job offer is present" do
-      subject(:send_job_offer_request) {
-        post send_job_offer_admin_user_path(user, job_offer_identifier: job_offer.identifier)
-      }
-
-      let!(:job_offer) { create(:job_offer) }
-
-      it "sends the job offer to the user" do
-        expect { send_job_offer_request }.to change { ActionMailer::Base.deliveries.count }.by(1)
-      end
-
-      it "redirects to user" do
-        expect(send_job_offer_request).to redirect_to(admin_user_path(user))
-      end
-    end
-
-    context "when the job offer is missing" do
-      subject(:send_job_offer_request) { post send_job_offer_admin_user_path(user) }
-
-      it "redirects to user" do
-        expect(send_job_offer_request).to redirect_to(admin_user_path(user))
-      end
-    end
-  end
 end

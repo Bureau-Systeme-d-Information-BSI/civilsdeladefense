@@ -2,7 +2,7 @@
   = fa_icon('gear', class: 'text-secondary')
   = t('.title')
 - if user.receive_job_offer_mails
-  = form_tag [:send_job_offer, :admin, user] do
+  = form_tag [:admin, user, :job_offer_sending] do
     .form-group.input-group
       .row
         .col-12

@@ -9,7 +9,7 @@
   .dropdown-menu.dropdown-menu-right.allow-focus{aria: {labelledby: 'dropdownState'}}
     %ul
       - all_states = JobOffer.states.to_a.delete_if{|x| x.first == 'archived'}
-      - all_states = JobOffer.states.to_a.select{|x| x.first == 'archived'} if controller.action_name == 'archived'
+      - all_states = JobOffer.states.to_a.select{|x| x.first == 'archived'} if archived_listing?
       - states = all_states.map {|k| [ JobOffer.human_attribute_name("state/#{k.first}"), k.last] }
       - for state in states
         - state_name = state.first

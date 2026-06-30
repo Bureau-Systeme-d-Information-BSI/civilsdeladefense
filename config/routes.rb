@@ -72,7 +72,7 @@ Rails.application.routes.draw do
         get :init, to: "job_offer_terms#index"
         get :add_actor
         resource :featured, only: :show, controller: "job_offers/featured", as: :job_offers_featured
-        get :archived
+        resource :archived, only: :show, controller: "job_offers/archived", as: :job_offers_archived
         JobOffer.aasm.events.map(&:name).each do |event_name|
           action_name = :"create_and_#{event_name}"
           post :create, constraints: CommitParamConstraint.new(action_name), action: action_name

@@ -1,8 +1,8 @@
 .sticky-top.py-1
   .row.mt-4.mb-3
     .col-12
-      - url = controller.action_name == 'archived' ? [:archived, :admin, @q] : [:admin, @q]
-      = search_form_for url do |f|
+      - url = archived_listing? ? admin_job_offers_archived_path : admin_job_offers_path
+      = search_form_for @q, url: url do |f|
         .form-group.input-group.input-search
           .input-group-prepend
             %span.input-group-text.bg-white
@@ -10,15 +10,15 @@
           = text_field_tag :s, params[:s], placeholder: 'Mots-clés'
         .row.mt-2
           .col-12.col-sm-2
-            = render partial: 'filter_state'
+            = render partial: 'admin/job_offers/filter_state'
           .col-12.col-sm-2
-            = render partial: 'filter_employer'
+            = render partial: 'admin/job_offers/filter_employer'
           .col-12.col-sm-2
-            = render partial: 'filter_contract_type'
+            = render partial: 'admin/job_offers/filter_contract_type'
           .col-12.col-sm-3
-            = render partial: 'filter_job_applications_count'
+            = render partial: 'admin/job_offers/filter_job_applications_count'
           .col-12.col-sm-3
-            = render partial: 'filter_most_advanced_job_applications_state'
+            = render partial: 'admin/job_offers/filter_most_advanced_job_applications_state'
         .d-flex.flex-row-reverse.align-items-center
           = submit_tag t('buttons.search'), name: nil, class: 'btn btn-primary btn-raised btn-small'
           = link_to 'Réinitialiser', url_for, class: 'mr-3 text-grey text-underline'

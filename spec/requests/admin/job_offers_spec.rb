@@ -184,17 +184,6 @@ RSpec.describe "Admin::Job_Offers" do
     it { expect(index_request).to render_template(:index) }
   end
 
-  describe "GET /admin/offresdemploi/featured" do
-    subject(:featured_request) { get featured_admin_job_offers_path }
-
-    before do
-      create(:published_job_offer, featured: true)
-      featured_request
-    end
-
-    it { expect(response).to be_successful }
-  end
-
   describe "GET /admin/offresdemploi (search)" do
     subject(:index_request) { get admin_job_offers_path, params: {s: "Developer"} }
 

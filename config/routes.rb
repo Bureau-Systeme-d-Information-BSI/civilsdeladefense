@@ -71,7 +71,7 @@ Rails.application.routes.draw do
         post :init, to: "job_offers#new"
         get :init, to: "job_offer_terms#index"
         get :add_actor
-        get :featured
+        resource :featured, only: :show, controller: "job_offers/featured", as: :job_offers_featured
         get :archived
         JobOffer.aasm.events.map(&:name).each do |event_name|
           action_name = :"create_and_#{event_name}"

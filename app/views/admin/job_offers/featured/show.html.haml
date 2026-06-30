@@ -30,8 +30,8 @@
                       Candidats
                     .col-1.text-truncate.font-weight-bold.text-primary
                       Étape
-          = render partial: 'job_offer', collection: @job_offers_filtered
+          = render partial: 'admin/job_offers/job_offer', collection: @job_offers_filtered
           .mt-5
-            = will_paginate @job_offers_filtered, params: { controller: 'job_offers', action: controller.action_name }
+            = will_paginate @job_offers_filtered
         - else
           %em Aucun résultat

@@ -11,7 +11,7 @@ Bundler.require(*Rails.groups)
 module Civilsdeladefense
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.2
+    config.load_defaults 8.0
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
@@ -42,9 +42,6 @@ module Civilsdeladefense
       "align-right",
       "align-justify"
     ]
-
-    # Don't disable deprecated singular associations names
-    config.active_record.allow_deprecated_singular_associations_name = true
 
     if Rails.env.production?
       # Cache assets for 1 year

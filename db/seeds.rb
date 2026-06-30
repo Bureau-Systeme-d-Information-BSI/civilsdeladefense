@@ -732,7 +732,7 @@ JobOffer.where.not(contract_duration_id: nil).where.not(id: [job_offer4.id, job_
       ja.organization = organization
       ja.job_offer = job_offer
       ja.user = user
-      ja.created_at = 1.upto(6).map { |x| x.days.ago }
+      ja.created_at = 1.upto(6).map { |x| x.days.ago }.sample
       ja.experiences_fit_job_offer = boolean_choices.sample
     }
     job_application.job_application_files.build(content: file, job_application_file_type: cover_letter)

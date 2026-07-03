@@ -268,7 +268,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :downloads, only: %i[show]
   resources :pages, only: %w[show]
   resource :robots, only: %w[show]
   resource :sitemap

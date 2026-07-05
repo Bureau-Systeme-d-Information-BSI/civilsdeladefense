@@ -122,7 +122,7 @@ Pour exécuter les jobs asynchrones :
 bundle exec sidekiq
 ```
 
-## docker
+## Docker
 
 Le projet est également dockerisé.
 Allez dans le répertoire (dir) du projet, lancez d'abord :

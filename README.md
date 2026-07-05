@@ -7,7 +7,7 @@ Application Ruby on Rails avec base de données PostgreSQL, assets compilés via
 ## Prérequis
 
 - PostgreSQL
-- Ruby 3.3.0
+- Ruby 4.0.5
 - NodeJS 18.20.4
 - Yarn
 - Redis
@@ -15,17 +15,17 @@ Application Ruby on Rails avec base de données PostgreSQL, assets compilés via
 
 ## Outils recommandés
 
-Installer ASDF pour gérer les versions de Ruby et de NodeJS.
-Une fois installé, dans le dossier du projet cloné depuis GitHub :
+Les versions de Ruby et de NodeJS sont définies dans le fichier `.tool-versions` à la racine du projet, qui fait office de source de vérité unique.
+
+Installer [ASDF](https://asdf-vm.com/) pour les gérer. Une fois ASDF installé, dans le dossier du projet cloné depuis GitHub :
 
 ```
 asdf plugin add ruby
-asdf install ruby 3.3.0
-asdf set ruby 3.3.0
 asdf plugin add nodejs
-asdf install nodejs 18.20.4
-asdf set nodejs 18.20.4
+asdf install
 ```
+
+La commande `asdf install` (sans argument) lit `.tool-versions` et installe exactement les versions requises.
 
 ## Installation locale
 

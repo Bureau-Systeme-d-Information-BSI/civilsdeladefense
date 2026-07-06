@@ -113,8 +113,8 @@ Rails.application.routes.draw do
     resources :preferred_users_lists, path: "liste-candidats" do
       member do
         get :export
-        post :send_job_offer
       end
+      resource :job_offer_sending, only: %i[create], module: :preferred_users_lists
       resources :preferred_users
     end
     resources :users, path: "candidats", except: %i[create update] do

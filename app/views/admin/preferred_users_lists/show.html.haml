@@ -14,7 +14,7 @@
         = t('buttons.delete')
     = render partial: 'search'
 
-    = form_tag [:send_job_offer, :admin, @preferred_users_list] do
+    = form_tag [:admin, @preferred_users_list, :job_offer_sending] do
       .row.mt-2.mb-3
         .col-4
           = label_tag "job_offer_identifier", "Envoyer une offre par email aux candidats", class: "form-control-label"

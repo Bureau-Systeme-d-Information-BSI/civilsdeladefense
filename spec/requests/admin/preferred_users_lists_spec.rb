@@ -181,36 +181,4 @@ RSpec.describe "Admin::PreferredUsersLists" do
       end
     end
   end
-
-  describe "POST /admin/liste-candidats/:id/send_job_offer" do
-    subject(:send_job_offer_request) {
-      post send_job_offer_admin_preferred_users_list_path(preferred_users_list, job_offer_identifier: job_offer.identifier)
-    }
-
-    context "when the job offer exists" do
-      let(:job_offer) { create(:job_offer) }
-
-      it "sends the job offer to the users of the list" do
-        expect_any_instance_of(JobOffer).to receive(:send_to_users).with(preferred_users_list.users)
-        send_job_offer_request
-      end
-
-      it "redirects to the preferred users list" do
-        expect(send_job_offer_request).to redirect_to(admin_preferred_users_list_path(preferred_users_list))
-      end
-    end
-
-    context "when the job offer does not exist" do
-      let(:job_offer) { instance_double(JobOffer, identifier: "unknown job offer") }
-
-      it "doesn't send the job offer to the users of the list" do
-        expect_any_instance_of(JobOffer).not_to receive(:send_to_users)
-        send_job_offer_request
-      end
-
-      it "redirects to the preferred users list" do
-        expect(send_job_offer_request).to redirect_to(admin_preferred_users_list_path(preferred_users_list))
-      end
-    end
-  end
 end

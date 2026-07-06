@@ -85,17 +85,6 @@ class Admin::UsersController < Admin::InheritedResourcesController
     end
   end
 
-  def send_job_offer
-    user = User.find(params[:id])
-    job_offer = JobOffer.find_by(identifier: params["job_offer_identifier"])
-
-    if job_offer&.send_to_users([user])
-      redirect_back_or_to([:admin, user], notice: t(".success"))
-    else
-      redirect_back_or_to([:admin, user], notice: t(".error"))
-    end
-  end
-
   protected
 
   def permitted_params_listing

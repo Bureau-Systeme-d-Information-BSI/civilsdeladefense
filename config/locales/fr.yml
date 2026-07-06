@@ -589,9 +589,10 @@ fr:
         account: "Mon compte"
         logout: "Déconnexion"
     users:
-      send_job_offer:
-        success: "Offre envoyée au candidat"
-        error: "L'offre n'a pa pu être envoyé, veuillez vérifier la référence"
+      job_offer_sendings:
+        create:
+          success: "Offre envoyée au candidat"
+          error: "L'offre n'a pa pu être envoyé, veuillez vérifier la référence"
       multi_select:
         success: "Offre envoyée aux candidats"
         error: "L'offre n'a pa pu être envoyé, veuillez vérifier la référence"

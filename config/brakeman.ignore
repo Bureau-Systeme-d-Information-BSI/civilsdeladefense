@@ -90,50 +90,6 @@
     {
       "warning_type": "Cross-Site Scripting",
       "warning_code": 2,
-      "fingerprint": "3f5b56f0ff7076416959e23faf00c09ac8844ba6df57cc9e214c29ea28431c6e",
-      "check_name": "CrossSiteScripting",
-      "message": "Unescaped model attribute",
-      "file": "app/views/admin/job_offers/_job_offer.html.haml",
-      "line": 6,
-      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
-      "code": "::Haml::AttributeBuilder.build_class(true, \"card job-offer mt-3\", \"card-state-#{(Unresolved Model).new.state}\")",
-      "render_path": [
-        {
-          "type": "controller",
-          "class": "Admin::JobOffersController",
-          "method": "featured",
-          "line": 27,
-          "file": "app/controllers/admin/job_offers_controller.rb",
-          "rendered": {
-            "name": "admin/job_offers/featured",
-            "file": "app/views/admin/job_offers/featured.html.haml"
-          }
-        },
-        {
-          "type": "template",
-          "name": "admin/job_offers/featured",
-          "line": 33,
-          "file": "app/views/admin/job_offers/featured.html.haml",
-          "rendered": {
-            "name": "admin/job_offers/_job_offer",
-            "file": "app/views/admin/job_offers/_job_offer.html.haml"
-          }
-        }
-      ],
-      "location": {
-        "type": "template",
-        "template": "admin/job_offers/_job_offer"
-      },
-      "user_input": "(Unresolved Model).new.state",
-      "confidence": "Weak",
-      "cwe_id": [
-        79
-      ],
-      "note": ""
-    },
-    {
-      "warning_type": "Cross-Site Scripting",
-      "warning_code": 2,
       "fingerprint": "59a781da5fbac07c57920f89dc6292587d989662e510f8f72043195261ee4643",
       "check_name": "CrossSiteScripting",
       "message": "Unescaped model attribute",
@@ -309,50 +265,6 @@
     {
       "warning_type": "Cross-Site Scripting",
       "warning_code": 2,
-      "fingerprint": "cd7f0d0004a2530f84271cccd2c9427b215c3d2e55b702875b41332d9ff5adbc",
-      "check_name": "CrossSiteScripting",
-      "message": "Unescaped model attribute",
-      "file": "app/views/admin/job_offers/_job_offer.html.haml",
-      "line": 34,
-      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
-      "code": "::Haml::AttributeBuilder.build_class(true, \"badge text-white text-uppercase text-nowrap mr-1\", badge_class((Unresolved Model).new.state.to_sym))",
-      "render_path": [
-        {
-          "type": "controller",
-          "class": "Admin::JobOffersController",
-          "method": "featured",
-          "line": 27,
-          "file": "app/controllers/admin/job_offers_controller.rb",
-          "rendered": {
-            "name": "admin/job_offers/featured",
-            "file": "app/views/admin/job_offers/featured.html.haml"
-          }
-        },
-        {
-          "type": "template",
-          "name": "admin/job_offers/featured",
-          "line": 33,
-          "file": "app/views/admin/job_offers/featured.html.haml",
-          "rendered": {
-            "name": "admin/job_offers/_job_offer",
-            "file": "app/views/admin/job_offers/_job_offer.html.haml"
-          }
-        }
-      ],
-      "location": {
-        "type": "template",
-        "template": "admin/job_offers/_job_offer"
-      },
-      "user_input": "(Unresolved Model).new.state",
-      "confidence": "Weak",
-      "cwe_id": [
-        79
-      ],
-      "note": ""
-    },
-    {
-      "warning_type": "Cross-Site Scripting",
-      "warning_code": 2,
       "fingerprint": "cea9afa6a109a8df16eb36f243cbf838a384189d69f753d805f60534d64822db",
       "check_name": "CrossSiteScripting",
       "message": "Unescaped model attribute",
@@ -415,23 +327,166 @@
       "note": "False positive: params[:job_application_file_id] is used only as a DB lookup key in find(). The dom_id value comes from the record's own persisted ID, not from the param."
     },
     {
-      "warning_type": "Unmaintained Dependency",
-      "warning_code": 122,
-      "fingerprint": "21ab0fe00fdd5899ffc405cff75aadb91b805ee996a614f7e27b08a287e9062d",
-      "check_name": "EOLRails",
-      "message": "Support for Rails 7.2.3.1 ends on 2026-08-09",
-      "file": "Gemfile.lock",
-      "line": 419,
-      "link": "https://brakemanscanner.org/docs/warning_types/unmaintained_dependency/",
-      "code": null,
-      "render_path": null,
-      "location": null,
-      "user_input": null,
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "9334360b9407fbc8630c9a9398d35c05ac6bddf57145994683f39c5aff699171",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/admin/job_offers/_job_offer.html.haml",
+      "line": 6,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "::Haml::AttributeBuilder.build_class(true, \"card job-offer mt-3\", \"card-state-#{JobOffer.find(params[:job_offer_id]).state}\")",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Admin::JobOffers::DispatchesController",
+          "method": "new",
+          "line": 10,
+          "file": "app/controllers/admin/job_offers/dispatches_controller.rb",
+          "rendered": {
+            "name": "layouts/admin/job_offer_single",
+            "file": "app/views/layouts/admin/job_offer_single.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "layouts/admin/job_offer_single",
+          "line": 11,
+          "file": "app/views/layouts/admin/job_offer_single.html.haml",
+          "rendered": {
+            "name": "admin/job_offers/_navbar_job_offer",
+            "file": "app/views/admin/job_offers/_navbar_job_offer.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "admin/job_offers/_navbar_job_offer",
+          "line": 5,
+          "file": "app/views/admin/job_offers/_navbar_job_offer.html.haml",
+          "rendered": {
+            "name": "admin/job_offers/_job_offer",
+            "file": "app/views/admin/job_offers/_job_offer.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "admin/job_offers/_job_offer"
+      },
+      "user_input": "JobOffer.find(params[:job_offer_id]).state",
       "confidence": "Weak",
       "cwe_id": [
-        1104
+        79
       ],
-      "note": "Rails 7.2 reaches end-of-life on 2026-08-09; tracked for the Rails 8 upgrade, ignored until then"
+      "note": "False positive: the card class interpolates the record AASM state (a constrained enum). The job offer is loaded via find(params[:job_offer_id]); the param is only a DB lookup key, not reflected user input. Re-fingerprinted from 3f5b56f0 after JobOffers::DispatchesController started rendering this partial."
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "cf25687fb2c4a07dd38547ea22202984dbe246f8efd12839d06f0b1fd31069b7",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/admin/job_offers/_job_offer.html.haml",
+      "line": 34,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "::Haml::AttributeBuilder.build_class(true, \"badge text-white text-uppercase text-nowrap mr-1\", badge_class(JobOffer.find(params[:job_offer_id]).state.to_sym))",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Admin::JobOffers::DispatchesController",
+          "method": "new",
+          "line": 10,
+          "file": "app/controllers/admin/job_offers/dispatches_controller.rb",
+          "rendered": {
+            "name": "layouts/admin/job_offer_single",
+            "file": "app/views/layouts/admin/job_offer_single.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "layouts/admin/job_offer_single",
+          "line": 11,
+          "file": "app/views/layouts/admin/job_offer_single.html.haml",
+          "rendered": {
+            "name": "admin/job_offers/_navbar_job_offer",
+            "file": "app/views/admin/job_offers/_navbar_job_offer.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "admin/job_offers/_navbar_job_offer",
+          "line": 5,
+          "file": "app/views/admin/job_offers/_navbar_job_offer.html.haml",
+          "rendered": {
+            "name": "admin/job_offers/_job_offer",
+            "file": "app/views/admin/job_offers/_job_offer.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "admin/job_offers/_job_offer"
+      },
+      "user_input": "JobOffer.find(params[:job_offer_id]).state",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": "False positive: badge_class maps the record AASM state (a constrained enum) to a CSS class. The job offer is loaded via find(params[:job_offer_id]); the param is only a DB lookup key, not reflected user input. Re-fingerprinted from cd7f0d00 after JobOffers::DispatchesController started rendering this partial."
+    },
+    {
+      "warning_type": "Cross-Site Scripting",
+      "warning_code": 2,
+      "fingerprint": "87e967e67ff3a7f8240363b571ff9bfb62dffc9a1d0a4fa96013b4ee1376180f",
+      "check_name": "CrossSiteScripting",
+      "message": "Unescaped model attribute",
+      "file": "app/views/admin/job_offers/_job_offer_nav.html.haml",
+      "line": 2,
+      "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "::Haml::AttributeBuilder.build_id(true, dom_id(JobOffer.find(params[:job_offer_id]), \"nav\"))",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "Admin::JobOffers::DispatchesController",
+          "method": "new",
+          "line": 10,
+          "file": "app/controllers/admin/job_offers/dispatches_controller.rb",
+          "rendered": {
+            "name": "layouts/admin/job_offer_single",
+            "file": "app/views/layouts/admin/job_offer_single.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "layouts/admin/job_offer_single",
+          "line": 11,
+          "file": "app/views/layouts/admin/job_offer_single.html.haml",
+          "rendered": {
+            "name": "admin/job_offers/_navbar_job_offer",
+            "file": "app/views/admin/job_offers/_navbar_job_offer.html.haml"
+          }
+        },
+        {
+          "type": "template",
+          "name": "admin/job_offers/_navbar_job_offer",
+          "line": 4,
+          "file": "app/views/admin/job_offers/_navbar_job_offer.html.haml",
+          "rendered": {
+            "name": "admin/job_offers/_job_offer_nav",
+            "file": "app/views/admin/job_offers/_job_offer_nav.html.haml"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "admin/job_offers/_job_offer_nav"
+      },
+      "user_input": "JobOffer.find(params[:job_offer_id])",
+      "confidence": "Weak",
+      "cwe_id": [
+        79
+      ],
+      "note": "False positive: dom_id is built from the record persisted integer id (find by params[:job_offer_id] is only a DB lookup key), not from raw user input."
     }
   ]
 }

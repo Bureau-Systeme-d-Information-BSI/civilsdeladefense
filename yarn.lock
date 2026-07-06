@@ -184,9 +184,9 @@
   integrity sha512-Dcu+NaSvHLT7EjrDrkEmH4qET2ZJZ5IcCWmNXxNQTBwlnE5tBZfN6WxZ842n5cHV52DH/AKNirbPBtcEXDLW4g==
 
 "@josefarias/hotwire_combobox@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@josefarias/hotwire_combobox/-/hotwire_combobox-0.4.0.tgz#9dc7040b4a107e797ad598e54773c1031cab960c"
-  integrity sha512-NcFKEfHYrL/2iQkqCy3z+PVJ+08roD1TM6I2M4/fUaoU0tE7g+LScbSzBu/76pNUxbRLg3qppqNvSGauu1yFNw==
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@josefarias/hotwire_combobox/-/hotwire_combobox-0.4.1.tgz#d3536ffba107cbaf4111c19e4a8453202d1ef80a"
+  integrity sha512-JvfGC7osghQ8jl/ZkJjAEvvMj4ZecguhjNGcaqmPEBRDhPjSOhYziO9PsOXPUgjqcpLZx654VufWnYu1+aR8xQ==
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"

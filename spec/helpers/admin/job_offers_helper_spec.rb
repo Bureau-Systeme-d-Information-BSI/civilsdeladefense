@@ -7,7 +7,7 @@ RSpec.describe Admin::JobOffersHelper do
     subject(:archived_listing?) { helper.archived_listing? }
 
     context "when the current controller lists archived job offers" do
-      before { allow(helper).to receive(:controller).and_return(Admin::JobOffers::ArchivedController.new) }
+      before { allow(helper).to receive(:controller).and_return(Admin::JobOffers::ArchivesController.new) }
 
       it { is_expected.to be(true) }
     end
@@ -23,7 +23,7 @@ RSpec.describe Admin::JobOffersHelper do
     subject(:featured_listing?) { helper.featured_listing? }
 
     context "when the current controller lists featured job offers" do
-      before { allow(helper).to receive(:controller).and_return(Admin::JobOffers::FeaturedController.new) }
+      before { allow(helper).to receive(:controller).and_return(Admin::JobOffers::FeaturesController.new) }
 
       it { is_expected.to be(true) }
     end

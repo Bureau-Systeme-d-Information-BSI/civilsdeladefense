@@ -1,7 +1,7 @@
 .sticky-top.py-1
   .row.mt-4.mb-3
     .col-12
-      - url = archived_listing? ? admin_job_offers_archived_path : admin_job_offers_path
+      - url = archived_listing? ? admin_job_offers_archives_path : admin_job_offers_path
       = search_form_for @q, url: url do |f|
         .form-group.input-group.input-search
           .input-group-prepend

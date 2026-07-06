@@ -3,9 +3,16 @@
 class Admin::JobOffers::FeaturesController < Admin::BaseController
   skip_load_and_authorize_resource
 
-  before_action :check_authorized
-  before_action :set_job_offer
+  layout "admin/job_offer_single"
+
+  before_action :authorize_featured, only: :index
+  before_action :set_job_offers, only: :index
+  before_action :check_authorized, only: %i[create destroy]
+  before_action :set_job_offer, only: %i[create destroy]
   before_action :notice_not_found, unless: -> { @job_offer }, only: :create
+
+  def index
+  end
 
   def create
     if @job_offer.update(featured: true)
@@ -28,6 +35,21 @@ class Admin::JobOffers::FeaturesController < Admin::BaseController
   end
 
   private
+
+  def authorize_featured = authorize!(:featured, JobOffer)
+
+  def set_job_offers
+    @job_offers = JobOffer.accessible_by(current_ability, :featured)
+    @job_offers_unfiltered = @job_offers.admin_index_featured
+    job_offers_nearly_filtered = @job_offers_unfiltered
+    if params[:s].present?
+      job_offers_nearly_filtered = job_offers_nearly_filtered
+        .search_full_text(params[:s])
+        .unscope(:order)
+    end
+    @q = job_offers_nearly_filtered.ransack(params[:q])
+    @job_offers_filtered = @q.result(distinct: true).page(params[:page]).per_page(20)
+  end
 
   def set_job_offer
     @job_offer = if params[:job_offer_identifier].present?

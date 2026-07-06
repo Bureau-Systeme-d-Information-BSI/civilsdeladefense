@@ -1,22 +1,26 @@
 # frozen_string_literal: true
 
-class Admin::JobOffers::FeaturedController < Admin::BaseController
+class Admin::JobOffers::ArchivesController < Admin::BaseController
   skip_load_and_authorize_resource
 
-  before_action :authorize_featured
+  before_action :authorize_archived
+  before_action :set_employers
   before_action :set_job_offers
   layout "admin/job_offer_single"
 
-  def show
+  def index
+    render "admin/job_offers/index"
   end
 
   private
 
-  def authorize_featured = authorize!(:featured, JobOffer)
+  def authorize_archived = authorize!(:archived, JobOffer)
+
+  def set_employers = @employers = Employer.tree
 
   def set_job_offers
-    @job_offers = JobOffer.accessible_by(current_ability, :featured)
-    @job_offers_unfiltered = @job_offers.admin_index_featured
+    @job_offers = JobOffer.accessible_by(current_ability, :archived)
+    @job_offers_unfiltered = @job_offers.admin_index_archived
     job_offers_nearly_filtered = @job_offers_unfiltered
     if params[:s].present?
       job_offers_nearly_filtered = job_offers_nearly_filtered

@@ -175,6 +175,12 @@ RSpec.describe "Admin::Users" do
     it "redirects to the user index when the user is not found" do
       expect(get(admin_user_path(-1))).to redirect_to(admin_users_path)
     end
+
+    context "when the user has a job application" do
+      before { create(:job_application, user:) }
+
+      it { expect(get(admin_user_path(user))).to render_template(:show) }
+    end
   end
 
   describe "GET /admin/candidats/:id/photo" do

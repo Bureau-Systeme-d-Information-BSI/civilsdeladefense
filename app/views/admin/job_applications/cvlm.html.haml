@@ -15,8 +15,8 @@
     .card-subheader.bg-secondary
     %div
       %object{data: admin_user_resume_path(user), type: "application/pdf", width: "100%", height: "500px"}
-- if @job_application.cover_letter.present?
-  - cover_letter_url = admin_job_application_cover_letter_path(@job_application)
+- if job_application.cover_letter.present?
+  - cover_letter_url = admin_job_application_cover_letter_path(job_application)
   .card
     .card-header.with-subheader.bg-white.font-weight-bold.text-secondary.d-flex.align-items-center.justify-content-between
       %div

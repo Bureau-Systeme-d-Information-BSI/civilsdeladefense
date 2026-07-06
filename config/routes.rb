@@ -236,9 +236,7 @@ Rails.application.routes.draw do
         resource :job_offer, only: :show, path: "offre"
         resources :job_application_files, path: "documents"
         resources :emails, only: %i[index create] do
-          member do
-            get :attachment
-          end
+          resources :attachments, only: :show, module: :emails
         end
         resource :withdrawal, path: "desistement", only: :create
         resource :cover_letter, only: %i[show]

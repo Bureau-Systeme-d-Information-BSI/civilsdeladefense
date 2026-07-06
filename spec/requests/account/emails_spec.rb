@@ -37,17 +37,4 @@ RSpec.describe "Account::Emails" do
       it { expect(response.body).to include('action="replace"') }
     end
   end
-
-  describe "GET /espace-candidat/mes-candidatures/:job_application_id/emails/:id/attachment" do
-    subject(:attachment_request) do
-      get attachment_account_job_application_email_path(job_application, email, email_attachment_id: email_attachment.id)
-    end
-
-    let(:email) { create(:email, job_application:) }
-    let(:email_attachment) { create(:email_attachment, email:) }
-
-    before { attachment_request }
-
-    it { expect(response).to be_successful }
-  end
 end

@@ -166,7 +166,7 @@ If the new action needs a permission, ensure the relevant ability is defined (e.
 
 ### Tests
 
-Add **RSpec** request specs (this project uses RSpec, not Minitest), in
+Add **RSpec** request specs (this project uses RSpec), in
 `spec/requests/<parent_namespace>/<resource>s_spec.rb`, following the project conventions in `CLAUDE.md`:
 
 - A named `subject` per `describe`, triggered in a `before` block where the assertion is on `response`.

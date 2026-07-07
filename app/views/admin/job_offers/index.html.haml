@@ -2,7 +2,7 @@
 .card
   .card-body
     .d-flex.flex-column.flex-md-row.align-items-start.align-items-md-center
-      .h3.text-primary.mr-auto= t(".job_offers_count_#{controller.action_name}", count: @job_offers_unfiltered.count)
+      .h3.text-primary.mr-auto= t(".job_offers_count_#{archived_listing? ? 'archived' : 'index'}", count: @job_offers_unfiltered.count)
       - if can? :create, JobOffer
         - if current_organization.job_offer_term?
           = link_to [:admin, :job_offer_terms], class: 'btn btn-primary btn-raised mb-0 mt-3 mt-md-0 ml-auto' do
@@ -12,7 +12,7 @@
           = link_to [:new, :admin, :job_offer], class: 'btn btn-primary btn-raised mb-0 mt-3 mt-md-0 ml-auto' do
             = fa_icon 'plus', class: 'mr-1'
             = t('.new_job_offer')
-    = render partial: 'search'
+    = render partial: 'admin/job_offers/search'
     = form_tag(exports_admin_job_offers_url, id: "export_job_offers", target: "_blank", data: {turbo: false}) do
       -# inputs associated via form="export_job_offers"
     %div{data: {controller: "selectall"}}
@@ -62,9 +62,9 @@
                         Candidats
                       .col-2.text-truncate.font-weight-bold.text-primary
                         Étape
-            = render partial: 'job_offer', collection: @job_offers_filtered, locals: { list: true }
+            = render partial: 'admin/job_offers/job_offer', collection: @job_offers_filtered, locals: { list: true }
             .mt-5
-              = will_paginate @job_offers_filtered, params: { controller: 'job_offers', action: controller.action_name }
+              = will_paginate @job_offers_filtered
             .text-right
               = button_tag 'Exporter', type: "submit", class: "btn btn-primary btn-raised", form: "export_job_offers"
           - else

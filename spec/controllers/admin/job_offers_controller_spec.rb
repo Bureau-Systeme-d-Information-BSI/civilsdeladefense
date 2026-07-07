@@ -24,17 +24,7 @@ RSpec.describe Admin::JobOffersController do
         create_list(:job_offer, 5)
         get :index, params: {}
         expect(response).to be_successful
-        expect(assigns(:job_offers_active).size).to eq(5)
-      end
-    end
-
-    describe "GET #archived" do
-      it "returns a success response" do
-        create_list(:job_offer, 5)
-        create_list(:job_offer, 3, state: :archived)
-        get :archived, params: {}
-        expect(response).to be_successful
-        expect(assigns(:job_offers_archived).size).to eq(3)
+        expect(assigns(:job_offers_unfiltered).size).to eq(5)
       end
     end
 
@@ -243,26 +233,6 @@ RSpec.describe Admin::JobOffersController do
         create_list(:job_offer, 5)
         get :index, params: {}
         expect(response).to be_successful
-      end
-    end
-
-    describe "GET #archived" do
-      it "returns a success response" do
-        create_list(:job_offer, 5)
-        get :archived, params: {}
-        expect(response).to be_successful
-        expect(assigns(:job_offers_archived).size).to eq(0)
-
-        create_list(:job_offer,
-          3,
-          state: :archived,
-          job_offer_actors_attributes: [{
-            administrator_id: subject.current_administrator.id, # rubocop:disable RSpec/NamedSubject
-            role: :grand_employer
-          }])
-        get :archived, params: {}
-        expect(response).to be_successful
-        expect(assigns(:job_offers_archived).size).to eq(3)
       end
     end
 

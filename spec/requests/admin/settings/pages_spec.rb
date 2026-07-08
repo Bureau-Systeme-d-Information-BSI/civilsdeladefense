@@ -34,7 +34,7 @@ RSpec.describe "Admin::Settings::Pages" do
   end
 
   describe "POST /admin/parametres/pages/:id/move_higher" do
-    subject(:move_higher_request) { post move_higher_admin_settings_page_path(second) }
+    subject(:move_higher_request) { post admin_settings_page_higher_position_path(second) }
 
     let(:root) { Page.create!(organization:, title: "Root") }
     let(:first) { Page.create!(organization:, title: "First", parent: root) }
@@ -48,7 +48,7 @@ RSpec.describe "Admin::Settings::Pages" do
   end
 
   describe "POST /admin/parametres/pages/:id/move_lower" do
-    subject(:move_lower_request) { post move_lower_admin_settings_page_path(first) }
+    subject(:move_lower_request) { post admin_settings_page_lower_position_path(first) }
 
     let(:root) { Page.create!(organization:, title: "Root") }
     let(:first) { Page.create!(organization:, title: "First", parent: root) }

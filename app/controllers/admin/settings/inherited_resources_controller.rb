@@ -27,30 +27,6 @@ class Admin::Settings::InheritedResourcesController < Admin::Settings::BaseContr
     redirect_to({action: :index}, flash: {notice: t("admin.settings.destroy.failure.#{e.class.name.parameterize.underscore}")})
   end
 
-  def move_higher
-    resource.move_higher
-
-    redirect_to action: :index
-  end
-
-  def move_lower
-    resource.move_lower
-
-    redirect_to action: :index
-  end
-
-  def move_left
-    resource.move_left
-
-    redirect_to action: :index
-  end
-
-  def move_right
-    resource.move_right
-
-    redirect_to action: :index
-  end
-
   protected
 
   def permitted_fields

@@ -18,7 +18,7 @@
         - if resource_class == Category
           = link_to fa_icon('plus'), [:new, :admin, :category, {parent_id: element.id}], title: t('buttons.add_child')
         - if element.has_attribute?(:position)
-          = link_to fa_icon('arrow-up'), [:move_higher, :admin, element], method: :post, title: t('buttons.move_higher'), data: {confirm: t('buttons.confirm')}
-          = link_to fa_icon('arrow-down'), [:move_lower, :admin, element], method: :post, title: t('buttons.move_lower'), data: {confirm: t('buttons.confirm')}
+          = link_to fa_icon('arrow-up'), [:admin, :settings, element, :higher_position], method: :post, title: t('buttons.move_higher'), data: {confirm: t('buttons.confirm')}
+          = link_to fa_icon('arrow-down'), [:admin, :settings, element, :lower_position], method: :post, title: t('buttons.move_lower'), data: {confirm: t('buttons.confirm')}
         = link_to fa_icon('pencil'), [:edit, :admin, element], title: t('buttons.edit')
         = link_to fa_icon('trash-can'), [:admin, element], method: :delete, title: t('buttons.delete'), data: {confirm: t('buttons.confirm')}

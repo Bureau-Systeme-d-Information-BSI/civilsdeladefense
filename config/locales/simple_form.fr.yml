@@ -245,9 +245,9 @@ fr:
       employer:
         code: "Ce champ est utilisé pour construire l'identifiant unique d'une annonce."
       job_application:
-        photo: "Format JPG ou PNG, max. 2Mo"
-        resume: "Format PDF, max. 2Mo"
-        cover_letter: "Format PDF, max. 2Mo"
+        photo: "Format JPG ou PNG, max. 10Mo"
+        resume: "Format PDF, max. 10Mo"
+        cover_letter: "Format PDF, max. 10Mo"
         website_url: "LinkedIn, Viadeo, portfolio, etc."
       organization:
         privacy_policy_url: "Ce lien est utilisé dans le formulaire de soumission d'une candidature"

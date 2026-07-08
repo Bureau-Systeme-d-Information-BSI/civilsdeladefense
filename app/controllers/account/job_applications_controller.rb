@@ -10,10 +10,6 @@ class Account::JobApplicationsController < Account::BaseController
     @job_applications_finished = job_applications.rejecteds
   end
 
-  def job_offer
-    render layout: "account/job_application_display"
-  end
-
   # GET /account/job_applications/1
   # GET /account/job_applications/1.json
   def show

@@ -1,6 +1,6 @@
 - unless user_signed_in?
   = render "devise/shared/france_connect"
-= simple_form_for(@job_application, url: [:send_application, @job_offer], method: :post, data: { turbo: true, controller: "form-save", form_save_target: "form", action: "change->form-save#saveFormData submit->form-save#clearFormData" }) do |f|
+= simple_form_for(@job_application, url: job_offer_job_application_path(@job_offer), method: :post, data: { turbo: true, controller: "form-save", form_save_target: "form", action: "change->form-save#saveFormData submit->form-save#clearFormData" }) do |f|
   %altcha-widget{challengeurl: altcha_url, delay: 500, overlay: true, hidelogo: true, hidefooter: true}
 
   .form-inputs.mt-3
@@ -47,8 +47,7 @@
             - if profile_form.object.resume.present? && user_signed_in?
               = link_to profile_form.object.resume_file_name, account_profiles_resume_path, target: '_blank'
 
-    - if @job_offer.cover_lettre_required?
-      = f.input :cover_letter, as: :file, required: true, label: t('job_applications.form.cover_letter')
+    = f.input :cover_letter, as: :file, required: @job_offer.cover_lettre_required?, label: t('job_applications.form.cover_letter')
 
     - job_application_files = @job_application.job_application_files.to_a
     - file_types = JobApplicationFileType.visible_by_user_up_to(@job_application.state)

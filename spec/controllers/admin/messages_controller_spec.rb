@@ -58,4 +58,24 @@ RSpec.describe Admin::MessagesController do
       end
     end
   end
+
+  describe "POST #create as js" do
+    before { create_message }
+
+    context "with valid params" do
+      subject(:create_message) do
+        post :create, params: {message: valid_attributes, job_application_id: job_application.id}, format: :js
+      end
+
+      it { expect(response).to be_successful }
+    end
+
+    context "with invalid params" do
+      subject(:create_message) do
+        post :create, params: {message: invalid_attributes, job_application_id: job_application.id}, format: :js
+      end
+
+      it { expect(response).to be_successful }
+    end
+  end
 end

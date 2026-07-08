@@ -325,6 +325,7 @@ GEM
     net-smtp (0.4.0)
       net-protocol
     nio4r (2.7.3)
+    nkf (0.2.0)
     nokogiri (1.18.7)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
@@ -407,7 +408,7 @@ GEM
     rack-protection (2.2.0)
       rack
     rack-rewrite (1.5.1)
-    rack-session (2.1.0)
+    rack-session (2.1.2)
       base64 (>= 0.1.0)
       rack (>= 3.0.0)
     rack-test (2.2.0)
@@ -684,6 +685,7 @@ DEPENDENCIES
   mail
   maintenance_tasks
   mini_magick
+  nkf
   omniauth-rails_csrf_protection
   omniauth_openid_connect (~> 0.8.0)
   ostruct

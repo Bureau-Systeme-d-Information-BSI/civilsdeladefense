@@ -49,7 +49,7 @@ class JobApplication < ApplicationRecord
 
   mount_uploader :cover_letter, DocumentUploader, mount_on: :cover_letter_file_name
   validates :cover_letter, presence: true, if: -> { job_offer.cover_lettre_required? }
-  validates :cover_letter, file_size: {less_than: 2.megabytes}, if: -> { cover_letter_file_name_changed? }
+  validates :cover_letter, file_size: {less_than: 10.megabytes}, if: -> { cover_letter_file_name_changed? }
 
   scope :with_category, -> { where.not(category: nil) }
 
@@ -250,8 +250,12 @@ class JobApplication < ApplicationRecord
   def compute_files_count
     ary_start = [0, 0]
     ary = job_application_files.each_with_object(ary_start) { |job_application_file, memo|
+      next if job_application_file.job_application_file_type&.cover_letter?
+
       memo[0] += 1
-      memo[1] += 1 if job_application_file.waiting_validation? && job_application_file.job_application_file_type&.notification
+      memo[1] += 1 if job_application_file.waiting_validation? &&
+        job_application_file.content_file_name.present? &&
+        job_application_file.job_application_file_type&.notification
     }
     self.files_count, self.files_unread_count = ary
   end

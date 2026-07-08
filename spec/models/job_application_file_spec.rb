@@ -5,6 +5,24 @@ RSpec.describe JobApplicationFile do
     it { is_expected.to delegate_method(:state).to(:job_application).with_prefix(true) }
   end
 
+  describe "content file size" do
+    subject(:job_application_file) { build(:job_application_file) }
+
+    before { allow(job_application_file.content).to receive(:size).and_return(size) }
+
+    context "when smaller than 10 megabytes" do
+      let(:size) { 10.megabytes - 1 }
+
+      it { expect(job_application_file).to be_valid }
+    end
+
+    context "when 10 megabytes or larger" do
+      let(:size) { 10.megabytes }
+
+      it { expect(job_application_file.tap(&:valid?).errors[:content]).to be_present }
+    end
+  end
+
   describe "#record_by_user" do
     subject(:record_by_user) { job_application_file.record_by_user }
 

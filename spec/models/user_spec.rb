@@ -10,6 +10,24 @@ RSpec.describe User do
     it { expect(user).to be_valid }
   end
 
+  describe "photo file size" do
+    subject(:user) { build(:user, :with_photo) }
+
+    before { allow(user.photo).to receive(:size).and_return(size) }
+
+    context "when smaller than 10 megabytes" do
+      let(:size) { 10.megabytes - 1 }
+
+      it { expect(user).to be_valid }
+    end
+
+    context "when 10 megabytes or larger" do
+      let(:size) { 10.megabytes }
+
+      it { expect(user.tap(&:valid?).errors[:photo]).to be_present }
+    end
+  end
+
   describe "associations" do
     it { is_expected.to have_one(:profile).dependent(:destroy) }
 

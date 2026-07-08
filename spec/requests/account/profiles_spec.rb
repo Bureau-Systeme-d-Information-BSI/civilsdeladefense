@@ -72,4 +72,17 @@ RSpec.describe "Account::Profiles" do
       it { expect(response).to redirect_to(edit_account_profiles_path) }
     end
   end
+
+  describe "PATCH /espace-candidat/mon-profile with invalid params" do
+    subject(:update_request) do
+      patch account_profiles_path, params: {profile: {availability_range_id: AvailabilityRange.first.id}}
+    end
+
+    before do
+      user.update!(profile: create(:profile, profileable: user))
+      update_request
+    end
+
+    it { expect(response).to render_template(:edit) }
+  end
 end

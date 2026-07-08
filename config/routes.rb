@@ -223,9 +223,7 @@ Rails.application.routes.draw do
         end
       end
       resources :job_applications, path: "mes-candidatures" do
-        member do
-          get :job_offer, path: "offre"
-        end
+        resource :job_offer, only: :show, path: "offre"
         resources :job_application_files, path: "documents"
         resources :emails, only: %i[index create] do
           member do
@@ -233,6 +231,7 @@ Rails.application.routes.draw do
           end
         end
         resource :withdrawal, path: "desistement", only: :create
+        resource :cover_letter, only: %i[show]
       end
       resource :user, path: "mon-compte", only: %i[show destroy] do
         collection do
@@ -253,13 +252,8 @@ Rails.application.routes.draw do
   end
 
   resources :job_offers, path: "offresdemploi", only: %i[index show] do
-    collection do
-      get :apply
-    end
+    resource :job_application, only: %i[new create show], module: :job_offers, path: "candidature"
     member do
-      get :apply, to: "job_offers#old_apply"
-      post :send_application
-      get :successful
       resources :bookmarks, only: %i[create destroy], path: "favoris"
     end
   end

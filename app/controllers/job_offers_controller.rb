@@ -2,9 +2,8 @@
 
 class JobOffersController < ApplicationController
   before_action :set_job_offers, only: %i[index]
-  before_action :set_job_offer, only: %i[show apply send_application successful]
-  invisible_captcha only: [:send_application], honeypot: :subtitle
-  layout "job_offer_display", only: %i[show apply successful send_application]
+  before_action :set_job_offer, only: %i[show]
+  layout "job_offer_display", only: %i[show]
 
   # GET /job_offers
   # GET /job_offers.json
@@ -30,75 +29,6 @@ class JobOffersController < ApplicationController
       format.html {}
       format.pdf { render_job_offer_as_pdf }
     end
-  end
-
-  # GET /job_offers/1/apply
-  # GET /job_offers/1/apply.json
-  def old_apply
-    redirect_to apply_job_offers_path(id: params[:id]), status: :moved_permanently
-  end
-
-  # GET /job_offers/apply?id=1
-  # GET /job_offers/apply.json?id=1
-  def apply
-    # Store location if user signup after
-    store_location_for(:user, request.fullpath)
-    if user_signed_in? && (previous_job_application = current_user.job_applications.first)
-      @job_application = previous_job_application.dup
-      @job_application.state = JobApplication.new.state
-    else
-      @job_application = JobApplication.new
-      @job_application.user = user_signed_in? ? current_user : User.new
-    end
-    @job_application.user.build_profile if @job_application.user.profile.nil?
-  end
-
-  # POST /job_offers/1/send_application
-  # POST /job_offers/1/send_application.json
-  def send_application
-    @job_application = JobApplication.new(job_application_params)
-    @job_application.job_offer = @job_offer
-    @job_application.organization = @job_offer.organization
-    @job_application.user = current_user if user_signed_in?
-    @job_application.user.organization = current_organization unless user_signed_in?
-
-    if user_signed_in?
-      @job_application.user.profile.profile_foreign_languages = []
-      @job_application.user.profile.category_experience_levels = []
-      if job_application_params[:user_attributes].present?
-        @job_application.user.assign_attributes(
-          job_application_params[:user_attributes].except(:profile_attributes)
-        )
-      end
-      @job_application.user.profile.assign_attributes(
-        job_application_params[:user_attributes][:profile_attributes].except(:department_profiles_attributes)
-      )
-      @job_application.user.profile.departments = departments
-    end
-
-    respond_to do |format|
-      if @job_application.save(context: :profile)
-        @job_offer.initial! if @job_offer.start?
-        @job_application.send_confirmation_email
-        format.html { redirect_to [:successful, @job_offer] }
-        format.json do
-          json = @job_application.to_json(only: %i[id])
-          render json: json, status: :created, location: [:successful, @job_offer]
-        end
-      else
-        format.turbo_stream do
-          instruction = turbo_stream.replace(@job_application, partial: "/job_applications/form")
-          render turbo_stream: instruction
-        end
-        format.html { render :apply }
-        format.json { render json: @job_application.errors, status: :unprocessable_content }
-      end
-    end
-  end
-
-  # GET /job_offers/1/successful
-  # GET /job_offers/1/successful.json
-  def successful
   end
 
   private
@@ -143,50 +73,6 @@ class JobOffersController < ApplicationController
       raise JobOfferNotAvailableAnymore.new(job_offer_title: @job_offer.title)
     end
     redirect_to @job_offer, status: :moved_permanently if params[:id] != @job_offer.slug
-  end
-
-  def job_application_params
-    params.require(:job_application).permit(
-      :category_id,
-      :cover_letter,
-      user_attributes: [
-        :first_name,
-        :last_name,
-        :phone,
-        :website_url,
-        :photo,
-        :email,
-        :password,
-        :password_confirmation,
-        :terms_of_service,
-        :certify_majority,
-        :receive_job_offer_mails,
-        profile_attributes: [
-          :gender,
-          :has_corporate_experience,
-          :age_range_id,
-          :availability_range_id,
-          :experience_level_id,
-          :study_level_id,
-          :resume,
-          profile_foreign_languages_attributes: [
-            :foreign_language_id,
-            :foreign_language_level_id
-          ],
-          category_experience_levels_attributes: [
-            :category_id,
-            :experience_level_id
-          ],
-          department_profiles_attributes: %i[department_id]
-        ]
-      ],
-      job_application_files_attributes: [
-        :content,
-        :job_application_file_type_id,
-        :job_application_file_existing_id,
-        :do_not_provide_immediately
-      ]
-    )
   end
 
   def search_params
@@ -252,12 +138,4 @@ class JobOffersController < ApplicationController
   end
 
   def pdf_job_offer = @pdf_job_offer ||= PdfJobOffer.new(@job_offer)
-
-  def departments = Department.where(id: department_ids)
-
-  def department_ids = department_profiles_attributes&.to_unsafe_h&.map { |_, department| department[:department_id] }
-
-  def department_profiles_attributes
-    job_application_params.dig(:user_attributes, :profile_attributes, :department_profiles_attributes)
-  end
 end

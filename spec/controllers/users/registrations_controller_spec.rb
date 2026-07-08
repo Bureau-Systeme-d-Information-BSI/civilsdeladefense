@@ -39,4 +39,15 @@ RSpec.describe Users::RegistrationsController do
       expect(response).to redirect_to(success_user_registration_url(email: user_attrs[:email]))
     end
   end
+
+  describe "GET #success" do
+    subject(:success_request) { get :success, params: {email: "candidate@example.com"} }
+
+    before do
+      request.env["devise.mapping"] = Devise.mappings[:user]
+      success_request
+    end
+
+    it { expect(response).to have_http_status(:ok) }
+  end
 end

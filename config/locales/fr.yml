@@ -118,7 +118,7 @@ fr:
       your_account_creation: "Votre création de compte"
       resume: "CV"
       resume_html: "CV <abbr title='obligatoire'>*</abbr>"
-      cover_letter: "Lettre de motivation (PDF uniquement, max 2Mo)"
+      cover_letter: "Lettre de motivation (PDF uniquement, max 10Mo)"
   job_offers:
     no_bookmarks:
       title: Vous n'avez pas encore d'offres favorites
@@ -250,10 +250,13 @@ fr:
     job_application_files:
       update:
         success: "Le document a bien été modifié"
-        error: "Le fichier n'est pas valide, seuls les fichiers PDF de taille inférieure à 2Mo sont acceptés."
+        error: "Le fichier n'est pas valide, seuls les fichiers PDF de taille inférieure à 10Mo sont acceptés."
       create:
         success: "Le document a bien été modifié"
-        error: "Le fichier n'est pas valide, seuls les fichiers PDF de taille inférieure à 2Mo sont acceptés."
+        error: "Le fichier n'est pas valide, seuls les fichiers PDF de taille inférieure à 10Mo sont acceptés."
+      index:
+        cover_letter: "Lettre de motivation"
+        cover_letter_uploaded_html: "Vous avez déjà téléversé ce <a href=\"%{url}\" target=\"_blank\" class=\"text-dark-gray\" rel=\"noopener\">fichier</a>"
     job_applications:
       index:
         title: "Mes candidatures"
@@ -263,7 +266,8 @@ fr:
         ongoing_none: "Aucune candidature en cours"
       job_application:
         created_at: "Candidaté il y a %{time_ago_in_words}"
-      job_offer:
+    job_offers:
+      show:
         withdraw: "Retirer ma candidature"
         withdraw_confirmation: "Souhaitez-vous retirer votre candidature ?"
         confirm: "Confirmer"
@@ -281,8 +285,8 @@ fr:
     profiles:
       edit:
         title: "Mon profil candidat"
-        resume: "CV (PDF uniquement, max 2Mo)"
-        resume_html: "CV (PDF uniquement, max 2Mo) <abbr title='obligatoire'>*</abbr>"
+        resume: "CV (PDF uniquement, max 10Mo)"
+        resume_html: "CV (PDF uniquement, max 10Mo) <abbr title='obligatoire'>*</abbr>"
       update:
         success: "Profil mis à jour !"
     users:
@@ -324,6 +328,8 @@ fr:
         success: "Vos informations ont été mises à jour"
         success_new_email: "Votre courriel a bien été modifié. Vérifiez votre boîte pour confirmer votre nouveau courriel."
     job_applications:
+      cvlm:
+        cover_letter: "Lettre de motivation"
       rejection_form:
         confirm: "Confirmez-vous le refus ou désistement du candidat ?"
       show:
@@ -347,7 +353,6 @@ fr:
         applied_on: "Candidaté le %{date}"
       files:
         title: "Documents du candidat"
-        cover_letter: "Lettre de motivation"
         subtitle_1: "Documents à fournir par le candidat"
         subtitle_2: "Documents complémentaires"
         none_atm: "Aucun fichiers demandés"
@@ -603,6 +608,8 @@ fr:
           other: "%{count} résultats de recherche"
       listing:
         title: "Ajouter/supprimer ce candidat de mes listes"
+      update_listing:
+        success: "Liste mise à jour !"
       suspensions:
         create:
           success: "Utilisateur suspendu"
@@ -720,6 +727,12 @@ fr:
             zero: "Aucun CMG"
             one: "1 CMG"
             other: "%{count} CMGs"
+        create:
+          success: "CMG ajouté !"
+        update:
+          success: "CMG mis à jour !"
+        destroy:
+          success: "CMG supprimé !"
       frequently_asked_questions:
         index:
           title: "FAQ"
@@ -731,13 +744,13 @@ fr:
         new:
           title: "Ajouter une question"
         create:
-          success: "CMG ajouté !"
+          success: "Question ajoutée !"
         update:
-          success: "CMG mis à jour !"
+          success: "Question mise à jour !"
         destroy:
-          success: "CMG supprimé !"
+          success: "Question supprimée !"
         edit:
-          title: "Modifier le CMG"
+          title: "Modifier la question"
       employers:
         index:
           title: "Employeurs"
@@ -1233,16 +1246,16 @@ fr:
               dar_unvalidated: 'Une autorité d''emploi affiliée à l''offre doit cocher la case "DAR validée" pour permettre la poursuite du processus de recrutement.'
               immutable_rejected: "Cette candidature a été refusée, son état ne peut pas être modifié"
             cover_letter_content_type:
-              invalid: "PDF uniquement, max 2Mo"
+              invalid: "PDF uniquement, max 10Mo"
             resume_content_type:
-              invalid: "PDF uniquement, max 2Mo"
+              invalid: "PDF uniquement, max 10Mo"
             photo:
               file_size_is_less_than_or_equal_to: "Est trop volumineuse (ne doit pas dépasser %{count})"
               allowed_file_content_types: "au mauvais format (seuls les formats JPG et PNG sont acceptés)"
         job_application_file:
           attributes:
             content:
-              file_size_is_less_than: "Fichier trop volumineux, doit être max. 2Mo"
+              file_size_is_less_than: "Fichier trop volumineux, doit être max. 10Mo"
             base:
               not_authorized_to_validate: "Vous n'êtes pas autorisé(e) à valider ou invalider ce type de pièce"
               cant_unrequest: "Ce document est obligatoire et ne peut pas être retiré"
@@ -1266,7 +1279,7 @@ fr:
               not_allowed_because_suspended: "impossible de supprimer un compte tant qu'il est suspendu"
             current_position: "Poste actuel"
             photo:
-              file_size_is_less_than: "Fichier trop volumineux, doit être max. 2Mo"
+              file_size_is_less_than: "Fichier trop volumineux, doit être max. 10Mo"
     models:
       job_offer: "Offre"
     attributes:
@@ -1365,6 +1378,19 @@ fr:
         application_deadline: "Date limite de candidature"
         cover_lettre_required: "Lettre de motivation obligatoire"
         positions_count: Nombre de postes
+        identifier: "Référence/identifiant de l'offre"
+        description: "Descriptif des missions"
+        level: "Catégorie / Niveau de l'offre"
+        professional_category: "Catégorie professionnelle"
+        sector: "Secteur"
+        bop: "BOP"
+        csp_value: "Référence CSP"
+        mobilia_value: "Référence MOBILIA"
+        ict_tct: "ICT-TCT"
+        asc: "ASC"
+        spontaneous: "Candidature spontanée"
+        estimate_monthly_salary_net: "Estimation mensuel net (fonction publique)"
+        estimate_annual_salary_gross: "Estimation annuel brut (secteur privé)"
       job_offer_actor/role:
         employer: "Employeur"
         grand_employer: "Employeur recruteur(s)"

@@ -39,5 +39,23 @@ RSpec.describe "Downloads" do
     it_behaves_like "a downloadable resource", "EmailAttachment", "content", "application/pdf" do
       let(:resource) { create(:email_attachment) }
     end
+
+    context "when the resource type is invalid" do
+      subject(:show_request) do
+        get download_path("anything", resource_type: "Invalid", attribute_name: "photo"),
+          headers: {"X-Download-Secret-Key" => ENV["DOWNLOAD_SECRET_KEY"]}
+      end
+
+      it { expect { show_request }.to raise_error(UncaughtThrowError) }
+    end
+
+    context "when the attribute name is invalid" do
+      subject(:show_request) do
+        get download_path("anything", resource_type: "User", attribute_name: "invalid"),
+          headers: {"X-Download-Secret-Key" => ENV["DOWNLOAD_SECRET_KEY"]}
+      end
+
+      it { expect { show_request }.to raise_error(UncaughtThrowError) }
+    end
   end
 end

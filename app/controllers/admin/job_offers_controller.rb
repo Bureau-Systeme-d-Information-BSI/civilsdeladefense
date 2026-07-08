@@ -59,7 +59,7 @@ class Admin::JobOffersController < Admin::BaseController
     if @administrator.present?
       render action: "add_actor", layout: false
     else
-      render :add_actor_error
+      render :add_actor_error, status: :unprocessable_content
     end
   end
 
@@ -225,7 +225,9 @@ class Admin::JobOffersController < Admin::BaseController
   def find_administrator_and_build_job_offer_actor(job_offer, email, role)
     return nil if email.blank?
 
-    administrator = Administrator.find_by!(email:)
+    administrator = Administrator.find_by(email:)
+    return nil if administrator.nil?
+
     job_offer_actor = job_offer.job_offer_actors.build(role:)
     job_offer_actor.administrator = administrator
     administrator

@@ -28,7 +28,7 @@ class Profile < ApplicationRecord
   accepts_nested_attributes_for :department_profiles, reject_if: :all_blank
 
   mount_uploader :resume, DocumentUploader, mount_on: :resume_file_name
-  validates :resume, file_size: {less_than: 2.megabytes}, if: -> { resume.present? }
+  validates :resume, file_size: {less_than: 10.megabytes}, if: -> { resume.present? }
 
   validate :at_least_one_category_experience_level, on: :profile
 

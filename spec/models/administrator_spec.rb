@@ -5,6 +5,24 @@ require "rails_helper"
 RSpec.describe Administrator do
   let(:administrator) { create(:administrator) }
 
+  describe "photo file size" do
+    subject(:administrator) { build(:administrator, :with_photo) }
+
+    before { allow(administrator.photo).to receive(:size).and_return(size) }
+
+    context "when smaller than 10 megabytes" do
+      let(:size) { 10.megabytes - 1 }
+
+      it { expect(administrator).to be_valid }
+    end
+
+    context "when 10 megabytes or larger" do
+      let(:size) { 10.megabytes }
+
+      it { expect(administrator.tap(&:valid?).errors[:photo]).to be_present }
+    end
+  end
+
   describe "associations" do
     it { is_expected.to have_many(:invitees).inverse_of(:inviter) }
 

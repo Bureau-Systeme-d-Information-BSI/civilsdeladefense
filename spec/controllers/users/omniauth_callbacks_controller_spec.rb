@@ -79,6 +79,18 @@ RSpec.describe Users::OmniauthCallbacksController do
         expect(controller.current_user).to eq(user)
       end
     end
+
+    context "when the oauth client raises an error" do
+      subject(:france_connect_request) { post :france_connect }
+
+      before do
+        allow(OmniauthInformation).to receive(:find_or_initialize_by)
+          .and_raise(Rack::OAuth2::Client::Error.new(400, error: "invalid_grant"))
+        france_connect_request
+      end
+
+      it { expect(response).to redirect_to(new_user_session_path) }
+    end
   end
 end
 

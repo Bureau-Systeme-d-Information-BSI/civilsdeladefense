@@ -1,2 +1,7 @@
+- if @job_application.cover_letter.present?
+  %h3= t('.cover_letter')
+  .rf-mb-1w.rf-mb-3w.font-weight-bold
+    = t('.cover_letter_uploaded_html', url: account_job_application_cover_letter_path(@job_application))
 - @job_application.file_types_for_user.each do |type|
+  - next if type.cover_letter?
   = render partial: 'file_name_upload', locals: {job_application_file: @job_application.file_for(type), job_application: @job_application}

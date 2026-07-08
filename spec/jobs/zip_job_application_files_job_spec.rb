@@ -43,4 +43,21 @@ RSpec.describe ZipJobApplicationFilesJob do
       }.not_to raise_error
     end
   end
+
+  describe "when a candidate has a resume" do
+    subject(:zip_entries) { Zip::File.open(ZipFile.find(id).zip.current_path).map(&:name) }
+
+    let(:id) { SecureRandom.uuid }
+    let(:user) { create(:user, first_name: "First name", last_name: "Last name") }
+    let(:resume) do
+      Rack::Test::UploadedFile.new(Rails.root.join("spec/fixtures/files/document.pdf"), "application/pdf")
+    end
+
+    before do
+      user.profile.update!(resume:)
+      described_class.new.perform(zip_id: id, user_ids: [user.id])
+    end
+
+    it { is_expected.to include("#{user.full_name} - CV.pdf") }
+  end
 end

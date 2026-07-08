@@ -11,6 +11,40 @@ RSpec.describe Organization do
   it { is_expected.to validate_presence_of(:service_name) }
   it { is_expected.to validate_presence_of(:brand_name) }
   it { is_expected.to validate_presence_of(:prefix_article) }
+
+  describe "#name" do
+    subject(:name) { described_class.new(service_name: "DGSE").name }
+
+    it { is_expected.to eq("DGSE") }
+  end
+
+  describe "#possessive_article" do
+    subject(:possessive_article) { described_class.new(prefix_article:).possessive_article }
+
+    context "when the prefix article is \"le\"" do
+      let(:prefix_article) { "le" }
+
+      it { is_expected.to eq("du ") }
+    end
+
+    context "when the prefix article is \"la\"" do
+      let(:prefix_article) { "la" }
+
+      it { is_expected.to eq("de la ") }
+    end
+
+    context "when the prefix article is \"l'\"" do
+      let(:prefix_article) { "l'" }
+
+      it { is_expected.to eq("de l'") }
+    end
+
+    context "when the prefix article is unknown" do
+      let(:prefix_article) { "les" }
+
+      it { is_expected.to be_nil }
+    end
+  end
 end
 
 # == Schema Information

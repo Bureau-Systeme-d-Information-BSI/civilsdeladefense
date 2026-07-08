@@ -183,7 +183,7 @@ RSpec.describe Admin::JobOffersController do
             email: "pipo"
           }
 
-          post :add_actor, params: invalid_attributes
+          post :add_actor, params: invalid_attributes, xhr: true
 
           expect(response).not_to be_successful
         end

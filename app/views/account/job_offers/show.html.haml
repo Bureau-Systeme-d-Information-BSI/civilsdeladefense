@@ -2,17 +2,17 @@
 - unless @job_application.affected? || @job_application.rejected?
   .rf-input-group.rf-grid-row.justify-content-center.rf-mt-3w{data: {controller: "modal"}}
     %button.btn.rf-btn{data: {action: "modal#open"}}
-      = t('account.job_applications.job_offer.withdraw')
+      = t('.withdraw')
     %dialog.rf-modal{"data-modal-target" => "dialog", aria: {labelledby: "withdraw-modal-title"}, role: :dialog}
       .rf-container.rf-container--fluid.rf-grid-row.rf-grid-row--center
         .rf-col-12.rf-col-md-8.rf-col-lg-6
           .rf-modal__body
             .rf-modal__header
-              %button.rf-link.rf-fi-close-line.rf-link--close{data: {action: "modal#close"}, title: t('account.job_applications.job_offer.cancel')}
-                = t('account.job_applications.job_offer.cancel')
+              %button.rf-link.rf-fi-close-line.rf-link--close{data: {action: "modal#close"}, title: t('.cancel')}
+                = t('.cancel')
             .rf-modal__content.text-center
-              %p#withdraw-modal-title= t('account.job_applications.job_offer.withdraw_confirmation')
+              %p#withdraw-modal-title= t('.withdraw_confirmation')
             .rf-modal__footer.justify-content-center
-              = button_to t('account.job_applications.job_offer.confirm'), account_job_application_withdrawal_path(@job_application), class: "btn rf-btn rf-mr-6w", data: {turbo: false}
+              = button_to t('.confirm'), account_job_application_withdrawal_path(@job_application), class: "btn rf-btn rf-mr-6w", data: {turbo: false}
               %button.btn.rf-btn.rf-btn--secondary{data: {action: "modal#close"}}
-                = t('account.job_applications.job_offer.cancel')
+                = t('.cancel')

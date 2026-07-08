@@ -8,7 +8,7 @@ class Account::WithdrawalsController < Account::BaseController
   def create
     @job_application.reject!(rejection_reason:, from_user: true)
     respond_to do |format|
-      format.html { redirect_to job_offer_account_job_application_path(@job_application), notice: t(".success") }
+      format.html { redirect_to account_job_application_job_offer_path(@job_application), notice: t(".success") }
     end
   end
 

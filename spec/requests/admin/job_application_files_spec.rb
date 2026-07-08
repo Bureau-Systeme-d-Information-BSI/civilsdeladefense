@@ -164,4 +164,99 @@ RSpec.describe "Admin::JobApplicationFiles" do
       end
     end
   end
+
+  describe "POST /admin/candidatures/:job_application_id/job_application_files when the file is invalid" do
+    let(:file_type) { create(:job_application_file_type) }
+    let(:params) { {job_application_file: {job_application_file_type_id: file_type.id, is_validated: false}} }
+
+    before { create(:job_application_file, job_application:, job_application_file_type: file_type) }
+
+    context "when format is html" do
+      subject(:create_request) { post admin_job_application_job_application_files_path(job_application), params: }
+
+      # No "new" template exists, so the html failure branch raises a missing template error.
+      it { expect { create_request }.to raise_error(ActionView::MissingTemplate) }
+    end
+
+    context "when format is js" do
+      subject(:create_request) {
+        post admin_job_application_job_application_files_path(job_application), params:, xhr: true
+      }
+
+      before { create_request }
+
+      it { expect(response).to render_template(:file_operation_total) }
+    end
+
+    context "when format is json" do
+      subject(:create_request) { post admin_job_application_job_application_files_path(job_application, format: :json), params: }
+
+      before { create_request }
+
+      it { expect(response).to have_http_status(:unprocessable_content) }
+    end
+  end
+
+  describe "PATCH /admin/candidatures/:job_application_id/job_application_files/:id when the file is invalid" do
+    let(:other_file_type) { create(:job_application_file_type, name: "Diploma") }
+    let(:params) { {job_application_file: {job_application_file_type_id: other_file_type.id}} }
+
+    before do
+      job_application_file
+      create(:job_application_file, job_application:, job_application_file_type: other_file_type)
+    end
+
+    context "when format is html" do
+      subject(:update_request) { patch admin_job_application_job_application_file_path(job_application, job_application_file), params: }
+
+      # No "new" template exists, so the html failure branch raises a missing template error.
+      it { expect { update_request }.to raise_error(ActionView::MissingTemplate) }
+    end
+
+    context "when format is js" do
+      subject(:update_request) {
+        patch admin_job_application_job_application_file_path(job_application, job_application_file), params:, xhr: true
+      }
+
+      before { update_request }
+
+      it { expect(response).to render_template(:file_operation_total) }
+    end
+
+    context "when format is json" do
+      subject(:update_request) {
+        patch admin_job_application_job_application_file_path(job_application, job_application_file, format: :json),
+          params:
+      }
+
+      before { update_request }
+
+      it { expect(response).to have_http_status(:unprocessable_content) }
+    end
+  end
+
+  describe "DELETE /admin/candidatures/:job_application_id/job_application_files/:id when it cannot be unrequested" do
+    let(:required_file_type) { create(:job_application_file_type, required: true) }
+    let(:job_application_file) {
+      create(:job_application_file, job_application:, job_application_file_type: required_file_type)
+    }
+
+    context "when format is js" do
+      subject(:destroy_request) {
+        delete admin_job_application_job_application_file_path(job_application, job_application_file), xhr: true
+      }
+
+      before { destroy_request }
+
+      it { expect(response).to render_template(:file_operation_total) }
+    end
+
+    context "when format is html" do
+      subject(:destroy_request) {
+        delete admin_job_application_job_application_file_path(job_application, job_application_file)
+      }
+
+      it { expect(destroy_request).to redirect_to(admin_job_application_path(job_application)) }
+    end
+  end
 end

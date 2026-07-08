@@ -131,6 +131,7 @@ class Administrator < ApplicationRecord
     super && !deleted_at && authorized_for_back_office?
   end
 
+  # TODO: @msharififr remove this check in septembre 2026
   def authorized_for_back_office?
     return true unless ENV["BACK_OFFICE_FUNCTIONAL_ADMIN_ONLY"] == "true"
 

@@ -12,9 +12,9 @@ RUN apt-get update -qq && apt-get install -y --no-install-recommends \
     pkg-config \
     && rm -rf /var/lib/apt/lists/*
 
-# Node 18.20.4 + Yarn (version pinned to match .tool-versions)
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
-    && apt-get install -y nodejs=18.20.4-1nodesource1 \
+# Node 24.18.0 + Yarn (version pinned to match .tool-versions)
+RUN curl -fsSL https://deb.nodesource.com/setup_24.x | bash - \
+    && apt-get install -y nodejs=24.18.0-1nodesource1 \
     && npm install -g yarn \
     && rm -rf /var/lib/apt/lists/*
 

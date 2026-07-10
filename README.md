@@ -8,7 +8,7 @@ Application Ruby on Rails avec base de données PostgreSQL, assets compilés via
 
 - PostgreSQL
 - Ruby 4.0.5
-- NodeJS 18.20.4
+- NodeJS 24.18.0
 - Yarn
 - Redis
 - ImageMagick

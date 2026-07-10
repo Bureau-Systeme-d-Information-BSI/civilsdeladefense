@@ -7,7 +7,7 @@ class User < ApplicationRecord
   PASSWORD_REGEX = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[\\\/<>{}()#¤:;,.?!•·|"'`´~@£¨µ§²$€%^&*+=_-]).{12,70}$/
 
   def self.omniauth_providers
-    ENV["FRANCE_CONNECT_HOST"] ? [:france_connect] : []
+    Rails.application.credentials.france_connect&.host ? [:france_connect] : []
   end
 
   devise :database_authenticatable, :registerable,

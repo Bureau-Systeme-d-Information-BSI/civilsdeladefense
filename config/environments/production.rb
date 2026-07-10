@@ -79,17 +79,18 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = {host: ENV["DEFAULT_HOST"]}
 
-  smtp_uri = URI(ENV["SMTP_URL"])
-
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    address: smtp_uri.host,
-    port: smtp_uri.port,
-    authentication: :login,
-    user_name: CGI.unescape(smtp_uri.user),
-    password: CGI.unescape(smtp_uri.password),
-    enable_starttls_auto: true
-  }
+  if (smtp_url = Rails.application.credentials.smtp_url)
+    smtp_uri = URI(smtp_url)
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      address: smtp_uri.host,
+      port: smtp_uri.port,
+      authentication: :login,
+      user_name: smtp_uri.user && CGI.unescape(smtp_uri.user),
+      password: smtp_uri.password && CGI.unescape(smtp_uri.password),
+      enable_starttls_auto: true
+    }
+  end
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).

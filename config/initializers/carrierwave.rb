@@ -7,17 +7,18 @@ CarrierWave.configure do |config|
 
   config.enable_processing = false if Rails.env.test? || Rails.env.cucumber? # rubocop:disable Rails/UnknownEnv
 
-  if ENV["OSC_AK"] && !(Rails.env.test? || Rails.env.cucumber?) # rubocop:disable Rails/UnknownEnv
+  osc = Rails.application.credentials.osc
+  if osc&.ak && !(Rails.env.test? || Rails.env.cucumber?) # rubocop:disable Rails/UnknownEnv
     config.fog_provider = "fog/aws"
     config.fog_credentials = {
       provider: "AWS",
-      aws_access_key_id: ENV["OSC_AK"],
-      aws_secret_access_key: ENV["OSC_SK"],
-      region: ENV["OSC_REGION"],
-      endpoint: ENV["OSC_ENDPOINT"],
+      aws_access_key_id: osc.ak,
+      aws_secret_access_key: osc.sk,
+      region: osc.region,
+      endpoint: osc.endpoint,
       aws_signature_version: 2
     }
-    config.fog_directory = ENV["OSC_BUCKET"]
+    config.fog_directory = osc.bucket
     config.fog_public = false
     config.storage = :fog
   else

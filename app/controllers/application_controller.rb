@@ -3,7 +3,7 @@
 class ApplicationController < ActionController::Base
   before_action :redirect_permanently, if: -> { redirect_url.present? }
   before_action :redirect_to_maintenance_mode, if: :maintenance_mode_activated?, unless: :admin_secret_access?
-  before_action :basic_auth, if: -> { ENV["BASIC_AUTH"].present? }
+  before_action :basic_auth, if: -> { Rails.application.credentials.basic_auth.present? }
 
   layout :layout_by_resource
 
@@ -29,11 +29,11 @@ class ApplicationController < ActionController::Base
 
   def maintenance_mode_activated? = ENV["MAINTENANCE_MODE"] == "true"
 
-  def admin_secret_access? = request.headers["X-Admin-Secret-Access"] == ENV["ADMIN_SECRET_ACCESS"]
+  def admin_secret_access? = request.headers["X-Admin-Secret-Access"] == Rails.application.credentials.admin_secret_access
 
   def basic_auth
     authenticate_or_request_with_http_basic do |u1, p1|
-      u2, p2 = ENV["BASIC_AUTH"].split(":")
+      u2, p2 = Rails.application.credentials.basic_auth.split(":")
       u1 == u2 && p1 == p2
     end
   end

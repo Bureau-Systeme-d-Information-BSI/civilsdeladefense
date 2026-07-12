@@ -110,9 +110,7 @@ Rails.application.routes.draw do
     end
     resources :preferred_users, only: :destroy
     resources :preferred_users_lists, path: "liste-candidats" do
-      member do
-        get :export
-      end
+      resource :export, only: %i[show], module: :preferred_users_lists
       resource :job_offer_sending, only: %i[create], module: :preferred_users_lists
       resources :preferred_users
     end

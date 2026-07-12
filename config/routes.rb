@@ -142,9 +142,7 @@ Rails.application.routes.draw do
       resource :dar, only: %i[update]
       resources :messages, only: %i[create]
       resources :emails, only: %i[create] do
-        member do
-          get :attachment
-        end
+        resources :attachments, only: :show, module: :emails
         resource :reading, only: %i[create destroy], module: :emails
       end
     end

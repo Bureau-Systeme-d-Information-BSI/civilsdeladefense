@@ -1,7 +1,7 @@
 require "csv"
 
 namespace :maintenance do
-  desc "Output inactive candidate accounts as CSV (no activity since INACTIVE_SINCE, default 2024-07-01)"
+  desc "Output inactive candidate accounts as CSV (no activity since INACTIVE_SINCE, default 2025-07-01)"
   task inactive_candidates_csv: :environment do
     cutoff = inactivity_cutoff
     format_time = ->(time) { time&.strftime("%Y-%m-%d %H:%M:%S") }
@@ -73,7 +73,7 @@ private
 # Cutoff before which an account is considered inactive.
 # Overridable through the INACTIVE_SINCE environment variable.
 def inactivity_cutoff
-  Time.zone.parse(ENV["INACTIVE_SINCE"].presence || "2024-07-01")
+  Time.zone.parse(ENV["INACTIVE_SINCE"].presence || "2025-07-01")
 end
 
 # Candidate accounts without any activity since the given cutoff:

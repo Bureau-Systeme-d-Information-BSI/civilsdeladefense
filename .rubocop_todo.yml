@@ -70,13 +70,3 @@ Rails/RootPathnameMethods:
 Rails/SelectMap:
   Exclude:
     - "app/models/user.rb"
-
-# Offense count: 15
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Rails/WhereRange:
-  Exclude:
-    - "app/models/altcha_solution.rb"
-    - "app/models/concerns/deactivation_flow.rb"
-    - "app/models/concerns/deletion_flow.rb"
-    - "app/models/job_application_file_type.rb"
-    - "app/models/page.rb"

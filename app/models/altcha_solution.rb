@@ -23,7 +23,7 @@ class AltchaSolution < ApplicationRecord
     # Replay attacks are protected by the time stamp in the salt of the challenge for
     # the duration configured in the timeout. All solutions in the database that older
     # can be deleted.
-    AltchaSolution.where("created_at < ?", Time.now - Altcha.timeout).delete_all # rubocop:disable Rails/TimeZone
+    AltchaSolution.where(created_at: ...(Time.now - Altcha.timeout)).delete_all # rubocop:disable Rails/TimeZone
   end
 end
 

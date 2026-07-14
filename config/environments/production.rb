@@ -43,10 +43,15 @@ Rails.application.configure do
 
   # Assume all access to the app is happening through a SSL-terminating reverse proxy.
   # Can be used together with config.force_ssl for Strict-Transport-Security and secure cookies.
+  # Deliberately left disabled: Scalingo's router terminates TLS and forwards
+  # X-Forwarded-Proto, which force_ssl already honors. Enabling assume_ssl would make
+  # every request look like HTTPS, suppressing the HTTP -> HTTPS redirect for requests
+  # that genuinely reach the app in plain HTTP.
   # config.assume_ssl = true
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
+  config.force_ssl = true
+  config.ssl_options = {hsts: {subdomains: false, preload: true, expires: 1.year}}
 
   # Include generic and useful information about system operation, but avoid logging too much
   # information to avoid inadvertent exposure of personally identifiable information (PII).

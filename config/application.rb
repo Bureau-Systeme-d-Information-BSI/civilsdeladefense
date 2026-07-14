@@ -49,10 +49,6 @@ module Civilsdeladefense
         "Cache-Control" => "max-age=#{1.year.to_i}",
         "Expires" => 1.year.from_now.httpdate
       }
-
-      # Setup HSTS to ensure https
-      config.force_ssl = true
-      config.ssl_options = {hsts: {subdomains: false, preload: true, expires: 1.year}}
     end
 
     config.middleware.insert_before 0, Rack::Cors do

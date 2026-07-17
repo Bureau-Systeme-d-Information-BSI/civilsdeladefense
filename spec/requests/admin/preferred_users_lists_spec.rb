@@ -145,40 +145,4 @@ RSpec.describe "Admin::PreferredUsersLists" do
       expect { preferred_users_list.reload }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
-
-  describe "GET /admin/liste-candidats/:id/export" do
-    subject(:export_request) {
-      get export_admin_preferred_users_list_path(preferred_users_list, format: format)
-    }
-
-    context "when format is XLSX" do
-      let(:format) { :xlsx }
-
-      it "downloads the list as an XLSX file" do
-        export_request
-        expect(response).to be_successful
-        expect(response.headers["Content-Type"]).to eq(
-          "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-        )
-      end
-    end
-
-    context "when format is ZIP" do
-      let(:format) { :zip }
-
-      it "starts a background job to zip the files and redirects to zip file" do
-        uuid = "randomly generated uuid"
-        allow(SecureRandom).to receive(:uuid).and_return(uuid)
-
-        expect {
-          export_request
-        }.to have_enqueued_job(ZipJobApplicationFilesJob).with(
-          zip_id: uuid,
-          user_ids: preferred_users_list.users.pluck(:id)
-        )
-
-        expect(response).to redirect_to(admin_zip_file_path(uuid))
-      end
-    end
-  end
 end

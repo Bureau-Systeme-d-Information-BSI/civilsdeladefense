@@ -33,8 +33,7 @@ class JobApplicationFileType < ApplicationRecord
   scope :visible_by_user_up_to, ->(state) {
     where(kind: :applicant_provided)
       .joins(:visibility_rules)
-      .where(visibility_rules: {by: :user})
-      .where("visibility_rules.state <= ?", JobApplication.states[state])
+      .where(visibility_rules: {by: :user, state: ..JobApplication.states[state]})
       .distinct
   }
 
@@ -50,8 +49,7 @@ class JobApplicationFileType < ApplicationRecord
 
   scope :visible_by, ->(administrator, state) {
     scope = joins(:visibility_rules)
-      .where(visibility_rules: {by: :administrator})
-      .where("visibility_rules.state <= ?", JobApplication.states[state])
+      .where(visibility_rules: {by: :administrator, state: ..JobApplication.states[state]})
       .distinct
     scope = scope.manager_provided if administrator.hr_manager? || administrator.payroll_manager?
     scope
@@ -60,8 +58,7 @@ class JobApplicationFileType < ApplicationRecord
   scope :required, ->(state) {
     where(required: true)
       .joins(:visibility_rules)
-      .where(visibility_rules: {by: :administrator})
-      .where("visibility_rules.state <= ?", JobApplication.states[state])
+      .where(visibility_rules: {by: :administrator, state: ..JobApplication.states[state]})
       .reorder(nil)
       .distinct
   }
@@ -71,8 +68,7 @@ class JobApplicationFileType < ApplicationRecord
 
     where(
       required: true,
-      id: VisibilityRule.where(by: :administrator)
-        .where("state <= ?", state_value)
+      id: VisibilityRule.where(by: :administrator, state: ..state_value)
         .select(:job_application_file_type_id)
     ).or(
       where(

@@ -30,25 +30,25 @@ module DeactivationFlow
     end
 
     def inactive_and_marked_for_deactivation_admins
-      where("marked_for_deactivation_on < ?", days_notice_period_before_deactivation.days.ago.to_date)
-        .where("last_sign_in_at < ?", days_inactivity_period_before_deactivation.days.ago)
+      where(marked_for_deactivation_on: ...days_notice_period_before_deactivation.days.ago.to_date)
+        .where(last_sign_in_at: ...days_inactivity_period_before_deactivation.days.ago)
     end
 
     def never_signed_in_and_marked_for_deactivation_admins
-      where("marked_for_deactivation_on < ?", days_notice_period_before_deactivation.days.ago.to_date)
+      where(marked_for_deactivation_on: ...days_notice_period_before_deactivation.days.ago.to_date)
         .where(last_sign_in_at: nil)
-        .where("created_at < ?", days_inactivity_period_before_deactivation.days.ago)
+        .where(created_at: ...days_inactivity_period_before_deactivation.days.ago)
     end
 
     def inactive_and_not_marked_for_deactivation_admin
-      where("last_sign_in_at < ?", notice_period_target_date)
+      where(last_sign_in_at: ...notice_period_target_date)
         .where(marked_for_deactivation_on: nil)
     end
 
     def never_signed_in_and_not_marked_for_deactivation_admins
       where(last_sign_in_at: nil)
         .where(marked_for_deactivation_on: nil)
-        .where("created_at < ?", notice_period_target_date)
+        .where(created_at: ...notice_period_target_date)
     end
 
     def notice_period_target_date

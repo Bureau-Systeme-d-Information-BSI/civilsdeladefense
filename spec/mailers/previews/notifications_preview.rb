@@ -37,4 +37,9 @@ class NotificationsPreview < ActionMailer::Preview
     administrator = Administrator.hr_managers.first || Administrator.first
     NotificationsMailer.with(administrator:, job_application:).new_document
   end
+
+  def deletion_warning
+    administrator = Administrator.first
+    NotificationsMailer.with(administrator:).deletion_warning
+  end
 end

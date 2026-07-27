@@ -8,6 +8,7 @@ class Administrator < ApplicationRecord
 
   devise :database_authenticatable, :recoverable, :trackable, :validatable, :confirmable, :lockable, :timeoutable
 
+  include Deletable
   include PgSearch::Model
 
   pg_search_scope :search_email, against: :email, using: {tsearch: {prefix: true}}
@@ -293,7 +294,7 @@ end
 #  last_sign_in_at                 :datetime
 #  last_sign_in_ip                 :inet
 #  locked_at                       :datetime
-#  marked_for_deactivation_on      :date
+#  marked_for_deletion_at          :datetime
 #  photo_content_type              :string
 #  photo_file_name                 :string
 #  photo_file_size                 :bigint

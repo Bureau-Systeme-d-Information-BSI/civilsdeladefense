@@ -71,6 +71,14 @@ class NotificationsMailer < ApplicationMailer
     mail to: @administrator.email, subject: t(".subject", service_name: @service_name)
   end
 
+  def deletion_warning
+    @administrator = params[:administrator]
+    @service_name = @administrator.organization.service_name
+    @days_notice_period_before_deletion = Administrator::Deletable::NOTICE_PERIOD.in_days.to_i
+
+    mail to: @administrator.email, subject: t(".subject", service_name: @service_name)
+  end
+
   private
 
   def manager_roles(administrator)

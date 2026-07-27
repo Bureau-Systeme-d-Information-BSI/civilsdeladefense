@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_05_07_140000) do
+ActiveRecord::Schema[7.2].define(version: 2026_07_27_141420) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
   enable_extension "pg_trgm"
@@ -93,6 +93,7 @@ ActiveRecord::Schema[7.2].define(version: 2026_05_07_140000) do
     t.integer "roles", default: 0, null: false
     t.boolean "ace", default: false
     t.boolean "ate", default: false
+    t.datetime "marked_for_deletion_at"
     t.index ["confirmation_token"], name: "index_administrators_on_confirmation_token", unique: true
     t.index ["email"], name: "index_administrators_on_email", unique: true
     t.index ["employer_id"], name: "index_administrators_on_employer_id"

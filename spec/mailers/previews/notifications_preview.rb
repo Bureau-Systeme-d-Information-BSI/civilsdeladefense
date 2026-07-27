@@ -47,4 +47,13 @@ class NotificationsPreview < ActionMailer::Preview
     administrator = Administrator.first
     NotificationsMailer.with(administrator:).deletion_canceled
   end
+
+  def deletion_notice
+    administrator = Administrator.first
+    NotificationsMailer.with(
+      email: administrator.email,
+      full_name: administrator.full_name,
+      organization_id: administrator.organization_id
+    ).deletion_notice
+  end
 end

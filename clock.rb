@@ -22,8 +22,9 @@ module Clockwork
     end
   end
 
-  every 1.day, "mark_administrators_for_deletion", at: "11:00" do
+  every 1.day, "purge_administrators", at: "11:00" do
     Administrator::MarkForDeletionJob.perform_later
+    Administrator::DeletionJob.perform_later
   end
 
   if (ENV["SEND_DAILY_SUMMARY"] || ENV["CRON_DAILY_SUMMARY"]).present?

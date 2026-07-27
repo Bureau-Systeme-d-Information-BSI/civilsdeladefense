@@ -29,4 +29,13 @@ module Administrator::Deletable
     update_column(:marked_for_deletion_at, nil) # rubocop:disable Rails/SkipsModelValidations
     NotificationsMailer.with(administrator: self).deletion_canceled.deliver_later
   end
+
+  def destroy_and_notify!
+    email = self.email
+    full_name = self.full_name
+    organization_id = self.organization_id
+
+    destroy!
+    NotificationsMailer.with(email:, full_name:, organization_id:).deletion_notice.deliver_later
+  end
 end

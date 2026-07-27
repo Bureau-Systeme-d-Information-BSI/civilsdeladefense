@@ -69,6 +69,16 @@ RSpec.describe Administrator::Deletable do
     it { expect { mark_for_deletion! }.to have_enqueued_mail(NotificationsMailer, :deletion_warning) }
   end
 
+  describe "#destroy_and_notify!" do
+    subject(:destroy_and_notify!) { administrator.destroy_and_notify! }
+
+    let!(:administrator) { create(:administrator) }
+
+    it { expect { destroy_and_notify! }.to change { Administrator.exists?(administrator.id) }.to(false) }
+
+    it { expect { destroy_and_notify! }.to have_enqueued_mail(NotificationsMailer, :deletion_notice) }
+  end
+
   describe "#after_database_authentication" do
     subject(:after_database_authentication) { administrator.after_database_authentication }
 

@@ -46,4 +46,22 @@ RSpec.describe Administrator::Deletable do
 
     it { expect { mark_for_deletion! }.to have_enqueued_mail(NotificationsMailer, :deletion_warning) }
   end
+
+  describe "#after_database_authentication" do
+    subject(:after_database_authentication) { administrator.after_database_authentication }
+
+    context "when the administrator is marked for deletion" do
+      let(:administrator) { create(:administrator, marked_for_deletion_at: 3.days.ago) }
+
+      it { expect { after_database_authentication }.to change { administrator.reload.marked_for_deletion_at }.to(nil) }
+
+      it { expect { after_database_authentication }.to have_enqueued_mail(NotificationsMailer, :deletion_canceled) }
+    end
+
+    context "when the administrator is not marked for deletion" do
+      let(:administrator) { create(:administrator) }
+
+      it { expect { after_database_authentication }.not_to have_enqueued_mail(NotificationsMailer, :deletion_canceled) }
+    end
+  end
 end

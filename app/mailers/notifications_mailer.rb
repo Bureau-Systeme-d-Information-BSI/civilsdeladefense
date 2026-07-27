@@ -79,6 +79,13 @@ class NotificationsMailer < ApplicationMailer
     mail to: @administrator.email, subject: t(".subject", service_name: @service_name)
   end
 
+  def deletion_canceled
+    @administrator = params[:administrator]
+    @service_name = @administrator.organization.service_name
+
+    mail to: @administrator.email, subject: t(".subject", service_name: @service_name)
+  end
+
   private
 
   def manager_roles(administrator)

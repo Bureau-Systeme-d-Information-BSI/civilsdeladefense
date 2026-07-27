@@ -14,11 +14,11 @@ CarrierWave.configure do |config|
       provider: "AWS",
       aws_access_key_id: osc.ak,
       aws_secret_access_key: osc.sk,
-      region: osc.region,
-      endpoint: osc.endpoint,
+      region: ENV["OSC_REGION"],
+      endpoint: ENV["OSC_ENDPOINT"],
       aws_signature_version: 2
     }
-    config.fog_directory = osc.bucket
+    config.fog_directory = ENV["OSC_BUCKET"]
     config.fog_public = false
     config.storage = :fog
   else

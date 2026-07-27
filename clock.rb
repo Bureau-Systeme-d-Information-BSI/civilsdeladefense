@@ -22,14 +22,6 @@ module Clockwork
     end
   end
 
-  cond = ENV["DAYS_INACTIVITY_PERIOD_BEFORE_DEACTIVATION"].present?
-  cond &&= ENV["DAYS_NOTICE_PERIOD_BEFORE_DEACTIVATION"].present?
-  if cond
-    every 1.day, "purge_administrators", at: "11:00" do
-      Administrator::DeactivateOldJob.perform_later
-    end
-  end
-
   if (ENV["SEND_DAILY_SUMMARY"] || ENV["CRON_DAILY_SUMMARY"]).present?
     every 1.day, "daily_summary", at: "08:00" do
       DailySummary.new(day: 1.day.ago).prepare_and_send

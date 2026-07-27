@@ -345,61 +345,6 @@ RSpec.describe Administrator do
     end
   end
 
-  describe "automatic deactivation" do
-    before do
-      ENV["DAYS_INACTIVITY_PERIOD_BEFORE_DEACTIVATION"] = "100"
-      ENV["DAYS_NOTICE_PERIOD_BEFORE_DEACTIVATION"] = "20"
-      administrator.reload
-      described_class.deactivate_when_too_old!
-      administrator.reload
-    end
-
-    context "when connected long time ago" do
-      let!(:administrator) { create(:administrator, last_sign_in_at: 81.days.ago) }
-
-      it "marked" do
-        expect(administrator.marked_for_deactivation_on).to eq(Time.zone.now.to_date)
-      end
-    end
-
-    context "when marked yesterday and has not connected since" do
-      let!(:administrator) { create(:administrator, marked_for_deactivation_on: 1.day.ago, last_sign_in_at: 101.days.ago) }
-
-      it "dont delete" do
-        expect(administrator.deleted_at.blank?).to be(true)
-      end
-    end
-
-    context "when marked more than 20 days ago and has not connected since" do
-      let!(:administrator) do
-        administrator = create(:administrator, last_sign_in_at: 101.days.ago)
-        administrator.update_column(:marked_for_deactivation_on, 21.days.ago) # rubocop:disable Rails/SkipsModelValidations
-        administrator
-      end
-
-      it "delete" do
-        expect(administrator.deleted_at&.to_date).to eq(Time.zone.now.to_date)
-      end
-    end
-
-    context "when not marked and has not connected since" do
-      let!(:administrator) { create(:administrator, last_sign_in_at: 101.days.ago) }
-
-      it "marked & dont delete" do
-        expect(administrator.marked_for_deactivation_on).to eq(Time.zone.now.to_date)
-        expect(administrator.deleted_at.blank?).to be(true)
-      end
-    end
-
-    context "when marked and has connected since" do
-      let!(:administrator) { create(:administrator, marked_for_deactivation_on: 21.days.ago, last_sign_in_at: Time.zone.now) }
-
-      it "doesn't delete" do
-        expect(administrator.deleted_at).to be_nil
-      end
-    end
-  end
-
   describe "#transfer" do
     subject(:transfer) { administrator.transfer(email) }
 

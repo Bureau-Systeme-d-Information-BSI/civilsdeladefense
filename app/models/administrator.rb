@@ -2,11 +2,11 @@
 
 # Recruiter on the platform
 class Administrator < ApplicationRecord
+  self.ignored_columns += %w[marked_for_deactivation_on] # Deprecated on 2026-07-27
+
   PASSWORD_REGEX = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[\\\/<>{}()#¤:;,.?!•·|"'`´~@£¨µ§²$€%^&*+=_-]).{12,70}$/
 
   devise :database_authenticatable, :recoverable, :trackable, :validatable, :confirmable, :lockable, :timeoutable
-
-  include DeactivationFlow
 
   include PgSearch::Model
 
@@ -107,7 +107,6 @@ class Administrator < ApplicationRecord
   before_validation :set_last_name, if: -> { last_name.blank? && email.present? }
   before_validation :set_title, if: -> { title.blank? && email.present? }
   before_validation :normalize_roles, unless: -> { roles.empty? }
-  before_save :remove_mark_for_deactivation
 
   scope :active, -> { where(deleted_at: nil) }
   scope :inactive, -> { where.not(deleted_at: nil) }
@@ -130,6 +129,14 @@ class Administrator < ApplicationRecord
   def active_for_authentication?
     super && !deleted_at
   end
+
+  def active? = deleted_at.blank?
+
+  def inactive? = deleted_at.present?
+
+  def deactivate = update_attribute(:deleted_at, Time.current) # rubocop:disable Rails/SkipsModelValidations
+
+  def reactivate = update_attribute(:deleted_at, nil) # rubocop:disable Rails/SkipsModelValidations
 
   def password_required?
     # Password is required if it is being set, but not for new records
@@ -222,10 +229,6 @@ class Administrator < ApplicationRecord
     return if password.blank? || password =~ PASSWORD_REGEX
 
     errors.add :password, :not_strong_enough
-  end
-
-  def remove_mark_for_deactivation
-    self.marked_for_deactivation_on = nil
   end
 
   def can_upload?(job_application_file_type)

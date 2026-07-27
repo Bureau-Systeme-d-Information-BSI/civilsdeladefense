@@ -6,12 +6,6 @@
 # Note that changes in the inspected code, or installation of new
 # versions of RuboCop, may require this file to be generated again.
 
-# Offense count: 3
-Lint/CopDirectiveSyntax:
-  Exclude:
-    - "app/controllers/account/users_controller.rb"
-    - "app/controllers/users/registrations_controller.rb"
-
 # Offense count: 1
 # This cop supports unsafe autocorrection (--autocorrect-all).
 Performance/MapCompact:
@@ -70,13 +64,3 @@ Rails/RootPathnameMethods:
 Rails/SelectMap:
   Exclude:
     - "app/models/user.rb"
-
-# Offense count: 15
-# This cop supports unsafe autocorrection (--autocorrect-all).
-Rails/WhereRange:
-  Exclude:
-    - "app/models/altcha_solution.rb"
-    - "app/models/concerns/deactivation_flow.rb"
-    - "app/models/concerns/deletion_flow.rb"
-    - "app/models/job_application_file_type.rb"
-    - "app/models/page.rb"

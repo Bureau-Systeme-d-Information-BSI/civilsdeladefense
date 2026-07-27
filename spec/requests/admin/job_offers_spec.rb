@@ -184,17 +184,6 @@ RSpec.describe "Admin::Job_Offers" do
     it { expect(index_request).to render_template(:index) }
   end
 
-  describe "GET /admin/offresdemploi/featured" do
-    subject(:featured_request) { get featured_admin_job_offers_path }
-
-    before do
-      create(:published_job_offer, featured: true)
-      featured_request
-    end
-
-    it { expect(response).to be_successful }
-  end
-
   describe "GET /admin/offresdemploi (search)" do
     subject(:index_request) { get admin_job_offers_path, params: {s: "Developer"} }
 
@@ -271,22 +260,6 @@ RSpec.describe "Admin::Job_Offers" do
       it { expect(response).to render_template(:new_transfer) }
 
       it { expect(response).to have_http_status(:unprocessable_content) }
-    end
-  end
-
-  describe "POST /admin/offresdemploi/:id/send_to_list" do
-    subject(:send_to_list_request) do
-      post send_to_list_admin_job_offer_path(job_offer),
-        params: {preferred_users_lists: [preferred_users_list.id]}
-    end
-
-    let(:job_offer) { create(:job_offer) }
-    let(:preferred_users_list) { create(:preferred_users_list, :with_users) }
-
-    it { expect(send_to_list_request).to redirect_to(admin_job_offers_path) }
-
-    it "sends the job offer to the list users" do
-      expect { send_to_list_request }.to change { ActionMailer::Base.deliveries.size }.by(3)
     end
   end
 

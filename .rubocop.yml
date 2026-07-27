@@ -39,3 +39,6 @@ RSpec/SpecFilePathFormat:
 RSpec/MultipleMemoizedHelpers:
   AllowSubject: true
   Max: 7
+
+Rails/StrongParametersExpect:
+  Enabled: false

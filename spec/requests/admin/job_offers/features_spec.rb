@@ -5,6 +5,27 @@ require "rails_helper"
 RSpec.describe "Admin::JobOffers::Features" do
   before { sign_in create(:administrator) }
 
+  describe "GET /admin/offresdemploi/features" do
+    subject(:features_request) { get admin_job_offers_features_path }
+
+    before { create(:published_job_offer, featured: true) }
+
+    context "when the administrator can feature job offers" do
+      before { features_request }
+
+      it { expect(response).to be_successful }
+    end
+
+    context "when the administrator cannot feature job offers" do
+      before do
+        allow_any_instance_of(Ability).to receive(:can?).and_return(false)
+        features_request
+      end
+
+      it { expect(response).to have_http_status(:forbidden) }
+    end
+  end
+
   describe "POST /admin/offresdemploi/:job_offer_id/feature" do
     subject(:feature_request) { post admin_job_offer_feature_path(job_offer) }
 

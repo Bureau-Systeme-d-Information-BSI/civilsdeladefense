@@ -11,7 +11,7 @@ Bundler.require(*Rails.groups)
 module Civilsdeladefense
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.2
+    config.load_defaults 8.0
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
@@ -43,19 +43,12 @@ module Civilsdeladefense
       "align-justify"
     ]
 
-    # Don't disable deprecated singular associations names
-    config.active_record.allow_deprecated_singular_associations_name = true
-
     if Rails.env.production?
       # Cache assets for 1 year
       config.public_file_server.headers = {
         "Cache-Control" => "max-age=#{1.year.to_i}",
         "Expires" => 1.year.from_now.httpdate
       }
-
-      # Setup HSTS to ensure https
-      config.force_ssl = true
-      config.ssl_options = {hsts: {subdomains: false, preload: true, expires: 1.year}}
     end
 
     config.middleware.insert_before 0, Rack::Cors do

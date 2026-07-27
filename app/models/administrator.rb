@@ -47,7 +47,7 @@ class Administrator < ApplicationRecord
   accepts_nested_attributes_for :supervisor_administrator
   accepts_nested_attributes_for :grand_employer_administrator
 
-  has_many :preferred_users, through: :preferred_users_list
+  has_many :preferred_users, through: :preferred_users_lists
   has_many :preferred_users_lists, dependent: :destroy
 
   def self.ransackable_attributes(auth_object = nil)

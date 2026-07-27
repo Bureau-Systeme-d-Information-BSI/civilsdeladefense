@@ -293,22 +293,29 @@ fr:
       link_france_connect:
         title: Certifier mon compte FranceConnect
         unlink_france_connect: Dissocier mon compte de FranceConnect
-      change_email:
-        title: "Changement de courriel"
-      change_password:
-        title: "Changement de mot de passe"
+      france_connect_links:
+        destroy:
+          success: "Votre compte a bien été dissocié de FranceConnect"
+      emails:
+        edit:
+          title: "Changement de courriel"
+        update:
+          success: "Votre adresse de courriel a bien été modifié"
+      passwords:
+        edit:
+          title: "Changement de mot de passe"
+        create:
+          success: "Votre mot de passe a bien été enregistré"
+        update:
+          success: "Votre mot de passe a bien été modifié"
       set_password:
         title: "Choisir un mot de passe"
       destroy:
         success: "Votre compte a bien été supprimé"
       edit:
         title: "Mes informations personnelles"
-      update_email:
-        success: "Votre adresse de courriel a bien été modifié"
       update:
         success: "Vos informations ont bien été modifiées"
-      update_password:
-        success: "Votre mot de passe a bien été modifié"
       want_destroy:
         title: "Danger"
         destroy: "Je veux supprimer mon compte"
@@ -436,8 +443,9 @@ fr:
       transfer:
         success: "Annonce transférée !"
         error: "L'annonce n'a pas pu être transférée, veuillez vérifier l'email du nouveau propriétaire"
-      send_to_list:
-        success: "Annonce diffusées !"
+      dispatches:
+        create:
+          success: "Annonce diffusées !"
       features:
         create:
           success: "Annonce mise à la une"
@@ -589,9 +597,10 @@ fr:
         account: "Mon compte"
         logout: "Déconnexion"
     users:
-      send_job_offer:
-        success: "Offre envoyée au candidat"
-        error: "L'offre n'a pa pu être envoyé, veuillez vérifier la référence"
+      job_offer_sendings:
+        create:
+          success: "Offre envoyée au candidat"
+          error: "L'offre n'a pa pu être envoyé, veuillez vérifier la référence"
       multi_select:
         success: "Offre envoyée aux candidats"
         error: "L'offre n'a pa pu être envoyé, veuillez vérifier la référence"
@@ -717,8 +726,12 @@ fr:
             success: "Compte désactivé"
           destroy:
             success: "Compte réactivé"
-        resend_confirmation_instructions:
-          success: "Invitation renvoyée !"
+        confirmation_instructions:
+          create:
+            success: "Invitation renvoyée !"
+        unlock_instructions:
+          create:
+            success: "Instructions de déblocage envoyées"
       cmgs:
         index:
           title: "Liste des CMG"
@@ -1149,9 +1162,10 @@ fr:
         success: "Candidat·e retiré·e avec succès"
         error: "Une erreur s'est produite"
     preferred_users_lists:
-      send_job_offer:
-        success: "Offre envoyée aux candidats"
-        error: "L'offre n'a pa pu être envoyé, veuillez vérifier la référence"
+      job_offer_sendings:
+        create:
+          success: "Offre envoyée aux candidats"
+          error: "L'offre n'a pa pu être envoyé, veuillez vérifier la référence"
       form:
         title_new: "Ajout d'une nouvelle liste de candidats"
         title_edit: "Édition d'une liste de candidats"

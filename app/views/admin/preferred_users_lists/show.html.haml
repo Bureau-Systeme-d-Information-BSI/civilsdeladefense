@@ -4,9 +4,9 @@
     .d-flex.align-items-center
       .h4.text-primary.d-md-flex.align-items-center.mr-auto
         = t('.preferred_users_html', count: @preferred_users.count, list_name: @preferred_users_list.name)
-      = link_to export_admin_preferred_users_list_path(@preferred_users_list, format: :xlsx), class: 'btn btn-primary btn-raised', target: "_blank" do
+      = link_to admin_preferred_users_list_export_path(@preferred_users_list, format: :xlsx), class: 'btn btn-primary btn-raised', target: "_blank" do
         = "Exporter XLSX"
-      = link_to export_admin_preferred_users_list_path(@preferred_users_list, format: :zip), class: 'btn btn-primary btn-raised ml-4', target: "_blank" do
+      = link_to admin_preferred_users_list_export_path(@preferred_users_list, format: :zip), class: 'btn btn-primary btn-raised ml-4', target: "_blank" do
         = "Exporter PDF"
       = link_to [:edit, :admin, :preferred_users_list], class: 'btn btn-primary btn-raised ml-4' do
         = t('buttons.edit')
@@ -14,7 +14,7 @@
         = t('buttons.delete')
     = render partial: 'search'
 
-    = form_tag [:send_job_offer, :admin, @preferred_users_list] do
+    = form_tag [:admin, @preferred_users_list, :job_offer_sending] do
       .row.mt-2.mb-3
         .col-4
           = label_tag "job_offer_identifier", "Envoyer une offre par email aux candidats", class: "form-control-label"
@@ -27,7 +27,7 @@
       .h5.text-primary.mr-auto
         = t('.preferred_users_filtered', count: @preferred_users_filtered.count)
       - klasses = %w[btn btn-link mb-0]
-      = sort_link(@q, :created_at, {}, {class: klasses}) do
+      = sort_link(@q, :created_at, {class: klasses}) do
         Date de création
         - unless @q.sorts.detect{|x| x.name == 'created_at'}
           &nbsp;▼

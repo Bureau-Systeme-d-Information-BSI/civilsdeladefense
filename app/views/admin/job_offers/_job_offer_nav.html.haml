@@ -17,8 +17,8 @@
         = job_offer.job_applications_count
   %li.mr-3.nav-item
     - klasses = base_link_klasses.dup
-    - klasses << :active if active_tab[:action_name] == 'new_send'
-    = link_to "Envoyer", [:new_send, :admin, job_offer], class: klasses
+    - klasses << :active if active_tab[:controller_name] == 'dispatches'
+    = link_to "Envoyer", [:new, :admin, job_offer, :dispatch], class: klasses
   - if can? :transfer, job_offer
     %li.mr-3.nav-item
       - klasses = base_link_klasses.dup

@@ -24,7 +24,7 @@ module UsersHelper
 
   def image_user_url(photo)
     return blank_photo if photo.blank?
-    return photo_account_user_path if current_user&.photo
+    return account_user_photo_path if current_user&.photo
 
     if current_administrator && photo.model.is_a?(User)
       photo_admin_user_path(photo.model)

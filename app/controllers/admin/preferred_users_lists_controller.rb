@@ -58,39 +58,10 @@ class Admin::PreferredUsersListsController < Admin::InheritedResourcesController
     end
   end
 
-  def export
-    respond_to do |format|
-      format.xlsx do
-        file = Exporter::Users.new(
-          @preferred_users_list.users,
-          current_administrator,
-          name: @preferred_users_list.name
-        ).generate
-        send_data file.read, filename: "#{Time.zone.today}_e-recrutement_vivers.xlsx"
-      end
-      format.zip do
-        zip_id = SecureRandom.uuid
-        ZipJobApplicationFilesJob.perform_later(zip_id: zip_id, user_ids: @preferred_users_list.users.pluck(:id))
-        redirect_to admin_zip_file_path(zip_id)
-      end
-    end
-  end
-
   def destroy
     @preferred_users_list.destroy
 
     redirect_to %i[admin users]
-  end
-
-  def send_job_offer
-    preferred_users_list = PreferredUsersList.find(params[:id])
-    job_offer = JobOffer.find_by(identifier: params["job_offer_identifier"])
-
-    if job_offer&.send_to_users(preferred_users_list.users)
-      redirect_back_or_to([:admin, preferred_users_list], notice: t(".success"))
-    else
-      redirect_back_or_to([:admin, preferred_users_list], notice: t(".error"))
-    end
   end
 
   protected

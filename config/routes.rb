@@ -71,8 +71,8 @@ Rails.application.routes.draw do
         post :init, to: "job_offers#new"
         get :init, to: "job_offer_terms#index"
         get :add_actor
-        get :featured
-        get :archived
+        resources :features, only: :index, controller: "job_offers/features", as: :job_offers_features
+        resources :archives, only: :index, controller: "job_offers/archives", as: :job_offers_archives
         JobOffer.aasm.events.map(&:name).each do |event_name|
           action_name = :"create_and_#{event_name}"
           post :create, constraints: CommitParamConstraint.new(action_name), action: action_name
@@ -83,9 +83,7 @@ Rails.application.routes.draw do
         get :board
         get :stats
         get :new_transfer
-        get :new_send
         post :transfer
-        post :send_to_list
         JobOffer.aasm.events.map(&:name).each do |event_name|
           patch(event_name.to_sym)
           action_name = :"update_and_#{event_name}"
@@ -96,6 +94,7 @@ Rails.application.routes.draw do
         end
       end
       resource :feature, only: %i[create destroy], module: :job_offers
+      resource :dispatch, only: %i[new create], module: :job_offers
       resources :job_applications, path: "candidatures" do
         member do
           get :cvlm
@@ -111,10 +110,8 @@ Rails.application.routes.draw do
     end
     resources :preferred_users, only: :destroy
     resources :preferred_users_lists, path: "liste-candidats" do
-      member do
-        get :export
-        post :send_job_offer
-      end
+      resource :export, only: %i[show], module: :preferred_users_lists
+      resource :job_offer_sending, only: %i[create], module: :preferred_users_lists
       resources :preferred_users
     end
     resources :users, path: "candidats", except: %i[create update] do
@@ -126,9 +123,9 @@ Rails.application.routes.draw do
         get :listing
         get :photo
         put :update_listing
-        post :send_job_offer
       end
       resource :suspension, only: %i[create destroy], module: :users
+      resource :job_offer_sending, only: %i[create], module: :users
     end
     resources :job_applications, path: "candidatures", only: %i[index show update] do
       member do
@@ -143,9 +140,7 @@ Rails.application.routes.draw do
       resource :dar, only: %i[update]
       resources :messages, only: %i[create]
       resources :emails, only: %i[create] do
-        member do
-          get :attachment
-        end
+        resources :attachments, only: :show, module: :emails
         resource :reading, only: %i[create destroy], module: :emails
       end
     end
@@ -185,11 +180,11 @@ Rails.application.routes.draw do
           get :inactive
         end
         member do
-          post :resend_confirmation_instructions
-          post :send_unlock_instructions
           post :transfer
         end
         resource :activation, only: %i[create destroy], module: :administrators
+        resource :confirmation_instruction, only: %i[create], module: :administrators
+        resource :unlock_instruction, only: %i[create], module: :administrators
       end
       resources :employers, :categories do
         resource :lefter_position, only: :create
@@ -226,26 +221,19 @@ Rails.application.routes.draw do
         resource :job_offer, only: :show, path: "offre"
         resources :job_application_files, path: "documents"
         resources :emails, only: %i[index create] do
-          member do
-            get :attachment
-          end
+          resources :attachments, only: :show, module: :emails
         end
         resource :withdrawal, path: "desistement", only: :create
         resource :cover_letter, only: %i[show]
       end
       resource :user, path: "mon-compte", only: %i[show destroy] do
+        resource :password, only: %i[create edit update], module: :users
+        resource :email, only: %i[edit update], module: :users
+        resource :france_connect_link, only: :destroy, module: :users
+        resource :photo, only: :show, module: :users
         collection do
           get :edit
           patch :update
-        end
-        member do
-          get :change_email
-          get :change_password
-          get :photo
-          patch :update_email
-          patch :update_password
-          patch :unlink_france_connect
-          patch :set_password
         end
       end
     end
@@ -258,7 +246,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :downloads, only: %i[show]
   resources :pages, only: %w[show]
   resource :robots, only: %w[show]
   resource :sitemap

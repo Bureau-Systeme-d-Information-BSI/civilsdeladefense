@@ -7,7 +7,7 @@ ruby "4.0.5"
 
 gem "ostruct"
 
-gem "rails", "~> 7.2.3.1"
+gem "rails", "8.0.5"
 gem "rails-i18n"
 
 # Pin connection_pool to 2.x: connection_pool 3.0 dropped the positional Hash
@@ -26,7 +26,7 @@ gem "pg", ">= 0.18", "< 2.0"
 gem "puma"
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem "jbuilder", "~> 2.11"
+gem "jbuilder", "~> 2.12"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", ">= 1.4.2", require: false

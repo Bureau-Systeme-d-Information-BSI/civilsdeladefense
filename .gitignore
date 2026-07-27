@@ -31,6 +31,7 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+/config/credentials/*.key
 
 .env*
 vendor/.bundle/
@@ -55,3 +56,7 @@ yarn-debug.log*
 
 /app/assets/builds/*
 !/app/assets/builds/.keep
+
+/config/credentials/development.key
+
+/config/credentials/test.key

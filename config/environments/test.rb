@@ -11,9 +11,6 @@ require "active_support/core_ext/integer/time"
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  # Turn false under Spring and add config.action_view.cache_template_loading = true.
-  config.cache_classes = true
-
   # While tests run files are not watched, reloading is not necessary.
   config.enable_reloading = false
 
@@ -51,15 +48,6 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :test
 
   config.action_mailer.default_url_options = {host: ENV["DEFAULT_HOST"]}
-
-  # Print deprecation notices to the stderr.
-  config.active_support.deprecation = :stderr
-
-  # Raise exceptions for disallowed deprecations.
-  config.active_support.disallowed_deprecation = :raise
-
-  # Tell Active Support which deprecation messages to disallow.
-  config.active_support.disallowed_deprecation_warnings = []
 
   # Raises error for missing translations.
   # config.i18n.raise_on_missing_translations = true

@@ -12,8 +12,8 @@ module DeletionFlow
   module ClassMethods
     def destroy_when_too_old
       target_date = days_notice_period_before_deletion.days.ago.to_date
-      where("marked_for_deletion_on < ?", target_date)
-        .where("last_sign_in_at < ?", days_inactivity_period_before_deletion.days.ago)
+      where(marked_for_deletion_on: ...target_date)
+        .where(last_sign_in_at: ...days_inactivity_period_before_deletion.days.ago)
         .find_each do |user|
           email = user.email
           name = user.full_name
@@ -24,7 +24,7 @@ module DeletionFlow
     end
 
     def mark_for_deletion
-      where("last_sign_in_at < ?", notice_period_target_date)
+      where(last_sign_in_at: ...notice_period_target_date)
         .where(marked_for_deletion_on: nil)
         .find_each do |user|
           user.mark_for_deletion!

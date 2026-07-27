@@ -6,9 +6,6 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
-  config.cache_classes = true
-
-  # Code is not reloaded between requests.
   config.enable_reloading = false
 
   # Eager load code on boot. This eager loads most of Rails and
@@ -46,10 +43,15 @@ Rails.application.configure do
 
   # Assume all access to the app is happening through a SSL-terminating reverse proxy.
   # Can be used together with config.force_ssl for Strict-Transport-Security and secure cookies.
+  # Deliberately left disabled: Scalingo's router terminates TLS and forwards
+  # X-Forwarded-Proto, which force_ssl already honors. Enabling assume_ssl would make
+  # every request look like HTTPS, suppressing the HTTP -> HTTPS redirect for requests
+  # that genuinely reach the app in plain HTTP.
   # config.assume_ssl = true
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
+  config.force_ssl = true
+  config.ssl_options = {hsts: {subdomains: false, preload: true, expires: 1.year}}
 
   # Include generic and useful information about system operation, but avoid logging too much
   # information to avoid inadvertent exposure of personally identifiable information (PII).
@@ -82,30 +84,22 @@ Rails.application.configure do
 
   config.action_mailer.default_url_options = {host: ENV["DEFAULT_HOST"]}
 
-  smtp_uri = URI(ENV["SMTP_URL"])
-
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    address: smtp_uri.host,
-    port: smtp_uri.port,
-    authentication: :login,
-    user_name: CGI.unescape(smtp_uri.user),
-    password: CGI.unescape(smtp_uri.password),
-    enable_starttls_auto: true
-  }
+  if (smtp_url = Rails.application.credentials.smtp_url)
+    smtp_uri = URI(smtp_url)
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.smtp_settings = {
+      address: smtp_uri.host,
+      port: smtp_uri.port,
+      authentication: :login,
+      user_name: smtp_uri.user && CGI.unescape(smtp_uri.user),
+      password: smtp_uri.password && CGI.unescape(smtp_uri.password),
+      enable_starttls_auto: true
+    }
+  end
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
   config.i18n.fallbacks = true
-
-  # Send deprecation notices to registered listeners.
-  config.active_support.deprecation = :notify
-
-  # Log disallowed deprecations.
-  config.active_support.disallowed_deprecation = :log
-
-  # Tell Active Support which deprecation messages to disallow.
-  config.active_support.disallowed_deprecation_warnings = []
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new

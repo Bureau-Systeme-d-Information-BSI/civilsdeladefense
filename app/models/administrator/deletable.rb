@@ -13,6 +13,8 @@ module Administrator::Deletable
         cutoff: INACTIVITY_PERIOD.ago
       )
     }
+
+    scope :deletables, -> { where(marked_for_deletion_at: ...NOTICE_PERIOD.ago) }
   end
 
   def mark_for_deletion!

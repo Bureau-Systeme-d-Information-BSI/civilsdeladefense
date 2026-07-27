@@ -37,6 +37,28 @@ RSpec.describe Administrator::Deletable do
     end
   end
 
+  describe ".deletables" do
+    subject(:deletables) { Administrator.deletables }
+
+    context "when the administrator was marked for deletion more than 30 days ago" do
+      let!(:administrator) { create(:administrator, marked_for_deletion_at: 31.days.ago) }
+
+      it { is_expected.to include(administrator) }
+    end
+
+    context "when the administrator was marked for deletion within the last 30 days" do
+      let!(:administrator) { create(:administrator, marked_for_deletion_at: 29.days.ago) }
+
+      it { is_expected.not_to include(administrator) }
+    end
+
+    context "when the administrator is not marked for deletion" do
+      let!(:administrator) { create(:administrator) }
+
+      it { is_expected.not_to include(administrator) }
+    end
+  end
+
   describe "#mark_for_deletion!" do
     subject(:mark_for_deletion!) { administrator.mark_for_deletion! }
 

@@ -281,8 +281,8 @@ Devise.setup do |config|
       userinfo_endpoint: "/api/v2/userinfo",
       end_session_endpoint: "/api/v2/session/end",
       jwks_uri: "https://#{ENV["FRANCE_CONNECT_HOST"]}/api/v2/jwks",
-      identifier: ENV["FRANCE_CONNECT_APP_ID"],
-      secret: ENV["FRANCE_CONNECT_APP_SECRET"],
+      identifier: Rails.application.credentials.france_connect&.app_id,
+      secret: Rails.application.credentials.france_connect&.app_secret,
       redirect_uri: "#{ENV["DEFAULT_HOST"]}/users/auth/france_connect/callback",
       post_logout_redirect_uri: ENV["DEFAULT_HOST"]
     }

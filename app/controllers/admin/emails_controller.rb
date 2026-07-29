@@ -33,15 +33,6 @@ class Admin::EmailsController < Admin::BaseController
     end
   end
 
-  def attachment
-    content = @email.email_attachments.find(params[:email_attachment_id]).document_content
-    send_data(
-      content.read,
-      filename: content.filename,
-      type: content.content_type
-    )
-  end
-
   private
 
   def email_params

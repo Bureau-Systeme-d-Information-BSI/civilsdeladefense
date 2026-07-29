@@ -110,9 +110,7 @@ Rails.application.routes.draw do
     end
     resources :preferred_users, only: :destroy
     resources :preferred_users_lists, path: "liste-candidats" do
-      member do
-        get :export
-      end
+      resource :export, only: %i[show], module: :preferred_users_lists
       resource :job_offer_sending, only: %i[create], module: :preferred_users_lists
       resources :preferred_users
     end
@@ -142,9 +140,7 @@ Rails.application.routes.draw do
       resource :dar, only: %i[update]
       resources :messages, only: %i[create]
       resources :emails, only: %i[create] do
-        member do
-          get :attachment
-        end
+        resources :attachments, only: :show, module: :emails
         resource :reading, only: %i[create destroy], module: :emails
       end
     end
@@ -190,11 +186,11 @@ Rails.application.routes.draw do
           get :inactive
         end
         member do
-          post :resend_confirmation_instructions
-          post :send_unlock_instructions
           post :transfer
         end
         resource :activation, only: %i[create destroy], module: :administrators
+        resource :confirmation_instruction, only: %i[create], module: :administrators
+        resource :unlock_instruction, only: %i[create], module: :administrators
       end
       resources :employers, :categories do
         member do

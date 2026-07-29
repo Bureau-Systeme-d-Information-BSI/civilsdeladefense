@@ -56,4 +56,6 @@ yarn-debug.log*
 
 /app/assets/builds/*
 !/app/assets/builds/.keep
-/config/credentials/*
+config/credentials/development.key
+/config/credentials/test.key
+/config/credentials/production.key

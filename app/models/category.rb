@@ -15,7 +15,7 @@ class Category < ApplicationRecord
     if leaf?
       update_column :published_job_offers_count, publicly_visible_job_offers.count # rubocop:disable Rails/SkipsModelValidations
     else
-      update_column :published_job_offers_count, children.map(&:published_job_offers_count).sum # rubocop:disable Rails/SkipsModelValidations
+      update_column :published_job_offers_count, children.sum(&:published_job_offers_count) # rubocop:disable Rails/SkipsModelValidations
     end
   end
 

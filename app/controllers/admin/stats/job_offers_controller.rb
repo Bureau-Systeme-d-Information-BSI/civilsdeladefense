@@ -57,7 +57,7 @@ class Admin::Stats::JobOffersController < Admin::Stats::BaseController
       .where("audits_end.audited_changes->?->-1 @> ?", :most_advanced_job_applications_state, to_state)
       .pluck(Arel.sql("DATE_PART('day', audits_end.created_at - audits_start.created_at)"))
 
-    @average_affection = days.present? ? (days.reduce(:+) / days.size.to_f).round : "-"
+    @average_affection = days.present? ? (days.sum / days.size.to_f).round : "-"
   end
 
   def date_start

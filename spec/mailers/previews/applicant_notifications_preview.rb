@@ -34,4 +34,8 @@ class ApplicantNotificationsPreview < ActionMailer::Preview
       job_offer: JobOffer.first
     ).notify_withdrawn
   end
+
+  def deletion_warning
+    ApplicantNotificationsMailer.with(user: User.first).deletion_warning
+  end
 end

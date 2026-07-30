@@ -96,4 +96,12 @@ class ApplicantNotificationsMailer < ApplicationMailer
       service_name: @service_name
     )
   end
+
+  def deletion_warning
+    @user = params[:user]
+    @service_name = @user.organization.service_name
+    @days_notice_period_before_deletion = User::Deletable::NOTICE_PERIOD.in_days.to_i
+
+    mail to: @user.email, subject: t(".subject", service_name: @service_name)
+  end
 end

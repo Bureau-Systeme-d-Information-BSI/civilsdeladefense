@@ -152,4 +152,23 @@ RSpec.describe ApplicantNotificationsMailer do
 
     it { expect(error_email.body.encoded).to match(/Sujet original/) }
   end
+
+  describe "deletion_warning" do
+    subject(:mail) { described_class.with(user:).deletion_warning }
+
+    let(:user) { create(:user) }
+
+    it {
+      expect(mail.subject).to eq(
+        I18n.t(
+          "applicant_notifications_mailer.deletion_warning.subject",
+          service_name: user.organization.service_name
+        )
+      )
+    }
+
+    it { expect(mail.to).to match([user.email]) }
+
+    it { expect(mail.body.encoded).to match(/Sans connexion sous 30 jours, votre compte sera supprimé automatiquement/) }
+  end
 end

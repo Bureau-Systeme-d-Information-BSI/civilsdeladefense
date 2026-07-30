@@ -16,6 +16,7 @@ class User < ApplicationRecord
     :confirmable, :lockable, :timeoutable,
     :omniauthable, omniauth_providers: User.omniauth_providers
   include Suspendable
+  include Deletable
   include PgSearch::Model
 
   pg_search_scope :search_full_text, against: [:first_name, :last_name], ignoring: :accents
@@ -204,7 +205,7 @@ end
 #  last_sign_in_at                  :datetime
 #  last_sign_in_ip                  :inet
 #  locked_at                        :datetime
-#  marked_for_deletion_on           :date
+#  marked_for_deletion_at           :datetime
 #  phone                            :string
 #  photo_content_type               :string
 #  photo_file_name                  :string

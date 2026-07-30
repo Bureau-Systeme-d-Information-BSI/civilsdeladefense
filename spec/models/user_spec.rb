@@ -260,7 +260,7 @@ end
 #  last_sign_in_at                  :datetime
 #  last_sign_in_ip                  :inet
 #  locked_at                        :datetime
-#  marked_for_deletion_on           :date
+#  marked_for_deletion_at           :datetime
 #  phone                            :string
 #  photo_content_type               :string
 #  photo_file_name                  :string

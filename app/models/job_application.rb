@@ -179,7 +179,7 @@ class JobApplication < ApplicationRecord
         .where("audits_start.audited_changes->?->-1 @> ?", :state, from_state)
         .where("audits_end.audited_changes->?->-1 @> ?", :state, to_state)
         .pluck(Arel.sql("DATE_PART('day', audits_end.created_at - audits_start.created_at)"))
-      average = days.present? ? (days.reduce(:+) / days.size.to_f).round : "-"
+      average = days.present? ? (days.sum / days.size.to_f).round : "-"
       [from, to, average]
     }
   end

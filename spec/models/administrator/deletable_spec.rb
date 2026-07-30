@@ -79,6 +79,24 @@ RSpec.describe Administrator::Deletable do
     it { expect { destroy_and_notify! }.to have_enqueued_mail(NotificationsMailer, :deletion_notice) }
   end
 
+  describe "#cancel_deletion!" do
+    subject(:cancel_deletion!) { administrator.cancel_deletion! }
+
+    context "when the administrator is marked for deletion" do
+      let(:administrator) { create(:administrator, marked_for_deletion_at: 3.days.ago) }
+
+      it { expect { cancel_deletion! }.to change { administrator.reload.marked_for_deletion_at }.to(nil) }
+
+      it { expect { cancel_deletion! }.to have_enqueued_mail(NotificationsMailer, :deletion_canceled) }
+    end
+
+    context "when the administrator is not marked for deletion" do
+      let(:administrator) { create(:administrator) }
+
+      it { expect { cancel_deletion! }.not_to have_enqueued_mail(NotificationsMailer, :deletion_canceled) }
+    end
+  end
+
   describe "#after_database_authentication" do
     subject(:after_database_authentication) { administrator.after_database_authentication }
 
@@ -94,6 +112,28 @@ RSpec.describe Administrator::Deletable do
       let(:administrator) { create(:administrator) }
 
       it { expect { after_database_authentication }.not_to have_enqueued_mail(NotificationsMailer, :deletion_canceled) }
+    end
+  end
+
+  describe "#reset_password" do
+    subject(:reset_password) { administrator.reset_password(new_password, new_password) }
+
+    let(:administrator) { create(:administrator, marked_for_deletion_at: 3.days.ago) }
+
+    context "when the new password is valid" do
+      let(:new_password) { "N3w-p4ssw0rd!aa" }
+
+      it { expect { reset_password }.to change { administrator.reload.marked_for_deletion_at }.to(nil) }
+
+      it { expect { reset_password }.to have_enqueued_mail(NotificationsMailer, :deletion_canceled) }
+    end
+
+    context "when the new password is invalid" do
+      let(:new_password) { "weak" }
+
+      it { expect { reset_password }.not_to change { administrator.reload.marked_for_deletion_at } }
+
+      it { expect { reset_password }.not_to have_enqueued_mail(NotificationsMailer, :deletion_canceled) }
     end
   end
 end

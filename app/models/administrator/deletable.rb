@@ -22,12 +22,20 @@ module Administrator::Deletable
     NotificationsMailer.with(administrator: self).deletion_warning.deliver_later
   end
 
-  def after_database_authentication
-    super
+  def cancel_deletion!
     return if marked_for_deletion_at.nil?
 
     update_column(:marked_for_deletion_at, nil) # rubocop:disable Rails/SkipsModelValidations
     NotificationsMailer.with(administrator: self).deletion_canceled.deliver_later
+  end
+
+  def after_database_authentication
+    super
+    cancel_deletion!
+  end
+
+  def reset_password(new_password, new_password_confirmation)
+    super.tap { |reset| cancel_deletion! if reset }
   end
 
   def destroy_and_notify!

@@ -52,4 +52,32 @@ RSpec.describe User::Deletable do
 
     it { expect { mark_for_deletion! }.to have_enqueued_mail(ApplicantNotificationsMailer, :deletion_warning) }
   end
+
+  describe "#cancel_deletion!" do
+    subject(:cancel_deletion!) { user.cancel_deletion! }
+
+    context "when the user is marked for deletion" do
+      let(:user) { create(:user, marked_for_deletion_at: 3.days.ago) }
+
+      it { expect { cancel_deletion! }.to change { user.reload.marked_for_deletion_at }.to(nil) }
+
+      it { expect { cancel_deletion! }.to have_enqueued_mail(ApplicantNotificationsMailer, :deletion_canceled) }
+    end
+
+    context "when the user is not marked for deletion" do
+      let(:user) { create(:user) }
+
+      it { expect { cancel_deletion! }.not_to have_enqueued_mail(ApplicantNotificationsMailer, :deletion_canceled) }
+    end
+  end
+
+  describe "#after_database_authentication" do
+    subject(:after_database_authentication) { user.after_database_authentication }
+
+    let(:user) { create(:user, marked_for_deletion_at: 3.days.ago) }
+
+    it { expect { after_database_authentication }.to change { user.reload.marked_for_deletion_at }.to(nil) }
+
+    it { expect { after_database_authentication }.to have_enqueued_mail(ApplicantNotificationsMailer, :deletion_canceled) }
+  end
 end

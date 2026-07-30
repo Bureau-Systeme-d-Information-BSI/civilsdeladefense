@@ -21,4 +21,16 @@ module User::Deletable
     update_column(:marked_for_deletion_at, Time.current) # rubocop:disable Rails/SkipsModelValidations
     ApplicantNotificationsMailer.with(user: self).deletion_warning.deliver_later
   end
+
+  def cancel_deletion!
+    return if marked_for_deletion_at.nil?
+
+    update_column(:marked_for_deletion_at, nil) # rubocop:disable Rails/SkipsModelValidations
+    ApplicantNotificationsMailer.with(user: self).deletion_canceled.deliver_later
+  end
+
+  def after_database_authentication
+    super
+    cancel_deletion!
+  end
 end

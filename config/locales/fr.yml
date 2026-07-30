@@ -187,6 +187,8 @@ fr:
       subject: "Votre candidature à l'offre %{job_offer_title} sur %{service_name} – Confirmation de votre désistement"
     deletion_warning:
       subject: "[%{service_name}] Conservation de votre compte utilisateur"
+    deletion_canceled:
+      subject: "[%{service_name}] Confirmation de mise à jour de votre compte"
   notifications_mailer:
     new_email:
       subject: "[%{service_name}] Notification « Employeur » - Etape %{state}"

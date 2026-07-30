@@ -38,4 +38,8 @@ class ApplicantNotificationsPreview < ActionMailer::Preview
   def deletion_warning
     ApplicantNotificationsMailer.with(user: User.first).deletion_warning
   end
+
+  def deletion_canceled
+    ApplicantNotificationsMailer.with(user: User.first).deletion_canceled
+  end
 end

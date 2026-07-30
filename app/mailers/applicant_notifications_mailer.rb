@@ -104,4 +104,11 @@ class ApplicantNotificationsMailer < ApplicationMailer
 
     mail to: @user.email, subject: t(".subject", service_name: @service_name)
   end
+
+  def deletion_canceled
+    @user = params[:user]
+    @service_name = @user.organization.service_name
+
+    mail to: @user.email, subject: t(".subject", service_name: @service_name)
+  end
 end

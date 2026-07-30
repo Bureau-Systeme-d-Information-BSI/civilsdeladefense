@@ -35,4 +35,13 @@ module User::Deletable
     super
     cancel_deletion!
   end
+
+  def destroy_and_notify!
+    email = self.email
+    full_name = self.full_name
+    organization_id = self.organization_id
+
+    destroy!
+    ApplicantNotificationsMailer.with(email:, full_name:, organization_id:).deletion_notice.deliver_later
+  end
 end

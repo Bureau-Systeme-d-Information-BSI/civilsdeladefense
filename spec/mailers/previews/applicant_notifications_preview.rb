@@ -42,4 +42,13 @@ class ApplicantNotificationsPreview < ActionMailer::Preview
   def deletion_canceled
     ApplicantNotificationsMailer.with(user: User.first).deletion_canceled
   end
+
+  def deletion_notice
+    user = User.first
+    ApplicantNotificationsMailer.with(
+      email: user.email,
+      full_name: user.full_name,
+      organization_id: user.organization_id
+    ).deletion_notice
+  end
 end

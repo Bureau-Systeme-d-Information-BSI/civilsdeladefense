@@ -190,4 +190,29 @@ RSpec.describe ApplicantNotificationsMailer do
 
     it { expect(mail.body.encoded).to match(/votre compte utilisateur a bien été mis à jour/) }
   end
+
+  describe "deletion_notice" do
+    subject(:mail) do
+      described_class.with(
+        email: user.email,
+        full_name: user.full_name,
+        organization_id: user.organization_id
+      ).deletion_notice
+    end
+
+    let(:user) { create(:user) }
+
+    it {
+      expect(mail.subject).to eq(
+        I18n.t(
+          "applicant_notifications_mailer.deletion_notice.subject",
+          service_name: user.organization.service_name
+        )
+      )
+    }
+
+    it { expect(mail.to).to match([user.email]) }
+
+    it { expect(mail.body.encoded).to match(/vous devrez créer un nouveau compte/) }
+  end
 end

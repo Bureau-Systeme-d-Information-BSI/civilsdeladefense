@@ -108,4 +108,20 @@ RSpec.describe User::Deletable do
 
     it { expect { after_database_authentication }.to have_enqueued_mail(ApplicantNotificationsMailer, :deletion_canceled) }
   end
+
+  describe "#destroy_and_notify!" do
+    subject(:destroy_and_notify!) { user.destroy_and_notify! }
+
+    let!(:user) { create(:user) }
+
+    it { expect { destroy_and_notify! }.to change { User.exists?(user.id) }.to(false) }
+
+    it { expect { destroy_and_notify! }.to have_enqueued_mail(ApplicantNotificationsMailer, :deletion_notice) }
+
+    context "with a job application" do
+      before { create(:job_application, :with_job_application_file, user:) }
+
+      it { expect { destroy_and_notify! }.to change(JobApplicationFile, :count).from(1).to(0) }
+    end
+  end
 end

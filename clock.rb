@@ -13,8 +13,9 @@ module Clockwork
     config[:tz] = "Europe/Paris"
   end
 
-  every 1.day, "mark_users_for_deletion", at: "11:00" do
+  every 1.day, "purge_users", at: "11:00" do
     User::MarkForDeletionJob.perform_later
+    User::DeletionJob.perform_later
   end
 
   every 1.day, "purge_administrators", at: "11:00" do

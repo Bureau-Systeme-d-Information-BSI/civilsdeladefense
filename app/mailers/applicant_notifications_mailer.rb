@@ -111,4 +111,11 @@ class ApplicantNotificationsMailer < ApplicationMailer
 
     mail to: @user.email, subject: t(".subject", service_name: @service_name)
   end
+
+  def deletion_notice
+    @full_name = params[:full_name]
+    @service_name = Organization.find(params[:organization_id]).service_name
+
+    mail to: params[:email], subject: t(".subject", service_name: @service_name)
+  end
 end

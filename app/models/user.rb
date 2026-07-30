@@ -70,6 +70,8 @@ class User < ApplicationRecord
 
   before_validation :build_profile, if: -> { profile.nil? }
   before_update :destroy_photo
+  # prepend so that it runs before job_applications' dependent: :nullify empties the association
+  before_destroy :purge_associated_objects, prepend: true
   before_destroy :mark_job_applications_as_read
 
   def self.ransackable_scopes(auth_object = nil)
@@ -175,6 +177,15 @@ class User < ApplicationRecord
 
   def destroy_photo
     remove_photo! if delete_photo
+  end
+
+  def purge_associated_objects
+    job_applications.reload.each do |job_application|
+      job_application.emails.destroy_all
+      job_application.messages.destroy_all
+      job_application.job_application_files.destroy_all
+      job_application.compute_notifications_counter!
+    end
   end
 
   def mark_job_applications_as_read

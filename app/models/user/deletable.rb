@@ -15,6 +15,8 @@ module User::Deletable
           cutoff: INACTIVITY_PERIOD.ago
         )
     }
+
+    scope :deletables, -> { where(suspended_at: nil).where(marked_for_deletion_at: ...NOTICE_PERIOD.ago) }
   end
 
   def mark_for_deletion!

@@ -43,6 +43,34 @@ RSpec.describe User::Deletable do
     end
   end
 
+  describe ".deletables" do
+    subject(:deletables) { User.deletables }
+
+    context "when the user was marked for deletion more than 30 days ago" do
+      let!(:user) { create(:user, marked_for_deletion_at: 31.days.ago) }
+
+      it { is_expected.to include(user) }
+    end
+
+    context "when the user was marked for deletion within the last 30 days" do
+      let!(:user) { create(:user, marked_for_deletion_at: 29.days.ago) }
+
+      it { is_expected.not_to include(user) }
+    end
+
+    context "when the user is not marked for deletion" do
+      let!(:user) { create(:user) }
+
+      it { is_expected.not_to include(user) }
+    end
+
+    context "when the user was marked for deletion more than 30 days ago then suspended" do
+      let!(:user) { create(:user, marked_for_deletion_at: 31.days.ago, suspended_at: 1.day.ago) }
+
+      it { is_expected.not_to include(user) }
+    end
+  end
+
   describe "#mark_for_deletion!" do
     subject(:mark_for_deletion!) { user.mark_for_deletion! }
 

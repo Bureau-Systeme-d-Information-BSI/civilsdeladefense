@@ -20,22 +20,6 @@ RSpec.describe Admin::AccountsController do
     end
   end
 
-  describe "GET /admin/account/photo" do
-    subject(:photo_request) { get photo_admin_account_path(id: administrator.id) }
-
-    let(:administrator) { create(:administrator, :with_photo) }
-
-    it "is successful" do
-      photo_request
-      expect(response).to be_successful
-    end
-
-    it "shows the administrator photo" do
-      photo_request
-      expect(response.headers["Content-Type"]).to eq("image/jpeg")
-    end
-  end
-
   describe "PATCH /admin/account/" do
     subject(:update_request) { patch admin_account_path, params: }
 

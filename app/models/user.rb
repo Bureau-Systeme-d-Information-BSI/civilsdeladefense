@@ -3,6 +3,7 @@
 # Candidate to job offer
 class User < ApplicationRecord
   self.ignored_columns += %w[gender] # Deprecated on 2024-09-03
+  self.ignored_columns += %w[marked_for_deletion_on] # Deprecated on 2026-07-30
 
   PASSWORD_REGEX = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[\\\/<>{}()#¤:;,.?!•·|"'`´~@£¨µ§²$€%^&*+=_-]).{12,70}$/
 
@@ -67,7 +68,6 @@ class User < ApplicationRecord
   attr_accessor :is_deleted, :delete_photo
 
   before_validation :build_profile, if: -> { profile.nil? }
-  before_save :remove_mark_for_deletion
   before_update :destroy_photo
   before_destroy :mark_job_applications_as_read
 
@@ -96,7 +96,6 @@ class User < ApplicationRecord
       "last_sign_in_at",
       "last_sign_in_ip",
       "locked_at",
-      "marked_for_deletion_on",
       "organization_id",
       "phone",
       "photo_content_type",
@@ -175,10 +174,6 @@ class User < ApplicationRecord
 
   def destroy_photo
     remove_photo! if delete_photo
-  end
-
-  def remove_mark_for_deletion
-    self.marked_for_deletion_on = nil
   end
 
   def mark_job_applications_as_read

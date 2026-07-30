@@ -36,28 +36,6 @@ class ApplicantNotificationsMailer < ApplicationMailer
     mail to: to, subject: "[#{@service_name}]"
   end
 
-  def notice_period_before_deletion(user_id)
-    @user = User.find(user_id)
-    @service_name = @user.organization.service_name
-    @days_notice_period_before_deletion = ENV["DAYS_NOTICE_PERIOD_BEFORE_DELETION"].to_i
-
-    to = @user.email
-    subject = "[#{@service_name}] Votre compte candidat : mise à jour nécessaire"
-
-    mail to: to, subject: subject
-  end
-
-  def deletion_notice(user_email, user_full_name, organization_id)
-    @user_full_name = user_full_name
-    organization = Organization.find(organization_id)
-    @service_name = organization.service_name
-
-    to = user_email
-    subject = "[#{@service_name}] Votre compte candidat a été supprimé"
-
-    mail to: to, subject: subject
-  end
-
   def send_job_offer(user, job_offer)
     return unless user.receive_job_offer_mails
 

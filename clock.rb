@@ -13,15 +13,6 @@ module Clockwork
     config[:tz] = "Europe/Paris"
   end
 
-  cond = ENV["DAYS_INACTIVITY_PERIOD_BEFORE_DELETION"].present?
-  cond &&= ENV["DAYS_NOTICE_PERIOD_BEFORE_DELETION"].present?
-  if cond
-    every 1.day, "purge_users", at: "11:00" do
-      User::MarkForDeletionJob.perform_later
-      User::DeleteOldJob.perform_later
-    end
-  end
-
   every 1.day, "purge_administrators", at: "11:00" do
     Administrator::MarkForDeletionJob.perform_later
     Administrator::DeletionJob.perform_later

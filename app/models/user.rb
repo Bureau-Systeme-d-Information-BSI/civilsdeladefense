@@ -15,7 +15,6 @@ class User < ApplicationRecord
     :confirmable, :lockable, :timeoutable,
     :omniauthable, omniauth_providers: User.omniauth_providers
   include Suspendable
-  include DeletionFlow
   include PgSearch::Model
 
   pg_search_scope :search_full_text, against: [:first_name, :last_name], ignoring: :accents

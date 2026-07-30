@@ -214,50 +214,6 @@ RSpec.describe User do
     end
   end
 
-  it "computes notice period difference in days" do
-    ENV["DAYS_INACTIVITY_PERIOD_BEFORE_DELETION"] = "100"
-    ENV["DAYS_NOTICE_PERIOD_BEFORE_DELETION"] = "20"
-    expect(described_class.notice_period_target_date.to_date).to eq(80.days.ago.to_date)
-  end
-
-  describe "automatic deletion" do
-    before do
-      ENV["DAYS_INACTIVITY_PERIOD_BEFORE_DELETION"] = "100"
-      ENV["DAYS_NOTICE_PERIOD_BEFORE_DELETION"] = "20"
-      user.reload
-      described_class.destroy_when_too_old
-      described_class.mark_for_deletion
-    end
-
-    context "when connected long time ago" do
-      let!(:user) { create(:user, last_sign_in_at: 81.days.ago) }
-
-      it "marked" do
-        expect(user.reload.marked_for_deletion_on).to eq(Time.zone.now.to_date)
-      end
-    end
-
-    context "when marked but has not connected since" do
-      let!(:user) do
-        user = create(:user, last_sign_in_at: 101.days.ago)
-        user.update_column(:marked_for_deletion_on, 21.days.ago) # rubocop:disable Rails/SkipsModelValidations
-        user
-      end
-
-      it "delete" do
-        expect(described_class.exists?(user.id)).to be(false)
-      end
-    end
-
-    context "when marked but has connected since" do
-      let!(:user) { create(:user, marked_for_deletion_on: 21.days.ago, last_sign_in_at: Time.zone.now) }
-
-      it "doesn't delete" do
-        expect(described_class.exists?(user.id)).to be(true)
-      end
-    end
-  end
-
   describe "#full_address" do
     subject { user.full_address }
 

@@ -152,37 +152,4 @@ RSpec.describe ApplicantNotificationsMailer do
 
     it { expect(error_email.body.encoded).to match(/Sujet original/) }
   end
-
-  describe "notice_period_before_deletion" do
-    subject(:notice_period_before_deletion) { described_class.notice_period_before_deletion(user.id) }
-
-    let(:user) { create(:user) }
-
-    it {
-      expect(notice_period_before_deletion.subject).to eq(
-        "[#{user.organization.service_name}] Votre compte candidat : mise à jour nécessaire"
-      )
-    }
-
-    it { expect(notice_period_before_deletion.to).to eq([user.email]) }
-
-    it { expect(notice_period_before_deletion.body.encoded).to match(/sera supprimé automatiquement/) }
-  end
-
-  describe "deletion_notice" do
-    subject(:deletion_notice) { described_class.deletion_notice(user_email, "Jane Doe", organization.id) }
-
-    let(:organization) { Organization.first }
-    let(:user_email) { "candidat@example.com" }
-
-    it {
-      expect(deletion_notice.subject).to eq(
-        "[#{organization.service_name}] Votre compte candidat a été supprimé"
-      )
-    }
-
-    it { expect(deletion_notice.to).to eq([user_email]) }
-
-    it { expect(deletion_notice.body.encoded).to match(/suppression de votre compte candidat/) }
-  end
 end

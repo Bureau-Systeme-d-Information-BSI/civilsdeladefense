@@ -109,6 +109,28 @@ RSpec.describe User::Deletable do
     it { expect { after_database_authentication }.to have_enqueued_mail(ApplicantNotificationsMailer, :deletion_canceled) }
   end
 
+  describe "#reset_password" do
+    subject(:reset_password) { user.reset_password(new_password, new_password) }
+
+    let(:user) { create(:user, marked_for_deletion_at: 3.days.ago) }
+
+    context "when the new password is valid" do
+      let(:new_password) { "N3w-p4ssw0rd!aa" }
+
+      it { expect { reset_password }.to change { user.reload.marked_for_deletion_at }.to(nil) }
+
+      it { expect { reset_password }.to have_enqueued_mail(ApplicantNotificationsMailer, :deletion_canceled) }
+    end
+
+    context "when the new password is invalid" do
+      let(:new_password) { "weak" }
+
+      it { expect { reset_password }.not_to change { user.reload.marked_for_deletion_at } }
+
+      it { expect { reset_password }.not_to have_enqueued_mail(ApplicantNotificationsMailer, :deletion_canceled) }
+    end
+  end
+
   describe "#destroy_and_notify!" do
     subject(:destroy_and_notify!) { user.destroy_and_notify! }
 

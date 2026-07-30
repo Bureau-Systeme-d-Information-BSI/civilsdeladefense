@@ -36,6 +36,10 @@ module User::Deletable
     cancel_deletion!
   end
 
+  def reset_password(new_password, new_password_confirmation)
+    super.tap { |reset| cancel_deletion! if reset }
+  end
+
   def destroy_and_notify!
     email = self.email
     full_name = self.full_name

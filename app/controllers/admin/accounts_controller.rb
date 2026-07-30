@@ -12,16 +12,6 @@ class Admin::AccountsController < Admin::BaseController
   def show
   end
 
-  def photo
-    administrator = Administrator.find(params[:id])
-
-    send_data(
-      administrator.photo.big.read,
-      filename: administrator.photo.filename,
-      type: administrator.photo.content_type
-    )
-  end
-
   # PATCH/PUT /admin/account/1
   # PATCH/PUT /admin/account/1.json
   def update
@@ -37,6 +27,8 @@ class Admin::AccountsController < Admin::BaseController
     end
   end
 
+  private
+
   def update_admin
     if password_changed?
       updated = @administrator.update_with_password(administrator_params)
@@ -47,8 +39,6 @@ class Admin::AccountsController < Admin::BaseController
       @administrator.update(administrator_params_without_password)
     end
   end
-
-  private
 
   def set_administrator
     @administrator = current_administrator

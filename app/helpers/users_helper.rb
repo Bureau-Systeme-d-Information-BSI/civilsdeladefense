@@ -29,7 +29,7 @@ module UsersHelper
     if current_administrator && photo.model.is_a?(User)
       photo_admin_user_path(photo.model)
     elsif current_administrator && photo.model.is_a?(Administrator)
-      photo_admin_account_path(id: photo.model.id)
+      admin_account_photo_path(id: photo.model.id)
     else
       blank_photo
     end

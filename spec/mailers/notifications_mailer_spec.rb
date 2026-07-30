@@ -121,4 +121,67 @@ RSpec.describe NotificationsMailer do
 
     it { expect(mail.body.encoded).to match(/nouveau document à consulter/) }
   end
+
+  describe "deletion_warning" do
+    subject(:mail) { described_class.with(administrator:).deletion_warning }
+
+    let(:administrator) { create(:administrator) }
+
+    it {
+      expect(mail.subject).to eq(
+        I18n.t(
+          "notifications_mailer.deletion_warning.subject",
+          service_name: administrator.organization.service_name
+        )
+      )
+    }
+
+    it { expect(mail.to).to match([administrator.email]) }
+
+    it { expect(mail.body.encoded).to match(/Sans connexion sous 30 jours, votre compte sera supprimé automatiquement/) }
+  end
+
+  describe "deletion_canceled" do
+    subject(:mail) { described_class.with(administrator:).deletion_canceled }
+
+    let(:administrator) { create(:administrator) }
+
+    it {
+      expect(mail.subject).to eq(
+        I18n.t(
+          "notifications_mailer.deletion_canceled.subject",
+          service_name: administrator.organization.service_name
+        )
+      )
+    }
+
+    it { expect(mail.to).to match([administrator.email]) }
+
+    it { expect(mail.body.encoded).to match(/votre compte utilisateur a bien été mis à jour/) }
+  end
+
+  describe "deletion_notice" do
+    subject(:mail) do
+      described_class.with(
+        email: administrator.email,
+        full_name: administrator.full_name,
+        organization_id: administrator.organization_id
+      ).deletion_notice
+    end
+
+    let(:administrator) { create(:administrator) }
+
+    it {
+      expect(mail.subject).to eq(
+        I18n.t(
+          "notifications_mailer.deletion_notice.subject",
+          service_name: administrator.organization.service_name
+        )
+      )
+    }
+
+    it { expect(mail.to).to match([administrator.email]) }
+
+    it { expect(mail.body.encoded).to match(/vous devrez créer un nouveau compte/) }
+  end
 end

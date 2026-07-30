@@ -198,6 +198,12 @@ fr:
       subject: "[%{service_name}] Notification « Gestionnaire » - Prise de poste"
     new_document:
       subject: "[%{service_name}] Nouveau document à consulter"
+    deletion_warning:
+      subject: "[%{service_name}] Conservation de votre compte utilisateur"
+    deletion_canceled:
+      subject: "[%{service_name}] Confirmation de mise à jour de votre compte"
+    deletion_notice:
+      subject: "[%{service_name}] Suppression de votre compte utilisateur"
   reports_mailer:
     daily_summary:
       subject: "[%{service_name}] Rapport journalier"

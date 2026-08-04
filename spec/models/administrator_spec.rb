@@ -400,6 +400,38 @@ RSpec.describe Administrator do
     end
   end
 
+  describe "#authorized_for_back_office?" do
+    subject(:authorized_for_back_office?) { administrator.authorized_for_back_office? }
+
+    let(:administrator) { build(:administrator, roles:) }
+
+    after { ENV.delete("BACK_OFFICE_FUNCTIONAL_ADMIN_ONLY") }
+
+    context "when the BACK_OFFICE_FUNCTIONAL_ADMIN_ONLY flag is disabled" do
+      before { ENV["BACK_OFFICE_FUNCTIONAL_ADMIN_ONLY"] = "false" }
+
+      let(:roles) { [:hr_manager] }
+
+      it { is_expected.to be(true) }
+    end
+
+    context "when the BACK_OFFICE_FUNCTIONAL_ADMIN_ONLY flag is enabled" do
+      before { ENV["BACK_OFFICE_FUNCTIONAL_ADMIN_ONLY"] = "true" }
+
+      context "when the administrator is a functional administrator" do
+        let(:roles) { [:functional_administrator] }
+
+        it { is_expected.to be(true) }
+      end
+
+      context "when the administrator is not a functional administrator" do
+        let(:roles) { [:hr_manager] }
+
+        it { is_expected.to be(false) }
+      end
+    end
+  end
+
   describe "#transfer" do
     subject(:transfer) { administrator.transfer(email) }
 

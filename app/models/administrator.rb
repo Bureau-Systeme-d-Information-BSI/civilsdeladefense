@@ -128,7 +128,14 @@ class Administrator < ApplicationRecord
 
   # ensure user account is active
   def active_for_authentication?
-    super && !deleted_at
+    super && !deleted_at && authorized_for_back_office?
+  end
+
+  # TODO: @msharififr remove this check in septembre 2026
+  def authorized_for_back_office?
+    return true unless ENV["BACK_OFFICE_FUNCTIONAL_ADMIN_ONLY"] == "true"
+
+    functional_administrator?
   end
 
   def password_required?

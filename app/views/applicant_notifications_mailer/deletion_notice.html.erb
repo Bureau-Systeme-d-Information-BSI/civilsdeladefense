@@ -1,15 +1,13 @@
 <p>
-  <%-if @user_full_name.present? %>
-  Bonjour <%= @user_full_name %>,
-  <%- else %>
-  Bonjour,
-  <%- end %>
+  Bonjour <%= @full_name %>,
 </p>
 
 <p>
-  Nous vous confirmons la suppression de votre compte candidat de notre base de données.
-  <br/>
-  Pour toute nouvelle candidature, nous vous invitons à créer un nouveau compte candidat sur notre site.
+  Votre compte utilisateur sur le site <%= @service_name %> a été supprimé.
+</p>
+
+<p>
+  Si vous souhaitez à nouveau utiliser notre plateforme, vous devrez créer un nouveau compte.
 </p>
 
 <p>

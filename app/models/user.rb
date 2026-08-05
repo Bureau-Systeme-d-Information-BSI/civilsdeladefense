@@ -3,6 +3,7 @@
 # Candidate to job offer
 class User < ApplicationRecord
   self.ignored_columns += %w[gender] # Deprecated on 2024-09-03
+  self.ignored_columns += %w[marked_for_deletion_on] # Deprecated on 2026-07-30
 
   PASSWORD_REGEX = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[\\\/<>{}()#¤:;,.?!•·|"'`´~@£¨µ§²$€%^&*+=_-]).{12,70}$/
 
@@ -15,7 +16,7 @@ class User < ApplicationRecord
     :confirmable, :lockable, :timeoutable,
     :omniauthable, omniauth_providers: User.omniauth_providers
   include Suspendable
-  include DeletionFlow
+  include Deletable
   include PgSearch::Model
 
   pg_search_scope :search_full_text, against: [:first_name, :last_name], ignoring: :accents
@@ -68,8 +69,9 @@ class User < ApplicationRecord
   attr_accessor :is_deleted, :delete_photo
 
   before_validation :build_profile, if: -> { profile.nil? }
-  before_save :remove_mark_for_deletion
   before_update :destroy_photo
+  # prepend so that it runs before job_applications' dependent: :nullify empties the association
+  before_destroy :purge_associated_objects, prepend: true
   before_destroy :mark_job_applications_as_read
 
   def self.ransackable_scopes(auth_object = nil)
@@ -97,7 +99,6 @@ class User < ApplicationRecord
       "last_sign_in_at",
       "last_sign_in_ip",
       "locked_at",
-      "marked_for_deletion_on",
       "organization_id",
       "phone",
       "photo_content_type",
@@ -178,8 +179,13 @@ class User < ApplicationRecord
     remove_photo! if delete_photo
   end
 
-  def remove_mark_for_deletion
-    self.marked_for_deletion_on = nil
+  def purge_associated_objects
+    job_applications.reload.each do |job_application|
+      job_application.emails.destroy_all
+      job_application.messages.destroy_all
+      job_application.job_application_files.destroy_all
+      job_application.compute_notifications_counter!
+    end
   end
 
   def mark_job_applications_as_read
@@ -210,7 +216,7 @@ end
 #  last_sign_in_at                  :datetime
 #  last_sign_in_ip                  :inet
 #  locked_at                        :datetime
-#  marked_for_deletion_on           :date
+#  marked_for_deletion_at           :datetime
 #  phone                            :string
 #  photo_content_type               :string
 #  photo_file_name                  :string

@@ -25,6 +25,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def sign_in_user
     sign_in @user
+    @user.cancel_deletion!
 
     session[:connected_with] = "france_connect"
 

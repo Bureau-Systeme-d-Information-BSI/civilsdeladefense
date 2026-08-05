@@ -153,36 +153,68 @@ RSpec.describe ApplicantNotificationsMailer do
     it { expect(error_email.body.encoded).to match(/Sujet original/) }
   end
 
-  describe "notice_period_before_deletion" do
-    subject(:notice_period_before_deletion) { described_class.notice_period_before_deletion(user.id) }
+  describe "deletion_warning" do
+    subject(:mail) { described_class.with(user:).deletion_warning }
 
     let(:user) { create(:user) }
 
     it {
-      expect(notice_period_before_deletion.subject).to eq(
-        "[#{user.organization.service_name}] Votre compte candidat : mise à jour nécessaire"
+      expect(mail.subject).to eq(
+        I18n.t(
+          "applicant_notifications_mailer.deletion_warning.subject",
+          service_name: user.organization.service_name
+        )
       )
     }
 
-    it { expect(notice_period_before_deletion.to).to eq([user.email]) }
+    it { expect(mail.to).to match([user.email]) }
 
-    it { expect(notice_period_before_deletion.body.encoded).to match(/sera supprimé automatiquement/) }
+    it { expect(mail.body.encoded).to match(/Sans connexion sous 30 jours, votre compte sera supprimé automatiquement/) }
+
+    it { expect(mail.body.encoded).to include(new_user_session_url) }
+  end
+
+  describe "deletion_canceled" do
+    subject(:mail) { described_class.with(user:).deletion_canceled }
+
+    let(:user) { create(:user) }
+
+    it {
+      expect(mail.subject).to eq(
+        I18n.t(
+          "applicant_notifications_mailer.deletion_canceled.subject",
+          service_name: user.organization.service_name
+        )
+      )
+    }
+
+    it { expect(mail.to).to match([user.email]) }
+
+    it { expect(mail.body.encoded).to match(/votre compte utilisateur a bien été mis à jour/) }
   end
 
   describe "deletion_notice" do
-    subject(:deletion_notice) { described_class.deletion_notice(user_email, "Jane Doe", organization.id) }
+    subject(:mail) do
+      described_class.with(
+        email: user.email,
+        full_name: user.full_name,
+        organization_id: user.organization_id
+      ).deletion_notice
+    end
 
-    let(:organization) { Organization.first }
-    let(:user_email) { "candidat@example.com" }
+    let(:user) { create(:user) }
 
     it {
-      expect(deletion_notice.subject).to eq(
-        "[#{organization.service_name}] Votre compte candidat a été supprimé"
+      expect(mail.subject).to eq(
+        I18n.t(
+          "applicant_notifications_mailer.deletion_notice.subject",
+          service_name: user.organization.service_name
+        )
       )
     }
 
-    it { expect(deletion_notice.to).to eq([user_email]) }
+    it { expect(mail.to).to match([user.email]) }
 
-    it { expect(deletion_notice.body.encoded).to match(/suppression de votre compte candidat/) }
+    it { expect(mail.body.encoded).to match(/vous devrez créer un nouveau compte/) }
   end
 end

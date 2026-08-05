@@ -1,12 +1,17 @@
 require "rails_helper"
 
 RSpec.describe User::MarkForDeletionJob do
-  subject(:mark_for_deletion) { described_class.new.perform }
+  subject(:perform) { described_class.new.perform }
 
-  before do
-    allow(User).to receive(:mark_for_deletion)
-    mark_for_deletion
+  context "when the user has not signed in for more than 12 months" do
+    let!(:user) { create(:user, last_sign_in_at: 13.months.ago) }
+
+    it { expect { perform }.to change { user.reload.marked_for_deletion_at }.from(nil) }
   end
 
-  it { expect(User).to have_received(:mark_for_deletion) }
+  context "when the user has signed in within the last 12 months" do
+    let!(:user) { create(:user, last_sign_in_at: 11.months.ago) }
+
+    it { expect { perform }.not_to change { user.reload.marked_for_deletion_at } }
+  end
 end

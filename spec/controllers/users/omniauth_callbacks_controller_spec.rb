@@ -80,6 +80,16 @@ RSpec.describe Users::OmniauthCallbacksController do
       end
     end
 
+    context "when the user is marked for deletion" do
+      subject(:france_connect_request) { post :france_connect }
+
+      let!(:user) { create(:confirmed_user, email:, marked_for_deletion_at: 3.days.ago) }
+
+      it { expect { france_connect_request }.to change { user.reload.marked_for_deletion_at }.to(nil) }
+
+      it { expect { france_connect_request }.to have_enqueued_mail(ApplicantNotificationsMailer, :deletion_canceled) }
+    end
+
     context "when the oauth client raises an error" do
       subject(:france_connect_request) { post :france_connect }
 

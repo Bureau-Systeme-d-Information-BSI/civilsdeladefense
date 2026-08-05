@@ -170,6 +170,8 @@ RSpec.describe ApplicantNotificationsMailer do
     it { expect(mail.to).to match([user.email]) }
 
     it { expect(mail.body.encoded).to match(/Sans connexion sous 30 jours, votre compte sera supprimé automatiquement/) }
+
+    it { expect(mail.body.encoded).to include(new_user_session_url) }
   end
 
   describe "deletion_canceled" do

@@ -53,9 +53,7 @@ Rails.application.routes.draw do
     resources :cities, only: [:index, :show]
     resources :administrator_emails, only: :index
     resource :account do
-      member do
-        get :photo
-      end
+      resource :photo, only: :show, module: :accounts
     end
     resources :salary_ranges, only: %i[index]
     resources :email_templates, only: %i[index] do

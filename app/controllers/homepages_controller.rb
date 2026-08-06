@@ -11,7 +11,7 @@ class HomepagesController < ApplicationController
     @job_offers_selected = root_rel.where(featured: true)
     @job_offers_last = root_rel.limit(6)
 
-    @categories = Category.order("lft ASC").where(
+    @categories = Category.order(lft: :asc).where(
       "published_job_offers_count > ? AND depth <= ?", 0, 1
     )
 

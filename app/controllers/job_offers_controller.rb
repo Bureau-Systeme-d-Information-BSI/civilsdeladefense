@@ -9,7 +9,7 @@ class JobOffersController < ApplicationController
   # GET /job_offers.json
   def index
     @page = current_organization.pages.where(parent_id: nil).first
-    @categories = Category.order("lft ASC").where(
+    @categories = Category.order(lft: :asc).where(
       "published_job_offers_count > ? AND depth = ?", 0, 0
     ).includes(:children)
     @contract_types = ContractType.all

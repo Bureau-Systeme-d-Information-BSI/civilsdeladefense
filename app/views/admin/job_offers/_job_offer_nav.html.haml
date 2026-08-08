@@ -10,8 +10,8 @@
     = link_to t('.stats'), [:stats, :admin, job_offer], class: klasses
   %li.mr-3.nav-item
     - klasses = base_link_klasses.dup
-    - klasses << :active if (active_tab[:action_name] == 'board') || (active_tab[:controller_name] == 'job_applications')
-    = link_to [:board, :admin, job_offer], class: klasses do
+    - klasses << :active if (active_tab[:controller_name] == 'boards') || (active_tab[:controller_name] == 'job_applications')
+    = link_to [:admin, job_offer, :board], class: klasses do
       = t('.board')
       = surround '(', ')' do
         = job_offer.job_applications_count

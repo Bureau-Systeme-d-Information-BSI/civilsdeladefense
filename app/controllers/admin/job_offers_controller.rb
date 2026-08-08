@@ -26,16 +26,6 @@ class Admin::JobOffersController < Admin::BaseController
   def show
   end
 
-  def add_actor
-    @job_offer = params[:job_offer_id].present? ? JobOffer.find(params[:job_offer_id]) : JobOffer.new
-    @administrator = find_administrator_and_build_job_offer_actor(@job_offer, params[:email].downcase, params[:role])
-    if @administrator.present?
-      render action: "add_actor", layout: false
-    else
-      render :add_actor_error, status: :unprocessable_content
-    end
-  end
-
   # GET /admin/job_offers/new
   def new
     if current_organization.job_offer_term? && params[:job_offer_term_ids].blank?
@@ -164,16 +154,5 @@ class Admin::JobOffersController < Admin::BaseController
     job_offer_actors_attributes = %i[id role _destroy]
     job_offer_actors_attributes << {administrator_attributes: %i[id email _destroy]}
     fields << {job_offer_actors_attributes: job_offer_actors_attributes}
-  end
-
-  def find_administrator_and_build_job_offer_actor(job_offer, email, role)
-    return nil if email.blank?
-
-    administrator = Administrator.find_by(email:)
-    return nil if administrator.nil?
-
-    job_offer_actor = job_offer.job_offer_actors.build(role:)
-    job_offer_actor.administrator = administrator
-    administrator
   end
 end

@@ -6,7 +6,7 @@
       .card
         .card-header.with-subheader
           .card-title= t('.card_subtitle')
-          .alert.alert-danger.d-none{id: "admin-not-found"}= t('admin.job_offers.add_actor.admin_not_found_html')
+          .alert.alert-danger.d-none{id: "admin-not-found"}= t('.admin_not_found_html')
         - JobOfferActor.roles.except('employer').each do |actor_role, weight|
           .card-subheader
             .card-title
@@ -26,7 +26,7 @@
                         = select_tag :email, options, include_blank: true, class: 'form-control', id: "email_#{actor_role}"
                       - else
                         = combobox_tag "email", admin_administrator_emails_path, placeholder: t('simple_form.labels.defaults.email'), id: "email_#{actor_role}"
-                    - url = add_actor_admin_job_offers_url(role: actor_role, job_offer_id: job_offer_id)
+                    - url = new_admin_job_offers_actor_url(role: actor_role, job_offer_id: job_offer_id)
                     - data = { action: "job-offer-management#addFields", url: url}
                     = link_to('#', class: 'btn btn-primary btn-raised mb-0 d-flex flex-row align-items-center', data: data) do
                       = t('buttons.add')

@@ -64,11 +64,11 @@ Rails.application.routes.draw do
     resources :job_offer_terms, only: %i[index]
     resources :job_offers, path: "offresdemploi" do
       collection do
-        post :exports
         post :feature, to: "job_offers/features#create"
         post :init, to: "job_offers#new"
         get :init, to: "job_offer_terms#index"
         get :add_actor
+        resources :exports, only: :index, controller: "job_offers/exports", as: :job_offers_exports
         resources :features, only: :index, controller: "job_offers/features", as: :job_offers_features
         resources :archives, only: :index, controller: "job_offers/archives", as: :job_offers_archives
         JobOffer.aasm.events.map(&:name).each do |event_name|

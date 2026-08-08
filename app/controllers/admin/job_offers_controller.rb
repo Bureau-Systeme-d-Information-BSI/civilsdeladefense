@@ -21,13 +21,6 @@ class Admin::JobOffersController < Admin::BaseController
     end
   end
 
-  def exports
-    job_offers = params[:select_all].present? ? JobOffer.all : JobOffer.where(id: params[:job_offer_ids])
-    file = Exporter::JobOffers.new(job_offers, current_administrator).generate
-
-    send_data file.read, filename: "#{Time.zone.today}_e-recrutement_offres.xlsx"
-  end
-
   # GET /admin/job_offers/1
   # GET /admin/job_offers/1.json
   def show

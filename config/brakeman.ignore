@@ -124,56 +124,56 @@
     {
       "warning_type": "Cross-Site Scripting",
       "warning_code": 2,
-      "fingerprint": "6ebbe5389305a8fb272a42c58a9f201e3866d00a6457b5f5ee6206cdebaab91c",
+      "fingerprint": "360ce282cd94e9d799c936fa7472ba1aa54c1b27d79d27a5a7c1da2b42c5a054",
       "check_name": "CrossSiteScripting",
       "message": "Unescaped model attribute",
-      "file": "app/views/admin/job_offers/_job_application.html.haml",
+      "file": "app/views/admin/job_offers/boards/_job_application.html.haml",
       "line": 4,
       "link": "https://brakemanscanner.org/docs/warning_types/cross_site_scripting",
-      "code": "::Haml::AttributeBuilder.build_class(true, \"card job-application\", \"job-application--state-#{(Unresolved Model).new.state}\")",
+      "code": "::Haml::AttributeBuilder.build_class(true, \"card job-application\", \"job-application--state-#{JobOffer.new.state}\")",
       "render_path": [
         {
           "type": "controller",
-          "class": "Admin::JobOffersController",
-          "method": "board",
-          "line": 75,
-          "file": "app/controllers/admin/job_offers_controller.rb",
+          "class": "Admin::JobOffers::BoardsController",
+          "method": "show",
+          "line": 12,
+          "file": "app/controllers/admin/job_offers/boards_controller.rb",
           "rendered": {
-            "name": "admin/job_offers/board",
-            "file": "app/views/admin/job_offers/board.html.haml"
+            "name": "admin/job_offers/boards/show",
+            "file": "app/views/admin/job_offers/boards/show.html.haml"
           }
         },
         {
           "type": "template",
-          "name": "admin/job_offers/board",
+          "name": "admin/job_offers/boards/show",
           "line": 6,
-          "file": "app/views/admin/job_offers/board.html.haml",
+          "file": "app/views/admin/job_offers/boards/show.html.haml",
           "rendered": {
-            "name": "admin/job_offers/_board_column",
-            "file": "app/views/admin/job_offers/_board_column.html.haml"
+            "name": "admin/job_offers/boards/_board_column",
+            "file": "app/views/admin/job_offers/boards/_board_column.html.haml"
           }
         },
         {
           "type": "template",
-          "name": "admin/job_offers/_board_column",
+          "name": "admin/job_offers/boards/_board_column",
           "line": 10,
-          "file": "app/views/admin/job_offers/_board_column.html.haml",
+          "file": "app/views/admin/job_offers/boards/_board_column.html.haml",
           "rendered": {
-            "name": "admin/job_offers/_job_application",
-            "file": "app/views/admin/job_offers/_job_application.html.haml"
+            "name": "admin/job_offers/boards/_job_application",
+            "file": "app/views/admin/job_offers/boards/_job_application.html.haml"
           }
         }
       ],
       "location": {
         "type": "template",
-        "template": "admin/job_offers/_job_application"
+        "template": "admin/job_offers/boards/_job_application"
       },
-      "user_input": "(Unresolved Model).new.state",
+      "user_input": "JobOffer.new.state",
       "confidence": "Weak",
       "cwe_id": [
         79
       ],
-      "note": ""
+      "note": "False positive: the card class interpolates the record AASM state (a constrained enum), not user input. Re-fingerprinted from 6ebbe538 after the board views moved to admin/job_offers/boards/ (Admin::JobOffers::BoardsController extraction)."
     },
     {
       "warning_type": "Cross-Site Scripting",

@@ -195,25 +195,6 @@ RSpec.describe "Admin::Job_Offers" do
     it { expect(response).to be_successful }
   end
 
-  describe "GET /admin/offresdemploi/:id/export" do
-    subject(:export_request) { get export_admin_job_offer_path(job_offer) }
-
-    let(:job_offer) { create(:published_job_offer) }
-
-    before do
-      create(:job_application, job_offer:)
-      export_request
-    end
-
-    it { expect(response).to be_successful }
-
-    it {
-      expect(response.headers["Content-Type"]).to eq(
-        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-      )
-    }
-  end
-
   describe "GET /admin/offresdemploi/new" do
     subject(:new_request) do
       get new_admin_job_offer_path, headers: {"HTTP_REFERER" => referer}

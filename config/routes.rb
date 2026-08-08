@@ -77,7 +77,6 @@ Rails.application.routes.draw do
         end
       end
       member do
-        get :export
         get :board
         get :stats
         get :new_transfer
@@ -91,6 +90,7 @@ Rails.application.routes.draw do
           resources :readings, only: :create
         end
       end
+      resource :export, only: :show, module: :job_offers
       resource :feature, only: %i[create destroy], module: :job_offers
       resource :dispatch, only: %i[new create], module: :job_offers
       resources :job_applications, path: "candidatures" do

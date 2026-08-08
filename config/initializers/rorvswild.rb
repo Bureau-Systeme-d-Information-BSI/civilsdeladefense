@@ -1,4 +1,4 @@
-if Rails.application.credentials.rorvswild_api_key.present?
+if Rails.application.credentials.rorvswild_api_key.present? && ENV["IS_REVIEW_APP"].blank?
   RorVsWild.start(
     api_key: Rails.application.credentials.rorvswild_api_key,
     ignore_exceptions: ["ActionController::RoutingError"],

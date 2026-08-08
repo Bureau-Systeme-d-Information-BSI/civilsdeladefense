@@ -436,8 +436,6 @@ fr:
         success: "La candidature a été dé-refusée"
         unauthorized: "Vous n'êtes pas autorisé(e) à annuler le refus de cette candidature."
     job_offers:
-      add_actor:
-        admin_not_found_html: 'Ce mail n’a pas de compte existant, veuillez envoyer une demande de création de compte via le lien suivant : <a href="https://demarche.numerique.gouv.fr/commencer/creation-maj-compte-e-recrutement">https://demarche.numerique.gouv.fr/commencer/creation-maj-compte-e-recrutement</a>'
       new_transfer:
         submit: "Transférer"
       transfer:
@@ -481,6 +479,7 @@ fr:
       form_actors:
         card_title: "2. Rôles sur cette offre"
         card_subtitle: "Les acteurs affiliés et notifiés"
+        admin_not_found_html: 'Ce mail n’a pas de compte existant, veuillez envoyer une demande de création de compte via le lien suivant : <a href="https://demarche.numerique.gouv.fr/commencer/creation-maj-compte-e-recrutement">https://demarche.numerique.gouv.fr/commencer/creation-maj-compte-e-recrutement</a>'
       job_offer:
         follow: "Suivre"
         unfollow: "Ne plus suivre"

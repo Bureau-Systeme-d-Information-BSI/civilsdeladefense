@@ -93,7 +93,7 @@ RSpec.describe "MultipleRecipientsEmails" do
 
     it "redirects to the job offer" do
       post admin_job_offer_multiple_recipients_emails_path(job_offer), params: params
-      expect(response).to redirect_to([:board, :admin, job_offer])
+      expect(response).to redirect_to([:admin, job_offer, :board])
     end
 
     describe "edge cases" do

@@ -11,7 +11,7 @@ class Admin::MultipleRecipientsEmailsController < Admin::BaseController
 
   def create
     if @multiple_recipients_email.save
-      redirect_to [:board, :admin, @job_offer], notice: t(".success")
+      redirect_to [:admin, @job_offer, :board], notice: t(".success")
     else
       @job_applications = @job_offer.job_applications.where(id: @multiple_recipients_email.job_application_ids)
       render :new

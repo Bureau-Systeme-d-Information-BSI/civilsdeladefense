@@ -36,14 +36,6 @@ RSpec.describe Admin::JobOffersController do
       end
     end
 
-    describe "GET #board" do
-      it "returns a success response" do
-        job_offer = create(:job_offer)
-        get :board, params: {id: job_offer.to_param}
-        expect(response).to be_successful
-      end
-    end
-
     describe "GET #stats" do
       it "returns a success response" do
         job_offer = create(:job_offer)
@@ -232,18 +224,6 @@ RSpec.describe Admin::JobOffersController do
       it "returns a success response" do
         create_list(:job_offer, 5)
         get :index, params: {}
-        expect(response).to be_successful
-      end
-    end
-
-    describe "GET #board" do
-      it "returns a success response" do
-        attrs = [{
-          administrator_id: subject.current_administrator.id, # rubocop:disable RSpec/NamedSubject
-          role: :grand_employer
-        }]
-        job_offer = create(:job_offer, job_offer_actors_attributes: attrs)
-        get :board, params: {id: job_offer.to_param}
         expect(response).to be_successful
       end
     end

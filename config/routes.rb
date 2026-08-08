@@ -77,7 +77,6 @@ Rails.application.routes.draw do
         end
       end
       member do
-        get :board
         get :stats
         get :new_transfer
         post :transfer
@@ -90,6 +89,7 @@ Rails.application.routes.draw do
           resources :readings, only: :create
         end
       end
+      resource :board, only: :show, module: :job_offers
       resource :export, only: :show, module: :job_offers
       resource :feature, only: %i[create destroy], module: :job_offers
       resource :dispatch, only: %i[new create], module: :job_offers

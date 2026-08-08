@@ -458,8 +458,9 @@ fr:
         new_record: 'Cliquer sur "Enregistrer" pour inviter'
         waiting: "En attente de confirmation"
         active: "Utilisateur actif"
-      board:
-        title: "Gestion des candidatures de l'offre %{job_offer_identifier}"
+      boards:
+        show:
+          title: "Gestion des candidatures de l'offre %{job_offer_identifier}"
       index:
         title: "Offres du Ministère des Armées"
         new_job_offer: "Ajouter une offre"

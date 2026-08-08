@@ -26,14 +26,6 @@ class Admin::JobOffersController < Admin::BaseController
   def show
   end
 
-  # GET /admin/job_offers/1/board
-  # GET /admin/job_offers/1/board.json
-  def board
-    @job_applications = @job_offer.job_applications.not_rejecteds.includes(:user).group_by(&:state)
-    @rejecteds = @job_offer.job_applications.rejecteds
-    request.xhr? && render(layout: false)
-  end
-
   def add_actor
     @job_offer = params[:job_offer_id].present? ? JobOffer.find(params[:job_offer_id]) : JobOffer.new
     @administrator = find_administrator_and_build_job_offer_actor(@job_offer, params[:email].downcase, params[:role])

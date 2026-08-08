@@ -13,7 +13,7 @@
             = fa_icon 'plus', class: 'mr-1'
             = t('.new_job_offer')
     = render partial: 'admin/job_offers/search'
-    = form_tag(exports_admin_job_offers_url, id: "export_job_offers", target: "_blank", data: {turbo: false}) do
+    = form_tag(admin_job_offers_exports_url, method: :get, id: "export_job_offers", target: "_blank", data: {turbo: false}) do
       -# inputs associated via form="export_job_offers"
     %div{data: {controller: "selectall"}}
       .d-flex.align-items-end{data: { controller: 'subcheckbox'}}
